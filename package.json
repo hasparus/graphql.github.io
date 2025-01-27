@@ -78,8 +78,8 @@
     "prettier-plugin-pkg": "^0.18.1",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "remark-frontmatter": "5.0.0",
-    "remark-lint-first-heading-level": "3.1.2",
-    "remark-lint-heading-increment": "3.1.2",
+    "remark-lint-first-heading-level": "4.0.1",
+    "remark-lint-heading-increment": "4.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.4.3"
   },
