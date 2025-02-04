@@ -16,11 +16,11 @@ const FAQS = [
   {
     question: "Are there group discounts for teams?",
     answer:
-      'If you have a group of 5 or more people, you can receive a 10% discount on all passes. All pass types must be the same, and all registrations must be processed under one group registration and must be paid with the same credit card. To create a group, select “Add Another Person” to your registration. When 5 or more people are added the 10% discount will be automatically applied. <a href="mailto:registration@linuxfoundation.org">Contact us</a> for any questions.',
+      'If you have a group of 5 or more people, you can receive a 10% discount on all passes. All pass types must be the same, and all registrations must be processed under one group registration and must be paid with the same credit card. To create a group, select “Add Another Person” to your registration. When 5 or more people are added the 10% discount will be automatically applied. <a href="mailto:registration@linuxfoundation.org">registration@linuxfoundation.org</a> for any questions.',
   },
   {
     question: "What is the refund and cancellation policy?",
-    answer: `If you must cancel for any reason, please sign back into your registration, click the “Register/Modify” button and select “Unregister.” If you need further assistance, <a href="mailto:registration@linuxfoundation.org">contact us</a>.<br/><br/>Refunds will only be issued for cancellations received two weeks prior to the event start date, including bulk ticket request refunds, and will appear as a credit on the card's statement 7-10 business days after cancellation. Individual refund requests for late cancellations due to sickness or emergency will be considered on a case by case basis - <a href="mailto:registration@linuxfoundation.org">contact us</a>.<br/><br/>Refunds can only be issued on the card the original payment was made.`,
+    answer: `If you must cancel for any reason, please sign back into your registration, click the “Register/Modify” button and select “Unregister.” If you need further assistance, please contact <a href="mailto:registration@linuxfoundation.org">registration@linuxfoundation.org</a>.<br/><br/>Refunds will only be issued for cancellations received two weeks prior to the event start date, including bulk ticket request refunds, and will appear as a credit on the card's statement 7-10 business days after cancellation. Individual refund requests for late cancellations due to sickness or emergency will be considered on a case by case basis - <a href="mailto:registration@linuxfoundation.org">registration@linuxfoundation.org</a>.<br/><br/>Refunds can only be issued on the card the original payment was made.`,
   },
   {
     question: "Can I transfer my registration?",
@@ -29,13 +29,30 @@ const FAQS = [
   },
   {
     question: "Can I get certificate of attendance?",
+    answer: `You can download your Certificate of Attendance directly from your <a target="_blank" href="https://openprofile.dev/myevents">LFX dashboard</a> by navigating to the "Past Events" section in the LF Events column. Please Note: We verify attendance through the registration system, and certificates will only be available for download after the event is completed.`,
+  },
+  {
+    question: "How do I request a visa letter?",
+    answer: `You must be registered for the event before requesting a visa letter. Please note: it can take up to an hour for our registration system and visa letter system to sync. <a target="_blank" href="https://events.linuxfoundation.org/about/visa-request/">Request a visa letter</a>.`,
+  },
+  {
+    question: "Where can I find health and safety information for the event?",
     answer:
-      'To request a Certificate of Attendance, please submit a request <a target="blank" href="https://docs.google.com/forms/d/1RpI8h6AGK2rCl3aIlyEY0D6fU3tsZ5yr1Ba6c3h6p9Y/viewform?edit_requested=true">here</a>. Please Note: We verify attendance through the registration system, and Certificate of Attendance letters are sent out after the event is completed.',
+      'Your well-being is our top priority. We continuously update our health and safety guidelines based on local regulations. Information about food allergies, medical resources, emergency contacts, and safety services can be found on  <a href="/conf/2025/resources#onsite-resources">this</a> page.',
+  },
+  {
+    question: "What accessibility and onsite resources are available?",
+    answer:
+      'We are committed to providing a comfortable and accessible experience for all attendees. Onsite resources include a private nursing room, venue accessibility support, reserved seating, a quiet room, communication and pronoun stickers, all-gender restrooms, first aid assistance, and a process for handling harassment reports. For full details on these resources, please visit <a href="/conf/2025/resources#health--safety">this</a> page.',
+  },
+  {
+    question: "Looking for more?",
+    answer: "Checkout our <a href='/conf/2025/resources'>Resources</a> page.",
   },
   {
     question: "Cannot find the answer to your question?",
     answer:
-      'You are welcome to email us <a href="mailto:graphqlconf@graphql.org">graphqlconf@graphql.org</a>.',
+      'You are welcome to email us <a href="mailto:graphql_events@linuxfoundation.org ">graphql_events@linuxfoundation.org</a>.',
   },
 ]
 
@@ -50,13 +67,14 @@ export function FAQ() {
             Asked Questions
           </h2>
           <p className="select-none text-sm">
-            PLEASE CONTACT{" "}
+            You can find much more information on our{" "}
             <a
-              href="mailto:graphqlconf@graphql.org"
-              className="select-text uppercase text-primary hover:underline"
+              href="/conf/2025/resources"
+              className="select-text text-primary hover:underline"
             >
-              graphqlconf@graphql.org
-            </a>
+              Resources
+            </a>{" "}
+            page.
           </p>
         </div>
 

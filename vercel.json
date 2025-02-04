@@ -52,7 +52,7 @@
     },
     {
       "source": "/graphql-js/:path*",
-      "destination": "https://graphql-js.org/:path*",
+      "destination": "https://graphql-js.org/docs/:path*",
       "permanent": true
     },
     {

@@ -1,17 +1,12 @@
 import { Metadata } from "next"
 import { HostedByGraphQLFoundation } from "@/icons"
-import { Rubik } from "next/font/google"
 import { GridButton } from "../_components/grid-button"
 import { Sponsor } from "./sponsorship"
 import { Venue } from "./venue"
 import { FAQ } from "./faq"
 import { Register } from "./register"
 import { PastSponsors } from "./past-sponsors"
-
-const rubik = Rubik({
-  weight: ["700", "600", "500", "400", "300"],
-  subsets: ["latin"],
-})
+import { Speakers } from "./speakers"
 
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
@@ -63,22 +58,13 @@ function Intro() {
 
 export default function Page() {
   return (
-    <main
-      style={{
-        fontFamily: rubik.style.fontFamily,
-      }}
-      className="text-white"
-    >
+    <main className="text-white">
       <Hero />
       <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32">
         <Intro />
         <PastSponsors />
         <Sponsor />
-        <GridButton
-          id="speakers"
-          title="Notify Me About Speaking"
-          href="https://forms.gle/jRsE2u8pokLX93RGA"
-        />
+        <Speakers />
         <Register />
         <Venue />
         <FAQ />
