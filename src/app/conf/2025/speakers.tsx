@@ -21,7 +21,10 @@ function TabHeading({
 function DatesTab() {
   return (
     <>
-      <TabHeading>Dates to Remember</TabHeading>
+      <p className="text-sm">
+        <em>Last Updated: 2025-04-02</em>
+      </p>
+      <TabHeading className="mt-6">Dates to Remember</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>CFP Opens: Tuesday, 4 February</li>
         <li>CFP Close: Sunday, 4 May at 23:59 CEST (UTC+2)</li>
@@ -39,7 +42,10 @@ function DatesTab() {
 function TopicsTab() {
   return (
     <>
-      <TabHeading>Suggested Topics</TabHeading>
+      <p className="text-sm">
+        <em>Last Updated: 2025-04-02</em>
+      </p>
+      <TabHeading className="mt-6">Suggested Topics</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>GraphQL Working Group</li>
         <ul className="list-disc space-y-2 pl-6">
@@ -79,7 +85,10 @@ function TopicsTab() {
 function NotesTab() {
   return (
     <>
-      <TabHeading>Important Notes</TabHeading>
+      <p className="text-sm">
+        <em>Last Updated: 2025-04-02</em>
+      </p>
+      <TabHeading className="mt-6">Important Notes</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>
           All speakers are required to adhere to our{" "}
@@ -183,7 +192,10 @@ function NotesTab() {
 function TypesTab() {
   return (
     <>
-      <TabHeading>Submission Types</TabHeading>
+      <p className="text-sm">
+        <em>Last Updated: 2025-04-02</em>
+      </p>
+      <TabHeading className="mt-6">Submission Types</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>
           Session Presentation: Typically 30 minutes in length, 1-2 speakers
@@ -200,6 +212,77 @@ function TypesTab() {
     </>
   )
 }
+
+function ProcessTab() {
+  return (
+    <>
+      <p className="text-sm">
+        <em>Last Updated: 2025-04-02</em>
+      </p>
+      <TabHeading className="mt-6">The Talk Selection Process</TabHeading>
+      <p className="mb-4">
+        The GraphQL Foundation strives to select conference talks based on fair
+        criteria in a transparent manner. There are three groups involved in the
+        selection process, each with their own focus to help create an engaging
+        and balanced conference schedule:
+      </p>
+      <ul className="list-disc space-y-2 pl-6">
+        <li>The Technical Steering Committee (TSC)</li>
+        <li>The new Subject Matter Experts initiative (SMEs)</li>
+        <li>The Program Committee</li>
+      </ul>
+      <TabHeading className="mt-6">The Technical Steering Committee</TabHeading>
+      <p className="mb-4">
+        The TSC are a group of 11 individuals who are elected to serve a two
+        year term to provide technical oversight of all GraphQL development
+        efforts. When evaluating conference talks they{" "}
+        <strong>focus on quality</strong> and use the following criteria:
+      </p>
+      <ul className="list-disc space-y-2 pl-6">
+        <li>Relevance</li>
+        <li>Originality</li>
+        <li>Soundness</li>
+        <li>Quality of Presentation</li>
+        <li>Importance</li>
+      </ul>
+      <TabHeading className="mt-6">Subject Matter Experts</TabHeading>
+      <p className="mb-4">
+        The SME initiative is new for 2025. This will be a panel of volunteers
+        drawn from industry experts, working group members, security and
+        observability experts, and maintainers and contributors to open source
+        GraphQL projects. When evaluating the talks, they will{" "}
+        <strong>focus on how exciting and engaging the talks are</strong> and
+        use the following criteria:
+      </p>
+      <ul className="list-disc space-y-2 pl-6">
+        <li>Subject Content</li>
+        <li>Originality</li>
+        <li>Audience Engagement</li>
+      </ul>
+      <TabHeading className="mt-6">The Program Committee</TabHeading>
+      <p>
+        The Program Committee is made up of representatives from the GraphQL
+        Foundation board and interested members of the GraphQL community who
+        have had experience organizing conferences. They shape the schedule from
+        the highest-rated talks, ensuring balance across industries and
+        affiliations, and also including a range of speaker experience and
+        demographics, to ensure a varied and well-rounded representation of the
+        GraphQL ecosystem.
+      </p>
+      <TabHeading className="mt-6">
+        Have More Questions? First Time Submitting? Don't Feel Intimidated
+      </TabHeading>
+      <p>
+        Linux Foundation events are an excellent way to get to know the
+        community and share your ideas and the work that you are doing and we
+        strongly encourage first-time speakers to submit talks for our events.
+        In the instance that you aren't sure about your abstract, reach out to
+        us and we will be more than happy to work with you on your proposal.
+      </p>
+    </>
+  )
+}
+
 export function Speakers() {
   const [buttonText, setButtonText] = useState("Submit a Proposal")
   const [isDisabled, setIsDisabled] = useState(false)
@@ -226,6 +309,7 @@ export function Speakers() {
     topics: <TopicsTab />,
     types: <TypesTab />,
     notes: <NotesTab />,
+    process: <ProcessTab />,
   }
 
   return (
@@ -281,7 +365,7 @@ export function Speakers() {
       </p>
       <div className="mb-6">
         <div className="flex border-b">
-          {["dates", "topics", "types", "notes"].map(tab => (
+          {["dates", "topics", "types", "notes", "process"].map(tab => (
             <button
               key={tab}
               className={`px-4 py-2 font-semibold ${
