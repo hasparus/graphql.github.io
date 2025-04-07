@@ -68,8 +68,8 @@ importers:
         specifier: ^7.4.0
         version: 7.7.2(react@18.3.1)
       marked:
-        specifier: 5.1.2
-        version: 5.1.2
+        specifier: 15.0.8
+        version: 15.0.8
       next:
         specifier: ^14.2.5
         version: 14.2.22(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3282,9 +3282,9 @@ packages:
     peerDependencies:
       react: '>= 0.14.0'
 
-  marked@5.1.2:
-    resolution: {integrity: sha512-ahRPGXJpjMjwSOlBoTMZAK7ATXkli5qCPxZ21TG44rx1KEo44bii4ekgTDQPNRQ4Kh7JMb9Ub1PVk1NxRSsorg==}
-    engines: {node: '>= 16'}
+  marked@15.0.8:
+    resolution: {integrity: sha512-rli4l2LyZqpQuRve5C0rkn6pj3hT8EWPC+zkAxFTAJLxRbENfTAhEQq9itrmf1Y81QtAX5D/MYlGlIomNgj9lA==}
+    engines: {node: '>= 18'}
     hasBin: true
 
   mathjax-full@3.2.2:
@@ -8167,7 +8167,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  marked@5.1.2: {}
+  marked@15.0.8: {}
 
   mathjax-full@3.2.2:
     dependencies:
