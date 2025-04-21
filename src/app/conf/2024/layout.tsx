@@ -4,6 +4,7 @@ import { Header } from "../_components/header"
 import { Footer } from "../_components/footer"
 import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
 import NextLink from "next/link"
+import { OldFontsStyleTag } from "../../fonts/old-fonts"
 
 export const metadata = {
   description:
@@ -30,6 +31,7 @@ export default function Layout({
 }): ReactElement {
   return (
     <>
+      <OldFontsStyleTag />
       <Header
         logo={
           <NextLink

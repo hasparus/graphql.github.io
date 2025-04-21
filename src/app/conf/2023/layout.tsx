@@ -4,6 +4,7 @@ import { Header } from "../_components/header"
 import { Footer } from "../_components/footer"
 import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
 import NextLink from "next/link"
+import { OldFontsStyleTag } from "../../fonts/old-fonts"
 
 export const metadata = {
   description:
@@ -33,6 +34,7 @@ export default function ConfLayout({
   const hover = "#c026d3"
   return (
     <>
+      <OldFontsStyleTag />
       <style>{`
         .text-primary,
         .hover\\:text-primary:hover {

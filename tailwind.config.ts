@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss"
 import typography from "@tailwindcss/typography"
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./theme.config.tsx"],
@@ -9,6 +10,12 @@ const config: Config = {
       padding: "1rem",
     },
     extend: {
+      fontFamily: {
+        sans: [
+          `var(--font-sans, ${fontFamily.sans.slice(0, 3).join(", ")})`,
+          ...fontFamily.sans,
+        ],
+      },
       colors: {
         primary: "#e10098",
         "conf-black": "#0e031c",

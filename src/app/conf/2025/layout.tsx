@@ -4,7 +4,7 @@ import { Header } from "../_components/header"
 import { Footer } from "../_components/footer"
 import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
 import NextLink from "next/link"
-import { hostGrotesk } from "../../fonts"
+import { NewFontsStyleTag } from "../../fonts"
 
 export const metadata = {
   description:
@@ -31,15 +31,7 @@ export default function Layout({
 }): ReactElement {
   return (
     <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: /* css */ `
-html.fonts {
-  --font-sans: ${hostGrotesk.style.fontFamily};
-  font-family: var(--font-sans);
-}`,
-        }}
-      />
+      <NewFontsStyleTag />
       <Header
         logo={
           <NextLink
