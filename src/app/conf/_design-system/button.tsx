@@ -2,11 +2,13 @@ import { clsx } from "clsx"
 import { Anchor } from "./anchor"
 
 type Size = "md" | "lg"
+type Variant = "primary" | "secondary"
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export declare namespace ButtonProps {
   export interface BaseProps {
     size?: Size
+    variant?: Variant
   }
 
   export interface AnchorProps
@@ -54,11 +56,11 @@ export type ButtonProps =
 
 export function Button(props: ButtonProps) {
   const className = clsx(
-    "relative flex items-center justify-center gap-2.5 rounded-lg font-normal text-base/none text-neu-0 font-sans h-14 px-8 data-[size=md]:h-12",
+    "relative flex items-center justify-center gap-2.5 font-normal text-base/none text-neu-0 font-sans h-14 px-8 data-[size=md]:h-12 data-[variant=secondary]:bg-neu-100 data-[variant=secondary]:light:text-neu-900",
     props.className,
   )
 
-  const styleAttrs = { "data-size": props.size }
+  const styleAttrs = { "data-size": props.size, "data-variant": props.variant }
 
   if ("href" in props && typeof props.href === "string") {
     const { className: _1, size: _2, children, ...rest } = props
