@@ -15,6 +15,10 @@ const config: Config = {
           `var(--font-sans, ${fontFamily.sans.slice(0, 3).join(", ")})`,
           ...fontFamily.sans,
         ],
+        mono: [
+          `var(--font-mono, ${fontFamily.mono.slice(0, 3).join(", ")})`,
+          ...fontFamily.mono,
+        ],
       },
       colors: {
         primary: "#e10098",

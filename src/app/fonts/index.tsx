@@ -8,9 +8,21 @@ export const hostGrotesk = localFont({
   weight: "300 800",
 })
 
+export const commitMono = localFont({
+  src: "./CommitMono-VariableFont.woff2",
+  weight: "200 700",
+  declarations: [
+    {
+      prop: "font-feature-settings",
+      value: "'ss01' on, 'ss02' on, 'ss04' on, 'ss05' on, 'cv08' on",
+    },
+  ],
+})
+
 const newFontsStyles = /* css */ `
 html {
   --font-sans: ${hostGrotesk.style.fontFamily};
+  --font-mono: ${commitMono.style.fontFamily};
 }`
 
 export const NewFontsStyleTag = () => {
