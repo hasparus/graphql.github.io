@@ -1,41 +1,41 @@
 :root {
-  --color-pri-lighter: #ffccef;
-  --color-pri-light: #ffccef;
-  --color-pri-base: #e10098;
-  --color-pri-dark: #990069;
-  --color-pri-darker: #660046;
+  --color-pri-lighter: 319 100% 90%;
+  --color-pri-light: 319 100% 90%;
+  --color-pri-base: 319 100% 44%;
+  --color-pri-dark: 319 100% 30%;
+  --color-pri-darker: 319 100% 20%;
 
-  --color-sec-lighter: #edfad1;
-  --color-sec-light: #dbf6a2;
-  --color-sec-base: #c3f654;
-  --color-sec-dark: #83bd02;
-  --color-sec-darker: #507501;
+  --color-sec-lighter: 79 80% 90%;
+  --color-sec-light: 79 82% 80%;
+  --color-sec-base: 79 90% 65%;
+  --color-sec-dark: 79 98% 37%;
+  --color-sec-darker: 79 98% 23%;
 
-  --color-neu-0: #ffffff;
-  --color-neu-50: #fafcf4;
-  --color-neu-100: #f3f4f0;
-  --color-neu-200: #e7e9e2;
-  --color-neu-300: #dbded3;
-  --color-neu-400: #cfd3c5;
-  --color-neu-500: #b8bda8;
-  --color-neu-600: #a0a88a;
-  --color-neu-700: #6d7557;
-  --color-neu-800: #363a2c;
-  --color-neu-900: #0e0f0b;
+  --color-neu-0: 0 0% 100%;
+  --color-neu-50: 75 57% 97%;
+  --color-neu-100: 75 15% 95%;
+  --color-neu-200: 77 14% 90%;
+  --color-neu-300: 76 14% 85%;
+  --color-neu-400: 77 14% 80%;
+  --color-neu-500: 74 14% 70%;
+  --color-neu-600: 76 15% 60%;
+  --color-neu-700: 76 15% 40%;
+  --color-neu-800: 77 14% 20%;
+  --color-neu-900: 75 15% 5%;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-neu-900: #ffffff;
-    --color-neu-800: #fafcf4;
-    --color-neu-700: #f3f4f0;
-    --color-neu-600: #e7e9e2;
-    --color-neu-500: #dbded3;
-    --color-neu-400: #cfd3c5;
-    --color-neu-300: #b8bda8;
-    --color-neu-200: #a0a88a;
-    --color-neu-100: #6d7557;
-    --color-neu-50: #363a2c;
-    --color-neu-0: #0e0f0b;
+    --color-neu-900: 0 0% 100%;
+    --color-neu-800: 75 57% 97%;
+    --color-neu-700: 75 15% 95%;
+    --color-neu-600: 77 14% 90%;
+    --color-neu-500: 76 14% 85%;
+    --color-neu-400: 77 14% 80%;
+    --color-neu-300: 74 14% 70%;
+    --color-neu-200: 76 15% 60%;
+    --color-neu-100: 76 15% 40%;
+    --color-neu-50: 77 14% 20%;
+    --color-neu-0: 75 15% 5%;
   }
 }
