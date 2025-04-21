@@ -7,6 +7,7 @@ import { FAQ } from "./faq"
 import { Register } from "./register"
 import { Sponsors } from "./sponsors"
 import { Speakers } from "./speakers"
+import { RegisterToday } from "./register-today"
 
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
@@ -60,6 +61,9 @@ export default function Page() {
   return (
     <main>
       <Hero />
+      <div className="mx-auto max-w-[90rem]">
+        <RegisterToday className="my-8 md:mb-16 md:mt-24" />
+      </div>
       <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32">
         <Intro />
         <Sponsors />
