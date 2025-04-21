@@ -6,6 +6,7 @@ import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
 import NextLink from "next/link"
 import { NewFontsStyleTag } from "../../fonts"
 import "../../colors.css"
+import "../../typography.css"
 
 export const metadata = {
   description:

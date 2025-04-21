@@ -1,0 +1,102 @@
+.typography-d1,
+.typography-h1,
+.typography-h2,
+.typography-h3 {
+  line-height: 1.2;
+}
+
+.typography-body-lg,
+.typography-body-md,
+.typography-body-sm,
+.typography-body-xs {
+  line-height: 1.5;
+}
+
+.typography-d1 {
+  font-size: 96px;
+}
+@media (min-width: 768px) {
+  .typography-d1 {
+    font-size: 48px;
+  }
+}
+
+.typography-h1 {
+  font-size: 40px;
+}
+@media (min-width: 768px) {
+  .typography-h1 {
+    font-size: 72px;
+  }
+}
+
+.typography-h2 {
+  font-size: 32px;
+}
+@media (min-width: 768px) {
+  .typography-h2 {
+    font-size: 48px;
+  }
+}
+
+.typography-h3 {
+  font-size: 24px;
+}
+@media (min-width: 768px) {
+  .typography-h3 {
+    font-size: 32px;
+  }
+}
+
+.typography-body-lg {
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  .typography-body-lg {
+    font-size: 20px;
+  }
+}
+
+.typography-body-md {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  .typography-body-md {
+    font-size: 16px;
+  }
+}
+
+.typography-body-sm {
+  font-size: 12px;
+}
+@media (min-width: 768px) {
+  .typography-body-sm {
+    font-size: 14px;
+  }
+}
+
+.typography-body-xs {
+  font-size: 10px;
+}
+@media (min-width: 768px) {
+  .typography-body-xs {
+    font-size: 12px;
+  }
+}
+
+.typography-button,
+.typography-tagline {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.typography-tagline {
+  text-transform: uppercase;
+}
+
+.typography-menu {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1;
+  text-transform: uppercase;
+}
