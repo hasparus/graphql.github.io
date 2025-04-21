@@ -1,6 +1,6 @@
+import { fontFamily } from "tailwindcss/defaultTheme"
 import type { Config } from "tailwindcss"
 import typography from "@tailwindcss/typography"
-import { fontFamily } from "tailwindcss/defaultTheme"
 
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./theme.config.tsx"],
@@ -40,17 +40,17 @@ const config: Config = {
 
         // We're using 3-letter color names to avoid conflicting
         // with the old `neutral` color.
-        "neu-0": "var(--color-neu-0)",
-        "neu-50": "var(--color-neu-50)",
-        "neu-100": "var(--color-neu-100)",
-        "neu-200": "var(--color-neu-200)",
-        "neu-300": "var(--color-neu-300)",
-        "neu-400": "var(--color-neu-400)",
-        "neu-500": "var(--color-neu-500)",
-        "neu-600": "var(--color-neu-600)",
-        "neu-700": "var(--color-neu-700)",
-        "neu-800": "var(--color-neu-800)",
-        "neu-900": "var(--color-neu-900)",
+        "neu-0": "rgb(from var(--color-neu-0) r g b / <alpha-value>)",
+        "neu-50": "rgb(from var(--color-neu-50) r g b / <alpha-value>)",
+        "neu-100": "rgb(from var(--color-neu-100) r g b / <alpha-value>)",
+        "neu-200": "rgb(from var(--color-neu-200) r g b / <alpha-value>)",
+        "neu-300": "rgb(from var(--color-neu-300) r g b / <alpha-value>)",
+        "neu-400": "rgb(from var(--color-neu-400) r g b / <alpha-value>)",
+        "neu-500": "rgb(from var(--color-neu-500) r g b / <alpha-value>)",
+        "neu-600": "rgb(from var(--color-neu-600) r g b / <alpha-value>)",
+        "neu-700": "rgb(from var(--color-neu-700) r g b / <alpha-value>)",
+        "neu-800": "rgb(from var(--color-neu-800) r g b / <alpha-value>)",
+        "neu-900": "rgb(from var(--color-neu-900) r g b / <alpha-value>)",
         // #endregion new design system colors
       },
       backgroundImage: {
