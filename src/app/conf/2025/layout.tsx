@@ -54,7 +54,7 @@ export default function Layout({
         ]}
         is2025
       />
-      <div>{children}</div>
+      <div className="bg-neu-0 text-neu-900">{children}</div>
       <Footer
         logo={
           <NextLink href="/conf/2025" className="nextra-logo text-white">

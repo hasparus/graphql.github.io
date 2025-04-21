@@ -58,7 +58,7 @@ function Intro() {
 
 export default function Page() {
   return (
-    <main className="text-white">
+    <main>
       <Hero />
       <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32">
         <Intro />
