@@ -4,12 +4,7 @@ import { Header } from "../_components/header"
 import { Footer } from "../_components/footer"
 import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
 import NextLink from "next/link"
-import { Rubik } from "next/font/google"
-
-const rubik = Rubik({
-  weight: ["700", "600", "500", "400", "300"],
-  subsets: ["latin"],
-})
+import { hostGrotesk } from "../../fonts"
 
 export const metadata = {
   description:
@@ -36,6 +31,15 @@ export default function Layout({
 }): ReactElement {
   return (
     <>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: /* css */ `
+html.fonts {
+  --font-sans: ${hostGrotesk.style.fontFamily};
+  font-family: var(--font-sans);
+}`,
+        }}
+      />
       <Header
         logo={
           <NextLink
@@ -56,13 +60,7 @@ export default function Layout({
         ]}
         is2025
       />
-      <div
-        style={{
-          fontFamily: rubik.style.fontFamily,
-        }}
-      >
-        {children}
-      </div>
+      <div>{children}</div>
       <Footer
         logo={
           <NextLink href="/conf/2025" className="nextra-logo text-white">

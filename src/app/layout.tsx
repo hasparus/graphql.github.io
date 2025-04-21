@@ -28,7 +28,8 @@ export default function RootLayout({
   children: ReactNode
 }): ReactElement {
   return (
-    <html lang="en" className={`scroll-smooth ${font.className}`}>
+    // eslint-disable-next-line tailwindcss/no-custom-classname
+    <html lang="en" className={`fonts scroll-smooth ${font.className}`}>
       <head>
         <style>{`html { scroll-padding-top: 5rem }`}</style>
       </head>
