@@ -1,6 +1,7 @@
 import { fontFamily } from "tailwindcss/defaultTheme"
 import type { Config } from "tailwindcss"
 import typography from "@tailwindcss/typography"
+import plugin from "tailwindcss/plugin"
 
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./theme.config.tsx"],
@@ -71,7 +72,89 @@ const config: Config = {
       },
     },
   },
-  plugins: [typography],
+  plugins: [
+    typography,
+    plugin(({ addUtilities }) => {
+      const headingStyles = {
+        ".typography-d1, .typography-h1, .typography-h2, .typography-h3": {
+          lineHeight: "1.2",
+        },
+        ".typography-d1": {
+          fontSize: "96px",
+          "@screen lg": {
+            fontSize: "48px",
+          },
+        },
+        ".typography-h1": {
+          fontSize: "40px",
+          "@screen lg": {
+            fontSize: "72px",
+          },
+        },
+        ".typography-h2": {
+          fontSize: "32px",
+          "@screen md": {
+            fontSize: "48px",
+          },
+        },
+        ".typography-h3": {
+          fontSize: "24px",
+          "@screen md": {
+            fontSize: "32px",
+          },
+        },
+      }
+
+      const bodyStyles = {
+        ".typography-body-lg, .typography-body-md, .typography-body-sm, .typography-body-xs":
+          {
+            lineHeight: "1.5",
+          },
+        ".typography-body-lg": {
+          fontSize: "16px",
+          "@screen md": {
+            fontSize: "20px",
+          },
+        },
+        ".typography-body-md": {
+          fontSize: "14px",
+          "@screen md": {
+            fontSize: "16px",
+          },
+        },
+        ".typography-body-sm": {
+          fontSize: "12px",
+          "@screen md": {
+            fontSize: "14px",
+          },
+        },
+        ".typography-body-xs": {
+          fontSize: "10px",
+          "@screen md": {
+            fontSize: "12px",
+          },
+        },
+      }
+
+      const specialStyles = {
+        ".typography-button, .typography-tagline": {
+          fontSize: "16px",
+          lineHeight: "1",
+        },
+        ".typography-tagline": {
+          textTransform: "uppercase",
+        },
+        ".typography-menu": {
+          fontFamily: "var(--font-mono)",
+          fontSize: "14px",
+          lineHeight: "1",
+          textTransform: "uppercase",
+        },
+      }
+
+      addUtilities({ ...headingStyles, ...bodyStyles, ...specialStyles })
+    }),
+  ],
   darkMode: ["class", 'html[class~="dark"]'],
 }
 export default config
