@@ -77,12 +77,6 @@ function Stripes() {
   const maskOdd =
     "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
 
-  // TODO: dark mode:
-  // background: linear-gradient(180deg, var(--Primary-Dark, #990069) 0%, #660046 100%);
-  // ^ the same one as with base
-  // background: linear-gradient(180deg, #990069 0%, var(--Primary-Dark, #990069) 100%);
-  // ^ the same one as with light
-
   return (
     <div
       role="presentation"
@@ -100,19 +94,15 @@ function Stripes() {
       }}
     >
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 bg-[linear-gradient(180deg,hsl(var(--color-pri-light))_0%,hsl(319deg_100%_90%_/_0.4)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-dark))_0%,hsl(319_100%_20%_/_1)_100%)]"
         style={{
-          background:
-            "linear-gradient(180deg, hsl(var(--color-pri-light)) 0%, hsl(319deg, 100%, 90%, 0.4) 100%)",
           maskImage: maskEven,
           WebkitMaskImage: maskEven,
         }}
       />
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 bg-[linear-gradient(180deg,hsl(319deg_100%_90%_/_0.2)_0%,hsl(var(--color-pri-base))_100%)] dark:bg-[linear-gradient(180deg,hsl(319_100%_30%_/_1)_0%,hsl(var(--color-pri-dark))_100%)]"
         style={{
-          background:
-            "linear-gradient(180deg, hsl(319deg, 100%, 90%, 0.2) 0%, hsl(var(--color-pri-base)) 100%)",
           maskImage: maskOdd,
           WebkitMaskImage: maskOdd,
         }}
