@@ -118,6 +118,7 @@ const config: Config = {
         },
         ".typography-body-md": {
           fontSize: "14px",
+          fontWeight: "300",
           "@screen md": {
             fontSize: "16px",
           },
