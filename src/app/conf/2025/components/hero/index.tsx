@@ -7,6 +7,7 @@ import { Button } from "../../../_design-system/button"
 import graphqlFoundationWordmarkSvg from "../../assets/graphql-foundation-wordmark.svg"
 import heroPhoto from "./hero-photo.jpeg"
 import blurBean from "./blur-bean-cropped.webp"
+import { ImageLoaded } from "./image-loaded"
 
 // - the background is made of even and odd stripes every 12px and a mask
 // - i can have two divs with repeating background image and a mask
@@ -78,9 +79,10 @@ function Stripes() {
     "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
 
   return (
-    <div
+    <ImageLoaded
       role="presentation"
-      className="pointer-events-none absolute inset-x-0 bottom-[-385px] top-[-203px] -z-10"
+      image={blurBean}
+      className="pointer-events-none absolute inset-x-0 bottom-[-385px] top-[-203px] -z-10 translate-y-12 opacity-0 transition duration-500 ease-linear data-[loaded=true]:translate-y-0 data-[loaded=true]:opacity-100"
       // todo: animate opacity up after the image is loaded
       style={{
         maskImage: `url(${blurBean.src})`,
@@ -107,6 +109,6 @@ function Stripes() {
           WebkitMaskImage: maskOdd,
         }}
       />
-    </div>
+    </ImageLoaded>
   )
 }
