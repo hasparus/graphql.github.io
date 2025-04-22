@@ -13,7 +13,7 @@ export function RegisterToday({ className }: RegisterTodayProps) {
   return (
     <section
       className={clsx(
-        "flex gap-x-24 gap-y-10 px-4 max-lg:flex-col-reverse md:px-24",
+        "flex gap-10 px-4 max-lg:flex-col-reverse md:px-24 xl:gap-x-24",
         className,
       )}
     >
@@ -23,7 +23,7 @@ export function RegisterToday({ className }: RegisterTodayProps) {
         alt="GraphQL Conference"
         width="450"
         height="566"
-        className="aspect-[312/392.43] w-full object-cover lg:aspect-[450/566] lg:h-[566px] lg:w-[450px]"
+        className="aspect-[312/392] w-full object-cover max-sm:hidden sm:aspect-[2] lg:aspect-[450/566] lg:h-[566px] lg:w-[450px]"
       />
       <div className="flex flex-col justify-between">
         <div>
