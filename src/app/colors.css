@@ -24,18 +24,16 @@
   --color-neu-900: 75 15% 5%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-neu-900: 0 0% 100%;
-    --color-neu-800: 75 57% 97%;
-    --color-neu-700: 75 15% 95%;
-    --color-neu-600: 77 14% 90%;
-    --color-neu-500: 76 14% 85%;
-    --color-neu-400: 77 14% 80%;
-    --color-neu-300: 74 14% 70%;
-    --color-neu-200: 76 15% 60%;
-    --color-neu-100: 76 15% 40%;
-    --color-neu-50: 77 14% 20%;
-    --color-neu-0: 75 15% 5%;
-  }
+html.dark {
+  --color-neu-900: 0 0% 100%;
+  --color-neu-800: 75 57% 97%;
+  --color-neu-700: 75 15% 95%;
+  --color-neu-600: 77 14% 90%;
+  --color-neu-500: 76 14% 85%;
+  --color-neu-400: 77 14% 80%;
+  --color-neu-300: 74 14% 70%;
+  --color-neu-200: 76 15% 60%;
+  --color-neu-100: 76 15% 40%;
+  --color-neu-50: 77 14% 20%;
+  --color-neu-0: 75 15% 5%;
 }

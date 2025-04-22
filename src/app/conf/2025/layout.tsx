@@ -6,7 +6,9 @@ import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
 import NextLink from "next/link"
 import { NewFontsStyleTag } from "../../fonts"
 import "../../colors.css"
-import "../../typography.css"
+
+// @ts-expect-error: we want to import the same version as Nextra for the main page
+import { ThemeProvider } from "next-themes"
 
 export const metadata = {
   description:
@@ -54,7 +56,9 @@ export default function Layout({
         ]}
         is2025
       />
-      <div className="bg-neu-0 text-neu-900">{children}</div>
+      <ThemeProvider attribute="class">
+        <div className="bg-neu-0 text-neu-900">{children}</div>
+      </ThemeProvider>
       <Footer
         logo={
           <NextLink href="/conf/2025" className="nextra-logo text-white">
