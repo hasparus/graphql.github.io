@@ -7,38 +7,11 @@ import { FAQ } from "./faq"
 import { Register } from "./register"
 import { Sponsors } from "./sponsors"
 import { Speakers } from "./speakers"
-import { RegisterToday } from "./register-today"
+import { RegisterToday } from "./components/register-today"
+import { Hero } from "./components/hero"
 
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
-}
-
-function Hero() {
-  return (
-    <section className="conf-hero-2025 relative">
-      <div className="flex h-full flex-col justify-center py-16 md:py-28">
-        <div className="flex flex-col items-center justify-center">
-          <h1 className="text-center text-5xl font-bold md:text-7xl">
-            GraphQLConf <span className="font-light">2025</span>
-          </h1>
-          <HostedByGraphQLFoundation className="mb-6 h-8 w-full shrink-0 self-start lg:h-10" />
-          <div className="flex flex-col justify-center text-xl font-medium md:flex-row md:gap-2">
-            <div className="flex items-center gap-1">
-              <time dateTime="2025-09-08">September 08</time>
-              <span>-</span>
-              <time dateTime="2025-09-10">10, 2025</time>
-            </div>
-            <span className="hidden md:block">|</span>
-            <address className="not-italic">Amsterdam, Netherlands</address>
-          </div>
-        </div>
-      </div>
-      <div
-        className="absolute bottom-0 left-1/2 h-px w-[90%] -translate-x-1/2 bg-white/10"
-        aria-hidden="true"
-      />
-    </section>
-  )
 }
 
 function Intro() {
