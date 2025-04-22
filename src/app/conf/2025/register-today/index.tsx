@@ -13,7 +13,7 @@ export function RegisterToday({ className }: RegisterTodayProps) {
   return (
     <section
       className={clsx(
-        "flex gap-10 px-4 max-lg:flex-col-reverse lg:px-10 xl:gap-x-24 xl:px-24",
+        "flex gap-10 px-4 max-lg:flex-col-reverse lg:px-12 xl:gap-x-24 xl:px-24",
         className,
       )}
     >
@@ -35,7 +35,7 @@ export function RegisterToday({ className }: RegisterTodayProps) {
             shape the next decade of APIs!
           </p>
         </div>
-        <div className="mt-10 flex gap-x-6 gap-y-4 max-md:flex-col">
+        <div className="mt-10 flex gap-x-6 gap-y-4 max-sm:flex-col">
           <Button href="https://cvent.me/PBNYEe?utm_source=graphql_conf_2025&utm_medium=website&utm_campaign=register_section">
             Register today
           </Button>
