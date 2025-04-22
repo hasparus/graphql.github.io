@@ -2,6 +2,7 @@ import { clsx } from "clsx"
 import NextImage from "next-image-export-optimizer"
 
 import { Button } from "../../_design-system/button"
+import { GET_TICKETS_LINK, BECOME_A_SPEAKER_LINK } from "../links"
 
 import speakerImage from "./speaker.webp"
 
@@ -36,13 +37,8 @@ export function RegisterToday({ className }: RegisterTodayProps) {
           </p>
         </div>
         <div className="mt-10 flex gap-x-6 gap-y-4 max-sm:flex-col">
-          <Button href="https://cvent.me/PBNYEe?utm_source=graphql_conf_2025&utm_medium=website&utm_campaign=register_section">
-            Register today
-          </Button>
-          <Button
-            variant="secondary"
-            href="https://sessionize.com/graphqlconf-2025?utm_medium=website&utm_campaign=speaker_section"
-          >
+          <Button href={GET_TICKETS_LINK}>Register today</Button>
+          <Button variant="secondary" href={BECOME_A_SPEAKER_LINK}>
             Become a speaker
           </Button>
         </div>
