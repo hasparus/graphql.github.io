@@ -80,9 +80,9 @@ const config: Config = {
           lineHeight: "1.2",
         },
         ".typography-d1": {
-          fontSize: "96px",
+          fontSize: "48px",
           "@screen lg": {
-            fontSize: "48px",
+            fontSize: "96px",
           },
         },
         ".typography-h1": {
