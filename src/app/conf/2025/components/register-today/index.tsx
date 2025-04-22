@@ -1,8 +1,8 @@
 import { clsx } from "clsx"
 import NextImage from "next-image-export-optimizer"
 
-import { Button } from "../../_design-system/button"
-import { GET_TICKETS_LINK, BECOME_A_SPEAKER_LINK } from "../links"
+import { Button } from "../../../_design-system/button"
+import { GET_TICKETS_LINK, BECOME_A_SPEAKER_LINK } from "../../links"
 
 import speakerImage from "./speaker.webp"
 
