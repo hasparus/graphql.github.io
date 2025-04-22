@@ -503,3 +503,7 @@ div[id^="headlessui-menu-items"] {
   @apply text-xl;
   @apply dark:border-neutral-700/80;
 }
+
+.gql-focus-visible {
+  @apply focus-visible:outline-neu-900 focus-visible:outline-offset-[5px];
+}
