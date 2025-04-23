@@ -2,6 +2,7 @@ import Grafbase from "public/img/conf/Sponsors/Grafbase.svg"
 
 import { clsx } from "clsx"
 import NextImage from "next-image-export-optimizer"
+import { Fragment } from "react"
 
 type LogosType = {
   icon: string
@@ -97,7 +98,7 @@ export function Sponsors() {
     <section>
       <h1 className="conf-heading mb-12">Sponsors</h1>
       {SPONSORS.map(({ title, logos }, i) => (
-        <>
+        <Fragment key={i}>
           <div className="mb-2 flex items-center gap-2 border-b-2 border-dotted border-white/40 pb-1.5">
             {/* Square box */}
             <div className="size-2.5 bg-primary" />
@@ -108,7 +109,7 @@ export function Sponsors() {
             className="flex"
             linkClassName="p-8 lg:p-16 h-28 lg:h-[220px]"
           />
-        </>
+        </Fragment>
       ))}
     </section>
   )
