@@ -56,18 +56,16 @@ export function Hero() {
 
 function DateAndLocation() {
   return (
-    <div className="flex flex-col gap-4 md:flex-row md:gap-6">
+    <div className="flex flex-col gap-4 typography-body-md md:flex-row md:gap-6">
       <div className="flex items-center gap-2">
-        <CalendarIcon className="size-6" />
+        <CalendarIcon className="size-5 sm:size-6" />
         <time dateTime="2025-09-08">September 08</time>
         <span>-</span>
         <time dateTime="2025-09-10">10, 2025</time>
       </div>
       <div className="flex items-center gap-2">
-        <PinIcon className="size-6" />
-        <address className="not-italic typography-body-md">
-          Amsterdam, Netherlands
-        </address>
+        <PinIcon className="size-5 sm:size-6" />
+        <address className="not-italic">Amsterdam, Netherlands</address>
       </div>
     </div>
   )

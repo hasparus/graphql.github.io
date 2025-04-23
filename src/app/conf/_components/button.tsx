@@ -19,7 +19,7 @@ export function Button({
   return disabled ? (
     <span
       className={clsx(
-        "inline-flex w-fit cursor-default whitespace-nowrap rounded border-0 px-6 py-2 text-center text-sm no-underline transition ease-in-out sm:text-base",
+        "inline-flex w-fit cursor-default whitespace-nowrap rounded border-0 px-6 py-2 text-center text-sm no-underline subpixel-antialiased transition ease-in-out sm:text-base",
         "bg-gray-400 font-medium text-white",
         className,
       )}
