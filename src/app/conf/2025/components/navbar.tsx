@@ -32,26 +32,33 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
     setMobileDrawerOpen(false)
   }, [pathname])
 
+  const navbarHeight = "70px"
+
   return (
     <>
       <div
         /* pink background "prelude" */ className={clsx(
-          "top-0 h-[70px] w-full scale-y-105 bg-pri-base dark:bg-pri-darker",
+          "top-0 w-full scale-y-105 bg-pri-base dark:bg-pri-darker",
           mobileDrawerOpen ? "static" : "absolute",
         )}
+        style={{
+          height: navbarHeight,
+        }}
       />
       <header
         // todo: not white, but ALWAYS contrasting color, either white or black depending on background
         className={clsx(
-          "top-0 z-10 w-full border-b border-white/70 bg-white/20 font-mono text-white antialiased",
+          "top-0 z-10 w-full bg-white/20 font-mono text-white antialiased",
           mobileDrawerOpen ? "fixed" : "sticky",
         )}
+        style={
+          {
+            "--navbar-h": navbarHeight,
+          } as {}
+        }
       >
-        <div
-          /* navbar backdrop */ className="absolute inset-0 -z-10 backdrop-blur-[6.4px]"
-        />
-        {/* todo: better backdrop */}
-        <div className="container flex h-[70px] items-center justify-between gap-5">
+        <BackdropBlur />
+        <div className="container flex h-[var(--navbar-h)] items-center justify-between gap-5">
           <div className="flex items-center gap-2 text-xl/none uppercase">
             <NextLink href="/">
               <GraphQLLogo className="h-6" />
@@ -62,13 +69,13 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
           {mobileDrawerOpen && (
             <div
               onClick={handleDrawerClick}
-              className="fixed inset-0 top-[71px] z-10 bg-neu-0/40 backdrop-blur-[6.4px]"
+              className="fixed inset-0 top-[calc(var(--navbar-h)+1px)] z-10 bg-neu-0/40 backdrop-blur-[6.4px]"
             />
           )}
 
           <nav
             className={clsx(
-              "inset-0 z-20 flex gap-7 typography-menu max-lg:fixed max-lg:mt-[71px] max-lg:flex-col max-md:min-w-[50%] sm:max-lg:p-4 lg:items-end",
+              "inset-0 z-20 flex gap-7 typography-menu max-lg:fixed max-lg:mt-[calc(var(--navbar-h)+1px)] max-lg:flex-col max-md:min-w-[50%] sm:max-lg:p-4 lg:items-end",
               mobileDrawerOpen
                 ? "translate-x-0 text-neu-900"
                 : "text-white max-lg:translate-x-full",
@@ -130,5 +137,31 @@ function GraphQLLogo(props: React.SVGProps<SVGSVGElement>) {
       <circle cx="14.7659" cy="70.3396" r="8.82" />
       <circle cx="14.7659" cy="29.6605" r="8.82" />
     </svg>
+  )
+}
+
+function BackdropBlur() {
+  const mask = "linear-gradient(to bottom, #000 0% 50%, transparent 50% 100%)"
+  const edgeMask =
+    "linear-gradient(to bottom, black 0, black 1.1px, transparent 1.1px)"
+  return (
+    <>
+      <div
+        // note: we can't use the background trick to reduce flickering, because we have many section
+        // background colors and big images, so we'd have to change the --bg var with javascript
+        className="pointer-events-none absolute inset-0 -z-10 h-[200%] backdrop-blur-[6.4px]"
+        style={{
+          maskImage: mask,
+          WebkitMaskImage: mask,
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 h-full translate-y-full bg-white/50 backdrop-blur-sm backdrop-brightness-200 backdrop-grayscale-[50%]"
+        style={{
+          maskImage: edgeMask,
+          WebkitMaskImage: edgeMask,
+        }}
+      />
+    </>
   )
 }
