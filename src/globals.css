@@ -509,5 +509,5 @@ div[id^="headlessui-menu-items"] {
 }
 
 .gql-conf-container {
-  @apply w-[120rem];
+  @apply mx-auto w-full max-w-[120rem];
 }
