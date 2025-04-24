@@ -14,7 +14,7 @@ export function RegisterToday({ className }: RegisterTodayProps) {
   return (
     <section
       className={clsx(
-        "flex gap-10 px-4 max-lg:flex-col-reverse lg:px-12 xl:gap-x-24 xl:px-24",
+        "flex gap-10 px-4 py-8 max-lg:flex-col-reverse lg:px-12 xl:gap-x-24 xl:px-24",
         className,
       )}
     >
@@ -28,10 +28,10 @@ export function RegisterToday({ className }: RegisterTodayProps) {
       />
       <div className="flex flex-col justify-between">
         <div>
-          <h2 className="typography-h2 text-neu-900">
+          <h2 className="text-neu-900 typography-h2">
             Let's celebrate 10 years of GraphQL together
           </h2>
-          <p className="typography-h3 text-neu-800 mt-6 md:mt-10">
+          <p className="mt-6 text-neu-800 typography-h3 md:mt-10">
             Join three transformative days of expert insights and innovation to
             shape the next decade of APIs!
           </p>

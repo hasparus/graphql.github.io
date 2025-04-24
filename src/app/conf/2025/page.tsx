@@ -35,9 +35,9 @@ export default function Page() {
   return (
     <main>
       <Hero />
-      <div className="mx-auto max-w-[90rem]">
-        <RegisterToday className="mt-8 md:mb-16 md:mt-24" />
-        <WhatToExpectSection className="mt-8" />
+      <div className="gql-conf-container mx-auto">
+        <RegisterToday className="md:mb-8 md:mt-24" />
+        <WhatToExpectSection className="md:mb-8 md:mt-24" />
       </div>
       <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32">
         <Intro />
