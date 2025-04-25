@@ -56,7 +56,7 @@ export type ButtonProps =
 
 export function Button(props: ButtonProps) {
   const className = clsx(
-    "relative flex items-center justify-center gap-2.5 font-normal text-base/none text-neu-0 bg-neu-900 hover:bg-neu-800 active:bg-neu-700 font-sans h-14 px-8 data-[size=md]:h-12 data-[variant=secondary]:bg-neu-100 data-[variant=secondary]:text-neu-900 dark:data-[variant=secondary]:text-neu-0 data-[variant=secondary]:hover:bg-neu-200/75 data-[variant=secondary]:active:bg-neu-200/90 gql-focus-visible",
+    "relative flex items-center justify-center gap-2.5 font-normal text-base/none text-neu-0 bg-neu-900 hover:bg-neu-800 active:bg-neu-700 font-sans h-14 px-8 data-[size=md]:h-12 data-[variant=secondary]:bg-neu-100 data-[variant=secondary]:text-neu-900 data-[variant=secondary]:hover:bg-neu-200/75 data-[variant=secondary]:active:bg-neu-200/90 gql-focus-visible",
     props.className,
   )
 
