@@ -25,9 +25,9 @@ export default function TopMindsSection({
       )}
       {...rest}
     >
-      <div className="flex flex-wrap max-sm:flex-col sm:*:border-b-0">
-        {/* todo: look up socials */}
-        <h3 className="grow pb-6 pr-6 typography-h2">
+      <div className="mx-auto flex flex-wrap max-sm:flex-col [@media(width<907px)]:gap-y-6 [@media(width>=907px)]:*:border-b-0">
+        {/* todo: remaining socials */}
+        <h3 className="mr-auto flex text-pretty pb-6 pr-6 typography-h2 [@media(width<907px)]:w-full [@media(width>=907px)]:w-[400px]">
           Meet the top industry minds
         </h3>
         <SpeakerCard
@@ -43,7 +43,7 @@ export default function TopMindsSection({
           src={elizabethStone}
           linkedin="elizabeth-stone-608a754"
         />
-        <div className="flex grow border-t border-sec-dark *:border-t-0 max-sm:contents">
+        <div className="flex grow border-sec-dark [@media(width<907px)]:contents [@media(width>=907px)]:border-t [@media(width>=907px)]:*:border-t-0">
           <SpeakerCard
             name="Kamil Kisiela"
             title="The Guild — Developer"
@@ -64,7 +64,7 @@ export default function TopMindsSection({
             twitter="tanmaigo"
             linkedin="tanmaig"
           />
-          <div className="mt-6 flex grow items-end justify-end pl-6">
+          <div className="mt-6 flex grow basis-[content] items-end justify-stretch pl-6 max-lg:w-full sm:justify-end">
             <Button variant="secondary">View all speakers</Button>
           </div>
         </div>
@@ -91,7 +91,7 @@ function SpeakerCard({
   return (
     <article
       className={clsx(
-        ":border-r border-y border-r border-sec-dark first-of-type:border-l",
+        ":border-r shrink-0 border-y border-r border-sec-dark first-of-type:border-l",
         className,
       )}
     >
@@ -100,7 +100,7 @@ function SpeakerCard({
         alt=""
         width={236}
         height={236}
-        className="aspect-square size-[236px] w-full object-cover transition-transform"
+        className="aspect-square w-full object-cover transition-transform sm:size-[236px]"
       />
       <div className="flex items-stretch border-t border-sec-dark">
         <div className="flex h-[80px] grow flex-col justify-center gap-1 p-3">
