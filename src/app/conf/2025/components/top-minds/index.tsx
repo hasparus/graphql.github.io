@@ -25,7 +25,7 @@ export default function TopMindsSection({
       )}
       {...rest}
     >
-      <div className="flex flex-wrap max-sm:flex-col">
+      <div className="flex flex-wrap max-sm:flex-col sm:*:border-b-0">
         {/* todo: look up socials */}
         <h3 className="grow pb-6 pr-6 typography-h2">
           Meet the top industry minds
@@ -34,14 +34,16 @@ export default function TopMindsSection({
           name="Uri Goldshtein"
           title="The Guild — Founder"
           src={uriGoldshtein}
+          linkedin="urigo"
+          twitter="UriGoldshtein"
         />
         <SpeakerCard
           name="Elizabeth Stone"
           title="Netflix — CTO"
           src={elizabethStone}
-          linkedinHref="https://www.linkedin.com/in/elizabeth-stone-608a754/"
+          linkedin="elizabeth-stone-608a754"
         />
-        <div className="flex grow max-sm:contents">
+        <div className="flex grow border-t border-sec-dark *:border-t-0 max-sm:contents">
           <SpeakerCard
             name="Kamil Kisiela"
             title="The Guild — Developer"
@@ -51,11 +53,14 @@ export default function TopMindsSection({
             name="Rajeev Rajan"
             title="Atlassian — CTO"
             src={rajeevRajan}
+            linkedin="rajeev-rajan"
           />
           <SpeakerCard
             name="Tenmai Gopal"
             title="Hasura — CEO & Co-Founder"
             src={tenmaiGopal}
+            twitter="tanmaigo"
+            linkedin="tanmaig"
           />
           <div className="mt-6 flex grow items-end justify-end pl-6">
             <Button variant="secondary">View all speakers</Button>
@@ -70,15 +75,15 @@ function SpeakerCard({
   name,
   title,
   src,
-  twitterHref,
-  linkedinHref,
+  twitter,
+  linkedin,
   className,
 }: {
   name: string
   title: string
   src: string | StaticImageData
-  twitterHref?: string
-  linkedinHref?: string
+  twitter?: string
+  linkedin?: string
   className?: string
 }) {
   return (
@@ -96,28 +101,28 @@ function SpeakerCard({
         className="aspect-square size-[236px] w-full object-cover transition-transform"
       />
       <div className="flex items-stretch border-t border-sec-dark">
-        <div className="flex grow flex-col gap-1 p-3">
+        <div className="flex h-[80px] grow flex-col justify-center gap-1 p-3">
           <h4 className="typography-body-md">{name}</h4>
           <p className="text-neu-700 typography-body-xs">{title}</p>
         </div>
-        {(linkedinHref || twitterHref) && (
+        {(linkedin || twitter) && (
           <div className="flex items-center border-l border-sec-dark sm:flex-col sm:border-l">
-            {linkedinHref && (
+            {linkedin && (
               <a
-                href={linkedinHref}
+                href={`https://www.linkedin.com/in/${linkedin}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex grow items-center justify-center p-4 transition-colors hover:text-neu-700 dark:hover:text-neu-400 sm:p-2"
+                className="flex grow items-center justify-center p-4 transition-colors hover:bg-neu-900/10 hover:text-neu-700 sm:p-2"
               >
                 <LinkedInIcon />
               </a>
             )}
-            {twitterHref && (
+            {twitter && (
               <a
-                href={twitterHref}
+                href={`https://x.com/${twitter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex grow items-center justify-center p-4 transition-colors hover:text-neu-700 dark:hover:text-neu-400 sm:p-2"
+                className="flex grow items-center justify-center p-4 transition-colors hover:bg-neu-900/10 hover:text-neu-700 sm:p-2"
               >
                 <TwitterIcon className="size-6" />
               </a>
