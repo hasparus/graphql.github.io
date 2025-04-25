@@ -93,7 +93,7 @@ function Stripes() {
       }}
     >
       <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,hsl(var(--color-pri-light))_0%,hsl(319deg_100%_90%_/_0.4)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-dark))_0%,hsl(319_100%_20%_/_1)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,hsl(var(--color-pri-light))_0%,hsl(319deg_100%_90%_/_0.2)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-dark))_0%,hsl(319_100%_20%_/_1)_100%)]"
         style={{
           maskImage: maskEven,
           WebkitMaskImage: maskEven,
