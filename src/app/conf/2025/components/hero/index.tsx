@@ -9,9 +9,6 @@ import heroPhoto from "./hero-photo.jpeg"
 import blurBean from "./blur-bean-cropped.webp"
 import { ImageLoaded } from "./image-loaded"
 
-// - the background is made of even and odd stripes every 12px and a mask
-// - i can have two divs with repeating background image and a mask
-
 export function Hero() {
   return (
     <article className="relative isolate flex flex-col justify-center bg-pri-base text-neu-0 dark:bg-pri-darker dark:text-neu-900">
