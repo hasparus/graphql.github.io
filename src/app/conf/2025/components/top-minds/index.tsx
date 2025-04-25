@@ -50,12 +50,14 @@ export default function TopMindsSection({
             src={kamilKisiela}
             linkedin="kamilkisiela"
             twitter="kamilkisiela"
+            className="[@media(744px<=width<=907px)]:first-of-type:border-l-0"
           />
           <SpeakerCard
             name="Rajeev Rajan"
             title="Atlassian — CTO"
             src={rajeevRajan}
             linkedin="rajeev-rajan"
+            className="[@media(744px<=width<=907px)]:border-l"
           />
           <SpeakerCard
             name="Tenmai Gopal"
@@ -63,6 +65,7 @@ export default function TopMindsSection({
             src={tenmaiGopal}
             twitter="tanmaigo"
             linkedin="tanmaig"
+            className="[@media(width<744px)]:border-l"
           />
           <div className="mt-6 flex grow basis-[content] items-end justify-stretch pl-6 max-lg:w-full sm:justify-end">
             <Button variant="secondary">View all speakers</Button>
