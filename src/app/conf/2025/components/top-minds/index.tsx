@@ -6,7 +6,7 @@ import type { StaticImageData } from "next/image"
 import elizabethStone from "./speakers/elizabeth-stone.webp"
 import kamilKisiela from "./speakers/kamil-kisiela.webp"
 import rajeevRajan from "./speakers/rajeev-rajan.webp"
-import tenmaiGopal from "./speakers/tenmai-gopal.webp"
+import tanmaiGopal from "./speakers/tanmai-gopal.webp"
 import uriGoldshtein from "./speakers/uri-goldshtein.webp"
 import TwitterIcon from "@/icons/twitter.svg"
 import { Button } from "@/app/conf/_design-system/button"
@@ -64,9 +64,9 @@ export default function TopMindsSection({
             className="[@media(744px<=width<=970px)]:border-l"
           />
           <SpeakerCard
-            name="Tenmai Gopal"
+            name="Tanmai Gopal"
             title="Hasura — CEO & Co-Founder"
-            src={tenmaiGopal}
+            src={tanmaiGopal}
             twitter="tanmaigo"
             linkedin="tanmaig"
             className="[@media(width<744px)]:border-l"
