@@ -48,6 +48,8 @@ export default function TopMindsSection({
             name="Kamil Kisiela"
             title="The Guild — Developer"
             src={kamilKisiela}
+            linkedin="kamilkisiela"
+            twitter="kamilkisiela"
           />
           <SpeakerCard
             name="Rajeev Rajan"
