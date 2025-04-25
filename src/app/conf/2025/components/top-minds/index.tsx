@@ -10,24 +10,28 @@ import tenmaiGopal from "./speakers/tenmai-gopal.webp"
 import uriGoldshtein from "./speakers/uri-goldshtein.webp"
 import TwitterIcon from "@/icons/twitter.svg"
 import { Button } from "@/app/conf/_design-system/button"
+import { BECOME_A_SPEAKER_LINK } from "../../links"
 
-interface TopMindsSectionProps extends HTMLAttributes<HTMLElement> {}
+interface TopMindsSectionProps extends HTMLAttributes<HTMLElement> {
+  hasSpeakersPage?: boolean
+}
 
 export default function TopMindsSection({
   className,
+  hasSpeakersPage,
   ...rest
 }: TopMindsSectionProps) {
   return (
     <section
       className={clsx(
-        "px-4 py-8 text-neu-900 max-md:flex-col lg:px-12 xl:gap-x-24 xl:px-24",
+        "flex justify-center px-4 py-8 text-neu-900 max-md:flex-col lg:px-12 xl:gap-x-24 xl:px-24",
         className,
       )}
       {...rest}
     >
-      <div className="mx-auto flex flex-wrap max-sm:flex-col [@media(width<907px)]:gap-y-6 [@media(width>=907px)]:*:border-b-0">
+      <div className="flex flex-wrap max-sm:flex-col [@media(width<=743px)]:justify-center [@media(width>=970px)]:*:border-b-0">
         {/* todo: remaining socials */}
-        <h3 className="mr-auto flex text-pretty pb-6 pr-6 typography-h2 [@media(width<907px)]:w-full [@media(width>=907px)]:w-[400px]">
+        <h3 className="mr-auto flex w-full grow text-pretty pb-6 pr-6 typography-h2 [@media(width>857px)]:basis-0">
           Meet the top industry minds
         </h3>
         <SpeakerCard
@@ -43,21 +47,21 @@ export default function TopMindsSection({
           src={elizabethStone}
           linkedin="elizabeth-stone-608a754"
         />
-        <div className="flex grow border-sec-dark [@media(width<907px)]:contents [@media(width>=907px)]:border-t [@media(width>=907px)]:*:border-t-0">
+        <div className="flex grow border-sec-dark [@media(width<970px)]:contents [@media(width>=970px)]:border-t [@media(width>=970px)]:*:border-t-0">
           <SpeakerCard
             name="Kamil Kisiela"
             title="The Guild — Developer"
             src={kamilKisiela}
             linkedin="kamilkisiela"
             twitter="kamilkisiela"
-            className="[@media(744px<=width<=907px)]:first-of-type:border-l-0"
+            className="[@media(744px<=width<=970px)]:first-of-type:border-l-0"
           />
           <SpeakerCard
             name="Rajeev Rajan"
             title="Atlassian — CTO"
             src={rajeevRajan}
             linkedin="rajeev-rajan"
-            className="[@media(744px<=width<=907px)]:border-l"
+            className="[@media(744px<=width<=970px)]:border-l"
           />
           <SpeakerCard
             name="Tenmai Gopal"
@@ -67,8 +71,16 @@ export default function TopMindsSection({
             linkedin="tanmaig"
             className="[@media(width<744px)]:border-l"
           />
-          <div className="mt-6 flex grow basis-[content] items-end justify-stretch pl-6 max-lg:w-full sm:justify-end">
-            <Button variant="secondary">View all speakers</Button>
+          <div className="mt-6 flex shrink-0 basis-[content] items-end justify-stretch max-lg:w-full max-sm:*:w-full sm:justify-end sm:pl-6 [@media(640px<=width<=855px)]:basis-[236px] [@media(width>855px)]:grow">
+            {hasSpeakersPage ? (
+              <Button variant="secondary" href="/conf/2025/speakers/">
+                View all speakers
+              </Button>
+            ) : (
+              <Button variant="secondary" href={BECOME_A_SPEAKER_LINK}>
+                Become a speaker
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -94,7 +106,7 @@ function SpeakerCard({
   return (
     <article
       className={clsx(
-        ":border-r shrink-0 border-y border-r border-sec-dark first-of-type:border-l",
+        ":border-r shrink-0 border-y border-r border-sec-dark first-of-type:border-l max-sm:border-l",
         className,
       )}
     >
@@ -103,15 +115,15 @@ function SpeakerCard({
         alt=""
         width={236}
         height={236}
-        className="aspect-square w-full object-cover transition-transform sm:size-[236px]"
+        className="aspect-square size-[312px] w-full object-cover transition-transform sm:size-[236px]"
       />
       <div className="flex items-stretch border-t border-sec-dark">
-        <div className="flex h-[80px] grow flex-col justify-center gap-1 p-3">
+        <div className="flex grow flex-col justify-center gap-1 p-3 sm:h-[80px]">
           <h4 className="typography-body-md">{name}</h4>
           <p className="text-neu-700 typography-body-xs">{title}</p>
         </div>
         {(linkedin || twitter) && (
-          <div className="flex items-center border-l border-sec-dark sm:flex-col sm:border-l">
+          <div className="flex items-center border-l border-sec-dark max-sm:divide-x sm:flex-col sm:divide-y sm:border-l">
             {linkedin && (
               <a
                 href={`https://www.linkedin.com/in/${linkedin}`}
@@ -127,7 +139,7 @@ function SpeakerCard({
                 href={`https://x.com/${twitter}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex grow items-center justify-center p-4 transition-colors hover:bg-neu-900/10 hover:text-neu-700 sm:p-2"
+                className="flex grow items-center justify-center border-sec-dark p-4 transition-colors hover:bg-neu-900/10 hover:text-neu-700 sm:p-2"
               >
                 <TwitterIcon className="size-6" />
               </a>
