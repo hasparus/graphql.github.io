@@ -84,11 +84,10 @@ function Stripes() {
       role="presentation"
       image={blurBean}
       className="pointer-events-none absolute inset-x-0 bottom-[-385px] top-[-203px] -z-10 translate-y-12 opacity-0 transition duration-[400ms] ease-linear [mask-size:100%_50%] data-[loaded=true]:translate-y-0 data-[loaded=true]:opacity-100 sm:[mask-size:125%] xl:[mask-size:100%]"
-      // todo: animate opacity up after the image is loaded
       style={{
         maskImage: `url(${blurBean.src})`,
         WebkitMaskImage: `url(${blurBean.src})`,
-        // maskSize: "100%", // todo: I need the newly exported full blur bean with rotation to match the mobile design.
+        // maskSize: "100%", // todo: (very low priority) need the newly exported full blur bean with rotation to match the mobile design 1-1
         maskRepeat: "no-repeat",
         WebkitMaskRepeat: "no-repeat",
         maskPosition: "center",
