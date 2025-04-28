@@ -14,7 +14,7 @@ export function RegisterToday({ className }: RegisterTodayProps) {
   return (
     <section
       className={clsx(
-        "flex gap-10 px-4 py-8 max-lg:flex-col-reverse lg:px-12 xl:gap-x-24 xl:px-24",
+        "gql-conf-section flex gap-10 max-lg:flex-col-reverse",
         className,
       )}
     >

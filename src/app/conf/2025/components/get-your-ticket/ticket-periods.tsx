@@ -1,11 +1,9 @@
 "use client"
 
-import { useState } from "react"
-import { useEffect } from "react"
-import { TicketPeriod } from "./ticket-period"
-import { useSyncExternalStore } from "react"
+import { useState, useEffect } from "react"
 
-// The registration deadline is 23:59 Central European Time on the respective date.
+import { TicketPeriod } from "./ticket-period"
+
 // Ticket period end dates (using zero-indexed months)
 const EARLY_BIRD_END_DATE = new Date(2025, 6, 13, 23, 59) // July 13th
 const STANDARD_END_DATE = new Date(2025, 7, 31, 23, 59) // August 31st
@@ -19,19 +17,19 @@ export function TicketPeriods() {
       <TicketPeriod
         name="Early Bird"
         price="$599"
-        date="Through 13 July"
+        date={EARLY_BIRD_END_DATE}
         disabled={now > EARLY_BIRD_END_DATE}
       />
       <TicketPeriod
         name="Standard"
         price="$799"
-        date="14 July - 31 August"
+        date={[new Date(2025, 6, 14), STANDARD_END_DATE]}
         disabled={now > STANDARD_END_DATE || now < EARLY_BIRD_END_DATE}
       />
       <TicketPeriod
         name="Late"
         price="$899"
-        date="1 September - 10 September"
+        date={[new Date(2025, 8, 1), LATE_END_DATE]}
         disabled={now > LATE_END_DATE || now < STANDARD_END_DATE}
       />
     </>

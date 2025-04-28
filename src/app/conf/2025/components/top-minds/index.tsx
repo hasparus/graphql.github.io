@@ -24,7 +24,7 @@ export default function TopMindsSection({
   return (
     <section
       className={clsx(
-        "flex justify-center px-4 py-8 text-neu-900 max-md:flex-col lg:px-12 xl:gap-x-24 xl:px-24",
+        "gql-conf-section flex justify-center max-md:flex-col",
         className,
       )}
       {...rest}

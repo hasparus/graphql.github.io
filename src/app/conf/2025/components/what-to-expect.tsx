@@ -9,10 +9,7 @@ export default function WhatToExpectSection({
 }: WhatToExpectSectionProps) {
   return (
     <section
-      className={clsx(
-        "flex gap-6 px-4 py-8 text-neu-900 max-md:flex-col lg:px-12 xl:gap-x-24 xl:px-24",
-        className,
-      )}
+      className={clsx("gql-conf-section flex gap-6 max-md:flex-col", className)}
       {...rest}
     >
       <h3 className="typography-h2 md:flex-1">What to expect</h3>

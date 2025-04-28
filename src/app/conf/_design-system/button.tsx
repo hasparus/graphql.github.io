@@ -20,6 +20,7 @@ export declare namespace ButtonProps {
     href: string
     as?: never
     className?: string
+    disabled?: boolean
   }
 
   export interface ButtonProps
@@ -56,17 +57,22 @@ export type ButtonProps =
 
 export function Button(props: ButtonProps) {
   const className = clsx(
-    "relative flex items-center justify-center gap-2.5 font-normal text-base/none text-neu-0 bg-neu-900 hover:bg-neu-800 active:bg-neu-700 font-sans h-14 px-8 data-[size=md]:h-12 data-[variant=secondary]:bg-neu-100 data-[variant=secondary]:text-neu-900 data-[variant=secondary]:hover:bg-neu-200/75 data-[variant=secondary]:active:bg-neu-200/90 gql-focus-visible",
+    "relative flex items-center justify-center gap-2.5 font-normal text-base/none text-neu-0 bg-neu-900 hover:bg-neu-800 active:bg-neu-700 font-sans h-14 px-8 data-[size=md]:h-12 data-[variant=secondary]:bg-neu-100 data-[variant=secondary]:text-neu-900 data-[variant=secondary]:hover:bg-neu-200/75 data-[variant=secondary]:active:bg-neu-200/90 gql-focus-visible [aria-disabled]:bg-neu-800",
     props.className,
   )
 
   const styleAttrs = { "data-size": props.size, "data-variant": props.variant }
 
   if ("href" in props && typeof props.href === "string") {
-    const { className: _1, size: _2, children, ...rest } = props
+    const { className: _1, size: _2, disabled, children, ...rest } = props
 
     return (
-      <Anchor className={className} {...styleAttrs} {...rest}>
+      <Anchor
+        className={className}
+        aria-disabled={disabled}
+        {...styleAttrs}
+        {...rest}
+      >
         {children}
       </Anchor>
     )

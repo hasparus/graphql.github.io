@@ -2,7 +2,7 @@ import { fontFamily } from "tailwindcss/defaultTheme"
 import type { Config } from "tailwindcss"
 import typography from "@tailwindcss/typography"
 import plugin from "tailwindcss/plugin"
-
+import containerQueries from "@tailwindcss/container-queries"
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./theme.config.tsx"],
   theme: {
@@ -20,6 +20,9 @@ const config: Config = {
           `var(--font-mono, ${fontFamily.mono.slice(0, 3).join(", ")})`,
           ...fontFamily.mono,
         ],
+      },
+      screens: {
+        "3xl": "1920px",
       },
       colors: {
         primary: "#e10098",
@@ -74,6 +77,7 @@ const config: Config = {
   },
   plugins: [
     typography,
+    containerQueries,
     plugin(({ addUtilities }) => {
       const headingStyles = {
         ".typography-d1, .typography-h1, .typography-h2, .typography-h3": {

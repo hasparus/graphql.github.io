@@ -18,9 +18,9 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main>
+    <main className="antialiased">
       <Hero />
-      <div className="gql-conf-container mx-auto">
+      <div className="gql-conf-container mx-auto text-neu-900">
         <RegisterToday className="md:mb-8 md:mt-24" />
         <WhatToExpectSection className="md:mb-8 md:mt-24" />
         <TopMindsSection className="md:mb-8 md:mt-24" hasSpeakersPage={false} />
