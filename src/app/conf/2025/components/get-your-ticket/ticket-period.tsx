@@ -18,7 +18,7 @@ export function TicketPeriod({
   return (
     <article
       className={clsx(
-        "@container/card flex flex-col border border-pri-lighter bg-pri-light/[0.24] backdrop-blur-md transition [&+&]:border-l-0",
+        "flex flex-col border border-pri-lighter bg-pri-light/[0.24] backdrop-blur-md transition @container/card max-md:[&+&]:border-t-0 md:[&+&]:border-l-0",
         disabled && "opacity-50",
       )}
     >
@@ -27,7 +27,7 @@ export function TicketPeriod({
       </header>
       <div className="flex h-full flex-col justify-end gap-6 p-6">
         <div className="flex items-end justify-between gap-2">
-          <span className="@[356px]:typography-h2 text-white typography-h3">
+          <span className="text-white typography-h3 @[356px]:typography-h2">
             {price}
           </span>
           {/* eslint-disable-next-line tailwindcss/no-custom-classname */}

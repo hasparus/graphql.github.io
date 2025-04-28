@@ -1,7 +1,6 @@
 import { clsx } from "clsx"
 
 import { ImageLoaded } from "../image-loaded"
-import { RepeatingStripes } from "../repeating-stripes"
 
 import { TicketPeriods } from "./ticket-periods"
 
@@ -45,7 +44,7 @@ function Stripes() {
     <ImageLoaded
       role="presentation"
       image={blurBean}
-      className="pointer-events-none absolute inset-x-0 bottom-[-385px] top-[-203px] translate-y-12 opacity-0 transition duration-[400ms] ease-linear [mask-position:70%_60%] *:opacity-60 data-[loaded=true]:translate-y-0 data-[loaded=true]:opacity-100 max-3xl:[mask-size:220%] 3xl:[mask-position:70%_39%]"
+      className="pointer-events-none absolute inset-x-0 bottom-[-385px] top-[-203px] translate-y-12 opacity-0 transition duration-[400ms] ease-linear [mask-position:70%_60%] *:opacity-100 data-[loaded=true]:translate-y-0 data-[loaded=true]:opacity-100 max-3xl:[mask-size:220%] max-md:[mask-size:800%] md:*:opacity-30 lg:*:opacity-50 xl:*:opacity-60 3xl:[mask-position:70%_39%]"
       style={{
         maskImage: `url(${blurBean.src})`,
         WebkitMaskImage: `url(${blurBean.src})`,
