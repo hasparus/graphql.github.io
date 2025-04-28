@@ -11,7 +11,7 @@ import { RegisterToday } from "./components/register-today"
 import { Hero } from "./components/hero"
 import WhatToExpectSection from "./components/what-to-expect"
 import TopMindsSection from "./components/top-minds"
-
+import { GetYourTicket } from "./components/get-your-ticket"
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
 }
@@ -25,6 +25,8 @@ export default function Page() {
         <WhatToExpectSection className="md:mb-8 md:mt-24" />
         <TopMindsSection className="md:mb-8 md:mt-24" hasSpeakersPage={false} />
       </div>
+      <GetYourTicket />
+
       <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32 [.light_&_.text-white]:text-neu-900 [.light_&_[alt='Grafbase_logo']]:invert">
         <Sponsors />
         <Sponsor />
