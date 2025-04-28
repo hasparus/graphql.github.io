@@ -513,5 +513,5 @@ div[id^="headlessui-menu-items"] {
 }
 
 .gql-conf-section {
-  @apply 3xl:px-[240px] px-4 py-8 lg:px-12 xl:gap-x-24 xl:px-24;
+  @apply px-4 py-8 lg:px-12 xl:gap-x-24 xl:px-24 3xl:px-[240px];
 }

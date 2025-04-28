@@ -5,6 +5,7 @@ import { GET_TICKETS_LINK } from "../../links"
 export interface TicketPeriodProps {
   price: string
   date: Date | [Date, Date]
+  isLoading?: boolean
   soldOut?: boolean
   comingSoon?: boolean
   name: string
@@ -13,11 +14,12 @@ export interface TicketPeriodProps {
 export function TicketPeriod({
   price,
   date,
+  isLoading,
   soldOut,
   comingSoon,
   name,
 }: TicketPeriodProps) {
-  const disabled = soldOut || comingSoon
+  const disabled = soldOut || comingSoon || isLoading
 
   return (
     <article
@@ -59,7 +61,13 @@ export function TicketPeriod({
           className="light w-full"
           href={GET_TICKETS_LINK}
         >
-          {soldOut ? "Sold out" : comingSoon ? "Coming soon" : "Get a ticket"}
+          {isLoading
+            ? "Get a ticket"
+            : soldOut
+              ? "Sold out"
+              : comingSoon
+                ? "Coming soon"
+                : "Get a ticket"}
         </Button>
       </div>
     </article>
