@@ -1,13 +1,14 @@
-import { clsx } from "clsx"
 import Image from "next-image-export-optimizer"
-import { CalendarIcon } from "../../pixelarticons/calendar-icon"
-import { PinIcon } from "../../pixelarticons/pin-icon"
-import { GET_TICKETS_LINK } from "../../links"
+
 import { Button } from "../../../_design-system/button"
+import { CalendarIcon } from "../../pixelarticons/calendar-icon"
+import { GET_TICKETS_LINK } from "../../links"
+import { PinIcon } from "../../pixelarticons/pin-icon"
 import graphqlFoundationWordmarkSvg from "../../assets/graphql-foundation-wordmark.svg"
-import heroPhoto from "./hero-photo.jpeg"
+
+import { ImageLoaded } from "../image-loaded"
 import blurBean from "./blur-bean-cropped.webp"
-import { ImageLoaded } from "./image-loaded"
+import heroPhoto from "./hero-photo.jpeg"
 
 export function Hero() {
   return (
@@ -71,12 +72,12 @@ function DateAndLocation() {
   )
 }
 
-function Stripes() {
-  const maskEven =
-    "repeating-linear-gradient(to right, transparent, transparent 12px, black 12px, black 24px)"
-  const maskOdd =
-    "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
+const maskEven =
+  "repeating-linear-gradient(to right, transparent, transparent 12px, black 12px, black 24px)"
+const maskOdd =
+  "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
 
+function Stripes() {
   return (
     <ImageLoaded
       role="presentation"

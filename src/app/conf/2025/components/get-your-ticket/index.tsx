@@ -1,5 +1,11 @@
 import { clsx } from "clsx"
+
+import { ImageLoaded } from "../image-loaded"
+import { RepeatingStripes } from "../repeating-stripes"
+
 import { TicketPeriods } from "./ticket-periods"
+
+import blurBean from "./blur-bean.webp"
 
 export function GetYourTicket({ className }: { className?: string }) {
   return (
@@ -9,7 +15,8 @@ export function GetYourTicket({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="gql-conf-container lg:px-12 xl:gap-x-24 xl:px-24">
+      <Stripes />
+      <div className="gql-conf-container relative lg:px-12 xl:gap-x-24 xl:px-24">
         <header className="flex flex-wrap justify-between gap-6 md:items-end">
           <h2 className="whitespace-pre text-white typography-h2">
             Get your ticket
@@ -25,5 +32,45 @@ export function GetYourTicket({ className }: { className?: string }) {
         </div>
       </div>
     </section>
+  )
+}
+
+const maskEven =
+  "repeating-linear-gradient(to right, transparent, transparent 12px, black 12px, black 24px)"
+const maskOdd =
+  "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
+
+function Stripes() {
+  return (
+    <ImageLoaded
+      role="presentation"
+      image={blurBean}
+      className="pointer-events-none absolute inset-x-0 bottom-[-385px] top-[-203px] translate-y-12 opacity-0 transition duration-[400ms] ease-linear [mask-position:70%_60%] *:opacity-60 data-[loaded=true]:translate-y-0 data-[loaded=true]:opacity-100 max-3xl:[mask-size:220%] 3xl:[mask-position:70%_39%]"
+      style={{
+        maskImage: `url(${blurBean.src})`,
+        WebkitMaskImage: `url(${blurBean.src})`,
+        maskRepeat: "no-repeat",
+        WebkitMaskRepeat: "no-repeat",
+      }}
+    >
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, hsl(var(--color-pri-light)) 0%, hsl(var(--color-pri-lighter)) 100%)",
+          maskImage: maskEven,
+          WebkitMaskImage: maskEven,
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg,hsl(319deg 100% 90% / 0.2) 0%, hsl(var(--color-pri-base)) 100%)",
+          maskImage: maskOdd,
+          WebkitMaskImage: maskOdd,
+        }}
+      />
+    </ImageLoaded>
   )
 }
