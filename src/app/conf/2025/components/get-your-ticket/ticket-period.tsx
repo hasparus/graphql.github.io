@@ -5,21 +5,28 @@ import { GET_TICKETS_LINK } from "../../links"
 export interface TicketPeriodProps {
   price: string
   date: Date | [Date, Date]
-  disabled?: boolean
+  soldOut?: boolean
+  comingSoon?: boolean
   name: string
 }
 
 export function TicketPeriod({
   price,
   date,
-  disabled,
+  soldOut,
+  comingSoon,
   name,
 }: TicketPeriodProps) {
+  const disabled = soldOut || comingSoon
+
   return (
     <article
+      data-disabled={disabled}
       className={clsx(
         "flex flex-col border border-pri-lighter bg-pri-light/[0.24] backdrop-blur-md transition @container/card max-md:[&+&]:border-t-0 md:[&+&]:border-l-0",
-        disabled && "opacity-50",
+        disabled
+          ? "opacity-50 max-md:[&:has(+article[data-disabled=false])]:border-b-0 md:[&:has(+article[data-disabled=false])]:border-r-0"
+          : "!border",
       )}
     >
       <header className="border-b border-pri-lighter p-6">
@@ -39,7 +46,10 @@ export function TicketPeriod({
                 <Time date={date[1]} />
               </>
             ) : (
-              <Time date={date} />
+              <>
+                <span>Through </span>
+                <Time date={date} />
+              </>
             )}
           </span>
         </div>
@@ -49,7 +59,7 @@ export function TicketPeriod({
           className="light w-full"
           href={GET_TICKETS_LINK}
         >
-          Get a ticket
+          {soldOut ? "Sold out" : comingSoon ? "Coming soon" : "Get a ticket"}
         </Button>
       </div>
     </article>

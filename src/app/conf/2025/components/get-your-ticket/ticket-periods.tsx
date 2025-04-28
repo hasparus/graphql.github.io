@@ -18,19 +18,22 @@ export function TicketPeriods() {
         name="Early Bird"
         price="$599"
         date={EARLY_BIRD_END_DATE}
-        disabled={now > EARLY_BIRD_END_DATE}
+        comingSoon={false}
+        soldOut={now > EARLY_BIRD_END_DATE}
       />
       <TicketPeriod
         name="Standard"
         price="$799"
         date={[new Date(2025, 6, 14), STANDARD_END_DATE]}
-        disabled={now > STANDARD_END_DATE || now < EARLY_BIRD_END_DATE}
+        comingSoon={now < EARLY_BIRD_END_DATE}
+        soldOut={now > STANDARD_END_DATE}
       />
       <TicketPeriod
         name="Late"
         price="$899"
         date={[new Date(2025, 8, 1), LATE_END_DATE]}
-        disabled={now > LATE_END_DATE || now < STANDARD_END_DATE}
+        comingSoon={now < STANDARD_END_DATE}
+        soldOut={now > LATE_END_DATE}
       />
     </>
   )
@@ -42,7 +45,8 @@ function useCurrentDate() {
   const [date, setDate] = useState<Date>(DEFAULT_DATE)
 
   useEffect(() => {
-    setDate(new Date())
+    const end = new Date(2025, 6, 14)
+    setDate(end)
   }, [])
 
   return date
