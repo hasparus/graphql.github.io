@@ -16,8 +16,24 @@ import EscapeTechnologies from "public/img/conf/Partners/EscapeTechnologies.svg"
 import AmsterdamGraphQL from "public/img/conf/Partners/AmsterdamGraphQL.svg"
 import BangkokGraphQL from "public/img/conf/Partners/BangkokGraphQL.svg"
 import TypeGraphQL from "public/img/conf/Partners/TypeGraphQL.svg"
-import { clsx } from "clsx"
 import NextImage from "next-image-export-optimizer"
+import { clsx } from "clsx"
+
+// Component for the small triangle icon before tier labels
+function TierIcon() {
+  return (
+    <svg
+      width="8"
+      height="10"
+      viewBox="0 0 8 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="mr-1 inline-block h-auto w-2 fill-primary"
+    >
+      <path d="M7.5 5L6.11959e-07 10L0 0L7.5 5Z" />
+    </svg>
+  )
+}
 
 interface Image {
   icon: string
@@ -86,104 +102,109 @@ function List({
   className,
   linkClassName,
 }: {
-  className?: string
   items: Image[]
+  className?: string
   linkClassName?: string
 }) {
   return (
-    <div className={clsx("grid w-full gap-7", className)}>
+    <div className={clsx("flex flex-row flex-wrap gap-x-8 gap-y-4", className)}>
       {items.map(({ link, icon, name }, i) => (
         <a
           key={i}
-          className={clsx(
-            "relative shrink-0 rounded-md bg-[#251f30]",
-            "flex justify-center",
-            "border border-solid border-transparent hover:border-primary focus:border-primary",
-            "transition-colors",
-            "shadow-md outline-none hover:shadow-primary/20 focus:shadow-primary/20",
-            linkClassName,
-          )}
           href={link}
           target="_blank"
           rel="noreferrer"
           title={name}
+          className={clsx(
+            "flex h-24 w-72 items-center justify-center",
+            linkClassName,
+          )}
         >
           <NextImage
             alt={`${name} logo`}
             src={icon}
-            className="h-auto shrink lg:max-w-60"
+            className="max-h-16 w-auto max-w-[80%] shrink-0 object-contain text-neu-600"
           />
-          <span className="absolute right-5 top-5 font-sans leading-none text-white lg:text-2xl">
-            ↗
-          </span>
         </a>
       ))}
     </div>
   )
 }
 
-const classes = {
-  heading:
-    "text-center text-primary text-2xl lg:text-3xl font-bold mb-10 mt-20",
-  title: "md:text-center text-white conf-heading",
-}
-
 export interface SponsorsProps {
   heading?: string
 }
 
+// --- Data structure for Tiers ---
+interface Tier {
+  name: string
+  items: Image[]
+}
+
+const sponsorTiers: Tier[] = [
+  {
+    name: "Diamond",
+    items: sponsorDiamond,
+  },
+  {
+    name: "Platinum",
+    items: sponsorPlatinum,
+  },
+  {
+    name: "Gold",
+    items: sponsorGold,
+  },
+  {
+    name: "Silver",
+    items: sponsorSilver,
+  },
+  {
+    name: "Workshop Day Sponsor",
+    items: workshopDaySponsors,
+  },
+]
+
+const partnerTiers: Tier[] = [
+  {
+    name: "Media Partners",
+    items: mediaPartners,
+  },
+  {
+    name: "Community Partners",
+    items: communityPartners,
+  },
+]
+// --- End Data structure ---
+
 export function Sponsors({ heading }: SponsorsProps) {
   return (
-    <section className="bg-conf-black">
-      <h2 className="typography-h2">{heading}</h2>
-      <div className="conf-block container">
-        <h1 className={classes.title}>Sponsors</h1>
-        <h3 className={classes.heading}>Diamond</h3>
-        <List
-          items={sponsorDiamond}
-          className="grid-cols-1"
-          linkClassName="p-8 lg:p-16 h-28 lg:h-[220px]"
-        />
-        <h3 className={classes.heading}>Platinum</h3>
-        <List
-          items={sponsorPlatinum}
-          className="grid-cols-2"
-          linkClassName="p-8 lg:py-14 h-28 lg:h-[210px]"
-        />
-        <h3 className={classes.heading}>Gold</h3>
-        <List
-          items={sponsorGold}
-          className="grid-cols-2 xl:grid-cols-3"
-          linkClassName="p-8 lg:py-14 h-28 lg:h-[170px]"
-        />
-        <h3 className={classes.heading}>Silver</h3>
-        <List
-          items={sponsorSilver}
-          className="grid-cols-2 xl:grid-cols-4"
-          linkClassName="p-6 lg:p-10 h-28 lg:h-[155px]"
-        />
-        <h3 className={classes.heading}>Workshop Day Sponsor</h3>
-        <List
-          items={workshopDaySponsors}
-          className="mx-auto grid-cols-2 lg:w-1/2 lg:grid-cols-1"
-          linkClassName="p-8 lg:p-10 h-28 lg:h-[155px]"
-        />
+    <section className="gql-conf-section py-16">
+      <h1 className="typography-h2">{heading}</h1>
+
+      <div className="mt-10 md:mt-16">
+        {sponsorTiers.map(tier => (
+          <Tier key={tier.name} tier={tier} />
+        ))}
       </div>
-      <div className="container py-24">
-        <h1 className={classes.title}>Partners</h1>
-        <h3 className={classes.heading}>Media Partners</h3>
-        <List
-          items={mediaPartners}
-          className="mx-auto grid-cols-2 xl:w-1/2"
-          linkClassName="p-9 lg:p-12 h-28 lg:h-[155px]"
-        />
-        <h3 className={classes.heading}>Community Partners</h3>
-        <List
-          items={communityPartners}
-          className="grid-cols-2 xl:grid-cols-4"
-          linkClassName="p-6 lg:p-10 h-28 lg:h-[155px]"
-        />
+
+      <div className="flex flex-col self-stretch border-t border-[#E7E9E2] pt-16">
+        <h1 className="mb-4 text-5xl font-normal text-[#0E0F0B]">Partners</h1>
+        {partnerTiers.map(tier => (
+          <Tier key={tier.name} tier={tier} />
+        ))}
       </div>
     </section>
+  )
+}
+
+function Tier({ tier }: { tier: Tier }) {
+  return (
+    <div className="flex gap-x-12 gap-y-4 border-t border-neu-200 py-4 dark:border-neu-50 max-md:flex-col">
+      <h3 className="min-w-[180px] whitespace-nowrap font-mono text-sm font-normal uppercase text-primary">
+        <TierIcon />
+        {tier.name}
+      </h3>
+      <List items={tier.items} />
+    </div>
   )
 }
