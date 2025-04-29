@@ -6,7 +6,6 @@ import Tyk from "public/img/conf/Sponsors/Tyk.svg?svgr"
 import IBM from "public/img/conf/Sponsors/IBM.svg?svgr"
 import Graphweaver from "public/img/conf/Sponsors/Graphweaver.svg?svgr"
 
-import NextImage from "next-image-export-optimizer"
 import { clsx } from "clsx"
 
 function TierIcon() {
