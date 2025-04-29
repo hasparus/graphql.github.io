@@ -23,24 +23,24 @@ function TierIcon() {
   )
 }
 
-interface Image {
+interface Sponsor {
   icon: React.FC<React.SVGProps<SVGElement>>
   name: string
   link: string
 }
 
-const sponsorDiamond: Image[] = [
+const sponsorDiamond: Sponsor[] = [
   { icon: TheGuild, name: "The Guild", link: "https://the-guild.dev" },
   { icon: IBM, name: "IBM", link: "https://www.ibm.com/products/api-connect" },
 ]
 
-const sponsorGold: Image[] = [
+const sponsorGold: Sponsor[] = [
   { icon: Apollo, name: "Apollo", link: "https://www.apollographql.com/" },
   { icon: Graphweaver, name: "Graphweaver", link: "https://graphweaver.com" },
   { icon: Hasura, name: "Hasura", link: "https://hasura.io" },
 ]
 
-const sponsorSilver: Image[] = [
+const sponsorSilver: Sponsor[] = [
   { icon: Stellate, name: "Stellate", link: "https://stellate.co" },
   { icon: Tyk, name: "Tyk", link: "https://tyk.io/" },
 ]
@@ -51,7 +51,7 @@ export interface SponsorsProps {
 
 interface Tier {
   name: string
-  items: Image[]
+  items: Sponsor[]
 }
 
 const sponsorTiers: Tier[] = [
