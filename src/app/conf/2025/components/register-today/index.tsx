@@ -18,7 +18,7 @@ export function RegisterToday({ className }: RegisterTodayProps) {
         className,
       )}
     >
-      {/* todo: test if the placeholder works in deploy preview */}
+      {/* todo: placeholders work in preview, but they could use some improvement */}
       <NextImage
         src={speakerImage}
         alt="GraphQL Conference"

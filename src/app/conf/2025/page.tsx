@@ -34,7 +34,7 @@ export default function Page() {
       </div>
       <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32 [.light_&_.text-white]:text-neu-900 [.light_&_[alt='Grafbase_logo']]:invert">
         <Sponsor />
-        <Speakers />
+        {/* <Speakers /> */}
         <Register />
         <Venue />
         <FAQ />
