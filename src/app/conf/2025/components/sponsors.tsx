@@ -7,21 +7,7 @@ import IBM from "public/img/conf/Sponsors/IBM.svg?svgr"
 import Graphweaver from "public/img/conf/Sponsors/Graphweaver.svg?svgr"
 
 import { clsx } from "clsx"
-
-function TierIcon() {
-  return (
-    <svg
-      width="8"
-      height="10"
-      viewBox="0 0 8 10"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="mr-1 inline-block h-auto w-2 fill-primary"
-    >
-      <path d="M7.5 5L6.11959e-07 10L0 0L7.5 5Z" />
-    </svg>
-  )
-}
+import { ChevronRight } from "../pixelarticons/chevron-right"
 
 interface Sponsor {
   icon: React.FC<React.SVGProps<SVGElement>>
@@ -86,8 +72,8 @@ export function Sponsors({ heading }: SponsorsProps) {
 function Tier({ tier }: { tier: Tier }) {
   return (
     <div className="flex gap-x-12 gap-y-4 border-t border-neu-200 py-4 dark:border-neu-50 max-md:flex-col">
-      <h3 className="min-w-[60px] whitespace-nowrap font-mono text-sm font-normal uppercase text-primary">
-        <TierIcon />
+      <h3 className="flex min-w-[60px] items-center gap-1 whitespace-nowrap font-mono text-sm/none font-normal uppercase text-primary">
+        <ChevronRight className="translate-y-[-0.5px]" />
         {tier.name}
       </h3>
       <div
