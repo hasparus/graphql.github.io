@@ -105,7 +105,7 @@ function Tier({ tier }: { tier: Tier }) {
             target="_blank"
             rel="noreferrer"
             title={name}
-            className="group flex h-24 w-72 items-center justify-center rounded-lg opacity-70 [--fill:hsl(var(--color-neu-700))] hover:bg-neu-500/10 hover:[--fill:hsl(var(--color-neu-800))] dark:opacity-90"
+            className="group flex h-24 w-72 items-center justify-center opacity-75 [--fill:hsl(var(--color-neu-700))] hover:bg-neu-500/10 hover:[--fill:hsl(var(--color-neu-800))] dark:opacity-90"
           >
             <Icon className="h-16 w-auto max-w-[80%] shrink-0 fill-[--fill] [&_path]:fill-[--fill]" />
           </a>
