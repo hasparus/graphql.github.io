@@ -72,8 +72,8 @@ export function Sponsors({ heading }: SponsorsProps) {
 function Tier({ tier }: { tier: Tier }) {
   return (
     <div className="flex gap-x-12 gap-y-4 border-t border-neu-200 py-4 dark:border-neu-50 max-md:flex-col">
-      <h3 className="flex min-w-[60px] items-center gap-1 whitespace-nowrap font-mono text-sm/none font-normal uppercase text-primary">
-        <ChevronRight className="translate-y-[-0.5px]" />
+      <h3 className="flex w-[80px] items-center gap-1 self-start whitespace-nowrap font-mono text-sm/none font-normal uppercase text-primary">
+        <ChevronRight className="shrink-0 translate-y-[-0.5px]" />
         {tier.name}
       </h3>
       <div
