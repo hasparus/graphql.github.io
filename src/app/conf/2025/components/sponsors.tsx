@@ -9,7 +9,6 @@ import Graphweaver from "public/img/conf/Sponsors/Graphweaver.svg?svgr"
 import NextImage from "next-image-export-optimizer"
 import { clsx } from "clsx"
 
-// Component for the small triangle icon before tier labels
 function TierIcon() {
   return (
     <svg
@@ -51,7 +50,6 @@ export interface SponsorsProps {
   heading?: string
 }
 
-// --- Data structure for Tiers ---
 interface Tier {
   name: string
   items: Image[]
