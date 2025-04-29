@@ -33,8 +33,13 @@ export function RegisterSection({ className, ...props }: RegisterSectionProps) {
           <h3 className="typography-h3">Speakers</h3>
           <p className="mt-6 typography-body-lg">
             You should have received a registration link in your acceptance
-            email. If you did not, please contact us for more details:
-            cfp@linuxfoundation.org.
+            email. If you did not, please contact us for more details:{" "}
+            <a
+              href="mailto:cfp@linuxfoundation.org"
+              className="text-neu-800 underline hover:no-underline"
+            >
+              cfp@linuxfoundation.org
+            </a>
           </p>
           <Button
             variant="primary"
@@ -49,8 +54,13 @@ export function RegisterSection({ className, ...props }: RegisterSectionProps) {
           <p className="mt-6 typography-body-lg">
             A registration link was shared in an email to your company's
             sponsorship contact. Please reach out to them if you need to
-            register as a Sponsor. For further questions, please email us:
-            graphql_events@linuxfoundation.org.
+            register as a Sponsor. For further questions, please email us:{" "}
+            <a
+              href="mailto:graphql_events@linuxfoundation.org"
+              className="text-neu-800 underline hover:no-underline"
+            >
+              graphql_events@linuxfoundation.org
+            </a>
           </p>
           <Button
             variant="primary"
