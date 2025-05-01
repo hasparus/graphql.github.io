@@ -22,34 +22,55 @@ function TabHeading({
 
 function DatesTab() {
   return (
-    <>
-      <p className="text-sm">
-        <em>Last Updated: 2025-04-02</em>
-      </p>
-      <TabHeading className="mt-6">Dates to Remember</TabHeading>
-      <ul className="list-disc space-y-2 pl-6">
-        <li>CFP Opens: Tuesday, 4 February</li>
-        <li>
-          <strong>CFP NOW EXTENDED TO</strong>: Sunday, 11 May at 23:59 CEST
-          (UTC+2)
-        </li>
-        <li>CFP Notifications: Monday, 9 June</li>
-        <li>Schedule Announced: Wednesday, 11 June</li>
-        <li>Slides due date: Friday, 5 September</li>
-        <li>
-          Event Dates: Monday, 8 September - Wednesday, 10 September, 2024
-        </li>
-      </ul>
-    </>
+    <dl className="divide-y divide-neu-300 border border-neu-300">
+      <DefinitionListItem term="CFP Opens" definition="Tuesday, 4 February" />
+      <DefinitionListItem
+        term="CFP Close"
+        definition="Sunday, 11 May at 23:59 CEST (UTC+2)"
+      />
+      <DefinitionListItem
+        term="CFP Notifications"
+        definition="Monday, 9 June"
+      />
+      <DefinitionListItem
+        term="Schedule Announced"
+        definition="Wednesday, 11 June"
+      />
+      <DefinitionListItem
+        term="Slides due date"
+        definition="Friday, 5 September"
+      />
+      <DefinitionListItem
+        term="Event Dates"
+        definition="Monday, 8 September - Wednesday, 10 September, 2024"
+      />
+    </dl>
   )
 }
 
+function DefinitionListItem({
+  className,
+  term,
+  definition,
+}: {
+  className?: string
+  term: string
+  definition: string
+}) {
+  return (
+    <div className={clsx(className, "flex border-neu-200 typography-body-md")}>
+      <dt className="flex w-[184.5px] shrink-0 items-center whitespace-pre border-r border-neu-300 bg-white/[0.79] p-4">
+        {term}
+      </dt>
+      <dd className="flex flex-1 items-center bg-white/[0.48] p-4 backdrop-blur-[3px]">
+        {definition}
+      </dd>
+    </div>
+  )
+}
 function TopicsTab() {
   return (
     <>
-      <p className="text-sm">
-        <em>Last Updated: 2025-04-02</em>
-      </p>
       <TabHeading className="mt-6">Suggested Topics</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>GraphQL Working Group</li>
@@ -90,9 +111,6 @@ function TopicsTab() {
 function NotesTab() {
   return (
     <>
-      <p className="text-sm">
-        <em>Last Updated: 2025-04-02</em>
-      </p>
       <TabHeading className="mt-6">Important Notes</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>
@@ -188,9 +206,6 @@ function NotesTab() {
 function TypesTab() {
   return (
     <>
-      <p className="text-sm">
-        <em>Last Updated: 2025-04-02</em>
-      </p>
       <TabHeading className="mt-6">Submission Types</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>
@@ -212,9 +227,6 @@ function TypesTab() {
 function ProcessTab() {
   return (
     <>
-      <p className="text-sm">
-        <em>Last Updated: 2025-04-02</em>
-      </p>
       <TabHeading className="mt-6">The Talk Selection Process</TabHeading>
       <p className="mb-4">
         The GraphQL Foundation strives to select conference talks based on fair
@@ -315,7 +327,7 @@ export function CallForProposals() {
   return (
     <section id="speakers" className="gql-conf-section gql-conf-container">
       <div className="flex p-4 *:basis-1/2 max-md:flex-col">
-        <div className="border-sec-dark bg-sec-light dark:border-sec-lighter max-md:border-r md:p-8 lg:p-16">
+        <div className="border-sec-dark bg-sec-light dark:border-sec-lighter md:border-r md:p-8 lg:p-16">
           <h1 className="typography-h2">Call for Proposals</h1>
           <p className="mt-6 md:mt-10">
             Putting on an amazing conference depends on great content, which is
@@ -361,7 +373,7 @@ export function CallForProposals() {
             {buttonText}
           </Button>
         </div>
-        <article className="bg-sec-base">
+        <article className="flex h-auto flex-col bg-[#C6F267]">
           <div
             role="tablist"
             className="flex divide-sec-dark border-b border-sec-dark *:flex-1 md:divide-x"
@@ -390,11 +402,13 @@ export function CallForProposals() {
                 }}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                <ArrowDownIcon className="ml-2 size-6 opacity-0 [[aria-selected=true]>&]:opacity-100" />
+                <ArrowDownIcon className="ml-2 size-6 text-sec-darker opacity-0 [[aria-selected=true]>&]:opacity-100" />
               </button>
             ))}
           </div>
-          <div className="md:p-8 lg:p-16">{tabs[activeTab]}</div>
+          <div className="flex flex-1 items-center justify-center md:p-8 lg:p-16">
+            {tabs[activeTab]}
+          </div>
         </article>
       </div>
     </section>
