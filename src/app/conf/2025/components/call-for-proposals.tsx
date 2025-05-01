@@ -6,23 +6,9 @@ import Link from "next/link"
 import { Button } from "../../_design-system/button"
 import ArrowDownIcon from "../pixelarticons/arrow-down.svg?svgr"
 
-function TabHeading({
-  children,
-  className,
-}: {
-  children: ReactNode
-  className?: string
-}) {
-  return (
-    <h2 className={clsx("mb-4 text-2xl font-semibold", className)}>
-      {children}
-    </h2>
-  )
-}
-
 function DatesTab() {
   return (
-    <dl className="divide-y divide-sec-dark border-neu-300 md:divide-neu-300 md:border">
+    <DefinitionListBox>
       <DefinitionListItem term="CFP Opens" definition="Tuesday, 4 February" />
       <DefinitionListItem
         term="CFP Close"
@@ -44,7 +30,7 @@ function DatesTab() {
         term="Event Dates"
         definition="Monday, 8 September - Wednesday, 10 September, 2024"
       />
-    </dl>
+    </DefinitionListBox>
   )
 }
 
@@ -58,11 +44,11 @@ function DefinitionListItem({
   definition: string
 }) {
   return (
-    <div className={clsx(className, "flex typography-body-md max-md:flex-col")}>
-      <dt className="flex w-[184.5px] shrink-0 items-center whitespace-pre border-neu-300 bg-white/[0.79] px-3 py-2 max-md:w-full md:border-r md:p-4">
+    <div className={clsx(className, "flex typography-body-md max-sm:flex-col")}>
+      <dt className="flex w-[184.5px] shrink-0 items-center whitespace-pre border-neu-300 bg-white/[0.79] px-3 py-2 max-sm:w-full sm:border-r sm:p-4">
         {term}
       </dt>
-      <dd className="flex flex-1 items-center bg-white/[0.48] px-3 py-2 backdrop-blur-[3px] md:p-4">
+      <dd className="flex flex-1 items-center bg-white/[0.48] px-3 py-2 backdrop-blur-[3px] sm:p-4">
         {definition}
       </dd>
     </div>
@@ -70,9 +56,9 @@ function DefinitionListItem({
 }
 function TopicsTab() {
   return (
-    <div>
-      <TabHeading className="mt-6">Suggested Topics</TabHeading>
-      <ul className="list-disc space-y-2 pl-6">
+    <div className="bg-sec-light p-4">
+      <h3 className="typography-h3">Suggested Topics</h3>
+      <ul className="mt-2 list-disc space-y-2 pl-6">
         <li>GraphQL Working Group</li>
         <ul className="list-disc space-y-2 pl-6">
           <li>
@@ -110,20 +96,20 @@ function TopicsTab() {
 
 function NotesTab() {
   return (
-    <div>
-      <TabHeading className="mt-6">Important Notes</TabHeading>
-      <ul className="list-disc space-y-2 pl-6">
+    <div className="bg-sec-light p-4">
+      <h3 className="typography-h3">Important Notes</h3>
+      <ul className="mt-2 list-disc space-y-2 pl-6">
         <li>
           All speakers are required to adhere to our{" "}
           <Link
-            className="underline hover:text-primary"
+            className="text-neu-800 underline hover:no-underline dark:text-neu-50"
             href="/conf/2025/resources/#code-of-conduct"
           >
             Code of Conduct
           </Link>
           . We also highly recommend that speakers take our online{" "}
           <a
-            className="underline hover:text-primary"
+            className="text-neu-800 underline hover:no-underline dark:text-neu-50"
             target="_blank"
             href="https://training.linuxfoundation.org/linux-courses/open-source-compliance-courses/inclusive-speaker-orientation"
           >
@@ -153,10 +139,8 @@ function NotesTab() {
           event.
         </li>
       </ul>
-      <TabHeading className="mt-6">
-        Preparing to Submit Your Proposal
-      </TabHeading>
-      <p className="mb-4">
+      <h3 className="mt-6 typography-h3">Preparing to Submit Your Proposal</h3>
+      <p className="mt-2">
         While it is not our intention to provide you with strict instructions on
         how to prepare your proposal, we hope you will take a moment to review
         the following guidelines that we have put together to help you prepare
@@ -176,22 +160,25 @@ function NotesTab() {
         letting you share your experiences, educate the community about an
         issue, or generate interest in a project.
       </p>
-      <TabHeading className="mt-6">How to Give a Great Talk</TabHeading>
-      <p>
+      <h3 className="mt-6 typography-h3">How to Give a Great Talk</h3>
+      <p className="mt-2">
         We want to make sure submitters receive resources to help put together a
         great submission and if accepted, give the best presentation possible.
         To help with this, we recommend viewing seasoned speaker Dawn Foster's
         in-depth talk:{" "}
-        <a href="https://youtu.be/2I5fYBLCfUA" target="_blank">
-          Getting Over Your Imposter Syndrome to Become a Conference Speaker –
-          Dawn Foster, VMware
+        <a
+          href="https://youtu.be/2I5fYBLCfUA"
+          target="_blank"
+          className="text-neu-800 underline hover:no-underline dark:text-neu-50"
+        >
+          Getting Over Your Imposter Syndrome to Become a Conference Speaker
         </a>
         .
       </p>
-      <TabHeading className="mt-6">
+      <h3 className="mt-6 typography-h3">
         Have More Questions? First Time Submitting? Don't Feel Intimidated
-      </TabHeading>
-      <p>
+      </h3>
+      <p className="mt-2">
         Linux Foundation events are an excellent way to get to know the
         community and share your ideas and the work that you are doing and we
         strongly encourage first-time speakers to submit talks for our events.
@@ -205,30 +192,38 @@ function NotesTab() {
 
 function TypesTab() {
   return (
-    <div>
-      <TabHeading className="mt-6">Submission Types</TabHeading>
-      <ul className="list-disc space-y-2 pl-6">
-        <li>
-          Session Presentation: Typically 30 minutes in length, 1-2 speakers
-          presenting on a topic
-        </li>
-        <li>
-          Panel Discussion: Typically 30 minutes in length, 3-4 speakers
-          presenting on a topic
-        </li>
-        <li>Birds of a Feather: Typically 45 minutes to 1 hour in length</li>
-        <li>Lightning Talk: Typically 5-10 minutes in length</li>
-        <li>Workshop: Typically 1-2 hours in length</li>
-      </ul>
+    <div className="md:p-8 lg:p-16">
+      <dl className="divide-y divide-sec-dark border-neu-300 md:divide-neu-300 md:border md:shadow-[0px_0px_20px_0px_rgba(133,185,19,0.20)]">
+        <DefinitionListItem
+          term="Session Presentation"
+          definition="Typically 30 minutes in length, 1-2 speakers presenting on a topic"
+        />
+        <DefinitionListItem
+          term="Panel Discussion"
+          definition="Typically 30 minutes in length, 3-4 speakers presenting on a topic"
+        />
+        <DefinitionListItem
+          term="Birds of a Feather"
+          definition="Typically 45 minutes to 1 hour in length"
+        />
+        <DefinitionListItem
+          term="Lightning Talk"
+          definition="Typically 5-10 minutes in length"
+        />
+        <DefinitionListItem
+          term="Workshop"
+          definition="Typically 1-2 hours in length"
+        />
+      </dl>
     </div>
   )
 }
 
 function ProcessTab() {
   return (
-    <div>
-      <TabHeading className="mt-6">The Talk Selection Process</TabHeading>
-      <p className="mb-4">
+    <div className="bg-sec-light p-4">
+      <h3 className="typography-h3">The Talk Selection Process</h3>
+      <p className="mt-2">
         The GraphQL Foundation strives to select conference talks based on fair
         criteria in a transparent manner. There are three groups involved in the
         selection process, each with their own focus to help create an engaging
@@ -239,22 +234,22 @@ function ProcessTab() {
         <li>The new Subject Matter Experts initiative (SMEs)</li>
         <li>The Program Committee</li>
       </ul>
-      <TabHeading className="mt-6">The Technical Steering Committee</TabHeading>
-      <p className="mb-4">
+      <h3 className="mt-6 typography-h3">The Technical Steering Committee</h3>
+      <p className="mt-2">
         The TSC are a group of 11 individuals who are elected to serve a two
         year term to provide technical oversight of all GraphQL development
         efforts. When evaluating conference talks they{" "}
         <strong>focus on quality</strong> and use the following criteria:
       </p>
-      <ul className="list-disc space-y-2 pl-6">
+      <ul className="mt-2 list-disc space-y-2 pl-6">
         <li>Relevance</li>
         <li>Originality</li>
         <li>Soundness</li>
         <li>Quality of Presentation</li>
         <li>Importance</li>
       </ul>
-      <TabHeading className="mt-6">Subject Matter Experts</TabHeading>
-      <p className="mb-4">
+      <h3 className="mt-6 typography-h3">Subject Matter Experts</h3>
+      <p className="mt-2">
         The SME initiative is new for 2025. This will be a panel of volunteers
         drawn from industry experts, working group members, security and
         observability experts, and maintainers and contributors to open source
@@ -262,13 +257,13 @@ function ProcessTab() {
         <strong>focus on how exciting and engaging the talks are</strong> and
         use the following criteria:
       </p>
-      <ul className="list-disc space-y-2 pl-6">
+      <ul className="mt-2 list-disc space-y-2 pl-6">
         <li>Subject Content</li>
         <li>Originality</li>
         <li>Audience Engagement</li>
       </ul>
-      <TabHeading className="mt-6">The Program Committee</TabHeading>
-      <p>
+      <h3 className="mt-6 typography-h3">The Program Committee</h3>
+      <p className="mt-2">
         The Program Committee is made up of representatives from the GraphQL
         Foundation board and interested members of the GraphQL community who
         have had experience organizing conferences. They shape the schedule from
@@ -277,10 +272,10 @@ function ProcessTab() {
         demographics, to ensure a varied and well-rounded representation of the
         GraphQL ecosystem.
       </p>
-      <TabHeading className="mt-6">
+      <h3 className="mt-6 typography-h3">
         Have More Questions? First Time Submitting? Don't Feel Intimidated
-      </TabHeading>
-      <p>
+      </h3>
+      <p className="mt-2">
         Linux Foundation events are an excellent way to get to know the
         community and share your ideas and the work that you are doing and we
         strongly encourage first-time speakers to submit talks for our events.
@@ -325,7 +320,11 @@ export function CallForProposals() {
   }, [])
 
   return (
-    <section id="speakers" className="gql-conf-section gql-conf-container">
+    <section
+      id="speakers"
+      // todo: the part with `dark:` here is temporary until we have a dark mode version of this section
+      className="gql-conf-section gql-conf-container dark:text-neu-0"
+    >
       <div className="flex *:basis-1/2 max-md:flex-col">
         <div className="border-sec-dark bg-sec-light p-4 dark:border-sec-lighter md:border-r md:p-8 lg:p-16">
           <h1 className="typography-h2">Call for Proposals</h1>
@@ -340,7 +339,7 @@ export function CallForProposals() {
             For any questions regarding the CFP process, please email{" "}
             <a
               href="mailto:cfp@linuxfoundation.org"
-              className="text-neu-800 underline hover:no-underline"
+              className="text-neu-800 underline hover:no-underline dark:text-neu-50"
             >
               cfp@linuxfoundation.org
             </a>
@@ -354,7 +353,7 @@ export function CallForProposals() {
             <a
               target="_blank"
               href="https://sessionize.com/playbook/submit-your-session-for-an-event"
-              className="text-neu-800 underline hover:no-underline"
+              className="text-neu-800 underline hover:no-underline dark:text-neu-50"
             >
               how to submit your session
             </a>{" "}
@@ -377,29 +376,78 @@ export function CallForProposals() {
         <article className="flex h-auto flex-col bg-[#C6F267]">
           <div
             role="tablist"
-            className="flex divide-sec-dark border-b border-sec-dark *:flex-1 md:divide-x"
+            className="flex divide-sec-dark border-b border-sec-dark *:flex-1 max-md:sr-only md:divide-x"
           >
             {tabsInOrder.map((tab, i) => (
-              <button
-                key={tab}
+              <TabButton
+                tab={tab}
                 tabIndex={i === 0 ? 0 : -1}
-                role="tab"
-                aria-selected={activeTab === tab}
-                className="gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none aria-selected:bg-sec-light"
-                onFocus={() => setActiveTab(tab)}
-                onKeyDown={arrowsMoveSideways}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                <ArrowDownIcon className="ml-2 size-6 text-sec-darker opacity-0 [[aria-selected=true]>&]:opacity-100" />
-              </button>
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+              />
             ))}
           </div>
-          <div className="flex flex-1 items-center justify-center md:p-8 lg:p-16">
-            {tabs[activeTab]}
+          <div className="flex flex-1 justify-center max-md:flex-col md:items-center">
+            {tabsInOrder.map(tab => (
+              <>
+                <TabButton
+                  tab={tab}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                  className="md:hidden"
+                  aria-hidden
+                />
+                <div
+                  role="tabpanel"
+                  key={tab}
+                  id={`tabpanel-${tab}`}
+                  className="flex-1"
+                  style={{
+                    display: activeTab === tab ? "block" : "none",
+                  }}
+                >
+                  {tabs[tab]}
+                </div>
+              </>
+            ))}
           </div>
         </article>
       </div>
     </section>
+  )
+}
+
+interface TabButtonProps
+  extends Omit<React.HTMLAttributes<HTMLButtonElement>, "onFocus"> {
+  tab: Tab
+  tabIndex?: number
+  activeTab: Tab
+  setActiveTab: (tab: Tab) => void
+}
+
+function TabButton({
+  tab,
+  tabIndex,
+  activeTab,
+  setActiveTab,
+  ...props
+}: TabButtonProps) {
+  return (
+    <button
+      key={tab}
+      tabIndex={tabIndex}
+      aria-selected={activeTab === tab}
+      className="gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none max-md:border-b max-md:border-sec-dark max-md:first:border-t md:[--collapsible:1] md:aria-selected:bg-sec-light"
+      onFocus={event => {
+        console.log("focus")
+        setActiveTab(tab)
+      }}
+      onKeyDown={arrowsMoveSideways}
+      {...props}
+    >
+      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+      <ArrowDownIcon className="ml-2 size-6 text-sec-darker opacity-0 [[aria-selected=true]>&]:opacity-100" />
+    </button>
   )
 }
 
@@ -415,4 +463,14 @@ function arrowsMoveSideways(event: React.KeyboardEvent<HTMLButtonElement>) {
       ;(nextElement as HTMLElement).focus()
     }
   }
+}
+
+function DefinitionListBox({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="md:p-8 lg:p-16">
+      <dl className="divide-y divide-sec-dark border-neu-300 md:divide-neu-300 md:border md:shadow-[0px_0px_20px_0px_rgba(133,185,19,0.20)]">
+        {children}
+      </dl>
+    </div>
+  )
 }
