@@ -98,7 +98,7 @@ function NotesTab() {
   return (
     <div className="bg-sec-light p-4">
       <h3 className="typography-h3">Important Notes</h3>
-      <ul className="mt-2 list-disc space-y-2 pl-6">
+      <ul className="mt-4 list-disc space-y-2 pl-6">
         <li>
           All speakers are required to adhere to our{" "}
           <Link
@@ -147,7 +147,7 @@ function NotesTab() {
         the best submission possible. To get started, here are three things that
         you should consider before submitting your proposal:
       </p>
-      <ul className="mb-4 list-disc space-y-2 pl-6">
+      <ul className="my-4 list-disc space-y-2 pl-6">
         <li>What are you hoping to get from your presentation?</li>
         <li>What do you expect the audience to gain from your presentation?</li>
         <li>How will your presentation help better the ecosystem?</li>
@@ -192,30 +192,28 @@ function NotesTab() {
 
 function TypesTab() {
   return (
-    <div className="md:p-8 lg:p-16">
-      <dl className="divide-y divide-sec-dark border-neu-300 md:divide-neu-300 md:border md:shadow-[0px_0px_20px_0px_rgba(133,185,19,0.20)]">
-        <DefinitionListItem
-          term="Session Presentation"
-          definition="Typically 30 minutes in length, 1-2 speakers presenting on a topic"
-        />
-        <DefinitionListItem
-          term="Panel Discussion"
-          definition="Typically 30 minutes in length, 3-4 speakers presenting on a topic"
-        />
-        <DefinitionListItem
-          term="Birds of a Feather"
-          definition="Typically 45 minutes to 1 hour in length"
-        />
-        <DefinitionListItem
-          term="Lightning Talk"
-          definition="Typically 5-10 minutes in length"
-        />
-        <DefinitionListItem
-          term="Workshop"
-          definition="Typically 1-2 hours in length"
-        />
-      </dl>
-    </div>
+    <DefinitionListBox>
+      <DefinitionListItem
+        term="Session Presentation"
+        definition="Typically 30 minutes in length, 1-2 speakers presenting on a topic"
+      />
+      <DefinitionListItem
+        term="Panel Discussion"
+        definition="Typically 30 minutes in length, 3-4 speakers presenting on a topic"
+      />
+      <DefinitionListItem
+        term="Birds of a Feather"
+        definition="Typically 45 minutes to 1 hour in length"
+      />
+      <DefinitionListItem
+        term="Lightning Talk"
+        definition="Typically 5-10 minutes in length"
+      />
+      <DefinitionListItem
+        term="Workshop"
+        definition="Typically 1-2 hours in length"
+      />
+    </DefinitionListBox>
   )
 }
 
@@ -326,7 +324,7 @@ export function CallForProposals() {
       className="gql-conf-section gql-conf-container dark:text-neu-0"
     >
       <div className="flex *:basis-1/2 max-md:flex-col">
-        <div className="border-sec-dark bg-sec-light p-4 dark:border-sec-lighter md:border-r md:p-8 lg:p-16">
+        <div className="border-sec-dark bg-sec-light p-4 md:border-r md:p-8 lg:p-16">
           <h1 className="typography-h2">Call for Proposals</h1>
           <p className="mt-6 md:mt-10">
             Putting on an amazing conference depends on great content, which is
@@ -387,7 +385,7 @@ export function CallForProposals() {
               />
             ))}
           </div>
-          <div className="flex flex-1 justify-center max-md:flex-col md:items-center">
+          <div className="flex flex-1 justify-center overflow-hidden max-md:flex-col md:items-center">
             {tabsInOrder.map(tab => (
               <>
                 <TabButton
@@ -430,6 +428,7 @@ function TabButton({
   tabIndex,
   activeTab,
   setActiveTab,
+  className,
   ...props
 }: TabButtonProps) {
   return (
@@ -437,7 +436,10 @@ function TabButton({
       key={tab}
       tabIndex={tabIndex}
       aria-selected={activeTab === tab}
-      className="gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none max-md:border-b max-md:border-sec-dark max-md:first:border-t md:[--collapsible:1] md:aria-selected:bg-sec-light"
+      className={clsx(
+        "gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none max-md:border-b max-md:border-sec-dark max-md:first:border-t md:[--collapsible:1] md:aria-selected:bg-sec-light",
+        className,
+      )}
       onFocus={event => {
         console.log("focus")
         setActiveTab(tab)
@@ -467,10 +469,51 @@ function arrowsMoveSideways(event: React.KeyboardEvent<HTMLButtonElement>) {
 
 function DefinitionListBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="md:p-8 lg:p-16">
+    <div className="relative isolate md:p-8 lg:p-16">
       <dl className="divide-y divide-sec-dark border-neu-300 md:divide-neu-300 md:border md:shadow-[0px_0px_20px_0px_rgba(133,185,19,0.20)]">
         {children}
       </dl>
+      <Stripes />
+    </div>
+  )
+}
+
+const maskEven =
+  "repeating-linear-gradient(to right, transparent, transparent 12px, black 12px, black 24px)"
+const maskOdd =
+  "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
+
+function Stripes() {
+  const mask = "linear-gradient(125deg, transparent 68%, hsl(0 0 0 / 0.8))"
+  return (
+    <div
+      role="presentation"
+      className="pointer-events-none absolute inset-0 bottom-[-20px] -z-10 translate-x-0.5 translate-y-12 ease-linear max-md:hidden"
+      style={{
+        maskImage: mask,
+        WebkitMaskImage: mask,
+      }}
+    >
+      <div
+        className="absolute inset-0"
+        style={{
+          maskImage: maskOdd,
+          WebkitMaskImage: maskOdd,
+          maskPosition: "right",
+          backgroundImage:
+            "linear-gradient(0deg, hsl(var(--color-sec-lighter)) 0%, rgba(133, 185, 19, 0.00) 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          maskImage: maskEven,
+          WebkitMaskImage: maskEven,
+          maskPosition: "right",
+          backgroundImage:
+            "linear-gradient(0deg, hsl(var(--color-sec-dark)) 0%, hsl(var(--color-sec-base)) 100%)",
+        }}
+      />
     </div>
   )
 }
