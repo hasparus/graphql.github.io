@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="antialiased">
+    <main className="gql-all-anchors-focusable antialiased">
       <Hero />
       <div className="gql-conf-container text-neu-900">
         <RegisterToday className="md:mb-8 md:mt-24" />

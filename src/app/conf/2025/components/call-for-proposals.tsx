@@ -70,7 +70,7 @@ function DefinitionListItem({
 }
 function TopicsTab() {
   return (
-    <>
+    <div>
       <TabHeading className="mt-6">Suggested Topics</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>GraphQL Working Group</li>
@@ -104,13 +104,13 @@ function TopicsTab() {
           <li>Documentation</li>
         </ul>
       </ul>
-    </>
+    </div>
   )
 }
 
 function NotesTab() {
   return (
-    <>
+    <div>
       <TabHeading className="mt-6">Important Notes</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>
@@ -199,13 +199,13 @@ function NotesTab() {
         <a href="mailto:cfp@linuxfoundation.org">reach out to us</a> and we will
         be more than happy to work with you on your proposal.
       </p>
-    </>
+    </div>
   )
 }
 
 function TypesTab() {
   return (
-    <>
+    <div>
       <TabHeading className="mt-6">Submission Types</TabHeading>
       <ul className="list-disc space-y-2 pl-6">
         <li>
@@ -220,13 +220,13 @@ function TypesTab() {
         <li>Lightning Talk: Typically 5-10 minutes in length</li>
         <li>Workshop: Typically 1-2 hours in length</li>
       </ul>
-    </>
+    </div>
   )
 }
 
 function ProcessTab() {
   return (
-    <>
+    <div>
       <TabHeading className="mt-6">The Talk Selection Process</TabHeading>
       <p className="mb-4">
         The GraphQL Foundation strives to select conference talks based on fair
@@ -287,7 +287,7 @@ function ProcessTab() {
         In the instance that you aren't sure about your abstract, reach out to
         us and we will be more than happy to work with you on your proposal.
       </p>
-    </>
+    </div>
   )
 }
 
@@ -386,20 +386,7 @@ export function CallForProposals() {
                 aria-selected={activeTab === tab}
                 className="gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none aria-selected:bg-sec-light"
                 onFocus={() => setActiveTab(tab)}
-                onKeyDown={event => {
-                  if (event.key === "ArrowLeft") {
-                    const previousElement =
-                      event.currentTarget.previousElementSibling
-                    if (previousElement) {
-                      ;(previousElement as HTMLElement).focus()
-                    }
-                  } else if (event.key === "ArrowRight") {
-                    const nextElement = event.currentTarget.nextElementSibling
-                    if (nextElement) {
-                      ;(nextElement as HTMLElement).focus()
-                    }
-                  }
-                }}
+                onKeyDown={arrowsMoveSideways}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
                 <ArrowDownIcon className="ml-2 size-6 text-sec-darker opacity-0 [[aria-selected=true]>&]:opacity-100" />
@@ -413,4 +400,18 @@ export function CallForProposals() {
       </div>
     </section>
   )
+}
+
+function arrowsMoveSideways(event: React.KeyboardEvent<HTMLButtonElement>) {
+  if (event.key === "ArrowLeft") {
+    const previousElement = event.currentTarget.previousElementSibling
+    if (previousElement) {
+      ;(previousElement as HTMLElement).focus()
+    }
+  } else if (event.key === "ArrowRight") {
+    const nextElement = event.currentTarget.nextElementSibling
+    if (nextElement) {
+      ;(nextElement as HTMLElement).focus()
+    }
+  }
 }
