@@ -22,7 +22,7 @@ function TabHeading({
 
 function DatesTab() {
   return (
-    <dl className="divide-y divide-neu-300 border border-neu-300">
+    <dl className="divide-y divide-sec-dark border-neu-300 md:divide-neu-300 md:border">
       <DefinitionListItem term="CFP Opens" definition="Tuesday, 4 February" />
       <DefinitionListItem
         term="CFP Close"
@@ -58,11 +58,11 @@ function DefinitionListItem({
   definition: string
 }) {
   return (
-    <div className={clsx(className, "flex border-neu-200 typography-body-md")}>
-      <dt className="flex w-[184.5px] shrink-0 items-center whitespace-pre border-r border-neu-300 bg-white/[0.79] p-4">
+    <div className={clsx(className, "flex typography-body-md max-md:flex-col")}>
+      <dt className="flex w-[184.5px] shrink-0 items-center whitespace-pre border-neu-300 bg-white/[0.79] px-3 py-2 max-md:w-full md:border-r md:p-4">
         {term}
       </dt>
-      <dd className="flex flex-1 items-center bg-white/[0.48] p-4 backdrop-blur-[3px]">
+      <dd className="flex flex-1 items-center bg-white/[0.48] px-3 py-2 backdrop-blur-[3px] md:p-4">
         {definition}
       </dd>
     </div>
@@ -326,8 +326,8 @@ export function CallForProposals() {
 
   return (
     <section id="speakers" className="gql-conf-section gql-conf-container">
-      <div className="flex p-4 *:basis-1/2 max-md:flex-col">
-        <div className="border-sec-dark bg-sec-light dark:border-sec-lighter md:border-r md:p-8 lg:p-16">
+      <div className="flex *:basis-1/2 max-md:flex-col">
+        <div className="border-sec-dark bg-sec-light p-4 dark:border-sec-lighter md:border-r md:p-8 lg:p-16">
           <h1 className="typography-h2">Call for Proposals</h1>
           <p className="mt-6 md:mt-10">
             Putting on an amazing conference depends on great content, which is
@@ -373,6 +373,7 @@ export function CallForProposals() {
             {buttonText}
           </Button>
         </div>
+        {/* todo: this might need to be a grid on mobile */}
         <article className="flex h-auto flex-col bg-[#C6F267]">
           <div
             role="tablist"
