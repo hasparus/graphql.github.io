@@ -3,6 +3,8 @@ import clsx from "clsx"
 
 import { useState, useEffect, ReactNode } from "react"
 import Link from "next/link"
+import { Button } from "../../_design-system/button"
+import ArrowDownIcon from "../pixelarticons/arrow-down.svg?svgr"
 
 function TabHeading({
   children,
@@ -162,11 +164,7 @@ function NotesTab() {
         great submission and if accepted, give the best presentation possible.
         To help with this, we recommend viewing seasoned speaker Dawn Foster's
         in-depth talk:{" "}
-        <a
-          href="https://youtu.be/2I5fYBLCfUA"
-          target="_blank"
-          className="underline hover:text-primary"
-        >
+        <a href="https://youtu.be/2I5fYBLCfUA" target="_blank">
           Getting Over Your Imposter Syndrome to Become a Conference Speaker –
           Dawn Foster, VMware
         </a>
@@ -180,13 +178,8 @@ function NotesTab() {
         community and share your ideas and the work that you are doing and we
         strongly encourage first-time speakers to submit talks for our events.
         In the instance that you aren't sure about your abstract,{" "}
-        <a
-          className="underline hover:text-primary"
-          href="mailto:cfp@linuxfoundation.org"
-        >
-          reach out to us
-        </a>{" "}
-        and we will be more than happy to work with you on your proposal.
+        <a href="mailto:cfp@linuxfoundation.org">reach out to us</a> and we will
+        be more than happy to work with you on your proposal.
       </p>
     </>
   )
@@ -286,10 +279,22 @@ function ProcessTab() {
   )
 }
 
-export function Speakers() {
+const tabs = {
+  dates: <DatesTab />,
+  topics: <TopicsTab />,
+  types: <TypesTab />,
+  notes: <NotesTab />,
+  process: <ProcessTab />,
+}
+
+type Tab = keyof typeof tabs
+
+const tabsInOrder: Tab[] = ["dates", "topics", "types", "notes", "process"]
+
+export function CallForProposals() {
   const [buttonText, setButtonText] = useState("Submit a Proposal")
   const [isDisabled, setIsDisabled] = useState(false)
-  const [activeTab, setActiveTab] = useState("dates")
+  const [activeTab, setActiveTab] = useState<Tab>("dates")
 
   useEffect(() => {
     const checkDate = () => {
@@ -307,83 +312,90 @@ export function Speakers() {
     return () => clearInterval(timer)
   }, [])
 
-  const tabContent = {
-    dates: <DatesTab />,
-    topics: <TopicsTab />,
-    types: <TypesTab />,
-    notes: <NotesTab />,
-    process: <ProcessTab />,
-  }
-
   return (
-    <section id="speakers" className="">
-      <h1 className="conf-heading">Call for Proposals</h1>
-      <p className="mb-4">
-        Putting on an amazing conference depends on great content, which is
-        where you come in! Join other GraphQL leaders and community members as a
-        presenter by submitting to our Call for Proposals (CFP) and sharing your
-        experience across a wide range of topics. Please click through all of
-        the tabs below before submitting a proposal.
-      </p>
-      <p className="mb-4">
-        For any questions regarding the CFP process, please email{" "}
-        <a
-          href="mailto:cfp@linuxfoundation.org"
-          className="underline hover:text-primary"
-        >
-          cfp@linuxfoundation.org
-        </a>
-        .
-      </p>
-      <button
-        disabled={isDisabled}
-        onClick={() =>
-          window.open(
-            "https://sessionize.com/graphqlconf-2025?utm_medium=website&utm_campaign=speaker_section",
-            "_blank",
-          )
-        }
-        className={clsx(
-          "px-20 py-4 text-center text-3xl font-semibold transition-colors md:px-28",
-          isDisabled
-            ? "cursor-not-allowed bg-gray-400"
-            : "bg-primary/85 hover:bg-primary/100",
-        )}
-      >
-        {buttonText}
-      </button>
-      <p className="mb-8 mt-6">
-        Please be aware that the Linux Foundation uses Sessionize for CFP
-        submissions. Sessionize is a cloud-based event content management
-        software designed to be intuitive and user-friendly. If you need
-        guidance, please review{" "}
-        <a
-          className="underline hover:text-primary"
-          target="_blank"
-          href="https://sessionize.com/playbook/submit-your-session-for-an-event"
-        >
-          how to submit your session
-        </a>{" "}
-        for an event to see step-by-step instructions and helpful screenshots.
-      </p>
-      <div className="mb-6">
-        <div className="flex border-b">
-          {["dates", "topics", "types", "notes", "process"].map(tab => (
-            <button
-              key={tab}
-              className={`px-4 py-2 font-semibold ${
-                activeTab === tab
-                  ? "border-b-2 border-primary text-white"
-                  : "text-gray-400 hover:text-primary"
-              }`}
-              onClick={() => setActiveTab(tab)}
+    <section id="speakers" className="gql-conf-section gql-conf-container">
+      <div className="flex p-4 *:basis-1/2 max-md:flex-col">
+        <div className="border-sec-dark bg-sec-light dark:border-sec-lighter max-md:border-r md:p-8 lg:p-16">
+          <h1 className="typography-h2">Call for Proposals</h1>
+          <p className="mt-6 md:mt-10">
+            Putting on an amazing conference depends on great content, which is
+            where you come in! Join other GraphQL leaders and community members
+            as a presenter by submitting to our Call for Proposals (CFP) and
+            sharing your experience across a wide range of topics. Please click
+            through all of the tabs below before submitting a proposal.
+          </p>
+          <p className="mt-6">
+            For any questions regarding the CFP process, please email{" "}
+            <a
+              href="mailto:cfp@linuxfoundation.org"
+              className="text-neu-800 underline hover:no-underline"
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </button>
-          ))}
+              cfp@linuxfoundation.org
+            </a>
+            .
+          </p>
+          <p className="mt-6 typography-body-sm md:mt-10">
+            Please be aware that the Linux Foundation uses Sessionize for CFP
+            submissions. Sessionize is a cloud-based event content management
+            software designed to be intuitive and user-friendly. If you need
+            guidance, please review{" "}
+            <a
+              target="_blank"
+              href="https://sessionize.com/playbook/submit-your-session-for-an-event"
+              className="text-neu-800 underline hover:no-underline"
+            >
+              how to submit your session
+            </a>{" "}
+            for an event to see step-by-step instructions and helpful
+            screenshots.
+          </p>
+          <Button
+            disabled={isDisabled}
+            variant="primary"
+            href="https://sessionize.com/graphqlconf-2025?utm_medium=website&utm_campaign=speaker_section"
+            className={clsx(
+              "mt-6 md:mt-10",
+              isDisabled && "cursor-not-allowed",
+            )}
+          >
+            {buttonText}
+          </Button>
         </div>
-        {/* @ts-ignore - fine code */}
-        <div className="mt-6">{tabContent[activeTab]}</div>
+        <article className="bg-sec-base">
+          <div
+            role="tablist"
+            className="flex divide-sec-dark border-b border-sec-dark *:flex-1 md:divide-x"
+          >
+            {tabsInOrder.map((tab, i) => (
+              <button
+                key={tab}
+                tabIndex={i === 0 ? 0 : -1}
+                role="tab"
+                aria-selected={activeTab === tab}
+                className="gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none aria-selected:bg-sec-light"
+                onFocus={() => setActiveTab(tab)}
+                onKeyDown={event => {
+                  if (event.key === "ArrowLeft") {
+                    const previousElement =
+                      event.currentTarget.previousElementSibling
+                    if (previousElement) {
+                      ;(previousElement as HTMLElement).focus()
+                    }
+                  } else if (event.key === "ArrowRight") {
+                    const nextElement = event.currentTarget.nextElementSibling
+                    if (nextElement) {
+                      ;(nextElement as HTMLElement).focus()
+                    }
+                  }
+                }}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                <ArrowDownIcon className="ml-2 size-6 opacity-0 [[aria-selected=true]>&]:opacity-100" />
+              </button>
+            ))}
+          </div>
+          <div className="md:p-8 lg:p-16">{tabs[activeTab]}</div>
+        </article>
       </div>
     </section>
   )

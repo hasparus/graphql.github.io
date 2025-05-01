@@ -5,7 +5,7 @@ import { Sponsor } from "./sponsorship"
 import { Venue } from "./venue"
 import { FAQ } from "./faq"
 import { Register } from "./register"
-import { Speakers } from "./speakers"
+import { CallForProposals } from "./components/call-for-proposals"
 import { RegisterToday } from "./components/register-today"
 import { Hero } from "./components/hero"
 import WhatToExpectSection from "./components/what-to-expect"
@@ -31,10 +31,10 @@ export default function Page() {
       <div className="gql-conf-container text-neu-900">
         <RegisterSection />
         <Sponsors heading="Thanks to our 2024 sponsors!" />
+        <CallForProposals />
       </div>
       <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32 [.light_&_.text-white]:text-neu-900 [.light_&_[alt='Grafbase_logo']]:invert">
         <Sponsor />
-        {/* <Speakers /> */}
         <Register />
         <Venue />
         <FAQ />
