@@ -22,23 +22,23 @@ export default function Page() {
   return (
     <main className="gql-all-anchors-focusable antialiased">
       <Hero />
-      <div className="gql-conf-container text-neu-900">
+      <div className="gql-conf-container gql-conf-navbar-strip before:dark:bg-blk/30 text-neu-900 before:bg-white/40">
         <RegisterToday className="md:mb-8 md:mt-24" />
         <WhatToExpectSection className="md:mb-8 md:mt-24" />
         <TopMindsSection className="md:mb-8 md:mt-24" hasSpeakersPage={false} />
       </div>
-      <GetYourTicket />
-      <div className="gql-conf-container text-neu-900">
+      <div className="gql-conf-navbar-strip before:bg-white/40 before:dark:bg-pri-dark/[0.45]">
+        <GetYourTicket />
+      </div>
+      <div className="gql-conf-container gql-conf-navbar-strip before:dark:bg-blk/30 text-neu-900 before:bg-white/50">
         <RegisterSection />
         <Sponsors heading="Thanks to our 2024 sponsors!" />
         <CallForProposals />
-      </div>
-      <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32 [.light_&_.text-white]:text-neu-900 [.light_&_[alt='Grafbase_logo']]:invert">
-        <Sponsor />
-        <Register />
-        <Venue />
-      </div>
-      <div className="gql-conf-container text-neu-900">
+        <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32 [.light_&_.text-white]:text-neu-900 [.light_&_[alt='Grafbase_logo']]:invert">
+          <Sponsor />
+          <Register />
+          <Venue />
+        </div>
         <FAQ />
       </div>
     </main>

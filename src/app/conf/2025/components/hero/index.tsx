@@ -11,9 +11,8 @@ import blurBean from "./blur-bean-cropped.webp"
 import heroPhoto from "./hero-photo.jpeg"
 
 export function Hero() {
-  // gql-conf-navbar-strip dark:before:bg-[#000]/40 dark:before:bg-[#000]/40
   return (
-    <article className="gql-conf-navbar-strip relative isolate flex flex-col justify-center bg-pri-base text-neu-0 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900 dark:before:bg-[#000]/40">
+    <article className="gql-conf-navbar-strip before:dark:bg-blk/40 relative isolate flex flex-col justify-center bg-pri-base text-neu-0 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900">
       <article className="relative">
         <Stripes />
         <div className="gql-conf-container mx-auto flex max-w-full flex-col gap-12 overflow-hidden p-4 pt-6 sm:p-8 sm:pt-12 md:gap-12 md:bg-left md:p-12 lg:px-24 lg:pb-16 lg:pt-24">
@@ -43,7 +42,7 @@ export function Hero() {
           </div>
         </div>
       </article>
-      <div className="bg-[#000]">
+      <div className="bg-blk">
         <Image
           src={heroPhoto}
           width={1920}

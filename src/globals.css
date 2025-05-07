@@ -518,7 +518,7 @@ div[id^="headlessui-menu-items"] {
 }
 
 .gql-conf-navbar-strip {
-  @apply relative before:sticky before:top-0 before:z-[9] before:-mt-[var(--navbar-h)] before:block before:h-[var(--navbar-h)] before:w-full before:content-[''];
+  @apply relative [contain:paint] before:sticky before:top-0 before:z-[9] before:-mt-[var(--navbar-h)] before:block before:h-[var(--navbar-h)] before:w-full before:content-[''];
 }
 
 :root {

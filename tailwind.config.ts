@@ -55,6 +55,8 @@ const config: Config = {
         "neu-700": "hsl(var(--color-neu-700) / <alpha-value>)",
         "neu-800": "hsl(var(--color-neu-800) / <alpha-value>)",
         "neu-900": "hsl(var(--color-neu-900) / <alpha-value>)",
+
+        blk: "#000",
         // #endregion new design system colors
       },
       backgroundImage: {
