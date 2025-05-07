@@ -5,7 +5,7 @@ import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
 import NextLink from "next/link"
 import { NewFontsStyleTag } from "../../fonts"
 import "../../colors.css"
-import { Navbar } from "./components/navbar"
+import { Navbar, NavbarBackgroundStrip } from "./components/navbar"
 
 // @ts-expect-error: we want to import the same version as Nextra for the main page
 import { ThemeProvider } from "next-themes"

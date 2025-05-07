@@ -32,8 +32,6 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
     setMobileDrawerOpen(false)
   }, [pathname])
 
-  const navbarHeight = "70px"
-
   return (
     <>
       <div
@@ -41,23 +39,19 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
           "top-0 w-full scale-y-105 bg-pri-base dark:bg-pri-darker",
           mobileDrawerOpen ? "static" : "absolute",
         )}
-        style={{
-          height: navbarHeight,
-        }}
+      />
+      <div
+        // placeholder
+        className="absolute h-[calc(var(--navbar-h)+1px)] w-full bg-pri-base dark:bg-pri-darker"
       />
       <header
         className={clsx(
-          "top-0 z-10 w-full border-b border-black/60 bg-white/40 font-mono text-neu-900 antialiased dark:border-white/80 dark:bg-black/40",
+          "top-0 z-10 w-full border-b border-black/60 font-mono text-neu-900 antialiased dark:border-white/80",
           mobileDrawerOpen ? "fixed" : "sticky",
         )}
-        style={
-          {
-            "--navbar-h": navbarHeight,
-          } as {}
-        }
       >
         <BackdropBlur />
-        <div className="container flex h-[var(--navbar-h)] items-center justify-between gap-5">
+        <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-10">
           <div className="flex items-center gap-2 text-xl/none uppercase">
             <NextLink href="/">
               <GraphQLLogo className="h-6" />
@@ -65,10 +59,21 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
             <span>/ GraphQLConf {year}</span>
           </div>
 
+          <div className="mr-auto flex h-full flex-col justify-center border-x border-black/60 px-4 typography-menu dark:border-white/80">
+            <p className="flex items-center gap-2 text-sm">
+              <time dateTime="2025-09-08">September 08</time>
+              <span>-</span>
+              <time dateTime="2025-09-10">10, 2025</time>
+            </p>
+            <address className="text-sm not-italic">
+              Amsterdam, Netherlands
+            </address>
+          </div>
+
           {mobileDrawerOpen && (
             <div
               onClick={handleDrawerClick}
-              className="fixed inset-0 top-[calc(var(--navbar-h)+1px)] z-10 bg-neu-0/40 backdrop-blur-[6.4px]"
+              className="fixed inset-0 top-[var(--navbar-h)] z-10 bg-neu-0/40 backdrop-blur-[6.4px]"
             />
           )}
 
@@ -138,7 +143,7 @@ function GraphQLLogo(props: React.SVGProps<SVGSVGElement>) {
 }
 
 function BackdropBlur() {
-  const mask = "linear-gradient(to bottom, #000 0% 50%, transparent 50% 100%)"
+  const mask = "linear-gradient(to bottom,#000 0% 50%, transparent 50% 100%)"
   return (
     <div
       // note: we can't use the background trick to reduce flickering, because we have many section

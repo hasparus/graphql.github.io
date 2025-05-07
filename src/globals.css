@@ -516,3 +516,11 @@ div[id^="headlessui-menu-items"] {
 .gql-conf-section {
   @apply px-4 py-8 lg:px-12 xl:gap-x-24 xl:px-24 3xl:px-[240px];
 }
+
+.gql-conf-navbar-strip {
+  @apply relative before:sticky before:top-0 before:z-[9] before:-mt-[var(--navbar-h)] before:block before:h-[var(--navbar-h)] before:w-full before:content-[''];
+}
+
+:root {
+  --navbar-h: 70px;
+}
