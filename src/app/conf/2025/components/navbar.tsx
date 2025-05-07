@@ -45,7 +45,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
         )}
       >
         <BackdropBlur />
-        <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-10">
+        <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-4 lg:px-10">
           <div className="flex items-center gap-2 text-xl/none uppercase">
             <NextLink href="/">
               <GraphQLLogo className="h-6" />
@@ -53,7 +53,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
             <span>/ GraphQLConf {year}</span>
           </div>
 
-          <div className="mr-auto flex h-full flex-col justify-center border-x border-black/60 px-4 typography-menu dark:border-white/80">
+          <div className="mr-auto flex h-full flex-col justify-center whitespace-pre border-x border-black/60 px-4 typography-menu dark:border-white/80 max-xl:hidden">
             <p className="flex items-center gap-2 text-sm">
               <time dateTime="2025-09-08">September 08</time>
               <span>-</span>
