@@ -37,6 +37,8 @@ export default function Page() {
         <Sponsor />
         <Register />
         <Venue />
+      </div>
+      <div className="gql-conf-container text-neu-900">
         <FAQ />
       </div>
     </main>
