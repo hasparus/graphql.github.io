@@ -30,9 +30,12 @@ const FAQS = [
         If you have a group of 5 or more people, you can receive a 10% discount
         on all passes. All pass types must be the same, and all registrations
         must be processed under one group registration and must be paid with the
-        same credit card. To create a group, select “Add Another Person” to your
-        registration. When 5 or more people are added the 10% discount will be
-        automatically applied.{" "}
+        same credit card.
+        <br />
+        <br />
+        To create a group, select “Add Another Person” to your registration.
+        When 5 or more people are added the 10% discount will be automatically
+        applied.{" "}
         <a
           className="typography-link"
           href="mailto:registration@linuxfoundation.org"
@@ -99,6 +102,8 @@ const FAQS = [
           LFX dashboard
         </a>{" "}
         by navigating to the "Past Events" section in the LF Events column.
+        <br />
+        <br />
         Please Note: We verify attendance through the registration system, and
         certificates will only be available for download after the event is
         completed.
@@ -165,7 +170,7 @@ const FAQS = [
     question: "Looking for more?",
     answer: (
       <>
-        Checkout our{" "}
+        Check out our{" "}
         <a className="typography-link" href="/conf/2025/resources">
           Resources
         </a>{" "}
@@ -210,12 +215,12 @@ export function FAQ({ className }: { className?: string }) {
         </p>
       </div>
 
-      <div className="space-y-4 md:space-y-6">
+      <div className="grow space-y-4 md:space-y-6">
         {FAQS.map((faq, index) => (
           <details
             open={index === 0}
             key={index}
-            className="group/q border border-neu-400"
+            className="group/q w-full border border-neu-400 @container"
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-2 border-neu-400 p-2 px-3 focus:outline-none group-open/q:border-b [&::-webkit-details-marker]:hidden">
               <span className="select-none typography-body-lg">
@@ -223,7 +228,7 @@ export function FAQ({ className }: { className?: string }) {
               </span>
               <ArrowDown className="size-10 text-sec-darker group-open/q:rotate-180" />
             </summary>
-            <p className="p-3 typography-body-md">{faq.answer}</p>
+            <div className="p-3 typography-body-md">{faq.answer}</div>
           </details>
         ))}
       </div>
