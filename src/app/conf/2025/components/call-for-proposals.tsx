@@ -1,7 +1,7 @@
 "use client"
 import clsx from "clsx"
 
-import { useState, useEffect, ReactNode } from "react"
+import { useState, useEffect, ReactNode, Fragment } from "react"
 import Link from "next/link"
 import { Button } from "../../_design-system/button"
 import ArrowDownIcon from "../pixelarticons/arrow-down.svg?svgr"
@@ -370,7 +370,6 @@ export function CallForProposals() {
             {buttonText}
           </Button>
         </div>
-        {/* todo: this might need to be a grid on mobile */}
         <article className="flex h-auto flex-col bg-[#C6F267]">
           <div
             role="tablist"
@@ -387,7 +386,7 @@ export function CallForProposals() {
           </div>
           <div className="flex flex-1 justify-center overflow-hidden max-md:flex-col md:items-center">
             {tabsInOrder.map(tab => (
-              <>
+              <Fragment key={tab}>
                 <TabButton
                   tab={tab}
                   activeTab={activeTab}
@@ -406,7 +405,7 @@ export function CallForProposals() {
                 >
                   {tabs[tab]}
                 </div>
-              </>
+              </Fragment>
             ))}
           </div>
         </article>
