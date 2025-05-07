@@ -37,7 +37,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
   return (
     <>
       <div
-        /* pink background "prelude" */ className={clsx(
+        className={clsx(
           "top-0 w-full scale-y-105 bg-pri-base dark:bg-pri-darker",
           mobileDrawerOpen ? "static" : "absolute",
         )}
@@ -46,9 +46,8 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
         }}
       />
       <header
-        // todo: not white, but ALWAYS contrasting color, either white or black depending on background
         className={clsx(
-          "top-0 z-10 w-full bg-white/20 font-mono text-white antialiased",
+          "top-0 z-10 w-full border-b border-black/60 bg-white/40 font-mono text-neu-900 antialiased dark:border-white/80 dark:bg-black/40",
           mobileDrawerOpen ? "fixed" : "sticky",
         )}
         style={
@@ -76,9 +75,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
           <nav
             className={clsx(
               "inset-0 z-20 flex gap-7 typography-menu max-lg:fixed max-lg:mt-[calc(var(--navbar-h)+1px)] max-lg:flex-col max-md:min-w-[50%] sm:max-lg:p-4 lg:items-end",
-              mobileDrawerOpen
-                ? "translate-x-0 text-neu-900"
-                : "text-white max-lg:translate-x-full",
+              mobileDrawerOpen ? "translate-x-0" : "max-lg:translate-x-full",
             )}
           >
             <div className="flex w-full flex-col lg:mt-0 lg:block">
@@ -142,26 +139,15 @@ function GraphQLLogo(props: React.SVGProps<SVGSVGElement>) {
 
 function BackdropBlur() {
   const mask = "linear-gradient(to bottom, #000 0% 50%, transparent 50% 100%)"
-  const edgeMask =
-    "linear-gradient(to bottom, black 0, black 1.1px, transparent 1.1px)"
   return (
-    <>
-      <div
-        // note: we can't use the background trick to reduce flickering, because we have many section
-        // background colors and big images, so we'd have to change the --bg var with javascript
-        className="pointer-events-none absolute inset-0 -z-10 h-[200%] backdrop-blur-[6.4px]"
-        style={{
-          maskImage: mask,
-          WebkitMaskImage: mask,
-        }}
-      />
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 h-full translate-y-full bg-white/50 backdrop-blur-sm backdrop-brightness-200 backdrop-grayscale-[50%]"
-        style={{
-          maskImage: edgeMask,
-          WebkitMaskImage: edgeMask,
-        }}
-      />
-    </>
+    <div
+      // note: we can't use the background trick to reduce flickering, because we have many section
+      // background colors and big images, so we'd have to change the --bg var with javascript
+      className="pointer-events-none absolute inset-0 -z-10 h-[200%] backdrop-blur-[6.4px]"
+      style={{
+        maskImage: mask,
+        WebkitMaskImage: mask,
+      }}
+    />
   )
 }
