@@ -102,14 +102,14 @@ function NotesTab() {
         <li>
           All speakers are required to adhere to our{" "}
           <Link
-            className="text-neu-800 underline hover:no-underline dark:text-neu-50"
+            className="typography-link dark:text-neu-50"
             href="/conf/2025/resources/#code-of-conduct"
           >
             Code of Conduct
           </Link>
           . We also highly recommend that speakers take our online{" "}
           <a
-            className="text-neu-800 underline hover:no-underline dark:text-neu-50"
+            className="typography-link dark:text-neu-50"
             target="_blank"
             href="https://training.linuxfoundation.org/linux-courses/open-source-compliance-courses/inclusive-speaker-orientation"
           >
@@ -169,7 +169,7 @@ function NotesTab() {
         <a
           href="https://youtu.be/2I5fYBLCfUA"
           target="_blank"
-          className="text-neu-800 underline hover:no-underline dark:text-neu-50"
+          className="typography-link dark:text-neu-50"
         >
           Getting Over Your Imposter Syndrome to Become a Conference Speaker
         </a>
@@ -183,8 +183,13 @@ function NotesTab() {
         community and share your ideas and the work that you are doing and we
         strongly encourage first-time speakers to submit talks for our events.
         In the instance that you aren't sure about your abstract,{" "}
-        <a href="mailto:cfp@linuxfoundation.org">reach out to us</a> and we will
-        be more than happy to work with you on your proposal.
+        <a
+          href="mailto:cfp@linuxfoundation.org"
+          className="typography-link dark:text-neu-50"
+        >
+          reach out to us
+        </a>{" "}
+        and we will be more than happy to work with you on your proposal.
       </p>
     </div>
   )
@@ -337,7 +342,7 @@ export function CallForProposals() {
             For any questions regarding the CFP process, please email{" "}
             <a
               href="mailto:cfp@linuxfoundation.org"
-              className="text-neu-800 underline hover:no-underline dark:text-neu-50"
+              className="typography-link dark:text-neu-50"
             >
               cfp@linuxfoundation.org
             </a>
@@ -351,7 +356,7 @@ export function CallForProposals() {
             <a
               target="_blank"
               href="https://sessionize.com/playbook/submit-your-session-for-an-event"
-              className="text-neu-800 underline hover:no-underline dark:text-neu-50"
+              className="typography-link dark:text-neu-50"
             >
               how to submit your session
             </a>{" "}

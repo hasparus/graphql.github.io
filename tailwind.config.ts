@@ -79,7 +79,8 @@ const config: Config = {
     typography,
     containerQueries,
     plugin(({ addUtilities }) => {
-      const headingStyles = {
+      // heading styles
+      addUtilities({
         ".typography-d1, .typography-h1, .typography-h2, .typography-h3": {
           lineHeight: "1.2",
         },
@@ -107,9 +108,10 @@ const config: Config = {
             fontSize: "32px",
           },
         },
-      }
+      })
 
-      const bodyStyles = {
+      // paragraph styles
+      addUtilities({
         ".typography-body-lg, .typography-body-md, .typography-body-sm, .typography-body-xs":
           {
             lineHeight: "1.5",
@@ -138,9 +140,10 @@ const config: Config = {
             fontSize: "12px",
           },
         },
-      }
+      })
 
-      const specialStyles = {
+      // other text styles
+      addUtilities({
         ".typography-button, .typography-tagline": {
           fontSize: "16px",
           lineHeight: "1",
@@ -154,9 +157,17 @@ const config: Config = {
           lineHeight: "1",
           textTransform: "uppercase",
         },
-      }
+      })
 
-      addUtilities({ ...headingStyles, ...bodyStyles, ...specialStyles })
+      addUtilities({
+        ".typography-link": {
+          color: "theme('colors.neu-800')",
+          textDecoration: "underline",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
+      })
     }),
   ],
   darkMode: ["class", 'html[class~="dark"]'],

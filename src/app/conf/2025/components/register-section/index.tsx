@@ -36,7 +36,7 @@ export function RegisterSection({ className, ...props }: RegisterSectionProps) {
             email. If you did not, please contact us for more details:{" "}
             <a
               href="mailto:cfp@linuxfoundation.org"
-              className="gql-focus-visible text-neu-800 underline hover:no-underline"
+              className="typography-link"
             >
               cfp@linuxfoundation.org
             </a>
@@ -57,7 +57,7 @@ export function RegisterSection({ className, ...props }: RegisterSectionProps) {
             register as a Sponsor. For further questions, please email us:{" "}
             <a
               href="mailto:graphql_events@linuxfoundation.org"
-              className="gql-focus-visible text-neu-800 underline hover:no-underline"
+              className="typography-link"
             >
               graphql_events@linuxfoundation.org
             </a>
