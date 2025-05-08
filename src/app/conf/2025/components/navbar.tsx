@@ -5,9 +5,10 @@ import NextLink from "next/link"
 import { clsx } from "clsx"
 import { usePathname } from "next/navigation"
 
-import { HamburgerIcon, CrossIcon } from "@/icons"
-
 import { Badge } from "../../_components/badge"
+
+import MenuIcon from "../pixelarticons/menu.svg?svgr"
+import CloseIcon from "../pixelarticons/close.svg?svgr"
 
 export interface NavbarProps {
   links: { href: string; children: React.ReactNode; "aria-disabled"?: true }[]
@@ -40,8 +41,8 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
       />
       <header
         className={clsx(
-          "top-0 z-10 w-full border-b border-black/60 font-mono text-neu-900 antialiased dark:border-white/80",
-          mobileDrawerOpen ? "fixed" : "sticky",
+          "gql-all-anchors-focusable top-0 z-10 w-full border-b border-black/60 font-mono text-neu-900 antialiased dark:border-white/80",
+          mobileDrawerOpen ? "fixed border-white" : "sticky",
         )}
       >
         <BackdropBlur />
@@ -73,7 +74,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
           {mobileDrawerOpen && (
             <div
               onClick={handleDrawerClick}
-              className="fixed inset-0 top-[var(--navbar-h)] z-10 bg-neu-0/40 backdrop-blur-[6.4px]"
+              className="fixed inset-0 top-[calc(var(--navbar-h)+1px)] z-10 bg-neu-0/40 backdrop-blur-[6.4px]"
             />
           )}
 
@@ -113,10 +114,10 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
           </nav>
 
           <button
-            className="z-40 ml-auto size-6 text-white lg:hidden"
+            className="gql-focus-visible z-40 ml-auto size-7 hover:bg-neu-900/10 lg:hidden"
             onClick={handleDrawerClick}
           >
-            {mobileDrawerOpen ? <CrossIcon /> : <HamburgerIcon />}
+            {mobileDrawerOpen ? <CloseIcon /> : <MenuIcon />}
           </button>
         </div>
       </header>
