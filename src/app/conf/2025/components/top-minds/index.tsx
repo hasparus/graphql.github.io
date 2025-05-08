@@ -24,12 +24,12 @@ export default function TopMindsSection({
   return (
     <section
       className={clsx(
-        "gql-conf-section flex justify-center max-md:flex-col",
+        "gql-conf-section flex justify-center max-md:flex-col [@media(767px<width<807px)]:px-6 [@media(807px<=width<858px)]:px-12",
         className,
       )}
       {...rest}
     >
-      <div className="flex flex-wrap max-sm:flex-col [@media(width<=743px)]:justify-center [@media(width>=970px)]:*:border-b-0">
+      <div className="flex grid-cols-2 flex-wrap [@media(444px<width<743px)]:grid [@media(width<=444px)]:flex-col [@media(width<=743px)]:justify-center [@media(width>=970px)]:*:border-b-0">
         {/* todo: remaining socials */}
         <h3 className="mr-auto flex w-full grow text-pretty pb-6 pr-6 typography-h2 [@media(width>857px)]:basis-0">
           Meet the top industry minds
@@ -46,6 +46,7 @@ export default function TopMindsSection({
           title="Netflix — CTO"
           src={elizabethStone}
           linkedin="elizabeth-stone-608a754"
+          className="[@media(width<=742px)]:border-l"
         />
         <div className="flex grow border-sec-dark [@media(width<970px)]:contents [@media(width>=970px)]:border-t [@media(width>=970px)]:*:border-t-0">
           <SpeakerCard
@@ -61,7 +62,7 @@ export default function TopMindsSection({
             title="Atlassian — CTO"
             src={rajeevRajan}
             linkedin="rajeev-rajan"
-            className="[@media(744px<=width<=970px)]:border-l"
+            className="[@media(639px<=width<=970px)]:border-l"
           />
           <SpeakerCard
             name="Tanmai Gopal"
@@ -71,7 +72,7 @@ export default function TopMindsSection({
             linkedin="tanmaig"
             className="[@media(width<744px)]:border-l"
           />
-          <div className="mt-6 flex shrink-0 basis-[content] items-end justify-stretch max-lg:w-full max-sm:*:w-full sm:justify-end sm:pl-6 [@media(640px<=width<=855px)]:basis-[236px] [@media(width>855px)]:grow">
+          <div className="mt-6 flex shrink-0 basis-[content] items-end justify-stretch max-lg:w-full [@media(640px<=width<=855px)]:basis-[236px] [@media(width<=444px)]:*:w-full [@media(width>742px)]:justify-end [@media(width>742px)]:pl-6 [@media(width>855px)]:grow">
             {hasSpeakersPage ? (
               <Button variant="secondary" href="/conf/2025/speakers/">
                 View all speakers
@@ -106,24 +107,24 @@ function SpeakerCard({
   return (
     <article
       className={clsx(
-        ":border-r shrink-0 border-y border-r border-sec-dark first-of-type:border-l max-sm:border-l",
+        "flex shrink-0 flex-col border-y border-r border-sec-dark first-of-type:border-l max-sm:border-l",
         className,
       )}
     >
       <Image
         src={src}
         alt=""
-        width={236}
-        height={236}
-        className="aspect-square size-[312px] w-full object-cover transition-transform sm:size-[236px]"
+        width={312}
+        height={312}
+        className="aspect-square size-[312px] w-full object-cover transition-transform sm:h-[236px]"
       />
-      <div className="flex items-stretch border-t border-sec-dark">
+      <div className="flex flex-1 items-stretch border-t border-sec-dark">
         <div className="flex grow flex-col justify-center gap-1 p-3 sm:h-[80px]">
           <h4 className="typography-body-md">{name}</h4>
           <p className="text-neu-700 typography-body-xs">{title}</p>
         </div>
         {(linkedin || twitter) && (
-          <div className="flex items-center border-l border-sec-dark max-sm:divide-x sm:flex-col sm:divide-y sm:border-l">
+          <div className="flex border-l border-sec-dark max-sm:divide-x sm:flex-col sm:items-center sm:divide-y sm:border-l">
             {linkedin && (
               <a
                 href={`https://www.linkedin.com/in/${linkedin}`}
