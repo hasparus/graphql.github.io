@@ -35,8 +35,8 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
         )}
       />
       <div
-        // placeholder
-        className="absolute h-[calc(var(--navbar-h)+1px)] w-full bg-pri-base dark:bg-pri-darker"
+        // placeholder: the colors here on `before` must match the ones on Hero `before` strip
+        className="absolute h-[calc(var(--navbar-h)+1px)] w-full bg-pri-base before:absolute before:top-0 before:h-[calc(var(--navbar-h)+1px)] before:w-full before:bg-white/30 dark:bg-pri-darker dark:before:bg-blk/40"
       />
       <header
         className={clsx(
