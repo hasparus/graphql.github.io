@@ -23,7 +23,12 @@ export default function RootLayout({
   children: ReactNode
 }): ReactElement {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html
+      lang="en"
+      className="scroll-smooth"
+      // ThemeProvider adds a `light`/`dark` class
+      suppressHydrationWarning
+    >
       <head>
         <style>{`html { scroll-padding-top: 5rem }`}</style>
       </head>
