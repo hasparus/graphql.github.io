@@ -6,15 +6,25 @@ import {
   YouTubeIcon,
   FacebookIcon,
 } from "@/icons"
+import clsx from "clsx"
 
 const anchorProps = {
   target: "_blank",
   rel: "noreferrer",
 }
 
-export function SocialIcons() {
+export function SocialIcons({
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className="flex items-center gap-5 *:outline-none *:transition-colors hover:*:text-primary focus:*:text-primary focus:*:ring focus:*:ring-primary [&_svg]:h-5">
+    <div
+      className={clsx(
+        "flex items-center gap-1 *:p-2 *:outline-none *:transition-colors hover:*:text-primary focus:*:text-primary focus:*:ring focus:*:ring-primary [&_svg]:h-5",
+        className,
+      )}
+      {...rest}
+    >
       <a href="https://github.com/graphql" {...anchorProps}>
         <GitHubIcon />
       </a>

@@ -1,14 +1,15 @@
 import { ReactElement, ReactNode } from "react"
 import { Metadata } from "next"
-import { Footer } from "../_components/footer"
-import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
-import NextLink from "next/link"
+
 import { NewFontsStyleTag } from "../../fonts"
 import "../../colors.css"
+
 import { Navbar } from "./components/navbar"
+import { Footer } from "./components/footer"
 
 // @ts-expect-error: we want to import the same version as Nextra for the main page
 import { ThemeProvider } from "next-themes"
+import { GraphQLConfLogoLink } from "./components/graphql-conf-logo-link"
 
 export const metadata = {
   description:
@@ -51,15 +52,7 @@ export default function Layout({
         <div className="bg-neu-0 text-neu-900 antialiased">{children}</div>
       </ThemeProvider>
       <Footer
-        logo={
-          <NextLink href="/conf/2025" className="nextra-logo text-white">
-            <div className="flex items-center gap-2">
-              <GraphQLConf className="h-6" />
-              <span className="select-none text-xl/none">2025</span>
-            </div>
-            <HostedByGraphQLFoundation className="mt-2 h-5" />
-          </NextLink>
-        }
+        logo={<GraphQLConfLogoLink year={2025} />}
         links={[
           [
             { children: "Sponsor", href: "/conf/2025/#sponsors" },
