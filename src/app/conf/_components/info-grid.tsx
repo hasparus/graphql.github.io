@@ -15,17 +15,15 @@ export const InfoGrid: React.FC<InfoGridProps> = ({
 }) => (
   <section id={id}>
     <h1 className="mb-4 typography-h2">{title}</h1>
-    <p className="mb-8 typography-body-lg">{subtitle}</p>
-
-    {/* Horizontal Scrollable Grid */}
+    <p className="typography-body-lg xl:mb-4">{subtitle}</p>
     <div
       style={{
         scrollSnapType: "x mandatory",
       }}
-      className="scroll-snap-x flex snap-mandatory gap-6 overflow-x-auto lg:grid lg:grid-cols-3 lg:overflow-visible"
+      className="-mx-4 flex gap-6 overflow-x-auto p-4 lg:grid lg:grid-cols-3 lg:overflow-visible"
     >
       {listItems.map(({ title, description }, index) => (
-        <div key={index} className="border border-neu-400 p-3">
+        <div key={index} className="min-w-64 border border-neu-400 p-3">
           <h2 className="mb-2 typography-body-lg">{title}</h2>
           <p
             className="typography-body-md [&_a]:typography-link"

@@ -40,7 +40,7 @@ export function Sponsor() {
         ]}
       />
 
-      <div className="mt-8 flex justify-center">
+      <div className="mt-4 flex justify-center xl:mt-8">
         <Button
           href="https://events.linuxfoundation.org/sponsor-GraphQLConf-25?utm_source=graphql_conf_2025&utm_medium=website&utm_campaign=sponsor_section"
           target="_blank"
