@@ -10,7 +10,7 @@ import TopMindsSection from "./components/top-minds"
 import { GetYourTicket } from "./components/get-your-ticket"
 import { RegisterSection } from "./components/register-section"
 import { Sponsors } from "./components/sponsors"
-
+import { GraphQLFoundationCard } from "./components/graphql-foundation-card"
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
 }
@@ -33,6 +33,7 @@ export default function Page() {
         <CallForProposals />
         <Sponsor />
         <Venue />
+        <GraphQLFoundationCard />
         <FAQ />
       </div>
     </main>
