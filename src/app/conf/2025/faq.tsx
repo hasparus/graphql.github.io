@@ -205,7 +205,9 @@ export function FAQ({ className }: { className?: string }) {
       )}
     >
       <div>
-        <h2 className="typography-h2">Frequently Asked Questions</h2>
+        <h2 className="typography-h2 lg:max-xl:max-w-lg">
+          Frequently Asked Questions
+        </h2>
         <p className="mt-6 typography-body-md">
           You can find much more information on our{" "}
           <a href="/conf/2025/resources" className="typography-link">
