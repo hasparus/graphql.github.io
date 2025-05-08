@@ -1,10 +1,11 @@
 import { InfoGrid } from "../_components/info-grid"
+import { Button } from "../_design-system/button"
 
 export function Sponsor() {
   return (
-    <section id="sponsors">
+    <section id="sponsors" className="gql-conf-section">
       <InfoGrid
-        title="Why Sponsor?"
+        title="Become a Sponsor"
         subtitle="Connect with the global GraphQL community and showcase your brand to industry leaders and decision-makers."
         listItems={[
           {
@@ -40,14 +41,13 @@ export function Sponsor() {
       />
 
       <div className="mt-8 flex justify-center">
-        <a
+        <Button
           href="https://events.linuxfoundation.org/sponsor-GraphQLConf-25?utm_source=graphql_conf_2025&utm_medium=website&utm_campaign=sponsor_section"
           target="_blank"
           rel="noreferrer"
-          className="bg-primary/85 px-20 py-4 text-center text-3xl font-semibold transition-colors hover:bg-primary/100 md:px-28"
         >
           Download Prospectus
-        </a>
+        </Button>
       </div>
     </section>
   )

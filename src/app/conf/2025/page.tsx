@@ -31,10 +31,8 @@ export default function Page() {
         <RegisterSection />
         <Sponsors heading="Thanks to our 2024 sponsors!" />
         <CallForProposals />
-        <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32 [.light_&_.text-white]:text-neu-900 [.light_&_[alt='Grafbase_logo']]:invert">
-          <Sponsor />
-          <Venue />
-        </div>
+        <Sponsor />
+        <Venue />
         <FAQ />
       </div>
     </main>
