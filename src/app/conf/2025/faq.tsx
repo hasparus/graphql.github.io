@@ -226,7 +226,7 @@ export function FAQ({ className }: { className?: string }) {
               <span className="select-none typography-body-lg">
                 {faq.question}
               </span>
-              <ArrowDown className="size-10 text-sec-darker group-open/q:rotate-180" />
+              <ArrowDown className="size-10 shrink-0 text-sec-darker group-open/q:rotate-180" />
             </summary>
             <div className="p-3 typography-body-md">{faq.answer}</div>
           </details>
