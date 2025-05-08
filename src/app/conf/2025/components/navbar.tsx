@@ -42,7 +42,9 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
       <header
         className={clsx(
           "gql-all-anchors-focusable top-0 z-10 w-full border-b border-black/60 font-mono text-neu-900 antialiased dark:border-white/80",
-          mobileDrawerOpen ? "fixed border-white" : "sticky",
+          mobileDrawerOpen
+            ? "fixed border-neu-900 dark:border-white"
+            : "sticky",
         )}
       >
         <BackdropBlur />
