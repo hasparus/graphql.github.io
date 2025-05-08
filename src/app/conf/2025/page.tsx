@@ -30,8 +30,8 @@ export default function Page() {
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/50 before:dark:bg-blk/30">
         <RegisterSection />
         <Sponsors heading="Thanks to our 2024 sponsors!" />
-        <CallForProposals />
         <Sponsor />
+        <CallForProposals />
         <Venue />
         <GraphQLFoundationCard />
         <FAQ />

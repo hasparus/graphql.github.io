@@ -3,7 +3,7 @@ import { Button } from "../_design-system/button"
 
 export function Sponsor() {
   return (
-    <section id="sponsors" className="gql-conf-section">
+    <section id="sponsors" className="gql-conf-section xl:py-16">
       <InfoGrid
         title="Become a Sponsor"
         subtitle="Connect with the global GraphQL community and showcase your brand to industry leaders and decision-makers."
