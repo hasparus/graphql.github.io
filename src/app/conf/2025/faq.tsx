@@ -200,7 +200,7 @@ export function FAQ({ className }: { className?: string }) {
     <section
       id="faq"
       className={clsx(
-        "gql-conf-section flex gap-10 max-md:flex-col xl:gap-24 2xl:gap-36",
+        "gql-conf-section flex gap-10 max-lg:flex-col xl:gap-24 2xl:gap-36",
         className,
       )}
     >
@@ -215,7 +215,7 @@ export function FAQ({ className }: { className?: string }) {
         </p>
       </div>
 
-      <div className="grow space-y-4 md:space-y-6">
+      <div className="grow space-y-4 lg:space-y-6">
         {FAQS.map((faq, index) => (
           <details
             open={index === 0}
