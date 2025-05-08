@@ -57,6 +57,12 @@ const config: Config = {
         "neu-900": "hsl(var(--color-neu-900) / <alpha-value>)",
 
         blk: "#000",
+
+        /**
+         * GraphQL Rhodamine as per the trademark guidelines
+         * https://www.graphql.org/brand/
+         */
+        rhodamine: "#e10098",
         // #endregion new design system colors
       },
       backgroundImage: {
