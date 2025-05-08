@@ -46,13 +46,18 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
       >
         <BackdropBlur />
         <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-4 lg:px-10">
-          <NextLink
-            href="/conf/2025"
-            className="-m-2 flex items-center gap-2 p-2 text-xl/none uppercase"
-          >
-            <GraphQLLogo className="h-6" />
-            <span>/ GraphQLConf {year}</span>
-          </NextLink>
+          <div className="flex items-center gap-2 text-xl/none uppercase">
+            <NextLink href="/" className="-m-1 p-1 hover:bg-neu-900/10">
+              <GraphQLLogo className="h-6" />
+            </NextLink>
+            <span>/</span>
+            <NextLink
+              href={`/conf/${year}`}
+              className="-m-2 p-2 underline-offset-4 hover:underline"
+            >
+              GraphQLConf {year}
+            </NextLink>
+          </div>
 
           <div className="mr-auto flex h-full flex-col justify-center whitespace-pre border-x border-black/60 px-4 typography-menu dark:border-white/80 max-xl:hidden">
             <p className="flex items-center gap-2 text-sm">
