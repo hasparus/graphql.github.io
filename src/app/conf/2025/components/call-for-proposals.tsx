@@ -444,15 +444,17 @@ function TabButton({
         "gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none max-md:border-b max-md:border-sec-dark max-md:first:border-t md:[--collapsible:1] md:aria-selected:bg-sec-light",
         className,
       )}
-      onFocus={event => {
-        console.log("focus")
+      onFocus={() => {
+        setActiveTab(tab)
+      }}
+      onPointerDown={() => {
         setActiveTab(tab)
       }}
       onKeyDown={arrowsMoveSideways}
       {...props}
     >
       {tab.charAt(0).toUpperCase() + tab.slice(1)}
-      <ArrowDownIcon className="ml-2 size-6 text-sec-darker opacity-0 [[aria-selected=true]>&]:opacity-100" />
+      <ArrowDownIcon className="ml-2 size-6 text-transparent max-md:[[aria-selected=false]>&]:rotate-180 max-md:[[aria-selected=false]>&]:text-sec-dark [[aria-selected=true]>&]:text-sec-darker" />
     </button>
   )
 }
