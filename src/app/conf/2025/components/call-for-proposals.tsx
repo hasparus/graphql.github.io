@@ -328,8 +328,8 @@ export function CallForProposals() {
       // todo: the part with `dark:` here is temporary until we have a dark mode version of this section
       className="gql-conf-section gql-conf-container dark:text-neu-0"
     >
-      <div className="flex *:basis-1/2 max-md:flex-col">
-        <div className="border-sec-dark bg-sec-light p-4 md:border-r md:p-8 lg:p-16">
+      <div className="flex *:basis-1/2 max-lg:flex-col">
+        <div className="border-sec-dark bg-sec-light p-4 lg:border-r lg:p-8 xl:p-16">
           <h1 className="typography-h2">Call for Proposals</h1>
           <p className="mt-6 md:mt-10">
             Putting on an amazing conference depends on great content, which is
@@ -378,7 +378,7 @@ export function CallForProposals() {
         <article className="flex h-auto flex-col bg-[#C6F267]">
           <div
             role="tablist"
-            className="flex divide-sec-dark border-b border-sec-dark *:flex-1 max-md:sr-only md:divide-x"
+            className="flex divide-sec-dark border-b border-sec-dark *:flex-1 max-lg:sr-only lg:divide-x"
           >
             {tabsInOrder.map((tab, i) => (
               <TabButton
@@ -389,21 +389,21 @@ export function CallForProposals() {
               />
             ))}
           </div>
-          <div className="flex flex-1 justify-center overflow-hidden max-md:flex-col md:items-center">
+          <div className="flex flex-1 justify-center overflow-hidden max-lg:flex-col lg:items-center">
             {tabsInOrder.map(tab => (
               <Fragment key={tab}>
                 <TabButton
                   tab={tab}
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
-                  className="md:hidden"
+                  className="lg:hidden"
                   aria-hidden
                 />
                 <div
                   role="tabpanel"
                   key={tab}
                   id={`tabpanel-${tab}`}
-                  className="flex-1"
+                  className="relative h-full flex-1"
                   style={{
                     display: activeTab === tab ? "block" : "none",
                   }}
@@ -441,7 +441,7 @@ function TabButton({
       tabIndex={tabIndex}
       aria-selected={activeTab === tab}
       className={clsx(
-        "gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none max-md:border-b max-md:border-sec-dark max-md:first:border-t md:[--collapsible:1] md:aria-selected:bg-sec-light",
+        "gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none max-lg:border-b max-lg:border-sec-dark max-lg:first:border-t lg:[--collapsible:1] lg:aria-selected:bg-sec-light",
         className,
       )}
       onFocus={() => {
@@ -454,7 +454,7 @@ function TabButton({
       {...props}
     >
       {tab.charAt(0).toUpperCase() + tab.slice(1)}
-      <ArrowDownIcon className="ml-2 size-6 text-transparent max-md:[[aria-selected=false]>&]:rotate-180 max-md:[[aria-selected=false]>&]:text-sec-dark [[aria-selected=true]>&]:text-sec-darker" />
+      <ArrowDownIcon className="ml-2 size-6 text-transparent max-lg:[[aria-selected=false]>&]:rotate-180 max-lg:[[aria-selected=false]>&]:text-sec-dark [[aria-selected=true]>&]:text-sec-darker" />
     </button>
   )
 }
@@ -475,8 +475,8 @@ function arrowsMoveSideways(event: React.KeyboardEvent<HTMLButtonElement>) {
 
 function DefinitionListBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative isolate md:p-8 lg:p-16">
-      <dl className="divide-y divide-sec-dark border-neu-300 md:divide-neu-300 md:border md:shadow-[0px_0px_20px_0px_rgba(133,185,19,0.20)]">
+    <div className="inset-0 isolate h-full lg:absolute lg:flex lg:items-center lg:justify-center lg:p-4 xl:p-8 2xl:p-16">
+      <dl className="divide-y divide-sec-dark border-neu-300 lg:divide-neu-300 lg:border lg:shadow-[0px_0px_20px_0px_rgba(133,185,19,0.20)]">
         {children}
       </dl>
       <Stripes />
@@ -494,7 +494,7 @@ function Stripes() {
   return (
     <div
       role="presentation"
-      className="pointer-events-none absolute inset-0 bottom-[-20px] -z-10 translate-x-0.5 translate-y-12 ease-linear max-md:hidden"
+      className="pointer-events-none absolute inset-0 bottom-[-20px] -z-10 translate-x-0.5 translate-y-12 ease-linear max-lg:hidden"
       style={{
         maskImage: mask,
         WebkitMaskImage: mask,
