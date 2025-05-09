@@ -54,18 +54,14 @@ export default function Layout({
       <Footer
         logo={<GraphQLConfLogoLink year={2025} />}
         links={[
+          { children: "Sponsor", href: "/conf/2025/#sponsors" },
+          { children: "Speakers", href: "/#speakers" },
+          { children: "GraphQLConf 2024", href: "/conf/2024" },
+          { children: "FAQ", href: "#faq" },
+          { children: "Contact Us", href: "/conf/2025/faq/#contact" },
+          { children: "GraphQL", href: "/" },
+          { children: "GraphQL Foundation", href: "/foundation" },
           [
-            { children: "Sponsor", href: "/conf/2025/#sponsors" },
-            { children: "Speakers", href: "/#speakers" },
-            { children: "GraphQLConf 2024", href: "/conf/2024" },
-          ],
-          [
-            { children: "FAQ", href: "#faq" },
-            { children: "Contact Us", href: "/conf/2025/faq/#contact" },
-          ],
-          [
-            { children: "GraphQL", href: "/" },
-            { children: "GraphQL Foundation", href: "/foundation" },
             {
               children: "Code of Conduct",
               href: "/conf/2025/resources/#code-of-conduct",

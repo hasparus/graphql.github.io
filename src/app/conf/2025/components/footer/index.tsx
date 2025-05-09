@@ -6,42 +6,41 @@ import { SocialIcons } from "../../../_components/social-icons"
 
 import blurBean from "./blur-bean.webp"
 
+interface FooterLink {
+  href: string
+  children: ReactNode
+  disabled?: boolean
+}
+
 export function Footer({
   links,
   logo,
 }: {
-  links: { href: string; children: string; "aria-disabled"?: true }[][]
+  links: (FooterLink | FooterLink[])[]
   logo: ReactNode
 }) {
   return (
-    <footer className="gql-conf-section gql-all-anchors-focusable relative !bg-neu-100 py-10 text-neu-900 typography-menu dark:!bg-neu-0 max-md:px-0 max-md:pt-0 lg:py-20">
+    <footer className="gql-all-anchors-focusable relative !bg-neu-100 text-neu-900 typography-menu dark:!bg-neu-0 max-md:px-0 max-md:pt-0">
       <Stripes />
-      <div className="mb-10 flex flex-wrap items-start justify-between xl:mb-32 xl:gap-10">
-        <div className="border-neu-400 p-5 max-md:w-full max-md:border-b md:p-4">
-          {logo}
+      <div className="flex flex-wrap justify-between gap-4 border-neu-400 p-4 max-md:w-full max-md:border-b lg:p-10">
+        {logo}
+        <div className="flex gap-x-4 gap-y-2 typography-body-lg">
+          <p className="flex items-center gap-2">
+            <time dateTime="2025-09-08">September 08</time>
+            <span>-</span>
+            <time dateTime="2025-09-10">10, 2025</time>
+          </p>
+          <address className="not-italic">Amsterdam, Netherlands</address>
         </div>
-        {links.map((link, i) => (
-          <ul key={i} className="max-md:contents">
-            {link.map(({ "aria-disabled": isDisabled, children, ...link }) => (
-              <li key={link.href} className="mb-3.5 max-md:w-1/2">
-                <NextLink
-                  {...link}
-                  className={clsx(
-                    "gql-focus-visible block p-5",
-                    isDisabled
-                      ? "pointer-events-none"
-                      : "underline-offset-4 hover:underline",
-                  )}
-                  tabIndex={isDisabled ? -1 : undefined}
-                >
-                  {children}
-                </NextLink>
-              </li>
-            ))}
-          </ul>
-        ))}
       </div>
-      <div className="relative flex justify-between gap-10 text-sm max-lg:flex-col max-md:px-5">
+      <ul className="grid grid-cols-2 gap-px bg-neu-400 py-px lg:grid-cols-4">
+        {links.map((box, i) => (
+          <li className="bg-neu-100 dark:bg-neu-0 lg:h-32" key={i}>
+            <FooterBox box={box} />
+          </li>
+        ))}
+      </ul>
+      <div className="relative flex justify-between gap-10 px-6 py-4 text-sm max-lg:flex-col">
         <div className="flex flex-col font-light max-md:gap-5">
           <p>
             Copyright © {new Date().getFullYear()} The GraphQL Foundation. All
@@ -89,14 +88,17 @@ function Stripes() {
         [--end-2:hsl(var(--color-pri-dark)/0.8)]
         dark:[--start-2:rgba(255,204,239,.1)]
         dark:[--end-2:hsl(var(--color-pri-base)/.8)]
+
+        mix-blend-darken
+        dark:mix-blend-lighten
       "
       style={{
         maskImage: `url(${blurBean.src})`,
         WebkitMaskImage: `url(${blurBean.src})`,
-        maskPosition: "center 300px",
-        WebkitMaskPosition: "center 300px",
-        maskSize: "200% 110%",
-        WebkitMaskSize: "200% 110%",
+        maskPosition: "center 200px",
+        WebkitMaskPosition: "center 200px",
+        maskSize: "200% 100%",
+        WebkitMaskSize: "200% 100%",
         maskRepeat: "no-repeat",
         WebkitMaskRepeat: "no-repeat",
         maskOrigin: "top",
@@ -117,5 +119,46 @@ function Stripes() {
         }}
       />
     </div>
+  )
+}
+
+function FooterBox({ box }: { box: FooterLink | FooterLink[] }) {
+  if (Array.isArray(box)) {
+    return (
+      <div className="relative flex flex-col p-3">
+        {box.map(link => (
+          <NextLink
+            key={link.href}
+            href={link.href}
+            title={link.disabled ? "Coming soon" : undefined}
+            className={clsx(
+              "gql-focus-visible block h-full p-3 first:font-bold",
+              link.disabled
+                ? "pointer-events-none"
+                : "underline-offset-4 hover:underline",
+            )}
+            tabIndex={link.disabled ? -1 : undefined}
+          >
+            {link.children}
+          </NextLink>
+        ))}
+      </div>
+    )
+  }
+
+  const { href, children, disabled } = box
+
+  return (
+    <NextLink
+      href={href}
+      title={disabled ? "Coming soon" : undefined}
+      className={clsx(
+        "gql-focus-visible relative block h-full p-6",
+        disabled ? "pointer-events-none" : "underline-offset-4 hover:underline",
+      )}
+      tabIndex={disabled ? -1 : undefined}
+    >
+      {children}
+    </NextLink>
   )
 }
