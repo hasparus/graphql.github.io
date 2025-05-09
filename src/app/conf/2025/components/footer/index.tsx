@@ -22,7 +22,7 @@ export function Footer({
   return (
     <footer className="gql-all-anchors-focusable relative !bg-neu-100 text-neu-900 typography-menu dark:!bg-neu-0 max-md:px-0 max-md:pt-0">
       <Stripes />
-      <div className="flex flex-wrap justify-between gap-4 border-neu-400 p-4 max-md:w-full max-md:border-b lg:p-10">
+      <div className="flex flex-wrap justify-between gap-4 p-4 max-md:w-full lg:p-10">
         {logo}
         <div className="flex gap-x-4 gap-y-2 typography-body-lg">
           <p className="flex items-center gap-2">
@@ -33,7 +33,7 @@ export function Footer({
           <address className="not-italic">Amsterdam, Netherlands</address>
         </div>
       </div>
-      <ul className="grid grid-cols-2 gap-px bg-neu-400 py-px lg:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-px bg-neu-400 py-px dark:bg-neu-100 lg:grid-cols-4">
         {links.map((box, i) => (
           <li className="bg-neu-100 dark:bg-neu-0 lg:h-32" key={i}>
             <FooterBox box={box} />
@@ -95,8 +95,8 @@ function Stripes() {
       style={{
         maskImage: `url(${blurBean.src})`,
         WebkitMaskImage: `url(${blurBean.src})`,
-        maskPosition: "center 200px",
-        WebkitMaskPosition: "center 200px",
+        maskPosition: "center 250px",
+        WebkitMaskPosition: "center 250px",
         maskSize: "200% 100%",
         WebkitMaskSize: "200% 100%",
         maskRepeat: "no-repeat",
