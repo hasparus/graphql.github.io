@@ -22,7 +22,7 @@ export function Footer({
   return (
     <footer className="gql-all-anchors-focusable relative !bg-neu-100 text-neu-900 typography-menu dark:!bg-neu-0 max-md:px-0 max-md:pt-0">
       <Stripes />
-      <div className="flex flex-wrap justify-between gap-4 p-4 max-md:w-full lg:p-10">
+      <div className="flex flex-wrap justify-between gap-4 px-6 py-4 max-md:w-full lg:py-10">
         {logo}
         <div className="flex gap-x-4 gap-y-2 typography-body-lg">
           <p className="flex items-center gap-2">
