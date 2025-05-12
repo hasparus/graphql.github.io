@@ -10,7 +10,7 @@ const keywords = [
 
 export function MarqueeUnderHero() {
   return (
-    <section className="py-6 font-mono text-xl/none text-pri-base md:pt-12 md:text-[56px]/none lg:pt-16 xl:pt-24">
+    <section className="space-y-2 pt-6 font-mono text-xl/none text-pri-base md:pt-12 md:text-[56px]/none lg:pt-16 xl:pt-24">
       {keywords.map((row, i) => (
         <Marquee
           key={i}

@@ -22,7 +22,7 @@ export default function Page() {
       <Hero />
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <MarqueeUnderHero />
-        <RegisterToday className="md:mb-8 md:mt-24" />
+        <RegisterToday className="md:mb-8 md:mt-16" />
         <WhatToExpectSection className="md:mb-8 md:mt-24" />
         <TopMindsSection className="md:mb-8 md:mt-24" hasSpeakersPage={false} />
       </div>

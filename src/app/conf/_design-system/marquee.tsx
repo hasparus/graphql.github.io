@@ -97,11 +97,11 @@ export function Marquee({
       <motion.div
         className="flex w-max"
         drag="x"
-        onDragStart={event => {
-          ;(event.target as HTMLElement).style.cursor = "grabbing"
+        onDragStart={() => {
+          document.documentElement.style.cursor = "grabbing"
         }}
-        onDragEnd={event => {
-          ;(event.target as HTMLElement).style.cursor = "initial"
+        onDragEnd={() => {
+          document.documentElement.style.cursor = "initial"
         }}
         style={{
           ...(direction === "horizontal"
@@ -114,6 +114,16 @@ export function Marquee({
         ref={ref}
         {...hoverProps}
       >
+        {children}
+        {children}
+        {children}
+        {children}
+        {children}
+        {children}
+        {children}
+        {children}
+        {children}
+        {children}
         {children}
         {children}
       </motion.div>
