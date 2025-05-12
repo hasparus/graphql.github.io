@@ -11,6 +11,7 @@ import { GetYourTicket } from "./components/get-your-ticket"
 import { RegisterSection } from "./components/register-section"
 import { Sponsors } from "./components/sponsors"
 import { GraphQLFoundationCard } from "./components/graphql-foundation-card"
+import { MarqueeUnderHero } from "./components/marquee-under-hero"
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
 }
@@ -20,6 +21,7 @@ export default function Page() {
     <main className="gql-all-anchors-focusable antialiased">
       <Hero />
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
+        <MarqueeUnderHero />
         <RegisterToday className="md:mb-8 md:mt-24" />
         <WhatToExpectSection className="md:mb-8 md:mt-24" />
         <TopMindsSection className="md:mb-8 md:mt-24" hasSpeakersPage={false} />
