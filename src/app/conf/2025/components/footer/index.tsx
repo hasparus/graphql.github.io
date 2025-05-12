@@ -3,6 +3,7 @@ import { ReactNode } from "react"
 import { clsx } from "clsx"
 
 import { SocialIcons } from "../../../_components/social-icons"
+import { StripesDecoration } from "../../../_design-system/stripes-decoration"
 
 import blurBean from "./blur-bean.webp"
 
@@ -66,11 +67,6 @@ export function Footer({
   )
 }
 
-const maskEven =
-  "repeating-linear-gradient(to right, transparent, transparent 12px, black 12px, black 24px)"
-const maskOdd =
-  "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
-
 function Stripes() {
   return (
     <div
@@ -104,19 +100,9 @@ function Stripes() {
         maskOrigin: "top",
       }}
     >
-      <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,var(--start-1)_0%,var(--end-1)_200%)]"
-        style={{
-          maskImage: maskEven,
-          WebkitMaskImage: maskEven,
-        }}
-      />
-      <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,var(--start-2)_0%,var(--end-2)_200%)]"
-        style={{
-          maskImage: maskOdd,
-          WebkitMaskImage: maskOdd,
-        }}
+      <StripesDecoration
+        evenClassName="bg-[linear-gradient(180deg,var(--start-1)_0%,var(--end-1)_200%)]"
+        oddClassName="bg-[linear-gradient(180deg,var(--start-2)_0%,var(--end-2)_200%)]"
       />
     </div>
   )

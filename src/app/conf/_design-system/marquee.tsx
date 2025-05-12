@@ -2,7 +2,7 @@
 
 import { clsx } from "clsx"
 import { useMotionValue, animate, motion } from "motion/react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Fragment } from "react"
 import useMeasure from "react-use-measure"
 
 export interface MarqueeProps {
@@ -13,6 +13,7 @@ export interface MarqueeProps {
   direction?: "horizontal" | "vertical"
   reverse?: boolean
   className?: string
+  drag?: boolean
 }
 
 export function Marquee({
@@ -23,6 +24,7 @@ export function Marquee({
   direction = "horizontal",
   reverse = false,
   className,
+  drag = false,
 }: MarqueeProps) {
   const [currentSpeed, setCurrentSpeed] = useState(speed)
   const [ref, { width, height }] = useMeasure()
@@ -89,20 +91,32 @@ export function Marquee({
             setIsTransitioning(true)
             setCurrentSpeed(speed)
           },
+          onPointerUp: () => {
+            if (window.matchMedia("(hover: none)").matches) {
+              setIsTransitioning(true)
+              setCurrentSpeed(speed)
+            }
+          },
         }
       : {}
+
+  const multiples = drag ? 12 : 2
+  const dragProps = drag
+    ? {
+        drag: "x" as const,
+        onDragStart: () => {
+          document.documentElement.style.cursor = "grabbing"
+        },
+        onDragEnd: () => {
+          document.documentElement.style.cursor = "initial"
+        },
+      }
+    : {}
 
   return (
     <div className={clsx("overflow-hidden", className)}>
       <motion.div
         className="flex w-max"
-        drag="x"
-        onDragStart={() => {
-          document.documentElement.style.cursor = "grabbing"
-        }}
-        onDragEnd={() => {
-          document.documentElement.style.cursor = "initial"
-        }}
         style={{
           ...(direction === "horizontal"
             ? { x: translation }
@@ -112,20 +126,12 @@ export function Marquee({
           alignItems: "center",
         }}
         ref={ref}
+        {...dragProps}
         {...hoverProps}
       >
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
-        {children}
+        {Array.from({ length: multiples }).map((_, i) => (
+          <Fragment key={i}>{children}</Fragment>
+        ))}
       </motion.div>
     </div>
   )
