@@ -85,7 +85,7 @@ function Stripes() {
         dark:[--end-1:hsl(var(--color-pri-base)/.9)]
 
         [--start-2:transparent]
-        [--end-2:hsl(var(--color-pri-dark)/0.8)]
+        [--end-2:hsl(var(--color-pri-base)/.6)]
         dark:[--start-2:rgba(255,204,239,.1)]
         dark:[--end-2:hsl(var(--color-pri-base)/.8)]
 
@@ -95,8 +95,8 @@ function Stripes() {
       style={{
         maskImage: `url(${blurBean.src})`,
         WebkitMaskImage: `url(${blurBean.src})`,
-        maskPosition: "center 250px",
-        WebkitMaskPosition: "center 250px",
+        maskPosition: "center 260px",
+        WebkitMaskPosition: "center 260px",
         maskSize: "200% 100%",
         WebkitMaskSize: "200% 100%",
         maskRepeat: "no-repeat",
