@@ -14,6 +14,7 @@ export interface MarqueeProps {
   reverse?: boolean
   className?: string
   drag?: boolean
+  separator?: React.ReactNode
 }
 
 export function Marquee({
@@ -25,6 +26,7 @@ export function Marquee({
   reverse = false,
   className,
   drag = false,
+  separator,
 }: MarqueeProps) {
   const [currentSpeed, setCurrentSpeed] = useState(speed)
   const [ref, { width, height }] = useMeasure()
@@ -130,7 +132,10 @@ export function Marquee({
         {...hoverProps}
       >
         {Array.from({ length: multiples }).map((_, i) => (
-          <Fragment key={i}>{children}</Fragment>
+          <Fragment key={i}>
+            {children}
+            {separator}
+          </Fragment>
         ))}
       </motion.div>
     </div>

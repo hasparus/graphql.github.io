@@ -11,17 +11,28 @@ import { GetYourTicket } from "./components/get-your-ticket"
 import { RegisterSection } from "./components/register-section"
 import { Sponsors } from "./components/sponsors"
 import { GraphQLFoundationCard } from "./components/graphql-foundation-card"
-import { MarqueeUnderHero } from "./components/marquee-under-hero"
+import { MarqueeRows } from "./components/marquee-rows"
+
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
 }
 
+const HERO_MARQUEE_ITEMS = [
+  ["COMMUNITY", "DEVELOPER EXPERIENCE", "APIs", "TOOLS & LIBRARIES"],
+  ["OPEN SOURCE", "FEDERATION", "ECOSYSTEMS", "TRACING & OBSERVABILITY"],
+  ["BEST PRACTICES", "WORKSHOPS", "SCHEMAS", "SECURITY"],
+]
+
 export default function Page() {
   return (
-    <main className="gql-all-anchors-focusable antialiased">
+    <main className="gql-all-anchors-focusable">
       <Hero />
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
-        <MarqueeUnderHero />
+        <MarqueeRows
+          variant="primary"
+          className="pt-4 max-sm:pb-1 sm:pt-6 md:space-y-2 md:pt-12 xl:pt-16"
+          items={HERO_MARQUEE_ITEMS}
+        />
         <RegisterToday className="md:mb-8 md:mt-16" />
         <WhatToExpectSection className="md:mb-8 md:mt-24" />
         <TopMindsSection className="md:mb-8 md:mt-24" hasSpeakersPage={false} />
@@ -34,9 +45,33 @@ export default function Page() {
         <Sponsors heading="Thanks to our 2024 sponsors!" />
         <Sponsor />
         <CallForProposals />
+        <MarqueeRows
+          variant="secondary"
+          items={[
+            ["AMSTERDAM", "SEPTEMBER 2025", "THREE DAYS", "PAKHUIS DE ZWIJGER"],
+            [
+              "THREE DAYS",
+              "PAKHUIS DE ZWIJGER",
+              "NETHERLANDS",
+              "PIET HEINKADE 179",
+            ],
+            [
+              "NETHERLANDS",
+              "10 YEARS OF GRAPHQL",
+              "8-10 SEPTEMBER",
+              "AMSTERDAM",
+            ],
+          ]}
+          className="my-8 xl:mb-16 xl:mt-10 2xl:mb-24"
+        />
         <Venue />
         <GraphQLFoundationCard />
         <FAQ />
+        <MarqueeRows
+          variant="secondary"
+          items={HERO_MARQUEE_ITEMS}
+          className="my-8 xl:my-16"
+        />
       </div>
     </main>
   )

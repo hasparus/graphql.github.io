@@ -1,4 +1,4 @@
-import { Fragment } from "react"
+import { Fragment, ReactNode } from "react"
 
 import { Marquee } from "@/app/conf/_design-system/marquee"
 
@@ -6,18 +6,41 @@ import CodeIcon from "../../pixelarticons/code.svg?svgr"
 
 import blurWave from "./blur.webp"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
+import { clsx } from "clsx"
 
-const keywords = [
-  ["COMMUNITY", "DEVELOPER EXPERIENCE", "APIs", "TOOLS & LIBRARIES"],
-  ["OPEN SOURCE", "FEDERATION", "ECOSYSTEMS", "TRACING & OBSERVABILITY"],
-  ["BEST PRACTICES", "WORKSHOPS", "SCHEMAS", "SECURITY"],
-]
+export interface MarqueeRowsProps extends React.HTMLAttributes<HTMLDivElement> {
+  items: ReactNode[][]
+  variant: "primary" | "secondary"
+}
 
-export function MarqueeUnderHero() {
+export function MarqueeRows({
+  items,
+  className,
+  variant,
+  ...rest
+}: MarqueeRowsProps) {
+  const separator = (
+    <CodeIcon
+      className={clsx(
+        "size-8 md:size-10",
+        variant === "primary"
+          ? "text-pri-dark dark:text-pri-light"
+          : "text-pri-base",
+      )}
+    />
+  )
+
   return (
-    <section className="relative pt-4 font-mono text-xl/none text-pri-base max-sm:pb-1 sm:pt-6 md:space-y-2 md:pt-12 md:text-[56px]/none xl:pt-16">
-      <Stripes />
-      {keywords.map((row, i) => (
+    <section
+      className={clsx(
+        "relative font-mono text-xl/none md:text-[56px]/none",
+        variant === "primary" ? "text-pri-base" : "text-neu-900",
+        className,
+      )}
+      {...rest}
+    >
+      {variant === "primary" && <Stripes />}
+      {items.map((row, i) => (
         <Marquee
           key={i}
           gap={16}
@@ -26,13 +49,12 @@ export function MarqueeUnderHero() {
           className="relative *:select-none"
           reverse={i % 2 === 1}
           drag
+          separator={separator}
         >
-          {row.map((keyword, j) => (
-            <Fragment key={keyword}>
-              <span>{keyword}</span>
-              {j !== row.length - 1 && (
-                <CodeIcon className="size-8 text-pri-dark dark:text-pri-light md:size-10" />
-              )}
+          {row.map((item, j) => (
+            <Fragment key={j}>
+              {item}
+              {j !== row.length - 1 && separator}
             </Fragment>
           ))}
         </Marquee>
