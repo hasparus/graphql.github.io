@@ -14,7 +14,7 @@ export function Hero() {
   return (
     <article className="gql-conf-navbar-strip relative isolate flex flex-col justify-center bg-pri-base text-neu-0 selection:bg-blk/40 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900 dark:selection:bg-white/40 before:dark:bg-blk/40">
       <article className="relative">
-        <Stripes />
+        <HeroStripes />
         <div className="gql-conf-container mx-auto flex max-w-full flex-col gap-12 overflow-hidden p-4 pt-6 sm:p-8 sm:pt-12 md:gap-12 md:bg-left md:p-12 lg:px-24 lg:pb-16 lg:pt-24">
           <div className="flex gap-10 max-md:flex-col md:justify-between">
             <h1 className="flex flex-wrap gap-2 typography-d1">
@@ -35,7 +35,7 @@ export function Hero() {
           </div>
 
           <div className="flex flex-col gap-8">
-            <DateAndLocation />
+            <HeroDateAndLocation />
             <Button className="md:w-fit" href={GET_TICKETS_LINK}>
               Get your tickets
             </Button>
@@ -55,7 +55,7 @@ export function Hero() {
   )
 }
 
-function DateAndLocation() {
+export function HeroDateAndLocation() {
   return (
     <div className="flex flex-col gap-4 typography-body-md md:flex-row md:gap-6">
       <div className="flex items-center gap-2">
@@ -77,7 +77,7 @@ const maskEven =
 const maskOdd =
   "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
 
-function Stripes() {
+export function HeroStripes() {
   return (
     <ImageLoaded
       role="presentation"

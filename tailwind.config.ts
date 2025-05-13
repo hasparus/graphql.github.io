@@ -73,11 +73,21 @@ const config: Config = {
       animation: {
         scroll:
           "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+        "arrow-left":
+          "arrow-left var(--animation-duration, .75s) var(--animation-direction, forwards) ease infinite",
       },
       keyframes: {
         scroll: {
           to: {
-            transform: "translate(calc(-50% - .5rem))",
+            transform: "translate(calc(-50% - .25rem))",
+          },
+        },
+        "arrow-left": {
+          "0%, 100%": {
+            transform: "translateX(0)",
+          },
+          "50%": {
+            transform: "translateX(-1.5px)",
           },
         },
       },
