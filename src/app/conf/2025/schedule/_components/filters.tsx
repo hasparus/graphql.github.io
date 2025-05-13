@@ -20,7 +20,7 @@ export function Filters({
       {Object.values(filterState).flat().length > 0 && (
         <button
           onClick={onReset}
-          className="flex cursor-pointer items-center gap-x-2 rounded-md bg-gray-200 px-2 py-1 text-sm font-medium text-gray-700 hover:bg-gray-300 hover:text-gray-900"
+          className="flex cursor-pointer items-center gap-x-2 bg-neu-100 px-2 py-1 text-neu-700 hover:bg-neu-200/80 hover:text-neu-900"
         >
           Reset filters <X className="inline-block size-4" />
         </button>
@@ -38,15 +38,7 @@ export function Filters({
             <div className="py-1">
               {categories.map(option => (
                 <Menu.Item key={option.name}>
-                  <span
-                    className={clsx(
-                      filterState[option.name].length > 0
-                        ? "font-medium text-gray-900"
-                        : "text-gray-500",
-                    )}
-                  >
-                    {option.name}
-                  </span>
+                  <span>{option.name}</span>
                 </Menu.Item>
               ))}
             </div>
@@ -61,20 +53,20 @@ export function Filters({
             id={`desktop-menu-${sectionIdx}`}
             className="relative inline-block text-left"
           >
-            <Popover.Button className="group inline-flex cursor-pointer items-center justify-center bg-inherit p-1 px-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+            <Popover.Button className="group inline-flex cursor-pointer items-center justify-center bg-inherit p-1 px-2 text-neu-700 hover:text-neu-900">
               <span>{section.name}</span>
               {filterState[section.name].length ? (
-                <span className="ml-1.5 rounded bg-gray-200 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-gray-700">
+                <span className="ml-1.5 bg-neu-200 px-1.5 py-0.5 tabular-nums text-neu-700">
                   {filterState[section.name].length}
                 </span>
               ) : null}
               <ChevronDown
-                className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
+                className="-mr-1 ml-1 size-5 shrink-0 text-neu-400 group-hover:text-neu-500"
                 aria-hidden="true"
               />
             </Popover.Button>
 
-            <Popover.Panel className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-lg focus:outline-none">
+            <Popover.Panel className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-neu-0 p-4 shadow-lg focus:outline-none">
               <form className="space-y-4">
                 {section.options.map((option, optionIdx) => (
                   <div key={option} className="flex items-center gap-3">
@@ -88,11 +80,11 @@ export function Filters({
                       }}
                       checked={filterState[section.name].includes(option)}
                       type="checkbox"
-                      className="size-4 cursor-pointer rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="size-4 cursor-pointer rounded border-neu-300 text-indigo-600 focus:ring-indigo-500"
                     />
                     <label
                       htmlFor={`filter-${section.name}-${optionIdx}`}
-                      className="cursor-pointer whitespace-nowrap pr-6 text-sm font-medium text-gray-900"
+                      className="cursor-pointer whitespace-nowrap pr-6 text-neu-900"
                     >
                       {option}
                     </label>

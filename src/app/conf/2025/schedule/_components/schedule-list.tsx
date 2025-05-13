@@ -79,7 +79,7 @@ interface Props {
   showFilter?: boolean
   scheduleData: ScheduleSession[]
   filterSchedule?: (sessions: ScheduleSession[]) => ScheduleSession[]
-  year: "2025"
+  year: "2025" | "2024"
   eventsColors: Record<string, string>
   filterCategories: {
     name: CategoryName
@@ -117,7 +117,6 @@ export function ScheduleList({
 
   return (
     <>
-      <div className="my-6 h-0.5 bg-gray-200" />
       {showFilter && (
         <Filters
           categories={filterCategories}
@@ -142,7 +141,7 @@ export function ScheduleList({
         />
       )}
       {Object.entries(sessionsState).length === 0 ? (
-        <div className="text-sm text-gray-800">
+        <div className="typography-body-sm">
           <h3 className="mb-5">No sessions found</h3>
         </div>
       ) : (
@@ -155,7 +154,7 @@ export function ScheduleList({
                 <a
                   href={`#day-${(year === "2024" ? 1 : 0) + index + 1}`}
                   key={date}
-                  className={"text-xs text-gray-800 hover:underline"}
+                  className={"typography-link"}
                 >
                   Day {index + 1}
                 </a>
@@ -163,23 +162,26 @@ export function ScheduleList({
           </div>
           {Object.entries(sessionsState).map(
             ([date, concurrentSessionsGroup], index) => (
-              <div key={date} className="text-sm text-gray-800">
-                <h3 className="mb-5" id={`day-${index + 1}`}>
+              <div
+                key={date}
+                className="bg-neu-200 typography-body-sm dark:bg-neu-50"
+              >
+                <h3
+                  className="bg-neu-50 py-4 dark:bg-neu-0"
+                  id={`day-${index + 1}`}
+                >
                   {format(parseISO(date), "EEEE, MMMM d")}
                 </h3>
                 {Object.entries(concurrentSessionsGroup).map(
                   ([sessionDate, sessions]) => (
                     <div key={`concurrent sessions on ${sessionDate}`}>
-                      <div className="mb-4 flex flex-col lg:flex-row">
-                        <div className="relative">
-                          <span className="mb-5 mt-3 inline-block w-20 whitespace-nowrap text-gray-500 lg:mr-7 lg:mt-0 lg:w-28">
+                      <div className="mb-px flex flex-col lg:mr-px lg:flex-row">
+                        <div className="relative bg-neu-50 dark:border-neu-50 dark:bg-neu-0 lg:border-r">
+                          <span className="inline-block w-20 whitespace-nowrap pb-4 typography-body-sm lg:mr-6 lg:mt-3 lg:w-28">
                             {format(parseISO(sessionDate), "hh:mmaaaa 'PDT'")}
                           </span>
-                          <div className="absolute right-3 top-0 hidden h-full w-0.5 bg-gray-200 lg:block" />
                         </div>
-                        <div className="relative flex w-full flex-col items-end gap-5 pl-[28px] lg:flex-row lg:items-start lg:pl-0">
-                          <div className="absolute left-3 top-0 block h-full w-0.5 bg-gray-200 lg:hidden" />
-
+                        <div className="relative flex w-full flex-col items-end gap-px pl-[28px] lg:flex-row lg:items-start lg:pl-0">
                           {sessions.map(session => {
                             const eventType = session.event_type.endsWith("s")
                               ? session.event_type.slice(0, -1)
@@ -195,17 +197,12 @@ export function ScheduleList({
                               formattedSpeakers,
                             )
 
-                            const borderColor = eventsColors[session.event_type]
+                            const eventColor = eventsColors[session.event_type]
 
                             return session.event_type === "Breaks" ? (
                               <div
                                 key={session.id}
-                                style={{
-                                  borderLeft: `10px solid ${borderColor}`,
-                                  borderRadius: "5px",
-                                  backgroundColor: "white",
-                                }}
-                                className="flex size-full items-center rounded-md px-4 py-2 font-normal text-black shadow-[-5px_10px_30px_20px_#d0d3da33]"
+                                className="flex size-full items-center bg-neu-0 px-4 py-2 font-normal"
                               >
                                 {showEventType ? eventType + " / " : ""}
                                 {eventTitle}
@@ -216,22 +213,25 @@ export function ScheduleList({
                                 data-tooltip-id="my-tooltip"
                                 href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
                                 key={session.id}
-                                style={{
-                                  borderLeft: `10px solid ${borderColor}`,
-                                  borderRadius: "5px",
-                                  backgroundColor: "white",
-                                }}
-                                className="group relative size-full rounded-md px-4 py-2 font-normal text-black no-underline shadow-[-5px_10px_30px_20px_#d0d3da33] hover:no-underline"
+                                className="group relative size-full bg-neu-0 px-4 py-2 font-normal no-underline [&:hover_*]:!no-underline"
                               >
-                                <div className="flex h-full flex-col justify-start gap-y-2 py-3">
-                                  {borderColor && (
+                                <span className="flex h-full flex-col justify-start gap-y-2 py-3">
+                                  {eventColor && (
                                     <span
-                                      className="mb-3 flex items-center justify-center self-start rounded-3xl border px-3 py-1 text-white group-hover:no-underline"
+                                      className="relative mb-3 flex items-center justify-center self-start border px-2 py-1 font-mono text-xs/none uppercase"
                                       style={{
-                                        backgroundColor: borderColor,
+                                        borderColor: eventColor,
                                       }}
                                     >
-                                      {eventType}
+                                      <span
+                                        className="absolute inset-0 opacity-20"
+                                        style={{
+                                          backgroundColor: eventColor,
+                                        }}
+                                      />
+                                      <span className="relative">
+                                        {eventType}
+                                      </span>
                                     </span>
                                   )}
                                   <div className="flex h-full flex-col justify-between gap-y-2 group-hover:underline">
@@ -260,7 +260,7 @@ export function ScheduleList({
                                       </span>
                                     </div>
                                   </div>
-                                </div>
+                                </span>
                               </a>
                             )
                           })}
