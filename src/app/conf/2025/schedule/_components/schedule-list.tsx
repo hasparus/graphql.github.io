@@ -8,11 +8,13 @@ import { SchedSpeaker } from "@/app/conf/2023/types"
 
 import { Filters } from "./filters"
 import {
-  ScheduleSession,
+  type ScheduleSession,
   CategoryName,
   ConcurrentSessions,
   ScheduleSessionsByDay,
 } from "./session-list"
+import { PinIcon } from "../../pixelarticons/pin-icon"
+import { Tag } from "@/app/conf/_design-system/tag"
 
 function isString(x: any) {
   return Object.prototype.toString.call(x) === "[object String]"
@@ -164,10 +166,10 @@ export function ScheduleList({
             ([date, concurrentSessionsGroup], index) => (
               <div
                 key={date}
-                className="bg-neu-200 typography-body-sm dark:bg-neu-50"
+                className="bg-neu-200 pt-px typography-body-sm dark:bg-neu-50"
               >
                 <h3
-                  className="bg-neu-50 py-4 dark:bg-neu-0"
+                  className="bg-neu-50 py-4 dark:bg-neu-0 lg:mb-px"
                   id={`day-${index + 1}`}
                 >
                   {format(parseISO(date), "EEEE, MMMM d")}
@@ -175,95 +177,22 @@ export function ScheduleList({
                 {Object.entries(concurrentSessionsGroup).map(
                   ([sessionDate, sessions]) => (
                     <div key={`concurrent sessions on ${sessionDate}`}>
-                      <div className="mb-px flex flex-col lg:mr-px lg:flex-row">
-                        <div className="relative bg-neu-50 dark:border-neu-50 dark:bg-neu-0 lg:border-r">
-                          <span className="inline-block w-20 whitespace-nowrap pb-4 typography-body-sm lg:mr-6 lg:mt-3 lg:w-28">
+                      <div className="mb-px mr-px flex flex-col max-lg:ml-px lg:flex-row">
+                        <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:border-x lg:mr-px">
+                          <span className="mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 typography-body-sm lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
                             {format(parseISO(sessionDate), "hh:mmaaaa 'PDT'")}
                           </span>
                         </div>
-                        <div className="relative flex w-full flex-col items-end gap-px pl-[28px] lg:flex-row lg:items-start lg:pl-0">
-                          {sessions.map(session => {
-                            const eventType = session.event_type.endsWith("s")
-                              ? session.event_type.slice(0, -1)
-                              : session.event_type
-
-                            const speakers = session.speakers
-                            const formattedSpeakers = isString(speakers || [])
-                              ? (speakers as string)?.split(",")
-                              : (speakers as SchedSpeaker[])?.map(e => e.name)
-                            const eventTitle = getEventTitle(
-                              // @ts-expect-error fixme
-                              session,
-                              formattedSpeakers,
-                            )
-
-                            const eventColor = eventsColors[session.event_type]
-
-                            return session.event_type === "Breaks" ? (
-                              <div
-                                key={session.id}
-                                className="flex size-full items-center bg-neu-0 px-4 py-2 font-normal"
-                              >
-                                {showEventType ? eventType + " / " : ""}
-                                {eventTitle}
-                              </div>
-                            ) : (
-                              <a
-                                id={`session-${session.id}`}
-                                data-tooltip-id="my-tooltip"
-                                href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
-                                key={session.id}
-                                className="group relative size-full bg-neu-0 px-4 py-2 font-normal no-underline [&:hover_*]:!no-underline"
-                              >
-                                <span className="flex h-full flex-col justify-start gap-y-2 py-3">
-                                  {eventColor && (
-                                    <span
-                                      className="relative mb-3 flex items-center justify-center self-start border px-2 py-1 font-mono text-xs/none uppercase"
-                                      style={{
-                                        borderColor: eventColor,
-                                      }}
-                                    >
-                                      <span
-                                        className="absolute inset-0 opacity-20"
-                                        style={{
-                                          backgroundColor: eventColor,
-                                        }}
-                                      />
-                                      <span className="relative">
-                                        {eventType}
-                                      </span>
-                                    </span>
-                                  )}
-                                  <div className="flex h-full flex-col justify-between gap-y-2 group-hover:underline">
-                                    {showEventType ? eventType + " / " : ""}
-                                    {eventTitle}
-                                    <div className="flex flex-col">
-                                      {(speakers?.length || 0) > 0 && (
-                                        <span className="font-light">
-                                          {formattedSpeakers.join(", ")}
-                                        </span>
-                                      )}
-                                      <span className="mt-2 flex items-center font-bold text-gray-700">
-                                        <svg
-                                          className="mb-0.5 mr-1"
-                                          width="16px"
-                                          height="16px"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 384 512"
-                                        >
-                                          <path
-                                            fill="rgb(55, 65, 81)"
-                                            d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
-                                          />
-                                        </svg>
-                                        {session.venue}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </span>
-                              </a>
-                            )
-                          })}
+                        <div className="relative flex w-full flex-col items-end lg:flex-row lg:items-start lg:gap-px">
+                          {sessions.map(session => (
+                            <ScheduleSession
+                              key={session.id}
+                              session={session}
+                              showEventType={showEventType}
+                              year={year}
+                              eventsColors={eventsColors}
+                            />
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -275,5 +204,73 @@ export function ScheduleList({
         </>
       )}
     </>
+  )
+}
+
+function ScheduleSession({
+  session,
+  showEventType,
+  year,
+  eventsColors,
+}: {
+  session: ScheduleSession
+  showEventType: boolean | undefined
+  year: "2025" | "2024"
+  eventsColors: Record<string, string>
+}) {
+  const eventType = session.event_type.endsWith("s")
+    ? session.event_type.slice(0, -1)
+    : session.event_type
+
+  const speakers = session.speakers
+  const formattedSpeakers = isString(speakers || [])
+    ? (speakers as string)?.split(",")
+    : (speakers as SchedSpeaker[])?.map(e => e.name)
+
+  const eventTitle = getEventTitle(
+    // @ts-expect-error fixme
+    session,
+    formattedSpeakers,
+  )
+
+  const eventColor = eventsColors[session.event_type]
+
+  return session.event_type === "Breaks" ? (
+    <div className="flex size-full items-center bg-neu-0 px-4 py-2 font-normal">
+      {showEventType ? eventType + " / " : ""}
+      {eventTitle}
+    </div>
+  ) : (
+    <a
+      id={`session-${session.id}`}
+      data-tooltip-id="my-tooltip"
+      href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
+      className="group relative size-full bg-neu-0 p-4 font-normal no-underline focus-visible:z-[1] max-lg:mt-px"
+    >
+      <span className="flex h-full flex-col justify-start">
+        {eventColor && (
+          <Tag className="mb-3" color={eventColor}>
+            {eventType}
+          </Tag>
+        )}
+        <span className="flex h-full flex-col justify-between gap-y-2">
+          {showEventType ? eventType + " / " : ""}
+          <span className="typography-body-md group-hover:underline">
+            {eventTitle}
+          </span>
+          <span className="flex flex-col">
+            {(speakers?.length || 0) > 0 && (
+              <span className="typography-body-sm">
+                {formattedSpeakers.join(", ")}
+              </span>
+            )}
+            <span className="mt-2 flex items-center gap-0.5 typography-body-xs">
+              <PinIcon className="size-4 text-pri-base" />
+              {session.venue}
+            </span>
+          </span>
+        </span>
+      </span>
+    </a>
   )
 }
