@@ -55,7 +55,7 @@ export default function SpeakerPage({ params }: SpeakerProps) {
     }))
 
   return (
-    <div className="bg-[#f4f6f8] py-14 text-conf-black">
+    <div className="py-14">
       <section className="container flex flex-col">
         <div className="flex flex-col">
           <BackLink year="2025" kind="speakers" />

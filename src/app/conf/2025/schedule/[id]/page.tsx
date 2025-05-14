@@ -99,7 +99,7 @@ export default function SessionPage({ params }: SessionProps) {
 
   return (
     <main className="gql-all-anchors-focusable">
-      <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/40 dark:bg-pri-darker dark:before:bg-black/30" />
+      <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/40 dark:bg-pri-darker dark:before:bg-blk/30" />
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <div className="py-10">
           <section className="xs:px-0 mx-auto min-h-[80vh] flex-col justify-center px-2 md:container lg:justify-between">
@@ -156,7 +156,7 @@ export default function SessionPage({ params }: SessionProps) {
                                 href={social.url}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="flex items-center text-black"
+                                className="flex items-center text-blk"
                               >
                                 <SocialMediaIcon
                                   service={
