@@ -28,6 +28,10 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
     setMobileDrawerOpen(false)
   }, [pathname])
 
+  useEffect(() => {
+    document.body.style.overflow = mobileDrawerOpen ? "hidden" : "auto"
+  }, [mobileDrawerOpen])
+
   return (
     <>
       <div
@@ -36,23 +40,18 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
           mobileDrawerOpen ? "static" : "absolute",
         )}
       />
-      <div
-        // placeholder: the colors here on `before` must match the ones on Hero `before` strip
-        className="absolute h-[calc(var(--navbar-h)+1px)] w-full bg-pri-base before:absolute before:top-0 before:h-[calc(var(--navbar-h)+1px)] before:w-full before:bg-white/30 dark:bg-pri-darker dark:before:bg-black/40"
-      />
+      <NavbarPlaceholder className="bg-pri-base before:bg-white/30 dark:bg-pri-darker dark:before:bg-blk/40" />
       <header
         className={clsx(
-          "gql-all-anchors-focusable top-0 z-10 w-full border-b border-black/60 font-mono text-neu-900 antialiased dark:border-white/80",
-          mobileDrawerOpen
-            ? "fixed border-neu-900 dark:border-white"
-            : "sticky",
+          "gql-all-anchors-focusable sticky top-0 z-10 w-full border-b border-blk/60 font-mono text-neu-900 antialiased dark:border-white/80",
+          mobileDrawerOpen && "!border-neu-900 dark:!border-white",
         )}
       >
         <BackdropBlur />
         <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-4 lg:px-10">
           <GraphQLConfLogoLink year={year} />
 
-          <div className="mr-auto flex h-full flex-col justify-center whitespace-pre border-x border-black/60 px-4 typography-menu dark:border-white/80 max-xl:hidden">
+          <div className="mr-auto flex h-full flex-col justify-center whitespace-pre border-x border-blk/60 px-4 typography-menu dark:border-white/80 max-xl:hidden">
             <p className="flex items-center gap-2 text-sm">
               <time dateTime="2025-09-08">September 08</time>
               <span>-</span>
@@ -65,8 +64,9 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
 
           {mobileDrawerOpen && (
             <div
+              // menu overlay
               onClick={handleDrawerClick}
-              className="fixed inset-0 top-[calc(var(--navbar-h)+1px)] z-10 bg-neu-0/40 backdrop-blur-[6.4px]"
+              className="fixed inset-0 top-[calc(var(--navbar-h)+1px)] z-10 bg-white/40 backdrop-blur-[6.4px] dark:bg-blk/30"
             />
           )}
 
@@ -128,6 +128,22 @@ function BackdropBlur() {
         maskImage: mask,
         WebkitMaskImage: mask,
       }}
+    />
+  )
+}
+
+export function NavbarPlaceholder({
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      // placeholder: the colors here on `before` must match the ones on Hero `before` strip
+      className={clsx(
+        "absolute h-[calc(var(--navbar-h)+1px)] w-full before:absolute before:top-0 before:h-[calc(var(--navbar-h)+1px)] before:w-full",
+        className,
+      )}
+      {...rest}
     />
   )
 }
