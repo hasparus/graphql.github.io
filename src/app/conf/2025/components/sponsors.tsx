@@ -1,10 +1,4 @@
-import Stellate from "public/img/conf/Sponsors/Stellate.svg?svgr"
-import Hasura from "public/img/conf/Sponsors/Hasura.svg?svgr"
-import TheGuild from "public/img/conf/Sponsors/TheGuild.svg?svgr"
-import Apollo from "public/img/conf/Sponsors/Apollo.svg?svgr"
-import Tyk from "public/img/conf/Sponsors/Tyk.svg?svgr"
-import IBM from "public/img/conf/Sponsors/IBM.svg?svgr"
-import Graphweaver from "public/img/conf/Sponsors/Graphweaver.svg?svgr"
+import Grafbase from "public/img/conf/Sponsors/Grafbase.svg?svgr"
 
 import { clsx } from "clsx"
 import { ChevronRight } from "../pixelarticons/chevron-right"
@@ -15,20 +9,12 @@ interface Sponsor {
   link: string
 }
 
-const sponsorDiamond: Sponsor[] = [
-  { icon: TheGuild, name: "The Guild", link: "https://the-guild.dev" },
-  { icon: IBM, name: "IBM", link: "https://www.ibm.com/products/api-connect" },
-]
+const sponsorDiamond: Sponsor[] = []
 
-const sponsorGold: Sponsor[] = [
-  { icon: Apollo, name: "Apollo", link: "https://www.apollographql.com/" },
-  { icon: Graphweaver, name: "Graphweaver", link: "https://graphweaver.com" },
-  { icon: Hasura, name: "Hasura", link: "https://hasura.io" },
-]
+const sponsorGold: Sponsor[] = []
 
 const sponsorSilver: Sponsor[] = [
-  { icon: Stellate, name: "Stellate", link: "https://stellate.co" },
-  { icon: Tyk, name: "Tyk", link: "https://tyk.io/" },
+  { icon: Grafbase, name: "Grafbase", link: "https://grafbase.com/" },
 ]
 
 export interface SponsorsProps {
@@ -61,9 +47,9 @@ export function Sponsors({ heading }: SponsorsProps) {
       <h1 className="typography-h2">{heading}</h1>
 
       <div className="mt-10 md:mt-16">
-        {sponsorTiers.map(tier => (
-          <Tier key={tier.name} tier={tier} />
-        ))}
+        {sponsorTiers.map(
+          tier => tier.items.length > 0 && <Tier key={tier.name} tier={tier} />,
+        )}
       </div>
     </section>
   )
@@ -78,7 +64,7 @@ function Tier({ tier }: { tier: Tier }) {
       </h3>
       <div
         className={clsx(
-          "grid justify-center gap-x-8 gap-y-4 md:grid-cols-2 xl:grid-cols-3",
+          "grid justify-center gap-x-8 gap-y-4 sm:grid-cols-2 xl:grid-cols-3",
         )}
       >
         {tier.items.map(({ link, icon: Icon, name }, i) => (
