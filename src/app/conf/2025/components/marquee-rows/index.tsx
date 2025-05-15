@@ -33,7 +33,7 @@ export function MarqueeRows({
   return (
     <section
       className={clsx(
-        "relative font-mono text-xl/none md:text-[56px]/none",
+        "relative font-mono text-xl/none md:text-[56px]/none 3xl:[mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]",
         variant === "primary" ? "text-pri-base" : "text-neu-900",
         className,
       )}

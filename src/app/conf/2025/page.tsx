@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { Sponsor } from "./sponsorship"
+import { BecomeASponsor } from "./components/become-a-sponsor"
 import { Venue } from "./venue"
 import { FAQ } from "./faq"
 import { CallForProposals } from "./components/call-for-proposals"
@@ -40,38 +40,47 @@ export default function Page() {
       <div className="gql-conf-navbar-strip before:bg-white/40 before:dark:bg-pri-dark/[0.45]">
         <GetYourTicket />
       </div>
-      <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/50 before:dark:bg-blk/30">
-        <RegisterSection />
-        <Sponsors heading="Sponsors" />
-        <Sponsor />
-        <CallForProposals />
-        <MarqueeRows
-          variant="secondary"
-          items={[
-            ["AMSTERDAM", "SEPTEMBER 2025", "THREE DAYS", "PAKHUIS DE ZWIJGER"],
-            [
-              "THREE DAYS",
-              "PAKHUIS DE ZWIJGER",
-              "NETHERLANDS",
-              "PIET HEINKADE 179",
-            ],
-            [
-              "NETHERLANDS",
-              "10 YEARS OF GRAPHQL",
-              "8-10 SEPTEMBER",
-              "AMSTERDAM",
-            ],
-          ]}
-          className="my-8 xl:mb-16 xl:mt-10 2xl:mb-24"
-        />
-        <Venue />
-        <GraphQLFoundationCard />
-        <FAQ />
-        <MarqueeRows
-          variant="secondary"
-          items={HERO_MARQUEE_ITEMS}
-          className="my-8 xl:my-16"
-        />
+      <div className="gql-conf-navbar-strip text-neu-900 before:bg-white/50 before:dark:bg-blk/30">
+        <div className="gql-conf-container">
+          <RegisterSection />
+          <Sponsors heading="Sponsors" />
+        </div>
+        <BecomeASponsor />
+        <div className="gql-conf-container">
+          <CallForProposals />
+          <MarqueeRows
+            variant="secondary"
+            items={[
+              [
+                "AMSTERDAM",
+                "SEPTEMBER 2025",
+                "THREE DAYS",
+                "PAKHUIS DE ZWIJGER",
+              ],
+              [
+                "THREE DAYS",
+                "PAKHUIS DE ZWIJGER",
+                "NETHERLANDS",
+                "PIET HEINKADE 179",
+              ],
+              [
+                "NETHERLANDS",
+                "10 YEARS OF GRAPHQL",
+                "8-10 SEPTEMBER",
+                "AMSTERDAM",
+              ],
+            ]}
+            className="my-8 xl:mb-16 xl:mt-10 2xl:mb-24"
+          />
+          <Venue />
+          <GraphQLFoundationCard />
+          <FAQ />
+          <MarqueeRows
+            variant="secondary"
+            items={HERO_MARQUEE_ITEMS}
+            className="my-8 xl:my-16"
+          />
+        </div>
       </div>
     </main>
   )
