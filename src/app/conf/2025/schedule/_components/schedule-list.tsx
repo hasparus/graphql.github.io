@@ -123,14 +123,10 @@ export function ScheduleList({
         <Filters
           categories={filterCategories}
           filterState={filtersState}
-          onFilterChange={(category, option, checked) => {
+          onFilterChange={(category, newSelectedOptions) => {
             setFiltersState(prev => ({
               ...prev,
-              [category]: checked
-                ? [...prev[category as CategoryName], option]
-                : prev[category as CategoryName].filter(
-                    option => option !== option,
-                  ),
+              [category]: newSelectedOptions,
             }))
           }}
           onReset={() => {

@@ -1,11 +1,16 @@
-import { Menu, Popover, Transition } from "@headlessui/react"
-import { clsx } from "clsx"
-import { ChevronDown, X } from "lucide-react"
+import clsx from "clsx"
+import { useState } from "react"
+
+import CloseIcon from "@/app/conf/2025/pixelarticons/close.svg?svgr"
+import CaretDownIcon from "@/app/conf/2025/pixelarticons/caret-down.svg?svgr"
+import { Combobox } from "@headlessui/react"
+import { Tag } from "@/app/conf/_design-system/tag"
+import { eventsColors } from "../../utils"
 
 type FiltersProps = {
   categories: { name: string; options: string[] }[]
   filterState: Record<string, string[]>
-  onFilterChange: (category: string, option: string, checked: boolean) => void
+  onFilterChange: (category: string, newSelectedOptions: string[]) => void
   onReset: () => void
 }
 
@@ -16,111 +21,209 @@ export function Filters({
   onReset,
 }: FiltersProps) {
   return (
-    <div className="flex justify-center gap-3 pb-10">
-      <Menu as="div" className="relative inline-block text-left">
-        <Transition
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
-        >
-          <Menu.Items className="absolute left-0 z-10 mt-2 w-40 origin-top-left rounded-md shadow-2xl ring-1 ring-blk/5 focus:outline-none">
-            <div className="py-1">
-              {categories.map(option => (
-                <Menu.Item key={option.name}>
-                  <span>{option.name}</span>
-                </Menu.Item>
-              ))}
-            </div>
-          </Menu.Items>
-        </Transition>
-      </Menu>
-      <Popover.Group className="flex items-baseline space-x-8">
-        {categories.map((category, sectionIdx) => (
-          <Popover
-            as="div"
-            key={category.name}
-            id={`desktop-menu-${sectionIdx}`}
-            className="relative inline-block text-left"
-          >
-            <Popover.Button className="group inline-flex cursor-pointer items-center justify-center bg-inherit p-1 px-2 text-neu-700 hover:text-neu-900">
-              <span>{category.name}</span>
-              {filterState[category.name].length ? (
-                <span className="ml-1.5 bg-neu-200 px-1.5 py-0.5 tabular-nums text-neu-700">
-                  {filterState[category.name].length}
-                </span>
-              ) : null}
-              <ChevronDown
-                className="-mr-1 ml-1 size-5 shrink-0 text-neu-400 group-hover:text-neu-500"
-                aria-hidden="true"
-              />
-            </Popover.Button>
-
-            <Popover.Panel className="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-neu-0 p-4 shadow-lg focus:outline-none">
-              <FilterOptions
-                category={category}
-                filterState={filterState}
-                onFilterChange={onFilterChange}
-              />
-            </Popover.Panel>
-          </Popover>
-        ))}
-      </Popover.Group>
+    <div className="flex flex-wrap justify-stretch gap-x-2 gap-y-4 pb-10">
+      {categories.map(category => (
+        <FiltersCombobox
+          key={category.name}
+          label={category.name}
+          options={category.options}
+          value={filterState[category.name] || []}
+          onChange={newSelectedOptions => {
+            onFilterChange(category.name, newSelectedOptions)
+          }}
+          placeholder={`Any ${category.name.toLowerCase()}`}
+          className="flex-1"
+        />
+      ))}
       {Object.values(filterState).flat().length > 0 && (
-        <ResetButton onReset={onReset} />
+        <div className="relative">
+          <ResetButton onReset={onReset} className="absolute top-[18px]" />
+        </div>
       )}
     </div>
   )
 }
 
-function ResetButton({ onReset }: { onReset: () => void }) {
+function ResetButton({
+  onReset,
+  className,
+}: {
+  onReset: () => void
+  className?: string
+}) {
   return (
     <button
+      title="Reset filters"
       onClick={onReset}
-      className="flex cursor-pointer items-center gap-x-2 bg-neu-100 px-2 py-1 text-neu-700 hover:bg-neu-200/80 hover:text-neu-900"
+      className={clsx(
+        "flex h-fit cursor-pointer items-center gap-x-2 bg-neu-100 p-2 text-neu-700 hover:bg-neu-200/80 hover:text-neu-900",
+        className,
+      )}
     >
-      Reset filters <X className="inline-block size-4" />
+      <CloseIcon className="inline-block size-4" />
     </button>
   )
 }
 
-interface FilterOptionsProps {
-  category: { name: string; options: string[] }
-  filterState: Record<string, string[]>
-  onFilterChange: (category: string, option: string, checked: boolean) => void
+interface FiltersComboboxProps {
+  label: string
+  options: string[]
+  value: string[]
+  onChange: (newSelectedOptions: string[]) => void
+  placeholder: string
+  className?: string
+}
+function FiltersCombobox({
+  label,
+  options,
+  value,
+  onChange,
+  placeholder,
+  className,
+}: FiltersComboboxProps) {
+  const [query, setQuery] = useState("")
+
+  const filteredOptions =
+    query === ""
+      ? options
+      : options.filter(option =>
+          option.toLowerCase().includes(query.toLowerCase()),
+        )
+
+  return (
+    <Combobox multiple nullable value={value} onChange={onChange}>
+      <div className={clsx("flex flex-col", className)}>
+        {label && (
+          <Combobox.Label className="mb-1 block font-mono font-medium uppercase text-neu-900 typography-menu">
+            {label}
+          </Combobox.Label>
+        )}
+        <label className="relative w-full border border-neu-500 bg-neu-0 p-2 leading-normal focus-within:outline-none focus-within:ring focus-within:ring-neu-300">
+          <Combobox.Input
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            className={clsx(
+              "text-neu-800 !outline-offset-0 typography-body-sm placeholder:text-neu-600 focus:outline-none max-lg:typography-body-md",
+            )}
+            placeholder={placeholder}
+            autoComplete="true"
+          />
+          <Combobox.Button
+            className={clsx(
+              "absolute inset-y-0 right-0 flex items-center px-2 focus:outline-none",
+            )}
+          >
+            <CaretDownIcon
+              className="ui-open:rotate-180 size-5 text-neu-400 transition-transform duration-150 group-hover:text-neu-500"
+              aria-hidden="true"
+            />
+          </Combobox.Button>
+          {value.length > 0 && (
+            <div className="inset-y-0 left-0 z-[1] mt-1 flex items-center overflow-x-auto pr-8">
+              <div className="flex flex-wrap items-center gap-1">
+                {value.map(item => (
+                  <Tag
+                    key={item}
+                    color={eventsColors[item] || "hsl(var(--color-neu-400))"}
+                  >
+                    {item}
+                  </Tag>
+                ))}
+              </div>
+            </div>
+          )}
+        </label>
+
+        <div className="relative">
+          <Combobox.Options
+            className={clsx(
+              "absolute z-10 -mt-px max-h-60 w-full overflow-auto border border-neu-500 bg-neu-0 p-1 text-base",
+            )}
+          >
+            {filteredOptions.map(option => (
+              <Combobox.Option key={option} value={option}>
+                {({ active, selected }) => (
+                  <FilterComboboxOption
+                    active={active}
+                    selected={selected}
+                    option={option}
+                  />
+                )}
+              </Combobox.Option>
+            ))}
+          </Combobox.Options>
+        </div>
+      </div>
+    </Combobox>
+  )
 }
 
-function FilterOptions({
-  category,
-  filterState,
-  onFilterChange,
-}: FilterOptionsProps) {
+interface CheckboxIconProps extends React.SVGProps<SVGSVGElement> {
+  checked: boolean
+}
+function CheckboxIcon({ checked, ...rest }: CheckboxIconProps) {
   return (
-    <form className="space-y-4">
-      {category.options.map((option, optionIdx) => (
-        <div key={option} className="flex items-center gap-3">
-          <input
-            id={`filter-${category.name}-${optionIdx}`}
-            name={`${category.name}[]`}
-            defaultValue={option}
-            onChange={e => {
-              const { checked, value } = e.target
-              onFilterChange(category.name, value, checked)
-            }}
-            checked={filterState[category.name].includes(option)}
-            type="checkbox"
-            className="size-4 cursor-pointer rounded border-neu-300"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      {...rest}
+    >
+      {!checked ? (
+        <>
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M2.5 2.5H4.16667H15.8333H17.5V17.5H15.8333H4.16667H2.5V2.5ZM15.8333 15.8333V4.16667H4.16667V15.8333H15.8333Z"
           />
-          <label
-            htmlFor={`filter-${category.name}-${optionIdx}`}
-            className="cursor-pointer whitespace-nowrap pr-6 text-neu-900"
-          >
-            {option}
-          </label>
-        </div>
-      ))}
-    </form>
+        </>
+      ) : (
+        <>
+          <rect x="2" y="3" width="15" height="15" />
+          <path d="M6 10.3333H7.66667V12H6V10.3333Z" fill="white" />
+          <path d="M7.66667 12H9.33333V13.6667H7.66667V12Z" fill="white" />
+          <path d="M9.33333 10.3333H11V12H9.33333V10.3333Z" fill="white" />
+          <path d="M11 8.66667H12.6667V10.3333H11V8.66667Z" fill="white" />
+          <path d="M12.6667 7H14.3333V8.66667H12.6667V7Z" fill="white" />
+        </>
+      )}
+    </svg>
+  )
+}
+
+function FilterComboboxOption({
+  active,
+  selected,
+  option,
+}: {
+  active: boolean
+  selected: boolean
+  option: string
+}) {
+  return (
+    <div
+      className={clsx(
+        "relative flex cursor-default select-none items-center p-1 font-sans typography-body-sm",
+        active && "bg-neu-100",
+      )}
+    >
+      <CheckboxIcon
+        className={clsx("size-5 shrink-0", active && "text-neu-700")}
+        checked={selected}
+      />
+      <div className="min-w-0 flex-1 overflow-hidden pl-1 [container-type:inline-size]">
+        <span
+          // eslint-disable-next-line tailwindcss/no-contradicting-classname
+          className={clsx(
+            "relative block w-fit min-w-full whitespace-nowrap pt-px transition-all [--delta-x:calc(-100%+100cqi)]",
+            active && "animate-show-overflow",
+          )}
+        >
+          {option}
+        </span>
+      </div>
+    </div>
   )
 }

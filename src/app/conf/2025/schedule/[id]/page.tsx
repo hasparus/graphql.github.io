@@ -15,6 +15,8 @@ import { ScheduleSession } from "../../../2023/types"
 import { SessionVideo } from "./session-video"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { BackLink } from "../_components/back-link"
+import { Tag } from "@/app/conf/_design-system/tag"
+import { eventsColors } from "../../utils"
 
 function getEventTitle(event: ScheduleSession, speakers: string[]): string {
   let { name } = event
@@ -59,24 +61,6 @@ export function generateStaticParams() {
   return schedule.filter(s => s.id).map(s => ({ id: s.id }))
 }
 
-const Tag = ({
-  text,
-  featured = false,
-}: {
-  text: string
-  featured?: boolean
-}) =>
-  !text ? null : (
-    <span
-      className={clsx(
-        "h-max whitespace-nowrap rounded-full border border-solid px-3 py-1 typography-tagline",
-        featured && "border-2 border-pri-darker bg-pri-darker text-white",
-      )}
-    >
-      {text}
-    </span>
-  )
-
 export default function SessionPage({ params }: SessionProps) {
   const event = schedule.find(s => s.id === params.id)
   if (!event) {
@@ -109,9 +93,31 @@ export default function SessionPage({ params }: SessionProps) {
             <div className="mx-auto mt-10 flex flex-col self-center sm:space-y-4">
               <div className="space-y-5">
                 <div className="flex flex-wrap gap-3">
-                  <Tag text={eventType} featured />
-                  <Tag text={event.audience} />
-                  <Tag text={event.event_subtype} />
+                  {eventType && (
+                    <Tag color={eventsColors[event.event_type]}>
+                      {eventType}
+                    </Tag>
+                  )}
+                  {event.audience && (
+                    <Tag
+                      color={
+                        eventsColors[event.audience] ||
+                        "hsl(var(--color-neu-700))"
+                      }
+                    >
+                      {event.audience}
+                    </Tag>
+                  )}
+                  {event.event_subtype && (
+                    <Tag
+                      color={
+                        eventsColors[event.event_subtype] ||
+                        "hsl(var(--color-sec-base))"
+                      }
+                    >
+                      {event.event_subtype}
+                    </Tag>
+                  )}
                 </div>
                 <h1 className="mt-0 typography-h1">{eventTitle}</h1>
                 <time dateTime={event.event_start} className="mt-4">
@@ -129,7 +135,7 @@ export default function SessionPage({ params }: SessionProps) {
                     key={speaker.username}
                   >
                     <Avatar
-                      className="size-[100px] rounded-full lg:size-[120px]"
+                      className="size-[100px] lg:size-[120px]"
                       avatar={speaker.avatar}
                       name={speaker.name}
                     />

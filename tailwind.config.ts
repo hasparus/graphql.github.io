@@ -75,6 +75,8 @@ const config: Config = {
           "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
         "arrow-left":
           "arrow-left var(--animation-duration, .75s) var(--animation-direction, forwards) ease infinite",
+        "show-overflow":
+          "show-overflow var(--animation-duration, 12s) var(--animation-delay, 1s) var(--animation-direction, forwards) ease infinite",
       },
       keyframes: {
         scroll: {
@@ -90,15 +92,23 @@ const config: Config = {
             transform: "translateX(-1.5px)",
           },
         },
+        "show-overflow": {
+          "0%, 100%": {
+            transform: "translateX(0)",
+          },
+          "25%, 75%": {
+            transform: "translateX(var(--delta-x))",
+          },
+        },
       },
     },
   },
   plugins: [
     typography,
     containerQueries,
-    plugin(({ addUtilities }) => {
+    plugin(({ addBase }) => {
       // heading styles
-      addUtilities({
+      addBase({
         ".typography-d1, .typography-h1, .typography-h2, .typography-h3": {
           lineHeight: "1.2",
         },
@@ -129,7 +139,7 @@ const config: Config = {
       })
 
       // paragraph styles
-      addUtilities({
+      addBase({
         ".typography-body-lg, .typography-body-md, .typography-body-sm, .typography-body-xs":
           {
             lineHeight: "1.5",
@@ -161,7 +171,7 @@ const config: Config = {
       })
 
       // other text styles
-      addUtilities({
+      addBase({
         ".typography-button, .typography-tagline": {
           fontSize: "16px",
           lineHeight: "1",
@@ -177,7 +187,7 @@ const config: Config = {
         },
       })
 
-      addUtilities({
+      addBase({
         ".typography-link": {
           color: "theme('colors.neu-800')",
           textDecoration: "underline",
