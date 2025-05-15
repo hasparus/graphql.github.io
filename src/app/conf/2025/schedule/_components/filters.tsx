@@ -98,12 +98,12 @@ function FiltersCombobox({
             {label}
           </Combobox.Label>
         )}
-        <label className="relative w-full border border-neu-500 bg-neu-0 p-2 leading-normal focus-within:outline-none focus-within:ring focus-within:ring-neu-300">
+        <label className="relative w-full border border-neu-500 p-2 focus-within:outline-none focus-within:ring focus-within:ring-neu-300 dark:focus-within:ring-neu-200">
           <Combobox.Input
             value={query}
             onChange={e => setQuery(e.target.value)}
             className={clsx(
-              "text-neu-800 !outline-offset-0 typography-body-sm placeholder:text-neu-600 focus:outline-none max-lg:typography-body-md",
+              "bg-transparent leading-none text-neu-800 !outline-offset-0 typography-body-sm [text-box:trim-both_cap_alphabetic] placeholder:text-neu-600 focus:outline-none max-lg:typography-body-md",
             )}
             placeholder={placeholder}
             autoComplete="true"
@@ -206,7 +206,7 @@ function FilterComboboxOption({
     <div
       className={clsx(
         "relative flex cursor-default select-none items-center p-1 font-sans typography-body-sm",
-        active && "bg-neu-100",
+        active && "bg-neu-100 dark:bg-neu-50",
       )}
     >
       <CheckboxIcon
