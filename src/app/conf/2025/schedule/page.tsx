@@ -9,6 +9,8 @@ import { Button } from "../../_design-system/button"
 import { GET_TICKETS_LINK } from "../links"
 import graphqlFoundationWordmarkSvg from "../assets/graphql-foundation-wordmark.svg"
 
+const year = "2025"
+
 export const metadata: Metadata = {
   title: "Schedule",
 }
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
 export default function SchedulePage() {
   return (
     <main className="gql-all-anchors-focusable bg-neu-50 dark:bg-neu-0">
-      <ScheduleHero />
+      <ScheduleHero year={year} />
       <div className="gql-conf-container gql-conf-section">
         <a
           href="https://graphqlconf2024.sched.com"
@@ -29,7 +31,7 @@ export default function SchedulePage() {
         <ScheduleList
           filterCategories={filterCategories2024}
           eventsColors={eventsColors}
-          year="2025"
+          year={year}
           scheduleData={schedule}
         />
       </div>
@@ -37,7 +39,7 @@ export default function SchedulePage() {
   )
 }
 
-function ScheduleHero() {
+function ScheduleHero({ year }: { year: "2025" }) {
   return (
     <article className="gql-conf-navbar-strip relative isolate flex flex-col justify-center bg-pri-base text-neu-0 selection:bg-blk/40 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900 dark:selection:bg-white/40 before:dark:bg-blk/40">
       <HeroStripes />
@@ -45,7 +47,7 @@ function ScheduleHero() {
         <div className="flex gap-10 max-md:flex-col md:justify-between">
           <div>
             <span className="text-sec-base typography-h3">
-              GraphQLConf 2025
+              GraphQLConf {year}
             </span>
             <h1 className="typography-d1">Schedule</h1>
           </div>
@@ -60,9 +62,10 @@ function ScheduleHero() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-8 pt-[18px]">
-          <Button className="md:w-fit" href={GET_TICKETS_LINK}>
-            Get your tickets
+        <div className="flex flex-row gap-4 pt-[18px]">
+          <Button href={GET_TICKETS_LINK}>Get your tickets</Button>
+          <Button variant="secondary" href={`/conf/${year}/speakers`}>
+            See the speakers
           </Button>
         </div>
       </div>
