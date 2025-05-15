@@ -13,12 +13,12 @@ export default function WhatToExpectSection({
       {...rest}
     >
       <h3 className="typography-h2 md:flex-1">What to expect</h3>
-      <dl className="flex flex-col gap-6 uppercase md:flex-1">
+      <ul className="flex flex-col gap-6 uppercase md:flex-1">
         <ListItem number="3" text="days" />
         <ListItem number="23" text="speakers" />
         <ListItem number="36" text="panels & workshops" />
         <ListItem number="1" text="unique venue" />
-      </dl>
+      </ul>
     </section>
   )
 }
