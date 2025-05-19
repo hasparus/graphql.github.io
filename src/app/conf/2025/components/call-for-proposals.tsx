@@ -382,6 +382,7 @@ export function CallForProposals() {
           >
             {tabsInOrder.map((tab, i) => (
               <TabButton
+                key={tab}
                 tab={tab}
                 tabIndex={i === 0 ? 0 : -1}
                 activeTab={activeTab}
