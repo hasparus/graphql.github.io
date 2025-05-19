@@ -2,7 +2,7 @@
 
 import { clsx } from "clsx"
 import { useMotionValue, animate, motion } from "motion/react"
-import { useState, useEffect, Fragment } from "react"
+import { useState, useEffect, Fragment, useRef } from "react"
 import useMeasure from "react-use-measure"
 
 export interface MarqueeProps {
@@ -102,19 +102,27 @@ export function Marquee({
         }
       : {}
 
-  const multiples = drag ? 12 : 2
   const dragProps = drag
     ? {
-        drag: "x" as const,
+        drag: direction === "horizontal" ? ("x" as const) : ("y" as const),
         onDragStart: () => {
           document.documentElement.style.cursor = "grabbing"
         },
         onDragEnd: () => {
           document.documentElement.style.cursor = "initial"
         },
+        dragConstraints:
+          direction === "horizontal"
+            ? {
+                right: 0,
+                // window.innerWidth won't be stale because resizing the window triggers useMeasure
+                left: window.innerWidth - width,
+              }
+            : {},
       }
     : {}
 
+  const multiples = 2
   return (
     <div className={clsx("overflow-hidden", className)}>
       <motion.div
@@ -131,10 +139,10 @@ export function Marquee({
         {...dragProps}
         {...hoverProps}
       >
-        {Array.from({ length: multiples }).map((_, i) => (
+        {Array.from({ length: 2 }).map((_, i) => (
           <Fragment key={i}>
             {children}
-            {separator}
+            {i < multiples - 1 && separator}
           </Fragment>
         ))}
       </motion.div>
