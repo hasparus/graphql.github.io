@@ -12,6 +12,9 @@ import { RegisterSection } from "./components/register-section"
 import { Sponsors } from "./components/sponsors"
 import { GraphQLFoundationCard } from "./components/graphql-foundation-card"
 import { MarqueeRows } from "./components/marquee-rows"
+import { CtaCardSection } from "./components/cta-card-section"
+import { Button } from "../_design-system/button"
+import { GET_TICKETS_LINK } from "./links"
 
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
@@ -75,6 +78,14 @@ export default function Page() {
           <Venue />
           <GraphQLFoundationCard />
           <FAQ />
+          <CtaCardSection
+            title="Get your ticket"
+            description="Join three transformative days of expert insights and innovation to shape the next decade of APIs!"
+          >
+            <Button variant="primary" href={GET_TICKETS_LINK}>
+              Get tickets
+            </Button>
+          </CtaCardSection>
           <MarqueeRows
             variant="secondary"
             items={HERO_MARQUEE_ITEMS}
