@@ -2,7 +2,7 @@
 
 import { clsx } from "clsx"
 import { useMotionValue, animate, motion } from "motion/react"
-import { useState, useEffect, Fragment, useRef } from "react"
+import { useState, useEffect, Fragment } from "react"
 import useMeasure from "react-use-measure"
 
 export interface MarqueeProps {
@@ -121,7 +121,10 @@ export function Marquee({
             ? {
                 right: 0,
                 // window.innerWidth won't be stale because resizing the window triggers useMeasure
-                left: window.innerWidth - width,
+                left:
+                  typeof window !== "undefined"
+                    ? window.innerWidth - width
+                    : undefined,
               }
             : {},
       }

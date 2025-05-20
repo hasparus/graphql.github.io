@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { clsx } from "clsx"
 import Image from "next-image-export-optimizer"
 import type { StaticImageData } from "next/image"
