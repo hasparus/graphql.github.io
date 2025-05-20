@@ -1,14 +1,11 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { motion, useMotionTemplate, useSpring } from "motion/react"
 import { clsx } from "clsx"
 import Image from "next-image-export-optimizer"
 import type { StaticImageData } from "next/image"
 
 import { Marquee } from "@/app/conf/_design-system/marquee"
-import ZoomInIcon from "../../pixelarticons/zoom-in.svg?svgr"
-import ZoomOutIcon from "../../pixelarticons/zoom-out.svg?svgr"
 
 import { imagesByYear } from "./images"
 
@@ -19,8 +16,6 @@ export interface GalleryStripProps extends React.HTMLAttributes<HTMLElement> {}
 
 export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
   const [selectedYear, setSelectedYear] = useState<Year>("2024")
-
-  const previousZoomedImage = useRef<HTMLElement | null>(null)
 
   return (
     <section
@@ -52,18 +47,12 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
           speedOnHover={15}
           drag
           reverse
-          className="!overflow-visible"
+          className="cursor-[var(--cursor-grabbing,grab)] !overflow-visible"
         >
           {imagesByYear[selectedYear].map((image, i) => {
             const key = `${selectedYear}-${i}`
 
-            return (
-              <GalleryStripImage
-                key={key}
-                image={image}
-                previousZoomedImage={previousZoomedImage}
-              />
-            )
+            return <GalleryStripImage key={key} image={image} />
           })}
         </Marquee>
       </div>
@@ -71,54 +60,9 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
   )
 }
 
-function GalleryStripImage({
-  image,
-  previousZoomedImage,
-}: {
-  image: StaticImageData
-  previousZoomedImage: React.MutableRefObject<HTMLElement | null>
-}) {
-  const [isZoomed, setIsZoomed] = useState(false)
-  const scale = useSpring(1)
-  const transform = useMotionTemplate`translate3d(0,0,var(--translate-z,-16px)) scale(${scale})`
-
-  // if we set scale in useEffect the UI glitches
-  const zoomIn = (current: HTMLElement | null) => {
-    if (previousZoomedImage.current) {
-      previousZoomedImage.current.style.zIndex = "0"
-      previousZoomedImage.current.style.setProperty("--translate-z", "0px")
-    }
-
-    if (current) {
-      current.style.zIndex = "2"
-      current.style.setProperty("--translate-z", "16px")
-    }
-
-    previousZoomedImage.current = current
-
-    scale.set(1.665625)
-    setIsZoomed(true)
-  }
-
-  const zoomOut = () => {
-    scale.set(1)
-    setIsZoomed(false)
-  }
-
+function GalleryStripImage({ image }: { image: StaticImageData }) {
   return (
-    <motion.div
-      role="presentation"
-      className="relative md:px-2"
-      style={{ transform }}
-      onPointerOut={event => {
-        const target = event.currentTarget
-        const relatedTarget = event.relatedTarget as Node | null
-
-        if (!relatedTarget || !target.contains(relatedTarget)) {
-          zoomOut()
-        }
-      }}
-    >
+    <div role="presentation" className="relative md:px-2">
       <Image
         src={image}
         alt=""
@@ -127,19 +71,6 @@ function GalleryStripImage({
         height={533}
         className="pointer-events-none aspect-[799/533] h-[320px] w-auto object-cover"
       />
-      <button
-        type="button"
-        className="absolute right-2 top-0 z-[1] bg-neu-50/10 p-4"
-        onClick={event => {
-          isZoomed ? zoomOut() : zoomIn(event.currentTarget.parentElement)
-        }}
-      >
-        {isZoomed ? (
-          <ZoomOutIcon className="size-12" />
-        ) : (
-          <ZoomInIcon className="size-12" />
-        )}
-      </button>
-    </motion.div>
+    </div>
   )
 }

@@ -107,9 +107,14 @@ export function Marquee({
         drag: direction === "horizontal" ? ("x" as const) : ("y" as const),
         onDragStart: () => {
           document.documentElement.style.cursor = "grabbing"
+          document.documentElement.style.setProperty(
+            "--cursor-grabbing",
+            "grabbing",
+          )
         },
         onDragEnd: () => {
           document.documentElement.style.cursor = "initial"
+          document.documentElement.style.removeProperty("--cursor-grabbing")
         },
         dragConstraints:
           direction === "horizontal"
