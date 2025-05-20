@@ -3,14 +3,46 @@ import { HTMLAttributes } from "react"
 import Image from "next-image-export-optimizer"
 import type { StaticImageData } from "next/image"
 
-import elizabethStone from "./speakers/elizabeth-stone.webp"
-import kamilKisiela from "./speakers/kamil-kisiela.webp"
-import rajeevRajan from "./speakers/rajeev-rajan.webp"
-import tanmaiGopal from "./speakers/tanmai-gopal.webp"
-import uriGoldshtein from "./speakers/uri-goldshtein.webp"
 import TwitterIcon from "@/icons/twitter.svg"
 import { Button } from "@/app/conf/_design-system/button"
 import { BECOME_A_SPEAKER_LINK } from "../../links"
+
+const previousConfSpeakers = {
+  benjie: {
+    name: "Benjie Gillam",
+    title: "GraphQL TSC & Spec",
+    src: "https://avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg",
+    twitter: "benjie",
+    linkedin: "benjiegillam",
+  },
+  kewei: {
+    name: "Kewei Qu",
+    title: "Meta — Senior Staff Software Engineer",
+    src: "https://avatars.sched.co/9/1a/18743864/avatar.jpg.320x320px.jpg",
+    twitter: "kewei_qu",
+    linkedin: "keweiqu",
+  },
+  donna: {
+    name: "Donna Zhou",
+    title: "Atlassian — Maintainer of GraphQL Java",
+    src: "https://avatars.sched.co/0/1d/18743879/avatar.jpg.320x320px.jpg?e1f",
+    linkedin: "donnazhou",
+  },
+  uri: {
+    name: "Uri Goldshtein",
+    title: "The Guild — Founder",
+    src: "https://avatars.sched.co/8/2b/14900013/avatar.jpg.320x320px.jpg?9f1",
+    twitter: "UriGoldshtein",
+    linkedin: "urigo",
+  },
+  alessia: {
+    name: "Alessia Bellisario",
+    title: "Apollo GraphQL — Staff Open Source Engineer",
+    src: "https://avatars.sched.co/a/c6/18743837/avatar.jpg.320x320px.jpg?847",
+    twitter: "alessbell",
+    linkedin: "alessiabellisario",
+  },
+}
 
 interface TopMindsSectionProps extends HTMLAttributes<HTMLElement> {
   hasSpeakersPage?: boolean
@@ -34,42 +66,22 @@ export default function TopMindsSection({
         <h3 className="mr-auto flex w-full grow text-pretty pb-6 pr-6 typography-h2 [@media(width>857px)]:basis-0">
           Meet the top industry minds
         </h3>
+        <SpeakerCard {...previousConfSpeakers.benjie} />
         <SpeakerCard
-          name="Uri Goldshtein"
-          title="The Guild — Founder"
-          src={uriGoldshtein}
-          linkedin="urigo"
-          twitter="UriGoldshtein"
-        />
-        <SpeakerCard
-          name="Elizabeth Stone"
-          title="Netflix — CTO"
-          src={elizabethStone}
-          linkedin="elizabeth-stone-608a754"
+          {...previousConfSpeakers.kewei}
           className="[@media(width<=742px)]:border-l"
         />
         <div className="flex grow border-sec-dark [@media(width<970px)]:contents [@media(width>=970px)]:border-t [@media(width>=970px)]:*:border-t-0">
           <SpeakerCard
-            name="Kamil Kisiela"
-            title="The Guild — Developer"
-            src={kamilKisiela}
-            linkedin="kamilkisiela"
-            twitter="kamilkisiela"
+            {...previousConfSpeakers.donna}
             className="[@media(744px<=width<=970px)]:first-of-type:border-l-0"
           />
           <SpeakerCard
-            name="Rajeev Rajan"
-            title="Atlassian — CTO"
-            src={rajeevRajan}
-            linkedin="rajeev-rajan"
+            {...previousConfSpeakers.uri}
             className="[@media(639px<=width<=970px)]:border-l"
           />
           <SpeakerCard
-            name="Tanmai Gopal"
-            title="Hasura — CEO & Co-Founder"
-            src={tanmaiGopal}
-            twitter="tanmaigo"
-            linkedin="tanmaig"
+            {...previousConfSpeakers.alessia}
             className="[@media(width<744px)]:border-l"
           />
           <div className="mt-6 flex shrink-0 basis-[content] items-end justify-stretch max-lg:w-full [@media(640px<=width<=855px)]:basis-[236px] [@media(width<=444px)]:*:w-full [@media(width>742px)]:justify-end [@media(width>742px)]:pl-6 [@media(width>855px)]:grow">
