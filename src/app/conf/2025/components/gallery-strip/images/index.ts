@@ -27,8 +27,8 @@ import image2024_13 from "./2024/13.webp"
 export const imagesByYear = {
   "2023": [
     image2023_8,
-    image2023_3,
     image2023_11,
+    image2023_3,
     image2023_1,
     image2023_13,
     image2023_6,
@@ -36,8 +36,8 @@ export const imagesByYear = {
     image2023_4,
     image2023_12,
     image2023_2,
-    image2023_7,
     image2023_10,
+    image2023_7,
     image2023_5,
   ],
   "2024": [
@@ -50,7 +50,7 @@ export const imagesByYear = {
     image2024_13,
     image2024_11,
     image2024_8,
-    image2024_1,
     image2024_4,
+    image2024_1,
   ],
 }

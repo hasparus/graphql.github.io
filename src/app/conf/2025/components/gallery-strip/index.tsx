@@ -52,7 +52,7 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
           {imagesByYear[selectedYear].map((image, i) => {
             const key = `${selectedYear}-${i}`
 
-            return <GalleryStripImage key={key} image={image} />
+            return <GalleryStripImage key={key} image={image} index={i} />
           })}
         </Marquee>
       </div>
@@ -60,16 +60,31 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
   )
 }
 
-function GalleryStripImage({ image }: { image: StaticImageData }) {
+function GalleryStripImage({
+  image,
+  index,
+}: {
+  image: StaticImageData
+  index: number
+}) {
   return (
     <div role="presentation" className="relative md:px-2">
       <Image
         src={image}
         alt=""
         role="presentation"
-        width={799}
-        height={533}
-        className="pointer-events-none aspect-[799/533] h-[320px] w-auto object-cover"
+        // intrinsic 799x533
+        height={320}
+        width={480}
+        className={clsx(
+          "pointer-events-none h-[320px] w-auto object-cover",
+          // Alternate between 3 widths
+          index % 4 === 2
+            ? "w-[200px]"
+            : index % 3 === 2
+              ? "w-[420px]"
+              : "w-[480px]",
+        )}
       />
     </div>
   )
