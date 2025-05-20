@@ -48,7 +48,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
         )}
       >
         <BackdropBlur />
-        <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-4 lg:px-10">
+        <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-4 md:px-6 2xl:px-10">
           <GraphQLConfLogoLink year={year} />
 
           <div className="mr-auto flex h-full flex-col justify-center whitespace-pre border-x border-blk/60 px-4 typography-menu dark:border-white/80 max-xl:hidden">
