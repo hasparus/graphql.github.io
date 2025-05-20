@@ -31,12 +31,38 @@ export default withLess(
         rule.test?.test?.(".svg"),
       )
 
-      fileLoaderRule.exclude = ALLOWED_SVG_REGEX
+      fileLoaderRule.exclude = /\.svg$/i
 
-      config.module.rules.push({
-        test: ALLOWED_SVG_REGEX,
-        use: ["@svgr/webpack"],
-      })
+      config.module.rules.push(
+        // All .svg from /icons/ and with ?svgr are going to be processed by @svgr/webpack
+        {
+          test: ALLOWED_SVG_REGEX,
+          use: ["@svgr/webpack"],
+        },
+        {
+          test: /\.svg$/i,
+          exclude: ALLOWED_SVG_REGEX,
+          resourceQuery: /svgr/,
+          use: [
+            {
+              loader: "@svgr/webpack",
+              options: {
+                dimensions: false, // **adds** viewBox.
+              },
+            },
+          ],
+        },
+        // Otherwise, we use the default file loader
+        {
+          ...fileLoaderRule,
+          test: /\.svg$/i,
+          exclude: ALLOWED_SVG_REGEX,
+          resourceQuery: {
+            not: [...fileLoaderRule.resourceQuery.not, /svgr/],
+          },
+        },
+      )
+
       return config
     },
     output: "export",

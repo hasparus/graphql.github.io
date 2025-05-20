@@ -6,3 +6,8 @@ declare module "*.mdx" {
   export default ReactComponent
   export const getStaticPaths: GetStaticPaths
 }
+
+declare module "*.svg?svgr" {
+  const content: React.FC<React.SVGProps<SVGElement>>
+  export default content
+}

@@ -1,15 +1,15 @@
 import { ReactElement, ReactNode } from "react"
 import { Metadata } from "next"
-import { Header } from "../_components/header"
-import { Footer } from "../_components/footer"
-import { GraphQLConf, HostedByGraphQLFoundation } from "@/icons"
-import NextLink from "next/link"
-import { Rubik } from "next/font/google"
 
-const rubik = Rubik({
-  weight: ["700", "600", "500", "400", "300"],
-  subsets: ["latin"],
-})
+import { NewFontsStyleTag } from "../../fonts"
+import "../../colors.css"
+
+import { Navbar } from "./components/navbar"
+import { Footer } from "./components/footer"
+
+// @ts-expect-error: we want to import the same version as Nextra for the main page
+import { ThemeProvider } from "next-themes"
+import { GraphQLConfLogoLink } from "./components/graphql-conf-logo-link"
 
 export const metadata = {
   description:
@@ -36,16 +36,9 @@ export default function Layout({
 }): ReactElement {
   return (
     <>
-      <Header
-        logo={
-          <NextLink
-            href="/conf/2025"
-            className="nextra-logo flex items-center gap-2 text-white"
-          >
-            <GraphQLConf className="h-6" />
-            <span className="select-none text-xl/none">2025</span>
-          </NextLink>
-        }
+      <NewFontsStyleTag />
+      <Navbar
+        year={2025}
         links={[
           { children: "Sponsor", href: "/conf/2025/#sponsors" },
           { children: "Submit to Speak", href: "/conf/2025/#speakers" },
@@ -54,38 +47,21 @@ export default function Layout({
           { children: "Resources", href: "/conf/2025/resources" },
           { children: "FAQ", href: "/conf/2025/#faq" },
         ]}
-        is2025
       />
-      <div
-        style={{
-          fontFamily: rubik.style.fontFamily,
-        }}
-      >
-        {children}
-      </div>
+      <ThemeProvider attribute="class">
+        <div className="bg-neu-0 text-neu-900 antialiased">{children}</div>
+      </ThemeProvider>
       <Footer
-        logo={
-          <NextLink href="/conf/2025" className="nextra-logo text-white">
-            <div className="flex items-center gap-2">
-              <GraphQLConf className="h-6" />
-              <span className="select-none text-xl/none">2025</span>
-            </div>
-            <HostedByGraphQLFoundation className="mt-2 h-5" />
-          </NextLink>
-        }
+        logo={<GraphQLConfLogoLink year={2025} />}
         links={[
+          { children: "Sponsor", href: "/conf/2025/#sponsors" },
+          { children: "Speakers", href: "/#speakers" },
+          { children: "GraphQLConf 2024", href: "/conf/2024" },
+          { children: "FAQ", href: "#faq" },
+          { children: "Contact Us", href: "/conf/2025/faq/#contact" },
+          { children: "GraphQL", href: "/" },
+          { children: "GraphQL Foundation", href: "/foundation" },
           [
-            { children: "Sponsor", href: "/conf/2025/#sponsors" },
-            { children: "Speakers", href: "/#speakers" },
-            { children: "GraphQLConf 2024", href: "/conf/2024" },
-          ],
-          [
-            { children: "FAQ", href: "#faq" },
-            { children: "Contact Us", href: "/conf/2025/faq/#contact" },
-          ],
-          [
-            { children: "GraphQL", href: "/" },
-            { children: "GraphQL Foundation", href: "/foundation" },
             {
               children: "Code of Conduct",
               href: "/conf/2025/resources/#code-of-conduct",

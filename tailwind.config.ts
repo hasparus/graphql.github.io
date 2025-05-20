@@ -1,6 +1,8 @@
+import { fontFamily } from "tailwindcss/defaultTheme"
 import type { Config } from "tailwindcss"
 import typography from "@tailwindcss/typography"
-
+import plugin from "tailwindcss/plugin"
+import containerQueries from "@tailwindcss/container-queries"
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./theme.config.tsx"],
   theme: {
@@ -9,10 +11,59 @@ const config: Config = {
       padding: "1rem",
     },
     extend: {
+      fontFamily: {
+        sans: [
+          `var(--font-sans, ${fontFamily.sans.slice(0, 3).join(", ")})`,
+          ...fontFamily.sans,
+        ],
+        mono: [
+          `var(--font-mono, ${fontFamily.mono.slice(0, 3).join(", ")})`,
+          ...fontFamily.mono,
+        ],
+      },
+      screens: {
+        "3xl": "1920px",
+      },
       colors: {
         primary: "#e10098",
         "conf-black": "#0e031c",
         black: "#1b1b1b",
+
+        // #region new design system colors
+        "pri-lighter": "hsl(var(--color-pri-lighter) / <alpha-value>)",
+        "pri-light": "hsl(var(--color-pri-light) / <alpha-value>)",
+        "pri-base": "hsl(var(--color-pri-base) / <alpha-value>)",
+        "pri-dark": "hsl(var(--color-pri-dark) / <alpha-value>)",
+        "pri-darker": "hsl(var(--color-pri-darker) / <alpha-value>)",
+
+        "sec-lighter": "hsl(var(--color-sec-lighter) / <alpha-value>)",
+        "sec-light": "hsl(var(--color-sec-light) / <alpha-value>)",
+        "sec-base": "hsl(var(--color-sec-base) / <alpha-value>)",
+        "sec-dark": "hsl(var(--color-sec-dark) / <alpha-value>)",
+        "sec-darker": "hsl(var(--color-sec-darker) / <alpha-value>)",
+
+        // We're using 3-letter color names to avoid conflicting
+        // with the old `neutral` color.
+        "neu-0": "hsl(var(--color-neu-0) / <alpha-value>)",
+        "neu-50": "hsl(var(--color-neu-50) / <alpha-value>)",
+        "neu-100": "hsl(var(--color-neu-100) / <alpha-value>)",
+        "neu-200": "hsl(var(--color-neu-200) / <alpha-value>)",
+        "neu-300": "hsl(var(--color-neu-300) / <alpha-value>)",
+        "neu-400": "hsl(var(--color-neu-400) / <alpha-value>)",
+        "neu-500": "hsl(var(--color-neu-500) / <alpha-value>)",
+        "neu-600": "hsl(var(--color-neu-600) / <alpha-value>)",
+        "neu-700": "hsl(var(--color-neu-700) / <alpha-value>)",
+        "neu-800": "hsl(var(--color-neu-800) / <alpha-value>)",
+        "neu-900": "hsl(var(--color-neu-900) / <alpha-value>)",
+
+        blk: "#000",
+
+        /**
+         * GraphQL Rhodamine as per the trademark guidelines
+         * https://www.graphql.org/brand/
+         */
+        rhodamine: "#e10098",
+        // #endregion new design system colors
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -32,7 +83,101 @@ const config: Config = {
       },
     },
   },
-  plugins: [typography],
+  plugins: [
+    typography,
+    containerQueries,
+    plugin(({ addUtilities }) => {
+      // heading styles
+      addUtilities({
+        ".typography-d1, .typography-h1, .typography-h2, .typography-h3": {
+          lineHeight: "1.2",
+        },
+        ".typography-d1": {
+          fontSize: "48px",
+          "@screen lg": {
+            fontSize: "96px",
+          },
+        },
+        ".typography-h1": {
+          fontSize: "40px",
+          "@screen lg": {
+            fontSize: "72px",
+          },
+        },
+        ".typography-h2": {
+          fontSize: "32px",
+          "@screen md": {
+            fontSize: "48px",
+          },
+        },
+        ".typography-h3": {
+          fontSize: "24px",
+          "@screen md": {
+            fontSize: "32px",
+          },
+        },
+      })
+
+      // paragraph styles
+      addUtilities({
+        ".typography-body-lg, .typography-body-md, .typography-body-sm, .typography-body-xs":
+          {
+            lineHeight: "1.5",
+          },
+        ".typography-body-lg": {
+          fontSize: "16px",
+          "@screen md": {
+            fontSize: "20px",
+          },
+        },
+        ".typography-body-md": {
+          fontSize: "14px",
+          "@screen md": {
+            fontSize: "16px",
+          },
+        },
+        ".typography-body-sm": {
+          fontSize: "12px",
+          "@screen md": {
+            fontSize: "14px",
+          },
+        },
+        ".typography-body-xs": {
+          fontSize: "10px",
+          "@screen md": {
+            fontSize: "12px",
+          },
+        },
+      })
+
+      // other text styles
+      addUtilities({
+        ".typography-button, .typography-tagline": {
+          fontSize: "16px",
+          lineHeight: "1",
+        },
+        ".typography-tagline": {
+          textTransform: "uppercase",
+        },
+        ".typography-menu": {
+          fontFamily: "var(--font-mono)",
+          fontSize: "14px",
+          lineHeight: "1",
+          textTransform: "uppercase",
+        },
+      })
+
+      addUtilities({
+        ".typography-link": {
+          color: "theme('colors.neu-800')",
+          textDecoration: "underline",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        },
+      })
+    }),
+  ],
   darkMode: ["class", 'html[class~="dark"]'],
 }
 export default config

@@ -1,0 +1,37 @@
+.gql-prose {
+  --prose-width: 640px;
+  --grid-col-aside: 1;
+  --grid-col-content: 1;
+
+  @apply xl:[--grid-col-content:3];
+  @apply grid grid-cols-1 gap-6 typography-body-md xl:my-12 xl:grid-cols-[auto_1fr_var(--prose-width)_1fr];
+
+  & > * {
+    grid-column: var(--grid-col-content);
+  }
+
+  & h1 {
+    @apply typography-h2 lg:col-span-full xl:pb-16;
+  }
+  & h2 {
+    @apply typography-h3;
+  }
+  & a:not(.raw) {
+    @apply typography-link;
+  }
+
+  & > p,
+  & > ul,
+  & > ol {
+    @apply max-w-[var(--prose-width)];
+  }
+
+  & > p {
+    @apply text-pretty;
+  }
+}
+
+.gql-sticky-aside {
+  grid-column: var(--grid-col-aside);
+  @apply xl:sticky xl:top-[calc(var(--navbar-h)+1rem)];
+}

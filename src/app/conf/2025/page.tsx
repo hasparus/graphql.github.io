@@ -1,73 +1,86 @@
 import { Metadata } from "next"
-import { HostedByGraphQLFoundation } from "@/icons"
-import { GridButton } from "../_components/grid-button"
-import { Sponsor } from "./sponsorship"
+import { BecomeASponsor } from "./components/become-a-sponsor"
 import { Venue } from "./venue"
 import { FAQ } from "./faq"
-import { Register } from "./register"
-import { Sponsors } from "./sponsors"
-import { Speakers } from "./speakers"
+import { CallForProposals } from "./components/call-for-proposals"
+import { RegisterToday } from "./components/register-today"
+import { Hero } from "./components/hero"
+import WhatToExpectSection from "./components/what-to-expect"
+import TopMindsSection from "./components/top-minds"
+import { GetYourTicket } from "./components/get-your-ticket"
+import { RegisterSection } from "./components/register-section"
+import { Sponsors } from "./components/sponsors"
+import { GraphQLFoundationCard } from "./components/graphql-foundation-card"
+import { MarqueeRows } from "./components/marquee-rows"
 
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
 }
 
-function Hero() {
-  return (
-    <section className="conf-hero-2025 relative">
-      <div className="flex h-full flex-col justify-center py-16 md:py-28">
-        <div className="flex flex-col items-center justify-center">
-          <h1 className="text-center text-5xl font-bold md:text-7xl">
-            GraphQLConf <span className="font-light">2025</span>
-          </h1>
-          <HostedByGraphQLFoundation className="mb-6 h-8 w-full shrink-0 self-start lg:h-10" />
-          <div className="flex flex-col justify-center text-xl font-medium md:flex-row md:gap-2">
-            <div className="flex items-center gap-1">
-              <time dateTime="2025-09-08">September 08</time>
-              <span>-</span>
-              <time dateTime="2025-09-10">10, 2025</time>
-            </div>
-            <span className="hidden md:block">|</span>
-            <address className="not-italic">Amsterdam, Netherlands</address>
-          </div>
-        </div>
-      </div>
-      <div
-        className="absolute bottom-0 left-1/2 h-px w-[90%] -translate-x-1/2 bg-white/10"
-        aria-hidden="true"
-      />
-    </section>
-  )
-}
-
-function Intro() {
-  return (
-    <section className="flex flex-col gap-20 md:gap-32">
-      <h2 className="text-3xl font-normal lg:text-5xl">
-        Celebrating 10 Years of GraphQL. Three transformative days of expert
-        insights and innovation to shape the next decade of APIs together!
-      </h2>
-
-      <GridButton
-        title="Get Tickets"
-        href="https://cvent.me/PBNYEe?utm_source=graphql_conf_2025&utm_medium=website&utm_campaign=cta"
-      />
-    </section>
-  )
-}
+const HERO_MARQUEE_ITEMS = [
+  ["COMMUNITY", "DEVELOPER EXPERIENCE", "APIs", "TOOLS & LIBRARIES"],
+  ["OPEN SOURCE", "FEDERATION", "ECOSYSTEMS", "TRACING & OBSERVABILITY"],
+  ["BEST PRACTICES", "WORKSHOPS", "SCHEMAS", "SECURITY"],
+]
 
 export default function Page() {
   return (
-    <main className="text-white">
+    <main className="gql-all-anchors-focusable">
       <Hero />
-      <div className="container my-20 flex flex-col gap-20 md:my-32 md:gap-32">
-        <Intro />
-        <Sponsors />
-        <Sponsor />
-        <Speakers />
-        <Register />
-        <Venue />
-        <FAQ />
+      <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
+        <MarqueeRows
+          variant="primary"
+          className="pt-4 max-sm:pb-1 sm:pt-6 md:space-y-2 md:pt-12 xl:pt-16"
+          items={HERO_MARQUEE_ITEMS}
+        />
+        <RegisterToday className="md:mb-8 md:mt-16" />
+        <WhatToExpectSection className="md:mb-8 md:mt-24" />
+        <TopMindsSection className="md:mb-8 md:mt-24" hasSpeakersPage={false} />
+      </div>
+      <div className="gql-conf-navbar-strip before:bg-white/40 before:dark:bg-pri-dark/[0.45]">
+        <GetYourTicket />
+      </div>
+      <div className="gql-conf-navbar-strip text-neu-900 before:bg-white/50 before:dark:bg-blk/30">
+        <div className="gql-conf-container">
+          <RegisterSection />
+          <Sponsors heading="Sponsors" />
+        </div>
+        <BecomeASponsor />
+        <div className="gql-conf-container">
+          <CallForProposals />
+          <MarqueeRows
+            variant="secondary"
+            items={[
+              [
+                "AMSTERDAM",
+                "SEPTEMBER 2025",
+                "THREE DAYS",
+                "PAKHUIS DE ZWIJGER",
+              ],
+              [
+                "THREE DAYS",
+                "PAKHUIS DE ZWIJGER",
+                "NETHERLANDS",
+                "PIET HEINKADE 179",
+              ],
+              [
+                "NETHERLANDS",
+                "10 YEARS OF GRAPHQL",
+                "8-10 SEPTEMBER",
+                "AMSTERDAM",
+              ],
+            ]}
+            className="my-8 xl:mb-16 xl:mt-10 2xl:mb-24"
+          />
+          <Venue />
+          <GraphQLFoundationCard />
+          <FAQ />
+          <MarqueeRows
+            variant="secondary"
+            items={HERO_MARQUEE_ITEMS}
+            className="my-8 xl:my-16"
+          />
+        </div>
       </div>
     </main>
   )

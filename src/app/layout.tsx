@@ -1,12 +1,7 @@
 import { ReactElement, ReactNode } from "react"
 import { Metadata } from "next"
-import { Roboto_Flex } from "next/font/google"
 import GoogleAnalytics from "@/app/ga"
 import "../globals.css"
-
-const font = Roboto_Flex({
-  subsets: ["latin"],
-})
 
 export const metadata: Metadata = {
   twitter: {
@@ -28,7 +23,12 @@ export default function RootLayout({
   children: ReactNode
 }): ReactElement {
   return (
-    <html lang="en" className={`scroll-smooth ${font.className}`}>
+    <html
+      lang="en"
+      className="scroll-smooth"
+      // ThemeProvider adds a `light`/`dark` class
+      suppressHydrationWarning
+    >
       <head>
         <style>{`html { scroll-padding-top: 5rem }`}</style>
       </head>

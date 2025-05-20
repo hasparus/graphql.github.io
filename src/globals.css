@@ -503,3 +503,24 @@ div[id^="headlessui-menu-items"] {
   @apply text-xl;
   @apply dark:border-neutral-700/80;
 }
+
+.gql-focus-visible,
+.gql-all-anchors-focusable a {
+  @apply focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[5px] focus-visible:outline-neu-900;
+}
+
+.gql-conf-container {
+  @apply mx-auto w-full max-w-[120rem];
+}
+
+.gql-conf-section {
+  @apply px-4 py-8 lg:px-12 xl:gap-x-24 xl:px-24 3xl:px-[240px];
+}
+
+.gql-conf-navbar-strip {
+  @apply relative [contain:paint] before:sticky before:top-0 before:z-[9] before:-mt-[var(--navbar-h)] before:block before:h-[var(--navbar-h)] before:w-full before:content-[''];
+}
+
+:root {
+  --navbar-h: 70px;
+}
