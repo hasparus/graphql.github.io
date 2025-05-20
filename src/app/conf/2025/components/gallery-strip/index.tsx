@@ -2,9 +2,12 @@
 
 import { useState } from "react"
 import { clsx } from "clsx"
+import Image from "next-image-export-optimizer"
 import { Marquee } from "@/app/conf/_design-system/marquee"
 
-const YEARS = ["2024", "2023", "2022"] as const
+import { imagesByYear } from "./images"
+
+const YEARS = ["2024", "2023"] as const
 type Year = (typeof YEARS)[number]
 
 export interface GalleryStripProps extends React.HTMLAttributes<HTMLElement> {}
@@ -13,7 +16,11 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
   const [selectedYear, setSelectedYear] = useState<Year>("2024")
 
   return (
-    <section className={clsx("py-8 md:py-16", className)} {...rest}>
+    <section
+      role="presentation"
+      className={clsx("py-8 md:py-16", className)}
+      {...rest}
+    >
       <div className="flex gap-3.5 max-md:items-center md:px-24">
         {YEARS.map(year => (
           <button
@@ -33,11 +40,22 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
 
       <div className="mt-6 w-full md:mt-10">
         <Marquee gap={8} speed={35} speedOnHover={15} drag reverse>
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="md:px-2" role="presentation">
-              <div className="h-[400px] w-[300px] bg-neu-500"></div>
-            </div>
-          ))}
+          {imagesByYear[selectedYear].map((image, i) => {
+            return (
+              <div
+                key={`${selectedYear}-${i}`}
+                className="md:px-2"
+                role="presentation"
+              >
+                <Image
+                  src={image}
+                  alt=""
+                  height={320}
+                  className="pointer-events-none"
+                />
+              </div>
+            )
+          })}
         </Marquee>
       </div>
     </section>
