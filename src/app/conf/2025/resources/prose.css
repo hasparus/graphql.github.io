@@ -1,5 +1,5 @@
 .gql-prose {
-  --prose-width: 800px;
+  --prose-width: 640px;
   --grid-col-aside: 1;
   --grid-col-content: 1;
 
@@ -18,6 +18,16 @@
   }
   & a:not(.raw) {
     @apply typography-link;
+  }
+
+  & > p,
+  & > ul,
+  & > ol {
+    @apply max-w-[var(--prose-width)];
+  }
+
+  & > p {
+    @apply text-pretty;
   }
 }
 
