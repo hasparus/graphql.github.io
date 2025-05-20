@@ -23,7 +23,7 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
       className={clsx("py-8 md:py-16", className)}
       {...rest}
     >
-      <div className="flex gap-3.5 max-md:items-center md:px-24">
+      <div className="flex gap-3.5 px-4 max-md:items-center md:px-24">
         {YEARS.map(year => (
           <button
             key={year}
