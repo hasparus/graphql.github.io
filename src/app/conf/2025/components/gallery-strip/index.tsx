@@ -44,7 +44,6 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
         <Marquee
           gap={8}
           speed={35}
-          speedOnHover={15}
           drag
           reverse
           className="cursor-[var(--cursor-grabbing,grab)] !overflow-visible"
@@ -76,7 +75,7 @@ function GalleryStripImage({
         role="presentation"
         // intrinsic 799x533
         height={320}
-        width={index % 4 === 2 ? 200 : index % 3 === 2 ? 420 : 480}
+        width={index % 4 === 2 ? 256 : index % 3 === 2 ? 420 : 480}
         className="pointer-events-none h-[320px] object-cover"
       />
     </div>
