@@ -25,11 +25,13 @@ export function Footer({
       <Stripes />
       <div className="flex flex-wrap justify-between gap-4 p-4 max-md:w-full md:px-6 lg:py-10 2xl:px-10">
         {logo}
-        <div className="flex gap-x-4 gap-y-2 typography-body-lg">
-          <p className="flex items-center gap-2">
+        <div className="flex gap-x-4 typography-body-lg max-sm:grid max-sm:grid-cols-2 max-sm:items-start max-sm:text-lg sm:gap-y-2">
+          <p className="flex items-center whitespace-pre">
             <time dateTime="2025-09-08">September 08</time>
             <span>-</span>
-            <time dateTime="2025-09-10">10, 2025</time>
+            <time dateTime="2025-09-10">
+              10<span className="max-sm:hidden">, 2025</span>
+            </time>
           </p>
           <address className="not-italic">Amsterdam, Netherlands</address>
         </div>

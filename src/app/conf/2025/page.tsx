@@ -15,6 +15,7 @@ import { MarqueeRows } from "./components/marquee-rows"
 import { CtaCardSection } from "./components/cta-card-section"
 import { Button } from "../_design-system/button"
 import { GET_TICKETS_LINK } from "./links"
+import { GalleryStrip } from "./components/gallery-strip"
 
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
@@ -76,6 +77,7 @@ export default function Page() {
             className="my-8 xl:mb-16 xl:mt-10 2xl:mb-24"
           />
           <Venue />
+          <GalleryStrip />
           <GraphQLFoundationCard />
           <FAQ />
           <CtaCardSection
