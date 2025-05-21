@@ -70,21 +70,14 @@ function GalleryStripImage({
   return (
     <div role="presentation" className="relative md:px-2">
       <Image
+        data-index={index}
         src={image}
         alt=""
         role="presentation"
         // intrinsic 799x533
         height={320}
-        width={480}
-        className={clsx(
-          "pointer-events-none h-[320px] w-auto object-cover",
-          // Alternate between 3 widths
-          index % 4 === 2
-            ? "w-[200px]"
-            : index % 3 === 2
-              ? "w-[420px]"
-              : "w-[480px]",
-        )}
+        width={index % 4 === 2 ? 200 : index % 3 === 2 ? 420 : 480}
+        className="pointer-events-none h-[320px] object-cover"
       />
     </div>
   )
