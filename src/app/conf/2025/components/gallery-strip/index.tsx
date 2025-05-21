@@ -68,7 +68,7 @@ function GalleryStripImage({
   index: number
 }) {
   return (
-    <div role="presentation" className="relative md:px-2">
+    <div className="relative md:px-2">
       <Image
         data-index={index}
         src={image}
