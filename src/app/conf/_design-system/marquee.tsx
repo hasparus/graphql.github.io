@@ -5,7 +5,7 @@ import { useMotionValue, animate, motion } from "motion/react"
 import { useState, useEffect, Fragment } from "react"
 import useMeasure from "react-use-measure"
 
-export interface MarqueeProps {
+export interface MarqueeProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode
   gap?: number
   speed?: number
@@ -27,6 +27,7 @@ export function Marquee({
   className,
   drag = false,
   separator,
+  ...rest
 }: MarqueeProps) {
   const [currentSpeed, setCurrentSpeed] = useState(speed)
   const [ref, { width, height }] = useMeasure()
@@ -93,7 +94,7 @@ export function Marquee({
             setIsTransitioning(true)
             setCurrentSpeed(speed)
           },
-          onPointerUp: () => {
+          onPointerUp: (_event: React.PointerEvent<HTMLElement>) => {
             if (window.matchMedia("(hover: none)").matches) {
               setIsTransitioning(true)
               setCurrentSpeed(speed)
@@ -105,14 +106,13 @@ export function Marquee({
   const dragProps = drag
     ? {
         drag: direction === "horizontal" ? ("x" as const) : ("y" as const),
-        onDragStart: () => {
-          document.documentElement.style.cursor = "grabbing"
+        onPointerDown: () => {
           document.documentElement.style.setProperty(
             "--cursor-grabbing",
             "grabbing",
           )
         },
-        onDragEnd: () => {
+        onPointerUp: (_event: React.PointerEvent<HTMLElement>) => {
           document.documentElement.style.cursor = "initial"
           document.documentElement.style.removeProperty("--cursor-grabbing")
         },
@@ -132,7 +132,7 @@ export function Marquee({
 
   const multiples = 2
   return (
-    <div className={clsx("overflow-hidden", className)}>
+    <div className={clsx("overflow-hidden", className)} {...rest}>
       <motion.div
         className="flex w-max"
         style={{
@@ -146,6 +146,10 @@ export function Marquee({
         ref={ref}
         {...dragProps}
         {...hoverProps}
+        onPointerUp={event => {
+          dragProps.onPointerUp?.(event)
+          hoverProps.onPointerUp?.(event)
+        }}
       >
         {Array.from({ length: 2 }).map((_, i) => (
           <Fragment key={i}>
