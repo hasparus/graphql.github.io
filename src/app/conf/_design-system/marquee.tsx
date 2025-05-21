@@ -116,6 +116,10 @@ export function Marquee({
           document.documentElement.style.cursor = "initial"
           document.documentElement.style.removeProperty("--cursor-grabbing")
         },
+        onDragEnd: () => {
+          setIsTransitioning(true)
+          setCurrentSpeed(speed)
+        },
         dragConstraints:
           direction === "horizontal"
             ? {

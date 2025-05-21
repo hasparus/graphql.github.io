@@ -46,7 +46,7 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
           speed={35}
           drag
           reverse
-          className="cursor-[var(--cursor-grabbing,grab)] !overflow-visible"
+          className="cursor-[var(--cursor-grabbing,grab)] touch-pan-y"
         >
           {imagesByYear[selectedYear].map((image, i) => {
             const key = `${selectedYear}-${i}`
