@@ -1,9 +1,9 @@
 import Image from "next-image-export-optimizer"
 
 import { Button } from "../../../_design-system/button"
-import { CalendarIcon } from "../../pixelarticons/calendar-icon"
+import { CalendarIcon } from "../../../_design-system/pixelarticons/calendar-icon"
 import { GET_TICKETS_LINK } from "../../links"
-import { PinIcon } from "../../pixelarticons/pin-icon"
+import { PinIcon } from "../../../_design-system/pixelarticons/pin-icon"
 import graphqlFoundationWordmarkSvg from "../../assets/graphql-foundation-wordmark.svg"
 
 import { ImageLoaded } from "../image-loaded"

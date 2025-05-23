@@ -1,10 +1,11 @@
 "use client"
-import clsx from "clsx"
 
-import { useState, useEffect, ReactNode, Fragment } from "react"
+import clsx from "clsx"
+import { useState, useEffect, Fragment } from "react"
 import Link from "next/link"
-import { Button } from "../../_design-system/button"
-import ArrowDownIcon from "../pixelarticons/arrow-down.svg?svgr"
+
+import ArrowDownIcon from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
+import { Button } from "@/app/conf/_design-system/button"
 
 function DatesTab() {
   return (
