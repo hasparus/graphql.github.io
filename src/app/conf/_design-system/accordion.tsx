@@ -30,7 +30,7 @@ export function Accordion({
         <details
           open={index === 0}
           key={index}
-          className="group/q w-full border border-sec-darker @container"
+          className="group/q w-full border border-sec-darker @container dark:border-sec-dark"
           onClick={event => {
             if (!multiple) {
               const allDetails =
@@ -50,7 +50,7 @@ export function Accordion({
             }
           }}
         >
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-2 border-sec-darker p-2 px-3 focus:outline-none group-open/q:border-b [&::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-2 border-sec-darker p-2 px-3 focus:outline-none group-open/q:border-b dark:border-sec-dark [&::-webkit-details-marker]:hidden">
             <span className="select-none typography-body-lg">{item.title}</span>
             <ArrowDown className="size-10 shrink-0 text-sec-darker group-open/q:rotate-180" />
           </summary>

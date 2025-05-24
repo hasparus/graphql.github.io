@@ -12,15 +12,25 @@ export function Venue(props: VenueProps) {
     <section
       {...props}
       style={{
+        ...({ "--photo": `url(${locationPhoto.src})` } as {}),
         ...props.style,
-        backgroundImage: `linear-gradient(0deg, hsl(var(--color-sec-light)) 0%, hsl(var(--color-sec-light)) 100%), url(${locationPhoto.src})`,
         backgroundBlendMode: "overlay, normal",
         backgroundSize: "cover",
       }}
-      className={clsx("gql-conf-section relative", props.className)}
+      className={clsx(
+        "gql-conf-section relative bg-[linear-gradient(0deg,hsl(var(--color-sec-light))_0%,hsl(var(--color-sec-light))_100%),var(--photo)] dark:bg-[linear-gradient(0deg,#181f01_0%,#283502_100%),var(--photo)]",
+        props.className,
+      )}
     >
-      <div className="flex gap-x-12 gap-y-10 bg-white/10 p-4 backdrop-blur-3xl dark:border-sec-darker max-lg:flex-col lg:p-16 xl:*:flex-1">
-        <article className="flex shrink-0 flex-col gap-6 max-xl:max-w-[476px]">
+      <div className="relative flex gap-x-12 gap-y-10 bg-white/10 p-4 dark:border-sec-darker max-lg:flex-col lg:p-16 xl:*:flex-1">
+        <div
+          className="absolute inset-0 backdrop-blur-3xl"
+          style={{
+            maskImage:
+              "radial-gradient(circle at center, #fff 65%, rgb(255 0 0/.8) 99%)",
+          }}
+        />
+        <article className="relative flex shrink-0 flex-col gap-6 max-xl:max-w-[476px]">
           <h2 className="typography-h2">
             A place of innovation &&nbsp;creation
           </h2>
@@ -38,7 +48,7 @@ export function Venue(props: VenueProps) {
             Google Maps
           </Button>
         </article>
-        <div className="flex-1">
+        <div className="relative flex-1">
           <h3 className="mb-6 typography-h3">How to get to the venue?</h3>
           <Accordion
             className="[&_svg]:fill-neu-900"
