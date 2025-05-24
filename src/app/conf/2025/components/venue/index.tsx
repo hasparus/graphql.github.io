@@ -15,18 +15,19 @@ export function Venue(props: VenueProps) {
         ...({ "--photo": `url(${locationPhoto.src})` } as {}),
         ...props.style,
         backgroundBlendMode: "overlay, normal",
-        backgroundSize: "cover",
       }}
       className={clsx(
-        "gql-conf-section relative bg-[linear-gradient(0deg,hsl(var(--color-sec-light))_0%,hsl(var(--color-sec-light))_100%),var(--photo)] dark:bg-[linear-gradient(0deg,#181f01_0%,#283502_100%),var(--photo)]",
+        "gql-conf-section relative bg-[linear-gradient(0deg,hsl(var(--color-sec-light))_0%,hsl(var(--color-sec-light))_100%),var(--photo)] dark:bg-[linear-gradient(180deg,#344303_0%,#344303_120%),var(--photo)] md:bg-cover",
         props.className,
       )}
     >
-      <div className="relative flex gap-x-12 gap-y-10 bg-white/10 p-4 dark:border-sec-darker max-lg:flex-col lg:p-16 xl:*:flex-1">
+      <div className="relative flex gap-x-12 gap-y-10 bg-white/10 p-4 dark:bg-blk/10 max-lg:flex-col lg:p-16 xl:*:flex-1">
         <div
           className="absolute inset-0 backdrop-blur-3xl"
           style={{
             maskImage:
+              "radial-gradient(circle at center, #fff 65%, rgb(255 0 0/.8) 99%)",
+            WebkitMaskImage:
               "radial-gradient(circle at center, #fff 65%, rgb(255 0 0/.8) 99%)",
           }}
         />

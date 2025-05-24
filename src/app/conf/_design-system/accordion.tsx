@@ -37,11 +37,6 @@ export function Accordion({
                 event.currentTarget.parentElement?.querySelectorAll("details")
               if (allDetails) {
                 allDetails.forEach(details => {
-                  console.log(
-                    details,
-                    event.currentTarget,
-                    event.currentTarget === details,
-                  )
                   if (details !== event.currentTarget) {
                     details.open = false
                   }
