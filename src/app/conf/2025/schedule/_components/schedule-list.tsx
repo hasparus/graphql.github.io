@@ -6,7 +6,7 @@ import { ReactElement, useEffect, useState } from "react"
 import { getEventTitle } from "@/app/conf/2023/utils"
 import { SchedSpeaker } from "@/app/conf/2023/types"
 
-import { Filters } from "./filters"
+import { Filters, ResetFiltersButton } from "./filters"
 import {
   type ScheduleSession,
   CategoryName,
@@ -119,6 +119,19 @@ export function ScheduleList({
 
   return (
     <>
+      <div className="flex justify-between gap-1 max-lg:flex-col">
+        <BookmarkOnSched />
+        <ResetFiltersButton
+          filters={filtersState}
+          onReset={() =>
+            setFiltersState({
+              Audience: [],
+              "Talk category": [],
+              "Event type": [],
+            })
+          }
+        />
+      </div>
       {showFilter && (
         <Filters
           categories={filterCategories}
@@ -128,13 +141,6 @@ export function ScheduleList({
               ...prev,
               [category]: newSelectedOptions,
             }))
-          }}
-          onReset={() => {
-            setFiltersState({
-              Audience: [],
-              "Talk category": [],
-              "Event type": [],
-            })
           }}
         />
       )}
@@ -267,6 +273,30 @@ function ScheduleSession({
           </span>
         </span>
       </span>
+    </a>
+  )
+}
+
+function BookmarkOnSched() {
+  return (
+    <a
+      href="https://graphqlconf2024.sched.com"
+      target="_blank"
+      rel="noreferrer"
+      className="mb-8 block w-fit decoration-neu-400 typography-link"
+    >
+      Bookmark sessions & plan your days on Sched
+      <svg
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        className="m-1 mb-2 inline-block size-4"
+      >
+        <path
+          d="M21 11V3h-8v2h4v2h-2v2h-2v2h-2v2H9v2h2v-2h2v-2h2V9h2V7h2v4h2zM11 5H3v16h16v-8h-2v6H5V7h6V5z"
+          fill="currentColor"
+        />
+      </svg>
     </a>
   )
 }

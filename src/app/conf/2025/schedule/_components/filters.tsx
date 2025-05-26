@@ -1,24 +1,23 @@
 import clsx from "clsx"
 import { useState } from "react"
+import { Combobox } from "@headlessui/react"
+
+import { Tag } from "@/app/conf/_design-system/tag"
+import { Button } from "@/app/conf/_design-system/button"
 
 import CloseIcon from "@/app/conf/2025/pixelarticons/close.svg?svgr"
 import CaretDownIcon from "@/app/conf/2025/pixelarticons/caret-down.svg?svgr"
-import { Combobox } from "@headlessui/react"
-import { Tag } from "@/app/conf/_design-system/tag"
 import { eventsColors } from "../../utils"
-
 type FiltersProps = {
   categories: { name: string; options: string[] }[]
   filterState: Record<string, string[]>
   onFilterChange: (category: string, newSelectedOptions: string[]) => void
-  onReset: () => void
 }
 
 export function Filters({
   categories,
   filterState,
   onFilterChange,
-  onReset,
 }: FiltersProps) {
   return (
     <div className="flex flex-wrap justify-stretch gap-x-2 gap-y-4 pb-10">
@@ -35,33 +34,35 @@ export function Filters({
           className="flex-1"
         />
       ))}
-      {Object.values(filterState).flat().length > 0 && (
-        <div className="relative">
-          <ResetButton onReset={onReset} className="absolute top-[18px]" />
-        </div>
-      )}
     </div>
   )
 }
 
-function ResetButton({
+export function ResetFiltersButton({
   onReset,
   className,
+  filters,
 }: {
+  filters: Record<string, string[]>
   onReset: () => void
   className?: string
 }) {
+  const hasFilters = Object.values(filters).flat().length > 0
+
   return (
-    <button
+    <Button
+      variant="tertiary"
       title="Reset filters"
       onClick={onReset}
+      disabled={!hasFilters}
       className={clsx(
-        "flex h-fit cursor-pointer items-center gap-x-2 bg-neu-100 p-2 text-neu-700 hover:bg-neu-200/80 hover:text-neu-900",
+        "h-fit items-center gap-x-2 bg-neu-100 !p-2 text-neu-700 transition-opacity hover:bg-neu-200/80 hover:text-neu-900 disabled:opacity-0",
         className,
       )}
     >
+      Clear filters
       <CloseIcon className="inline-block size-4" />
-    </button>
+    </Button>
   )
 }
 
@@ -180,14 +181,14 @@ function CheckboxIcon({ checked, ...rest }: CheckboxIconProps) {
           />
         </>
       ) : (
-        <>
+        <g className="[&>path]:fill-neu-0">
           <rect x="2" y="3" width="15" height="15" />
-          <path d="M6 10.3333H7.66667V12H6V10.3333Z" fill="white" />
-          <path d="M7.66667 12H9.33333V13.6667H7.66667V12Z" fill="white" />
-          <path d="M9.33333 10.3333H11V12H9.33333V10.3333Z" fill="white" />
-          <path d="M11 8.66667H12.6667V10.3333H11V8.66667Z" fill="white" />
-          <path d="M12.6667 7H14.3333V8.66667H12.6667V7Z" fill="white" />
-        </>
+          <path d="M6 10.3333H7.66667V12H6V10.3333Z" />
+          <path d="M7.66667 12H9.33333V13.6667H7.66667V12Z" />
+          <path d="M9.33333 10.3333H11V12H9.33333V10.3333Z" />
+          <path d="M11 8.66667H12.6667V10.3333H11V8.66667Z" />
+          <path d="M12.6667 7H14.3333V8.66667H12.6667V7Z" />
+        </g>
       )}
     </svg>
   )
