@@ -19,6 +19,7 @@ import { Tag } from "@/app/conf/_design-system/tag"
 import { eventsColors } from "../../utils"
 import { PinIcon } from "../../pixelarticons/pin-icon"
 import { CalendarIcon } from "../../pixelarticons/calendar-icon"
+import { SpeakerCard } from "../../components/speaker-card"
 
 function getEventTitle(event: ScheduleSession, speakers: string[]): string {
   let { name } = event
@@ -80,14 +81,17 @@ export default function SessionPage({ params }: SessionProps) {
   )
 
   return (
-    <main className="gql-all-anchors-focusable gql-conf-container gql-conf-section">
-      <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/40 dark:bg-pri-darker dark:before:bg-blk/30" />
+    <main className="gql-all-anchors-focusable">
+      <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
-        <div className="py-10">
+        <div className="mx-auto max-w-[1088px] py-10">
           <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
             <SessionHeader event={event} eventTitle={eventTitle} />
             <SessionVideo event={event} eventTitle={eventTitle} />
-            <p>{event.description}</p>
+            <SessionSpeakers event={event} />
+            <p className="py-8 typography-body-lg lg:py-10">
+              {event.description}
+            </p>
 
             <div className="py-8">
               {event.files?.map(({ path }) => (
@@ -163,57 +167,20 @@ function SessionHeader({
         </div>
         <SessionTags session={event} />
       </div>
-
-      <div className="mt-8 flex flex-col flex-wrap gap-5 lg:flex-row">
-        {event.speakers!.map(speaker => (
-          <div
-            className={`flex w-full items-center gap-3 ${event?.speakers?.length || 0 > 1 ? "max-w-[320px]" : ""}`}
-            key={speaker.username}
-          >
-            <Avatar
-              className="size-[100px] lg:size-[120px]"
-              avatar={speaker.avatar}
-              name={speaker.name}
-            />
-
-            <div className="flex flex-col gap-1.5 lg:gap-1">
-              <a
-                href={`/conf/2024/speakers/${speaker.username}`}
-                className="mt-0 typography-body-lg"
-              >
-                {speaker.name}
-              </a>
-
-              <span className="typography-body-sm">
-                <span>{speaker.company}</span>
-                {speaker.company && ", "}
-                {speaker.position}
-              </span>
-              {speaker.socialurls?.length ? (
-                <div className="mt-0 text-[#333333]">
-                  <div className="flex space-x-2">
-                    {speaker.socialurls.map(social => (
-                      <a
-                        key={social.url}
-                        href={social.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center text-blk"
-                      >
-                        <SocialMediaIcon
-                          service={
-                            social.service.toLowerCase() as SocialMediaIconServiceType
-                          }
-                        />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          </div>
-        ))}
-      </div>
     </header>
+  )
+}
+
+function SessionSpeakers({ event }: { event: ScheduleSession }) {
+  return (
+    <div className="mt-8 flex flex-col flex-wrap gap-5 lg:flex-row">
+      {event.speakers!.map(speaker => (
+        <SpeakerCard
+          key={speaker.username}
+          speaker={speaker}
+          year="2025"
+        />
+      ))}
+    </div>
   )
 }
