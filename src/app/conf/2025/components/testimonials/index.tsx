@@ -64,7 +64,7 @@ export function Testimonials({ className, ...rest }: TestimonialsProps) {
             className="flex shrink-0 snap-start flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
           >
             <div>
-              <p className="max-w-[calc(100vw-16px)] typography-body-lg max-md:text-center md:max-w-[544px] xl:text-2xl">
+              <p className="max-w-[calc(100vw-32px)] typography-body-lg max-md:text-center md:max-w-[544px] xl:text-2xl">
                 {testimonial.quote}
               </p>
               <AuthorNameAndRole
