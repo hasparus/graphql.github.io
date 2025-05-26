@@ -134,22 +134,11 @@ export function SessionList({
         <Filters
           categories={filterCategories}
           filterState={filtersState}
-          onFilterChange={(category, option, checked) => {
+          onFilterChange={(category, newSelectedOptions) => {
             setFiltersState(prev => ({
               ...prev,
-              [category]: checked
-                ? [...prev[category as CategoryName], option]
-                : prev[category as CategoryName].filter(
-                    option => option !== option,
-                  ),
+              [category]: newSelectedOptions,
             }))
-          }}
-          onReset={() => {
-            setFiltersState({
-              Audience: [],
-              "Talk category": [],
-              "Event type": [],
-            })
           }}
         />
       )}
@@ -171,7 +160,7 @@ export function SessionList({
                     <NextLink
                       key={session.id}
                       className={`${clsx(
-                        "white flex flex-col overflow-hidden rounded-md text-current shadow-2xl hover:no-underline focus:no-underline",
+                        "flex flex-col overflow-hidden rounded-md text-current shadow-2xl hover:no-underline focus:no-underline",
                       )} ${minimalVersion ? "bg-[#251f30]" : ""}`}
                       href={
                         minimalVersion

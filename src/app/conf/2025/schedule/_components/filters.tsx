@@ -99,7 +99,7 @@ function FiltersCombobox({
             {label}
           </Combobox.Label>
         )}
-        <label className="relative w-full border border-neu-500 p-2 focus-within:outline-none focus-within:ring focus-within:ring-neu-300 dark:focus-within:ring-neu-200">
+        <label className="relative w-full border border-neu-500 bg-neu-0 p-2 focus-within:outline-none focus-within:ring focus-within:ring-neu-300 dark:focus-within:ring-neu-200">
           <Combobox.Input
             value={query}
             onChange={e => setQuery(e.target.value)}
