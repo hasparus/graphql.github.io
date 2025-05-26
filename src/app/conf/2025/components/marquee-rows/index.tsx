@@ -1,12 +1,11 @@
+import { clsx } from "clsx"
 import { Fragment, ReactNode } from "react"
 
 import { Marquee } from "@/app/conf/_design-system/marquee"
-
-import CodeIcon from "../../pixelarticons/code.svg?svgr"
+import CodeIcon from "@/app/conf/_design-system/pixelarticons/code.svg?svgr"
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
 import blurWave from "./blur.webp"
-import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
-import { clsx } from "clsx"
 
 export interface MarqueeRowsProps extends React.HTMLAttributes<HTMLDivElement> {
   items: ReactNode[][]
