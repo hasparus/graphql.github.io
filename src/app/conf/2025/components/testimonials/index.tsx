@@ -91,10 +91,14 @@ function TestimonialAuthor({ author }: { author: Testimonial["author"] }) {
           height={128}
           className="size-16 xl:size-32"
         />
-        <div className="absolute inset-0 z-[1] bg-pri-base mix-blend-plus-lighter" />
+        <div className="absolute inset-0 z-[1] bg-pri-base opacity-95 mix-blend-plus-lighter" />
         <Stripes />
       </div>
       <AuthorNameAndRole author={author} className="contents md:hidden" />
+      <div
+        // the separator
+        className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-pri-lighter to-transparent max-md:hidden"
+      />
     </div>
   )
 }
