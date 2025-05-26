@@ -11,11 +11,11 @@ export function BackLink({
   return (
     <NextLink
       href={`/conf/${year}/${kind}`}
-      className="group cursor-pointer !no-underline transition-all typography-link"
+      className="group cursor-pointer transition-all typography-menu hover:underline hover:underline-offset-4"
     >
-      <span className="flex items-center gap-2">
-        <div className="group-hover:animate-arrow-left group-focus:animate-arrow-left">
-          <ArrowDownIcon className="inline-block size-8 rotate-90" />
+      <span className="-m-2 flex items-center gap-2 p-2">
+        <div className="group-hover:animate-arrow-left group-focus:animate-arrow-left [--arrow-left-x:-1px]">
+          <ArrowDownIcon className="inline-block size-4 rotate-90" />
         </div>
         Back to {capitalize(kind)}
       </span>

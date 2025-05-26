@@ -89,7 +89,7 @@ const config: Config = {
             transform: "translateX(0)",
           },
           "50%": {
-            transform: "translateX(-1.5px)",
+            transform: "translateX(var(--arrow-left-x,-1.5px))",
           },
         },
         "show-overflow": {
