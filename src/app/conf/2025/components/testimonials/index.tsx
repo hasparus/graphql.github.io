@@ -1,5 +1,8 @@
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 import { clsx } from "clsx"
 import Image from "next-image-export-optimizer"
+
+import maskBlur from "./mask.webp"
 
 export interface TestimonialsProps extends React.HTMLAttributes<HTMLElement> {}
 
@@ -80,16 +83,18 @@ export function Testimonials({ className, ...rest }: TestimonialsProps) {
 function TestimonialAuthor({ author }: { author: Testimonial["author"] }) {
   return (
     <div className="relative flex shrink-0 flex-col items-center justify-center whitespace-pre md:px-6 lg:h-full lg:px-8">
-      {/* todo: pink tint */}
-      <Image
-        src={author.avatar}
-        alt={author.name}
-        width={128}
-        height={128}
-        className="size-16 xl:size-32"
-      />
+      <div className="relative bg-neu-500 dark:bg-neu-200">
+        <Image
+          src={author.avatar}
+          alt={author.name}
+          width={128}
+          height={128}
+          className="size-16 xl:size-32"
+        />
+        <div className="absolute inset-0 z-[1] bg-pri-base mix-blend-plus-lighter" />
+        <Stripes />
+      </div>
       <AuthorNameAndRole author={author} className="contents md:hidden" />
-      <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-pri-lighter to-transparent max-md:hidden" />
     </div>
   )
 }
@@ -105,6 +110,29 @@ function AuthorNameAndRole({
     <div className={className}>
       <div className="mt-3 typography-body-sm">{author.name}</div>
       <div className="text-neu-700 typography-body-xs">{author.role}</div>
+    </div>
+  )
+}
+
+function Stripes() {
+  const mask = `url(${maskBlur.src})`
+  return (
+    <div
+      role="presentation"
+      className="pointer-events-none absolute inset-0"
+      style={{
+        maskImage: mask,
+        WebkitMaskImage: mask,
+        maskSize: "cover",
+        WebkitMaskSize: "cover",
+        maskPosition: "left",
+        WebkitMaskPosition: "left",
+      }}
+    >
+      <StripesDecoration
+        evenClassName="bg-gradient-to-b from-pri-light/0 to-pri-lighter/25"
+        stripeWidth="8px"
+      />
     </div>
   )
 }
