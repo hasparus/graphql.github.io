@@ -17,6 +17,8 @@ import { NavbarPlaceholder } from "../../components/navbar"
 import { BackLink } from "../_components/back-link"
 import { Tag } from "@/app/conf/_design-system/tag"
 import { eventsColors } from "../../utils"
+import { PinIcon } from "../../pixelarticons/pin-icon"
+import { CalendarIcon } from "../../pixelarticons/calendar-icon"
 
 function getEventTitle(event: ScheduleSession, speakers: string[]): string {
   let { name } = event
@@ -72,129 +74,146 @@ export default function SessionPage({ params }: SessionProps) {
     speakers.find(s => s.username === speaker.username),
   )
 
-  const eventType = event.event_type.endsWith("s")
-    ? event.event_type.slice(0, -1)
-    : event.event_type
-
   const eventTitle = getEventTitle(
     event,
     event.speakers!.map(s => s.name),
   )
 
   return (
-    <main className="gql-all-anchors-focusable">
+    <main className="gql-all-anchors-focusable gql-conf-container gql-conf-section">
       <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/40 dark:bg-pri-darker dark:before:bg-blk/30" />
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <div className="py-10">
-          <section className="xs:px-0 mx-auto min-h-[80vh] flex-col justify-center px-2 md:container lg:justify-between">
-            <BackLink year="2025" kind="schedule" />
+          <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
+            <SessionHeader event={event} eventTitle={eventTitle} />
             <SessionVideo event={event} eventTitle={eventTitle} />
+            <p>{event.description}</p>
 
-            <div className="mx-auto mt-10 flex flex-col self-center sm:space-y-4">
-              <div className="space-y-5">
-                <div className="flex flex-wrap gap-3">
-                  {eventType && (
-                    <Tag color={eventsColors[event.event_type]}>
-                      {eventType}
-                    </Tag>
-                  )}
-                  {event.audience && (
-                    <Tag
-                      color={
-                        eventsColors[event.audience] ||
-                        "hsl(var(--color-neu-700))"
-                      }
-                    >
-                      {event.audience}
-                    </Tag>
-                  )}
-                  {event.event_subtype && (
-                    <Tag
-                      color={
-                        eventsColors[event.event_subtype] ||
-                        "hsl(var(--color-sec-base))"
-                      }
-                    >
-                      {event.event_subtype}
-                    </Tag>
-                  )}
+            <div className="py-8">
+              {event.files?.map(({ path }) => (
+                <div key={path}>
+                  <a href={path} target="_blank" rel="noreferrer">
+                    View Full PDF{" "}
+                    <span className="font-sans text-2xl font-light">↗</span>
+                  </a>
+                  <iframe src={path} className="aspect-video size-full" />
                 </div>
-                <h1 className="mt-0 typography-h1">{eventTitle}</h1>
-                <time dateTime={event.event_start} className="mt-4">
-                  {format(
-                    parseISO(event.event_start),
-                    "EEEE, MMMM d / hh:mmaaaa 'PDT'",
-                  )}{" "}
-                  - {format(parseISO(event.event_end), "hh:mmaaaa 'PDT'")}
-                </time>
-              </div>
-              <div className="mt-8 flex flex-col flex-wrap gap-5 lg:flex-row">
-                {event.speakers!.map(speaker => (
-                  <div
-                    className={`flex w-full items-center gap-3 ${event?.speakers?.length || 0 > 1 ? "max-w-[320px]" : ""}`}
-                    key={speaker.username}
-                  >
-                    <Avatar
-                      className="size-[100px] lg:size-[120px]"
-                      avatar={speaker.avatar}
-                      name={speaker.name}
-                    />
-
-                    <div className="flex flex-col gap-1.5 lg:gap-1">
-                      <a
-                        href={`/conf/2024/speakers/${speaker.username}`}
-                        className="mt-0 typography-body-lg"
-                      >
-                        {speaker.name}
-                      </a>
-
-                      <span className="typography-body-sm">
-                        <span>{speaker.company}</span>
-                        {speaker.company && ", "}
-                        {speaker.position}
-                      </span>
-                      {speaker.socialurls?.length ? (
-                        <div className="mt-0 text-[#333333]">
-                          <div className="flex space-x-2">
-                            {speaker.socialurls.map(social => (
-                              <a
-                                key={social.url}
-                                href={social.url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="flex items-center text-blk"
-                              >
-                                <SocialMediaIcon
-                                  service={
-                                    social.service.toLowerCase() as SocialMediaIconServiceType
-                                  }
-                                />
-                              </a>
-                            ))}
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p>{event.description}</p>
-
-              <div className="py-8">
-                {event.files?.map(({ path }) => (
-                  <div key={path}>
-                    <a href={path} target="_blank" rel="noreferrer">
-                      View Full PDF{" "}
-                      <span className="font-sans text-2xl font-light">↗</span>
-                    </a>
-                    <iframe src={path} className="aspect-video size-full" />
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </section>
         </div>
       </div>
     </main>
+  )
+}
+
+function SessionTags({ session }: { session: ScheduleSession }) {
+  const eventType = session.event_type.endsWith("s")
+    ? session.event_type.slice(0, -1)
+    : session.event_type
+
+  return (
+    <div className="flex flex-wrap gap-3">
+      {eventType && (
+        <Tag color={eventsColors[session.event_type]}>{eventType}</Tag>
+      )}
+      {session.audience && (
+        <Tag
+          color={eventsColors[session.audience] || "hsl(var(--color-neu-700))"}
+        >
+          {session.audience}
+        </Tag>
+      )}
+      {session.event_subtype && (
+        <Tag
+          color={
+            eventsColors[session.event_subtype] || "hsl(var(--color-sec-base))"
+          }
+        >
+          {session.event_subtype}
+        </Tag>
+      )}
+    </div>
+  )
+}
+
+function SessionHeader({
+  event,
+  eventTitle,
+}: {
+  event: ScheduleSession
+  eventTitle: string | null
+}) {
+  return (
+    <header>
+      <BackLink year="2025" kind="schedule" />
+      <h1 className="my-6 typography-h2">{eventTitle}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-col gap-4 typography-body-md md:flex-row md:gap-6">
+          <div className="flex items-center gap-2">
+            <CalendarIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
+            <time dateTime="2025-09-08">September 08</time>
+            <span>-</span>
+            <time dateTime="2025-09-10">10, 2025</time>
+          </div>
+          <div className="flex items-center gap-2">
+            <PinIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
+            <span>{event.venue}</span>
+          </div>
+        </div>
+        <SessionTags session={event} />
+      </div>
+
+      <div className="mt-8 flex flex-col flex-wrap gap-5 lg:flex-row">
+        {event.speakers!.map(speaker => (
+          <div
+            className={`flex w-full items-center gap-3 ${event?.speakers?.length || 0 > 1 ? "max-w-[320px]" : ""}`}
+            key={speaker.username}
+          >
+            <Avatar
+              className="size-[100px] lg:size-[120px]"
+              avatar={speaker.avatar}
+              name={speaker.name}
+            />
+
+            <div className="flex flex-col gap-1.5 lg:gap-1">
+              <a
+                href={`/conf/2024/speakers/${speaker.username}`}
+                className="mt-0 typography-body-lg"
+              >
+                {speaker.name}
+              </a>
+
+              <span className="typography-body-sm">
+                <span>{speaker.company}</span>
+                {speaker.company && ", "}
+                {speaker.position}
+              </span>
+              {speaker.socialurls?.length ? (
+                <div className="mt-0 text-[#333333]">
+                  <div className="flex space-x-2">
+                    {speaker.socialurls.map(social => (
+                      <a
+                        key={social.url}
+                        href={social.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center text-blk"
+                      >
+                        <SocialMediaIcon
+                          service={
+                            social.service.toLowerCase() as SocialMediaIconServiceType
+                          }
+                        />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        ))}
+      </div>
+    </header>
   )
 }

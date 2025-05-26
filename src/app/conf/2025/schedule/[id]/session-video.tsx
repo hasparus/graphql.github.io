@@ -27,7 +27,7 @@ export function SessionVideo({ eventTitle, event }: SessionVideoProps) {
 
   return (
     <iframe
-      className="mx-auto mt-6 aspect-video w-full max-w-4xl rounded-md"
+      className="mx-auto mt-6 aspect-video w-full"
       src={`https://youtube.com/embed/${videoId}`}
       title={recordingTitle.target}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
