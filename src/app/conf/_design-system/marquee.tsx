@@ -1,11 +1,11 @@
 "use client"
 
 import { clsx } from "clsx"
-import { useMotionValue, animate, motion } from "motion/react"
-import { useState, useEffect, Fragment } from "react"
+import { useMotionValue, animate, motion, useReducedMotion } from "motion/react"
+import { useState, useEffect, Fragment, useId } from "react"
 import useMeasure from "react-use-measure"
 
-export interface MarqueeProps {
+export interface MarqueeProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode
   gap?: number
   speed?: number
@@ -27,14 +27,25 @@ export function Marquee({
   className,
   drag = false,
   separator,
+  ...rest
 }: MarqueeProps) {
+  const shouldReduceMotion = useReducedMotion()
   const [currentSpeed, setCurrentSpeed] = useState(speed)
   const [ref, { width, height }] = useMeasure()
-  const translation = useMotionValue(0)
+
+  // ensure the marquees don't start in the same place.
+  const initialShiftPx = useSomeValue() * -64
+
+  const translation = useMotionValue(initialShiftPx)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [key, setKey] = useState(0)
 
   useEffect(() => {
+    if (shouldReduceMotion) {
+      setCurrentSpeed(0)
+      return
+    }
+
     let controls
     const size = direction === "horizontal" ? width : height
     const contentSize = size + gap
@@ -80,6 +91,7 @@ export function Marquee({
     isTransitioning,
     direction,
     reverse,
+    shouldReduceMotion,
   ])
 
   const hoverProps =
@@ -93,7 +105,7 @@ export function Marquee({
             setIsTransitioning(true)
             setCurrentSpeed(speed)
           },
-          onPointerUp: () => {
+          onPointerUp: (_event: React.PointerEvent<HTMLElement>) => {
             if (window.matchMedia("(hover: none)").matches) {
               setIsTransitioning(true)
               setCurrentSpeed(speed)
@@ -102,21 +114,41 @@ export function Marquee({
         }
       : {}
 
-  const multiples = drag ? 12 : 2
   const dragProps = drag
     ? {
-        drag: "x" as const,
-        onDragStart: () => {
-          document.documentElement.style.cursor = "grabbing"
+        drag: direction === "horizontal" ? ("x" as const) : ("y" as const),
+        onPointerDown: () => {
+          document.documentElement.style.setProperty(
+            "--cursor-grabbing",
+            "grabbing",
+          )
+        },
+        onPointerUp: (_event: React.PointerEvent<HTMLElement>) => {
+          document.documentElement.style.cursor = "initial"
+          document.documentElement.style.removeProperty("--cursor-grabbing")
         },
         onDragEnd: () => {
-          document.documentElement.style.cursor = "initial"
+          setIsTransitioning(true)
+          setCurrentSpeed(speed)
         },
+        dragConstraints:
+          direction === "horizontal"
+            ? {
+                right: 0,
+                // window.innerWidth won't be stale because resizing the window triggers useMeasure
+                left:
+                  typeof window !== "undefined"
+                    ? window.innerWidth - width
+                    : undefined,
+              }
+            : {},
       }
     : {}
 
+  const multiples = 2
+
   return (
-    <div className={clsx("overflow-hidden", className)}>
+    <div className={clsx("overflow-hidden", className)} {...rest}>
       <motion.div
         className="flex w-max"
         style={{
@@ -130,14 +162,26 @@ export function Marquee({
         ref={ref}
         {...dragProps}
         {...hoverProps}
+        onPointerUp={event => {
+          dragProps.onPointerUp?.(event)
+          hoverProps.onPointerUp?.(event)
+        }}
       >
         {Array.from({ length: multiples }).map((_, i) => (
           <Fragment key={i}>
             {children}
-            {separator}
+            {i < multiples - 1 && separator}
           </Fragment>
         ))}
       </motion.div>
     </div>
   )
+}
+
+function useSomeValue() {
+  const id = useId()
+  const num =
+    id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) - 950
+
+  return Math.abs(Math.sin(num))
 }

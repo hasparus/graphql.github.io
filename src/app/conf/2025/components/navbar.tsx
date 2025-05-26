@@ -10,6 +10,7 @@ import { Badge } from "../../_components/badge"
 import MenuIcon from "../pixelarticons/menu.svg?svgr"
 import CloseIcon from "../pixelarticons/close.svg?svgr"
 import { GraphQLConfLogoLink } from "./graphql-conf-logo-link"
+import { Anchor } from "../../_design-system/anchor"
 
 export interface NavbarProps {
   links: { href: string; children: React.ReactNode; "aria-disabled"?: true }[]
@@ -31,6 +32,15 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
 
   useEffect(() => {
     document.body.style.overflow = mobileDrawerOpen ? "hidden" : "auto"
+    if (mobileDrawerOpen) {
+      const closeOnEscape = (event: KeyboardEvent) => {
+        if (event.key === "Escape") setMobileDrawerOpen(false)
+      }
+      document.addEventListener("keydown", closeOnEscape)
+      return () => {
+        document.removeEventListener("keydown", closeOnEscape)
+      }
+    }
   }, [mobileDrawerOpen])
 
   return (
@@ -49,7 +59,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
         )}
       >
         <BackdropBlur />
-        <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-4 lg:px-10">
+        <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-4 md:px-6 2xl:px-10">
           <GraphQLConfLogoLink year={year} />
 
           <div className="mr-auto flex h-full flex-col justify-center whitespace-pre border-x border-blk/60 px-4 typography-menu dark:border-white/80 max-xl:hidden">
@@ -80,19 +90,19 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
             <div className="flex w-full flex-col lg:mt-0 lg:block">
               {links.map(
                 ({ "aria-disabled": isDisabled, children, ...link }) => (
-                  <NextLink
+                  <Anchor
                     aria-disabled={isDisabled}
                     key={link.href}
                     {...link}
-                    // if external link, open in new tab
-                    {...(link.href.startsWith("https") && {
-                      target: "_blank",
-                      rel: "noopener noreferrer",
-                    })}
                     className={clsx(
                       "p-5 underline-offset-4 hover:underline aria-disabled:pointer-events-none max-lg:text-base",
                       pathname === link.href && "underline",
                     )}
+                    onClick={() => {
+                      if (mobileDrawerOpen) {
+                        setMobileDrawerOpen(false)
+                      }
+                    }}
                   >
                     {children}
                     {isDisabled && (
@@ -100,7 +110,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
                         <Badge className="text-white">Soon</Badge>
                       </sup>
                     )}
-                  </NextLink>
+                  </Anchor>
                 ),
               )}
             </div>

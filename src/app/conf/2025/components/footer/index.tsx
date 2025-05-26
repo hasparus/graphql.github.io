@@ -23,13 +23,15 @@ export function Footer({
   return (
     <footer className="gql-all-anchors-focusable relative !bg-neu-100 text-neu-900 typography-menu dark:!bg-neu-0 max-md:px-0 max-md:pt-0">
       <Stripes />
-      <div className="flex flex-wrap justify-between gap-4 px-6 py-4 max-md:w-full lg:py-10">
+      <div className="flex flex-wrap justify-between gap-4 p-4 max-md:w-full md:px-6 lg:py-10 2xl:px-10">
         {logo}
-        <div className="flex gap-x-4 gap-y-2 typography-body-lg">
-          <p className="flex items-center gap-2">
+        <div className="flex gap-x-4 typography-body-lg max-sm:grid max-sm:grid-cols-2 max-sm:items-start max-sm:text-lg sm:gap-y-2">
+          <p className="flex items-center whitespace-pre">
             <time dateTime="2025-09-08">September 08</time>
             <span>-</span>
-            <time dateTime="2025-09-10">10, 2025</time>
+            <time dateTime="2025-09-10">
+              10<span className="max-sm:hidden">, 2025</span>
+            </time>
           </p>
           <address className="not-italic">Amsterdam, Netherlands</address>
         </div>
@@ -41,7 +43,7 @@ export function Footer({
           </li>
         ))}
       </ul>
-      <div className="relative flex justify-between gap-10 px-6 py-4 text-sm max-lg:flex-col">
+      <div className="relative flex justify-between gap-10 p-4 text-sm max-lg:flex-col md:px-6 2xl:px-10">
         <div className="flex flex-col font-light max-md:gap-5">
           <p>
             Copyright © {new Date().getFullYear()} The GraphQL Foundation. All
@@ -139,7 +141,7 @@ function FooterBox({ box }: { box: FooterLink | FooterLink[] }) {
       href={href}
       title={disabled ? "Coming soon" : undefined}
       className={clsx(
-        "gql-focus-visible relative block h-full p-6",
+        "gql-focus-visible relative block h-full p-4 pb-8 md:p-6 2xl:px-10",
         disabled ? "pointer-events-none" : "underline-offset-4 hover:underline",
       )}
       tabIndex={disabled ? -1 : undefined}
