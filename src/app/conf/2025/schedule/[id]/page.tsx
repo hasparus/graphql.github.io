@@ -20,6 +20,7 @@ import { eventsColors } from "../../utils"
 import { PinIcon } from "../../pixelarticons/pin-icon"
 import { CalendarIcon } from "../../pixelarticons/calendar-icon"
 import { SpeakerCard } from "../../components/speaker-card"
+import { Anchor } from "@/app/conf/_design-system/anchor"
 
 function getEventTitle(event: ScheduleSession, speakers: string[]): string {
   let { name } = event
@@ -86,10 +87,10 @@ export default function SessionPage({ params }: SessionProps) {
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <div className="mx-auto max-w-[1088px] py-10">
           <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
-            <SessionHeader event={event} eventTitle={eventTitle} />
+            <SessionHeader event={event} eventTitle={eventTitle} year="2025" />
             <SessionVideo event={event} eventTitle={eventTitle} />
             <SessionSpeakers event={event} />
-            <p className="py-8 typography-body-lg lg:py-10">
+            <p className="typography-body-lg py-8 lg:py-10">
               {event.description}
             </p>
 
@@ -144,16 +145,39 @@ function SessionTags({ session }: { session: ScheduleSession }) {
 function SessionHeader({
   event,
   eventTitle,
+  year,
 }: {
   event: ScheduleSession
   eventTitle: string | null
+  year: number | `${number}`
 }) {
+  const speakers = event.speakers || []
+
   return (
     <header>
       <BackLink year="2025" kind="schedule" />
-      <h1 className="my-6 typography-h2">{eventTitle}</h1>
+      <p
+        className={clsx(
+          "mt-8 text-neu-700",
+          speakers.length >= 4 ? "typography-body-lg" : "typography-h3",
+        )}
+      >
+        {speakers.map((s, i) => (
+          <>
+            <Anchor
+              key={s.username}
+              href={`/conf/${year}/speakers/${s.username}`}
+              className="decoration-neu-500 hover:underline dark:decoration-neu-100"
+            >
+              {s.name}
+            </Anchor>
+            {i !== speakers.length - 1 && <span>, </span>}
+          </>
+        ))}
+      </p>
+      <h1 className="typography-h2 mb-6 mt-3">{eventTitle}</h1>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-col gap-4 typography-body-md md:flex-row md:gap-6">
+        <div className="typography-body-md flex flex-col gap-4 md:flex-row md:gap-6">
           <div className="flex items-center gap-2">
             <CalendarIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
             <time dateTime="2025-09-08">September 08</time>
@@ -175,11 +199,7 @@ function SessionSpeakers({ event }: { event: ScheduleSession }) {
   return (
     <div className="mt-8 flex flex-col flex-wrap gap-5 lg:flex-row">
       {event.speakers!.map(speaker => (
-        <SpeakerCard
-          key={speaker.username}
-          speaker={speaker}
-          year="2025"
-        />
+        <SpeakerCard key={speaker.username} speaker={speaker} year="2025" />
       ))}
     </div>
   )
