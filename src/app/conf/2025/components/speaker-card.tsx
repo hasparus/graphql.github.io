@@ -17,20 +17,6 @@ export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   year: string
 }
 
-function Stripes({ mask }: { mask?: string }) {
-  return (
-    <div
-      role="presentation"
-      className="pointer-events-none absolute inset-0 inset-y-[-20px]"
-      style={{
-        maskImage: mask,
-        WebkitMaskImage: mask,
-      }}
-    >
-      <StripesDecoration oddClassName="absolute inset-0 bg-gradient-to-b from-sec-dark to-sec-light" />
-    </div>
-  )
-}
 
 export function SpeakerCard({
   tags = [],
@@ -42,7 +28,7 @@ export function SpeakerCard({
   return (
     <article
       className={clsx(
-        "relative flex flex-col overflow-hidden border border-neu-300",
+        "relative flex flex-col overflow-hidden border border-neu-300 [container-type:inline-size]",
         className,
       )}
       {...props}
@@ -124,6 +110,22 @@ function SpeakerLinks({
           <SocialIcon type={social.service.toLowerCase()} className="size-5" />
         </a>
       ))}
+    </div>
+  )
+}
+
+
+function Stripes({ mask }: { mask?: string }) {
+  return (
+    <div
+      role="presentation"
+      className="pointer-events-none absolute inset-0 inset-y-[-20px]"
+      style={{
+        maskImage: mask,
+        WebkitMaskImage: mask,
+      }}
+    >
+      <StripesDecoration oddClassName="absolute inset-0 bg-gradient-to-b from-sec-dark to-sec-light" />
     </div>
   )
 }

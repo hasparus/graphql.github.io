@@ -1,3 +1,5 @@
+import { ScheduleSession } from "../2023/types"
+
 export const eventsColors: Record<string, string> = {
   Breaks: "#7DAA5E",
   "Keynote Sessions": "#7e66cc",
@@ -16,4 +18,24 @@ export const eventsColors: Record<string, string> = {
   "GraphQL Security": "#CC6BB0",
   "GraphQL Spec": "#6B73CC",
   Scaling: "#8D8D8D",
+}
+
+export function getEventTitle(
+  event: Pick<ScheduleSession, "name">,
+  speakers: string[],
+): string {
+  let { name } = event
+
+  if (!speakers) {
+    return name
+  }
+
+  speakers?.forEach(speaker => {
+    const speakerInTitle = name.indexOf(`- ${speaker.replace("ı", "i")}`)
+    if (speakerInTitle > -1) {
+      name = name.slice(0, speakerInTitle)
+    }
+  })
+
+  return name
 }

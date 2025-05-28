@@ -18,23 +18,6 @@ import { CalendarIcon } from "../../pixelarticons/calendar-icon"
 import { SpeakerCard } from "../../components/speaker-card"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 
-function getEventTitle(event: ScheduleSession, speakers: string[]): string {
-  let { name } = event
-
-  if (!speakers) {
-    return name
-  }
-
-  speakers?.forEach(speaker => {
-    const speakerInTitle = name.indexOf(`- ${speaker.replace("ı", "i")}`)
-    if (speakerInTitle > -1) {
-      name = name.slice(0, speakerInTitle)
-    }
-  })
-
-  return name
-}
-
 type SessionProps = { params: { id: string } }
 
 export function generateMetadata({ params }: SessionProps): Metadata {

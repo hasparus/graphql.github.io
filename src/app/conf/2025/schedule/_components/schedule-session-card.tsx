@@ -1,12 +1,15 @@
-import { getEventTitle } from "@/app/conf/2023/utils"
-import { SchedSpeaker } from "@/app/conf/2023/types"
+import React from "react"
 
-import { PinIcon } from "../../pixelarticons/pin-icon"
+import { SchedSpeaker } from "@/app/conf/2023/types"
+import { Anchor } from "@/app/conf/_design-system/anchor"
 import { Tag } from "@/app/conf/_design-system/tag"
 
-import { type ScheduleSession } from "./session-list"
+import { PinIcon } from "../../pixelarticons/pin-icon"
 
-function isString(x: any) {
+import { type ScheduleSession } from "./session-list"
+import { getEventTitle } from "../../utils"
+
+function isString(x: unknown): x is string {
   return Object.prototype.toString.call(x) === "[object String]"
 }
 
@@ -26,14 +29,16 @@ export function ScheduleSessionCard({
     : session.event_type
 
   const speakers = session.speakers
-  const formattedSpeakers = isString(speakers || [])
-    ? (speakers as string)?.split(",")
-    : (speakers as SchedSpeaker[])?.map(e => e.name)
+    ? isString(session.speakers)
+      ? (session.speakers as string)
+          .split(",")
+          .map(name => ({ name, username: "" }))
+      : (session.speakers as SchedSpeaker[])
+    : []
 
   const eventTitle = getEventTitle(
-    // @ts-expect-error fixme
     session,
-    formattedSpeakers,
+    speakers.map(s => s.name),
   )
 
   const eventColor = eventsColors[session.event_type]
@@ -50,6 +55,7 @@ export function ScheduleSessionCard({
       href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
       className="group relative size-full bg-neu-0 p-4 font-normal no-underline ring-neu-400 hover:bg-neu-0/90 hover:ring-1 focus-visible:z-[1] dark:ring-neu-100 dark:hover:bg-neu-0/80 max-lg:mt-px"
     >
+      {/* todo: fix link nesting */}
       <span className="flex h-full flex-col justify-start">
         {eventColor && (
           <Tag className="mb-3" color={eventColor}>
@@ -61,12 +67,25 @@ export function ScheduleSessionCard({
           <span className="typography-body-md">{eventTitle}</span>
           <span className="flex flex-col">
             {(speakers?.length || 0) > 0 && (
-              <span className="typography-body-sm">
-                {/* todo: link to speakers (anchor background on z-index above the main link layer) */}
-                {formattedSpeakers.join(", ")}
+              <span className="typography-body-sm z-[2]">
+                {speakers.map((s, i) => (
+                  <React.Fragment key={s.username || s.name}>
+                    {s.username ? (
+                      <Anchor
+                        href={`/conf/${year}/speakers/${s.username}`}
+                        className="decoration-neu-500 hover:underline dark:decoration-neu-100"
+                      >
+                        {s.name}
+                      </Anchor>
+                    ) : (
+                      s.name
+                    )}
+                    {i !== speakers.length - 1 && <span>, </span>}
+                  </React.Fragment>
+                ))}
               </span>
             )}
-            <span className="mt-2 flex items-center gap-0.5 typography-body-xs">
+            <span className="typography-body-xs mt-2 flex items-center gap-0.5">
               <PinIcon className="size-4 text-pri-base" />
               {session.venue}
             </span>
