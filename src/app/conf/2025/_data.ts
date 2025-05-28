@@ -68,6 +68,8 @@ async function getSchedule(): Promise<ScheduleSession[]> {
       // console.log(`Found HTML element in about field for session "${session.name}"`)
     }
 
+    // TODO: Preserve formatting??
+
     return {
       ...session,
       description: description && stripHtml(description).result,
@@ -77,8 +79,7 @@ async function getSchedule(): Promise<ScheduleSession[]> {
   return result
 }
 
-// @ts-expect-error -- fixme
 export const speakers = await getSpeakers()
 
-// @ts-expect-error -- fixme
+// TODO: Collect tags from schedule for speakers.
 export const schedule = await getSchedule()
