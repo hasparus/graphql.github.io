@@ -1,21 +1,15 @@
 import clsx from "clsx"
 import Image from "next-image-export-optimizer"
-import type { StaticImageData } from "next/image"
 
-import TwitterXIcon from "@/icons/twitter.svg?svgr"
-import LinkedInIcon from "@/icons/linkedin.svg?svgr"
 import { eventsColors } from "../utils"
 
 import { Anchor } from "../../_design-system/anchor"
 import { Tag } from "../../_design-system/tag"
 import { SchedSpeaker } from "../../2023/types"
-import {
-  SocialMediaIcon,
-  SocialMediaIconServiceType,
-} from "../../_components/speakers/social-media"
+import { StripesDecoration } from "../../_design-system/stripes-decoration"
+import { SocialIcon, SocialIconType } from "../../_design-system/social-icon"
 
 export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  imageUrl?: string | StaticImageData
   tags?: string[]
   isReturning?: boolean
   stripes?: string
@@ -33,13 +27,12 @@ function Stripes({ mask }: { mask?: string }) {
         WebkitMaskImage: mask,
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-sec-dark/50 to-sec-light/50" />
+      <StripesDecoration oddClassName="absolute inset-0 bg-gradient-to-b from-sec-dark to-sec-light" />
     </div>
   )
 }
 
 export function SpeakerCard({
-  imageUrl,
   tags = [],
   className,
   speaker,
@@ -55,31 +48,29 @@ export function SpeakerCard({
       {...props}
     >
       <div className="flex gap-6 p-6">
-        {imageUrl && (
-          <div className="relative aspect-square size-[236px] shrink-0 overflow-hidden">
-            <div className="absolute inset-0 z-[1] bg-sec-light opacity-90 mix-blend-multiply" />
+        <SpeakerLinks speaker={speaker} className="absolute right-6 top-6" />
+        {speaker.avatar && (
+          <div className="relative aspect-square shrink-0 overflow-hidden">
+            <div className="absolute inset-0 z-[1] bg-sec-light mix-blend-multiply" />
             <Image
-              src={imageUrl}
+              src={speaker.avatar}
               alt=""
-              width={312}
-              height={312}
-              className="size-full object-cover saturate-[0.1] transition-transform"
+              width={176}
+              height={176}
+              className="size-full object-cover saturate-[.1] transition-transform"
             />
-            <Stripes
-              // TODO!
-              mask={""}
-            />
+            <Stripes mask="radial-gradient(ellipse at top left, hsl(var(--color-pri-base)) 0%, hsl(var(--color-pri-base)) 5%, transparent 40%, transparent, transparent 85%, black 100%)" />
           </div>
         )}
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex flex-col gap-1">
             <h3 className="typography-body-lg">{speaker.name}</h3>
-            <p className="text-neu-700 typography-body-sm">
+            <p className="typography-body-sm text-neu-800">
               {[speaker.position, speaker.company].filter(Boolean).join(", ")}
             </p>
           </div>
           {speaker.about && (
-            <p className="text-neu-700 typography-body-sm">{speaker.about}</p>
+            <p className="typography-body-sm text-neu-800">{speaker.about}</p>
           )}
           {/* TODO: We'll have to collect it when fetching all sessions. */}
           {tags.length > 0 && (
@@ -91,36 +82,48 @@ export function SpeakerCard({
               ))}
             </div>
           )}
-          <div className="flex gap-4">
-            {speaker.socialurls?.length ? (
-              <div className="mt-0 text-[#765e5e]">
-                <div className="flex space-x-2">
-                  {speaker.socialurls.map(social => (
-                    <a
-                      key={social.url}
-                      href={social.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center text-blk"
-                    >
-                      <SocialMediaIcon
-                        service={
-                          social.service.toLowerCase() as SocialMediaIconServiceType
-                        }
-                      />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-          </div>
         </div>
       </div>
       <Anchor
         href={`/conf/${year}/speakers/${speaker.username}`}
-        className="absolute inset-0"
+        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:ring-1 dark:ring-neu-100"
         title={`See ${speaker.name.split(" ")[0]}'s sessions`}
       />
     </article>
+  )
+}
+
+function SpeakerLinks({
+  speaker,
+  className,
+}: {
+  speaker: SchedSpeaker
+  className?: string
+}) {
+  const speakerUrls = SocialIconType.all
+    .map(social => speaker.socialurls.find(x => x.service === social))
+    .concat([{ service: "website", url: speaker.url || "" }])
+    .filter((x): x is Exclude<typeof x, undefined> => !!x?.url)
+    .slice(-3)
+
+  return (
+    <div
+      className={clsx(
+        "z-[3] flex divide-x divide-neu-200 border border-neu-200",
+        className,
+      )}
+    >
+      {speakerUrls.map(social => (
+        <a
+          key={social.url}
+          href={social.url}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center p-2 text-neu-900"
+        >
+          <SocialIcon type={social.service.toLowerCase()} className="size-5" />
+        </a>
+      ))}
+    </div>
   )
 }
