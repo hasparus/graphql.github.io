@@ -1,14 +1,10 @@
+import React from "react"
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
 import clsx from "clsx"
-import { format, parseISO } from "date-fns"
 
 import { metadata as layoutMetadata } from "@/app/conf/2023/layout"
-import { Avatar } from "../../../_components/speakers/avatar"
-import {
-  SocialMediaIcon,
-  SocialMediaIconServiceType,
-} from "../../../_components/speakers/social-media"
+
 import { speakers, schedule } from "../../_data"
 import { ScheduleSession } from "../../../2023/types"
 
@@ -89,10 +85,18 @@ export default function SessionPage({ params }: SessionProps) {
           <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
             <SessionHeader event={event} eventTitle={eventTitle} year="2025" />
             <SessionVideo event={event} eventTitle={eventTitle} />
+
+            <div className="mt-8 flex gap-4 max-lg:flex-col lg:mt-16 lg:gap-8">
+              <h3 className="typography-h2 min-w-[320px]">
+                Session description
+              </h3>
+              <p className="typography-body-lg">{event.description}</p>
+            </div>
+
+            <h3 className="typography-h2 my-8 max-w-[408px] lg:my-16">
+              Session speakers
+            </h3>
             <SessionSpeakers event={event} />
-            <p className="typography-body-lg py-8 lg:py-10">
-              {event.description}
-            </p>
 
             <div className="py-8">
               {event.files?.map(({ path }) => (
@@ -163,16 +167,15 @@ function SessionHeader({
         )}
       >
         {speakers.map((s, i) => (
-          <>
+          <React.Fragment key={s.username}>
             <Anchor
-              key={s.username}
               href={`/conf/${year}/speakers/${s.username}`}
               className="decoration-neu-500 hover:underline dark:decoration-neu-100"
             >
               {s.name}
             </Anchor>
             {i !== speakers.length - 1 && <span>, </span>}
-          </>
+          </React.Fragment>
         ))}
       </p>
       <h1 className="typography-h2 mb-6 mt-3">{eventTitle}</h1>
@@ -197,8 +200,8 @@ function SessionHeader({
 
 function SessionSpeakers({ event }: { event: ScheduleSession }) {
   return (
-    <div className="mt-8 flex flex-col flex-wrap gap-5 lg:flex-row">
-      {event.speakers!.map(speaker => (
+    <div className="flex flex-col flex-wrap gap-5 lg:flex-row">
+      {event.speakers?.map(speaker => (
         <SpeakerCard key={speaker.username} speaker={speaker} year="2025" />
       ))}
     </div>
