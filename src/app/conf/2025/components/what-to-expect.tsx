@@ -29,7 +29,7 @@ function ListItem({ number, text }: { number: string; text: string }) {
       <span className="inline-block w-[87px] text-[72px]/none [text-box:trim-both_cap_alphabetic]">
         {number}
       </span>{" "}
-      <span className="typography-menu ml-10 inline-block">{text}</span>
+      <span className="ml-10 inline-block typography-menu">{text}</span>
     </li>
   )
 }
