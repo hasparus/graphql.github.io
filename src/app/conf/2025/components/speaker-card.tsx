@@ -29,7 +29,7 @@ export function SpeakerCard({
   return (
     <article
       className={clsx(
-        "relative flex flex-col overflow-hidden border border-neu-200 [container-type:inline-size] dark:border-neu-100",
+        "group relative flex flex-col overflow-hidden border border-neu-200 bg-neu-0 [container-type:inline-size] dark:border-neu-100",
         className,
       )}
       {...props}
@@ -55,7 +55,12 @@ export function SpeakerCard({
           <div className="flex flex-col gap-1">
             <h3 className="typography-body-lg">{speaker.name}</h3>
             <p className="typography-body-sm text-neu-800">
-              {[speaker.position, speaker.company].filter(Boolean).join(", ")}
+              {[
+                speaker.position,
+                speaker.company === "-" ? "" : speaker.company,
+              ]
+                .filter(Boolean)
+                .join(", ")}
             </p>
           </div>
           {speaker.about && (
@@ -77,8 +82,8 @@ export function SpeakerCard({
       </div>
       <Anchor
         href={`/conf/${year}/speakers/${speaker.username}`}
-        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:ring-1 dark:ring-neu-100"
-        title={`See ${speaker.name.split(" ")[0]}'s sessions`}
+        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100"
+        aria-label={`See ${speaker.name.split(" ")[0]}'s sessions`}
       />
     </article>
   )

@@ -49,7 +49,7 @@ export function ScheduleSessionCard({
       {eventTitle}
     </div>
   ) : (
-    <div className="group relative size-full bg-neu-0 p-4 font-normal no-underline ring-neu-400 hover:bg-neu-0/90 hover:ring-1 focus-visible:z-[1] dark:ring-neu-100 dark:hover:bg-neu-0/80">
+    <div className="group relative size-full bg-neu-0 p-4 font-normal no-underline ring-neu-400 focus-visible:z-[1] dark:ring-neu-100 dark:hover:bg-neu-0/80 [&:has(>a:hover)]:bg-neu-0/90 [&:has(>a:hover)]:ring-1">
       <Anchor
         id={`session-${session.id}`}
         href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
@@ -67,13 +67,13 @@ export function ScheduleSessionCard({
           <span className="typography-body-md">{eventTitle}</span>
           <span className="flex flex-col">
             {(speakers?.length || 0) > 0 && (
-              <span className="typography-body-sm z-[2]">
+              <span className="typography-body-sm">
                 {speakers.map((s, i) => (
                   <React.Fragment key={s.username || s.name}>
                     {s.username ? (
                       <Anchor
                         href={`/conf/${year}/speakers/${s.username}`}
-                        className="decoration-neu-500 hover:underline dark:decoration-neu-100"
+                        className="relative z-[2] decoration-neu-600 hover:underline dark:decoration-neu-200"
                       >
                         {s.name}
                       </Anchor>

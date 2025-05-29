@@ -71,10 +71,10 @@ export default function SessionPage({ params }: SessionProps) {
       <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
 
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
-        <div className="gql-conf-container">
-          <div className="gql-conf-section !pt-0">
-            <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
-              <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
+        <div className="bg-neu-50 dark:bg-neu-0">
+          <div className="gql-conf-container">
+            <div className="gql-conf-section !py-0">
+              <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
                 <SessionHeader
                   event={event}
                   eventTitle={eventTitle}
@@ -90,7 +90,7 @@ export default function SessionPage({ params }: SessionProps) {
                   <Hr className="mt-10 2xl:mt-16" />
                 )}
 
-                <div className="mt-8 flex gap-4 px-2 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
+                <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
                   <h3 className="typography-h2 min-w-[320px]">
                     Session description
                   </h3>
@@ -102,9 +102,14 @@ export default function SessionPage({ params }: SessionProps) {
                 <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
                   Session speakers
                 </h3>
-                <SessionSpeakers event={event} className="-mx-px" />
+                <SessionSpeakers event={event} className="-mx-px -mb-px" />
 
-                <div className="py-8 xl:mt-16">
+                <Hr />
+
+                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
+                  Session resources
+                </h3>
+                <section>
                   {event.files?.map(({ path }) => (
                     <iframe
                       key={path}
@@ -112,13 +117,13 @@ export default function SessionPage({ params }: SessionProps) {
                       className="aspect-video size-full"
                     />
                   ))}
-                </div>
-              </section>
+                </section>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-neu-0 py-8 xl:py-16">
+        <div className="border-t border-neu-200 bg-neu-0 py-8 dark:border-neu-100 xl:py-16">
           <div className="gql-conf-container">
             <CtaCardSection
               title="Get your ticket"
@@ -230,7 +235,12 @@ function SessionSpeakers({
   className?: string
 }) {
   return (
-    <div className={clsx("grid gap-5 lg:grid-cols-2", className)}>
+    <div
+      className={clsx(
+        "grid max-lg:*:border-y-0 lg:grid-cols-2 lg:gap-5",
+        className,
+      )}
+    >
       {event.speakers?.map(speaker => (
         <SpeakerCard key={speaker.username} speaker={speaker} year="2025" />
       ))}

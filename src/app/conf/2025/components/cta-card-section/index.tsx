@@ -2,8 +2,9 @@ import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
 import logoMask from "./logo-mask.webp"
 
-export interface CtaCardSectionProps extends React.HTMLAttributes<HTMLElement> {
-  title: string
+export interface CtaCardSectionProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {
+  title: React.ReactNode
   description: string
   children: React.ReactNode
 }
