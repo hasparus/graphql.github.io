@@ -1,4 +1,4 @@
-import { TrainIcon, AroundIcon, ParkingIcon, BusIcon } from "@/icons"
+import { TrainIcon, AroundIcon, ParkingIcon } from "@/icons"
 import NextImage from "next-image-export-optimizer"
 import cityViewImage from "./sf-city-view.jpeg"
 

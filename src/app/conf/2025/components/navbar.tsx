@@ -1,14 +1,13 @@
 "use client"
 
 import { ReactElement, useCallback, useEffect, useState } from "react"
-import NextLink from "next/link"
 import { clsx } from "clsx"
 import { usePathname } from "next/navigation"
 
 import { Badge } from "../../_components/badge"
 
-import MenuIcon from "../pixelarticons/menu.svg?svgr"
-import CloseIcon from "../pixelarticons/close.svg?svgr"
+import MenuIcon from "@/app/conf/_design-system/pixelarticons/menu.svg?svgr"
+import CloseIcon from "@/app/conf/_design-system/pixelarticons/close.svg?svgr"
 import { GraphQLConfLogoLink } from "./graphql-conf-logo-link"
 import { Anchor } from "../../_design-system/anchor"
 

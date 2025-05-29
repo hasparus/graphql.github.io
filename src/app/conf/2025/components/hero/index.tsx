@@ -1,5 +1,6 @@
-import { CalendarIcon } from "../../pixelarticons/calendar-icon"
-import { PinIcon } from "../../pixelarticons/pin-icon"
+import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
+import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
+
 import GraphQLFoundationWordmark from "../../assets/graphql-foundation-wordmark.svg?svgr"
 
 import { ImageLoaded } from "../image-loaded"

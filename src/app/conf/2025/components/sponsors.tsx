@@ -1,7 +1,7 @@
 import Grafbase from "public/img/conf/Sponsors/Grafbase.svg?svgr"
 
 import { clsx } from "clsx"
-import { ChevronRight } from "../pixelarticons/chevron-right"
+import { ChevronRight } from "../../_design-system/pixelarticons/chevron-right"
 
 interface Sponsor {
   icon: React.FC<React.SVGProps<SVGElement>>

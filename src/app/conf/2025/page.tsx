@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { BecomeASponsor } from "./components/become-a-sponsor"
-import { Venue } from "./venue"
+import { Venue } from "./components/venue"
 import { FAQ } from "./faq"
 import { CallForProposals } from "./components/call-for-proposals"
 import { RegisterToday } from "./components/register-today"

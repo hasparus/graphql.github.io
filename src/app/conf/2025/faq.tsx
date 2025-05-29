@@ -1,5 +1,6 @@
 import clsx from "clsx"
-import ArrowDown from "./pixelarticons/arrow-down.svg?svgr"
+
+import ArrowDown from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
 
 const FAQS = [
   {
