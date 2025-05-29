@@ -69,7 +69,6 @@ export default function SessionPage({ params }: SessionProps) {
   return (
     <>
       <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
-
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <div className="bg-neu-50 dark:bg-neu-0">
           <div className="gql-conf-container">

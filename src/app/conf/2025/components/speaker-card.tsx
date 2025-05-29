@@ -23,18 +23,18 @@ export function SpeakerCard({
   className,
   speaker,
   year,
-  showSocials = true,
+  showSocials = false,
   ...props
 }: SpeakerCardProps) {
   return (
     <article
       className={clsx(
-        "group relative flex flex-col overflow-hidden border border-neu-200 bg-neu-0 [container-type:inline-size] dark:border-neu-100",
+        "group relative overflow-hidden border border-neu-200 bg-neu-0 @container dark:border-neu-100",
         className,
       )}
       {...props}
     >
-      <div className="flex gap-6 p-6">
+      <div className="flex h-full flex-col gap-4 p-4 @[420px]:flex-row md:gap-6 md:p-6">
         {showSocials && (
           <SpeakerLinks speaker={speaker} className="absolute right-6 top-6" />
         )}
