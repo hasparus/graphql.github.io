@@ -24,19 +24,19 @@ export function Hero({
           <div className="flex gap-10 max-md:flex-col md:justify-between">
             {pageName ? (
               <div>
-                <span className="text-sec-base typography-h3">
+                <span className="typography-h3 text-sec-base">
                   GraphQLConf {year}
                 </span>
                 <h1 className="typography-d1">{pageName}</h1>
               </div>
             ) : (
-              <h1 className="flex flex-wrap gap-2 typography-d1">
+              <h1 className="typography-d1 flex flex-wrap gap-2">
                 <span>GraphQLConf</span>
                 <span className="text-sec-base">{year}</span>
               </h1>
             )}
             <div className="flex h-min items-center gap-4">
-              <span className="whitespace-pre typography-body-sm">
+              <span className="typography-body-sm whitespace-pre">
                 hosted by
               </span>
               <GraphQLFoundationWordmark width={128} height={34.877} />
@@ -53,7 +53,7 @@ export function Hero({
 
 export function HeroDateAndLocation() {
   return (
-    <div className="flex flex-col gap-4 typography-body-md md:flex-row md:gap-6">
+    <div className="typography-body-md flex flex-col gap-4 md:flex-row md:gap-6">
       <div className="flex items-center gap-2">
         <CalendarIcon className="size-5 sm:size-6" />
         <time dateTime="2025-09-08">September 08</time>

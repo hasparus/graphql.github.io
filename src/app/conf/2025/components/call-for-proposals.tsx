@@ -44,7 +44,7 @@ function DefinitionListItem({
   definition: string
 }) {
   return (
-    <div className={clsx(className, "flex typography-body-md max-sm:flex-col")}>
+    <div className={clsx(className, "typography-body-md flex max-sm:flex-col")}>
       <dt className="flex w-[184.5px] shrink-0 items-center whitespace-pre border-neu-300 bg-white/[0.79] px-3 py-2 max-sm:w-full sm:border-r sm:p-4">
         {term}
       </dt>
@@ -139,7 +139,7 @@ function NotesTab() {
           event.
         </li>
       </ul>
-      <h3 className="mt-6 typography-h3">Preparing to Submit Your Proposal</h3>
+      <h3 className="typography-h3 mt-6">Preparing to Submit Your Proposal</h3>
       <p className="mt-2">
         While it is not our intention to provide you with strict instructions on
         how to prepare your proposal, we hope you will take a moment to review
@@ -160,7 +160,7 @@ function NotesTab() {
         letting you share your experiences, educate the community about an
         issue, or generate interest in a project.
       </p>
-      <h3 className="mt-6 typography-h3">How to Give a Great Talk</h3>
+      <h3 className="typography-h3 mt-6">How to Give a Great Talk</h3>
       <p className="mt-2">
         We want to make sure submitters receive resources to help put together a
         great submission and if accepted, give the best presentation possible.
@@ -175,7 +175,7 @@ function NotesTab() {
         </a>
         .
       </p>
-      <h3 className="mt-6 typography-h3">
+      <h3 className="typography-h3 mt-6">
         Have More Questions? First Time Submitting? Don't Feel Intimidated
       </h3>
       <p className="mt-2">
@@ -237,7 +237,7 @@ function ProcessTab() {
         <li>The new Subject Matter Experts initiative (SMEs)</li>
         <li>The Program Committee</li>
       </ul>
-      <h3 className="mt-6 typography-h3">The Technical Steering Committee</h3>
+      <h3 className="typography-h3 mt-6">The Technical Steering Committee</h3>
       <p className="mt-2">
         The TSC are a group of 11 individuals who are elected to serve a two
         year term to provide technical oversight of all GraphQL development
@@ -251,7 +251,7 @@ function ProcessTab() {
         <li>Quality of Presentation</li>
         <li>Importance</li>
       </ul>
-      <h3 className="mt-6 typography-h3">Subject Matter Experts</h3>
+      <h3 className="typography-h3 mt-6">Subject Matter Experts</h3>
       <p className="mt-2">
         The SME initiative is new for 2025. This will be a panel of volunteers
         drawn from industry experts, working group members, security and
@@ -265,7 +265,7 @@ function ProcessTab() {
         <li>Originality</li>
         <li>Audience Engagement</li>
       </ul>
-      <h3 className="mt-6 typography-h3">The Program Committee</h3>
+      <h3 className="typography-h3 mt-6">The Program Committee</h3>
       <p className="mt-2">
         The Program Committee is made up of representatives from the GraphQL
         Foundation board and interested members of the GraphQL community who
@@ -275,7 +275,7 @@ function ProcessTab() {
         demographics, to ensure a varied and well-rounded representation of the
         GraphQL ecosystem.
       </p>
-      <h3 className="mt-6 typography-h3">
+      <h3 className="typography-h3 mt-6">
         Have More Questions? First Time Submitting? Don't Feel Intimidated
       </h3>
       <p className="mt-2">
@@ -348,7 +348,7 @@ export function CallForProposals() {
             </a>
             .
           </p>
-          <p className="mt-6 typography-body-sm md:mt-10">
+          <p className="typography-body-sm mt-6 md:mt-10">
             Please be aware that the Linux Foundation uses Sessionize for CFP
             submissions. Sessionize is a cloud-based event content management
             software designed to be intuitive and user-friendly. If you need
@@ -442,7 +442,7 @@ function TabButton({
       tabIndex={tabIndex}
       aria-selected={activeTab === tab}
       className={clsx(
-        "gql-focus-visible flex items-center justify-between px-3 py-4 typography-body-lg hover:bg-sec-light focus:outline-none max-lg:border-b max-lg:border-sec-dark max-lg:first:border-t lg:[--collapsible:1] lg:aria-selected:bg-sec-light",
+        "gql-focus-visible typography-body-lg flex items-center justify-between px-3 py-4 hover:bg-sec-light focus:outline-none max-lg:border-b max-lg:border-sec-dark max-lg:first:border-t lg:[--collapsible:1] lg:aria-selected:bg-sec-light",
         className,
       )}
       onFocus={() => {

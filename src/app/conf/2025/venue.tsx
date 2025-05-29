@@ -49,7 +49,7 @@ export function Venue() {
     <section className="gql-conf-section">
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
         <div className="typography-body-md">
-          <h2 className="mb-4 typography-h2">Venue</h2>
+          <h2 className="typography-h2 mb-4">Venue</h2>
           <address className="not-italic">
             <Link
               className="typography-link"
@@ -62,17 +62,17 @@ export function Venue() {
             Amsterdam, Netherlands
           </address>
           <div className="mt-6 flex flex-col gap-4">
-            <h3 className="mb-4 typography-body-lg">
+            <h3 className="typography-body-lg mb-4">
               How to get to the venue?
             </h3>
             {HOW_TO_GET_TO_VENUE.map(({ title, description, icon }) => (
               <div key={title}>
                 <div className="flex flex-row items-center gap-4">
                   <div className="bg-neu-100 p-1">{icon}</div>
-                  <h5 className="text-neu-800 typography-body-md">{title}</h5>
+                  <h5 className="typography-body-md text-neu-800">{title}</h5>
                 </div>
                 <p
-                  className="ml-9 max-w-lg text-pretty pl-1 typography-body-sm"
+                  className="typography-body-sm ml-9 max-w-lg text-pretty pl-1"
                   dangerouslySetInnerHTML={{
                     __html: description,
                   }}
@@ -83,7 +83,7 @@ export function Venue() {
         </div>
 
         <div>
-          <h2 className="mb-4 typography-h2">Hotel Information</h2>
+          <h2 className="typography-h2 mb-4">Hotel Information</h2>
           <p className="typography-body-md">
             The Linux Foundation has not contracted rooms at these properties
             and cannot guarantee rates or availability.
@@ -91,7 +91,7 @@ export function Venue() {
           <div className="mt-10 flex flex-col gap-4">
             {HOTELS.map(hotel => (
               <address className="not-italic" key={hotel.name}>
-                <strong className="font-normal typography-body-md">
+                <strong className="typography-body-md font-normal">
                   <a
                     className="flex items-center gap-1 hover:underline"
                     target="_blank"
@@ -103,7 +103,7 @@ export function Venue() {
                   </a>
                 </strong>
                 <span
-                  className="whitespace-pre-wrap typography-body-sm"
+                  className="typography-body-sm whitespace-pre-wrap"
                   dangerouslySetInnerHTML={{ __html: hotel.description }}
                 />
               </address>

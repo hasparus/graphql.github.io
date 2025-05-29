@@ -208,7 +208,7 @@ export function FAQ({ className }: { className?: string }) {
         <h2 className="typography-h2 lg:max-xl:max-w-lg">
           Frequently Asked Questions
         </h2>
-        <p className="mt-6 typography-body-md">
+        <p className="typography-body-md mt-6">
           You can find much more information on our{" "}
           <a href="/conf/2025/resources" className="typography-link">
             Resources
@@ -225,12 +225,12 @@ export function FAQ({ className }: { className?: string }) {
             className="group/q w-full border border-neu-400 @container"
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-2 border-neu-400 p-2 px-3 focus:outline-none group-open/q:border-b [&::-webkit-details-marker]:hidden">
-              <span className="select-none typography-body-lg">
+              <span className="typography-body-lg select-none">
                 {faq.question}
               </span>
               <ArrowDown className="size-10 shrink-0 text-sec-darker group-open/q:rotate-180" />
             </summary>
-            <div className="p-3 typography-body-md">{faq.answer}</div>
+            <div className="typography-body-md p-3">{faq.answer}</div>
           </details>
         ))}
       </div>

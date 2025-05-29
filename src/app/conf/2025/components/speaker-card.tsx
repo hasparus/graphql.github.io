@@ -17,7 +17,6 @@ export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   year: string
 }
 
-
 export function SpeakerCard({
   tags = [],
   className,
@@ -113,7 +112,6 @@ function SpeakerLinks({
     </div>
   )
 }
-
 
 function Stripes({ mask }: { mask?: string }) {
   return (

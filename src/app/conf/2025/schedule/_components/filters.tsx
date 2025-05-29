@@ -95,7 +95,7 @@ function FiltersCombobox({
     <Combobox multiple nullable value={value} onChange={onChange}>
       <div className={clsx("flex flex-col", className)}>
         {label && (
-          <Combobox.Label className="mb-1 block font-mono font-medium uppercase text-neu-900 typography-menu">
+          <Combobox.Label className="typography-menu mb-1 block font-mono font-medium uppercase text-neu-900">
             {label}
           </Combobox.Label>
         )}
@@ -104,7 +104,7 @@ function FiltersCombobox({
             value={query}
             onChange={e => setQuery(e.target.value)}
             className={clsx(
-              "bg-transparent leading-none text-neu-800 !outline-offset-0 typography-body-sm [text-box:trim-both_cap_alphabetic] placeholder:text-neu-600 focus:outline-none max-lg:typography-body-md",
+              "typography-body-sm bg-transparent leading-none text-neu-800 !outline-offset-0 [text-box:trim-both_cap_alphabetic] max-lg:typography-body-md placeholder:text-neu-600 focus:outline-none",
             )}
             placeholder={placeholder}
             autoComplete="true"
@@ -206,7 +206,7 @@ function FilterComboboxOption({
   return (
     <div
       className={clsx(
-        "relative flex cursor-default select-none items-center p-1 font-sans typography-body-sm",
+        "typography-body-sm relative flex cursor-default select-none items-center p-1 font-sans",
         active && "bg-neu-100 dark:bg-neu-50",
       )}
     >
