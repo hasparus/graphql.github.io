@@ -17,16 +17,11 @@ import { Button } from "../_design-system/button"
 import { GET_TICKETS_LINK } from "./links"
 import { GalleryStrip } from "./components/gallery-strip"
 import { HeroImage } from "./components/hero/hero-image"
+import { HERO_MARQUEE_ITEMS } from "./utils"
 
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
 }
-
-const HERO_MARQUEE_ITEMS = [
-  ["COMMUNITY", "DEVELOPER EXPERIENCE", "APIs", "TOOLS & LIBRARIES"],
-  ["OPEN SOURCE", "FEDERATION", "ECOSYSTEMS", "TRACING & OBSERVABILITY"],
-  ["BEST PRACTICES", "WORKSHOPS", "SCHEMAS", "SECURITY"],
-]
 
 export default function Page() {
   return (

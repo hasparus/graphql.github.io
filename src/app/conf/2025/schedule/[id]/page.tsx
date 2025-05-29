@@ -8,15 +8,21 @@ import { metadata as layoutMetadata } from "@/app/conf/2023/layout"
 import { speakers, schedule } from "../../_data"
 import { ScheduleSession } from "../../../2023/types"
 
-import { SessionVideo } from "./session-video"
+import ExternalLinkIcon from "@/app/conf/2025/pixelarticons/external-link.svg?svgr"
+
+import { findVideo, SessionVideo } from "./session-video"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { BackLink } from "../_components/back-link"
 import { Tag } from "@/app/conf/_design-system/tag"
-import { eventsColors, getEventTitle } from "../../utils"
+import { eventsColors, getEventTitle, HERO_MARQUEE_ITEMS } from "../../utils"
 import { PinIcon } from "../../pixelarticons/pin-icon"
 import { CalendarIcon } from "../../pixelarticons/calendar-icon"
 import { SpeakerCard } from "../../components/speaker-card"
 import { Anchor } from "@/app/conf/_design-system/anchor"
+import { MarqueeRows } from "../../components/marquee-rows"
+import { GET_TICKETS_LINK } from "../../links"
+import { CtaCardSection } from "../../components/cta-card-section"
+import { Button } from "@/app/conf/_design-system/button"
 
 type SessionProps = { params: { id: string } }
 
@@ -60,48 +66,87 @@ export default function SessionPage({ params }: SessionProps) {
     event.speakers!.map(s => s.name),
   )
 
+  const video = findVideo(event, eventTitle)
+
   return (
-    <main className="gql-all-anchors-focusable">
-      <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
-      <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
-        <div className="gql-conf-section">
-          <div className="mx-auto max-w-[1088px] py-10">
-            <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
-              <SessionHeader
-                event={event}
-                eventTitle={eventTitle}
-                year="2025"
-              />
-              <SessionVideo event={event} eventTitle={eventTitle} />
+    <>
+      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
 
-              <div className="mt-8 flex gap-4 max-lg:flex-col lg:mt-16 lg:gap-8">
-                <h3 className="typography-h2 min-w-[320px]">
-                  Session description
+      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
+        <div className="gql-conf-container">
+          <div className="gql-conf-section !pt-0">
+            <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
+              <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
+                <SessionHeader
+                  event={event}
+                  eventTitle={eventTitle}
+                  year="2025"
+                  className={clsx(
+                    "px-2 sm:px-3",
+                    video && "mx-auto max-w-[1088px]",
+                  )}
+                />
+                {video ? (
+                  <SessionVideo video={video} className="mt-6" />
+                ) : (
+                  <Hr className="mt-10 2xl:mt-16" />
+                )}
+
+                <div className="mt-8 flex gap-4 px-2 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
+                  <h3 className="typography-h2 min-w-[320px]">
+                    Session description
+                  </h3>
+                  <p className="typography-body-lg">{event.description}</p>
+                </div>
+
+                <Hr />
+
+                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
+                  Session speakers
                 </h3>
-                <p className="typography-body-lg">{event.description}</p>
-              </div>
+                <SessionSpeakers event={event} className="-mx-px" />
 
-              <h3 className="typography-h2 my-8 max-w-[408px] lg:mb-16">
-                Session speakers
-              </h3>
-              <SessionSpeakers event={event} />
-
-              <div className="py-8">
-                {event.files?.map(({ path }) => (
-                  <div key={path}>
-                    <a href={path} target="_blank" rel="noreferrer">
-                      View Full PDF{" "}
-                      <span className="font-sans text-2xl font-light">↗</span>
-                    </a>
-                    <iframe src={path} className="aspect-video size-full" />
-                  </div>
-                ))}
-              </div>
-            </section>
+                <div className="py-8 xl:mt-16">
+                  {event.files?.map(({ path }) => (
+                    <div key={path} className="flex flex-col">
+                      <Button
+                        variant="tertiary"
+                        href={path}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={clsx(
+                          "m-1 h-fit items-center gap-x-2 self-end bg-neu-100 !p-2 text-neu-700 transition-opacity hover:bg-neu-200/80 hover:text-neu-900 disabled:opacity-0",
+                        )}
+                      >
+                        View full PDF
+                        <ExternalLinkIcon className="size-4" />
+                      </Button>
+                      <iframe src={path} className="aspect-video size-full" />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+
+        <div className="bg-neu-0 py-8 xl:py-16">
+          <div className="gql-conf-container">
+            <CtaCardSection
+              title="Get your ticket"
+              description="Join three transformative days of expert insights and innovation to shape the next decade of APIs!"
+            >
+              <Button variant="primary" href={GET_TICKETS_LINK}>
+                Get tickets
+              </Button>
+            </CtaCardSection>
+            <div className="py-8">
+              <MarqueeRows variant="secondary" items={HERO_MARQUEE_ITEMS} />
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
   )
 }
 
@@ -139,15 +184,17 @@ function SessionHeader({
   event,
   eventTitle,
   year,
+  className,
 }: {
   event: ScheduleSession
   eventTitle: string | null
   year: number | `${number}`
+  className?: string
 }) {
   const speakers = event.speakers || []
 
   return (
-    <header>
+    <header className={className}>
       <BackLink year="2025" kind="schedule" />
       <p
         className={clsx(
@@ -187,12 +234,29 @@ function SessionHeader({
   )
 }
 
-function SessionSpeakers({ event }: { event: ScheduleSession }) {
+function SessionSpeakers({
+  event,
+  className,
+}: {
+  event: ScheduleSession
+  className?: string
+}) {
   return (
-    <div className="grid gap-5 lg:grid-cols-2">
+    <div className={clsx("grid gap-5 lg:grid-cols-2", className)}>
       {event.speakers?.map(speaker => (
         <SpeakerCard key={speaker.username} speaker={speaker} year="2025" />
       ))}
     </div>
+  )
+}
+
+function Hr({ className }: { className?: string }) {
+  return (
+    <hr
+      className={clsx(
+        "ml-[-50vw] w-[200vw] border-neu-200 dark:border-neu-100",
+        className,
+      )}
+    />
   )
 }

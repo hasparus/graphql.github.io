@@ -1,13 +1,31 @@
+import clsx from "clsx"
 import { findBestMatch } from "string-similarity"
-import { videos } from "../../_videos"
+
 import { ScheduleSession } from "@/app/conf/2023/types"
 
+import { videos } from "../../_videos"
+
 export interface SessionVideoProps {
-  eventTitle: string
-  event: ScheduleSession
+  video: {
+    id: string
+    title: string
+  }
+  className?: string
 }
 
-export function SessionVideo({ eventTitle, event }: SessionVideoProps) {
+export function SessionVideo({ video, className }: SessionVideoProps) {
+  return (
+    <iframe
+      className={clsx("mx-auto aspect-video w-full", className)}
+      src={`https://youtube.com/embed/${video.id}`}
+      title={video.title}
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+    />
+  )
+}
+
+export function findVideo(event: ScheduleSession, eventTitle: string) {
   const result = findBestMatch(
     `${eventTitle} ${event.speakers!.map(e => e.name).join(" ")}`,
     videos.map(e => e.title),
@@ -19,19 +37,11 @@ export function SessionVideo({ eventTitle, event }: SessionVideoProps) {
 
   const recordingTitle = result.bestMatch
 
-  const videoId = videos.find(e => e.title === recordingTitle.target)?.id
+  const video = videos.find(e => e.title === recordingTitle.target)
 
-  if (!videoId) {
+  if (!video) {
     throw new Error(`Video "${recordingTitle.target}" not found`)
   }
 
-  return (
-    <iframe
-      className="mx-auto mt-6 aspect-video w-full"
-      src={`https://youtube.com/embed/${videoId}`}
-      title={recordingTitle.target}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowFullScreen
-    />
-  )
+  return video
 }

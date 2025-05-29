@@ -49,13 +49,13 @@ export function ScheduleSessionCard({
       {eventTitle}
     </div>
   ) : (
-    <a
-      id={`session-${session.id}`}
-      data-tooltip-id="my-tooltip"
-      href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
-      className="group relative size-full bg-neu-0 p-4 font-normal no-underline ring-neu-400 hover:bg-neu-0/90 hover:ring-1 focus-visible:z-[1] dark:ring-neu-100 dark:hover:bg-neu-0/80 max-lg:mt-px"
-    >
-      {/* todo: fix link nesting */}
+    <div className="group relative size-full bg-neu-0 p-4 font-normal no-underline ring-neu-400 hover:bg-neu-0/90 hover:ring-1 focus-visible:z-[1] dark:ring-neu-100 dark:hover:bg-neu-0/80">
+      <Anchor
+        id={`session-${session.id}`}
+        href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
+        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:ring-1 dark:ring-neu-100"
+        aria-label={`Read more about "${eventTitle}" by ${speakers.map(s => s.name).join(", ")}`}
+      />
       <span className="flex h-full flex-col justify-start">
         {eventColor && (
           <Tag className="mb-3" color={eventColor}>
@@ -92,6 +92,6 @@ export function ScheduleSessionCard({
           </span>
         </span>
       </span>
-    </a>
+    </div>
   )
 }

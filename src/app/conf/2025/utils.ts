@@ -39,3 +39,9 @@ export function getEventTitle(
 
   return name
 }
+
+export const HERO_MARQUEE_ITEMS = [
+  ["COMMUNITY", "DEVELOPER EXPERIENCE", "APIs", "TOOLS & LIBRARIES"],
+  ["OPEN SOURCE", "FEDERATION", "ECOSYSTEMS", "TRACING & OBSERVABILITY"],
+  ["BEST PRACTICES", "WORKSHOPS", "SCHEMAS", "SECURITY"],
+]

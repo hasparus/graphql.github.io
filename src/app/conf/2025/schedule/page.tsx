@@ -25,7 +25,7 @@ export default function SchedulePage() {
           </Button>
         </div>
       </Hero>
-      <div className="gql-conf-container gql-conf-section">
+      <div className="gql-conf-container gql-conf-section 2xl:!px-24">
         <ScheduleList
           filterCategories={filterCategories2024}
           eventsColors={eventsColors}

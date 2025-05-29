@@ -29,7 +29,7 @@ export function SpeakerCard({
   return (
     <article
       className={clsx(
-        "relative flex flex-col overflow-hidden border border-neu-300 [container-type:inline-size]",
+        "relative flex flex-col overflow-hidden border border-neu-200 [container-type:inline-size] dark:border-neu-100",
         className,
       )}
       {...props}
@@ -100,7 +100,7 @@ function SpeakerLinks({
   return (
     <div
       className={clsx(
-        "z-[3] flex divide-x divide-neu-200 border border-neu-200",
+        "z-[3] flex divide-x divide-neu-200 border border-neu-200 dark:border-neu-100",
         className,
       )}
     >
