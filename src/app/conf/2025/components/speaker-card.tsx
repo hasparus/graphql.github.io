@@ -14,6 +14,7 @@ export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   isReturning?: boolean
   stripes?: string
   speaker: SchedSpeaker
+  showSocials?: boolean
   year: string
 }
 
@@ -22,6 +23,7 @@ export function SpeakerCard({
   className,
   speaker,
   year,
+  showSocials = true,
   ...props
 }: SpeakerCardProps) {
   return (
@@ -33,7 +35,9 @@ export function SpeakerCard({
       {...props}
     >
       <div className="flex gap-6 p-6">
-        <SpeakerLinks speaker={speaker} className="absolute right-6 top-6" />
+        {showSocials && (
+          <SpeakerLinks speaker={speaker} className="absolute right-6 top-6" />
+        )}
         {speaker.avatar && (
           <div className="relative aspect-square shrink-0 overflow-hidden">
             <div className="absolute inset-0 z-[1] bg-sec-light mix-blend-multiply" />
@@ -55,7 +59,9 @@ export function SpeakerCard({
             </p>
           </div>
           {speaker.about && (
-            <p className="typography-body-sm text-neu-800">{speaker.about}</p>
+            <p className="typography-body-sm line-clamp-3 text-neu-800">
+              {speaker.about}
+            </p>
           )}
           {/* TODO: We'll have to collect it when fetching all sessions. */}
           {tags.length > 0 && (

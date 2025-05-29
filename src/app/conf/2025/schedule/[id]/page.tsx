@@ -12,7 +12,7 @@ import { SessionVideo } from "./session-video"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { BackLink } from "../_components/back-link"
 import { Tag } from "@/app/conf/_design-system/tag"
-import { eventsColors } from "../../utils"
+import { eventsColors, getEventTitle } from "../../utils"
 import { PinIcon } from "../../pixelarticons/pin-icon"
 import { CalendarIcon } from "../../pixelarticons/calendar-icon"
 import { SpeakerCard } from "../../components/speaker-card"
@@ -64,35 +64,41 @@ export default function SessionPage({ params }: SessionProps) {
     <main className="gql-all-anchors-focusable">
       <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
       <div className="gql-conf-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
-        <div className="mx-auto max-w-[1088px] py-10">
-          <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
-            <SessionHeader event={event} eventTitle={eventTitle} year="2025" />
-            <SessionVideo event={event} eventTitle={eventTitle} />
+        <div className="gql-conf-section">
+          <div className="mx-auto max-w-[1088px] py-10">
+            <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 sm:px-0 lg:justify-between">
+              <SessionHeader
+                event={event}
+                eventTitle={eventTitle}
+                year="2025"
+              />
+              <SessionVideo event={event} eventTitle={eventTitle} />
 
-            <div className="mt-8 flex gap-4 max-lg:flex-col lg:mt-16 lg:gap-8">
-              <h3 className="typography-h2 min-w-[320px]">
-                Session description
+              <div className="mt-8 flex gap-4 max-lg:flex-col lg:mt-16 lg:gap-8">
+                <h3 className="typography-h2 min-w-[320px]">
+                  Session description
+                </h3>
+                <p className="typography-body-lg">{event.description}</p>
+              </div>
+
+              <h3 className="typography-h2 my-8 max-w-[408px] lg:mb-16">
+                Session speakers
               </h3>
-              <p className="typography-body-lg">{event.description}</p>
-            </div>
+              <SessionSpeakers event={event} />
 
-            <h3 className="typography-h2 my-8 max-w-[408px] lg:my-16">
-              Session speakers
-            </h3>
-            <SessionSpeakers event={event} />
-
-            <div className="py-8">
-              {event.files?.map(({ path }) => (
-                <div key={path}>
-                  <a href={path} target="_blank" rel="noreferrer">
-                    View Full PDF{" "}
-                    <span className="font-sans text-2xl font-light">↗</span>
-                  </a>
-                  <iframe src={path} className="aspect-video size-full" />
-                </div>
-              ))}
-            </div>
-          </section>
+              <div className="py-8">
+                {event.files?.map(({ path }) => (
+                  <div key={path}>
+                    <a href={path} target="_blank" rel="noreferrer">
+                      View Full PDF{" "}
+                      <span className="font-sans text-2xl font-light">↗</span>
+                    </a>
+                    <iframe src={path} className="aspect-video size-full" />
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </main>
@@ -183,7 +189,7 @@ function SessionHeader({
 
 function SessionSpeakers({ event }: { event: ScheduleSession }) {
   return (
-    <div className="flex flex-col flex-wrap gap-5 lg:flex-row">
+    <div className="grid gap-5 lg:grid-cols-2">
       {event.speakers?.map(speaker => (
         <SpeakerCard key={speaker.username} speaker={speaker} year="2025" />
       ))}
