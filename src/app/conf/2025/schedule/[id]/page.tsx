@@ -8,8 +8,6 @@ import { metadata as layoutMetadata } from "@/app/conf/2023/layout"
 import { speakers, schedule } from "../../_data"
 import { ScheduleSession } from "../../../2023/types"
 
-import ExternalLinkIcon from "@/app/conf/2025/pixelarticons/external-link.svg?svgr"
-
 import { findVideo, SessionVideo } from "./session-video"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { BackLink } from "../_components/back-link"
@@ -108,21 +106,11 @@ export default function SessionPage({ params }: SessionProps) {
 
                 <div className="py-8 xl:mt-16">
                   {event.files?.map(({ path }) => (
-                    <div key={path} className="flex flex-col">
-                      <Button
-                        variant="tertiary"
-                        href={path}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={clsx(
-                          "m-1 h-fit items-center gap-x-2 self-end bg-neu-100 !p-2 text-neu-700 transition-opacity hover:bg-neu-200/80 hover:text-neu-900 disabled:opacity-0",
-                        )}
-                      >
-                        View full PDF
-                        <ExternalLinkIcon className="size-4" />
-                      </Button>
-                      <iframe src={path} className="aspect-video size-full" />
-                    </div>
+                    <iframe
+                      key={path}
+                      src={path}
+                      className="aspect-video size-full"
+                    />
                   ))}
                 </div>
               </section>
