@@ -73,7 +73,7 @@ interface Props {
   showFilter?: boolean
   scheduleData: ScheduleSession[]
   filterSchedule?: (sessions: ScheduleSession[]) => ScheduleSession[]
-  year: "2025" | "2024"
+  year: `202${number}`
   eventsColors: Record<string, string>
   filterCategories: {
     name: CategoryName
@@ -112,7 +112,7 @@ export function ScheduleList({
   return (
     <>
       <div className="flex justify-between gap-1 max-lg:flex-col">
-        <BookmarkOnSched />
+        <BookmarkOnSched year={year} />
         <ResetFiltersButton
           filters={filtersState}
           onReset={() =>
@@ -160,7 +160,7 @@ export function ScheduleList({
             ([date, concurrentSessionsGroup], index) => (
               <div
                 key={date}
-                className="typography-body-sm bg-neu-200 pt-px dark:bg-neu-50"
+                className="bg-neu-200 pt-px typography-body-sm dark:bg-neu-50"
               >
                 <h3
                   className="bg-neu-50 py-4 dark:bg-neu-0 lg:mb-px"
@@ -173,7 +173,7 @@ export function ScheduleList({
                     <div key={`concurrent sessions on ${sessionDate}`}>
                       <div className="mr-px flex flex-col max-lg:ml-px lg:mb-px lg:flex-row">
                         <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:mt-px max-lg:border-x lg:mr-px">
-                          <span className="typography-body-sm mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
+                          <span className="mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 typography-body-sm lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
                             {format(parseISO(sessionDate), "hh:mmaaaa 'PDT'")}
                           </span>
                         </div>
@@ -201,13 +201,13 @@ export function ScheduleList({
   )
 }
 
-function BookmarkOnSched() {
+function BookmarkOnSched({ year }: { year: `202${number}` }) {
   return (
     <a
-      href="https://graphqlconf2024.sched.com"
+      href={`https://graphqlconf${year}.sched.com`}
       target="_blank"
       rel="noreferrer"
-      className="typography-link mb-8 block w-fit decoration-neu-400"
+      className="mb-8 block w-fit decoration-neu-400 typography-link"
     >
       Bookmark sessions & plan your days on Sched
       <svg
