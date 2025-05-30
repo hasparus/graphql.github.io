@@ -176,12 +176,12 @@ function SpeakerTags({
       <Tag color="hsl(var(--color-neu-500))">
         {returningSpeakers.has(speaker.name) ? (
           <>
-            <ReloadIcon className="mr-2" />
+            <ReloadIcon className="size-3" />
             returning speaker
           </>
         ) : (
           <>
-            <PlayIcon className="mr-2" /> first time speaker
+            <PlayIcon className="size-3" /> first time speaker
           </>
         )}
       </Tag>
