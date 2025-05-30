@@ -71,7 +71,7 @@ export function SpeakerCard({
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex flex-col gap-1">
             <h3 className="typography-body-lg">{speaker.name}</h3>
-            <p className="line-clamp-1 text-neu-800 typography-body-sm">
+            <p className="typography-body-sm line-clamp-1 text-neu-800">
               {[
                 speaker.position,
                 speaker.company === "-" ? "" : speaker.company,
@@ -82,7 +82,7 @@ export function SpeakerCard({
             <SpeakerTags speaker={speaker} className="my-3" />
           </div>
           {speaker.about && (
-            <p className="line-clamp-3 text-neu-800 typography-body-sm">
+            <p className="typography-body-sm line-clamp-3 text-neu-800">
               {speaker.about}
             </p>
           )}
@@ -169,19 +169,21 @@ function SpeakerTags({
     <div className={clsx("flex basis-0 flex-wrap gap-2", className)}>
       {eventType && (
         <Tag color={eventsColors[eventType] || "hsl(var(--color-sec-base))"}>
-          {eventType}
+          {eventType === "Federation and Composite Schemas"
+            ? "Federation"
+            : eventType}
         </Tag>
       )}
 
       <Tag color="hsl(var(--color-neu-500))">
-        {returningSpeakers.has(speaker.name) ? (
+        {returningSpeakers.has(speaker.username) ? (
           <>
-            <ReloadIcon className="size-3" />
+            <ReloadIcon className="-mx-0.5 size-3" />
             returning speaker
           </>
         ) : (
           <>
-            <PlayIcon className="size-3" /> first time speaker
+            <PlayIcon className="-mx-1 size-3" /> first time speaker
           </>
         )}
       </Tag>

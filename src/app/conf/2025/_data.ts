@@ -126,7 +126,3 @@ for (const { username } of speakers2023) {
     returningSpeakers.add(username)
   }
 }
-
-console.log({
-  returningSpeakers: returningSpeakers.size,
-})
