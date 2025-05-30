@@ -3,6 +3,16 @@ import { stripHtml } from "string-strip-html"
 import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
 import pLimit from "p-limit"
 
+const USE_2025 = false
+
+const apiUrl = USE_2025
+  ? "https://graphqlconf2025.sched.com/api"
+  : "https://graphqlconf2024.sched.com/api"
+
+const token = USE_2025
+  ? process.env.SCHED_ACCESS_TOKEN_2025
+  : process.env.SCHED_ACCESS_TOKEN_2024
+
 async function fetchData<T>(url: string): Promise<T> {
   try {
     const response = await fetch(url, {
@@ -21,11 +31,9 @@ async function fetchData<T>(url: string): Promise<T> {
   }
 }
 
-const token = process.env.SCHED_ACCESS_TOKEN_2024
-
 async function getUsernames(): Promise<string[]> {
   const response = await fetchData<{ username: string }[]>(
-    `https://graphqlconf2024.sched.com/api/user/list?api_key=${token}&format=json&fields=username`,
+    `${apiUrl}/user/list?api_key=${token}&format=json&fields=username`,
   )
   return response.map(user => user.username)
 }
@@ -39,7 +47,7 @@ async function getSpeakers(): Promise<SchedSpeaker[]> {
     usernames.map(username =>
       limit(() => {
         return fetchData<SchedSpeaker>(
-          `https://graphqlconf2024.sched.com/api/user/get?api_key=${token}&by=username&term=${username}&format=json&fields=username,company,position,name,about,location,url,avatar,role,socialurls`,
+          `${apiUrl}/user/get?api_key=${token}&by=username&term=${username}&format=json&fields=username,company,position,name,about,location,url,avatar,role,socialurls`,
         )
       }),
     ),
@@ -59,7 +67,7 @@ async function getSpeakers(): Promise<SchedSpeaker[]> {
 
 async function getSchedule(): Promise<ScheduleSession[]> {
   const sessions = await fetchData<ScheduleSession[]>(
-    `https://graphqlconf2024.sched.com/api/session/export?api_key=${token}&format=json`,
+    `${apiUrl}/session/export?api_key=${token}&format=json`,
   )
 
   const result = sessions.map(session => {
