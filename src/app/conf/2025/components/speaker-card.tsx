@@ -9,6 +9,8 @@ import { SchedSpeaker } from "../../2023/types"
 import { StripesDecoration } from "../../_design-system/stripes-decoration"
 import { SocialIcon, SocialIconType } from "../../_design-system/social-icon"
 
+import styles from "./speaker-card.module.css"
+
 export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   tags?: string[]
   isReturning?: boolean
@@ -30,6 +32,7 @@ export function SpeakerCard({
     <article
       className={clsx(
         "group relative overflow-hidden border border-neu-200 bg-neu-0 @container dark:border-neu-100",
+        styles.speakerCard,
         className,
       )}
       {...props}
@@ -38,9 +41,10 @@ export function SpeakerCard({
         {showSocials && (
           <SpeakerLinks speaker={speaker} className="absolute right-6 top-6" />
         )}
-        {speaker.avatar && (
-          <div className="relative aspect-square shrink-0 overflow-hidden">
-            <div className="absolute inset-0 z-[1] bg-sec-light mix-blend-multiply" />
+
+        <div className="relative aspect-square shrink-0 overflow-hidden @[420px]:basis-[176px]">
+          <div className="absolute inset-0 z-[1] bg-sec-light mix-blend-multiply" />
+          {speaker.avatar ? (
             <Image
               src={speaker.avatar}
               alt=""
@@ -48,13 +52,22 @@ export function SpeakerCard({
               height={176}
               className="size-full object-cover saturate-[.1] transition-transform"
             />
-            <Stripes mask="radial-gradient(ellipse at top left, hsl(var(--color-pri-base)) 0%, hsl(var(--color-pri-base)) 5%, transparent 40%, transparent, transparent 85%, black 100%)" />
-          </div>
-        )}
+          ) : (
+            <div
+              className="size-full"
+              style={{
+                backgroundImage:
+                  "linear-gradient(163deg, #759236 0%, hsl(var(--color-sec-lighter)) 100%)",
+              }}
+            />
+          )}
+          <Stripes />
+        </div>
+
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex flex-col gap-1">
             <h3 className="typography-body-lg">{speaker.name}</h3>
-            <p className="typography-body-sm text-neu-800">
+            <p className="text-neu-800 typography-body-sm">
               {[
                 speaker.position,
                 speaker.company === "-" ? "" : speaker.company,
@@ -64,7 +77,7 @@ export function SpeakerCard({
             </p>
           </div>
           {speaker.about && (
-            <p className="typography-body-sm line-clamp-3 text-neu-800">
+            <p className="line-clamp-3 text-neu-800 typography-body-sm">
               {speaker.about}
             </p>
           )}
@@ -124,17 +137,16 @@ function SpeakerLinks({
   )
 }
 
-function Stripes({ mask }: { mask?: string }) {
+function Stripes() {
   return (
     <div
       role="presentation"
-      className="pointer-events-none absolute inset-0 inset-y-[-20px]"
-      style={{
-        maskImage: mask,
-        WebkitMaskImage: mask,
-      }}
+      className={clsx(
+        "pointer-events-none absolute inset-0 inset-y-[-20px]",
+        styles.stripes,
+      )}
     >
-      <StripesDecoration oddClassName="absolute inset-0 bg-gradient-to-b from-sec-dark to-sec-light" />
+      <StripesDecoration oddClassName="absolute inset-0 bg-gradient-to-b from-sec-dark to-[var(--end-color)]" />
     </div>
   )
 }

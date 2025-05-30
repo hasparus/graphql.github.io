@@ -61,6 +61,11 @@ async function getSpeakers(): Promise<SchedSpeaker[]> {
         about: stripHtml(user.about).result,
       }
     })
+    .sort((a, b) => {
+      if (a.avatar && !b.avatar) return -1
+      if (!a.avatar && b.avatar) return 1
+      return 0
+    })
 
   return result
 }

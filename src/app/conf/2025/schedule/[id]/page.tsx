@@ -90,7 +90,7 @@ export default function SessionPage({ params }: SessionProps) {
                 )}
 
                 <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
-                  <h3 className="typography-h2 min-w-[320px]">
+                  <h3 className="min-w-[320px] typography-h2">
                     Session description
                   </h3>
                   <p className="typography-body-lg">{event.description}</p>
@@ -98,14 +98,14 @@ export default function SessionPage({ params }: SessionProps) {
 
                 <Hr />
 
-                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
+                <h3 className="my-8 max-w-[408px] px-2 typography-h2 sm:px-3 lg:my-16">
                   Session speakers
                 </h3>
                 <SessionSpeakers event={event} className="-mx-px -mb-px" />
 
                 <Hr />
 
-                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
+                <h3 className="my-8 px-2 typography-h2 sm:px-3 lg:my-16">
                   Session resources
                 </h3>
                 <section>
@@ -206,9 +206,9 @@ function SessionHeader({
           </React.Fragment>
         ))}
       </p>
-      <h1 className="typography-h2 mb-6 mt-3">{eventTitle}</h1>
+      <h1 className="mb-6 mt-3 typography-h2">{eventTitle}</h1>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="typography-body-md flex flex-col gap-4 md:flex-row md:gap-6">
+        <div className="flex flex-col gap-4 typography-body-md md:flex-row md:gap-6">
           <div className="flex items-center gap-2">
             <CalendarIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
             <time dateTime="2025-09-08">September 08</time>

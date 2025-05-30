@@ -21,7 +21,7 @@ export function ScheduleSessionCard({
 }: {
   session: ScheduleSession
   showEventType: boolean | undefined
-  year: "2025" | "2024"
+  year: `202${number}`
   eventsColors: Record<string, string>
 }) {
   const eventType = session.event_type.endsWith("s")
