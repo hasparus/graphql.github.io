@@ -4,7 +4,7 @@ import { SchedSpeaker } from "@/app/conf/2023/types"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { Tag } from "@/app/conf/_design-system/tag"
 
-import { PinIcon } from "../../pixelarticons/pin-icon"
+import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 
 import { type ScheduleSession } from "./session-list"
 import { getEventTitle } from "../../utils"
@@ -85,7 +85,7 @@ export function ScheduleSessionCard({
                 ))}
               </span>
             )}
-            <span className="typography-body-xs mt-2 flex items-center gap-0.5">
+            <span className="mt-2 flex items-center gap-0.5 typography-body-xs">
               <PinIcon className="size-4 text-pri-base" />
               {session.venue}
             </span>
