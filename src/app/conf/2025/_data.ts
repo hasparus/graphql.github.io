@@ -82,7 +82,6 @@ async function getSchedule(): Promise<ScheduleSession[]> {
     }
 
     // TODO: Preserve formatting??
-
     return {
       ...session,
       description: description && stripHtml(description).result,
@@ -96,3 +95,38 @@ export const speakers = await getSpeakers()
 
 // TODO: Collect tags from schedule for speakers.
 export const schedule = await getSchedule()
+
+type SpeakerUsername = SchedSpeaker["username"]
+
+export const speakerSessions = new Map<SpeakerUsername, ScheduleSession[]>()
+
+for (const session of schedule) {
+  for (const speaker of session.speakers || []) {
+    if (!speakerSessions.has(speaker.username)) {
+      speakerSessions.set(speaker.username, [])
+    }
+
+    speakerSessions.get(speaker.username)!.push(session)
+  }
+}
+
+export const returningSpeakers = new Set<SpeakerUsername>()
+
+import { speakers as speakers2024 } from "../2024/_data"
+import { speakers as speakers2023 } from "../2023/_data"
+
+for (const { username } of speakers2024) {
+  if (speakerSessions.has(username)) {
+    returningSpeakers.add(username)
+  }
+}
+
+for (const { username } of speakers2023) {
+  if (speakerSessions.has(username)) {
+    returningSpeakers.add(username)
+  }
+}
+
+console.log({
+  returningSpeakers: returningSpeakers.size,
+})

@@ -10,6 +10,7 @@ import { StripesDecoration } from "../../_design-system/stripes-decoration"
 import { SocialIcon, SocialIconType } from "../../_design-system/social-icon"
 
 import styles from "./speaker-card.module.css"
+import { returningSpeakers, speakerSessions } from "../_data"
 
 export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   tags?: string[]
@@ -42,7 +43,7 @@ export function SpeakerCard({
           <SpeakerLinks speaker={speaker} className="absolute right-6 top-6" />
         )}
 
-        <div className="relative aspect-square shrink-0 overflow-hidden @[420px]:basis-[176px]">
+        <div className="relative aspect-square shrink-0 overflow-hidden @[420px]:size-[176px]">
           <div className="absolute inset-0 z-[1] bg-sec-light mix-blend-multiply" />
           {speaker.avatar ? (
             <Image
@@ -67,7 +68,7 @@ export function SpeakerCard({
         <div className="flex flex-1 flex-col gap-2">
           <div className="flex flex-col gap-1">
             <h3 className="typography-body-lg">{speaker.name}</h3>
-            <p className="text-neu-800 typography-body-sm">
+            <p className="line-clamp-1 text-neu-800 typography-body-sm">
               {[
                 speaker.position,
                 speaker.company === "-" ? "" : speaker.company,
@@ -75,6 +76,7 @@ export function SpeakerCard({
                 .filter(Boolean)
                 .join(", ")}
             </p>
+            <SpeakerTags speaker={speaker} className="my-3" />
           </div>
           {speaker.about && (
             <p className="line-clamp-3 text-neu-800 typography-body-sm">
@@ -147,6 +149,29 @@ function Stripes() {
       )}
     >
       <StripesDecoration oddClassName="absolute inset-0 bg-gradient-to-b from-sec-dark to-[var(--end-color)]" />
+    </div>
+  )
+}
+
+function SpeakerTags({
+  speaker,
+  className,
+}: {
+  speaker: SchedSpeaker
+  className?: string
+}) {
+  const eventType = speakerSessions.get(speaker.username)?.[0]?.event_type
+
+  return (
+    <div className={clsx("flex basis-0 flex-wrap gap-2", className)}>
+      {eventType && (
+        <Tag color={eventsColors[eventType] || "hsl(var(--color-sec-base))"}>
+          {eventType}
+        </Tag>
+      )}
+      {returningSpeakers.has(speaker.name) && (
+        <Tag color="hsl(var(--color-neu-500))">Returning speaker</Tag>
+      )}
     </div>
   )
 }
