@@ -9,6 +9,9 @@ import { SchedSpeaker } from "../../2023/types"
 import { StripesDecoration } from "../../_design-system/stripes-decoration"
 import { SocialIcon, SocialIconType } from "../../_design-system/social-icon"
 
+import ReloadIcon from "@/app/conf/_design-system/pixelarticons/reload.svg?svgr"
+import PlayIcon from "@/app/conf/_design-system/pixelarticons/play.svg?svgr"
+
 import styles from "./speaker-card.module.css"
 import { returningSpeakers, speakerSessions } from "../_data"
 
@@ -169,9 +172,19 @@ function SpeakerTags({
           {eventType}
         </Tag>
       )}
-      {returningSpeakers.has(speaker.name) && (
-        <Tag color="hsl(var(--color-neu-500))">Returning speaker</Tag>
-      )}
+
+      <Tag color="hsl(var(--color-neu-500))">
+        {returningSpeakers.has(speaker.name) ? (
+          <>
+            <ReloadIcon className="mr-2" />
+            returning speaker
+          </>
+        ) : (
+          <>
+            <PlayIcon className="mr-2" /> first time speaker
+          </>
+        )}
+      </Tag>
     </div>
   )
 }
