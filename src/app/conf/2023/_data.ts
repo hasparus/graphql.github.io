@@ -77,8 +77,6 @@ async function getSchedule(): Promise<ScheduleSession[]> {
   return result
 }
 
-// @ts-expect-error -- fixme
 export const speakers = await getSpeakers()
 
-// @ts-expect-error -- fixme
 export const schedule = await getSchedule()
