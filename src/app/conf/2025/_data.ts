@@ -78,11 +78,7 @@ async function getSchedule(): Promise<ScheduleSession[]> {
 
   const result = sessions.map(session => {
     const { description } = session
-    if (description?.includes("<")) {
-      // console.log(`Found HTML element in about field for session "${session.name}"`)
-    }
 
-    // TODO: Preserve formatting??
     return {
       ...session,
       description: preprocessDescription(description),
