@@ -16,6 +16,8 @@ import { MarqueeRows } from "../../components/marquee-rows"
 import { GET_TICKETS_LINK } from "../../links"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { SpeakerTags } from "../../components/speaker-tags"
+import { SpeakerLinks } from "../../components/speaker-links"
+import { LongSessionCard } from "./long-session-card"
 
 type SpeakerProps = { params: { id: string } }
 
@@ -42,8 +44,8 @@ export function generateStaticParams() {
 }
 
 export default function SpeakerPage({ params }: SpeakerProps) {
-  const event = speakers.find(s => s.username === params.id)
-  if (!event) {
+  const speaker = speakers.find(s => s.username === params.id)
+  if (!speaker) {
     notFound()
   }
 
@@ -55,13 +57,13 @@ export default function SpeakerPage({ params }: SpeakerProps) {
           <div className="gql-conf-container">
             <div className="gql-conf-section !py-0">
               <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
-                <SpeakerHeader speaker={event} year="2025" />
+                <SpeakerHeader speaker={speaker} year="2025" />
 
                 <div>
-                  
+                  <SpeakerLinks size="lg" speaker={speaker} />
                 </div>
                 <p className="typography-body-lg mt-8 p-4 lg:p-8 xl:px-24 xl:pb-24 xl:pt-16 xl:text-[32px]">
-                  {event.about}
+                  {speaker.about}
                 </p>
 
                 <Hr />
@@ -69,14 +71,14 @@ export default function SpeakerPage({ params }: SpeakerProps) {
                 <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
                   2025 Sessions
                 </h3>
-                <SpeakerSessions speaker={event} className="-mx-px -mb-px" />
+                <SpeakerSessions speaker={speaker} className="-mx-px -mb-px" />
 
                 <Hr />
 
                 <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
                   Sessions from previous editions
                 </h3>
-                <SpeakerSessions speaker={event} className="-mx-px -mb-px" />
+                <SpeakerSessions speaker={speaker} className="-mx-px -mb-px" />
               </div>
             </div>
           </div>
@@ -161,7 +163,7 @@ function SpeakerSessions({
       {speakerSessions
         .get(speaker.username)
         ?.map(session => (
-          <SpeakerCard key={session.id} session={session} year="2025" />
+          <LongSessionCard key={session.id} session={session} year="2025" />
         ))}
     </div>
   )
