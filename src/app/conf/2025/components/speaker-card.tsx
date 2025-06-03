@@ -14,7 +14,6 @@ import { SpeakerLinks } from "./speaker-links"
 import styles from "./speaker-card.module.css"
 
 export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  tags?: string[]
   isReturning?: boolean
   stripes?: string
   speaker: SchedSpeaker
@@ -23,7 +22,6 @@ export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function SpeakerCard({
-  tags = [],
   className,
   speaker,
   year,
@@ -86,16 +84,6 @@ export function SpeakerCard({
             <p className="typography-body-sm line-clamp-3 text-neu-800">
               {speaker.about}
             </p>
-          )}
-          {/* TODO: We'll have to collect it when fetching all sessions. */}
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {tags.map(tag => (
-                <Tag color={eventsColors[tag] || "hsl(var(--color-sec-base))"}>
-                  {tag}
-                </Tag>
-              ))}
-            </div>
           )}
         </div>
       </div>

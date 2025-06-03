@@ -57,7 +57,7 @@ export function LongSessionCard({
   return (
     <div
       className={clsx(
-        "group relative border border-neu-200 bg-neu-0 p-6",
+        "group relative border border-neu-200 bg-neu-0",
         !!video && "flex flex-col gap-6 backdrop-blur-md",
         className,
       )}
@@ -69,7 +69,7 @@ export function LongSessionCard({
         aria-label={`Read more about "${eventTitle}" by ${session.speakers?.[0]?.name || "Speaker"}`}
       />
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 p-6">
         <div className="flex items-center justify-between gap-6">
           <SessionTags session={session} />
           {video && (
@@ -84,7 +84,12 @@ export function LongSessionCard({
 
         <div className="flex flex-col gap-4">
           <div className="min-h-[120px]">
-            <h3 className="typography-h3 text-neu-900">{session.name}</h3>
+            <h3 className="typography-body-lg text-neu-900">
+              {getEventTitle(
+                session,
+                speakers.map(s => s.name),
+              )}
+            </h3>
           </div>
           <div className="flex items-center justify-between gap-2">
             {(speakers?.length || 0) > 0 && (

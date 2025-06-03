@@ -120,7 +120,7 @@ function SpeakerHeader({
   className?: string
 }) {
   return (
-    <header className={className}>
+    <header className={clsx("flex max-md:flex-col", className)}>
       <div className="pl-2 sm:pl-3">
         <BackLink year="2025" kind="schedule" />
         <p className="typography-body-lg mt-4 text-sec-darker lg:typography-h3 lg:mt-20">
