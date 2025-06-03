@@ -170,7 +170,7 @@ function SpeakerSessions({
   return (
     <div
       className={clsx(
-        "grid lg:grid-cols-2 lg:gap-5 [&>*:not(:last-child)]:border-b-0",
+        "grid lg:grid-cols-2 lg:gap-5 max-lg:[&>*:not(:last-child)]:border-b-0",
         className,
       )}
     >

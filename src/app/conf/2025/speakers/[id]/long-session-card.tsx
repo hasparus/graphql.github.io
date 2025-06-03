@@ -67,21 +67,21 @@ export function LongSessionCard({
         aria-label={`Read more about "${eventTitle}" by ${session.speakers?.[0]?.name || "Speaker"}`}
       />
 
-      <div className="flex flex-col gap-6 p-6">
+      <div className="flex flex-col gap-6 p-4 lg:p-6">
         <div className="flex items-center justify-between gap-6">
           <SessionTags session={session} />
           {video && (
             <div className="flex items-center gap-2 border border-neu-400 bg-neu-100 px-2 py-1">
               <span className="typography-menu text-neu-900">
                 {/* todo: find year */}
-                GraphQLConf 2024
+                2024
               </span>
             </div>
           )}
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="min-h-[60px]">
+          <div className="min-h-[32px]">
             <h3 className="typography-body-lg text-neu-900 2xl:text-2xl">
               {eventTitle}
             </h3>
@@ -121,7 +121,7 @@ export function LongSessionCard({
       {/* todo: past session no recording variant */}
 
       {video ? (
-        <footer className="px-6 pb-6 pt-0">
+        <footer className="p-4 pt-0 lg:px-6 lg:pb-6">
           <Button
             href={`https://youtube.com/embed/${video.id}`}
             variant="primary"
@@ -133,7 +133,7 @@ export function LongSessionCard({
         </footer>
       ) : (
         <footer className="flex items-center border-t border-neu-200 text-neu-800 dark:border-neu-100">
-          <div className="flex flex-1 items-center gap-6 border-r border-neu-200 p-6">
+          <div className="flex flex-1 items-center gap-6 border-r border-neu-200 p-4 dark:border-neu-100 lg:p-6">
             <div className="contents flex-col md:max-xl:flex">
               <div className="flex items-center gap-0.5 whitespace-pre">
                 <CalendarIcon className="size-4 shrink-0 -translate-y-px text-sec-dark" />
@@ -150,7 +150,7 @@ export function LongSessionCard({
             </div>
           </div>
           {/* TODO: Actually add to calendar. Ensure we show this only on this year's events. */}
-          <button className="relative z-[2] flex h-full flex-row items-center justify-center gap-0.5 px-6 py-4 text-neu-800 ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100">
+          <button className="relative z-[2] flex h-full flex-row items-center justify-center gap-0.5 p-4 text-neu-800 ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100 lg:px-6">
             <PlusIcon className="size-4 shrink-0 text-sec-dark" />
             <span className="typography-body-xs">Add to calendar</span>
           </button>
