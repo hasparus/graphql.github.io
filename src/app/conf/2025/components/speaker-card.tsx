@@ -7,13 +7,11 @@ import { Anchor } from "../../_design-system/anchor"
 import { Tag } from "../../_design-system/tag"
 import { SchedSpeaker } from "../../2023/types"
 import { StripesDecoration } from "../../_design-system/stripes-decoration"
-import { SocialIcon, SocialIconType } from "../../_design-system/social-icon"
 
-import ReloadIcon from "@/app/conf/_design-system/pixelarticons/reload.svg?svgr"
-import PlayIcon from "@/app/conf/_design-system/pixelarticons/play.svg?svgr"
+import { SpeakerTags } from "./speaker-tags"
+import { SpeakerLinks } from "./speaker-links"
 
 import styles from "./speaker-card.module.css"
-import { returningSpeakers, speakerSessions } from "../_data"
 
 export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   tags?: string[]
@@ -43,7 +41,10 @@ export function SpeakerCard({
     >
       <div className="flex h-full flex-col gap-4 p-4 @[420px]:flex-row md:gap-6 md:p-6">
         {showSocials && (
-          <SpeakerLinks speaker={speaker} className="absolute right-6 top-6" />
+          <SpeakerLinks
+            speaker={speaker}
+            className="absolute right-6 top-6 z-[3]"
+          />
         )}
 
         <div className="relative aspect-square shrink-0 overflow-hidden @[420px]:size-[176px]">
@@ -107,41 +108,6 @@ export function SpeakerCard({
   )
 }
 
-function SpeakerLinks({
-  speaker,
-  className,
-}: {
-  speaker: SchedSpeaker
-  className?: string
-}) {
-  const speakerUrls = SocialIconType.all
-    .map(social => speaker.socialurls.find(x => x.service === social))
-    .concat([{ service: "website", url: speaker.url || "" }])
-    .filter((x): x is Exclude<typeof x, undefined> => !!x?.url)
-    .slice(-3)
-
-  return (
-    <div
-      className={clsx(
-        "z-[3] flex divide-x divide-neu-200 border border-neu-200 dark:border-neu-100",
-        className,
-      )}
-    >
-      {speakerUrls.map(social => (
-        <a
-          key={social.url}
-          href={social.url}
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center p-2 text-neu-900"
-        >
-          <SocialIcon type={social.service.toLowerCase()} className="size-5" />
-        </a>
-      ))}
-    </div>
-  )
-}
-
 function Stripes() {
   return (
     <div
@@ -152,41 +118,6 @@ function Stripes() {
       )}
     >
       <StripesDecoration oddClassName="absolute inset-0 bg-gradient-to-b from-sec-dark to-[var(--end-color)]" />
-    </div>
-  )
-}
-
-function SpeakerTags({
-  speaker,
-  className,
-}: {
-  speaker: SchedSpeaker
-  className?: string
-}) {
-  const eventType = speakerSessions.get(speaker.username)?.[0]?.event_type
-
-  return (
-    <div className={clsx("flex basis-0 flex-wrap gap-2", className)}>
-      {eventType && (
-        <Tag color={eventsColors[eventType] || "hsl(var(--color-sec-base))"}>
-          {eventType === "Federation and Composite Schemas"
-            ? "Federation"
-            : eventType}
-        </Tag>
-      )}
-
-      <Tag color="hsl(var(--color-neu-500))">
-        {returningSpeakers.has(speaker.username) ? (
-          <>
-            <ReloadIcon className="-mx-0.5 size-3" />
-            returning speaker
-          </>
-        ) : (
-          <>
-            <PlayIcon className="-mx-1 size-3" /> first time speaker
-          </>
-        )}
-      </Tag>
     </div>
   )
 }

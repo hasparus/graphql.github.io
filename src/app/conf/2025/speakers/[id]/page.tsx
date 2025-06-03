@@ -1,21 +1,21 @@
 import { Metadata } from "next"
-import NextLink from "next/link"
+import { notFound } from "next/navigation"
 import React from "react"
 
-import { SessionList } from "@/app/conf/_components/schedule/session-list"
-import {
-  SocialMediaIcon,
-  SocialMediaIconServiceType,
-} from "@/app/conf/_components/speakers/social-media"
-import { Avatar } from "@/app/conf/_components/speakers/avatar"
-import { ChevronLeftIcon } from "@/icons"
-
-import { speakers, schedule } from "../../_data"
+import { speakers, speakerSessions } from "../../_data"
 import { metadata as layoutMetadata } from "../../layout"
 
-import { filterCategories2024 } from "@/app/conf/_components/schedule/filter-categories"
-import { eventsColors } from "../../utils"
+import { eventsColors, HERO_MARQUEE_ITEMS } from "../../utils"
 import { BackLink } from "../../schedule/_components/back-link"
+import { NavbarPlaceholder } from "../../components/navbar"
+import { CtaCardSection } from "../../components/cta-card-section"
+import clsx from "clsx"
+import { SchedSpeaker } from "@/app/conf/2023/types"
+import { Button } from "@/app/conf/_design-system/button"
+import { MarqueeRows } from "../../components/marquee-rows"
+import { GET_TICKETS_LINK } from "../../links"
+import { Anchor } from "@/app/conf/_design-system/anchor"
+import { SpeakerTags } from "../../components/speaker-tags"
 
 type SpeakerProps = { params: { id: string } }
 
@@ -42,77 +42,138 @@ export function generateStaticParams() {
 }
 
 export default function SpeakerPage({ params }: SpeakerProps) {
-  const decodedId = decodeURIComponent(params.id)
-  const speaker = speakers.find(s => s.username === decodedId)!
-
-  const s = schedule
-    .filter(s => s.speakers && s.speakers.some(s => s.username === decodedId))
-    .map(s => ({
-      ...s,
-      speakers: s.speakers!.map(
-        s => speakers.find(speaker => speaker.username === s.username)!,
-      ),
-    }))
+  const event = speakers.find(s => s.username === params.id)
+  if (!event) {
+    notFound()
+  }
 
   return (
-    <div className="py-14">
-      <section className="container flex flex-col">
-        <div className="flex flex-col">
-          <BackLink year="2025" kind="speakers" />
+    <>
+      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
+      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
+        <div className="bg-neu-50 dark:bg-neu-0">
+          <div className="gql-conf-container">
+            <div className="gql-conf-section !py-0">
+              <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
+                <SpeakerHeader speaker={event} year="2025" />
 
-          <div className="max-w-5xl self-center">
-            <div className="flex flex-col justify-between gap-0 gap-y-5 pb-20 pt-14 max-lg:flex-col-reverse sm:flex-row sm:gap-10">
-              <div className="flex flex-col items-start gap-y-5">
-                <h1 className="conf-heading">{speaker.name}</h1>
+                <div>
+                  
+                </div>
+                <p className="typography-body-lg mt-8 p-4 lg:p-8 xl:px-24 xl:pb-24 xl:pt-16 xl:text-[32px]">
+                  {event.about}
+                </p>
 
-                <span className="text-2xl">
-                  <span className="underline">{speaker.company}</span>
-                  {speaker.company && ", "}
-                  {speaker.position}
-                </span>
+                <Hr />
 
-                <p className="text-lg">{speaker.about}</p>
+                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
+                  2025 Sessions
+                </h3>
+                <SpeakerSessions speaker={event} className="-mx-px -mb-px" />
 
-                {!!speaker.socialurls?.length && (
-                  <div className="mt-0">
-                    <div className="flex gap-5 lg:gap-2.5">
-                      {speaker.socialurls.map(social => (
-                        <a
-                          key={social.url}
-                          href={social.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex w-max items-center"
-                        >
-                          <SocialMediaIcon
-                            service={
-                              social.service.toLowerCase() as SocialMediaIconServiceType
-                            }
-                          />
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <Hr />
+
+                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
+                  Sessions from previous editions
+                </h3>
+                <SpeakerSessions speaker={event} className="-mx-px -mb-px" />
               </div>
-
-              <Avatar
-                className="size-[280px] self-center rounded-full sm:self-start"
-                avatar={speaker.avatar}
-                name={speaker.name}
-              />
             </div>
-            <h1 className="conf-heading mb-10">Sessions</h1>
-            <SessionList
-              showFilter={false}
-              filterCategories={filterCategories2024}
-              eventsColors={eventsColors}
-              year="2024"
-              scheduleData={s}
-            />
           </div>
         </div>
-      </section>
+
+        <div className="border-t border-neu-200 bg-neu-0 py-8 dark:border-neu-100 xl:py-16">
+          <div className="gql-conf-container">
+            <CtaCardSection
+              title="Get your ticket"
+              description="Join three transformative days of expert insights and innovation to shape the next decade of APIs!"
+            >
+              <Button variant="primary" href={GET_TICKETS_LINK}>
+                Get tickets
+              </Button>
+            </CtaCardSection>
+            <div className="py-8">
+              <MarqueeRows variant="secondary" items={HERO_MARQUEE_ITEMS} />
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
+  )
+}
+
+function SpeakerHeader({
+  speaker,
+  year,
+  className,
+}: {
+  speaker: SchedSpeaker
+  year: `20${number}`
+  className?: string
+}) {
+  return (
+    <header className={className}>
+      <BackLink year="2025" kind="schedule" />
+      <p
+        className={clsx(
+          "mt-8 text-neu-700",
+          speakers.length >= 4 ? "typography-body-lg" : "typography-h3",
+        )}
+      >
+        {speakers.map((s, i) => (
+          <React.Fragment key={s.username}>
+            <Anchor
+              href={`/conf/${year}/speakers/${s.username}`}
+              className="decoration-neu-500 hover:underline dark:decoration-neu-100"
+            >
+              {s.name}
+            </Anchor>
+            {i !== speakers.length - 1 && <span>, </span>}
+          </React.Fragment>
+        ))}
+      </p>
+      <p className="typography-h3">Meet the speaker</p>
+      <h1 className="typography-h1 mt-2">{speaker.name}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-2 lg:gap-x-4 xl:gap-x-8">
+        {[speaker.position, speaker.company === "-" ? "" : speaker.company]
+          .filter(Boolean)
+          .join(", ")}
+        <SpeakerTags speaker={speaker} />
+      </div>
+    </header>
+  )
+}
+
+function SpeakerSessions({
+  speaker,
+  className,
+}: {
+  speaker: SchedSpeaker
+  className?: string
+}) {
+  return (
+    <div
+      className={clsx(
+        "grid max-lg:*:border-y-0 lg:grid-cols-2 lg:gap-5",
+        className,
+      )}
+    >
+      {speakerSessions
+        .get(speaker.username)
+        ?.map(session => (
+          <SpeakerCard key={session.id} session={session} year="2025" />
+        ))}
     </div>
+  )
+}
+
+function Hr({ className }: { className?: string }) {
+  return (
+    <hr
+      className={clsx(
+        "ml-[-50vw] w-[200vw] border-neu-200 dark:border-neu-100",
+        className,
+      )}
+    />
   )
 }
