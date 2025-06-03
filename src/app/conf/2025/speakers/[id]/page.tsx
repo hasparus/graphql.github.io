@@ -5,7 +5,7 @@ import React from "react"
 import { speakers, speakerSessions } from "../../_data"
 import { metadata as layoutMetadata } from "../../layout"
 
-import { eventsColors, HERO_MARQUEE_ITEMS } from "../../utils"
+import { HERO_MARQUEE_ITEMS } from "../../utils"
 import { BackLink } from "../../schedule/_components/back-link"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { CtaCardSection } from "../../components/cta-card-section"
@@ -14,10 +14,10 @@ import { SchedSpeaker } from "@/app/conf/2023/types"
 import { Button } from "@/app/conf/_design-system/button"
 import { MarqueeRows } from "../../components/marquee-rows"
 import { GET_TICKETS_LINK } from "../../links"
-import { Anchor } from "@/app/conf/_design-system/anchor"
 import { SpeakerTags } from "../../components/speaker-tags"
 import { SpeakerLinks } from "../../components/speaker-links"
 import { LongSessionCard } from "./long-session-card"
+import Image from "next-image-export-optimizer"
 
 type SpeakerProps = { params: { id: string } }
 
@@ -51,8 +51,9 @@ export default function SpeakerPage({ params }: SpeakerProps) {
 
   return (
     <>
-      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
-      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
+      {/* gql-conf-navbar-strip border-t border-neu-200 bg-neu-0 py-8 text-neu-900 before:bg-white/40 dark:border-neu-100 before:dark:bg-blk/30 xl:py-16 */}
+      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-neu-50/40 dark:bg-neu-0 dark:before:bg-blk/30" />
+      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-neu-50/40 before:dark:bg-blk/30">
         <div className="bg-neu-50 dark:bg-neu-0">
           <div className="gql-conf-container">
             <div className="gql-conf-section !py-0">
@@ -115,33 +116,29 @@ function SpeakerHeader({
 }) {
   return (
     <header className={className}>
-      <BackLink year="2025" kind="schedule" />
-      <p
-        className={clsx(
-          "mt-8 text-neu-700",
-          speakers.length >= 4 ? "typography-body-lg" : "typography-h3",
-        )}
-      >
-        {speakers.map((s, i) => (
-          <React.Fragment key={s.username}>
-            <Anchor
-              href={`/conf/${year}/speakers/${s.username}`}
-              className="decoration-neu-500 hover:underline dark:decoration-neu-100"
-            >
-              {s.name}
-            </Anchor>
-            {i !== speakers.length - 1 && <span>, </span>}
-          </React.Fragment>
-        ))}
-      </p>
-      <p className="typography-h3">Meet the speaker</p>
-      <h1 className="typography-h1 mt-2">{speaker.name}</h1>
-      <div className="flex flex-wrap items-center justify-between gap-2 lg:gap-x-4 xl:gap-x-8">
-        {[speaker.position, speaker.company === "-" ? "" : speaker.company]
-          .filter(Boolean)
-          .join(", ")}
-        <SpeakerTags speaker={speaker} />
+      <div>
+        <BackLink year="2025" kind="schedule" />
+        <p className="typography-h3 mt-4 lg:mt-20">Meet the speaker</p>
+        <h1 className="typography-h1 mt-2">{speaker.name}</h1>
+        <div className="flex flex-wrap items-center justify-between gap-2 lg:gap-x-4 xl:gap-x-8">
+          {[speaker.position, speaker.company === "-" ? "" : speaker.company]
+            .filter(Boolean)
+            .join(", ")}
+          <SpeakerTags speaker={speaker} />
+        </div>
       </div>
+      {speaker.avatar && (
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0 z-[1] bg-sec-lighter opacity-90 mix-blend-multiply" />
+          <Image
+            src={speaker.avatar}
+            alt=""
+            width={464}
+            height={464}
+            className="aspect-square size-[464px] w-full object-cover saturate-[0.1] transition-transform"
+          />
+        </div>
+      )}
     </header>
   )
 }

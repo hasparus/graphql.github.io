@@ -7,11 +7,12 @@ import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 import ClockIcon from "@/app/conf/_design-system/pixelarticons/clock.svg?svgr"
 import PlusIcon from "@/app/conf/_design-system/pixelarticons/plus.svg?svgr"
 import PlayIcon from "@/app/conf/_design-system/pixelarticons/play.svg?svgr"
+import { findVideo } from "../../schedule/[id]/session-video"
+import { getEventTitle } from "../../utils"
 
 export interface LongSessionCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
   session: ScheduleSession
-  variant?: "current" | "previous"
   eventColors?: Record<string, string>
 }
 
@@ -32,7 +33,6 @@ function formatDate(dateString: string): string {
 
 export function LongSessionCard({
   session,
-  variant = "current",
   eventColors = {},
   className,
   ...props
@@ -44,7 +44,14 @@ export function LongSessionCard({
   const formattedDate = formatDate(session.event_start)
   const formattedTime = formatTime(session.event_start)
 
-  if (variant === "previous") {
+  const eventTitle = getEventTitle(
+    session,
+    session.speakers?.map(s => s.name) || [],
+  )
+  const video = findVideo(session, eventTitle)
+  const hasVideo = video !== null
+
+  if (hasVideo) {
     return (
       <div
         className={clsx(
@@ -58,7 +65,8 @@ export function LongSessionCard({
             <Tag color={eventColors[session.event_type]}>{eventType}</Tag>
             <div className="flex items-center gap-2 border border-neu-400 bg-neu-100 px-2 py-1">
               <span className="typography-menu text-neu-900">
-                graphql conf 2024
+                {/* todo: find year */}
+                GraphQLConf 2024
               </span>
             </div>
           </div>

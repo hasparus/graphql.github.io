@@ -68,8 +68,8 @@ export default function SessionPage({ params }: SessionProps) {
 
   return (
     <>
-      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
-      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
+      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-neu-50/40 dark:bg-neu-0 dark:before:bg-blk/30" />
+      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-neu-50/40 before:dark:bg-blk/30">
         <div className="bg-neu-50 dark:bg-neu-0">
           <div className="gql-conf-container">
             <div className="gql-conf-section !py-0">
@@ -101,22 +101,29 @@ export default function SessionPage({ params }: SessionProps) {
                 <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
                   Session speakers
                 </h3>
-                <SessionSpeakers event={event} className="-mx-px -mb-px" />
+                <SessionSpeakers
+                  event={event}
+                  className="-mx-px -mb-px last:xl:pb-24"
+                />
 
-                <Hr />
+                {!!event.files?.length && (
+                  <>
+                    <Hr />
 
-                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
-                  Session resources
-                </h3>
-                <section>
-                  {event.files?.map(({ path }) => (
-                    <iframe
-                      key={path}
-                      src={path}
-                      className="aspect-video size-full"
-                    />
-                  ))}
-                </section>
+                    <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
+                      Session resources
+                    </h3>
+                    <section>
+                      {event.files?.map(({ path }) => (
+                        <iframe
+                          key={path}
+                          src={path}
+                          className="aspect-video size-full"
+                        />
+                      ))}
+                    </section>
+                  </>
+                )}
               </div>
             </div>
           </div>
