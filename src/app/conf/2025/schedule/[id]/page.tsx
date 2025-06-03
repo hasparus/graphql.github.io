@@ -49,22 +49,22 @@ export function generateStaticParams() {
 }
 
 export default function SessionPage({ params }: SessionProps) {
-  const event = schedule.find(s => s.id === params.id)
-  if (!event) {
+  const session = schedule.find(s => s.id === params.id)
+  if (!session) {
     notFound()
   }
 
   // @ts-expect-error -- fixme
-  event.speakers = (event.speakers || []).map(speaker =>
+  session.speakers = (session.speakers || []).map(speaker =>
     speakers.find(s => s.username === speaker.username),
   )
 
   const eventTitle = getEventTitle(
-    event,
-    event.speakers!.map(s => s.name),
+    session,
+    session.speakers!.map(s => s.name),
   )
 
-  const video = findVideo(event, eventTitle)
+  const video = findVideo(session, eventTitle)
 
   return (
     <>
@@ -75,7 +75,7 @@ export default function SessionPage({ params }: SessionProps) {
             <div className="gql-conf-section !py-0">
               <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
                 <SessionHeader
-                  event={event}
+                  event={session}
                   eventTitle={eventTitle}
                   year="2025"
                   className={clsx(
@@ -89,14 +89,9 @@ export default function SessionPage({ params }: SessionProps) {
                   <Hr className="mt-10 2xl:mt-16" />
                 )}
 
-                {event.description && (
+                {session.description && (
                   <>
-                    <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
-                      <h3 className="typography-h2 min-w-[320px]">
-                        Session description
-                      </h3>
-                      <p className="typography-body-lg">{event.description}</p>
-                    </div>
+                    <SessionDescription session={session} />
                     <Hr />
                   </>
                 )}
@@ -105,11 +100,11 @@ export default function SessionPage({ params }: SessionProps) {
                   Session speakers
                 </h3>
                 <SessionSpeakers
-                  event={event}
+                  session={session}
                   className="-mx-px -mb-px last:xl:pb-24"
                 />
 
-                {!!event.files?.length && (
+                {!!session.files?.length && (
                   <>
                     <Hr />
 
@@ -117,7 +112,7 @@ export default function SessionPage({ params }: SessionProps) {
                       Session resources
                     </h3>
                     <section>
-                      {event.files?.map(({ path }) => (
+                      {session.files?.map(({ path }) => (
                         <iframe
                           key={path}
                           src={path}
@@ -191,9 +186,12 @@ function SessionHeader({
         <div className="typography-body-md flex flex-col gap-4 md:flex-row md:gap-6">
           <div className="flex items-center gap-2">
             <CalendarIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
-            <time dateTime="2025-09-08">September 08</time>
-            <span>-</span>
-            <time dateTime="2025-09-10">10, 2025</time>
+            <time dateTime={event.event_start}>
+              {new Date(event.event_start).toLocaleDateString("en-US", {
+                day: "numeric",
+                month: "long",
+              })}
+            </time>
           </div>
           <div className="flex items-center gap-2">
             <PinIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
@@ -207,10 +205,10 @@ function SessionHeader({
 }
 
 function SessionSpeakers({
-  event,
+  session: event,
   className,
 }: {
-  event: ScheduleSession
+  session: ScheduleSession
   className?: string
 }) {
   return (
@@ -235,5 +233,18 @@ function Hr({ className }: { className?: string }) {
         className,
       )}
     />
+  )
+}
+
+function SessionDescription({ session }: { session: ScheduleSession }) {
+
+  
+  return (
+    <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
+      <h3 className="typography-h2 min-w-[320px]">Session description</h3>
+      <p className="typography-body-lg whitespace-pre-wrap">
+        {session.description}
+      </p>
+    </div>
   )
 }

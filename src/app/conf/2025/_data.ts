@@ -84,11 +84,22 @@ async function getSchedule(): Promise<ScheduleSession[]> {
     // TODO: Preserve formatting??
     return {
       ...session,
-      description: description && stripHtml(description).result,
+      description: preprocessDescription(description),
     }
   })
 
   return result
+}
+
+function preprocessDescription(description: string | undefined | null): string {
+  let res = description || ""
+
+  // we respect manual line breaks
+  res = res.replace(/<br\s*\/?>/g, "\n")
+
+  // respecting <li> and <a> tags doesn't make sense, because speakers don't use them consistently
+  // we'll improve how the descriptions look later down the tree in the session details page
+  return stripHtml(res).result
 }
 
 export const speakers = await getSpeakers()

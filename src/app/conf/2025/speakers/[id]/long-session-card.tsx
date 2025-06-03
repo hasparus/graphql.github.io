@@ -11,6 +11,7 @@ import PlayIcon from "@/app/conf/_design-system/pixelarticons/play.svg?svgr"
 import { findVideo } from "../../schedule/[id]/session-video"
 import { eventsColors, getEventTitle } from "../../utils"
 import React from "react"
+import { SessionTags } from "../../components/session-tags"
 
 export interface LongSessionCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,33 +20,27 @@ export interface LongSessionCardProps
   year?: string
 }
 
-function formatTime(dateString: string): string {
-  return new Date(dateString).toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  })
-}
-
-function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "long",
-  })
-}
-
 export function LongSessionCard({
   session,
   year = "2025",
   className,
   ...props
 }: LongSessionCardProps) {
-  const eventType = session.event_type.endsWith("s")
-    ? session.event_type.slice(0, -1)
-    : session.event_type
-
-  const formattedDate = formatDate(session.event_start)
-  const formattedTime = formatTime(session.event_start)
+  const formattedDate = new Date(session.event_start).toLocaleDateString(
+    "en-US",
+    {
+      day: "numeric",
+      month: "long",
+    },
+  )
+  const formattedTime = new Date(session.event_start).toLocaleTimeString(
+    "en-US",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    },
+  )
 
   const eventTitle = getEventTitle(
     session,
@@ -53,7 +48,7 @@ export function LongSessionCard({
   )
   const video = findVideo(session, eventTitle)
 
-  const eventDuration =
+  const eventDurationMs =
     new Date(session.event_end).getTime() -
     new Date(session.event_start).getTime()
 
@@ -74,15 +69,9 @@ export function LongSessionCard({
         aria-label={`Read more about "${eventTitle}" by ${session.speakers?.[0]?.name || "Speaker"}`}
       />
 
-      <div className={clsx("flex flex-col gap-6", video && "mb-6")}>
+      <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between gap-6">
-          <Tag
-            color={
-              eventsColors[session.event_type] || "hsl(var(--color-neu-700))"
-            }
-          >
-            {eventType}
-          </Tag>
+          <SessionTags session={session} />
           {video && (
             <div className="flex items-center gap-2 border border-neu-400 bg-neu-100 px-2 py-1">
               <span className="typography-menu text-neu-900">
@@ -93,7 +82,7 @@ export function LongSessionCard({
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
           <div className="min-h-[120px]">
             <h3 className="typography-h3 text-neu-900">{session.name}</h3>
           </div>
@@ -121,13 +110,15 @@ export function LongSessionCard({
               <div className="flex items-center gap-0.5">
                 <ClockIcon className="size-3" />
                 <span className="typography-body-xs text-neu-600">
-                  {eventDuration}
+                  {Math.round(eventDurationMs / (1000 * 60))} min
                 </span>
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {/* todo: past session no recording variant */}
 
       {video ? (
         <Button
@@ -139,8 +130,8 @@ export function LongSessionCard({
           <PlayIcon className="size-6" />
         </Button>
       ) : (
-        <div className="flex items-center text-neu-800">
-          <div className="flex flex-1 items-center gap-6 border-r border-neu-200 pr-6">
+        <footer className="flex items-center border-t border-neu-200 text-neu-800">
+          <div className="flex flex-1 items-center gap-6 border-r border-neu-200 px-6 py-4">
             <div className="flex items-center gap-0.5">
               <CalendarIcon className="size-4 text-sec-dark" />
               <span className="typography-body-xs">{formattedDate}</span>
@@ -154,13 +145,13 @@ export function LongSessionCard({
               <span className="typography-body-xs">{session.venue}</span>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-6 pl-6">
+          <div className="flex flex-col items-center justify-center gap-6 px-6 py-4">
             <button className="relative z-[2] flex items-center gap-0.5 text-neu-800">
               <PlusIcon className="size-4 text-sec-dark" />
               <span className="typography-body-xs">Add to calendar</span>
             </button>
           </div>
-        </div>
+        </footer>
       )}
     </div>
   )
