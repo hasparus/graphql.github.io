@@ -21,6 +21,7 @@ import { GET_TICKETS_LINK } from "../../links"
 import { CtaCardSection } from "../../components/cta-card-section"
 import { Button } from "@/app/conf/_design-system/button"
 import { SessionTags } from "../../components/session-tags"
+import { formatDescription } from "./format-description"
 
 type SessionProps = { params: { id: string } }
 
@@ -237,13 +238,13 @@ function Hr({ className }: { className?: string }) {
 }
 
 function SessionDescription({ session }: { session: ScheduleSession }) {
+  const formattedDescription = formatDescription(session.description || "")
 
-  
   return (
     <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
       <h3 className="typography-h2 min-w-[320px]">Session description</h3>
       <p className="typography-body-lg whitespace-pre-wrap">
-        {session.description}
+        {formattedDescription}
       </p>
     </div>
   )
