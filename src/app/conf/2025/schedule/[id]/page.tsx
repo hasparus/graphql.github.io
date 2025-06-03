@@ -11,8 +11,7 @@ import { ScheduleSession } from "../../../2023/types"
 import { findVideo, SessionVideo } from "./session-video"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { BackLink } from "../_components/back-link"
-import { Tag } from "@/app/conf/_design-system/tag"
-import { eventsColors, getEventTitle, HERO_MARQUEE_ITEMS } from "../../utils"
+import { getEventTitle, HERO_MARQUEE_ITEMS } from "../../utils"
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
 import { SpeakerCard } from "../../components/speaker-card"
@@ -21,6 +20,7 @@ import { MarqueeRows } from "../../components/marquee-rows"
 import { GET_TICKETS_LINK } from "../../links"
 import { CtaCardSection } from "../../components/cta-card-section"
 import { Button } from "@/app/conf/_design-system/button"
+import { SessionTags } from "../../components/session-tags"
 
 type SessionProps = { params: { id: string } }
 
@@ -90,7 +90,7 @@ export default function SessionPage({ params }: SessionProps) {
                 )}
 
                 <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
-                  <h3 className="min-w-[320px] typography-h2">
+                  <h3 className="typography-h2 min-w-[320px]">
                     Session description
                   </h3>
                   <p className="typography-body-lg">{event.description}</p>
@@ -98,14 +98,14 @@ export default function SessionPage({ params }: SessionProps) {
 
                 <Hr />
 
-                <h3 className="my-8 max-w-[408px] px-2 typography-h2 sm:px-3 lg:my-16">
+                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
                   Session speakers
                 </h3>
                 <SessionSpeakers event={event} className="-mx-px -mb-px" />
 
                 <Hr />
 
-                <h3 className="my-8 px-2 typography-h2 sm:px-3 lg:my-16">
+                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
                   Session resources
                 </h3>
                 <section>
@@ -139,36 +139,6 @@ export default function SessionPage({ params }: SessionProps) {
         </div>
       </main>
     </>
-  )
-}
-
-function SessionTags({ session }: { session: ScheduleSession }) {
-  const eventType = session.event_type.endsWith("s")
-    ? session.event_type.slice(0, -1)
-    : session.event_type
-
-  return (
-    <div className="flex flex-wrap gap-3">
-      {eventType && (
-        <Tag color={eventsColors[session.event_type]}>{eventType}</Tag>
-      )}
-      {session.audience && (
-        <Tag
-          color={eventsColors[session.audience] || "hsl(var(--color-neu-700))"}
-        >
-          {session.audience}
-        </Tag>
-      )}
-      {session.event_subtype && (
-        <Tag
-          color={
-            eventsColors[session.event_subtype] || "hsl(var(--color-sec-base))"
-          }
-        >
-          {session.event_subtype}
-        </Tag>
-      )}
-    </div>
   )
 }
 
@@ -206,9 +176,9 @@ function SessionHeader({
           </React.Fragment>
         ))}
       </p>
-      <h1 className="mb-6 mt-3 typography-h2">{eventTitle}</h1>
+      <h1 className="typography-h2 mb-6 mt-3">{eventTitle}</h1>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-col gap-4 typography-body-md md:flex-row md:gap-6">
+        <div className="typography-body-md flex flex-col gap-4 md:flex-row md:gap-6">
           <div className="flex items-center gap-2">
             <CalendarIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
             <time dateTime="2025-09-08">September 08</time>
