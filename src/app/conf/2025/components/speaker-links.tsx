@@ -39,7 +39,7 @@ export function SpeakerLinks({
           target="_blank"
           rel="noreferrer"
           className={clsx(
-            "flex items-center text-neu-900",
+            "flex items-center text-neu-900 hover:bg-neu-600/10",
             size === "lg" ? "p-4" : "p-2",
           )}
         >

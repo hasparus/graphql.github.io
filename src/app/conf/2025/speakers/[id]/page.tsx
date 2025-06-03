@@ -60,10 +60,15 @@ export default function SpeakerPage({ params }: SpeakerProps) {
               <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
                 <SpeakerHeader speaker={speaker} year="2025" />
 
-                <div>
-                  <SpeakerLinks size="lg" speaker={speaker} />
+                <div className="flex justify-end">
+                  <SpeakerLinks
+                    size="lg"
+                    speaker={speaker}
+                    className="!border-r-0"
+                  />
                 </div>
-                <p className="typography-body-lg mt-8 p-4 lg:p-8 xl:px-24 xl:pb-24 xl:pt-16 xl:text-[32px]">
+
+                <p className="typography-body-lg px-4 py-8 lg:p-8 xl:px-24 xl:pb-24 xl:pt-16 xl:text-[32px]">
                   {speaker.about}
                 </p>
 
@@ -116,20 +121,22 @@ function SpeakerHeader({
 }) {
   return (
     <header className={className}>
-      <div>
+      <div className="pl-2 sm:pl-3">
         <BackLink year="2025" kind="schedule" />
-        <p className="typography-h3 mt-4 lg:mt-20">Meet the speaker</p>
-        <h1 className="typography-h1 mt-2">{speaker.name}</h1>
+        <p className="typography-body-lg mt-4 text-sec-darker lg:typography-h3 lg:mt-20">
+          Meet the speaker
+        </p>
+        <h1 className="typography-h1 lg:mt-2">{speaker.name}</h1>
         <div className="flex flex-wrap items-center justify-between gap-2 lg:gap-x-4 xl:gap-x-8">
           {[speaker.position, speaker.company === "-" ? "" : speaker.company]
             .filter(Boolean)
             .join(", ")}
-          <SpeakerTags speaker={speaker} />
+          <SpeakerTags speaker={speaker} className="max-lg:flex-nowrap" />
         </div>
       </div>
       {speaker.avatar && (
-        <div className="relative overflow-hidden">
-          <div className="absolute inset-0 z-[1] bg-sec-lighter opacity-90 mix-blend-multiply" />
+        <div className="relative overflow-hidden max-lg:mt-6">
+          <div className="absolute inset-0 z-[1] bg-[hsl(79_81%_83.5%)] opacity-90 mix-blend-multiply" />
           <Image
             src={speaker.avatar}
             alt=""
@@ -153,7 +160,7 @@ function SpeakerSessions({
   return (
     <div
       className={clsx(
-        "grid max-lg:*:border-y-0 lg:grid-cols-2 lg:gap-5",
+        "grid lg:grid-cols-2 lg:gap-5 [&>*:not(:last-child)]:border-b-0",
         className,
       )}
     >

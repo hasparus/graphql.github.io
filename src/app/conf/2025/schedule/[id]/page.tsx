@@ -89,14 +89,17 @@ export default function SessionPage({ params }: SessionProps) {
                   <Hr className="mt-10 2xl:mt-16" />
                 )}
 
-                <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
-                  <h3 className="typography-h2 min-w-[320px]">
-                    Session description
-                  </h3>
-                  <p className="typography-body-lg">{event.description}</p>
-                </div>
-
-                <Hr />
+                {event.description && (
+                  <>
+                    <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
+                      <h3 className="typography-h2 min-w-[320px]">
+                        Session description
+                      </h3>
+                      <p className="typography-body-lg">{event.description}</p>
+                    </div>
+                    <Hr />
+                  </>
+                )}
 
                 <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
                   Session speakers
@@ -213,7 +216,7 @@ function SessionSpeakers({
   return (
     <div
       className={clsx(
-        "grid max-lg:*:border-y-0 lg:grid-cols-2 lg:gap-5",
+        "grid lg:grid-cols-2 lg:gap-5 max-lg:[&>*:not(:last-child)]:border-b-0",
         className,
       )}
     >
