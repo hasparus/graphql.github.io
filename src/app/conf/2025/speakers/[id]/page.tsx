@@ -18,6 +18,7 @@ import { SpeakerTags } from "../../components/speaker-tags"
 import { SpeakerLinks } from "../../components/speaker-links"
 import { LongSessionCard } from "./long-session-card"
 import Image from "next-image-export-optimizer"
+import { formatDescription } from "../../schedule/[id]/format-description"
 
 type SpeakerProps = { params: { id: string } }
 
@@ -51,37 +52,40 @@ export default function SpeakerPage({ params }: SpeakerProps) {
 
   return (
     <>
-      {/* gql-conf-navbar-strip border-t border-neu-200 bg-neu-0 py-8 text-neu-900 before:bg-white/40 dark:border-neu-100 before:dark:bg-blk/30 xl:py-16 */}
       <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-neu-50/40 dark:bg-neu-0 dark:before:bg-blk/30" />
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-neu-50/40 before:dark:bg-blk/30">
         <div className="bg-neu-50 dark:bg-neu-0">
           <div className="gql-conf-container">
             <div className="gql-conf-section !py-0">
-              <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
-                <SpeakerHeader speaker={speaker} year="2025" />
+              <div className="border-x border-neu-200 dark:border-neu-100">
+                <SpeakerHeader
+                  speaker={speaker}
+                  year="2025"
+                  className="border-b border-neu-200 dark:border-neu-100"
+                />
 
                 <div className="flex justify-end">
                   <SpeakerLinks
                     size="lg"
                     speaker={speaker}
-                    className="!border-r-0"
+                    className="!border-r-0 !border-t-0"
                   />
                 </div>
 
-                <p className="typography-body-lg px-4 py-8 lg:p-8 xl:px-24 xl:pb-24 xl:pt-16 xl:text-[32px]">
-                  {speaker.about}
+                <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
+                  {formatDescription(speaker.about)}
                 </p>
 
                 <Hr />
 
-                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
+                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
                   2025 Sessions
                 </h3>
                 <SpeakerSessions speaker={speaker} className="-mx-px -mb-px" />
 
                 <Hr />
 
-                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
+                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
                   Sessions from previous editions
                 </h3>
                 <SpeakerSessions speaker={speaker} className="-mx-px -mb-px" />
@@ -120,22 +124,28 @@ function SpeakerHeader({
   className?: string
 }) {
   return (
-    <header className={clsx("flex max-md:flex-col", className)}>
-      <div className="pl-2 sm:pl-3">
-        <BackLink year="2025" kind="schedule" />
+    <header
+      className={clsx("flex justify-between gap-4 max-md:flex-col", className)}
+    >
+      <div className="pl-2 pt-8 sm:pl-3 2xl:pl-24 2xl:pr-16 2xl:pt-16">
+        <BackLink year={year} kind="schedule" />
         <p className="typography-body-lg mt-4 text-sec-darker lg:typography-h3 lg:mt-20">
           Meet the speaker
         </p>
         <h1 className="typography-h1 lg:mt-2">{speaker.name}</h1>
-        <div className="flex flex-wrap items-center justify-between gap-2 lg:gap-x-4 xl:gap-x-8">
+        <div className="typography-body-lg mt-8 flex flex-wrap items-center gap-x-8 gap-y-2 lg:mt-12 xl:mt-16 2xl:mt-20">
           {[speaker.position, speaker.company === "-" ? "" : speaker.company]
             .filter(Boolean)
             .join(", ")}
-          <SpeakerTags speaker={speaker} className="max-lg:flex-nowrap" />
+          <SpeakerTags
+            speaker={speaker}
+            className="flex-nowrap"
+            showEventType={false}
+          />
         </div>
       </div>
       {speaker.avatar && (
-        <div className="relative overflow-hidden max-lg:mt-6">
+        <div className="relative overflow-hidden">
           <div className="absolute inset-0 z-[1] bg-[hsl(79_81%_83.5%)] opacity-90 mix-blend-multiply" />
           <Image
             src={speaker.avatar}

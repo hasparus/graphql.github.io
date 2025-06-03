@@ -1,6 +1,5 @@
 import { clsx } from "clsx"
 import { ScheduleSession } from "@/app/conf/2023/types"
-import { Tag } from "@/app/conf/_design-system/tag"
 import { Button } from "@/app/conf/_design-system/button"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
@@ -9,7 +8,7 @@ import ClockIcon from "@/app/conf/_design-system/pixelarticons/clock.svg?svgr"
 import PlusIcon from "@/app/conf/_design-system/pixelarticons/plus.svg?svgr"
 import PlayIcon from "@/app/conf/_design-system/pixelarticons/play.svg?svgr"
 import { findVideo } from "../../schedule/[id]/session-video"
-import { eventsColors, getEventTitle } from "../../utils"
+import { getEventTitle } from "../../utils"
 import React from "react"
 import { SessionTags } from "../../components/session-tags"
 
@@ -57,15 +56,14 @@ export function LongSessionCard({
   return (
     <div
       className={clsx(
-        "group relative border border-neu-200 bg-neu-0",
-        !!video && "flex flex-col gap-6 backdrop-blur-md",
+        "group relative border border-neu-200 bg-neu-0 dark:border-neu-100",
         className,
       )}
       {...props}
     >
       <Anchor
         href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
-        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:ring-1 dark:ring-neu-100"
+        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100"
         aria-label={`Read more about "${eventTitle}" by ${session.speakers?.[0]?.name || "Speaker"}`}
       />
 
@@ -83,12 +81,9 @@ export function LongSessionCard({
         </div>
 
         <div className="flex flex-col gap-4">
-          <div className="min-h-[120px]">
-            <h3 className="typography-body-lg text-neu-900">
-              {getEventTitle(
-                session,
-                speakers.map(s => s.name),
-              )}
+          <div className="min-h-[60px]">
+            <h3 className="typography-body-lg text-neu-900 2xl:text-2xl">
+              {eventTitle}
             </h3>
           </div>
           <div className="flex items-center justify-between gap-2">
@@ -126,36 +121,39 @@ export function LongSessionCard({
       {/* todo: past session no recording variant */}
 
       {video ? (
-        <Button
-          href={`https://youtube.com/embed/${video.id}`}
-          variant="primary"
-          className="relative z-[2] w-full"
-        >
-          Watch
-          <PlayIcon className="size-6" />
-        </Button>
+        <footer className="px-6 pb-6 pt-0">
+          <Button
+            href={`https://youtube.com/embed/${video.id}`}
+            variant="primary"
+            className="relative z-[2] w-full"
+          >
+            Watch
+            <PlayIcon className="size-6" />
+          </Button>
+        </footer>
       ) : (
-        <footer className="flex items-center border-t border-neu-200 text-neu-800">
-          <div className="flex flex-1 items-center gap-6 border-r border-neu-200 px-6 py-4">
-            <div className="flex items-center gap-0.5">
-              <CalendarIcon className="size-4 text-sec-dark" />
-              <span className="typography-body-xs">{formattedDate}</span>
+        <footer className="flex items-center border-t border-neu-200 text-neu-800 dark:border-neu-100">
+          <div className="flex flex-1 items-center gap-6 border-r border-neu-200 p-6">
+            <div className="contents flex-col md:max-xl:flex">
+              <div className="flex items-center gap-0.5 whitespace-pre">
+                <CalendarIcon className="size-4 shrink-0 -translate-y-px text-sec-dark" />
+                <span className="typography-body-xs">{formattedDate}</span>
+              </div>
+              <div className="flex items-center gap-0.5">
+                <ClockIcon className="size-4 shrink-0 text-sec-dark" />
+                <span className="typography-body-xs">{formattedTime}</span>
+              </div>
             </div>
             <div className="flex items-center gap-0.5">
-              <ClockIcon className="size-4 text-sec-dark" />
-              <span className="typography-body-xs">{formattedTime}</span>
-            </div>
-            <div className="flex items-center gap-0.5">
-              <PinIcon className="size-4 text-sec-dark" />
+              <PinIcon className="size-4 shrink-0 text-sec-dark" />
               <span className="typography-body-xs">{session.venue}</span>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-6 px-6 py-4">
-            <button className="relative z-[2] flex items-center gap-0.5 text-neu-800">
-              <PlusIcon className="size-4 text-sec-dark" />
-              <span className="typography-body-xs">Add to calendar</span>
-            </button>
-          </div>
+          {/* TODO: Actually add to calendar. Ensure we show this only on this year's events. */}
+          <button className="relative z-[2] flex h-full flex-row items-center justify-center gap-0.5 px-6 py-4 text-neu-800 ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100">
+            <PlusIcon className="size-4 shrink-0 text-sec-dark" />
+            <span className="typography-body-xs">Add to calendar</span>
+          </button>
         </footer>
       )}
     </div>

@@ -11,11 +11,14 @@ import { eventsColors } from "../utils"
 export function SpeakerTags({
   speaker,
   className,
+  showEventType = true,
 }: {
   speaker: SchedSpeaker
   className?: string
+  showEventType?: boolean
 }) {
-  const eventType = speakerSessions.get(speaker.username)?.[0]?.event_type
+  const eventType =
+    showEventType && speakerSessions.get(speaker.username)?.[0]?.event_type
 
   return (
     <div className={clsx("flex basis-0 flex-wrap gap-2", className)}>
