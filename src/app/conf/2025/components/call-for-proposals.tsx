@@ -112,6 +112,7 @@ function NotesTab() {
           <a
             className="typography-link dark:text-neu-50"
             target="_blank"
+            rel="noreferrer"
             href="https://training.linuxfoundation.org/linux-courses/open-source-compliance-courses/inclusive-speaker-orientation"
           >
             Inclusive Speaker Orientation Course
@@ -171,6 +172,7 @@ function NotesTab() {
           href="https://youtu.be/2I5fYBLCfUA"
           target="_blank"
           className="typography-link dark:text-neu-50"
+          rel="noreferrer"
         >
           Getting Over Your Imposter Syndrome to Become a Conference Speaker
         </a>
@@ -358,6 +360,7 @@ export function CallForProposals() {
               target="_blank"
               href="https://sessionize.com/playbook/submit-your-session-for-an-event"
               className="typography-link dark:text-neu-50"
+              rel="noreferrer"
             >
               how to submit your session
             </a>{" "}

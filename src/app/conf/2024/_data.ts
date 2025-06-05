@@ -11,6 +11,7 @@ async function fetchData<T>(url: string): Promise<T> {
         "Content-Type": "application/json",
         "User-Agent": "GraphQL Conf / GraphQL Foundation",
       },
+      cache: "force-cache",
     })
     const data = await response.json()
     return data

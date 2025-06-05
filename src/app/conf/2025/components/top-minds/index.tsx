@@ -77,7 +77,7 @@ export default function TopMindsSection({
       {...rest}
     >
       <div className="flex grid-cols-2 flex-wrap [@media(444px<width<743px)]:grid [@media(width<=444px)]:flex-col [@media(width<=743px)]:justify-center [@media(width>=970px)]:*:border-b-0">
-        <h3 className="mr-auto flex w-full grow text-pretty pb-6 pr-6 typography-h2 [@media(width>857px)]:basis-0">
+        <h3 className="typography-h2 mr-auto flex w-full grow text-pretty pb-6 pr-6 [@media(width>857px)]:basis-0">
           Meet the top industry minds
         </h3>
         <TopMindCard
@@ -160,13 +160,14 @@ function TopMindCard({
       <div className="flex flex-1 items-stretch border-t border-sec-dark">
         <div className="flex grow flex-col justify-center gap-1 p-3 sm:h-[80px]">
           <h4 className="typography-body-md">{name}</h4>
-          <p className="text-neu-700 typography-body-xs">{title}</p>
+          <p className="typography-body-xs text-neu-700">{title}</p>
         </div>
         <div className="flex border-l border-sec-dark max-sm:divide-x sm:flex-col sm:items-center sm:divide-y sm:border-l">
           {SocialIconType.all.map(type => {
             if (!socials[type]) return null
             return (
               <a
+                key={type}
                 href={urlForUser(type, socials[type])}
                 target="_blank"
                 rel="noopener noreferrer"

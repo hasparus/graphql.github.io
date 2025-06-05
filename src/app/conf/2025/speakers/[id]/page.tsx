@@ -1,21 +1,24 @@
 import { Metadata } from "next"
-import NextLink from "next/link"
+import { notFound } from "next/navigation"
 import React from "react"
 
-import { SessionList } from "@/app/conf/_components/schedule/session-list"
-import {
-  SocialMediaIcon,
-  SocialMediaIconServiceType,
-} from "@/app/conf/_components/speakers/social-media"
-import { Avatar } from "@/app/conf/_components/speakers/avatar"
-import { ChevronLeftIcon } from "@/icons"
-
-import { speakers, schedule } from "../../_data"
+import { speakers, speakerSessions } from "../../_data"
 import { metadata as layoutMetadata } from "../../layout"
 
-import { filterCategories2024 } from "@/app/conf/_components/schedule/filter-categories"
-import { eventsColors } from "../../utils"
+import { HERO_MARQUEE_ITEMS } from "../../utils"
 import { BackLink } from "../../schedule/_components/back-link"
+import { NavbarPlaceholder } from "../../components/navbar"
+import { CtaCardSection } from "../../components/cta-card-section"
+import clsx from "clsx"
+import { SchedSpeaker } from "@/app/conf/2023/types"
+import { Button } from "@/app/conf/_design-system/button"
+import { MarqueeRows } from "../../components/marquee-rows"
+import { GET_TICKETS_LINK } from "../../links"
+import { SpeakerTags } from "../../components/speaker-tags"
+import { SpeakerLinks } from "../../components/speaker-links"
+import { LongSessionCard } from "./long-session-card"
+import Image from "next-image-export-optimizer"
+import { formatDescription } from "../../schedule/[id]/format-description"
 
 type SpeakerProps = { params: { id: string } }
 
@@ -42,77 +45,151 @@ export function generateStaticParams() {
 }
 
 export default function SpeakerPage({ params }: SpeakerProps) {
-  const decodedId = decodeURIComponent(params.id)
-  const speaker = speakers.find(s => s.username === decodedId)!
-
-  const s = schedule
-    .filter(s => s.speakers && s.speakers.some(s => s.username === decodedId))
-    .map(s => ({
-      ...s,
-      speakers: s.speakers!.map(
-        s => speakers.find(speaker => speaker.username === s.username)!,
-      ),
-    }))
+  const speaker = speakers.find(s => s.username === params.id)
+  if (!speaker) {
+    notFound()
+  }
 
   return (
-    <div className="py-14">
-      <section className="container flex flex-col">
-        <div className="flex flex-col">
-          <BackLink year="2025" kind="speakers" />
+    <>
+      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-neu-50/40 dark:bg-neu-0 dark:before:bg-blk/30" />
+      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-neu-50/40 before:dark:bg-blk/30">
+        <div className="bg-neu-50 dark:bg-neu-0">
+          <div className="gql-conf-container">
+            <div className="gql-conf-section !py-0 max-xs:px-0">
+              <div className="border-neu-200 dark:border-neu-100 xs:border-x">
+                <SpeakerHeader
+                  speaker={speaker}
+                  year="2025"
+                  className="border-b border-neu-200 dark:border-neu-100"
+                />
 
-          <div className="max-w-5xl self-center">
-            <div className="flex flex-col justify-between gap-0 gap-y-5 pb-20 pt-14 max-lg:flex-col-reverse sm:flex-row sm:gap-10">
-              <div className="flex flex-col items-start gap-y-5">
-                <h1 className="conf-heading">{speaker.name}</h1>
+                <div className="flex justify-end">
+                  <SpeakerLinks
+                    size="lg"
+                    speaker={speaker}
+                    className="!border-r-0 !border-t-0"
+                  />
+                </div>
 
-                <span className="text-2xl">
-                  <span className="underline">{speaker.company}</span>
-                  {speaker.company && ", "}
-                  {speaker.position}
-                </span>
+                <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
+                  {formatDescription(speaker.about)}
+                </p>
 
-                <p className="text-lg">{speaker.about}</p>
+                <Hr />
 
-                {!!speaker.socialurls?.length && (
-                  <div className="mt-0">
-                    <div className="flex gap-5 lg:gap-2.5">
-                      {speaker.socialurls.map(social => (
-                        <a
-                          key={social.url}
-                          href={social.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex w-max items-center"
-                        >
-                          <SocialMediaIcon
-                            service={
-                              social.service.toLowerCase() as SocialMediaIconServiceType
-                            }
-                          />
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
+                  2025 Sessions
+                </h3>
+                <SpeakerSessions speaker={speaker} className="-mx-px -mb-px" />
+
+                <Hr />
+
+                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
+                  Sessions from previous editions
+                </h3>
+                <SpeakerSessions speaker={speaker} className="-mx-px -mb-px" />
               </div>
-
-              <Avatar
-                className="size-[280px] self-center rounded-full sm:self-start"
-                avatar={speaker.avatar}
-                name={speaker.name}
-              />
             </div>
-            <h1 className="conf-heading mb-10">Sessions</h1>
-            <SessionList
-              showFilter={false}
-              filterCategories={filterCategories2024}
-              eventsColors={eventsColors}
-              year="2024"
-              scheduleData={s}
-            />
           </div>
         </div>
-      </section>
+
+        <div className="border-t border-neu-200 bg-neu-0 py-8 dark:border-neu-100 xl:py-16">
+          <div className="gql-conf-container">
+            <CtaCardSection
+              title="Get your ticket"
+              description="Join three transformative days of expert insights and innovation to shape the next decade of APIs!"
+            >
+              <Button variant="primary" href={GET_TICKETS_LINK}>
+                Get tickets
+              </Button>
+            </CtaCardSection>
+            <div className="py-8">
+              <MarqueeRows variant="secondary" items={HERO_MARQUEE_ITEMS} />
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
+  )
+}
+
+function SpeakerHeader({
+  speaker,
+  year,
+  className,
+}: {
+  speaker: SchedSpeaker
+  year: `20${number}`
+  className?: string
+}) {
+  return (
+    <header
+      className={clsx("flex justify-between gap-4 max-md:flex-col", className)}
+    >
+      <div className="pl-2 pt-8 sm:pl-3 2xl:pl-24 2xl:pr-16 2xl:pt-16">
+        <BackLink year={year} kind="schedule" />
+        <p className="typography-body-lg mt-4 text-sec-darker lg:typography-h3 lg:mt-20">
+          Meet the speaker
+        </p>
+        <h1 className="typography-h1 lg:mt-2">{speaker.name}</h1>
+        <div className="typography-body-lg mt-8 flex flex-wrap items-center gap-x-8 gap-y-2 lg:mt-12 xl:mt-16 2xl:mt-20">
+          {[speaker.position, speaker.company === "-" ? "" : speaker.company]
+            .filter(Boolean)
+            .join(", ")}
+          <SpeakerTags
+            speaker={speaker}
+            className="flex-nowrap"
+            showEventType={false}
+          />
+        </div>
+      </div>
+      {speaker.avatar && (
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0 z-[1] bg-[hsl(79_81%_83.5%)] opacity-90 mix-blend-multiply" />
+          <Image
+            src={speaker.avatar}
+            alt=""
+            width={464}
+            height={464}
+            className="aspect-square size-[464px] w-full object-cover saturate-[0.1] transition-transform"
+          />
+        </div>
+      )}
+    </header>
+  )
+}
+
+function SpeakerSessions({
+  speaker,
+  className,
+}: {
+  speaker: SchedSpeaker
+  className?: string
+}) {
+  return (
+    <div
+      className={clsx(
+        "grid lg:grid-cols-2 lg:gap-5 max-lg:[&>*:not(:last-child)]:border-b-0",
+        className,
+      )}
+    >
+      {speakerSessions
+        .get(speaker.username)
+        ?.map(session => (
+          <LongSessionCard key={session.id} session={session} year="2025" />
+        ))}
     </div>
+  )
+}
+
+function Hr({ className }: { className?: string }) {
+  return (
+    <hr
+      className={clsx(
+        "ml-[-50vw] w-[200vw] border-neu-200 dark:border-neu-100",
+        className,
+      )}
+    />
   )
 }

@@ -85,7 +85,7 @@ export function ScheduleSessionCard({
                 ))}
               </span>
             )}
-            <span className="mt-2 flex items-center gap-0.5 typography-body-xs">
+            <span className="typography-body-xs mt-2 flex items-center gap-0.5">
               <PinIcon className="size-4 text-pri-base" />
               {session.venue}
             </span>

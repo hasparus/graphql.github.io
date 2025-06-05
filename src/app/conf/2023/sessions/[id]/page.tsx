@@ -86,7 +86,7 @@ export default function SessionPage({ params }: SessionProps) {
     <div className="bg-[#f4f6f8]">
       <div className="container">
         <div className="py-10">
-          <section className="xs:px-0 mx-auto min-h-[80vh] flex-col justify-center px-2 text-[#333333] md:container lg:justify-between">
+          <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 text-[#333333] md:container xs:px-0 lg:justify-between">
             <div className="flex flex-col lg:px-0">
               <BackLink year="2023" kind="sessions" />
               {recordingTitle.rating > 0.5 && (

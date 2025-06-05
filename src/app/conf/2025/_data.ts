@@ -21,6 +21,7 @@ async function fetchData<T>(url: string): Promise<T> {
         "Content-Type": "application/json",
         "User-Agent": "GraphQL Conf / GraphQL Foundation",
       },
+      cache: "force-cache",
     })
     const data = await response.json()
     return data
@@ -58,7 +59,7 @@ async function getSpeakers(): Promise<SchedSpeaker[]> {
     .map(user => {
       return {
         ...user,
-        about: stripHtml(user.about).result,
+        about: preprocessDescription(user.about),
       }
     })
     .sort((a, b) => {
@@ -77,18 +78,25 @@ async function getSchedule(): Promise<ScheduleSession[]> {
 
   const result = sessions.map(session => {
     const { description } = session
-    if (description?.includes("<")) {
-      // console.log(`Found HTML element in about field for session "${session.name}"`)
-    }
 
-    // TODO: Preserve formatting??
     return {
       ...session,
-      description: description && stripHtml(description).result,
+      description: preprocessDescription(description),
     }
   })
 
   return result
+}
+
+function preprocessDescription(description: string | undefined | null): string {
+  let res = description || ""
+
+  // we respect manual line breaks
+  res = res.replace(/<br\s*\/?>/g, "\n")
+
+  // respecting <li> and <a> tags doesn't make sense, because speakers don't use them consistently
+  // we'll improve how the descriptions look later down the tree in the session details page
+  return stripHtml(res).result
 }
 
 export const speakers = await getSpeakers()

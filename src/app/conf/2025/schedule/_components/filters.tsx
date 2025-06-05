@@ -95,7 +95,7 @@ function FiltersCombobox({
     <Combobox immediate multiple value={value} onChange={onChange}>
       <div className={clsx("flex flex-col", className)}>
         {label && (
-          <Combobox.Label className="mb-1 block font-mono font-medium uppercase text-neu-900 typography-menu">
+          <Combobox.Label className="typography-menu mb-1 block font-mono font-medium uppercase text-neu-900">
             {label}
           </Combobox.Label>
         )}
@@ -104,7 +104,7 @@ function FiltersCombobox({
             value={query}
             onChange={e => setQuery(e.target.value)}
             className={clsx(
-              "bg-transparent leading-none text-neu-800 !outline-offset-0 typography-body-sm [text-box:trim-both_cap_alphabetic] placeholder:text-neu-600 focus:outline-none max-lg:typography-body-md",
+              "typography-body-sm bg-transparent leading-none text-neu-800 !outline-offset-0 [text-box:trim-both_cap_alphabetic] max-lg:typography-body-md placeholder:text-neu-600 focus:outline-none",
             )}
             placeholder={placeholder}
             autoComplete="true"
@@ -175,8 +175,8 @@ function CheckboxIcon({ checked, ...rest }: CheckboxIconProps) {
       {!checked ? (
         <>
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M2.5 2.5H4.16667H15.8333H17.5V17.5H15.8333H4.16667H2.5V2.5ZM15.8333 15.8333V4.16667H4.16667V15.8333H15.8333Z"
           />
         </>
@@ -206,7 +206,7 @@ function FilterComboboxOption({
   return (
     <div
       className={clsx(
-        "relative flex cursor-default select-none items-center p-1 font-sans typography-body-sm",
+        "typography-body-sm relative flex cursor-default select-none items-center p-1 font-sans",
         active && "bg-neu-100 dark:bg-neu-50",
       )}
     >

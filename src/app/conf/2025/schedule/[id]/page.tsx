@@ -11,8 +11,7 @@ import { ScheduleSession } from "../../../2023/types"
 import { findVideo, SessionVideo } from "./session-video"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { BackLink } from "../_components/back-link"
-import { Tag } from "@/app/conf/_design-system/tag"
-import { eventsColors, getEventTitle, HERO_MARQUEE_ITEMS } from "../../utils"
+import { getEventTitle, HERO_MARQUEE_ITEMS } from "../../utils"
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
 import { SpeakerCard } from "../../components/speaker-card"
@@ -21,6 +20,8 @@ import { MarqueeRows } from "../../components/marquee-rows"
 import { GET_TICKETS_LINK } from "../../links"
 import { CtaCardSection } from "../../components/cta-card-section"
 import { Button } from "@/app/conf/_design-system/button"
+import { SessionTags } from "../../components/session-tags"
+import { formatDescription } from "./format-description"
 
 type SessionProps = { params: { id: string } }
 
@@ -49,33 +50,33 @@ export function generateStaticParams() {
 }
 
 export default function SessionPage({ params }: SessionProps) {
-  const event = schedule.find(s => s.id === params.id)
-  if (!event) {
+  const session = schedule.find(s => s.id === params.id)
+  if (!session) {
     notFound()
   }
 
   // @ts-expect-error -- fixme
-  event.speakers = (event.speakers || []).map(speaker =>
+  session.speakers = (session.speakers || []).map(speaker =>
     speakers.find(s => s.username === speaker.username),
   )
 
   const eventTitle = getEventTitle(
-    event,
-    event.speakers!.map(s => s.name),
+    session,
+    session.speakers!.map(s => s.name),
   )
 
-  const video = findVideo(event, eventTitle)
+  const video = findVideo(session, eventTitle)
 
   return (
     <>
-      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-white/40 dark:bg-neu-0 dark:before:bg-blk/30" />
-      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
+      <NavbarPlaceholder className="top-0 bg-neu-50 before:bg-neu-50/40 dark:bg-neu-0 dark:before:bg-blk/30" />
+      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-neu-50/40 before:dark:bg-blk/30">
         <div className="bg-neu-50 dark:bg-neu-0">
           <div className="gql-conf-container">
-            <div className="gql-conf-section !py-0">
-              <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
+            <div className="gql-conf-section !py-0 max-xs:px-0">
+              <div className="border-neu-200 pt-8 dark:border-neu-100 xs:border-x 2xl:pt-16">
                 <SessionHeader
-                  event={event}
+                  event={session}
                   eventTitle={eventTitle}
                   year="2025"
                   className={clsx(
@@ -89,34 +90,39 @@ export default function SessionPage({ params }: SessionProps) {
                   <Hr className="mt-10 2xl:mt-16" />
                 )}
 
-                <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
-                  <h3 className="min-w-[320px] typography-h2">
-                    Session description
-                  </h3>
-                  <p className="typography-body-lg">{event.description}</p>
-                </div>
+                {session.description && (
+                  <>
+                    <SessionDescription session={session} />
+                    <Hr />
+                  </>
+                )}
 
-                <Hr />
-
-                <h3 className="my-8 max-w-[408px] px-2 typography-h2 sm:px-3 lg:my-16">
+                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
                   Session speakers
                 </h3>
-                <SessionSpeakers event={event} className="-mx-px -mb-px" />
+                <SessionSpeakers
+                  session={session}
+                  className="-mx-px -mb-px last:xl:pb-24"
+                />
 
-                <Hr />
+                {!!session.files?.length && (
+                  <>
+                    <Hr />
 
-                <h3 className="my-8 px-2 typography-h2 sm:px-3 lg:my-16">
-                  Session resources
-                </h3>
-                <section>
-                  {event.files?.map(({ path }) => (
-                    <iframe
-                      key={path}
-                      src={path}
-                      className="aspect-video size-full"
-                    />
-                  ))}
-                </section>
+                    <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
+                      Session resources
+                    </h3>
+                    <section>
+                      {session.files?.map(({ path }) => (
+                        <iframe
+                          key={path}
+                          src={path}
+                          className="aspect-video size-full"
+                        />
+                      ))}
+                    </section>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -139,36 +145,6 @@ export default function SessionPage({ params }: SessionProps) {
         </div>
       </main>
     </>
-  )
-}
-
-function SessionTags({ session }: { session: ScheduleSession }) {
-  const eventType = session.event_type.endsWith("s")
-    ? session.event_type.slice(0, -1)
-    : session.event_type
-
-  return (
-    <div className="flex flex-wrap gap-3">
-      {eventType && (
-        <Tag color={eventsColors[session.event_type]}>{eventType}</Tag>
-      )}
-      {session.audience && (
-        <Tag
-          color={eventsColors[session.audience] || "hsl(var(--color-neu-700))"}
-        >
-          {session.audience}
-        </Tag>
-      )}
-      {session.event_subtype && (
-        <Tag
-          color={
-            eventsColors[session.event_subtype] || "hsl(var(--color-sec-base))"
-          }
-        >
-          {session.event_subtype}
-        </Tag>
-      )}
-    </div>
   )
 }
 
@@ -206,14 +182,17 @@ function SessionHeader({
           </React.Fragment>
         ))}
       </p>
-      <h1 className="mb-6 mt-3 typography-h2">{eventTitle}</h1>
+      <h1 className="typography-h2 mb-6 mt-3">{eventTitle}</h1>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-col gap-4 typography-body-md md:flex-row md:gap-6">
+        <div className="typography-body-md flex flex-col gap-2 md:flex-row md:gap-6">
           <div className="flex items-center gap-2">
             <CalendarIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
-            <time dateTime="2025-09-08">September 08</time>
-            <span>-</span>
-            <time dateTime="2025-09-10">10, 2025</time>
+            <time dateTime={event.event_start}>
+              {new Date(event.event_start).toLocaleDateString("en-US", {
+                day: "numeric",
+                month: "long",
+              })}
+            </time>
           </div>
           <div className="flex items-center gap-2">
             <PinIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
@@ -227,16 +206,16 @@ function SessionHeader({
 }
 
 function SessionSpeakers({
-  event,
+  session: event,
   className,
 }: {
-  event: ScheduleSession
+  session: ScheduleSession
   className?: string
 }) {
   return (
     <div
       className={clsx(
-        "grid max-lg:*:border-y-0 lg:grid-cols-2 lg:gap-5",
+        "grid lg:grid-cols-2 lg:gap-5 max-lg:[&>*:not(:last-child)]:border-b-0",
         className,
       )}
     >
@@ -255,5 +234,18 @@ function Hr({ className }: { className?: string }) {
         className,
       )}
     />
+  )
+}
+
+function SessionDescription({ session }: { session: ScheduleSession }) {
+  const formattedDescription = formatDescription(session.description || "")
+
+  return (
+    <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
+      <h3 className="typography-h2 min-w-[320px]">Session description</h3>
+      <p className="typography-body-lg whitespace-pre-wrap">
+        {formattedDescription}
+      </p>
+    </div>
   )
 }
