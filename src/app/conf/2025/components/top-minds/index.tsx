@@ -167,6 +167,7 @@ function TopMindCard({
             if (!socials[type]) return null
             return (
               <a
+                key={type}
                 href={urlForUser(type, socials[type])}
                 target="_blank"
                 rel="noopener noreferrer"

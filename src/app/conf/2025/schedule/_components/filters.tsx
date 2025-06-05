@@ -175,8 +175,8 @@ function CheckboxIcon({ checked, ...rest }: CheckboxIconProps) {
       {!checked ? (
         <>
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M2.5 2.5H4.16667H15.8333H17.5V17.5H15.8333H4.16667H2.5V2.5ZM15.8333 15.8333V4.16667H4.16667V15.8333H15.8333Z"
           />
         </>

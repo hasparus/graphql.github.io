@@ -98,6 +98,7 @@ const FAQS = [
         <a
           className="typography-link"
           target="_blank"
+          rel="noreferrer"
           href="https://openprofile.dev/myevents"
         >
           LFX dashboard
@@ -122,6 +123,7 @@ const FAQS = [
           className="typography-link"
           target="_blank"
           href="https://events.linuxfoundation.org/about/visa-request/"
+          rel="noreferrer"
         >
           Request a visa letter
         </a>

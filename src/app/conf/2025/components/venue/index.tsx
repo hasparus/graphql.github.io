@@ -81,6 +81,7 @@ export function Venue(props: VenueProps) {
                       className="typography-link"
                       href="https://dezwijger.nl/about-us-en/contact"
                       target="_blank"
+                      rel="noreferrer"
                     >
                       Pakhuis de Zwijger
                     </a>
