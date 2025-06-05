@@ -22,6 +22,7 @@ const config: Config = {
         ],
       },
       screens: {
+        xs: "394px",
         "3xl": "1920px",
       },
       colors: {

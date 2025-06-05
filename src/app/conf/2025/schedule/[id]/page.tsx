@@ -73,8 +73,8 @@ export default function SessionPage({ params }: SessionProps) {
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-neu-50/40 before:dark:bg-blk/30">
         <div className="bg-neu-50 dark:bg-neu-0">
           <div className="gql-conf-container">
-            <div className="gql-conf-section !py-0">
-              <div className="border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
+            <div className="gql-conf-section max-xs:px-0 !py-0">
+              <div className="xs:border-x border-neu-200 pt-8 dark:border-neu-100 2xl:pt-16">
                 <SessionHeader
                   event={session}
                   eventTitle={eventTitle}
