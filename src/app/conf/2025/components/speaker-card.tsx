@@ -45,7 +45,7 @@ export function SpeakerCard({
           />
         )}
 
-        <div className="relative h-full shrink-0 overflow-hidden @[420px]:w-[176px]">
+        <div className="relative h-full overflow-hidden @[420px]:w-[176px] @[420px]:shrink-0">
           <div className="absolute inset-0 z-[1] bg-sec-light mix-blend-multiply" />
           {speaker.avatar ? (
             <Image
