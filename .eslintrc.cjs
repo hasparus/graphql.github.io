@@ -136,6 +136,7 @@ module.exports = {
     {
       files: [
         `src/pages/blog/**/*.{${MARKDOWN_EXT}}`,
+        `src/pages/graphql-js/running-an-express-graphql-server.mdx`,
         `src/code/**/*.{${MARKDOWN_EXT}}`,
         `src/app/conf/**/*.{${MARKDOWN_EXT}}`,
       ],
