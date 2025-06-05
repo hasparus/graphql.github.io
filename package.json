@@ -81,14 +81,14 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-mdx": "^3.1.5",
     "eslint-plugin-tailwindcss": "3.17.5",
-    "prettier": "3.4.2",
-    "prettier-plugin-pkg": "^0.18.1",
-    "prettier-plugin-tailwindcss": "^0.6.9",
+    "prettier": "3.5.3",
+    "prettier-plugin-pkg": "^0.20.0",
+    "prettier-plugin-tailwindcss": "^0.6.12",
     "remark-frontmatter": "5.0.0",
     "remark-lint-first-heading-level": "3.1.2",
     "remark-lint-heading-increment": "3.1.2",
-    "tsx": "^4.7.0",
-    "typescript": "^5.4.3"
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
   },
   "pnpm": {
     "patchedDependencies": {
