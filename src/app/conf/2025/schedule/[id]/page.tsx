@@ -184,7 +184,7 @@ function SessionHeader({
       </p>
       <h1 className="typography-h2 mb-6 mt-3">{eventTitle}</h1>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="typography-body-md flex flex-col gap-4 md:flex-row md:gap-6">
+        <div className="typography-body-md flex flex-col gap-2 md:flex-row md:gap-6">
           <div className="flex items-center gap-2">
             <CalendarIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
             <time dateTime={event.event_start}>
