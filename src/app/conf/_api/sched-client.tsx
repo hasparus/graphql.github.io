@@ -14,7 +14,7 @@ const requestsRetried = new Map<
   RequestPending | RequestSuccess | RequestError
 >()
 
-export async function fetchData<T>(url: string): Promise<T> {
+export async function fetchSchedData<T>(url: string): Promise<T> {
   try {
     if (rateLimitResetAt && Date.now() < rateLimitResetAt) {
       const wait = rateLimitResetAt - Date.now()
@@ -60,7 +60,7 @@ export async function fetchData<T>(url: string): Promise<T> {
       setTimeout(
         () =>
           later.resolve(
-            fetchData<T>(url).then(data => {
+            fetchSchedData<T>(url).then(data => {
               rateLimitResetAt = null
               requestsRetried.set(url, "ok")
               return data
@@ -83,3 +83,5 @@ export async function fetchData<T>(url: string): Promise<T> {
     )
   }
 }
+
+// todo: functions for `getSpeakers`, `getSchedule`

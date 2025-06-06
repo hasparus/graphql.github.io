@@ -33,7 +33,7 @@ export function getEventTitle(
     return name
   }
 
-  speakers?.forEach(speaker => {
+  speakers.forEach(speaker => {
     const speakerInTitle = name.indexOf(`- ${speaker.replace("ı", "i")}`)
     if (speakerInTitle > -1) {
       name = name.slice(0, speakerInTitle)

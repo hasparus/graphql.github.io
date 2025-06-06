@@ -2,7 +2,7 @@ import "server-only"
 import { stripHtml } from "string-strip-html"
 import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
 
-import { fetchData } from "../_api/sched-client"
+import { fetchSchedData } from "../_api/sched-client"
 import { speakers as speakers2024 } from "../2024/_data"
 import { speakers as speakers2023 } from "../2023/_data"
 
@@ -17,7 +17,7 @@ const token = USE_2025
   : process.env.SCHED_ACCESS_TOKEN_2024
 
 async function getSpeakers(): Promise<SchedSpeaker[]> {
-  const users = await fetchData<SchedSpeaker[]>(
+  const users = await fetchSchedData<SchedSpeaker[]>(
     `${apiUrl}/user/list?api_key=${token}&format=json&fields=username,company,position,name,about,location,url,avatar,role,socialurls`,
   )
 
@@ -26,6 +26,7 @@ async function getSpeakers(): Promise<SchedSpeaker[]> {
     .map(user => {
       return {
         ...user,
+        socialurls: user.socialurls || [],
         about: preprocessDescription(user.about),
       }
     })
@@ -39,7 +40,7 @@ async function getSpeakers(): Promise<SchedSpeaker[]> {
 }
 
 async function getSchedule(): Promise<ScheduleSession[]> {
-  const sessions = await fetchData<ScheduleSession[]>(
+  const sessions = await fetchSchedData<ScheduleSession[]>(
     `${apiUrl}/session/export?api_key=${token}&format=json`,
   )
 
@@ -67,8 +68,6 @@ function preprocessDescription(description: string | undefined | null): string {
 }
 
 export const speakers = await getSpeakers()
-
-console.log("speakers", speakers)
 
 // TODO: Collect tags from schedule for speakers.
 export const schedule = await getSchedule()

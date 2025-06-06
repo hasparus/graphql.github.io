@@ -49,7 +49,12 @@ export default function ScheduleOpengraphImage({
 
       <div className="flex flex-1 flex-col justify-between p-10">
         <div className="flex flex-col gap-10">
-          <h3 className="m-0 font-sans text-[72px] font-normal leading-tight text-neu-900">
+          <h3
+            className="m-0 font-sans leading-tight text-neu-900"
+            style={{
+              fontSize: eventTitle.length <= 32 ? "72px" : "32px",
+            }}
+          >
             {eventTitle}
           </h3>
         </div>
@@ -83,7 +88,12 @@ export default function ScheduleOpengraphImage({
 
         {speakers.length > 1 && (
           <div className="flex flex-col gap-4">
-            <h4 className="m-0 font-sans text-[48px] font-normal leading-tight text-neu-900">
+            <h4
+              className="m-0 font-sans font-normal leading-tight text-neu-900"
+              style={{
+                fontSize: speakers.length < 4 ? "48px" : "32px",
+              }}
+            >
               {speakers.map(s => s.name).join(", ")}
             </h4>
           </div>

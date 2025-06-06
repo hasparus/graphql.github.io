@@ -82,7 +82,25 @@ export default function WorkroomPage() {
       <ScheduleOpengraphImage
         session={{
           name: "TSC Panel - Lee Byron, GraphQL Foundation; Kewei Qu, Meta; Rob Richard, 1stDibs; Michael Staib, ChilliCream; Moderated by Sasha Solomon, Staff Software Engineer & Tech Lead",
-          speakers: [enisdenjo, saihaj, enisdenjo, saihaj, enisdenjo, saihaj],
+          speakers: [
+            {
+              ...enisdenjo,
+              name: "Lee Byron",
+            },
+            {
+              ...enisdenjo,
+              name: "Kewei Qu",
+            },
+            {
+              ...enisdenjo,
+              name: "Rob Richard",
+            },
+            {
+              ...enisdenjo,
+              name: "Michael Staib",
+            },
+            { ...enisdenjo, name: "Sasha Solomon" },
+          ],
           event_type: "Keynote Sessions",
         }}
         date="September 8-10"

@@ -2,12 +2,12 @@ import "server-only"
 import { stripHtml } from "string-strip-html"
 
 import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
-import { fetchData } from "../_api/sched-client"
+import { fetchSchedData } from "../_api/sched-client"
 
 const token = process.env.SCHED_ACCESS_TOKEN_2023
 
 async function getSpeakers(): Promise<SchedSpeaker[]> {
-  const users = await fetchData<SchedSpeaker[]>(
+  const users = await fetchSchedData<SchedSpeaker[]>(
     `https://graphqlconf23.sched.com/api/user/list?api_key=${token}&format=json&fields=username,company,position,name,about,location,url,avatar,role,socialurls`,
   )
 
@@ -24,7 +24,7 @@ async function getSpeakers(): Promise<SchedSpeaker[]> {
 }
 
 async function getSchedule(): Promise<ScheduleSession[]> {
-  const sessions = await fetchData<ScheduleSession[]>(
+  const sessions = await fetchSchedData<ScheduleSession[]>(
     `https://graphqlconf23.sched.com/api/session/export?api_key=${token}&format=json`,
   )
 
