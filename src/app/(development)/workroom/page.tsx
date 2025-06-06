@@ -77,6 +77,18 @@ export default function WorkroomPage() {
         year="2025"
         location="Amsterdam, Netherlands"
       />
+
+      <p>SpeakerOpengraphImage / very long title</p>
+      <ScheduleOpengraphImage
+        session={{
+          name: "TSC Panel - Lee Byron, GraphQL Foundation; Kewei Qu, Meta; Rob Richard, 1stDibs; Michael Staib, ChilliCream; Moderated by Sasha Solomon, Staff Software Engineer & Tech Lead",
+          speakers: [enisdenjo, saihaj, enisdenjo, saihaj, enisdenjo, saihaj],
+          event_type: "Keynote Sessions",
+        }}
+        date="September 8-10"
+        year="2025"
+        location="Amsterdam, Netherlands"
+      />
     </main>
   )
 }

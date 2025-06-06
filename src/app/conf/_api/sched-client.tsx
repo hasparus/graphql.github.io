@@ -2,8 +2,7 @@
  * Sched's API has a rate limit of 30 requests per minute.
  */
 
-let last429Timestamp: number | null = null
-const RATE_LIMIT_MS = 60_000
+let rateLimitResetAt: number | null = null
 
 type RequestURL = string
 type RequestPending = Promise<unknown>
@@ -17,8 +16,8 @@ const requestsRetried = new Map<
 
 export async function fetchData<T>(url: string): Promise<T> {
   try {
-    if (last429Timestamp && Date.now() - last429Timestamp < RATE_LIMIT_MS) {
-      const wait = RATE_LIMIT_MS - (Date.now() - last429Timestamp)
+    if (rateLimitResetAt && Date.now() < rateLimitResetAt) {
+      const wait = rateLimitResetAt - Date.now()
       await new Promise(resolve => setTimeout(resolve, wait))
     }
 
@@ -34,14 +33,22 @@ export async function fetchData<T>(url: string): Promise<T> {
     // Take note that this is feasible only because
     // we're currently only using this API at build time.
     if (response.status === 429) {
-      last429Timestamp = Date.now()
+      let wait = 60_000
+      const xRateLimitResetAt = response.headers.get("x-rate-limit-reset-at")
+      if (xRateLimitResetAt) {
+        rateLimitResetAt = Number(xRateLimitResetAt) * 1000
+        console.warn(
+          `Rate limit reset at ${new Date(rateLimitResetAt).toISOString()}`,
+        )
+        wait = rateLimitResetAt - Date.now()
+      }
 
       const later = Promise.withResolvers<T>()
       requestsRetried.set(url, later.promise)
       const queueSize = requestsRetried.size
 
       console.warn(
-        `Rate limit exceeded, retrying in 60 seconds: ${url} (queue size: ${queueSize})`,
+        `Rate limit exceeded, retrying in ${Math.round(wait / 1000)}s: ${url} (queue size: ${queueSize})`,
       )
 
       const size = Object.entries(requestsRetried).filter(
@@ -49,16 +56,17 @@ export async function fetchData<T>(url: string): Promise<T> {
       ).length
 
       console.warn(`${size} requests retrying...`)
+
       setTimeout(
         () =>
           later.resolve(
             fetchData<T>(url).then(data => {
+              rateLimitResetAt = null
               requestsRetried.set(url, "ok")
-              last429Timestamp = null
               return data
             }),
           ),
-        60_000,
+        wait,
       )
 
       return later.promise

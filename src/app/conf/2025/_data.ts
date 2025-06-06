@@ -6,7 +6,7 @@ import { fetchData } from "../_api/sched-client"
 import { speakers as speakers2024 } from "../2024/_data"
 import { speakers as speakers2023 } from "../2023/_data"
 
-const USE_2025 = true
+const USE_2025 = false || process.env.USE_2025 === "true"
 
 const apiUrl = USE_2025
   ? "https://graphqlconf2025.sched.com/api"
@@ -67,6 +67,8 @@ function preprocessDescription(description: string | undefined | null): string {
 }
 
 export const speakers = await getSpeakers()
+
+console.log("speakers", speakers)
 
 // TODO: Collect tags from schedule for speakers.
 export const schedule = await getSchedule()

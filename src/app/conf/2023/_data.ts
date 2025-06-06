@@ -1,53 +1,18 @@
 import "server-only"
 import { stripHtml } from "string-strip-html"
-import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
-import pLimit from "p-limit"
 
-async function fetchData<T>(url: string): Promise<T> {
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "User-Agent": "GraphQL Conf / GraphQL Foundation",
-      },
-      cache: "force-cache",
-    })
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw new Error(
-      `Error fetching data from ${url}: ${(error as Error).message || (error as Error).toString()}`,
-    )
-  }
-}
+import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
+import { fetchData } from "../_api/sched-client"
 
 const token = process.env.SCHED_ACCESS_TOKEN_2023
 
-async function getUsernames(): Promise<string[]> {
-  const response = await fetchData<{ username: string }[]>(
-    `https://graphqlconf23.sched.com/api/user/list?api_key=${token}&format=json&fields=username`,
-  )
-  return response.map(user => user.username)
-}
-
-const limit = pLimit(40) // rate limit is 30req/min
-
 async function getSpeakers(): Promise<SchedSpeaker[]> {
-  const usernames = await getUsernames()
-
-  const users = await Promise.all(
-    usernames.map(username =>
-      limit(() => {
-        return fetchData<SchedSpeaker>(
-          `https://graphqlconf23.sched.com/api/user/get?api_key=${token}&by=username&term=${username}&format=json&fields=username,company,position,name,about,location,url,avatar,role,socialurls`,
-        )
-      }),
-    ),
+  const users = await fetchData<SchedSpeaker[]>(
+    `https://graphqlconf23.sched.com/api/user/list?api_key=${token}&format=json&fields=username,company,position,name,about,location,url,avatar,role,socialurls`,
   )
 
   const result = users
-    .filter(speaker => speaker.role.includes("speaker"))
+    .filter(user => user.role.includes("speaker"))
     .map(user => {
       return {
         ...user,

@@ -47,7 +47,7 @@ export default function SpeakerOpengraphImage({
             </div>
           </div>
 
-          <footer className="flex items-center border-t border-neu-300 px-16 py-8 pl-10">
+          <footer className="flex items-center border-t-2 border-neu-300 px-16 py-8 pl-10">
             <span className="font-mono text-2xl font-normal uppercase leading-none text-neu-900">
               Speakers
             </span>
@@ -55,7 +55,7 @@ export default function SpeakerOpengraphImage({
         </div>
 
         {speaker.avatar && (
-          <div className="relative flex overflow-hidden">
+          <div className="relative flex overflow-hidden border-l-2 border-neu-300">
             <div className="absolute inset-0 z-[1] bg-sec-lighter mix-blend-multiply" />
             <img
               src={speaker.avatar}
