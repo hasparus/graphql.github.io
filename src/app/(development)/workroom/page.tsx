@@ -9,8 +9,8 @@ export default function WorkroomPage() {
       <SpeakerOpengraphImage
         speaker={{
           name: "Denis Badurina",
-          username: "denisbadurina",
-          avatar: "https://github.com/denisbadurina.png",
+          username: "enisdenjo",
+          avatar: "https://github.com/enisdenjo.png",
           company: "The Guild",
           position: "Software Architect",
           about:
