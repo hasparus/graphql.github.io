@@ -20,6 +20,9 @@ export const eventsColors: Record<string, string> = {
   Scaling: "#8D8D8D",
 }
 
+// We always display tags so thse would duplicate the same word.
+const prefixes = ["Keynote: ", "Unconference: "]
+
 export function getEventTitle(
   event: Pick<ScheduleSession, "name">,
   speakers: string[],
@@ -34,6 +37,12 @@ export function getEventTitle(
     const speakerInTitle = name.indexOf(`- ${speaker.replace("ı", "i")}`)
     if (speakerInTitle > -1) {
       name = name.slice(0, speakerInTitle)
+    }
+  })
+
+  prefixes.forEach(prefix => {
+    if (name.startsWith(prefix)) {
+      name = name.slice(prefix.length)
     }
   })
 

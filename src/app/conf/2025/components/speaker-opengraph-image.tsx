@@ -9,22 +9,24 @@ const RIGHT_COLUMN_WIDTH_PX = 476
 interface SpeakerOpengraphImageProps extends React.HTMLAttributes<HTMLElement> {
   speaker: SchedSpeaker
   date: string
+  year: string
   location: string
 }
 
 export default function SpeakerOpengraphImage({
   speaker,
   date,
+  year,
   location,
   ...rest
 }: SpeakerOpengraphImageProps) {
   return (
     <article
-      className="flex h-[630px] w-[1200px] flex-col overflow-hidden border border-neu-300 bg-neu-50"
+      className="flex h-[630px] w-[1200px] flex-col overflow-hidden border-2 border-neu-300 bg-neu-100"
       {...rest}
     >
       <ConferenceOpengraphImageHeader
-        year={speaker.year}
+        year={year}
         date={date}
         location={location}
       />
@@ -79,8 +81,8 @@ export function ConferenceOpengraphImageHeader({
   location: string
 }) {
   return (
-    <header className="flex items-center border-b border-neu-300">
-      <div className="flex flex-1 items-center gap-6 border-r border-neu-300 p-10 pr-16">
+    <header className="flex items-center border-b-2 border-neu-300">
+      <div className="flex flex-1 items-center gap-6 border-r-2 border-neu-300 p-10 pr-16">
         <div className="flex items-center gap-4">
           <div className="font-mono font-normal uppercase leading-none text-neu-900">
             <div className="flex h-[74px] items-center gap-4 text-[40px]/none uppercase">
@@ -102,7 +104,7 @@ export function ConferenceOpengraphImageHeader({
           width: RIGHT_COLUMN_WIDTH_PX,
         }}
       >
-        <div className="flex items-center gap-6 border-b border-neu-300 px-6 py-[26px]">
+        <div className="flex items-center gap-6 border-b-2 border-neu-300 px-6 py-[26px]">
           <div className="flex items-center gap-2">
             <CalendarIcon
               width="24"

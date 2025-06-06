@@ -1,9 +1,12 @@
 import "server-only"
 import { stripHtml } from "string-strip-html"
 import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
-import pLimit from "p-limit"
 
-const USE_2025 = false
+import { fetchData } from "../_api/sched-client"
+import { speakers as speakers2024 } from "../2024/_data"
+import { speakers as speakers2023 } from "../2023/_data"
+
+const USE_2025 = true
 
 const apiUrl = USE_2025
   ? "https://graphqlconf2025.sched.com/api"
@@ -13,45 +16,9 @@ const token = USE_2025
   ? process.env.SCHED_ACCESS_TOKEN_2025
   : process.env.SCHED_ACCESS_TOKEN_2024
 
-async function fetchData<T>(url: string): Promise<T> {
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "User-Agent": "GraphQL Conf / GraphQL Foundation",
-      },
-      cache: "force-cache",
-    })
-    const data = await response.json()
-    return data
-  } catch (error) {
-    throw new Error(
-      `Error fetching data from ${url}: ${(error as Error).message || (error as Error).toString()}`,
-    )
-  }
-}
-
-async function getUsernames(): Promise<string[]> {
-  const response = await fetchData<{ username: string }[]>(
-    `${apiUrl}/user/list?api_key=${token}&format=json&fields=username`,
-  )
-  return response.map(user => user.username)
-}
-
-const limit = pLimit(40) // rate limit is 30req/min
-
 async function getSpeakers(): Promise<SchedSpeaker[]> {
-  const usernames = await getUsernames()
-
-  const users = await Promise.all(
-    usernames.map(username =>
-      limit(() => {
-        return fetchData<SchedSpeaker>(
-          `${apiUrl}/user/get?api_key=${token}&by=username&term=${username}&format=json&fields=username,company,position,name,about,location,url,avatar,role,socialurls`,
-        )
-      }),
-    ),
+  const users = await fetchData<SchedSpeaker[]>(
+    `${apiUrl}/user/list?api_key=${token}&format=json&fields=username,company,position,name,about,location,url,avatar,role,socialurls`,
   )
 
   const result = users
@@ -120,9 +87,6 @@ for (const session of schedule) {
 
 export const returningSpeakers = new Set<SpeakerUsername>()
 
-import { speakers as speakers2024 } from "../2024/_data"
-import { speakers as speakers2023 } from "../2023/_data"
-
 for (const { username } of speakers2024) {
   if (speakerSessions.has(username)) {
     returningSpeakers.add(username)
@@ -134,3 +98,12 @@ for (const { username } of speakers2023) {
     returningSpeakers.add(username)
   }
 }
+
+const longestSessionName = schedule.reduce((max, session) => {
+  if (session.name.length > max.length) {
+    return session.name
+  }
+  return max
+}, "")
+
+console.log({ longestSessionName })

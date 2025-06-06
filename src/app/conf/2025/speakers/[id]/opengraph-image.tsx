@@ -5,6 +5,7 @@ import { resolve } from "node:path"
 import { loadFontsForOG } from "@/app/fonts/og/load-fonts-for-og"
 
 import { speakers } from "../../_data"
+import SpeakerOpengraphImage from "../../components/speaker-opengraph-image"
 
 export const contentType = "image/png"
 export const size = {
@@ -14,8 +15,7 @@ export const size = {
 
 // This doesn't seem to work?
 export function generateStaticParams() {
-  // return speakers.map(s => ({ id: s.username }))
-  return [{ id: "aditi_rajawat" }]
+  return speakers.map(s => ({ id: s.username }))
 }
 
 export default async function SpeakerOGImage({
@@ -30,17 +30,16 @@ export default async function SpeakerOGImage({
     throw new Error(`Speaker not found: ${decodedId}`)
   }
 
-  // TODO: The fonts need to be in .woff, not .woff2.
   const fonts = loadFontsForOG()
 
   return new ImageResponse(
     (
-      <div className="size-full">
-        <h1 className="font-mono">{params.id}</h1>
-        <p className="typography-body-lg">
-          {speaker?.name} is speaking at GraphQLConf 2025.
-        </p>
-      </div>
+      <SpeakerOpengraphImage
+        speaker={speaker}
+        date="September 8-10"
+        year="2025"
+        location="Amsterdam, Netherlands"
+      />
     ),
     {
       ...size,
