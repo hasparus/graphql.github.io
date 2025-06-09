@@ -5,9 +5,14 @@ import { parseArgs } from "node:util"
 import { readFileSync, existsSync } from "node:fs"
 import { join } from "node:path"
 
-import { getSchedule, getSpeakers } from "@/app/conf/_api/sched-client"
+import {
+  getSchedule,
+  getSpeakerDetails,
+  getSpeakers,
+  RequestContext,
+} from "@/app/conf/_api/sched-client"
 import { SchedSpeaker, ScheduleSession } from "@/app/conf/_api/sched-types"
-import { writeFile } from "node:fs/promises"
+import { readFile, writeFile } from "node:fs/promises"
 
 // Sched API rate limit is 30 requests per minute per token.
 // This scripts fires:
@@ -26,6 +31,8 @@ const options = {
     short: "h",
   },
 }
+
+const unsafeKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>
 
 async function main() {
   try {
@@ -58,19 +65,6 @@ if (require.main === module) {
   void main()
 }
 
-function readJsonFile<T>(filePath: string, defaultValue: T): T {
-  if (!existsSync(filePath)) {
-    return defaultValue
-  }
-
-  try {
-    const content = readFileSync(filePath, "utf-8")
-    return JSON.parse(content)
-  } catch {
-    return defaultValue
-  }
-}
-
 async function sync(year: number, token: string) {
   const apiUrl = {
     2023: "https://graphqlconf23.sched.com/api",
@@ -80,21 +74,25 @@ async function sync(year: number, token: string) {
 
   assert(apiUrl, `API URL for year ${year} not found`)
 
-  const ctx = { apiUrl, token }
+  const ctx: RequestContext = { apiUrl, token }
 
   const scriptDir = __dirname
   const speakersFilePath = join(scriptDir, "speakers.json")
   const scheduleFilePath = join(scriptDir, `schedule-${year}.json`)
 
-  const existingSpeakers = readJsonFile<SchedSpeaker[]>(speakersFilePath, [])
-  const existingSchedule = readJsonFile<ScheduleSession[]>(scheduleFilePath, [])
-
   console.log("Getting schedule and speakers list...")
 
   const schedule = getSchedule(ctx)
   const speakers = getSpeakers(ctx)
+  const existingSchedule = readFile(scheduleFilePath, "utf-8").then(JSON.parse)
+  const existingSpeakers = readFile(speakersFilePath, "utf-8").then(JSON.parse)
 
-  const scheduleComparison = compare(existingSchedule, await schedule, "id")
+  const scheduleComparison = compare(
+    await existingSpeakers,
+    await schedule,
+    "id",
+    { merge: false },
+  )
   printComparison(scheduleComparison, "sessions", "id")
 
   const writeSchedule = writeFile(
@@ -103,20 +101,25 @@ async function sync(year: number, token: string) {
   )
 
   const speakerComparison = compare(
-    existingSpeakers,
+    await existingSpeakers,
     await speakers,
     "username",
+    { merge: true },
   )
+
+  await updateSpeakerDetails(
+    ctx,
+    speakerComparison,
+    SPEAKER_DETAILS_REQUEST_QUOTA,
+  )
+
   printComparison(speakerComparison, "speakers", "username")
 
   const updatedSpeakers = [
     ...speakerComparison.removed,
     ...speakerComparison.unchanged,
     ...speakerComparison.changed.map(change => change.new),
-    ...speakerComparison.added.map(speaker => ({
-      ...speaker,
-      ["~syncedAt"]: -1,
-    })),
+    ...speakerComparison.added,
   ].sort((a, b) => a.username.localeCompare(b.username))
 
   const writeSpeakers = writeFile(
@@ -124,14 +127,53 @@ async function sync(year: number, token: string) {
     JSON.stringify(updatedSpeakers, null, 2),
   )
 
-  writeSpeakers.then(() => {
-    console.log(
-      `Updated speakers data: ${updatedSpeakers.length} total speakers`,
-    )
-  })
-
   await writeSchedule
   await writeSpeakers
+}
+
+async function updateSpeakerDetails(
+  ctx: RequestContext,
+  /** mutated in place */
+  comparison: Comparison<SchedSpeaker>,
+  quota: number,
+) {
+  const locations = new Map<
+    string /* username */,
+    [key: keyof Comparison<unknown>, index: number]
+  >()
+
+  for (const key of unsafeKeys(comparison)) {
+    const items = comparison[key as keyof Comparison<SchedSpeaker>]
+    for (let i = 0; i < items.length; i++) {
+      let item = items[i]
+      if (!("username" in item)) item = item.new
+      locations.set(item.username, [key, i])
+    }
+  }
+
+  const byUpdateTime = [
+    ...comparison.unchanged,
+    ...comparison.changed.map(change => change.new),
+    ...comparison.added,
+  ].sort((a, b) => {
+    const aTime = a["~syncedDetailsAt"] ?? 0
+    const bTime = b["~syncedDetailsAt"] ?? 0
+    return bTime - aTime
+  })
+
+  const toUpdate = byUpdateTime.slice(0, quota)
+
+  const updated = await Promise.all(
+    toUpdate.map(speaker => getSpeakerDetails(ctx, speaker.username)),
+  )
+
+  for (const speaker of updated) {
+    const location = locations.get(speaker.username)
+    if (location) {
+      const [key, index] = location
+      comparison[key][index] = speaker
+    }
+  }
 }
 
 function help() {
@@ -148,7 +190,12 @@ type Comparison<T> = {
   unchanged: T[]
 }
 
-function compare<T extends object>(olds: T[], news: T[], key: keyof T) {
+function compare<T extends object>(
+  olds: T[],
+  news: T[],
+  key: keyof T,
+  options: { merge: boolean },
+) {
   const oldMap = new Map(olds.map(o => [o[key], o]))
   const newMap = new Map(news.map(n => [n[key], n]))
 
@@ -163,7 +210,10 @@ function compare<T extends object>(olds: T[], news: T[], key: keyof T) {
       if (JSON.stringify(oldItem) === JSON.stringify(newItem)) {
         unchanged.push(oldItem)
       } else {
-        changed.push({ old: oldItem, new: newItem })
+        changed.push({
+          old: oldItem,
+          new: options.merge ? { ...oldItem, ...newItem } : newItem,
+        })
       }
     } else {
       added.push(newItem)
@@ -211,10 +261,7 @@ function printComparison<T extends object>(
 
 function objectDiff<T extends object>(change: Change<T>): string {
   const allKeys = [
-    ...new Set([
-      ...(Object.keys(change.old) as Array<keyof T>),
-      ...(Object.keys(change.new) as Array<keyof T>),
-    ]),
+    ...new Set([...unsafeKeys(change.old), ...unsafeKeys(change.new)]),
   ].sort()
 
   const diff = allKeys
