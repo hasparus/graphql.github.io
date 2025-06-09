@@ -8,10 +8,11 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/9/c4/18680304/avatar.jpg.320x320px.jpg?949",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749492371844
+    "~years": [
+      2023
+    ],
+    "~syncedDetailsAt": 1749497543087
   },
   {
     "username": "adam_malone.2791s6x2",
@@ -22,10 +23,10 @@
     "location": "",
     "url": "",
     "avatar": "",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494020774
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "adam.sayah",
@@ -36,52 +37,65 @@
     "location": "",
     "url": "https://solo.io",
     "avatar": "//avatars.sched.co/e/3c/12615405/avatar.jpg.320x320px.jpg?742",
-    "role": "speaker",
-    "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749492371844
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/_asayah"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/adamsayah/"
+      }
+    ],
+    "~years": [
+      2023
+    ],
+    "~syncedDetailsAt": 1749497543087
   },
   {
     "username": "aditi_rajawat",
-    "name": "Aditi Rajawat",
-    "about": "Aditi is an Engineering manager at Intuit leading GraphQL API Platform team, who transitioned into this role the current year from Staff Software Engineer. She has experience of 9 years in the software industry and enjoys working on distributed software systems. She is driving GraphQL adoption at Intuit with focus on improving developer productivity and holding a high bar for operational excellence of GraphQL runtime. Recently, she is also building a new habit to read books in her free time.",
-    "url": "",
-    "avatar": "//avatars.sched.co/7/07/21066788/avatar.jpg.320x320px.jpg?825",
-    "role": "attendee, speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749492022246,
     "company": "Intuit",
     "position": "Software Engineering Manager",
+    "name": "Aditi Rajawat",
+    "about": "Aditi is an Engineering manager at Intuit leading GraphQL API Platform team, who transitioned into this role the current year from Staff Software Engineer. She has experience of 9 years in the software industry and enjoys working on distributed software systems. She is driving GraphQL adoption at Intuit with focus on improving developer productivity and holding a high bar for operational excellence of GraphQL runtime. Recently, she is also building a new habit to read books in her free time.",
     "location": "",
-    "socialurls": []
+    "url": "",
+    "avatar": "//avatars.sched.co/7/07/21066788/avatar.jpg.320x320px.jpg?825",
+    "socialurls": [],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497429311
   },
   {
     "username": "ajhingran",
-    "name": "Anant Jhingran",
-    "about": "Anant Jhingran is the CTO for IBM Software. He came into this current role when StepZen was acquired by IBM in February 2023. He was the CEO of StepZen, which he co-founded in early 2020 along with a couple of his Apigee colleagues. StepZen delivers GraphQL APIs using declarative approaches that he learnt from his decades of experience building out IBM's databases. \n \nHe has shipped deeply technical products that have been deployed in 1000s of enterprises. Before founding StepZen, he helped take Apigee public, as well as its acquisition by Google. He has a PhD in database systems from UC Berkeley and is accomplished in his professional career (IBM Fellow; CTO of IBM's Information Management Division; Distinguished Alumnus, IIT Delhi). His products have delivered billions of dollars of revenue at IBM and Apigee, and he has led large teams of researchers, engineers and product managers during his career.\n \nHe has received several awards including IBM Fellow, IIT Delhi Distinguished Alumnus Award, IBM Corporate Award for contributions to DB2, President's Gold Medal for highest GPA at IIT Delhi, and IBM Academy of Technology. He is the author of over a dozen patents and over 20 technical papers and is frequently giving keynotes in industry and academic conferences.",
-    "url": "",
-    "avatar": "//avatars.sched.co/3/48/19225935/avatar.jpg.320x320px.jpg?a5a",
-    "role": "speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749493439527,
     "company": "IBM",
     "position": "IBM Fellow & CTO, Software",
+    "name": "Anant Jhingran",
+    "about": "Anant Jhingran is the CTO for IBM Software. He came into this current role when StepZen was acquired by IBM in February 2023. He was the CEO of StepZen, which he co-founded in early 2020 along with a couple of his Apigee colleagues. StepZen delivers GraphQL APIs using declarative approaches that he learnt from his decades of experience building out IBM's databases. \n \nHe has shipped deeply technical products that have been deployed in 1000s of enterprises. Before founding StepZen, he helped take Apigee public, as well as its acquisition by Google. He has a PhD in database systems from UC Berkeley and is accomplished in his professional career (IBM Fellow; CTO of IBM's Information Management Division; Distinguished Alumnus, IIT Delhi). His products have delivered billions of dollars of revenue at IBM and Apigee, and he has led large teams of researchers, engineers and product managers during his career.\n \nHe has received several awards including IBM Fellow, IIT Delhi Distinguished Alumnus Award, IBM Corporate Award for contributions to DB2, President's Gold Medal for highest GPA at IIT Delhi, and IBM Academy of Technology. He is the author of over a dozen patents and over 20 technical papers and is frequently giving keynotes in industry and academic conferences.",
     "location": "",
-    "socialurls": []
+    "url": "",
+    "avatar": "//avatars.sched.co/3/48/19225935/avatar.jpg.320x320px.jpg?a5a",
+    "socialurls": [],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497429311
   },
   {
     "username": "alan.quigley",
-    "name": "Alan Quigley",
-    "about": "I live in Dublin with my wife and two kids, near the city centre. I’ve been a Frontend Engineer at Toast for five years, with over twenty years of experience. At Toast, I’ve helped lead our design system and micro frontend architecture, and I’m currently focusing on the GraphQL tool chain to enhance our development process. Before engineering, I worked in Animation, where I learned the value of process and consistency, which I apply to my work today.",
-    "url": "",
-    "avatar": "//avatars.sched.co/a/aa/21066789/avatar.jpg.320x320px.jpg?256",
-    "role": "speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749492022246,
     "company": "Toast Inc",
     "position": "Principal Software Engineer",
+    "name": "Alan Quigley",
+    "about": "I live in Dublin with my wife and two kids, near the city centre. I’ve been a Frontend Engineer at Toast for five years, with over twenty years of experience. At Toast, I’ve helped lead our design system and micro frontend architecture, and I’m currently focusing on the GraphQL tool chain to enhance our development process. Before engineering, I worked in Animation, where I learned the value of process and consistency, which I apply to my work today.",
     "location": "",
-    "socialurls": []
+    "url": "",
+    "avatar": "//avatars.sched.co/a/aa/21066789/avatar.jpg.320x320px.jpg?256",
+    "socialurls": [],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497429311
   },
   {
     "username": "alec102",
@@ -92,24 +106,44 @@
     "location": "",
     "url": "https://alec.aivazis.com/",
     "avatar": "//avatars.sched.co/d/b3/18743870/avatar.jpg.320x320px.jpg?ac7",
-    "role": "attendee, speaker",
-    "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749492371844
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/alecaivazis"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://linkedin.com/alecaivazis"
+      }
+    ],
+    "~years": [
+      2023
+    ],
+    "~syncedDetailsAt": 1749497543087
   },
   {
     "username": "alex_reilly.7ldur4l",
-    "name": "Alex Reilly",
-    "about": "",
-    "url": "https://alex.dev",
-    "avatar": "//avatars.sched.co/9/8e/14900019/avatar.jpg.320x320px.jpg?3f4",
-    "role": "speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749494949562,
     "company": "Independent",
     "position": "Software Engineer",
+    "name": "Alex Reilly",
+    "about": "",
     "location": "San Francisco",
-    "socialurls": []
+    "url": "https://alex.dev",
+    "avatar": "//avatars.sched.co/9/8e/14900019/avatar.jpg.320x320px.jpg?3f4",
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://x.com/alex_reilly_pro"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/alexander-reilly/"
+      }
+    ],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497429311
   },
   {
     "username": "alexsandra.sikora",
@@ -120,10 +154,20 @@
     "location": "",
     "url": "https://the-guild.dev/",
     "avatar": "//avatars.sched.co/5/98/18743798/avatar.jpg.320x320px.jpg?43c",
-    "role": "attendee, speaker",
-    "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749492371844
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/aleksandrasays"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/aleksandra-sikora-b54699132/"
+      }
+    ],
+    "~years": [
+      2023
+    ],
+    "~syncedDetailsAt": 1749497543087
   },
   {
     "username": "amy1908",
@@ -134,24 +178,31 @@
     "location": "",
     "url": "https://redwoodjs.com",
     "avatar": "//avatars.sched.co/4/80/16832327/avatar.jpg.320x320px.jpg?42e",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749492371844
+    "~years": [
+      2023
+    ],
+    "~syncedDetailsAt": 1749497543087
   },
   {
     "username": "an.ngo",
-    "name": "An Ngo",
-    "about": "An Ngo is a Tech Lead at bol. A GraphQL enthusiast since 2019, and founder of the API BrainTrust and a contributor of the (REST/GraphQL) API guidelines within bol. Currently core member of the GraphQL stewardship for the adoption of GraphQL at bol.",
-    "url": "",
-    "avatar": "//avatars.sched.co/2/28/21066792/avatar.jpg.320x320px.jpg?375",
-    "role": "attendee, speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749494949562,
     "company": "bol",
     "position": "Tech Lead",
+    "name": "An Ngo",
+    "about": "An Ngo is a Tech Lead at bol. A GraphQL enthusiast since 2019, and founder of the API BrainTrust and a contributor of the (REST/GraphQL) API guidelines within bol. Currently core member of the GraphQL stewardship for the adoption of GraphQL at bol.",
     "location": "",
-    "socialurls": []
+    "url": "",
+    "avatar": "//avatars.sched.co/2/28/21066792/avatar.jpg.320x320px.jpg?375",
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/vliegveld5/"
+      }
+    ],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497429311
   },
   {
     "username": "andreas.heiberg",
@@ -162,10 +213,10 @@
     "location": "London, United Kingdom",
     "url": "https://stellate.co/",
     "avatar": "//avatars.sched.co/9/16/18743801/avatar.jpg.320x320px.jpg?7e0",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "andreas.marek1",
@@ -176,10 +227,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/1/ac/21066795/avatar.jpg.320x320px.jpg?e5e",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "andrei.bocan",
@@ -190,10 +241,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/f/c3/21066797/avatar.jpg.320x320px.jpg?012",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "andrew.doyle1",
@@ -204,10 +255,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/e/7d/21066800/avatar.jpg.320x320px.jpg?55c",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "ankita25",
@@ -218,10 +269,10 @@
     "location": "San Francisco",
     "url": "https://akto.io/",
     "avatar": "//avatars.sched.co/9/a0/21265832/avatar.jpg.320x320px.jpg?b49",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494962143
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "annyce.davis",
@@ -232,10 +283,10 @@
     "location": "United States",
     "url": "https://www.meetup.com",
     "avatar": "//avatars.sched.co/3/11/2147992/avatar.jpg.320x320px.jpg?b1a",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "anthony_miller1",
@@ -246,10 +297,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/5/01/21066803/avatar.jpg.320x320px.jpg?46c",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "antoine.carossio",
@@ -260,10 +311,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/c/49/18743834/avatar.jpg.320x320px.jpg?7f3",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "anushrut.gupta",
@@ -274,10 +325,10 @@
     "location": "San Francisco, California",
     "url": "askpacha.ai",
     "avatar": "//avatars.sched.co/3/3e/21460012/avatar.jpg.320x320px.jpg?925",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494962143
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "ardatanrikulu",
@@ -288,24 +339,25 @@
     "location": "İstanbul, Türkiye",
     "url": "",
     "avatar": "//avatars.sched.co/1/10/18982310/avatar.jpg.320x320px.jpg?e18",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "arkenflame",
-    "name": "Mike Solomon",
-    "about": "Mike is a software engineer with a background in distributed systems at scale. Previously, he was a Sr. Staff Software Engineer leading the Strato team (and a Group Tech Lead in Core Services) at Twitter.",
-    "url": "",
-    "avatar": "//avatars.sched.co/1/be/18743867/avatar.jpg.320x320px.jpg?5f6",
-    "role": "speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749492022246,
     "company": "-",
     "position": "Software Engineer",
+    "name": "Mike Solomon",
+    "about": "Mike is a software engineer with a background in distributed systems at scale. Previously, he was a Sr. Staff Software Engineer leading the Strato team (and a Group Tech Lead in Core Services) at Twitter.",
     "location": "",
-    "socialurls": []
+    "url": "",
+    "avatar": "//avatars.sched.co/1/be/18743867/avatar.jpg.320x320px.jpg?5f6",
+    "socialurls": [],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497439360
   },
   {
     "username": "ashpak_shaikh",
@@ -316,10 +368,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/0/a8/19084619/avatar.jpg.320x320px.jpg?4ad",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "badurinadenis",
@@ -330,7 +382,6 @@
     "location": "Sarajevo",
     "url": "https://the-guild.dev/",
     "avatar": "//avatars.sched.co/6/a9/18743810/avatar.jpg.320x320px.jpg?ec6",
-    "role": "speaker",
     "socialurls": [
       {
         "service": "Twitter",
@@ -341,23 +392,34 @@
         "url": "https://www.linkedin.com/in/enisdenjo/"
       }
     ],
-    "tags": "",
-    "~syncedDetailsAt": 1749495173014
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497439360
   },
   {
     "username": "benjie3",
-    "name": "Benjie Gillam",
-    "email": "benjie@graphile.com",
-    "about": "A self-described \"community-funded open source maintainer,\" Benjie spends much of his time on OSS, enabled by appreciative and forward-thinking individuals and organizations who sponsor his continued efforts. Through his 5 years attending the GraphQL Working Group, Benjie has become one of the key members – both in terms of his own contributions, and in terms of helping others to advance their submissions. As a member of the GraphQL TSC, Benjie is proud to help guide GraphQL into the future.",
-    "url": "https://graphile.org/",
-    "avatar": "//avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg?b57",
-    "role": "speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749494949562,
     "company": "Graphile",
     "position": "GraphQL Community Gardener",
+    "name": "Benjie Gillam",
+    "about": "A self-described \"community-funded open source maintainer,\" Benjie spends much of his time on OSS, enabled by appreciative and forward-thinking individuals and organizations who sponsor his continued efforts. Through his 5 years attending the GraphQL Working Group, Benjie has become one of the key members – both in terms of his own contributions, and in terms of helping others to advance their submissions. As a member of the GraphQL TSC, Benjie is proud to help guide GraphQL into the future.",
     "location": "Chandler's Ford, UK",
-    "socialurls": []
+    "url": "https://graphile.org/",
+    "avatar": "//avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg?b57",
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/benjie"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/benjiegillam/"
+      }
+    ],
+    "~years": [
+      2025
+    ],
+    "~syncedDetailsAt": 1749497416063
   },
   {
     "username": "brandon.r.minnick",
@@ -368,10 +430,10 @@
     "location": "",
     "url": "https://codetraveler.io",
     "avatar": "//avatars.sched.co/2/a4/9493345/avatar.jpg.320x320px.jpg?3ce",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "bryan.robinson2",
@@ -382,10 +444,10 @@
     "location": "",
     "url": "https://hygraph.com",
     "avatar": "//avatars.sched.co/5/8e/19076363/avatar.jpg.320x320px.jpg?ad8",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "bsklar",
@@ -396,10 +458,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/d/92/18743813/avatar.jpg.320x320px.jpg?042",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "bsy",
@@ -410,10 +472,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/7/1c/18743852/avatar.jpg.320x320px.jpg?de3",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "budha1",
@@ -424,15 +486,10 @@
     "location": "Durham, NC",
     "url": "https://www.linkedin.com/in/budha-b/",
     "avatar": "//avatars.sched.co/1/fe/17694866/avatar.jpg.320x320px.jpg?7a7",
-    "role": "attendee, speaker",
-    "socialurls": [
-      {
-        "service": "LinkedIn",
-        "url": "https://www.linkedin.com/in/budha-b"
-      }
-    ],
-    "tags": "",
-    "~syncedDetailsAt": 1749495355488
+    "socialurls": [],
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "christian.ernst",
@@ -443,10 +500,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/c/5f/19084532/avatar.jpg.320x320px.jpg?8bd",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494366195
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "christian.ernst1",
@@ -457,10 +514,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/9/39/21066804/avatar.jpg.320x320px.jpg?fff",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "christian.stangier",
@@ -471,10 +528,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/a/5f/21066807/avatar.jpg.320x320px.jpg?a7c",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "danadajian",
@@ -485,15 +542,10 @@
     "location": "Chicago, IL",
     "url": "https://github.com/danadajian/",
     "avatar": "//avatars.sched.co/a/cc/21487429/avatar.jpg.320x320px.jpg?ffa",
-    "role": "attendee, speaker",
-    "socialurls": [
-      {
-        "service": "LinkedIn",
-        "url": "https://www.linkedin.com/in/dan-adajian-aa8aaa72"
-      }
-    ],
-    "tags": "",
-    "~syncedDetailsAt": 1749495355488
+    "socialurls": [],
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "danielle.man",
@@ -504,10 +556,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/b/1a/21066810/avatar.jpg.320x320px.jpg?708",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493898059
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "david3103",
@@ -518,10 +570,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/7/71/13551525/avatar.jpg.320x320px.jpg?cc8",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "donnasiqizhou",
@@ -532,10 +584,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/0/1d/18743879/avatar.jpg.320x320px.jpg?e1f",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "dotansimha",
@@ -546,10 +598,10 @@
     "location": "",
     "url": "https://the-guild.dev/",
     "avatar": "//avatars.sched.co/1/4d/18743828/avatar.jpg.320x320px.jpg?795",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "eitan15",
@@ -560,10 +612,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/5/e5/17700131/avatar.jpg.320x320px.jpg?aaf",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "emily.li2",
@@ -574,15 +626,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/d/91/21066813/avatar.jpg.320x320px.jpg?591",
-    "role": "attendee, speaker",
-    "socialurls": [
-      {
-        "service": "LinkedIn",
-        "url": "https://www.linkedin.com/in/emily-li-el2857/"
-      }
-    ],
-    "tags": "",
-    "~syncedDetailsAt": 1749495355488
+    "socialurls": [],
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "en3m",
@@ -593,10 +640,10 @@
     "location": "",
     "url": "https://the-guild.dev",
     "avatar": "//avatars.sched.co/5/78/18743843/avatar.jpg.320x320px.jpg?664",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "erikwrede2",
@@ -607,19 +654,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/6/74/21102110/avatar.jpg.320x320px.jpg?a37",
-    "role": "speaker",
-    "socialurls": [
-      {
-        "service": "Twitter",
-        "url": "https://twitter.com/erik_wrede"
-      },
-      {
-        "service": "LinkedIn",
-        "url": "https://www.linkedin.com/in/erikwrede/"
-      }
-    ],
-    "tags": "",
-    "~syncedDetailsAt": 1749495355488
+    "socialurls": [],
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "ernie.turner1",
@@ -630,10 +668,10 @@
     "location": "",
     "url": "https://coinbase.com",
     "avatar": "//avatars.sched.co/b/bc/18743873/avatar.jpg.320x320px.jpg?222",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "gabrielschulhof",
@@ -644,10 +682,10 @@
     "location": "Irvine, CA",
     "url": "https://auction.com/",
     "avatar": "//avatars.sched.co/0/e6/13020672/avatar.jpg.320x320px.jpg?d7c",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493945645
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "gerard.klijs",
@@ -658,10 +696,10 @@
     "location": "",
     "url": "https://www.axoniq.io/",
     "avatar": "//avatars.sched.co/2/4b/18743792/avatar.jpg.320x320px.jpg?b61",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "giacomo.simmi",
@@ -672,15 +710,10 @@
     "location": "Milan, Italy",
     "url": "https://keadex.dev",
     "avatar": "//avatars.sched.co/6/8c/21496501/avatar.jpg.320x320px.jpg?5c6",
-    "role": "attendee, speaker",
-    "socialurls": [
-      {
-        "service": "LinkedIn",
-        "url": "https://www.linkedin.com/in/giacomosimmi/"
-      }
-    ],
-    "tags": "",
-    "~syncedDetailsAt": 1749495355488
+    "socialurls": [],
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "gilgardosh",
@@ -691,10 +724,10 @@
     "location": "",
     "url": "https://the-guild.dev/",
     "avatar": "//avatars.sched.co/0/33/19070448/avatar.jpg.320x320px.jpg?34a",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "gonenj",
@@ -705,24 +738,34 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/3/c5/18743816/avatar.jpg.320x320px.jpg?0f8",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "hello2358",
-    "name": "Roy Derks",
-    "about": "Roy is an entrepreneur, speaker and author from The Netherlands and, in his own words, 'wants to make the world a better place through tech'. He has been giving talks and trainings to developers worldwide on technologies like GraphQL, React and TypeScript. Most recently he wrote the book Fullstack GraphQL.",
-    "url": "https://x.com/gethackteam",
-    "avatar": "//avatars.sched.co/a/20/16832291/avatar.jpg.320x320px.jpg?60d",
-    "role": "speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749494949561,
     "company": "IBM",
     "position": "Technical Product Manager",
+    "name": "Roy Derks",
+    "about": "Roy is an entrepreneur, speaker and author from The Netherlands and, in his own words, 'wants to make the world a better place through tech'. He has been giving talks and trainings to developers worldwide on technologies like GraphQL, React and TypeScript. Most recently he wrote the book Fullstack GraphQL.",
     "location": "Santa Clara, CA",
-    "socialurls": []
+    "url": "https://x.com/gethackteam",
+    "avatar": "//avatars.sched.co/a/20/16832291/avatar.jpg.320x320px.jpg?60d",
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://x.com/gethackteam"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/gethackteam"
+      }
+    ],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497439360
   },
   {
     "username": "idit_levine.25krdj4u",
@@ -733,10 +776,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/e/82/18769950/avatar.jpg.320x320px.jpg?ca2",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494370921
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "itamark",
@@ -747,19 +790,10 @@
     "location": "",
     "url": "https://www.threads.net/@itamarok",
     "avatar": "//avatars.sched.co/b/e5/80829/avatar.jpg.320x320px.jpg?988",
-    "role": "attendee, speaker",
-    "socialurls": [
-      {
-        "service": "Facebook",
-        "url": "https://www.facebook.com/profile.php?id=504330120"
-      },
-      {
-        "service": "LinkedIn",
-        "url": "https://linkedin.com/in/itamarkestenbaum"
-      }
-    ],
-    "tags": "",
-    "~syncedDetailsAt": 1749495355488
+    "socialurls": [],
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "jamie855",
@@ -770,8 +804,10 @@
     "location": "North East, UK",
     "url": "https://grafbase.com",
     "avatar": "//avatars.sched.co/c/f3/18743804/avatar.jpg.320x320px.jpg?2a2",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "janette.cheng",
@@ -782,10 +818,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/c/c0/21066816/avatar.jpg.320x320px.jpg?aa7",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493945645
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "jared_cheney.7rad60v",
@@ -796,22 +832,34 @@
     "location": "Boise, ID",
     "url": "intuit.com",
     "avatar": "//avatars.sched.co/4/e3/18775617/avatar.jpg.320x320px.jpg?01b",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "jeff.auriemma",
-    "name": "Jeff Auriemma",
-    "about": "Hi, I'm Jeff! I'm a manager serving the Apollo Client, Apollo iOS, and Apollo Kotlin engineers. I also serve as a member of the GraphQL Foundation's Governing Board. In my spare time I enjoy baking, coffee, making music, kayaking, and nature walks with my spouse and three children.",
-    "url": "https://apollographql.com",
-    "avatar": "//avatars.sched.co/3/77/18743876/avatar.jpg.320x320px.jpg?a1e",
-    "role": "attendee, speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749494949561,
     "company": "Apollo GraphQL",
     "position": "Senior Engineering Manager",
+    "name": "Jeff Auriemma",
+    "about": "Hi, I'm Jeff! I'm a manager serving the Apollo Client, Apollo iOS, and Apollo Kotlin engineers. I also serve as a member of the GraphQL Foundation's Governing Board. In my spare time I enjoy baking, coffee, making music, kayaking, and nature walks with my spouse and three children.",
     "location": "Connecticut, USA",
-    "socialurls": []
+    "url": "https://apollographql.com",
+    "avatar": "//avatars.sched.co/3/77/18743876/avatar.jpg.320x320px.jpg?a1e",
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/JeffAuriemma"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/jeffreyauriemma/"
+      }
+    ],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497439360
   },
   {
     "username": "jens63",
@@ -822,8 +870,10 @@
     "location": "",
     "url": "https://wundergraph.com",
     "avatar": "//avatars.sched.co/3/68/19226202/avatar.jpg.320x320px.jpg?aea",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "jim.barton",
@@ -834,8 +884,10 @@
     "location": "Myrtle Beach, SC, USA",
     "url": "https://solo.io",
     "avatar": "//avatars.sched.co/f/74/12615290/avatar.jpg.320x320px.jpg?8cc",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "jordaneldredge",
@@ -846,10 +898,10 @@
     "location": "",
     "url": "https://jordaneldredge.com",
     "avatar": "//avatars.sched.co/7/eb/21066819/avatar.jpg.320x320px.jpg?65e",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493945646
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "kamilkisiela",
@@ -860,10 +912,24 @@
     "location": "Warsaw, Poland",
     "url": "https://github.com/kamilkisiela",
     "avatar": "//avatars.sched.co/2/7e/19082388/avatar.jpg.320x320px.jpg?d55",
-    "role": "speaker",
-    "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493945646
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/kamilkisiela"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/kamilkisiela"
+      },
+      {
+        "service": "Instagram",
+        "url": "https://www.instagram.com/kisiel_ogarnij"
+      }
+    ],
+    "~years": [
+      2024
+    ],
+    "~syncedDetailsAt": 1749497439360
   },
   {
     "username": "keerthan.ekbote",
@@ -874,8 +940,10 @@
     "location": "",
     "url": "https://solo.io",
     "avatar": "//avatars.sched.co/a/6d/14553875/avatar.jpg.320x320px.jpg?9aa",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "keith.babo",
@@ -886,8 +954,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/2/05/19071264/avatar.jpg.320x320px.jpg?0c9",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "kenneth.wussmann",
@@ -898,10 +968,10 @@
     "location": "",
     "url": "",
     "avatar": "",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494020774
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "kennethstott",
@@ -912,10 +982,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/f/b3/21066821/avatar.jpg.320x320px.jpg?439",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493945646
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "kevin.brown11",
@@ -926,10 +996,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/f/4d/21490044/avatar.jpg.320x320px.jpg?2c5",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493945646
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "kevin1700",
@@ -940,8 +1010,10 @@
     "location": "San Francisco, CA",
     "url": "",
     "avatar": "//avatars.sched.co/2/d0/19150962/avatar.jpg.320x320px.jpg?e4c",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "laurent57",
@@ -952,8 +1024,10 @@
     "location": "Le Mans, France",
     "url": "",
     "avatar": "//avatars.sched.co/4/7d/18853523/avatar.jpg.320x320px.jpg?fdb",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "laurinquast",
@@ -964,10 +1038,10 @@
     "location": "",
     "url": "https://the-guild.dev/",
     "avatar": "//avatars.sched.co/2/a6/18743819/avatar.jpg.320x320px.jpg?ed8",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493945646
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "ldebruijn",
@@ -978,25 +1052,25 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/4/57/5922948/avatar.jpg.320x320px.jpg?fa5",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493945646
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "lee_byron.25jvpjmb",
-    "name": "Lee Byron",
-    "email": "lee@leebyron.com",
-    "about": "",
-    "url": "",
-    "avatar": "//avatars.sched.co/5/24/18743534/avatar.jpg.320x320px.jpg?480",
-    "role": "speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749491666848,
     "company": "GraphQL Foundation",
     "position": "Co-creator of GraphQL and Director",
+    "name": "Lee Byron",
+    "about": "",
     "location": "",
-    "socialurls": []
+    "url": "",
+    "avatar": "//avatars.sched.co/5/24/18743534/avatar.jpg.320x320px.jpg?480",
+    "socialurls": [],
+    "~years": [
+      2025
+    ],
+    "~syncedDetailsAt": 1749497416063
   },
   {
     "username": "lee_byron.25krdom6",
@@ -1007,8 +1081,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/8/92/18769956/avatar.jpg.320x320px.jpg?547",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "lerenzo",
@@ -1019,8 +1095,10 @@
     "location": "",
     "url": "https://miro.com",
     "avatar": "//avatars.sched.co/f/19/5604312/avatar.jpg.320x320px.jpg?db4",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "lyonwj1",
@@ -1031,8 +1109,10 @@
     "location": "San Mateo, CA",
     "url": "https://lyonwj.com/",
     "avatar": "//avatars.sched.co/5/93/19084292/avatar.jpg.320x320px.jpg?348",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "mahoney.mattj",
@@ -1043,10 +1123,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/c/1d/19314398/avatar.jpg.320x320px.jpg?f73",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "marion84",
@@ -1057,8 +1137,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/b/cf/19150944/avatar.jpg.320x320px.jpg?418",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "martijn.walraven",
@@ -1069,10 +1151,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/6/33/21066825/avatar.jpg.320x320px.jpg?23a",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "marybriskin",
@@ -1083,10 +1165,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/2/3f/21457039/avatar.jpg.320x320px.jpg?7cf",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "masanori.uehara",
@@ -1097,10 +1179,10 @@
     "location": "Tokyo, Japan",
     "url": "https://www.tailor.tech/",
     "avatar": "//avatars.sched.co/4/fd/21066828/avatar.jpg.320x320px.jpg?b60",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "matt1575",
@@ -1111,10 +1193,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/c/59/7503056/avatar.jpg.320x320px.jpg?f15",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "mauricio.montalvo.guzman",
@@ -1125,10 +1207,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/8/d4/21066831/avatar.jpg.320x320px.jpg?a40",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "meenakshi.dhanani1",
@@ -1139,8 +1221,10 @@
     "location": "India",
     "url": "",
     "avatar": "//avatars.sched.co/4/8c/18777983/avatar.jpg.320x320px.jpg?237",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "mgiroux7",
@@ -1151,8 +1235,10 @@
     "location": "Montreal, Canada",
     "url": "https://productionreadygraphql.com/",
     "avatar": "//avatars.sched.co/0/61/9031414/avatar.jpg.320x320px.jpg?b12",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "michael_staib.23xujj9p",
@@ -1163,10 +1249,10 @@
     "location": "Zurich",
     "url": "http://chillicream.com",
     "avatar": "//avatars.sched.co/a/85/14900031/avatar.jpg.320x320px.jpg?df4",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "michael.bleigh",
@@ -1177,10 +1263,10 @@
     "location": "Bay Area, CA",
     "url": "https://mbleigh.dev",
     "avatar": "//avatars.sched.co/d/0b/21066834/avatar.jpg.320x320px.jpg?83f",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "omribruchim",
@@ -1191,10 +1277,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/8/5c/21066837/avatar.jpg.320x320px.jpg?b62",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "pascal.senn",
@@ -1205,10 +1291,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/f/4e/21066839/avatar.jpg.320x320px.jpg?7e4",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749493951828
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "patrick.arminio",
@@ -1219,8 +1305,10 @@
     "location": "London",
     "url": "https://patrick.wtf",
     "avatar": "//avatars.sched.co/1/ab/19178765/avatar.jpg.320x320px.jpg?bd3",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "plgah",
@@ -1231,8 +1319,10 @@
     "location": "Calgary, Canada",
     "url": "https://www.postman.com",
     "avatar": "//avatars.sched.co/f/0e/15289322/avatar.jpg.320x320px.jpg?4a4",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "pooja.mistry",
@@ -1243,8 +1333,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/d/a3/18775745/avatar.jpg.320x320px.jpg?cfc",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "pooja.mistry1",
@@ -1255,10 +1347,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/1/b4/21225462/avatar.jpg.320x320px.jpg?a43",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "qkw1221",
@@ -1269,10 +1361,10 @@
     "location": "",
     "url": "https://investor.fb.com/home/default.aspx",
     "avatar": "//avatars.sched.co/9/1a/18743864/avatar.jpg.320x320px.jpg?7fa",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "rachit_sengupta",
@@ -1283,10 +1375,10 @@
     "location": "San Diego",
     "url": "",
     "avatar": "//avatars.sched.co/7/bc/21066842/avatar.jpg.320x320px.jpg?426",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "rama_palaniappan",
@@ -1297,10 +1389,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/5/dc/21066845/avatar.jpg.320x320px.jpg?4c4",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "ramnivas.laddad",
@@ -1311,10 +1403,10 @@
     "location": "",
     "url": "https://exograph.dev",
     "avatar": "//avatars.sched.co/6/89/21066848/avatar.jpg.320x320px.jpg?5de",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "robert.balicki",
@@ -1325,10 +1417,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/5/8b/18743858/avatar.jpg.320x320px.jpg?07e",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "robrichard87",
@@ -1339,10 +1431,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/b/cb/21066852/avatar.jpg.320x320px.jpg?cd2",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "ruben.cagnie",
@@ -1353,10 +1445,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/1/37/21066855/avatar.jpg.320x320px.jpg?9fa",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "sabrina.wasserman",
@@ -1367,25 +1459,25 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/d/94/21066857/avatar.jpg.320x320px.jpg?49c",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "saihaj",
-    "name": "Saihajpreet Singh",
-    "email": "saihaj@the-guild.dev",
-    "about": "",
-    "url": "",
-    "avatar": "",
-    "role": "speaker",
-    "tags": "",
-    "~syncedDetailsAt": 1749492150458,
     "company": "",
     "position": "",
+    "name": "Saihajpreet Singh",
+    "about": "",
     "location": "",
-    "socialurls": []
+    "url": "",
+    "avatar": "",
+    "socialurls": [],
+    "~years": [
+      2025
+    ],
+    "~syncedDetailsAt": 1749497416063
   },
   {
     "username": "saihajpreet.singh",
@@ -1396,10 +1488,10 @@
     "location": "",
     "url": "https://saihaj.dev",
     "avatar": "//avatars.sched.co/d/77/21066858/avatar.jpg.320x320px.jpg?75f",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494007813
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "sasanders26",
@@ -1410,10 +1502,10 @@
     "location": "San Francisco, CA",
     "url": "",
     "avatar": "//avatars.sched.co/4/50/21066861/avatar.jpg.320x320px.jpg?2f0",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "sasha177",
@@ -1424,10 +1516,10 @@
     "location": "Portland, OR",
     "url": "sashatsolomon.com",
     "avatar": "//avatars.sched.co/e/e5/21336701/avatar.jpg.320x320px.jpg?ae7",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "satish.chitnis",
@@ -1438,10 +1530,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/1/c3/21496512/avatar.jpg.320x320px.jpg?0c2",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "sdk.bens",
@@ -1452,8 +1544,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/2/52/18743831/avatar.jpg.320x320px.jpg?746",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "seiyaizumi",
@@ -1464,10 +1558,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/7/bc/21066863/avatar.jpg.320x320px.jpg?c03",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "serhii.korin",
@@ -1478,8 +1572,10 @@
     "location": "Amsterdam",
     "url": "",
     "avatar": "//avatars.sched.co/4/6a/19235292/avatar.jpg.320x320px.jpg?3fe",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "shahar_binyamin.24vrzgo4",
@@ -1490,8 +1586,10 @@
     "location": "",
     "url": "https://inigo.io/",
     "avatar": "//avatars.sched.co/c/b0/17274089/avatar.jpg.320x320px.jpg?cec",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "shashank.gugnani",
@@ -1502,10 +1600,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/3/e1/21458022/avatar.jpg.320x320px.jpg?bde",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "siva27",
@@ -1516,10 +1614,10 @@
     "location": "Toronto",
     "url": "",
     "avatar": "//avatars.sched.co/f/23/9778144/avatar.jpg.320x320px.jpg?422",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "spencer211",
@@ -1530,8 +1628,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/e/9c/18743795/avatar.jpg.320x320px.jpg?957",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "sspalding2",
@@ -1542,10 +1642,10 @@
     "location": "",
     "url": "http://stephenspalding.com",
     "avatar": "//avatars.sched.co/8/08/18743825/avatar.jpg.320x320px.jpg?599",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "stefan239",
@@ -1556,10 +1656,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/0/e6/21335795/avatar.jpg.320x320px.jpg?985",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "stephanie.saunders2",
@@ -1570,8 +1670,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/1/65/14992671/avatar.jpg.320x320px.jpg?588",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "suresh_muthu",
@@ -1582,8 +1684,10 @@
     "location": "",
     "url": "https://www.intuit.com/",
     "avatar": "//avatars.sched.co/2/29/18743849/avatar.jpg.320x320px.jpg?d1d",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "tanmaig",
@@ -1594,8 +1698,10 @@
     "location": "San Francisco",
     "url": "https://hasura.io",
     "avatar": "//avatars.sched.co/1/7c/4968006/avatar.jpg.320x320px.jpg?81a",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "theo93",
@@ -1606,8 +1712,10 @@
     "location": "San Francisco",
     "url": "t3.gg",
     "avatar": "//avatars.sched.co/2/a1/19108367/avatar.jpg.320x320px.jpg?09c",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "thomas.heyenbrock",
@@ -1618,8 +1726,10 @@
     "location": "Munich, Germany",
     "url": "",
     "avatar": "//avatars.sched.co/d/37/14989332/avatar.jpg.320x320px.jpg?9f4",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "tim.hall.engr",
@@ -1630,8 +1740,10 @@
     "location": "",
     "url": "https://www.postman.com",
     "avatar": "//avatars.sched.co/a/76/18743807/avatar.jpg.320x320px.jpg?7e7",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "tristan119",
@@ -1642,8 +1754,10 @@
     "location": "San Francisco, USA",
     "url": "https://escape.tech",
     "avatar": "//avatars.sched.co/7/08/19011005/avatar.jpg.320x320px.jpg?53c",
-    "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "tushar.mathur",
@@ -1654,10 +1768,10 @@
     "location": "",
     "url": "https://tailcall.run",
     "avatar": "//avatars.sched.co/6/97/21066872/avatar.jpg.320x320px.jpg?498",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "twitter7",
@@ -1668,10 +1782,10 @@
     "location": "",
     "url": "https://apollographql.com",
     "avatar": "//avatars.sched.co/a/c6/18743837/avatar.jpg.320x320px.jpg?847",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494013518
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "uri_goldshtein.23xujj9a",
@@ -1682,10 +1796,10 @@
     "location": "",
     "url": "http://the-guild.dev",
     "avatar": "//avatars.sched.co/8/2b/14900013/avatar.jpg.320x320px.jpg?9f1",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494020774
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "vincent.desmares",
@@ -1696,10 +1810,10 @@
     "location": "Paris, France",
     "url": "https://www.teamstarter.com/en",
     "avatar": "//avatars.sched.co/d/cc/21066875/avatar.jpg.320x320px.jpg?f80",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494020774
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "watson17",
@@ -1710,10 +1824,10 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/4/84/19024254/avatar.jpg.320x320px.jpg?838",
-    "role": "speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494020774
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "yaacovcr",
@@ -1724,8 +1838,10 @@
     "location": "",
     "url": "https://github.com/yaacovCR",
     "avatar": "//avatars.sched.co/4/e4/18743840/avatar.jpg.320x320px.jpg?eb9",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   },
   {
     "username": "yassineldeeb94",
@@ -1736,10 +1852,10 @@
     "location": "Egypt",
     "url": "https://the-guild.dev",
     "avatar": "//avatars.sched.co/4/33/18743822/avatar.jpg.320x320px.jpg?230",
-    "role": "attendee, speaker",
     "socialurls": [],
-    "tags": "",
-    "~syncedDetailsAt": 1749494020774
+    "~years": [
+      2024
+    ]
   },
   {
     "username": "yczhu",
@@ -1750,7 +1866,9 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/4/46/18743882/avatar.jpg.320x320px.jpg?6ba",
-    "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "~years": [
+      2023
+    ]
   }
 ]

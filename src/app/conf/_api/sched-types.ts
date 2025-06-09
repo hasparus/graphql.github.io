@@ -25,5 +25,7 @@ export type SchedSpeaker = {
   socialurls: { service: string; url: string }[]
   /* unix timestamp */
   ["~syncedDetailsAt"]?: number
-  ["~years"]?: ("2025" | "2024" | "2023")[]
+  ["~years"]: ConferenceYear[]
 }
+
+export type ConferenceYear = 2025 | 2024 | 2023

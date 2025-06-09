@@ -12,7 +12,7 @@ import {
   getSpeakers,
   RequestContext,
 } from "@/app/conf/_api/sched-client"
-import type { SchedSpeaker } from "@/app/conf/_api/sched-types"
+import type { ConferenceYear, SchedSpeaker } from "@/app/conf/_api/sched-types"
 
 /**
  * Sched API rate limit is 30 requests per minute per token.
@@ -89,7 +89,7 @@ async function sync(year: number, detailsRequestsQuota: number, token: string) {
   console.log("Getting schedule and speakers list...")
 
   const schedule = getSchedule(ctx)
-  const speakers = getSpeakers(ctx)
+  const thisYearSpeakers = getSpeakers(ctx)
   const existingSchedule = readFile(scheduleFilePath, "utf-8").then(JSON.parse)
   const existingSpeakers = readFile(speakersFilePath, "utf-8").then(JSON.parse)
 
@@ -107,7 +107,12 @@ async function sync(year: number, detailsRequestsQuota: number, token: string) {
 
   const speakerComparison = compare(
     await existingSpeakers,
-    await speakers,
+    await thisYearSpeakers.then(speakers =>
+      speakers.map(s => ({
+        ...s,
+        ["~years"]: [year as ConferenceYear],
+      })),
+    ),
     "username",
     { merge: mergeSpeaker },
   )
@@ -397,6 +402,12 @@ function mergeSpeaker(
     socialurls: newSpeaker.socialurls?.length
       ? newSpeaker.socialurls
       : oldSpeaker.socialurls,
+    ["~years"]: [
+      ...new Set([
+        ...(oldSpeaker["~years"] || []),
+        ...(newSpeaker["~years"] || []),
+      ]),
+    ].sort(),
   }
 }
 
