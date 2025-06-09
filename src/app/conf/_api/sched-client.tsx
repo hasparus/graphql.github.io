@@ -185,5 +185,9 @@ function shapeSpeaker(user: SchedSpeaker): SchedSpeaker {
   }
   delete res.role
 
+  if (res.avatar?.startsWith("http://")) {
+    res.avatar = res.avatar.slice(5)
+  }
+
   return res
 }
