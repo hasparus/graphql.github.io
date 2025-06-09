@@ -17,8 +17,7 @@
 }
 
 .conf-hero {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       360deg,
       #0e031c 10.63%,
       #0e031c 10.65%,
@@ -229,8 +228,7 @@ div[id^="headlessui-menu-items"] {
 }
 
 .code-page {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       303.75deg,
       rgba(124, 124, 124, 0.2) 0.8%,
       rgba(124, 124, 124, 0) 74.17%
@@ -239,8 +237,7 @@ div[id^="headlessui-menu-items"] {
 }
 
 .dark .code-page {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       303.75deg,
       rgba(124, 124, 124, 0.2) 0.8%,
       rgba(124, 124, 124, 0) 74.17%
@@ -249,8 +246,7 @@ div[id^="headlessui-menu-items"] {
 }
 
 .dark .blog-page {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       250.93deg,
       rgba(115, 119, 125, 0.1),
       rgba(115, 119, 125, 0)
@@ -259,8 +255,7 @@ div[id^="headlessui-menu-items"] {
 }
 
 .blog-page {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       231.79deg,
       rgba(225, 0, 152, 0.4) -23.67%,
       rgba(225, 0, 152, 0) 25.9%
@@ -393,8 +388,7 @@ div[id^="headlessui-menu-items"] {
 }
 
 .index-bg {
-  background:
-    linear-gradient(
+  background: linear-gradient(
       303.75deg,
       rgba(124, 124, 124, 0.2) 0.8%,
       rgba(124, 124, 124, 0) 74.17%
@@ -402,8 +396,7 @@ div[id^="headlessui-menu-items"] {
     linear-gradient(0deg, #f8f8f8, #f8f8f8);
 
   .dark & {
-    background:
-      linear-gradient(0deg, #111, #111),
+    background: linear-gradient(0deg, #111, #111),
       linear-gradient(
         303.75deg,
         rgba(124, 124, 124, 0.2) 0.8%,
