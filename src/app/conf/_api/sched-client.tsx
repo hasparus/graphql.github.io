@@ -137,20 +137,7 @@ export async function getSpeakers(
 
   const result = users
     .filter(speaker => speaker.role?.includes("speaker"))
-    .map(user => {
-      const res = {
-        ...user,
-        socialurls: user.socialurls || [],
-        about: preprocessDescription(user.about),
-      }
-
-      for (const field of SPEAKER_IGNORED_FIELDS) {
-        delete res[field as keyof typeof res]
-      }
-      delete res.role
-
-      return res
-    })
+    .map(shapeSpeaker)
     .sort((a, b) => {
       if (a.avatar && !b.avatar) return -1
       if (!a.avatar && b.avatar) return 1
@@ -172,12 +159,7 @@ export async function getSpeakerDetails(
     term: username,
   })
 
-  for (const field of SPEAKER_IGNORED_FIELDS) {
-    delete data[field as keyof typeof data]
-  }
-  delete data.role
-
-  return data as SchedSpeaker
+  return shapeSpeaker(data as SchedSpeaker)
 }
 
 function preprocessDescription(description: string | undefined | null): string {
@@ -189,4 +171,20 @@ function preprocessDescription(description: string | undefined | null): string {
   // respecting <li> and <a> tags doesn't make sense, because speakers don't use them consistently
   // we'll improve how the descriptions look later down the tree in the session details page
   return stripHtml(res).result
+}
+
+function shapeSpeaker(user: SchedSpeaker): SchedSpeaker {
+  const res = {
+    ...user,
+    socialurls: user.socialurls || [],
+    about: preprocessDescription(user.about),
+  }
+
+  for (const field of SPEAKER_IGNORED_FIELDS) {
+    delete res[field as keyof typeof res]
+  }
+  delete res.role
+
+  return res
+}
 }

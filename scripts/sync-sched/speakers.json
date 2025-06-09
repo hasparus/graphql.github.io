@@ -171,9 +171,11 @@
     "about": "GraphQL TSC Member and GraphQL Java founder. Working on all things GraphQL at Atlassian.",
     "location": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/1/ac/21066795/avatar.jpg.320x320px.jpg?e5e",
+    "avatar": "//avatars.sched.co/1/ac/21066795/avatar.jpg.320x320px.jpg?e5e",
     "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "andrei.bocan",
@@ -183,9 +185,11 @@
     "about": "Andrei is a professional book hoarder who frequently complains about software.",
     "location": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/f/c3/21066797/avatar.jpg.320x320px.jpg?012",
+    "avatar": "//avatars.sched.co/f/c3/21066797/avatar.jpg.320x320px.jpg?012",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "andrew.doyle1",
@@ -195,9 +199,11 @@
     "about": "Andy Doyle is a technologist with over 30 years experience building systems. He currently works for the House of Representatives modernizing applications that support the legislative process.",
     "location": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/e/7d/21066800/avatar.jpg.320x320px.jpg?55c",
+    "avatar": "//avatars.sched.co/e/7d/21066800/avatar.jpg.320x320px.jpg?55c",
     "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "ankita25",
@@ -207,9 +213,11 @@
     "about": "Ankita is the co-founder and CEO of Akto.io. Prior to Akto she has experience working in VMware, LinkedIn and JP Morgan. She holds MBA from Dartmouth College and Bachelors in Technology from IIT Roorkee.",
     "location": "San Francisco",
     "url": "https://akto.io/",
-    "avatar": "http://avatars.sched.co/9/a0/21265832/avatar.jpg.320x320px.jpg?b49",
+    "avatar": "//avatars.sched.co/9/a0/21265832/avatar.jpg.320x320px.jpg?b49",
     "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "annyce.davis",
@@ -231,9 +239,11 @@
     "about": "Anthony Miller leads the development of Apollo GraphQL’s iOS client library. He has a passion for client-side infrastructure, quality API design, and writing far too many unit tests. Outside of Apollo, Anthony enjoys board gaming with friends, watching movies, and relaxing by the pool.",
     "location": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/5/01/21066803/avatar.jpg.320x320px.jpg?46c",
+    "avatar": "//avatars.sched.co/5/01/21066803/avatar.jpg.320x320px.jpg?46c",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "antoine.carossio",
@@ -255,9 +265,11 @@
     "about": "We are building Pacha, an incredible tool that helps you build powerful AI applications that connect to any kind of data source with authorization, give LLMs a programmatic runtime and structured memory to eliminate context loss.",
     "location": "San Francisco, California",
     "url": "askpacha.ai",
-    "avatar": "http://avatars.sched.co/3/3e/21460012/avatar.jpg.320x320px.jpg?925",
+    "avatar": "//avatars.sched.co/3/3e/21460012/avatar.jpg.320x320px.jpg?925",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "ardatanrikulu",
@@ -305,9 +317,11 @@
     "about": "I am a self-taught senior software architect, with a distinguishing trait of resiliently finding simple solutions to complex problems using communication through words and code. Starting from my first Lego set, I've been in love with development throughout my whole life. As a creator, having the ability to turn thoughts into reality is a gift I find essential. Forever learning through practical applications, bad decisions and positive thoughts - I, ultimately, turned a hobby into an obsession.",
     "location": "Sarajevo",
     "url": "https://the-guild.dev/",
-    "avatar": "http://avatars.sched.co/6/a9/18743810/avatar.jpg.320x320px.jpg?ec6",
+    "avatar": "//avatars.sched.co/6/a9/18743810/avatar.jpg.320x320px.jpg?ec6",
     "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "benjie3",
@@ -377,12 +391,14 @@
     "company": "Tyk",
     "position": "Director of Product Ecosystems",
     "name": "Budhaditya Bhattacharya",
-    "about": "Budha is the director of product ecosystems at Tyk, where he leads product education, ecosystem expansion, and open standards adoption. \n \nAs the board chair of the OpenAPI Initiative, he is responsible for membership growth and driving the adoption of OAS, Arazzo, and Overlays. \n \nPart product strategist, part developer advocate, and part storyteller, he’s on a mission to remove friction from API ecosystems by breaking down tech complexities preferably with a great metaphor and a well-placed pun.",
+    "about": "Budha is the director of product ecosystems at Tyk, where he leads product education, ecosystem expansion, and open standards adoption. <br /> <br /> As the board chair of the OpenAPI Initiative, he is responsible for membership growth and driving the adoption of OAS, Arazzo, and Overlays. <br /> <br /> Part product strategist, part developer advocate, and part storyteller, he’s on a mission to remove friction from API ecosystems by breaking down tech complexities preferably with a great metaphor and a well-placed pun.",
     "location": "Durham, NC",
     "url": "https://www.linkedin.com/in/budha-b/",
-    "avatar": "http://avatars.sched.co/1/fe/17694866/avatar.jpg.320x320px.jpg?7a7",
+    "avatar": "//avatars.sched.co/1/fe/17694866/avatar.jpg.320x320px.jpg?7a7",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "christian.ernst",
@@ -404,9 +420,11 @@
     "about": "Christian is currently a Senior Software Engineer at Booking.com. For the last three years Christian has been working to drive the GraphQL initiative across the company by helping teams adopt build new features leveraging GraphQL.",
     "location": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/9/39/21066804/avatar.jpg.320x320px.jpg?fff",
+    "avatar": "//avatars.sched.co/9/39/21066804/avatar.jpg.320x320px.jpg?fff",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "christian.stangier",
@@ -416,9 +434,11 @@
     "about": "Christian is a Software Engineer at MOIA GmbH, a company trying to improve urban transportation with ride-pooling. With over 12 years of experience as a full-stack developer, Christian is currently focused on building real-time tooling for fleet operators with GraphQL on serverless AWS.",
     "location": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/a/5f/21066807/avatar.jpg.320x320px.jpg?a7c",
+    "avatar": "//avatars.sched.co/a/5f/21066807/avatar.jpg.320x320px.jpg?a7c",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749493186105
   },
   {
     "username": "danadajian",
