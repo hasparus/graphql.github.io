@@ -105,7 +105,7 @@
     "avatar": "//avatars.sched.co/9/8e/14900019/avatar.jpg.320x320px.jpg?3f4",
     "role": "speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749492046812,
+    "~syncedDetailsAt": 1749494949562,
     "company": "Independent",
     "position": "Software Engineer",
     "location": "San Francisco",
@@ -147,7 +147,7 @@
     "avatar": "//avatars.sched.co/2/28/21066792/avatar.jpg.320x320px.jpg?375",
     "role": "attendee, speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749492046812,
+    "~syncedDetailsAt": 1749494949562,
     "company": "bol",
     "position": "Tech Lead",
     "location": "",
@@ -221,7 +221,7 @@
     "role": "speaker",
     "socialurls": [],
     "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~syncedDetailsAt": 1749494962143
   },
   {
     "username": "annyce.davis",
@@ -277,7 +277,7 @@
     "role": "attendee, speaker",
     "socialurls": [],
     "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~syncedDetailsAt": 1749494962143
   },
   {
     "username": "ardatanrikulu",
@@ -331,9 +331,18 @@
     "url": "https://the-guild.dev/",
     "avatar": "//avatars.sched.co/6/a9/18743810/avatar.jpg.320x320px.jpg?ec6",
     "role": "speaker",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/enisdenjo"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/enisdenjo/"
+      }
+    ],
     "tags": "",
-    "~syncedDetailsAt": 1749493186105
+    "~syncedDetailsAt": 1749495173014
   },
   {
     "username": "benjie3",
@@ -344,7 +353,7 @@
     "avatar": "//avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg?b57",
     "role": "speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749492145465,
+    "~syncedDetailsAt": 1749494949562,
     "company": "Graphile",
     "position": "GraphQL Community Gardener",
     "location": "Chandler's Ford, UK",
@@ -416,9 +425,14 @@
     "url": "https://www.linkedin.com/in/budha-b/",
     "avatar": "//avatars.sched.co/1/fe/17694866/avatar.jpg.320x320px.jpg?7a7",
     "role": "attendee, speaker",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/budha-b"
+      }
+    ],
     "tags": "",
-    "~syncedDetailsAt": 1749493439527
+    "~syncedDetailsAt": 1749495355488
   },
   {
     "username": "christian.ernst",
@@ -472,9 +486,14 @@
     "url": "https://github.com/danadajian/",
     "avatar": "//avatars.sched.co/a/cc/21487429/avatar.jpg.320x320px.jpg?ffa",
     "role": "attendee, speaker",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/dan-adajian-aa8aaa72"
+      }
+    ],
     "tags": "",
-    "~syncedDetailsAt": 1749493898059
+    "~syncedDetailsAt": 1749495355488
   },
   {
     "username": "danielle.man",
@@ -556,9 +575,14 @@
     "url": "",
     "avatar": "//avatars.sched.co/d/91/21066813/avatar.jpg.320x320px.jpg?591",
     "role": "attendee, speaker",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/emily-li-el2857/"
+      }
+    ],
     "tags": "",
-    "~syncedDetailsAt": 1749493898059
+    "~syncedDetailsAt": 1749495355488
   },
   {
     "username": "en3m",
@@ -584,9 +608,18 @@
     "url": "",
     "avatar": "//avatars.sched.co/6/74/21102110/avatar.jpg.320x320px.jpg?a37",
     "role": "speaker",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/erik_wrede"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/erikwrede/"
+      }
+    ],
     "tags": "",
-    "~syncedDetailsAt": 1749493898059
+    "~syncedDetailsAt": 1749495355488
   },
   {
     "username": "ernie.turner1",
@@ -640,9 +673,14 @@
     "url": "https://keadex.dev",
     "avatar": "//avatars.sched.co/6/8c/21496501/avatar.jpg.320x320px.jpg?5c6",
     "role": "attendee, speaker",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/giacomosimmi/"
+      }
+    ],
     "tags": "",
-    "~syncedDetailsAt": 1749493945645
+    "~syncedDetailsAt": 1749495355488
   },
   {
     "username": "gilgardosh",
@@ -680,7 +718,7 @@
     "avatar": "//avatars.sched.co/a/20/16832291/avatar.jpg.320x320px.jpg?60d",
     "role": "speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749492022246,
+    "~syncedDetailsAt": 1749494949561,
     "company": "IBM",
     "position": "Technical Product Manager",
     "location": "Santa Clara, CA",
@@ -710,9 +748,18 @@
     "url": "https://www.threads.net/@itamarok",
     "avatar": "//avatars.sched.co/b/e5/80829/avatar.jpg.320x320px.jpg?988",
     "role": "attendee, speaker",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Facebook",
+        "url": "https://www.facebook.com/profile.php?id=504330120"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://linkedin.com/in/itamarkestenbaum"
+      }
+    ],
     "tags": "",
-    "~syncedDetailsAt": 1749493945645
+    "~syncedDetailsAt": 1749495355488
   },
   {
     "username": "jamie855",
@@ -760,7 +807,7 @@
     "avatar": "//avatars.sched.co/3/77/18743876/avatar.jpg.320x320px.jpg?a1e",
     "role": "attendee, speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749492022246,
+    "~syncedDetailsAt": 1749494949561,
     "company": "Apollo GraphQL",
     "position": "Senior Engineering Manager",
     "location": "Connecticut, USA",

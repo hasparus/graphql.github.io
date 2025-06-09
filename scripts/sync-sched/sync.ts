@@ -97,7 +97,6 @@ async function sync(year: number, detailsRequestsQuota: number, token: string) {
     await existingSchedule,
     await schedule,
     "id",
-    { merge: false },
   )
   printComparison(scheduleComparison, "sessions", "id")
 
@@ -110,7 +109,7 @@ async function sync(year: number, detailsRequestsQuota: number, token: string) {
     await existingSpeakers,
     await speakers,
     "username",
-    { merge: true },
+    { merge: mergeSpeaker },
   )
 
   await updateSpeakerDetails(ctx, speakerComparison, detailsRequestsQuota)
@@ -181,17 +180,13 @@ async function updateSpeakerDetails(
     if (location) {
       const [key, index] = location
       if (key === "changed") {
-        comparison[key][index].new = {
-          ...comparison[key][index].new,
-          ...speaker,
-        }
+        comparison[key][index].new = mergeSpeaker(
+          comparison[key][index].new,
+          speaker,
+        )
         comparison[key][index].new["~syncedDetailsAt"] = Date.now()
       } else {
-        // Merge for all other categories too to preserve existing fields
-        comparison[key][index] = {
-          ...comparison[key][index],
-          ...speaker,
-        }
+        comparison[key][index] = mergeSpeaker(comparison[key][index], speaker)
         comparison[key][index]["~syncedDetailsAt"] = Date.now()
       }
     }
@@ -227,7 +222,7 @@ function compare<T extends object>(
   olds: T[],
   news: T[],
   key: keyof T,
-  options: { merge: boolean },
+  options: { merge?: (oldItem: T, newItem: T) => T } = {},
 ) {
   const oldMap = new Map(olds.map(o => [o[key], o]))
   const newMap = new Map(news.map(n => [n[key], n]))
@@ -245,7 +240,7 @@ function compare<T extends object>(
       } else {
         changed.push({
           old: oldItem,
-          new: options.merge ? { ...oldItem, ...newItem } : newItem,
+          new: options.merge ? options.merge(oldItem, newItem) : newItem,
         })
       }
     } else {
@@ -386,6 +381,23 @@ function deepStrictEqualWithoutInternals(a: unknown, b: unknown): boolean {
   }
 
   return true
+}
+
+/**
+ * Merges speaker data from API with existing local data,
+ * preserving important local fields when API returns empty values.
+ */
+function mergeSpeaker(
+  oldSpeaker: SchedSpeaker,
+  newSpeaker: SchedSpeaker,
+): SchedSpeaker {
+  return {
+    ...oldSpeaker,
+    ...newSpeaker,
+    socialurls: newSpeaker.socialurls?.length
+      ? newSpeaker.socialurls
+      : oldSpeaker.socialurls,
+  }
 }
 
 // #endregion utility
