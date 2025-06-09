@@ -43,7 +43,9 @@ export default function SpeakerPage({ params }: SpeakerProps) {
   const speaker = speakers.find(s => s.username === decodedId)!
 
   const s = schedule
-    .filter(s => s.speakers && s.speakers.some(s => s.username === decodedId))
+    .filter((s): s is typeof s & Required<Pick<typeof s, "speakers">> =>
+      Boolean(s.speakers && s.speakers.some(s => s.username === decodedId)),
+    )
     .map(s => ({
       ...s,
       speakers: s.speakers.map(
