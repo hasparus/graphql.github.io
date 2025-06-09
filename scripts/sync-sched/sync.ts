@@ -21,7 +21,7 @@ import type { SchedSpeaker } from "@/app/conf/_api/sched-types"
  *  - one request for the list of speakers with partial details
  *  - and N requests for the full details of each speaker
  */
-const SPEAKER_DETAILS_REQUEST_QUOTA = 5
+const SPEAKER_DETAILS_REQUEST_QUOTA = 10
 
 const PRINT_UNCHANGED = false
 
@@ -112,7 +112,10 @@ async function sync(year: number, token: string) {
     SPEAKER_DETAILS_REQUEST_QUOTA,
   )
 
-  printComparison(speakerComparison, "speakers", "username")
+  printComparison(speakerComparison, "speakers", "username", {
+    // we don't remove speakers
+    printRemoved: false,
+  })
 
   const updatedSpeakers = [
     ...speakerComparison.removed,
@@ -180,7 +183,11 @@ async function updateSpeakerDetails(
         }
         comparison[key][index].new["~syncedDetailsAt"] = Date.now()
       } else {
-        comparison[key][index] = speaker
+        // Merge for all other categories too to preserve existing fields
+        comparison[key][index] = {
+          ...comparison[key][index],
+          ...speaker,
+        }
         comparison[key][index]["~syncedDetailsAt"] = Date.now()
       }
     }
@@ -255,6 +262,7 @@ function printComparison<T extends object>(
   comparison: Comparison<T>,
   name: string,
   key: keyof T,
+  options: { printRemoved?: boolean } = { printRemoved: true },
 ) {
   if (comparison.added.length > 0) {
     console.log(bold(`${comparison.added.length} ${name} added.`))
@@ -263,10 +271,12 @@ function printComparison<T extends object>(
     }
   }
 
-  if (comparison.removed.length > 0) {
-    console.log(bold(`${comparison.removed.length} ${name} removed.`))
-    for (const item of comparison.removed) {
-      console.log(red(`- ${JSON.stringify(item)}`))
+  if (options.printRemoved) {
+    if (comparison.removed.length > 0) {
+      console.log(bold(`${comparison.removed.length} ${name} removed.`))
+      for (const item of comparison.removed) {
+        console.log(red(`- ${JSON.stringify(item)}`))
+      }
     }
   }
 

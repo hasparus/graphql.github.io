@@ -136,7 +136,7 @@ export async function getSpeakers(
   })) as SchedSpeaker[]
 
   const result = users
-    .filter(speaker => speaker.role.includes("speaker"))
+    .filter(speaker => speaker.role?.includes("speaker"))
     .map(user => {
       const res = {
         ...user,
@@ -147,6 +147,7 @@ export async function getSpeakers(
       for (const field of SPEAKER_IGNORED_FIELDS) {
         delete res[field as keyof typeof res]
       }
+      delete res.role
 
       return res
     })
@@ -174,6 +175,7 @@ export async function getSpeakerDetails(
   for (const field of SPEAKER_IGNORED_FIELDS) {
     delete data[field as keyof typeof data]
   }
+  delete data.role
 
   return data as SchedSpeaker
 }

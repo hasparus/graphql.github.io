@@ -32,7 +32,7 @@
     "start_time_ts": 1725915600,
     "end_date": "2024-09-09",
     "end_time": "17:00:00",
-    "event_type_sort": 12,
+    "event_type_sort": "12",
     "description": ""
   },
   {
@@ -68,7 +68,7 @@
     "start_time_ts": 1725980400,
     "end_date": "2024-09-10",
     "end_time": "19:00:00",
-    "event_type_sort": 12,
+    "event_type_sort": "12",
     "description": ""
   },
   {
@@ -114,7 +114,7 @@
     "start_time_ts": 1725984000,
     "end_date": "2024-09-10",
     "end_time": "09:15:00",
-    "event_type_sort": 11,
+    "event_type_sort": "11",
     "description": ""
   },
   {
@@ -162,7 +162,7 @@
     "start_time_ts": 1725984900,
     "end_date": "2024-09-10",
     "end_time": "09:25:00",
-    "event_type_sort": 11
+    "event_type_sort": "11"
   },
   {
     "event_key": "706606",
@@ -207,7 +207,7 @@
     "start_time_ts": 1725985800,
     "end_date": "2024-09-10",
     "end_time": "09:40:00",
-    "event_type_sort": 11,
+    "event_type_sort": "11",
     "description": ""
   },
   {
@@ -255,7 +255,7 @@
     "start_time_ts": 1725986400,
     "end_date": "2024-09-10",
     "end_time": "09:55:00",
-    "event_type_sort": 11
+    "event_type_sort": "11"
   },
   {
     "event_key": "13",
@@ -335,7 +335,7 @@
     "start_time_ts": 1725987300,
     "end_date": "2024-09-10",
     "end_time": "10:25:00",
-    "event_type_sort": 11,
+    "event_type_sort": "11",
     "description": ""
   },
   {
@@ -381,7 +381,7 @@
     "start_time_ts": 1725989100,
     "end_date": "2024-09-10",
     "end_time": "10:30:00",
-    "event_type_sort": 11,
+    "event_type_sort": "11",
     "description": ""
   },
   {
@@ -417,7 +417,7 @@
     "start_time_ts": 1725989400,
     "end_date": "2024-09-10",
     "end_time": "11:00:00",
-    "event_type_sort": 3,
+    "event_type_sort": "3",
     "description": ""
   },
   {
@@ -454,7 +454,7 @@
     "start_time_ts": 1725989400,
     "end_date": "2024-09-10",
     "end_time": "19:00:00",
-    "event_type_sort": 14
+    "event_type_sort": "14"
   },
   {
     "event_key": "706622",
@@ -500,7 +500,7 @@
     "start_time_ts": 1725991200,
     "end_date": "2024-09-10",
     "end_time": "11:30:00",
-    "event_type_sort": 1,
+    "event_type_sort": "1",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/20/GraphQL Conf 2024.pdf",
@@ -561,7 +561,7 @@
     "start_time_ts": 1725991200,
     "end_date": "2024-09-10",
     "end_time": "11:30:00",
-    "event_type_sort": 2,
+    "event_type_sort": "2",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/3f/200_Is_Not_OK.pptx.pdf",
@@ -615,7 +615,7 @@
     "start_time_ts": 1725991200,
     "end_date": "2024-09-10",
     "end_time": "11:30:00",
-    "event_type_sort": 7,
+    "event_type_sort": "7",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/85/BellisarioGraphQLConf2024.pdf",
@@ -676,7 +676,7 @@
     "start_time_ts": 1725991200,
     "end_date": "2024-09-10",
     "end_time": "11:30:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/48/Converging EPG architectures with the help of GraphQL - Journey, Challenges and Solutions.pdf",
@@ -730,7 +730,7 @@
     "start_time_ts": 1725993600,
     "end_date": "2024-09-10",
     "end_time": "12:10:00",
-    "event_type_sort": 2,
+    "event_type_sort": "2",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/f5/graphql-edge-webassembly-ramnivas-laddad.pdf",
@@ -784,7 +784,7 @@
     "start_time_ts": 1725993600,
     "end_date": "2024-09-10",
     "end_time": "12:10:00",
-    "event_type_sort": 6
+    "event_type_sort": "6"
   },
   {
     "event_key": "696986",
@@ -832,7 +832,7 @@
     "start_time_ts": 1725993600,
     "end_date": "2024-09-10",
     "end_time": "12:10:00",
-    "event_type_sort": 7,
+    "event_type_sort": "7",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/7c/GraphQL Talk Mary Briskin.pdf",
@@ -886,7 +886,7 @@
     "start_time_ts": 1725993600,
     "end_date": "2024-09-10",
     "end_time": "12:10:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/55/Incrementally Adopting GraphQL and Relay at Pinterest - Mauricio Montalvo.pdf",
@@ -927,7 +927,7 @@
     "start_time_ts": 1725995400,
     "end_date": "2024-09-10",
     "end_time": "13:30:00",
-    "event_type_sort": 3,
+    "event_type_sort": "3",
     "description": ""
   },
   {
@@ -976,7 +976,7 @@
     "start_time_ts": 1726000200,
     "end_date": "2024-09-10",
     "end_time": "14:00:00",
-    "event_type_sort": 2
+    "event_type_sort": "2"
   },
   {
     "event_key": "692359",
@@ -1025,7 +1025,7 @@
     "start_time_ts": 1726000200,
     "end_date": "2024-09-10",
     "end_time": "13:40:00",
-    "event_type_sort": 6,
+    "event_type_sort": "6",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/b5/graphql-conf2024-talk.pdf",
@@ -1077,7 +1077,7 @@
     "start_time_ts": 1726000200,
     "end_date": "2024-09-10",
     "end_time": "14:00:00",
-    "event_type_sort": 7,
+    "event_type_sort": "7",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/17/GraphQLServerComponentsRoyDerks.pdf",
@@ -1138,7 +1138,7 @@
     "start_time_ts": 1726000200,
     "end_date": "2024-09-10",
     "end_time": "14:00:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/96/Building a Serverless GraphQL Subscription Gateway.pdf",
@@ -1192,7 +1192,7 @@
     "start_time_ts": 1726001400,
     "end_date": "2024-09-10",
     "end_time": "14:00:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/be/compiler-techniques-graphqlconf2024.pdf",
@@ -1247,7 +1247,7 @@
     "start_time_ts": 1726002600,
     "end_date": "2024-09-10",
     "end_time": "14:40:00",
-    "event_type_sort": 2,
+    "event_type_sort": "2",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/cd/In.Memory.of.Travails.pptx",
@@ -1301,7 +1301,7 @@
     "start_time_ts": 1726002600,
     "end_date": "2024-09-10",
     "end_time": "14:40:00",
-    "event_type_sort": 6
+    "event_type_sort": "6"
   },
   {
     "event_key": "691185",
@@ -1349,7 +1349,7 @@
     "start_time_ts": 1726002600,
     "end_date": "2024-09-10",
     "end_time": "14:40:00",
-    "event_type_sort": 7,
+    "event_type_sort": "7",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/58/[GraphQLConf 2024] Championing the GraphQL Client in a Modern Platform.pdf",
@@ -1403,7 +1403,7 @@
     "start_time_ts": 1726002600,
     "end_date": "2024-09-10",
     "end_time": "14:40:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/70/Declarative Pagination.pdf",
@@ -1457,7 +1457,7 @@
     "start_time_ts": 1726005000,
     "end_date": "2024-09-10",
     "end_time": "15:20:00",
-    "event_type_sort": 1
+    "event_type_sort": "1"
   },
   {
     "event_key": "697562",
@@ -1505,7 +1505,7 @@
     "start_time_ts": 1726005000,
     "end_date": "2024-09-10",
     "end_time": "15:20:00",
-    "event_type_sort": 5,
+    "event_type_sort": "5",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/2a/GraphQL is for Client Developers, not Client Apps.pdf",
@@ -1566,7 +1566,7 @@
     "start_time_ts": 1726005000,
     "end_date": "2024-09-10",
     "end_time": "15:20:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/13/GraphQLConf24-presentation.pdf",
@@ -1620,7 +1620,7 @@
     "start_time_ts": 1726005000,
     "end_date": "2024-09-10",
     "end_time": "15:00:00",
-    "event_type_sort": 13,
+    "event_type_sort": "13",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/c7/GraphQL Conference 2024_ Improve Application Performance and User Engagement with Advanced GraphQL features.pdf",
@@ -1674,7 +1674,7 @@
     "start_time_ts": 1726005900,
     "end_date": "2024-09-10",
     "end_time": "15:15:00",
-    "event_type_sort": 5,
+    "event_type_sort": "5",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/47/GraphQL and Newcomers - 202240910 0848.pdf",
@@ -1715,7 +1715,7 @@
     "start_time_ts": 1726006800,
     "end_date": "2024-09-10",
     "end_time": "15:40:00",
-    "event_type_sort": 3,
+    "event_type_sort": "3",
     "description": ""
   },
   {
@@ -1764,7 +1764,7 @@
     "start_time_ts": 1726008000,
     "end_date": "2024-09-10",
     "end_time": "16:10:00",
-    "event_type_sort": 4,
+    "event_type_sort": "4",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/22/GraphQLConf.pdf",
@@ -1817,7 +1817,7 @@
     "start_time_ts": 1726008000,
     "end_date": "2024-09-10",
     "end_time": "16:10:00",
-    "event_type_sort": 4
+    "event_type_sort": "4"
   },
   {
     "event_key": "699211",
@@ -1865,7 +1865,7 @@
     "start_time_ts": 1726010400,
     "end_date": "2024-09-10",
     "end_time": "16:50:00",
-    "event_type_sort": 7,
+    "event_type_sort": "7",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/0c/ConsumingGraphQL.key",
@@ -1919,7 +1919,7 @@
     "start_time_ts": 1726010400,
     "end_date": "2024-09-10",
     "end_time": "16:50:00",
-    "event_type_sort": 13,
+    "event_type_sort": "13",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/3c/slides.pdf",
@@ -1974,7 +1974,7 @@
     "start_time_ts": 1726012800,
     "end_date": "2024-09-10",
     "end_time": "17:30:00",
-    "event_type_sort": 6,
+    "event_type_sort": "6",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/1b/GraphQL Federation in the Wild.pdf",
@@ -2028,7 +2028,7 @@
     "start_time_ts": 1726012800,
     "end_date": "2024-09-10",
     "end_time": "17:30:00",
-    "event_type_sort": 7,
+    "event_type_sort": "7",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/c0/GraphQLConf 2024 - Relay Error Handling and @catch (7).pdf",
@@ -2069,7 +2069,7 @@
     "start_time_ts": 1726014600,
     "end_date": "2024-09-10",
     "end_time": "19:00:00",
-    "event_type_sort": 3,
+    "event_type_sort": "3",
     "description": ""
   },
   {
@@ -2105,7 +2105,7 @@
     "start_time_ts": 1726066800,
     "end_date": "2024-09-11",
     "end_time": "17:00:00",
-    "event_type_sort": 12,
+    "event_type_sort": "12",
     "description": ""
   },
   {
@@ -2150,7 +2150,7 @@
     "start_time_ts": 1726070400,
     "end_date": "2024-09-11",
     "end_time": "09:05:00",
-    "event_type_sort": 11,
+    "event_type_sort": "11",
     "description": ""
   },
   {
@@ -2197,7 +2197,7 @@
     "start_time_ts": 1726070700,
     "end_date": "2024-09-11",
     "end_time": "09:25:00",
-    "event_type_sort": 11
+    "event_type_sort": "11"
   },
   {
     "event_key": "706613",
@@ -2244,7 +2244,7 @@
     "start_time_ts": 1726071900,
     "end_date": "2024-09-11",
     "end_time": "09:35:00",
-    "event_type_sort": 11
+    "event_type_sort": "11"
   },
   {
     "event_key": "693038",
@@ -2291,7 +2291,7 @@
     "start_time_ts": 1726072500,
     "end_date": "2024-09-11",
     "end_time": "09:55:00",
-    "event_type_sort": 11
+    "event_type_sort": "11"
   },
   {
     "event_key": "706619",
@@ -2337,7 +2337,7 @@
     "start_time_ts": 1726073700,
     "end_date": "2024-09-11",
     "end_time": "10:05:00",
-    "event_type_sort": 11
+    "event_type_sort": "11"
   },
   {
     "event_key": "706630",
@@ -2383,7 +2383,7 @@
     "start_time_ts": 1726074300,
     "end_date": "2024-09-11",
     "end_time": "10:15:00",
-    "event_type_sort": 11
+    "event_type_sort": "11"
   },
   {
     "event_key": "14",
@@ -2427,7 +2427,7 @@
     "start_time_ts": 1726075200,
     "end_date": "2024-09-11",
     "end_time": "10:30:00",
-    "event_type_sort": 11,
+    "event_type_sort": "11",
     "description": ""
   },
   {
@@ -2463,7 +2463,7 @@
     "start_time_ts": 1726075800,
     "end_date": "2024-09-11",
     "end_time": "11:00:00",
-    "event_type_sort": 3,
+    "event_type_sort": "3",
     "description": ""
   },
   {
@@ -2500,7 +2500,7 @@
     "start_time_ts": 1726075800,
     "end_date": "2024-09-11",
     "end_time": "17:00:00",
-    "event_type_sort": 14
+    "event_type_sort": "14"
   },
   {
     "event_key": "706597",
@@ -2548,7 +2548,7 @@
     "start_time_ts": 1726077600,
     "end_date": "2024-09-11",
     "end_time": "11:30:00",
-    "event_type_sort": 2,
+    "event_type_sort": "2",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/e0/Implementation-First-GraphQL Conf 2024.pdf",
@@ -2609,7 +2609,7 @@
     "start_time_ts": 1726077600,
     "end_date": "2024-09-11",
     "end_time": "11:30:00",
-    "event_type_sort": 5,
+    "event_type_sort": "5",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/9b/GraphQLConf_2024_PPT.pptx.pdf",
@@ -2664,7 +2664,7 @@
     "start_time_ts": 1726077600,
     "end_date": "2024-09-11",
     "end_time": "11:30:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/e1/GraphQLConf-2024-v5-pdf.pdf",
@@ -2718,7 +2718,7 @@
     "start_time_ts": 1726077600,
     "end_date": "2024-09-11",
     "end_time": "11:30:00",
-    "event_type_sort": 10,
+    "event_type_sort": "10",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/64/Defer and Stream GraphQL Conf 2024.pdf",
@@ -2772,7 +2772,7 @@
     "start_time_ts": 1726080000,
     "end_date": "2024-09-11",
     "end_time": "12:10:00",
-    "event_type_sort": 2,
+    "event_type_sort": "2",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/ce/Emily_Li_GraphQLConf_2024.pdf",
@@ -2826,7 +2826,7 @@
     "start_time_ts": 1726080000,
     "end_date": "2024-09-11",
     "end_time": "12:10:00",
-    "event_type_sort": 5,
+    "event_type_sort": "5",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/59/GraphQL Docs Beyond the Schema (1).pdf",
@@ -2887,7 +2887,7 @@
     "start_time_ts": 1726080000,
     "end_date": "2024-09-11",
     "end_time": "12:10:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/69/presentation.pdf",
@@ -2941,7 +2941,7 @@
     "start_time_ts": 1726080000,
     "end_date": "2024-09-11",
     "end_time": "12:10:00",
-    "event_type_sort": 9,
+    "event_type_sort": "9",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/3c/graphql-techniques-to-protect.pdf",
@@ -2983,7 +2983,7 @@
     "start_time_ts": 1726081800,
     "end_date": "2024-09-11",
     "end_time": "13:40:00",
-    "event_type_sort": 3
+    "event_type_sort": "3"
   },
   {
     "event_key": "698984",
@@ -3031,7 +3031,7 @@
     "start_time_ts": 1726087200,
     "end_date": "2024-09-11",
     "end_time": "14:10:00",
-    "event_type_sort": 1,
+    "event_type_sort": "1",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/82/Dynamic (but Safe) Operations.pdf",
@@ -3092,7 +3092,7 @@
     "start_time_ts": 1726087200,
     "end_date": "2024-09-11",
     "end_time": "14:10:00",
-    "event_type_sort": 5,
+    "event_type_sort": "5",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/1b/Schema Driven UI - Tailor Inc.pdf",
@@ -3146,7 +3146,7 @@
     "start_time_ts": 1726087200,
     "end_date": "2024-09-11",
     "end_time": "14:10:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/d9/Identity and GraphQL_ More Than You Want to Think About IDs 2024.pdf",
@@ -3200,7 +3200,7 @@
     "start_time_ts": 1726087200,
     "end_date": "2024-09-11",
     "end_time": "14:10:00",
-    "event_type_sort": 10,
+    "event_type_sort": "10",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/87/Semantic Non Null GraphQL Conf 2024.pdf",
@@ -3254,7 +3254,7 @@
     "start_time_ts": 1726089600,
     "end_date": "2024-09-11",
     "end_time": "14:50:00",
-    "event_type_sort": 1
+    "event_type_sort": "1"
   },
   {
     "event_key": "698734",
@@ -3302,7 +3302,7 @@
     "start_time_ts": 1726089600,
     "end_date": "2024-09-11",
     "end_time": "14:50:00",
-    "event_type_sort": 5,
+    "event_type_sort": "5",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/e6/Schema Scoring.pdf",
@@ -3356,7 +3356,7 @@
     "start_time_ts": 1726089600,
     "end_date": "2024-09-11",
     "end_time": "14:50:00",
-    "event_type_sort": 8
+    "event_type_sort": "8"
   },
   {
     "event_key": "691729",
@@ -3432,7 +3432,7 @@
     "start_time_ts": 1726089600,
     "end_date": "2024-09-11",
     "end_time": "14:50:00",
-    "event_type_sort": 10
+    "event_type_sort": "10"
   },
   {
     "event_key": "699192",
@@ -3480,7 +3480,7 @@
     "start_time_ts": 1726092000,
     "end_date": "2024-09-11",
     "end_time": "15:30:00",
-    "event_type_sort": 1
+    "event_type_sort": "1"
   },
   {
     "event_key": "697133",
@@ -3528,7 +3528,7 @@
     "start_time_ts": 1726092000,
     "end_date": "2024-09-11",
     "end_time": "15:30:00",
-    "event_type_sort": 6
+    "event_type_sort": "6"
   },
   {
     "event_key": "690785",
@@ -3576,7 +3576,7 @@
     "start_time_ts": 1726092000,
     "end_date": "2024-09-11",
     "end_time": "15:10:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/19/Unset Fields (GraphQL Conf '24).pdf",
@@ -3630,7 +3630,7 @@
     "start_time_ts": 1726092000,
     "end_date": "2024-09-11",
     "end_time": "15:30:00",
-    "event_type_sort": 10
+    "event_type_sort": "10"
   },
   {
     "event_key": "695423",
@@ -3677,7 +3677,7 @@
     "start_time_ts": 1726092600,
     "end_date": "2024-09-11",
     "end_time": "15:20:00",
-    "event_type_sort": 8
+    "event_type_sort": "8"
   },
   {
     "event_key": "692297",
@@ -3725,7 +3725,7 @@
     "start_time_ts": 1726093200,
     "end_date": "2024-09-11",
     "end_time": "15:30:00",
-    "event_type_sort": 8
+    "event_type_sort": "8"
   },
   {
     "event_key": "10",
@@ -3760,7 +3760,7 @@
     "start_time_ts": 1726093800,
     "end_date": "2024-09-11",
     "end_time": "15:50:00",
-    "event_type_sort": 3,
+    "event_type_sort": "3",
     "description": ""
   },
   {
@@ -3830,7 +3830,7 @@
     "start_time_ts": 1726095000,
     "end_date": "2024-09-11",
     "end_time": "16:20:00",
-    "event_type_sort": 6
+    "event_type_sort": "6"
   },
   {
     "event_key": "699597",
@@ -3878,7 +3878,7 @@
     "start_time_ts": 1726095000,
     "end_date": "2024-09-11",
     "end_time": "16:20:00",
-    "event_type_sort": 8,
+    "event_type_sort": "8",
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf2024/af/GraphqlConf 2023.pdf",
@@ -3932,7 +3932,7 @@
     "start_time_ts": 1726095000,
     "end_date": "2024-09-11",
     "end_time": "16:20:00",
-    "event_type_sort": 10
+    "event_type_sort": "10"
   },
   {
     "event_key": "706610",
@@ -3979,7 +3979,7 @@
     "start_time_ts": 1726097400,
     "end_date": "2024-09-11",
     "end_time": "17:00:00",
-    "event_type_sort": 2
+    "event_type_sort": "2"
   },
   {
     "event_key": "697477",
@@ -4027,7 +4027,7 @@
     "start_time_ts": 1726097400,
     "end_date": "2024-09-11",
     "end_time": "17:00:00",
-    "event_type_sort": 7
+    "event_type_sort": "7"
   },
   {
     "event_key": "706598",
@@ -4074,7 +4074,7 @@
     "start_time_ts": 1726097400,
     "end_date": "2024-09-11",
     "end_time": "17:00:00",
-    "event_type_sort": 9
+    "event_type_sort": "9"
   },
   {
     "event_key": "706601",
@@ -4109,7 +4109,7 @@
     "start_time_ts": 1726153200,
     "end_date": "2024-09-12",
     "end_time": "15:00:00",
-    "event_type_sort": 12,
+    "event_type_sort": "12",
     "description": ""
   },
   {
@@ -4146,7 +4146,7 @@
     "start_time_ts": 1726153200,
     "end_date": "2024-09-12",
     "end_time": "12:30:00",
-    "event_type_sort": 14
+    "event_type_sort": "14"
   },
   {
     "event_key": "692330",
@@ -4201,7 +4201,7 @@
     "start_time_ts": 1726156800,
     "end_date": "2024-09-12",
     "end_time": "10:30:00",
-    "event_type_sort": 1
+    "event_type_sort": "1"
   },
   {
     "event_key": "706617",
@@ -4239,7 +4239,7 @@
     "start_time_ts": 1726156800,
     "end_date": "2024-09-12",
     "end_time": "10:30:00",
-    "event_type_sort": 4
+    "event_type_sort": "4"
   },
   {
     "event_key": "706616",
@@ -4286,7 +4286,7 @@
     "start_time_ts": 1726156800,
     "end_date": "2024-09-12",
     "end_time": "10:30:00",
-    "event_type_sort": 4
+    "event_type_sort": "4"
   },
   {
     "event_key": "706614",
@@ -4333,7 +4333,7 @@
     "start_time_ts": 1726156800,
     "end_date": "2024-09-12",
     "end_time": "10:30:00",
-    "event_type_sort": 4
+    "event_type_sort": "4"
   },
   {
     "event_key": "6",
@@ -4368,7 +4368,7 @@
     "start_time_ts": 1726162200,
     "end_date": "2024-09-12",
     "end_time": "11:00:00",
-    "event_type_sort": 3,
+    "event_type_sort": "3",
     "description": ""
   },
   {
@@ -4417,7 +4417,7 @@
     "start_time_ts": 1726164000,
     "end_date": "2024-09-12",
     "end_time": "12:30:00",
-    "event_type_sort": 7
+    "event_type_sort": "7"
   },
   {
     "event_key": "706626",
@@ -4453,7 +4453,7 @@
     "start_time_ts": 1726164000,
     "end_date": "2024-09-12",
     "end_time": "11:15:00",
-    "event_type_sort": 15
+    "event_type_sort": "15"
   },
   {
     "event_key": "706629",
@@ -4488,7 +4488,7 @@
     "start_time_ts": 1726164900,
     "end_date": "2024-09-12",
     "end_time": "12:30:00",
-    "event_type_sort": 15,
+    "event_type_sort": "15",
     "description": ""
   },
   {
@@ -4525,7 +4525,7 @@
     "start_time_ts": 1726164900,
     "end_date": "2024-09-12",
     "end_time": "12:30:00",
-    "event_type_sort": 15
+    "event_type_sort": "15"
   },
   {
     "event_key": "706628",
@@ -4561,7 +4561,7 @@
     "start_time_ts": 1726164900,
     "end_date": "2024-09-12",
     "end_time": "12:30:00",
-    "event_type_sort": 15
+    "event_type_sort": "15"
   },
   {
     "event_key": "7",
@@ -4597,7 +4597,7 @@
     "start_time_ts": 1726169400,
     "end_date": "2024-09-12",
     "end_time": "14:00:00",
-    "event_type_sort": 3
+    "event_type_sort": "3"
   },
   {
     "event_key": "1",
@@ -4632,7 +4632,7 @@
     "start_time_ts": 1726174800,
     "end_date": "2024-09-12",
     "end_time": "15:30:00",
-    "event_type_sort": 15,
+    "event_type_sort": "15",
     "description": ""
   },
   {
@@ -4668,7 +4668,7 @@
     "start_time_ts": 1726174800,
     "end_date": "2024-09-12",
     "end_time": "15:30:00",
-    "event_type_sort": 15,
+    "event_type_sort": "15",
     "description": ""
   },
   {
@@ -4704,7 +4704,7 @@
     "start_time_ts": 1726174800,
     "end_date": "2024-09-12",
     "end_time": "15:30:00",
-    "event_type_sort": 15,
+    "event_type_sort": "15",
     "description": ""
   },
   {
@@ -4741,6 +4741,6 @@
     "start_time_ts": 1726174800,
     "end_date": "2024-09-12",
     "end_time": "15:30:00",
-    "event_type_sort": 15
+    "event_type_sort": "15"
   }
 ]

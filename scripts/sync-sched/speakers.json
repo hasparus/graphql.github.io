@@ -7,9 +7,11 @@
     "about": "Ryan Abbott is a software engineer with over 15 years of experience building scalable and maintainable backend systems. He currently works as a contractor for NASA through Element 84, where he is responsible for developing and maintaining mission-critical applications. Ryan is passionate about leveraging the right tools and technologies to create reliable and efficient systems. When not working, Ryan can be found flying planes, playing soccer, and spending quality time with his wife and kids.",
     "location": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/9/c4/18680304/avatar.jpg.320x320px.jpg?949",
+    "avatar": "//avatars.sched.co/9/c4/18680304/avatar.jpg.320x320px.jpg?949",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749492371844
   },
   {
     "username": "adam_malone.2791s6x2",
@@ -31,9 +33,11 @@
     "about": "Adam Sayah is Field Engineer at Solo.io, a company specializing in open source and enterprise software for application networking from the edge to service mesh. At Solo.io, Adam helps organizations build and operate robust cloud-native architecture. Prior to Solo.io, Adam held software engineering roles at cloud-native technology companies, working on Managed File Transfers, Kubernetes, API gateways, and service mesh.",
     "location": "",
     "url": "https://solo.io",
-    "avatar": "http://avatars.sched.co/e/3c/12615405/avatar.jpg.320x320px.jpg?742",
+    "avatar": "//avatars.sched.co/e/3c/12615405/avatar.jpg.320x320px.jpg?742",
     "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749492371844
   },
   {
     "username": "aditi_rajawat",
@@ -43,7 +47,11 @@
     "avatar": "//avatars.sched.co/7/07/21066788/avatar.jpg.320x320px.jpg?825",
     "role": "attendee, speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749491829987
+    "~syncedDetailsAt": 1749492022246,
+    "company": "Intuit",
+    "position": "Software Engineering Manager",
+    "location": "",
+    "socialurls": []
   },
   {
     "username": "ajhingran",
@@ -67,7 +75,11 @@
     "avatar": "//avatars.sched.co/a/aa/21066789/avatar.jpg.320x320px.jpg?256",
     "role": "speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749491829987
+    "~syncedDetailsAt": 1749492022246,
+    "company": "Toast Inc",
+    "position": "Principal Software Engineer",
+    "location": "",
+    "socialurls": []
   },
   {
     "username": "alec102",
@@ -77,20 +89,24 @@
     "about": "Alec is an open source enthusiast currently focused on Houdini, a GraphQL client. He spends his time away from the keyboard tending to a collection of carnivorous plants. And when he's in the mood for a sunburn, he also enjoys cycling and sailing with his family.",
     "location": "",
     "url": "https://alec.aivazis.com/",
-    "avatar": "http://avatars.sched.co/d/b3/18743870/avatar.jpg.320x320px.jpg?ac7",
+    "avatar": "//avatars.sched.co/d/b3/18743870/avatar.jpg.320x320px.jpg?ac7",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749492371844
   },
   {
     "username": "alex_reilly.7ldur4l",
-    "company": "Independent",
-    "position": "Software Engineer",
     "name": "Alex Reilly",
     "about": "",
-    "location": "San Francisco",
     "url": "https://alex.dev",
-    "avatar": "http://avatars.sched.co/9/8e/14900019/avatar.jpg.320x320px.jpg?3f4",
+    "avatar": "//avatars.sched.co/9/8e/14900019/avatar.jpg.320x320px.jpg?3f4",
     "role": "speaker",
+    "tags": "",
+    "~syncedDetailsAt": 1749492046812,
+    "company": "Independent",
+    "position": "Software Engineer",
+    "location": "San Francisco",
     "socialurls": []
   },
   {
@@ -101,9 +117,11 @@
     "about": "Aleksandra is an open-source developer at The Guild, based in Wrocław, Poland. Previously a tech lead for the Hasura Console and a lead maintainer of Blitz.js. Deeply passionate about open-source, TypeScript and dedicated to staying up to date with the JavaScript ecosystem.",
     "location": "",
     "url": "https://the-guild.dev/",
-    "avatar": "http://avatars.sched.co/5/98/18743798/avatar.jpg.320x320px.jpg?43c",
+    "avatar": "//avatars.sched.co/5/98/18743798/avatar.jpg.320x320px.jpg?43c",
     "role": "attendee, speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749492371844
   },
   {
     "username": "amy1908",
@@ -113,20 +131,24 @@
     "about": "Amy loves using her 22 years of internet experience to teach developers how to design, and designers how to develop. She lives in Nashville, TN USA with her husband, 3 adorable kids, and 2 dogs.",
     "location": "",
     "url": "https://redwoodjs.com",
-    "avatar": "http://avatars.sched.co/4/80/16832327/avatar.jpg.320x320px.jpg?42e",
+    "avatar": "//avatars.sched.co/4/80/16832327/avatar.jpg.320x320px.jpg?42e",
     "role": "speaker",
-    "socialurls": []
+    "socialurls": [],
+    "tags": "",
+    "~syncedDetailsAt": 1749492371844
   },
   {
     "username": "an.ngo",
-    "company": "bol",
-    "position": "Tech Lead",
     "name": "An Ngo",
     "about": "An Ngo is a Tech Lead at bol. A GraphQL enthusiast since 2019, and founder of the API BrainTrust and a contributor of the (REST/GraphQL) API guidelines within bol. Currently core member of the GraphQL stewardship for the adoption of GraphQL at bol.",
-    "location": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/2/28/21066792/avatar.jpg.320x320px.jpg?375",
+    "avatar": "//avatars.sched.co/2/28/21066792/avatar.jpg.320x320px.jpg?375",
     "role": "attendee, speaker",
+    "tags": "",
+    "~syncedDetailsAt": 1749492046812,
+    "company": "bol",
+    "position": "Tech Lead",
+    "location": "",
     "socialurls": []
   },
   {
@@ -257,7 +279,11 @@
     "avatar": "//avatars.sched.co/1/be/18743867/avatar.jpg.320x320px.jpg?5f6",
     "role": "speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749491960923
+    "~syncedDetailsAt": 1749492022246,
+    "company": "-",
+    "position": "Software Engineer",
+    "location": "",
+    "socialurls": []
   },
   {
     "username": "ashpak_shaikh",
@@ -280,7 +306,7 @@
     "location": "Sarajevo",
     "url": "https://the-guild.dev/",
     "avatar": "http://avatars.sched.co/6/a9/18743810/avatar.jpg.320x320px.jpg?ec6",
-    "role": "attendee, speaker",
+    "role": "speaker",
     "socialurls": []
   },
   {
@@ -290,9 +316,9 @@
     "about": "A self-described \"community-funded open source maintainer,\" Benjie spends much of his time on OSS, enabled by appreciative and forward-thinking individuals and organizations who sponsor his continued efforts. Through his 5 years attending the GraphQL Working Group, Benjie has become one of the key members – both in terms of his own contributions, and in terms of helping others to advance their submissions. As a member of the GraphQL TSC, Benjie is proud to help guide GraphQL into the future.",
     "url": "https://graphile.org/",
     "avatar": "//avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg?b57",
-    "role": "attendee, speaker",
+    "role": "speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749491829987,
+    "~syncedDetailsAt": 1749492145465,
     "company": "Graphile",
     "position": "GraphQL Community Gardener",
     "location": "Chandler's Ford, UK",
@@ -582,7 +608,11 @@
     "avatar": "//avatars.sched.co/a/20/16832291/avatar.jpg.320x320px.jpg?60d",
     "role": "speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749491960923
+    "~syncedDetailsAt": 1749492022246,
+    "company": "IBM",
+    "position": "Technical Product Manager",
+    "location": "Santa Clara, CA",
+    "socialurls": []
   },
   {
     "username": "idit_levine.25krdj4u",
@@ -652,7 +682,11 @@
     "avatar": "//avatars.sched.co/3/77/18743876/avatar.jpg.320x320px.jpg?a1e",
     "role": "attendee, speaker",
     "tags": "",
-    "~syncedDetailsAt": 1749491960923
+    "~syncedDetailsAt": 1749492022246,
+    "company": "Apollo GraphQL",
+    "position": "Senior Engineering Manager",
+    "location": "Connecticut, USA",
+    "socialurls": []
   },
   {
     "username": "jens63",
@@ -699,7 +733,7 @@
     "location": "Warsaw, Poland",
     "url": "https://github.com/kamilkisiela",
     "avatar": "http://avatars.sched.co/2/7e/19082388/avatar.jpg.320x320px.jpg?d55",
-    "role": "attendee, speaker",
+    "role": "speaker",
     "socialurls": []
   },
   {
@@ -795,7 +829,7 @@
     "location": "",
     "url": "https://the-guild.dev/",
     "avatar": "http://avatars.sched.co/2/a6/18743819/avatar.jpg.320x320px.jpg?ed8",
-    "role": "attendee, speaker",
+    "role": "speaker",
     "socialurls": []
   },
   {
@@ -1074,7 +1108,7 @@
     "location": "",
     "url": "https://investor.fb.com/home/default.aspx",
     "avatar": "http://avatars.sched.co/9/1a/18743864/avatar.jpg.320x320px.jpg?7fa",
-    "role": "attendee, speaker",
+    "role": "speaker",
     "socialurls": []
   },
   {
@@ -1122,7 +1156,7 @@
     "location": "",
     "url": "",
     "avatar": "http://avatars.sched.co/5/8b/18743858/avatar.jpg.320x320px.jpg?07e",
-    "role": "speaker",
+    "role": "attendee, speaker",
     "socialurls": []
   },
   {
@@ -1163,14 +1197,17 @@
   },
   {
     "username": "saihaj",
-    "company": "",
-    "position": "",
     "name": "Saihajpreet Singh",
+    "email": "saihaj@the-guild.dev",
     "about": "",
-    "location": "",
     "url": "",
     "avatar": "",
     "role": "speaker",
+    "tags": "",
+    "~syncedDetailsAt": 1749492150458,
+    "company": "",
+    "position": "",
+    "location": "",
     "socialurls": []
   },
   {
@@ -1434,7 +1471,7 @@
     "location": "",
     "url": "https://apollographql.com",
     "avatar": "http://avatars.sched.co/a/c6/18743837/avatar.jpg.320x320px.jpg?847",
-    "role": "speaker",
+    "role": "attendee, speaker",
     "socialurls": []
   },
   {
@@ -1446,7 +1483,7 @@
     "location": "",
     "url": "http://the-guild.dev",
     "avatar": "http://avatars.sched.co/8/2b/14900013/avatar.jpg.320x320px.jpg?9f1",
-    "role": "attendee, speaker",
+    "role": "speaker",
     "socialurls": []
   },
   {

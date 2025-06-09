@@ -20,7 +20,7 @@ export type SchedSpeaker = {
   position?: string
   avatar?: string
   url?: string
-  role: string
+  role?: string
   location?: string
   socialurls: { service: string; url: string }[]
   year?: "2025" | "2024" | "2023"
