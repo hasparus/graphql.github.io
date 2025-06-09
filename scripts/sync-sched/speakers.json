@@ -230,7 +230,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873330
   },
   {
     "username": "andrei.bocan",
@@ -244,7 +245,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873330
   },
   {
     "username": "andrew.doyle1",
@@ -258,7 +260,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873330
   },
   {
     "username": "ankita25",
@@ -269,10 +272,20 @@
     "location": "San Francisco",
     "url": "https://akto.io/",
     "avatar": "//avatars.sched.co/9/a0/21265832/avatar.jpg.320x320px.jpg?b49",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/ankitaiitr"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/ankita-gupta-89214515/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873330
   },
   {
     "username": "annyce.davis",
@@ -300,7 +313,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873330
   },
   {
     "username": "antoine.carossio",
@@ -325,10 +339,16 @@
     "location": "San Francisco, California",
     "url": "askpacha.ai",
     "avatar": "//avatars.sched.co/3/3e/21460012/avatar.jpg.320x320px.jpg?925",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/anushrut-gupta/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873331
   },
   {
     "username": "ardatanrikulu",
@@ -486,10 +506,16 @@
     "location": "Durham, NC",
     "url": "https://www.linkedin.com/in/budha-b/",
     "avatar": "//avatars.sched.co/1/fe/17694866/avatar.jpg.320x320px.jpg?7a7",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/budha-b"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873331
   },
   {
     "username": "christian.ernst",
@@ -517,7 +543,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873331
   },
   {
     "username": "christian.stangier",
@@ -531,7 +558,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873331
   },
   {
     "username": "danadajian",
@@ -542,10 +570,16 @@
     "location": "Chicago, IL",
     "url": "https://github.com/danadajian/",
     "avatar": "//avatars.sched.co/a/cc/21487429/avatar.jpg.320x320px.jpg?ffa",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/dan-adajian-aa8aaa72"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501873331
   },
   {
     "username": "danielle.man",
