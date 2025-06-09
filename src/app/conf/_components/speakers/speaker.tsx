@@ -11,7 +11,7 @@ export function Speaker({
   username,
   socialurls,
   year,
-}: SchedSpeaker) {
+}: SchedSpeaker & { year: string }) {
   return (
     <div className="flex flex-col items-center">
       <NextLink href={`/conf/${year}/speakers/${username}`} className="group">

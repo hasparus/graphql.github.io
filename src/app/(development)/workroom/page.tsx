@@ -16,7 +16,6 @@ export default function WorkroomPage() {
       "Denis is a software architect at The Guild. He is a passionate about GraphQL and the GraphQL ecosystem.",
     role: "speaker",
     socialurls: [],
-    year: "2025",
   }
 
   const saihaj: SchedSpeaker = {
@@ -29,7 +28,6 @@ export default function WorkroomPage() {
       "I'm an engineer focused on building developer tools, infrastructure, and application solutions, while experimenting with practical AI applications. Always accelerating efficiently.",
     role: "speaker",
     socialurls: [],
-    year: "2025",
   }
 
   return (
