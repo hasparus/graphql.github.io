@@ -2,8 +2,8 @@ import { ImageResponse } from "next/og"
 
 import { loadFontsForOG } from "@/app/fonts/og/load-fonts-for-og"
 
-import { speakers } from "../../_data"
-import SpeakerOpengraphImage from "../../components/speaker-opengraph-image"
+import { schedule } from "../../_data"
+import ScheduleOpengraphImage from "../../components/session-opengraph-image"
 
 export const contentType = "image/png"
 export const size = {
@@ -11,9 +11,8 @@ export const size = {
   height: 630,
 }
 
-// This doesn't seem to work?
 export function generateStaticParams() {
-  return speakers.map(s => ({ id: s.username }))
+  return schedule.filter(s => s.id).map(s => ({ id: s.id }))
 }
 
 export default async function SpeakerOGImage({
@@ -22,9 +21,9 @@ export default async function SpeakerOGImage({
   params: { id: string }
 }) {
   const decodedId = decodeURIComponent(params.id)
-  const speaker = speakers.find(s => s.username === decodedId)
+  const session = schedule.find(s => s.id === decodedId)
 
-  if (!speaker) {
+  if (!session) {
     throw new Error(`Speaker not found: ${decodedId}`)
   }
 
@@ -32,8 +31,8 @@ export default async function SpeakerOGImage({
 
   return new ImageResponse(
     (
-      <SpeakerOpengraphImage
-        speaker={speaker}
+      <ScheduleOpengraphImage
+        session={session}
         date="September 8-10"
         year="2025"
         location="Amsterdam, Netherlands"
