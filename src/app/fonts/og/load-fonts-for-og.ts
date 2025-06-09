@@ -22,7 +22,7 @@ export async function loadFontsForOG(): Promise<FontOptions[]> {
       name: "Host Grotesk",
     },
     {
-      data: await readFile(resolve(cwd, dirname, "CommitMono-400-Regular.ttf")),
+      data: await readFile(resolve(cwd, dirname, "CommitMono-400-Regular.otf")),
       name: "Commit Mono",
     },
   ]
