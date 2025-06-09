@@ -22,10 +22,12 @@ export type SchedSpeaker = {
   url?: string
   role?: string
   location?: string
+  /* merged on conflict */
   socialurls: { service: string; url: string }[]
-  /* unix timestamp */
+  /* unix timestamp, ignored when diffing */
   ["~syncedDetailsAt"]?: number
-  ["~years"]: ConferenceYear[]
+  /* merged on conflict */
+  _years: ConferenceYear[]
 }
 
 export type ConferenceYear = 2025 | 2024 | 2023

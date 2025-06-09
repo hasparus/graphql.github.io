@@ -110,7 +110,7 @@ async function sync(year: number, detailsRequestsQuota: number, token: string) {
     await thisYearSpeakers.then(speakers =>
       speakers.map(s => ({
         ...s,
-        ["~years"]: [year as ConferenceYear],
+        _years: [year as ConferenceYear],
       })),
     ),
     "username",
@@ -402,10 +402,10 @@ function mergeSpeaker(
     socialurls: newSpeaker.socialurls?.length
       ? newSpeaker.socialurls
       : oldSpeaker.socialurls,
-    ["~years"]: [
+    ["_years"]: [
       ...new Set([
-        ...(oldSpeaker["~years"] || []),
-        ...(newSpeaker["~years"] || []),
+        ...(oldSpeaker["_years"] || []),
+        ...(newSpeaker["_years"] || []),
       ]),
     ].sort(),
   }

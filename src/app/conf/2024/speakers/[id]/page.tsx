@@ -46,7 +46,7 @@ export default function SpeakerPage({ params }: SpeakerProps) {
     .filter(s => s.speakers && s.speakers.some(s => s.username === decodedId))
     .map(s => ({
       ...s,
-      speakers: s.speakers!.map(
+      speakers: s.speakers.map(
         s => speakers.find(speaker => speaker.username === s.username)!,
       ),
     }))
