@@ -172,7 +172,10 @@ async function updateSpeakerDetails(
     if (location) {
       const [key, index] = location
       if (key === "changed") {
-        comparison[key][index].new = speaker
+        comparison[key][index].new = {
+          ...comparison[key][index].new,
+          ...speaker,
+        }
         comparison[key][index].new["~syncedDetailsAt"] = Date.now()
       } else {
         comparison[key][index] = speaker
@@ -309,15 +312,7 @@ function yellow(text: string) {
 }
 
 function deepStrictEqualWithoutInternals(a: unknown, b: unknown): boolean {
-  if (a === b) return true
-
-  if (a === null || b === null || a === undefined || b === undefined) {
-    return a === b
-  }
-
-  if (typeof a !== typeof b) return false
-
-  if (typeof a !== "object") return false
+  if (typeof a !== "object") return a === b
 
   if (Array.isArray(a) !== Array.isArray(b)) return false
 
@@ -342,10 +337,6 @@ function deepStrictEqualWithoutInternals(a: unknown, b: unknown): boolean {
 
   aKeys.sort()
   bKeys.sort()
-
-  for (let i = 0; i < aKeys.length; i++) {
-    if (aKeys[i] !== bKeys[i]) return false
-  }
 
   for (const key of aKeys) {
     if (!deepStrictEqualWithoutInternals(aObj[key], bObj[key])) {

@@ -8,9 +8,11 @@
     "avatar": "//avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg?b57",
     "role": "speaker",
     "tags": "",
-    "tickets": [],
-    "plusones": 0,
-    "~syncedDetailsAt": 1749489924661
+    "~syncedDetailsAt": 1749491538699,
+    "company": "Graphile",
+    "position": "GraphQL Community Gardener",
+    "location": "Chandler's Ford, UK",
+    "socialurls": []
   },
   {
     "username": "lee_byron.25jvpjmb",
@@ -18,11 +20,10 @@
     "email": "lee@leebyron.com",
     "about": "",
     "url": "",
-    "avatar": "http://avatars.sched.co/5/24/18743534/avatar.jpg.320x320px.jpg?480",
+    "avatar": "//avatars.sched.co/5/24/18743534/avatar.jpg.320x320px.jpg?480",
     "role": "speaker",
     "tags": "",
-    "tickets": [],
-    "plusones": 0,
+    "~syncedDetailsAt": 1749491538699,
     "company": "GraphQL Foundation",
     "position": "Co-creator of GraphQL and Director",
     "location": "",
@@ -30,15 +31,14 @@
   },
   {
     "username": "saihaj",
+    "company": "",
+    "position": "",
     "name": "Saihajpreet Singh",
-    "email": "saihaj@the-guild.dev",
     "about": "",
+    "location": "",
     "url": "",
     "avatar": "",
     "role": "speaker",
-    "tags": "",
-    "tickets": [],
-    "plusones": 0,
-    "~syncedDetailsAt": 1749489924661
+    "socialurls": []
   }
 ]

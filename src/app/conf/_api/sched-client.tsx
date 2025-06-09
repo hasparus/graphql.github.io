@@ -125,6 +125,9 @@ export async function getSchedule(
 const SPEAKER_FIELDS =
   "username,company,position,name,about,location,url,avatar,role,socialurls"
 
+// We receive this fields despite the fact we don't ask for them.
+const SPEAKER_IGNORED_FIELDS = ["plusones", "tickets"]
+
 export async function getSpeakers(
   ctx: RequestContext,
 ): Promise<SchedSpeaker[]> {
@@ -135,11 +138,17 @@ export async function getSpeakers(
   const result = users
     .filter(speaker => speaker.role.includes("speaker"))
     .map(user => {
-      return {
+      const res = {
         ...user,
         socialurls: user.socialurls || [],
         about: preprocessDescription(user.about),
       }
+
+      for (const field of SPEAKER_IGNORED_FIELDS) {
+        delete res[field as keyof typeof res]
+      }
+
+      return res
     })
     .sort((a, b) => {
       if (a.avatar && !b.avatar) return -1
@@ -161,6 +170,10 @@ export async function getSpeakerDetails(
     by: "username",
     term: username,
   })
+
+  for (const field of SPEAKER_IGNORED_FIELDS) {
+    delete data[field as keyof typeof data]
+  }
 
   return data as SchedSpeaker
 }
