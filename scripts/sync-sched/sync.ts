@@ -21,7 +21,9 @@ import type { SchedSpeaker } from "@/app/conf/_api/sched-types"
  *  - one request for the list of speakers with partial details
  *  - and N requests for the full details of each speaker
  */
-const SPEAKER_DETAILS_REQUEST_QUOTA = 2
+const SPEAKER_DETAILS_REQUEST_QUOTA = 5
+
+const PRINT_UNCHANGED = false
 
 const options = {
   year: {
@@ -183,6 +185,17 @@ async function updateSpeakerDetails(
       }
     }
   }
+
+  // Re-classify after speaker details update
+  const actuallyChanged = comparison.changed.filter(
+    change => !deepStrictEqualWithoutInternals(change.old, change.new),
+  )
+  const nowUnchanged = comparison.changed
+    .filter(change => deepStrictEqualWithoutInternals(change.old, change.new))
+    .map(change => change.old)
+
+  comparison.changed = actuallyChanged
+  comparison.unchanged.push(...nowUnchanged)
 }
 
 function help() {
@@ -244,28 +257,30 @@ function printComparison<T extends object>(
   key: keyof T,
 ) {
   if (comparison.added.length > 0) {
-    console.log(`Added ${comparison.added.length} ${name}`)
+    console.log(bold(`${comparison.added.length} ${name} added.`))
     for (const item of comparison.added) {
       console.log(green(`+ ${JSON.stringify(item)}`))
     }
   }
 
   if (comparison.removed.length > 0) {
-    console.log(`Removed ${comparison.removed.length} ${name}`)
+    console.log(bold(`${comparison.removed.length} ${name} removed.`))
     for (const item of comparison.removed) {
       console.log(red(`- ${JSON.stringify(item)}`))
     }
   }
 
   if (comparison.unchanged.length > 0) {
-    console.log(`Unchanged ${comparison.unchanged.length} ${name}`)
-    for (const item of comparison.unchanged) {
-      console.log(yellow(`{ ${String(key)}: ${item[key]}, ... }`))
+    console.log(bold(`${comparison.unchanged.length} ${name} not changed.`))
+    if (PRINT_UNCHANGED) {
+      for (const item of comparison.unchanged) {
+        console.log(yellow(`{ ${String(key)}: ${item[key]}, ... }`))
+      }
     }
   }
 
   if (comparison.changed.length > 0) {
-    console.log(`Changed ${comparison.changed.length} ${name}`)
+    console.log(bold(`${comparison.changed.length} ${name} changed.`))
     for (const change of comparison.changed) {
       console.log(change.new[key] + "\n", objectDiff(change))
     }
@@ -311,8 +326,20 @@ function yellow(text: string) {
   return `\x1b[33m${text}\x1b[0m`
 }
 
+function bold(text: string) {
+  return `\x1b[1m${text}\x1b[0m`
+}
+
 function deepStrictEqualWithoutInternals(a: unknown, b: unknown): boolean {
-  if (typeof a !== "object") return a === b
+  if (a === b) return true
+
+  if (a === null || b === null || a === undefined || b === undefined) {
+    return a === b
+  }
+
+  if (typeof a !== typeof b) return false
+
+  if (typeof a !== "object") return false
 
   if (Array.isArray(a) !== Array.isArray(b)) return false
 
