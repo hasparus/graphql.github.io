@@ -2,7 +2,6 @@
 
 import assert from "node:assert"
 import { parseArgs } from "node:util"
-import { readFileSync, existsSync } from "node:fs"
 import { join } from "node:path"
 
 import {
@@ -11,14 +10,16 @@ import {
   getSpeakers,
   RequestContext,
 } from "@/app/conf/_api/sched-client"
-import { SchedSpeaker, ScheduleSession } from "@/app/conf/_api/sched-types"
+import type { SchedSpeaker } from "@/app/conf/_api/sched-types"
 import { readFile, writeFile } from "node:fs/promises"
 
-// Sched API rate limit is 30 requests per minute per token.
-// This scripts fires:
-// - one request for the entire schedule which overwritten
-// - one request for the list of speakers with partial details
-// - and N requests for the full details of each speaker
+/**
+ * Sched API rate limit is 30 requests per minute per token.
+ * This scripts fires:
+ *  - one request for the entire schedule which overwritten
+ *  - one request for the list of speakers with partial details
+ *  - and N requests for the full details of each speaker
+ */
 const SPEAKER_DETAILS_REQUEST_QUOTA = 10
 
 const options = {
@@ -88,7 +89,7 @@ async function sync(year: number, token: string) {
   const existingSpeakers = readFile(speakersFilePath, "utf-8").then(JSON.parse)
 
   const scheduleComparison = compare(
-    await existingSpeakers,
+    await existingSchedule,
     await schedule,
     "id",
     { merge: false },
