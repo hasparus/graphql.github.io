@@ -1,9 +1,10 @@
 import "server-only"
 
 import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
+import { readSpeakers } from "../_api/sched-data"
 
 export const schedule: ScheduleSession[] = require("../../../../scripts/sync-sched/schedule-2025.json")
-export const speakers: SchedSpeaker[] = require("../../../../scripts/sync-sched/speakers.json")
+export const speakers: SchedSpeaker[] = readSpeakers(2025)
 
 type SpeakerUsername = SchedSpeaker["username"]
 
