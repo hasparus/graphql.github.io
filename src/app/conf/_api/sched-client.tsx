@@ -187,4 +187,3 @@ function shapeSpeaker(user: SchedSpeaker): SchedSpeaker {
 
   return res
 }
-}
