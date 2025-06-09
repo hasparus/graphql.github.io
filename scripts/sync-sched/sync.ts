@@ -4,6 +4,7 @@ import assert from "node:assert"
 import { parseArgs } from "node:util"
 import { join } from "node:path"
 import { readFile, writeFile } from "node:fs/promises"
+import pLimit from "p-limit"
 
 import {
   getSchedule,
@@ -159,8 +160,11 @@ async function updateSpeakerDetails(
 
   const toUpdate = byUpdateTime.slice(0, quota)
 
+  const limit = pLimit(5)
   const updated = await Promise.all(
-    toUpdate.map(speaker => getSpeakerDetails(ctx, speaker.username)),
+    toUpdate.map(speaker =>
+      limit(() => getSpeakerDetails(ctx, speaker.username)),
+    ),
   )
 
   for (const speaker of updated) {
