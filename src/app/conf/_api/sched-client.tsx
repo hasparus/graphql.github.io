@@ -157,6 +157,7 @@ export async function getSpeakerDetails(
   const data = await fetchSchedData(ctx, "/user/get", {
     by: "username",
     term: username,
+    fields: SPEAKER_FIELDS,
   })
 
   return shapeSpeaker(data as SchedSpeaker)

@@ -156,11 +156,12 @@ async function updateSpeakerDetails(
     }
   }
 
-  const byUpdateTime = [
+  const allSpeakers = [
     ...comparison.unchanged,
     ...comparison.changed.map(change => change.new),
     ...comparison.added,
-  ].sort((a, b) => {
+  ]
+  const byUpdateTime = allSpeakers.sort((a, b) => {
     const aTime = a["~syncedDetailsAt"] ?? 0
     const bTime = b["~syncedDetailsAt"] ?? 0
     return aTime - bTime
