@@ -4,6 +4,11 @@ import { join } from "node:path"
 import { readFile } from "node:fs/promises"
 
 import type { SchedSpeaker } from "@/app/conf/_api/sched-types"
+
+/**
+ * We count the number of speakers we didn't sync details for
+ * to make sure we have social URLs for everybody.
+ */
 ;(async function main() {
   try {
     const speakersFilePath = join(import.meta.dirname, "speakers.json")
