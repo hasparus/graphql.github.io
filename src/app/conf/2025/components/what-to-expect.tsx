@@ -14,9 +14,9 @@ export default function WhatToExpectSection({
     >
       <h3 className="typography-h2 md:flex-1">What to expect</h3>
       <ul className="flex flex-col gap-6 uppercase md:flex-1">
-        <ListItem number="3" text="days" />
-        <ListItem number="23" text="speakers" />
-        <ListItem number="36" text="panels & workshops" />
+        <ListItem number="75+" text="talks" />
+        <ListItem number="42" text="sessions" />
+        <ListItem number="7" text="workshops" />
         <ListItem number="1" text="unique venue" />
       </ul>
     </section>

@@ -16,6 +16,7 @@ import { CtaCardSection } from "./components/cta-card-section"
 import { Button } from "../_design-system/button"
 import { GET_TICKETS_LINK } from "./links"
 import { GalleryStrip } from "./components/gallery-strip"
+import { Testimonials } from "./components/testimonials"
 
 export const metadata: Metadata = {
   title: "GraphQLConf 2025 — Sept 08-10",
@@ -78,6 +79,7 @@ export default function Page() {
           />
           <Venue />
           <GalleryStrip />
+          <Testimonials />
           <GraphQLFoundationCard />
           <FAQ />
           <CtaCardSection

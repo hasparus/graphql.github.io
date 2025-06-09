@@ -55,7 +55,7 @@ export function CtaCardSection({
           }}
         >
           <StripesDecoration
-            thin
+            stripeWidth="5.2px"
             oddClassName="bg-[linear-gradient(180deg,var(--start)_0%,var(--end)_100%)]"
           />
         </div>
