@@ -3,6 +3,7 @@
 import assert from "node:assert"
 import { parseArgs } from "node:util"
 import { join } from "node:path"
+import { readFile, writeFile } from "node:fs/promises"
 
 import {
   getSchedule,
@@ -11,7 +12,6 @@ import {
   RequestContext,
 } from "@/app/conf/_api/sched-client"
 import type { SchedSpeaker } from "@/app/conf/_api/sched-types"
-import { readFile, writeFile } from "node:fs/promises"
 
 /**
  * Sched API rate limit is 30 requests per minute per token.
@@ -20,7 +20,7 @@ import { readFile, writeFile } from "node:fs/promises"
  *  - one request for the list of speakers with partial details
  *  - and N requests for the full details of each speaker
  */
-const SPEAKER_DETAILS_REQUEST_QUOTA = 10
+const SPEAKER_DETAILS_REQUEST_QUOTA = 2
 
 const options = {
   year: {
@@ -35,7 +35,7 @@ const options = {
 
 const unsafeKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>
 
-async function main() {
+;(async function main() {
   try {
     const { values } = parseArgs({ options })
 
@@ -60,11 +60,7 @@ async function main() {
     }
     throw error
   }
-}
-
-if (require.main === module) {
-  void main()
-}
+})()
 
 async function sync(year: number, token: string) {
   const apiUrl = {
@@ -77,9 +73,8 @@ async function sync(year: number, token: string) {
 
   const ctx: RequestContext = { apiUrl, token }
 
-  const scriptDir = __dirname
-  const speakersFilePath = join(scriptDir, "speakers.json")
-  const scheduleFilePath = join(scriptDir, `schedule-${year}.json`)
+  const speakersFilePath = join(import.meta.dirname, "speakers.json")
+  const scheduleFilePath = join(import.meta.dirname, `schedule-${year}.json`)
 
   console.log("Getting schedule and speakers list...")
 
@@ -172,7 +167,13 @@ async function updateSpeakerDetails(
     const location = locations.get(speaker.username)
     if (location) {
       const [key, index] = location
-      comparison[key][index] = speaker
+      if (key === "changed") {
+        comparison[key][index].new = speaker
+        comparison[key][index].new["~syncedDetailsAt"] = Date.now()
+      } else {
+        comparison[key][index] = speaker
+        comparison[key][index]["~syncedDetailsAt"] = Date.now()
+      }
     }
   }
 }
@@ -208,7 +209,7 @@ function compare<T extends object>(
   for (const newItem of news) {
     const oldItem = oldMap.get(newItem[key])
     if (oldItem) {
-      if (JSON.stringify(oldItem) === JSON.stringify(newItem)) {
+      if (deepStrictEqualWithoutInternals(oldItem, newItem)) {
         unchanged.push(oldItem)
       } else {
         changed.push({
@@ -235,42 +236,48 @@ function printComparison<T extends object>(
   name: string,
   key: keyof T,
 ) {
-  console.log(`Removed: ${comparison.removed.length}`)
-  console.log(`Changed: ${comparison.changed.length}`)
-  console.log(`Unchanged: ${comparison.unchanged.length}`)
-
-  console.log(`Added ${comparison.added.length} ${name}`)
-  for (const item of comparison.added) {
-    console.log(`+ ${item}`)
+  if (comparison.added.length > 0) {
+    console.log(`Added ${comparison.added.length} ${name}`)
+    for (const item of comparison.added) {
+      console.log(green(`+ ${JSON.stringify(item)}`))
+    }
   }
 
-  console.log(`Removed ${comparison.removed.length} ${name}`)
-  for (const item of comparison.removed) {
-    console.log(`- ${item}`)
+  if (comparison.removed.length > 0) {
+    console.log(`Removed ${comparison.removed.length} ${name}`)
+    for (const item of comparison.removed) {
+      console.log(red(`- ${JSON.stringify(item)}`))
+    }
   }
 
-  console.log(`Unchanged ${comparison.unchanged.length} ${name}`)
-  for (const item of comparison.unchanged) {
-    console.log(item)
+  if (comparison.unchanged.length > 0) {
+    console.log(`Unchanged ${comparison.unchanged.length} ${name}`)
+    for (const item of comparison.unchanged) {
+      console.log(yellow(`{ ${String(key)}: ${item[key]}, ... }`))
+    }
   }
 
-  console.log(`Changed ${comparison.changed.length} ${name}`)
-  for (const change of comparison.changed) {
-    console.log(change.new[key], objectDiff(change))
+  if (comparison.changed.length > 0) {
+    console.log(`Changed ${comparison.changed.length} ${name}`)
+    for (const change of comparison.changed) {
+      console.log(change.new[key] + "\n", objectDiff(change))
+    }
   }
 }
 
 function objectDiff<T extends object>(change: Change<T>): string {
   const allKeys = [
     ...new Set([...unsafeKeys(change.old), ...unsafeKeys(change.new)]),
-  ].sort()
+  ]
+    .sort()
+    .filter(key => !String(key).startsWith("~"))
 
   const diff = allKeys
     .map(key => {
       const oldValue = change.old[key]
       const newValue = change.new[key]
 
-      if (oldValue === newValue) {
+      if (JSON.stringify(oldValue) === JSON.stringify(newValue)) {
         return null
       }
 
@@ -280,9 +287,69 @@ function objectDiff<T extends object>(change: Change<T>): string {
 
   return diff
     .map(diff => {
-      return `\x1b[33m${String(diff.key)}\x1b[0m: ${diff.oldValue} -> ${diff.newValue}`
+      return `${yellow(String(diff.key))}:\n  ${red("-" + JSON.stringify(diff.oldValue))}\n  ${green("+" + JSON.stringify(diff.newValue))}`
     })
     .join("\n")
+}
+
+function green(text: string) {
+  return `\x1b[32m${text}\x1b[0m`
+}
+
+function red(text: string) {
+  return `\x1b[31m${text}\x1b[0m`
+}
+
+function yellow(text: string) {
+  return `\x1b[33m${text}\x1b[0m`
+}
+
+function deepStrictEqualWithoutInternals(a: unknown, b: unknown): boolean {
+  if (a === b) return true
+
+  if (a === null || b === null || a === undefined || b === undefined) {
+    return a === b
+  }
+
+  if (typeof a !== typeof b) return false
+
+  if (typeof a !== "object") return false
+
+  if (Array.isArray(a) !== Array.isArray(b)) return false
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    if (a.length !== b.length) return false
+
+    for (let i = 0; i < a.length; i++) {
+      if (!deepStrictEqualWithoutInternals(a[i], b[i])) {
+        return false
+      }
+    }
+    return true
+  }
+
+  const aObj = a as Record<string, unknown>
+  const bObj = b as Record<string, unknown>
+
+  const aKeys = Object.keys(aObj).filter(key => !key.startsWith("~"))
+  const bKeys = Object.keys(bObj).filter(key => !key.startsWith("~"))
+
+  if (aKeys.length !== bKeys.length) return false
+
+  aKeys.sort()
+  bKeys.sort()
+
+  for (let i = 0; i < aKeys.length; i++) {
+    if (aKeys[i] !== bKeys[i]) return false
+  }
+
+  for (const key of aKeys) {
+    if (!deepStrictEqualWithoutInternals(aObj[key], bObj[key])) {
+      return false
+    }
+  }
+
+  return true
 }
 
 // #endregion utility

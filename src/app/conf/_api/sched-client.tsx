@@ -27,7 +27,7 @@ export async function fetchSchedData(
   path: string,
   searchParams: Record<string, string> = {},
 ): Promise<object> {
-  const url = new URL(path, ctx.apiUrl)
+  const url = new URL(ctx.apiUrl + path)
   const search = new URLSearchParams(searchParams)
   search.set("api_key", ctx.token)
   search.set("format", "json")

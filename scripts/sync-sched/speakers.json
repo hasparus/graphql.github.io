@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "username": "benjie3",
+    "name": "Benjie Gillam",
+    "email": "benjie@graphile.com",
+    "about": "A self-described \"community-funded open source maintainer,\" Benjie spends much of his time on OSS, enabled by appreciative and forward-thinking individuals and organizations who sponsor his continued efforts. Through his 5 years attending the GraphQL Working Group, Benjie has become one of the key members – both in terms of his own contributions, and in terms of helping others to advance their submissions. As a member of the GraphQL TSC, Benjie is proud to help guide GraphQL into the future.",
+    "url": "https://graphile.org/",
+    "avatar": "//avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg?b57",
+    "role": "speaker",
+    "tags": "",
+    "tickets": [],
+    "plusones": 0,
+    "~syncedDetailsAt": 1749489924661
+  },
+  {
+    "username": "lee_byron.25jvpjmb",
+    "name": "Lee Byron",
+    "email": "lee@leebyron.com",
+    "about": "",
+    "url": "",
+    "avatar": "http://avatars.sched.co/5/24/18743534/avatar.jpg.320x320px.jpg?480",
+    "role": "speaker",
+    "tags": "",
+    "tickets": [],
+    "plusones": 0,
+    "company": "GraphQL Foundation",
+    "position": "Co-creator of GraphQL and Director",
+    "location": "",
+    "socialurls": []
+  },
+  {
+    "username": "saihaj",
+    "name": "Saihajpreet Singh",
+    "email": "saihaj@the-guild.dev",
+    "about": "",
+    "url": "",
+    "avatar": "",
+    "role": "speaker",
+    "tags": "",
+    "tickets": [],
+    "plusones": 0,
+    "~syncedDetailsAt": 1749489924661
+  }
+]
