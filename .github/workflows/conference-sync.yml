@@ -1,0 +1,23 @@
+# Sched's API rate limits are very limited, so we sync non-critical part of the data on a cron.
+on:
+  schedule:
+    - cron: "*/1 * * * *" # every minute
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Sync conference data from Sched
+        run: |
+          node --experimental-transform-types scripts/sync-sched/sync.ts --year 2025
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "scripts/sync-sched/*.json"
+          commit_message: "Sync conference data from Sched"

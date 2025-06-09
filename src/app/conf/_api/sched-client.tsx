@@ -1,7 +1,10 @@
+import { stripHtml } from "string-strip-html"
+
+import { SchedSpeaker, ScheduleSession } from "./sched-types"
+
 /**
  * Sched's API has a rate limit of 30 requests per minute.
  */
-
 let rateLimitResetAt: number | null = null
 
 type RequestURL = string
@@ -14,7 +17,22 @@ const requestsRetried = new Map<
   RequestPending | RequestSuccess | RequestError
 >()
 
-export async function fetchSchedData<T>(url: string): Promise<T> {
+export type RequestContext = {
+  apiUrl: string
+  token: string
+}
+
+export async function fetchSchedData(
+  ctx: RequestContext,
+  path: string,
+  searchParams: Record<string, string> = {},
+): Promise<object> {
+  const url = new URL(path, ctx.apiUrl)
+  const search = new URLSearchParams(searchParams)
+  search.set("api_key", ctx.token)
+  search.set("format", "json")
+  url.search = search.toString()
+
   try {
     if (rateLimitResetAt && Date.now() < rateLimitResetAt) {
       const wait = rateLimitResetAt - Date.now()
@@ -43,8 +61,8 @@ export async function fetchSchedData<T>(url: string): Promise<T> {
         wait = rateLimitResetAt - Date.now()
       }
 
-      const later = Promise.withResolvers<T>()
-      requestsRetried.set(url, later.promise)
+      const later = Promise.withResolvers<object>()
+      requestsRetried.set(url.toString(), later.promise)
       const queueSize = requestsRetried.size
 
       console.warn(
@@ -60,9 +78,9 @@ export async function fetchSchedData<T>(url: string): Promise<T> {
       setTimeout(
         () =>
           later.resolve(
-            fetchSchedData<T>(url).then(data => {
+            fetchSchedData(ctx, path, searchParams).then(data => {
               rateLimitResetAt = null
-              requestsRetried.set(url, "ok")
+              requestsRetried.set(url.toString(), "ok")
               return data
             }),
           ),
@@ -76,7 +94,7 @@ export async function fetchSchedData<T>(url: string): Promise<T> {
     return data
   } catch (e) {
     const error = e instanceof Error ? e : new Error(String(e))
-    requestsRetried.set(url, error)
+    requestsRetried.set(url.toString(), error)
 
     throw new Error(
       `Error fetching data from ${url}: ${(error as Error).message || (error as Error).toString()}`,
@@ -84,4 +102,76 @@ export async function fetchSchedData<T>(url: string): Promise<T> {
   }
 }
 
-// todo: functions for `getSpeakers`, `getSchedule`
+export async function getSchedule(
+  ctx: RequestContext,
+): Promise<ScheduleSession[]> {
+  const sessions = (await fetchSchedData(
+    ctx,
+    "/session/export",
+  )) as ScheduleSession[]
+
+  const result = sessions.map(session => {
+    const { description } = session
+
+    return {
+      ...session,
+      description: preprocessDescription(description),
+    }
+  })
+
+  return result
+}
+
+const SPEAKER_FIELDS =
+  "username,company,position,name,about,location,url,avatar,role,socialurls"
+
+export async function getSpeakers(
+  ctx: RequestContext,
+): Promise<SchedSpeaker[]> {
+  const users = (await fetchSchedData(ctx, "/user/list", {
+    fields: SPEAKER_FIELDS,
+  })) as SchedSpeaker[]
+
+  const result = users
+    .filter(speaker => speaker.role.includes("speaker"))
+    .map(user => {
+      return {
+        ...user,
+        socialurls: user.socialurls || [],
+        about: preprocessDescription(user.about),
+      }
+    })
+    .sort((a, b) => {
+      if (a.avatar && !b.avatar) return -1
+      if (!a.avatar && b.avatar) return 1
+      return 0
+    })
+
+  return result
+}
+
+/**
+ * `/user/list` is insufficient, as it does not return `socialurls` nor any other custom fields
+ */
+export async function getSpeakerDetails(
+  ctx: RequestContext,
+  username: string,
+): Promise<SchedSpeaker> {
+  const data = await fetchSchedData(ctx, "/user/get", {
+    by: "username",
+    term: username,
+  })
+
+  return data as SchedSpeaker
+}
+
+function preprocessDescription(description: string | undefined | null): string {
+  let res = description || ""
+
+  // we respect manual line breaks
+  res = res.replace(/<br\s*\/?>/g, "\n")
+
+  // respecting <li> and <a> tags doesn't make sense, because speakers don't use them consistently
+  // we'll improve how the descriptions look later down the tree in the session details page
+  return stripHtml(res).result
+}
