@@ -163,7 +163,7 @@ async function updateSpeakerDetails(
   ].sort((a, b) => {
     const aTime = a["~syncedDetailsAt"] ?? 0
     const bTime = b["~syncedDetailsAt"] ?? 0
-    return bTime - aTime
+    return aTime - bTime
   })
 
   const toUpdate = byUpdateTime.slice(0, quota)
