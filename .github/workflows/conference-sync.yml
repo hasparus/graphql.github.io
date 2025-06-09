@@ -1,7 +1,7 @@
 # Sched's API rate limits are very limited, so we sync non-critical part of the data on a cron.
 on:
   schedule:
-    - cron: "*/1 * * * *" # every minute
+    - cron: "*/10 * * * *" # every ten minutes
 
 jobs:
   sync:
