@@ -31,7 +31,7 @@ export function SpeakerTags({
       )}
 
       <Tag color="hsl(var(--color-neu-500))">
-        {returningSpeakers.has(speaker.username) ? (
+        {(speaker["~years"] || []).length > 1 ? (
           <>
             <ReloadIcon className="-mx-0.5 size-3" />
             returning speaker

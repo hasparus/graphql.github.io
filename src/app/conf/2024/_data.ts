@@ -1,11 +1,6 @@
 import "server-only"
 
-import { getSchedule, getSpeakers } from "../_api/sched-client"
+import { SchedSpeaker, ScheduleSession } from "../_api/sched-types"
 
-const ctx = {
-  apiUrl: "https://graphqlconf2024.sched.com/api",
-  token: process.env.SCHED_ACCESS_TOKEN_2024!,
-}
-
-export const speakers = await getSpeakers(ctx)
-export const schedule = await getSchedule(ctx)
+export const schedule: ScheduleSession[] = require("../../../../scripts/sync-sched/schedule-2024.json")
+export const speakers: SchedSpeaker[] = require("../../../../scripts/sync-sched/speakers.json")
