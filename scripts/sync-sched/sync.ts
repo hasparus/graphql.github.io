@@ -21,26 +21,30 @@ import type { SchedSpeaker } from "@/app/conf/_api/sched-types"
  *  - one request for the list of speakers with partial details
  *  - and N requests for the full details of each speaker
  */
-const SPEAKER_DETAILS_REQUEST_QUOTA = 10
+const DEFAULT_SPEAKER_DETAILS_REQUEST_QUOTA = 10
 
 const PRINT_UNCHANGED = false
-
-const options = {
-  year: {
-    type: "string" as const,
-    short: "y",
-  },
-  help: {
-    type: "boolean" as const,
-    short: "h",
-  },
-}
 
 const unsafeKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>
 
 ;(async function main() {
   try {
-    const { values } = parseArgs({ options })
+    const { values } = parseArgs({
+      options: {
+        year: {
+          type: "string",
+          short: "y",
+        },
+        quota: {
+          type: "string",
+          short: "q",
+        },
+        help: {
+          type: "boolean",
+          short: "h",
+        },
+      },
+    })
 
     if (values.help) {
       help()
@@ -48,13 +52,16 @@ const unsafeKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>
     }
 
     const year = parseInt(values.year || new Date().getFullYear().toString())
+    const quota = parseInt(
+      values.quota || DEFAULT_SPEAKER_DETAILS_REQUEST_QUOTA.toString(),
+    )
 
     console.log(`Syncing schedule for year: ${year}`)
 
     const token = process.env[`SCHED_ACCESS_TOKEN_${year}`]
     assert(token, `SCHED_ACCESS_TOKEN_${year} is not set`)
 
-    await sync(year, token)
+    await sync(year, quota, token)
   } catch (error) {
     if (error instanceof Error && error.message.includes("Unknown option")) {
       console.error(`Error: ${error.message}`)
@@ -65,7 +72,7 @@ const unsafeKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>
   }
 })()
 
-async function sync(year: number, token: string) {
+async function sync(year: number, detailsRequestsQuota: number, token: string) {
   const apiUrl = {
     2023: "https://graphqlconf23.sched.com/api",
     2024: "https://graphqlconf2024.sched.com/api",
@@ -106,11 +113,7 @@ async function sync(year: number, token: string) {
     { merge: true },
   )
 
-  await updateSpeakerDetails(
-    ctx,
-    speakerComparison,
-    SPEAKER_DETAILS_REQUEST_QUOTA,
-  )
+  await updateSpeakerDetails(ctx, speakerComparison, detailsRequestsQuota)
 
   printComparison(speakerComparison, "speakers", "username", {
     // we don't remove speakers
