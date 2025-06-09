@@ -113,6 +113,10 @@ export async function getSchedule(
   const result = sessions.map(session => {
     const { description } = session
 
+    // This field is sometimes sent as a string, sometimes as a number,
+    // so it creates noise in our diffs, but we don't use it anyway.
+    delete (session as Record<string, unknown>)["event_type_sort"]
+
     return {
       ...session,
       description: preprocessDescription(description),

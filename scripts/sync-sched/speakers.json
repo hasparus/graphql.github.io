@@ -26,7 +26,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "adam.sayah",
@@ -213,10 +214,20 @@
     "location": "London, United Kingdom",
     "url": "https://stellate.co/",
     "avatar": "//avatars.sched.co/9/16/18743801/avatar.jpg.320x320px.jpg?7e0",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/andheiberg"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/andheiberg/"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "andreas.marek1",
@@ -296,10 +307,20 @@
     "location": "United States",
     "url": "https://www.meetup.com",
     "avatar": "//avatars.sched.co/3/11/2147992/avatar.jpg.320x320px.jpg?b1a",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/brwngrldev"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/annycedavis"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "anthony_miller1",
@@ -325,10 +346,20 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/c/49/18743834/avatar.jpg.320x320px.jpg?7f3",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/iCarossio"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/acarossio/"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "anushrut.gupta",
@@ -359,10 +390,20 @@
     "location": "İstanbul, Türkiye",
     "url": "",
     "avatar": "//avatars.sched.co/1/10/18982310/avatar.jpg.320x320px.jpg?e18",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/ardatanrikulu"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/ardatan/"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "arkenflame",
@@ -388,10 +429,16 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/0/a8/19084619/avatar.jpg.320x320px.jpg?4ad",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/ashpak--shaikh/"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "badurinadenis",
@@ -450,10 +497,16 @@
     "location": "",
     "url": "https://codetraveler.io",
     "avatar": "//avatars.sched.co/2/a4/9493345/avatar.jpg.320x320px.jpg?3ce",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/thecodetraveler"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "bryan.robinson2",
@@ -464,10 +517,20 @@
     "location": "",
     "url": "https://hygraph.com",
     "avatar": "//avatars.sched.co/5/8e/19076363/avatar.jpg.320x320px.jpg?ad8",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/brob"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://linkedin.com/in/bryanlrobinson"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "bsklar",
@@ -478,10 +541,16 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/d/92/18743813/avatar.jpg.320x320px.jpg?042",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/benjamin-sklar/"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "bsy",
@@ -495,7 +564,8 @@
     "socialurls": [],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "budha1",
@@ -526,10 +596,20 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/c/5f/19084532/avatar.jpg.320x320px.jpg?8bd",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/cernst11"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://nl.linkedin.com/in/christian-ernst11"
+      }
+    ],
     "~years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749502266902
   },
   {
     "username": "christian.ernst1",
@@ -593,7 +673,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "david3103",
@@ -660,10 +741,16 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/d/91/21066813/avatar.jpg.320x320px.jpg?591",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/emily-li-el2857/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "en3m",
@@ -688,10 +775,20 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/6/74/21102110/avatar.jpg.320x320px.jpg?a37",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/erik_wrede"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/erikwrede/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "ernie.turner1",
@@ -719,7 +816,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "gerard.klijs",
@@ -744,10 +842,16 @@
     "location": "Milan, Italy",
     "url": "https://keadex.dev",
     "avatar": "//avatars.sched.co/6/8c/21496501/avatar.jpg.320x320px.jpg?5c6",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/giacomosimmi/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "gilgardosh",
@@ -824,10 +928,20 @@
     "location": "",
     "url": "https://www.threads.net/@itamarok",
     "avatar": "//avatars.sched.co/b/e5/80829/avatar.jpg.320x320px.jpg?988",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Facebook",
+        "url": "https://www.facebook.com/profile.php?id=504330120"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://linkedin.com/in/itamarkestenbaum"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "jamie855",
@@ -855,7 +969,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "jared_cheney.7rad60v",
@@ -932,10 +1047,20 @@
     "location": "",
     "url": "https://jordaneldredge.com",
     "avatar": "//avatars.sched.co/7/eb/21066819/avatar.jpg.320x320px.jpg?65e",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/captbaritone"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/jordaneldredge/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "kamilkisiela",
@@ -1005,7 +1130,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "kennethstott",
@@ -1019,7 +1145,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "kevin.brown11",
@@ -1033,7 +1160,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501888881
   },
   {
     "username": "kevin1700",
@@ -1072,10 +1200,20 @@
     "location": "",
     "url": "https://the-guild.dev/",
     "avatar": "//avatars.sched.co/2/a6/18743819/avatar.jpg.320x320px.jpg?ed8",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/n1rual"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/laurin-quast-a47b871b4/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "ldebruijn",
@@ -1086,10 +1224,16 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/4/57/5922948/avatar.jpg.320x320px.jpg?fa5",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/lars-de-bruijn/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "lee_byron.25jvpjmb",
@@ -1104,7 +1248,7 @@
     "~years": [
       2025
     ],
-    "~syncedDetailsAt": 1749497416063
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "lee_byron.25krdom6",
@@ -1157,10 +1301,20 @@
     "location": "",
     "url": "",
     "avatar": "//avatars.sched.co/c/1d/19314398/avatar.jpg.320x320px.jpg?f73",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Facebook",
+        "url": "https://www.facebook.com/mattjmahoney?mibextid=LQQJ4d"
+      },
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/mahoneymattj"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "marion84",
@@ -1188,7 +1342,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "marybriskin",
@@ -1202,7 +1357,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "masanori.uehara",
@@ -1213,10 +1369,20 @@
     "location": "Tokyo, Japan",
     "url": "https://www.tailor.tech/",
     "avatar": "//avatars.sched.co/4/fd/21066828/avatar.jpg.320x320px.jpg?b60",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/jackchuka"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/jackchuka/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "matt1575",
@@ -1230,7 +1396,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "mauricio.montalvo.guzman",
@@ -1244,7 +1411,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "meenakshi.dhanani1",
@@ -1283,10 +1451,20 @@
     "location": "Zurich",
     "url": "http://chillicream.com",
     "avatar": "//avatars.sched.co/a/85/14900031/avatar.jpg.320x320px.jpg?df4",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/michael_staib"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/michael-staib-31519571/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "michael.bleigh",
@@ -1297,10 +1475,20 @@
     "location": "Bay Area, CA",
     "url": "https://mbleigh.dev",
     "avatar": "//avatars.sched.co/d/0b/21066834/avatar.jpg.320x320px.jpg?83f",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/mbleigh"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://linkedin.com/in/mbleigh"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749501892530
   },
   {
     "username": "omribruchim",
@@ -1314,7 +1502,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056388
   },
   {
     "username": "pascal.senn",
@@ -1328,7 +1517,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056388
   },
   {
     "username": "patrick.arminio",
@@ -1384,7 +1574,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056389
   },
   {
     "username": "qkw1221",
@@ -1398,7 +1589,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056389
   },
   {
     "username": "rachit_sengupta",
@@ -1409,10 +1601,16 @@
     "location": "San Diego",
     "url": "",
     "avatar": "//avatars.sched.co/7/bc/21066842/avatar.jpg.320x320px.jpg?426",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/rachit-sengupta-57b45513b/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056389
   },
   {
     "username": "rama_palaniappan",
@@ -1426,7 +1624,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056389
   },
   {
     "username": "ramnivas.laddad",
@@ -1437,10 +1636,20 @@
     "location": "",
     "url": "https://exograph.dev",
     "avatar": "//avatars.sched.co/6/89/21066848/avatar.jpg.320x320px.jpg?5de",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/ramnivas"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/ramnivasladdad/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056389
   },
   {
     "username": "robert.balicki",
@@ -1454,7 +1663,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056389
   },
   {
     "username": "robrichard87",
@@ -1468,7 +1678,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056389
   },
   {
     "username": "ruben.cagnie",
@@ -1482,7 +1693,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502056389
   },
   {
     "username": "sabrina.wasserman",
@@ -1496,7 +1708,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "saihaj",
@@ -1522,10 +1735,20 @@
     "location": "",
     "url": "https://saihaj.dev",
     "avatar": "//avatars.sched.co/d/77/21066858/avatar.jpg.320x320px.jpg?75f",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/singh_saihaj/"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/saihaj/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "sasanders26",
@@ -1536,10 +1759,16 @@
     "location": "San Francisco, CA",
     "url": "",
     "avatar": "//avatars.sched.co/4/50/21066861/avatar.jpg.320x320px.jpg?2f0",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/sarah-sanders-42913121a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medi"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "sasha177",
@@ -1550,10 +1779,20 @@
     "location": "Portland, OR",
     "url": "sashatsolomon.com",
     "avatar": "//avatars.sched.co/e/e5/21336701/avatar.jpg.320x320px.jpg?ae7",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://x.com/sachee"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/sasha-s-3808365a/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "satish.chitnis",
@@ -1567,7 +1806,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "sdk.bens",
@@ -1595,7 +1835,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "serhii.korin",
@@ -1637,7 +1878,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "siva27",
@@ -1651,7 +1893,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "spencer211",
@@ -1676,10 +1919,16 @@
     "location": "",
     "url": "http://stephenspalding.com",
     "avatar": "//avatars.sched.co/8/08/18743825/avatar.jpg.320x320px.jpg?599",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/stephenspalding"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "stefan239",
@@ -1693,7 +1942,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502079623
   },
   {
     "username": "stephanie.saunders2",
@@ -1802,10 +2052,20 @@
     "location": "",
     "url": "https://tailcall.run",
     "avatar": "//avatars.sched.co/6/97/21066872/avatar.jpg.320x320px.jpg?498",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/tusharmath/"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/tusharmath/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "twitter7",
@@ -1816,10 +2076,20 @@
     "location": "",
     "url": "https://apollographql.com",
     "avatar": "//avatars.sched.co/a/c6/18743837/avatar.jpg.320x320px.jpg?847",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/alessbell"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/alessiabellisario/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "uri_goldshtein.23xujj9a",
@@ -1830,10 +2100,20 @@
     "location": "",
     "url": "http://the-guild.dev",
     "avatar": "//avatars.sched.co/8/2b/14900013/avatar.jpg.320x320px.jpg?9f1",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/UriGoldshtein"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/urigo"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "vincent.desmares",
@@ -1847,7 +2127,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "watson17",
@@ -1861,7 +2142,8 @@
     "socialurls": [],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "yaacovcr",
@@ -1886,10 +2168,20 @@
     "location": "Egypt",
     "url": "https://the-guild.dev",
     "avatar": "//avatars.sched.co/4/33/18743822/avatar.jpg.320x320px.jpg?230",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/YassinEldeeb7"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/yassin-eldeeb/"
+      }
+    ],
     "~years": [
       2024
-    ]
+    ],
+    "~syncedDetailsAt": 1749502251756
   },
   {
     "username": "yczhu",
