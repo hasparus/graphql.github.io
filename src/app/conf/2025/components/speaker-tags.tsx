@@ -29,19 +29,12 @@ export function SpeakerTags({
         </Tag>
       )}
 
-      <Tag color="hsl(var(--color-neu-500))">
-        {speaker._years.length > 1 ? (
-          <>
-            <ReloadIcon className="-mx-0.5 size-3" />
-            returning speaker
-          </>
-        ) : (
-          <>
-            {/* todo: this should probably be a tag manually added in Sched because it suggests it's a debut talk  */}
-            {/* <PlayIcon className="-mx-1 size-3" /> first time speaker */}
-          </>
-        )}
-      </Tag>
+      {speaker._years.length > 1 && (
+        <Tag color="hsl(var(--color-neu-500))">
+          <ReloadIcon className="-mx-0.5 size-3" />
+          returning speaker
+        </Tag>
+      )}
     </div>
   )
 }
