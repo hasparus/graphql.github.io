@@ -60,13 +60,13 @@ export default function SessionPage({ params }: SessionProps) {
   }
 
   session.speakers = (session.speakers || []).map(speaker => {
-    const found = speakers.find(s => s.username === speaker.username)
-    if (!found) {
+    const s = speakers.find(s => s.username === speaker.username)
+    if (!s) {
       throw new Error(
         `Speaker "${speaker.username}" not found for "${session.name}"`,
       )
     }
-    return found
+    return s
   })
 
   const eventTitle = getEventTitle(

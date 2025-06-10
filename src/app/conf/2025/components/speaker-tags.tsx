@@ -3,7 +3,6 @@ import clsx from "clsx"
 import { SchedSpeaker } from "@/app/conf/2023/types"
 import { Tag } from "@/app/conf/_design-system/tag"
 import ReloadIcon from "@/app/conf/_design-system/pixelarticons/reload.svg?svgr"
-import PlayIcon from "@/app/conf/_design-system/pixelarticons/play.svg?svgr"
 
 import { speakerSessions } from "../_data"
 import { eventsColors } from "../utils"
@@ -30,18 +29,12 @@ export function SpeakerTags({
         </Tag>
       )}
 
-      <Tag color="hsl(var(--color-neu-500))">
-        {speaker._years.length > 1 ? (
-          <>
-            <ReloadIcon className="-mx-0.5 size-3" />
-            returning speaker
-          </>
-        ) : (
-          <>
-            <PlayIcon className="-mx-1 size-3" /> first time speaker
-          </>
-        )}
-      </Tag>
+      {speaker._years.length > 1 && (
+        <Tag color="hsl(var(--color-neu-500))">
+          <ReloadIcon className="-mx-0.5 size-3" />
+          returning speaker
+        </Tag>
+      )}
     </div>
   )
 }

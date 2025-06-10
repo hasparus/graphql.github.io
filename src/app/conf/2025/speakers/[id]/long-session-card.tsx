@@ -1,5 +1,7 @@
 import { clsx } from "clsx"
-import { ScheduleSession } from "@/app/conf/2023/types"
+import { ics } from "calendar-link"
+
+import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
 import { Button } from "@/app/conf/_design-system/button"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
@@ -16,30 +18,27 @@ export interface LongSessionCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
   session: ScheduleSession
   eventColors?: Record<string, string>
-  year?: string
 }
 
 export function LongSessionCard({
   session,
-  year = "2025",
   className,
   ...props
 }: LongSessionCardProps) {
-  const formattedDate = new Date(session.event_start).toLocaleDateString(
-    "en-US",
-    {
-      day: "numeric",
-      month: "long",
-    },
-  )
-  const formattedTime = new Date(session.event_start).toLocaleTimeString(
-    "en-US",
-    {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    },
-  )
+  const eventStart = new Date(session.event_start)
+
+  const formattedDate = eventStart.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+  })
+
+  const year = eventStart.getFullYear()
+
+  const formattedTime = eventStart.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })
 
   const eventTitle = getEventTitle(
     session,
@@ -56,7 +55,7 @@ export function LongSessionCard({
   return (
     <div
       className={clsx(
-        "group relative border border-neu-200 bg-neu-0 dark:border-neu-100",
+        "group relative flex flex-col justify-between border border-neu-200 bg-neu-0 dark:border-neu-100",
         className,
       )}
       {...props}
@@ -68,14 +67,11 @@ export function LongSessionCard({
       />
 
       <div className="flex flex-col gap-6 p-4 lg:p-6">
-        <div className="flex items-center justify-between gap-6">
+        <div className="flex items-start justify-between gap-6">
           <SessionTags session={session} />
-          {video && (
+          {year !== new Date().getFullYear() && (
             <div className="flex items-center gap-2 border border-neu-400 bg-neu-100 px-2 py-1">
-              <span className="typography-menu text-neu-900">
-                {/* todo: find year */}
-                2024
-              </span>
+              <span className="typography-menu text-neu-900">{year}</span>
             </div>
           )}
         </div>
@@ -107,9 +103,10 @@ export function LongSessionCard({
               </span>
             )}
             {video && (
-              <div className="flex items-center gap-0.5">
+              // ideally, we'd display the duration of the video, not the projected duration of the talk
+              <div className="flex shrink-0 items-center gap-0.5">
                 <ClockIcon className="size-3" />
-                <span className="typography-body-xs text-neu-600">
+                <span className="typography-body-xs text-neu-800">
                   {Math.round(eventDurationMs / (1000 * 60))} min
                 </span>
               </div>
@@ -117,8 +114,6 @@ export function LongSessionCard({
           </div>
         </div>
       </div>
-
-      {/* todo: past session no recording variant */}
 
       {video ? (
         <footer className="p-4 pt-0 lg:px-6 lg:pb-6">
@@ -133,7 +128,7 @@ export function LongSessionCard({
         </footer>
       ) : (
         <footer className="flex items-center border-t border-neu-200 text-neu-800 dark:border-neu-100">
-          <div className="flex flex-1 items-center gap-6 border-r border-neu-200 p-4 dark:border-neu-100 lg:p-6">
+          <div className="flex flex-1 items-center gap-2 border-r border-neu-200 p-4 dark:border-neu-100 lg:p-6 xl:gap-6">
             <div className="contents flex-col md:max-xl:flex">
               <div className="flex items-center gap-0.5 whitespace-pre">
                 <CalendarIcon className="size-4 shrink-0 -translate-y-px text-sec-dark" />
@@ -149,13 +144,46 @@ export function LongSessionCard({
               <span className="typography-body-xs">{session.venue}</span>
             </div>
           </div>
-          {/* TODO: Actually add to calendar. Ensure we show this only on this year's events. */}
-          <button className="relative z-[2] flex h-full flex-row items-center justify-center gap-0.5 p-4 text-neu-800 ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100 lg:px-6">
-            <PlusIcon className="size-4 shrink-0 text-sec-dark" />
-            <span className="typography-body-xs">Add to calendar</span>
-          </button>
+          {year === new Date().getFullYear() && (
+            <AddToCalendarLink
+              eventTitle={eventTitle}
+              session={session}
+              speakers={speakers}
+            />
+          )}
         </footer>
       )}
     </div>
+  )
+}
+
+function AddToCalendarLink({
+  eventTitle,
+  session,
+  speakers,
+}: {
+  eventTitle: string
+  session: ScheduleSession
+  speakers: SchedSpeaker[]
+}) {
+  return (
+    <a
+      className="relative z-[2] flex h-full flex-row items-center justify-center gap-0.5 p-4 text-neu-800 ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100 lg:px-6"
+      href={ics({
+        title: eventTitle,
+        start: session.event_start,
+        end: session.event_end,
+        description: session.description,
+        location: session.venue,
+        organizer: {
+          name: `GraphQLConf ${new Date().getFullYear()}`,
+          email: "graphql_events@linuxfoundation.org",
+        },
+        guests: speakers.map(s => s.name),
+      })}
+    >
+      <PlusIcon className="size-4 shrink-0 text-sec-dark" />
+      <span className="typography-body-xs">Add to calendar</span>
+    </a>
   )
 }

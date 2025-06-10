@@ -1,8 +1,7 @@
 import { Metadata } from "next"
-import { notFound } from "next/navigation"
 import React from "react"
 
-import { speakers, speakerSessions } from "../../_data"
+import { previousEditionSessions, speakers, speakerSessions } from "../../_data"
 import { metadata as layoutMetadata } from "../../layout"
 
 import { HERO_MARQUEE_ITEMS } from "../../utils"
@@ -10,7 +9,7 @@ import { BackLink } from "../../schedule/_components/back-link"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { CtaCardSection } from "../../components/cta-card-section"
 import clsx from "clsx"
-import { SchedSpeaker } from "@/app/conf/2023/types"
+import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
 import { Button } from "@/app/conf/_design-system/button"
 import { MarqueeRows } from "../../components/marquee-rows"
 import { GET_TICKETS_LINK } from "../../links"
@@ -24,7 +23,11 @@ type SpeakerProps = { params: { id: string } }
 
 export function generateMetadata({ params }: SpeakerProps): Metadata {
   const decodedId = decodeURIComponent(params.id)
-  const speaker = speakers.find(s => s.username === decodedId)!
+  const speaker = speakers.find(s => s.username === decodedId)
+
+  if (!speaker) {
+    throw new Error(`Speaker "${decodedId}" not found for details page`)
+  }
 
   const keywords = [speaker.name, speaker.company, speaker.position].filter(
     Boolean,
@@ -43,9 +46,13 @@ export function generateStaticParams() {
 
 export default function SpeakerPage({ params }: SpeakerProps) {
   const speaker = speakers.find(s => s.username === params.id)
+
   if (!speaker) {
-    notFound()
+    throw new Error(`Speaker "${params.id}" not found for details page`)
   }
+
+  const currentYearSessions = speakerSessions.get(speaker.username) || []
+  const previousSessions = previousEditionSessions.get(speaker.username) || []
 
   return (
     <>
@@ -70,25 +77,36 @@ export default function SpeakerPage({ params }: SpeakerProps) {
                 </div>
 
                 {speaker.about && (
+                  <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
+                    {formatDescription(speaker.about)}
+                  </p>
+                )}
+
+                {currentYearSessions.length > 0 && (
                   <>
-                    <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
-                      {formatDescription(speaker.about)}
-                    </p>
                     <Hr />
+                    <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
+                      2025 Sessions
+                    </h3>
+                    <SpeakerSessions
+                      sessions={currentYearSessions}
+                      className="-mx-px -mb-px"
+                    />
                   </>
                 )}
 
-                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
-                  2025 Sessions
-                </h3>
-                <SpeakerSessions speaker={speaker} className="-mx-px -mb-px" />
-
-                <Hr />
-
-                <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
-                  Sessions from previous editions
-                </h3>
-                <SpeakerSessions speaker={speaker} className="-mx-px -mb-px" />
+                {previousSessions.length > 0 && (
+                  <>
+                    <Hr />
+                    <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
+                      Sessions from previous editions
+                    </h3>
+                    <SpeakerSessions
+                      sessions={previousSessions}
+                      className="-mx-px -mb-px"
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -152,7 +170,7 @@ function SpeakerHeader({
             alt=""
             width={464}
             height={464}
-            className="aspect-square size-[464px] w-full object-cover saturate-[0.1] transition-transform"
+            className="aspect-square size-[464px] object-cover saturate-[0.1] transition-transform max-lg:w-full"
           />
         </div>
       )}
@@ -161,10 +179,10 @@ function SpeakerHeader({
 }
 
 function SpeakerSessions({
-  speaker,
+  sessions,
   className,
 }: {
-  speaker: SchedSpeaker
+  sessions: ScheduleSession[]
   className?: string
 }) {
   return (
@@ -174,11 +192,9 @@ function SpeakerSessions({
         className,
       )}
     >
-      {speakerSessions
-        .get(speaker.username)
-        ?.map(session => (
-          <LongSessionCard key={session.id} session={session} year="2025" />
-        ))}
+      {sessions.map(session => (
+        <LongSessionCard key={session.id} session={session} year="2025" />
+      ))}
     </div>
   )
 }
