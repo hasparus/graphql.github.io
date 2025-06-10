@@ -57,7 +57,7 @@ export function Testimonials({ className, ...rest }: TestimonialsProps) {
       )}
       {...rest}
     >
-      <h2 className="text-center text-neu-800 typography-h2">
+      <h2 className="typography-h2 text-center text-neu-800">
         How was the previous edition?
       </h2>
       <div className="flex w-full snap-x snap-mandatory flex-row gap-10 overflow-x-auto px-4 py-6 lg:mt-16 lg:py-16">
@@ -67,7 +67,7 @@ export function Testimonials({ className, ...rest }: TestimonialsProps) {
             className="flex shrink-0 snap-start flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
           >
             <div>
-              <p className="max-w-[calc(100vw-32px)] !leading-[1.1] typography-body-lg max-md:text-center md:max-w-[544px]">
+              <p className="typography-body-lg max-w-[calc(100vw-32px)] !leading-[1.1] max-md:text-center md:max-w-[544px]">
                 {testimonial.quote}
               </p>
               <AuthorNameAndRole
@@ -115,8 +115,8 @@ function AuthorNameAndRole({
 }) {
   return (
     <div className={className}>
-      <div className="mt-3 typography-body-sm">{author.name}</div>
-      <div className="text-neu-700 typography-body-xs">{author.role}</div>
+      <div className="typography-body-sm mt-3">{author.name}</div>
+      <div className="typography-body-xs text-neu-700">{author.role}</div>
     </div>
   )
 }

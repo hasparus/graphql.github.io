@@ -1,6 +1,9 @@
 import type { ScheduleSession } from "@/app/conf/2025/schedule/_components/session-list"
 import type { SchedSpeaker } from "@/app/conf/2023/types"
-import { ConferenceOpengraphImageHeader, normalizeProtocolRelativeUrl } from "./speaker-opengraph-image"
+import {
+  ConferenceOpengraphImageHeader,
+  normalizeProtocolRelativeUrl,
+} from "./speaker-opengraph-image"
 import { getEventTitle } from "../utils"
 import { formatSpeakerPosition } from "./format-speaker-position"
 
@@ -110,5 +113,3 @@ export default function ScheduleOpengraphImage({
     </article>
   )
 }
-
-
