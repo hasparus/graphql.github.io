@@ -119,11 +119,16 @@ export async function getSchedule(
       // so it creates noise in our diffs, but we don't use it anyway.
       delete (session as Record<string, unknown>)["event_type_sort"]
 
+      // If Sched form includes just event type or event subtype and its a phrase separated by a dash,
+      // we split it into two fields.
+
       let event_type = session.event_type || ""
       let event_subtype = session.event_subtype || ""
 
       if (!event_type && event_subtype.includes(" - ")) {
         ;[event_type, event_subtype] = event_subtype.split(" - ")
+      } else if (!event_subtype && event_type.includes(" - ")) {
+        ;[event_type, event_subtype] = event_type.split(" - ")
       }
 
       return {
