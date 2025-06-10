@@ -12,7 +12,7 @@
     "_years": [
       2023
     ],
-    "~syncedDetailsAt": 1749497543087
+    "~syncedDetailsAt": 1749568381879
   },
   {
     "username": "adam_malone.2791s6x2",
@@ -184,7 +184,7 @@
     "_years": [
       2023
     ],
-    "~syncedDetailsAt": 1749497543087
+    "~syncedDetailsAt": 1749568381879
   },
   {
     "username": "an.ngo",
@@ -2086,10 +2086,16 @@
     "location": "Amsterdam",
     "url": "",
     "avatar": "//avatars.sched.co/4/6a/19235292/avatar.jpg.320x320px.jpg?3fe",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/serhiikorin"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381878
   },
   {
     "username": "shahar_binyamin.24vrzgo4",
@@ -2100,10 +2106,20 @@
     "location": "",
     "url": "https://inigo.io/",
     "avatar": "//avatars.sched.co/c/b0/17274089/avatar.jpg.320x320px.jpg?cec",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/ShacharBinyamin"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/shacharbinyamin/"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381878
   },
   {
     "username": "shashank.gugnani",
@@ -2147,7 +2163,8 @@
     "socialurls": [],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381878
   },
   {
     "username": "sspalding2",
@@ -2197,7 +2214,8 @@
     "socialurls": [],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381878
   },
   {
     "username": "suresh_muthu",
@@ -2208,10 +2226,20 @@
     "location": "",
     "url": "https://www.intuit.com/",
     "avatar": "//avatars.sched.co/2/29/18743849/avatar.jpg.320x320px.jpg?d1d",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/sureshmuthu"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/sureshmuthu/"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381878
   },
   {
     "username": "tanmaig",
@@ -2222,10 +2250,20 @@
     "location": "San Francisco",
     "url": "https://hasura.io",
     "avatar": "//avatars.sched.co/1/7c/4968006/avatar.jpg.320x320px.jpg?81a",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/tanmaigo"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/tanmaig"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381878
   },
   {
     "username": "theo93",
@@ -2236,10 +2274,16 @@
     "location": "San Francisco",
     "url": "t3.gg",
     "avatar": "//avatars.sched.co/2/a1/19108367/avatar.jpg.320x320px.jpg?09c",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/t3dotgg"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381878
   },
   {
     "username": "thomas.heyenbrock",
@@ -2250,10 +2294,20 @@
     "location": "Munich, Germany",
     "url": "",
     "avatar": "//avatars.sched.co/d/37/14989332/avatar.jpg.320x320px.jpg?9f4",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/heyenbrock"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/thomas-heyenbrock-1a9651145/"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381878
   },
   {
     "username": "tim.hall.engr",
@@ -2264,10 +2318,20 @@
     "location": "",
     "url": "https://www.postman.com",
     "avatar": "//avatars.sched.co/a/76/18743807/avatar.jpg.320x320px.jpg?7e7",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/timhalldesign"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/timhallengr/"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381879
   },
   {
     "username": "tristan119",
@@ -2278,10 +2342,16 @@
     "location": "San Francisco, USA",
     "url": "https://escape.tech",
     "avatar": "//avatars.sched.co/7/08/19011005/avatar.jpg.320x320px.jpg?53c",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "LinkedIn",
+        "url": "https://linkedin.com/in/tkalos"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381879
   },
   {
     "username": "tushar.mathur",
@@ -2396,10 +2466,20 @@
     "location": "",
     "url": "https://github.com/yaacovCR",
     "avatar": "//avatars.sched.co/4/e4/18743840/avatar.jpg.320x320px.jpg?eb9",
-    "socialurls": [],
+    "socialurls": [
+      {
+        "service": "Twitter",
+        "url": "https://twitter.com/YRydzinski"
+      },
+      {
+        "service": "LinkedIn",
+        "url": "https://www.linkedin.com/in/yaacov"
+      }
+    ],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381879
   },
   {
     "username": "yassineldeeb94",
@@ -2438,6 +2518,7 @@
     "socialurls": [],
     "_years": [
       2023
-    ]
+    ],
+    "~syncedDetailsAt": 1749568381879
   }
 ]
