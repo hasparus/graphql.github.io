@@ -69,11 +69,14 @@ export default function SpeakerPage({ params }: SpeakerProps) {
                   />
                 </div>
 
-                <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
-                  {formatDescription(speaker.about)}
-                </p>
-
-                <Hr />
+                {speaker.about && (
+                  <>
+                    <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
+                      {formatDescription(speaker.about)}
+                    </p>
+                    <Hr />
+                  </>
+                )}
 
                 <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
                   2025 Sessions
