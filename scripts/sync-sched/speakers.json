@@ -572,6 +572,21 @@
     "~syncedDetailsAt": 1749503993038
   },
   {
+    "username": "benoit_lubek.28dhc1v7",
+    "company": "",
+    "position": "",
+    "name": "Benoit Lubek",
+    "about": "",
+    "location": "",
+    "url": "",
+    "avatar": "",
+    "socialurls": [],
+    "_years": [
+      2025
+    ],
+    "~syncedDetailsAt": 1749580595155
+  },
+  {
     "username": "BoD",
     "company": "Apollo Graph",
     "position": "Android Developer",
@@ -2018,6 +2033,21 @@
     "~syncedDetailsAt": 1749501892530
   },
   {
+    "username": "matt_mahoney.28dhc1w9",
+    "company": "",
+    "position": "",
+    "name": "Matt Mahoney",
+    "about": "",
+    "location": "",
+    "url": "",
+    "avatar": "",
+    "socialurls": [],
+    "_years": [
+      2025
+    ],
+    "~syncedDetailsAt": 1749580595155
+  },
+  {
     "username": "matt1575",
     "company": "Apollo GraphQL",
     "position": "CTO + cofounder",
@@ -2154,7 +2184,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "michael.bleigh",
@@ -2192,7 +2223,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "omribruchim",
@@ -2403,7 +2435,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "rickbijkerk54",
@@ -2417,7 +2450,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "robert.balicki",
@@ -2427,7 +2461,7 @@
     "about": "Robert Balicki works as a software engineer at Jetty. He used to have hair down to his shoulders and play in a rock band.",
     "location": "",
     "url": "",
-    "avatar": "//avatars.sched.co/5/8b/18743858/avatar.jpg.320x320px.jpg?947",
+    "avatar": "//avatars.sched.co/5/8b/18743858/avatar.jpg.320x320px.jpg?7d6",
     "socialurls": [],
     "_years": [
       2023,
@@ -2534,7 +2568,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "sanvertarmur",
@@ -2548,7 +2583,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "sasanders26",
@@ -2710,7 +2746,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "siva27",
@@ -2806,7 +2843,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "suresh_muthu",
@@ -2936,7 +2974,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "tristan119",
@@ -3060,7 +3099,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "vmjohnson999",
@@ -3074,7 +3114,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "watson17",
@@ -3103,7 +3144,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "yaacovcr",
@@ -3181,7 +3223,8 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   },
   {
     "username": "zach.fetters",
@@ -3195,6 +3238,7 @@
     "socialurls": [],
     "_years": [
       2025
-    ]
+    ],
+    "~syncedDetailsAt": 1749580595155
   }
 ]
