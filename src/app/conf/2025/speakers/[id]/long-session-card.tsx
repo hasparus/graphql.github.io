@@ -149,11 +149,10 @@ export function LongSessionCard({
               <span className="typography-body-xs">{session.venue}</span>
             </div>
           </div>
-          {/* TODO: Actually add to calendar. Ensure we show this only on this year's events. */}
-          <button className="relative z-[2] flex h-full flex-row items-center justify-center gap-0.5 p-4 text-neu-800 ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100 lg:px-6">
+          {/* <button className="relative z-[2] flex h-full flex-row items-center justify-center gap-0.5 p-4 text-neu-800 ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100 lg:px-6">
             <PlusIcon className="size-4 shrink-0 text-sec-dark" />
             <span className="typography-body-xs">Add to calendar</span>
-          </button>
+          </button> */}
         </footer>
       )}
     </div>
