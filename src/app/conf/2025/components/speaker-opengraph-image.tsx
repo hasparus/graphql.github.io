@@ -4,6 +4,22 @@ import { PinIcon } from "../../_design-system/pixelarticons/pin-icon"
 import { formatSpeakerPosition } from "./format-speaker-position"
 import { GraphQLLogo } from "./graphql-conf-logo-link"
 
+export const colors = {
+  neu0: "hsl(0 0% 100%)",
+  neu50: "hsl(75 57% 97%)",
+  neu100: "hsl(75 15% 95%)",
+  neu200: "hsl(77 14% 90%)",
+  neu300: "hsl(76 14% 85%)",
+  neu400: "hsl(77 14% 80%)",
+  neu500: "hsl(74 14% 70%)",
+  neu600: "hsl(76 15% 60%)",
+  neu700: "hsl(76 15% 40%)",
+  neu800: "hsl(77 14% 20%)",
+  neu900: "hsl(75 15% 5%)",
+  secLighter: "hsl(79 80% 90%)",
+  priBase: "hsl(319 100% 44.1%)",
+}
+
 const RIGHT_COLUMN_WIDTH_PX = 476
 
 interface SpeakerOpengraphImageProps extends React.HTMLAttributes<HTMLElement> {
@@ -22,7 +38,17 @@ export default function SpeakerOpengraphImage({
 }: SpeakerOpengraphImageProps) {
   return (
     <article
-      className="flex h-[630px] w-[1200px] flex-col overflow-hidden border-2 border-neu-300 bg-neu-100"
+      style={{
+        display: "flex",
+        height: "630px",
+        width: "1200px",
+        flexDirection: "column",
+        overflow: "hidden",
+        borderWidth: "2px",
+        backgroundColor: colors.neu100,
+        borderColor: colors.neu600,
+        fontFamily: "'Host Grotesk'",
+      }}
       {...rest}
     >
       <ConferenceOpengraphImageHeader
@@ -31,36 +57,117 @@ export default function SpeakerOpengraphImage({
         location={location}
       />
 
-      <div className="flex">
-        <div className="flex flex-1 flex-col justify-center">
-          <div className="flex flex-1 flex-col justify-center gap-10 pl-10 pr-16">
-            <div className="flex w-[454px] flex-col gap-10">
-              <h3 className="m-0 font-sans text-[88px] font-normal leading-tight text-neu-900">
+      <div style={{ display: "flex" }}>
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: "2.5rem",
+              padding: "2.5rem",
+              paddingRight: "4rem",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "2.5rem",
+              }}
+            >
+              <h3
+                style={{
+                  margin: 0,
+                  fontSize: "88px",
+                  fontWeight: "normal",
+                  lineHeight: "1.25",
+                  color: colors.neu900,
+                }}
+              >
                 {speaker.name}
               </h3>
 
-              <div className="flex items-center gap-8">
-                <span className="font-sans text-[32px] font-normal leading-tight text-neu-700">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "2rem",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "'Host Grotesk'",
+                    fontSize: "32px",
+                    fontWeight: "normal",
+                    lineHeight: "1.25",
+                    color: colors.neu700,
+                  }}
+                >
                   {formatSpeakerPosition(speaker)}
                 </span>
               </div>
             </div>
           </div>
 
-          <footer className="flex items-center border-t-2 border-neu-300 px-16 py-8 pl-10">
-            <span className="font-mono text-2xl font-normal uppercase leading-none text-neu-900">
+          <footer
+            style={{
+              display: "flex",
+              alignItems: "center",
+              borderTop: `2px solid ${colors.neu600}`,
+              paddingLeft: "2.5rem",
+              paddingRight: "4rem",
+              paddingTop: "2rem",
+              paddingBottom: "2rem",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "monospace",
+                fontSize: "1.5rem",
+                fontWeight: "normal",
+                textTransform: "uppercase",
+                lineHeight: "1",
+                color: colors.neu900,
+              }}
+            >
               Speakers
             </span>
           </footer>
         </div>
 
         {speaker.avatar && (
-          <div className="relative flex overflow-hidden border-l-2 border-neu-300">
-            <div className="absolute inset-0 z-[1] bg-sec-lighter mix-blend-multiply" />
+          <div
+            style={{
+              position: "relative",
+              display: "flex",
+              overflow: "hidden",
+              borderLeft: `2px solid ${colors.neu600}`,
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                zIndex: 1,
+                backgroundColor: colors.secLighter,
+                mixBlendMode: "multiply",
+              }}
+            />
             <img
               src={normalizeProtocolRelativeUrl(speaker.avatar)}
               alt=""
-              className="object-cover"
+              style={{
+                objectFit: "cover",
+              }}
               width={RIGHT_COLUMN_WIDTH_PX}
               height={RIGHT_COLUMN_WIDTH_PX}
             />
@@ -81,17 +188,55 @@ export function ConferenceOpengraphImageHeader({
   location: string
 }) {
   return (
-    <header className="flex items-center border-b-2 border-neu-300">
-      <div className="flex flex-1 items-center gap-6 border-r-2 border-neu-300 p-10 pr-16">
-        <div className="flex items-center gap-4">
-          <div className="font-mono font-normal uppercase leading-none text-neu-900">
-            <div className="flex h-[74px] items-center gap-4 text-[40px]/none uppercase">
-              <div className="text-pri-base">
-                <GraphQLLogo className="h-12" />
-              </div>
+    <header
+      style={{
+        display: "flex",
+        alignItems: "center",
+        borderBottom: `2px solid ${colors.neu600}`,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          alignItems: "center",
+          gap: "1.5rem",
+          borderRight: `2px solid ${colors.neu600}`,
+          padding: "2.5rem",
+          paddingRight: "4rem",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <div
+            style={{
+              fontFamily: "monospace",
+              display: "flex",
+              fontWeight: "normal",
+              textTransform: "uppercase",
+              lineHeight: "1",
+              color: colors.neu900,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                height: "74px",
+                alignItems: "center",
+                gap: "1rem",
+                fontSize: "40px",
+                lineHeight: "1",
+                textTransform: "uppercase",
+              }}
+            >
+              <GraphQLLogo
+                style={{ height: "3rem", width: "3rem", color: colors.priBase }}
+              />
               <span>/</span>
-              <div>
-                GraphQLConf <span className="text-pri-base">{year}</span>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                GraphQLConf{" "}
+                <span style={{ color: colors.priBase }}>{year}</span>
               </div>
             </div>
           </div>
@@ -99,32 +244,82 @@ export function ConferenceOpengraphImageHeader({
       </div>
 
       <div
-        className="flex h-full shrink-0 flex-col justify-center"
         style={{
+          display: "flex",
+          height: "100%",
+          flexShrink: 0,
+          flexDirection: "column",
+          justifyContent: "center",
           width: RIGHT_COLUMN_WIDTH_PX,
         }}
       >
-        <div className="flex items-center gap-6 border-b-2 border-neu-300 px-6 py-[26px]">
-          <div className="flex items-center gap-2">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1.5rem",
+            borderBottom: `2px solid ${colors.neu600}`,
+            paddingLeft: "1.5rem",
+            paddingRight: "1.5rem",
+            paddingTop: "26px",
+            paddingBottom: "26px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <CalendarIcon
               width="24"
               height="24"
-              className="-translate-y-px text-pri-base"
+              style={{
+                transform: "translateY(-1px)",
+                color: colors.priBase,
+              }}
             />
-            <span className="font-mono text-xl font-normal uppercase leading-[1.2] text-neu-900">
+            <span
+              style={{
+                fontFamily: "monospace",
+                display: "flex",
+                fontSize: "1.25rem",
+                fontWeight: "normal",
+                textTransform: "uppercase",
+                lineHeight: "1.2",
+                color: colors.neu900,
+              }}
+            >
               {date}, {year}
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-6 px-6 py-[26px]">
-          <div className="flex items-center gap-2">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1.5rem",
+            paddingLeft: "1.5rem",
+            paddingRight: "1.5rem",
+            paddingTop: "26px",
+            paddingBottom: "26px",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <PinIcon
               width="24"
               height="24"
-              className="translate-y-[-.5px] text-pri-base"
+              style={{
+                transform: "translateY(-0.5px)",
+                color: colors.priBase,
+              }}
             />
-            <span className="font-mono text-xl font-normal uppercase leading-[1.2] text-neu-900">
+            <span
+              style={{
+                fontFamily: "monospace",
+                fontSize: "1.25rem",
+                fontWeight: "normal",
+                textTransform: "uppercase",
+                lineHeight: "1.2",
+                color: colors.neu900,
+              }}
+            >
               {location}
             </span>
           </div>
