@@ -6,7 +6,7 @@ import clsx from "clsx"
 import { metadata as layoutMetadata } from "@/app/conf/2023/layout"
 
 import { speakers, schedule } from "../../_data"
-import { ScheduleSession } from "../../../2023/types"
+import { SchedSpeaker, ScheduleSession } from "../../../2023/types"
 
 import { findVideo, SessionVideo } from "./session-video"
 import { NavbarPlaceholder } from "../../components/navbar"
@@ -55,10 +55,15 @@ export default function SessionPage({ params }: SessionProps) {
     notFound()
   }
 
-  // @ts-expect-error -- fixme
-  session.speakers = (session.speakers || []).map(speaker =>
-    speakers.find(s => s.username === speaker.username),
-  )
+  session.speakers = (session.speakers || []).map(speaker => {
+    const found = speakers.find(s => s.username === speaker.username)
+    if (!found) {
+      throw new Error(
+        `Speaker "${speaker.username}" not found for "${session.name}"`,
+      )
+    }
+    return found
+  })
 
   const eventTitle = getEventTitle(
     session,
