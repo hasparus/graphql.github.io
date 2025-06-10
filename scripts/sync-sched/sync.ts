@@ -51,7 +51,9 @@ const unsafeKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>
       process.exit(0)
     }
 
-    const year = parseInt(values.year || new Date().getFullYear().toString())
+    const year = parseInt(
+      values.year || new Date().getFullYear().toString(),
+    ) as ConferenceYear
     const quota = parseInt(
       values.quota || DEFAULT_SPEAKER_DETAILS_REQUEST_QUOTA.toString(),
     )
@@ -72,7 +74,11 @@ const unsafeKeys = Object.keys as <T extends object>(obj: T) => Array<keyof T>
   }
 })()
 
-async function sync(year: number, detailsRequestsQuota: number, token: string) {
+async function sync(
+  year: ConferenceYear,
+  detailsRequestsQuota: number,
+  token: string,
+) {
   const apiUrl = {
     2023: "https://graphqlconf23.sched.com/api",
     2024: "https://graphqlconf2024.sched.com/api",
@@ -110,14 +116,14 @@ async function sync(year: number, detailsRequestsQuota: number, token: string) {
     await thisYearSpeakers.then(speakers =>
       speakers.map(s => ({
         ...s,
-        ["~years"]: [year as ConferenceYear],
+        _years: [year as ConferenceYear],
       })),
     ),
     "username",
     { merge: mergeSpeaker },
   )
 
-  await updateSpeakerDetails(ctx, speakerComparison, detailsRequestsQuota)
+  await updateSpeakerDetails(ctx, speakerComparison, detailsRequestsQuota, year)
 
   printComparison(speakerComparison, "speakers", "username", {
     // we don't remove speakers
@@ -145,6 +151,7 @@ async function updateSpeakerDetails(
   /** mutated in place */
   comparison: Comparison<SchedSpeaker>,
   quota: number,
+  year: ConferenceYear,
 ) {
   const locations = new Map<
     string /* username */,
@@ -165,11 +172,13 @@ async function updateSpeakerDetails(
     ...comparison.changed.map(change => change.new),
     ...comparison.added,
   ]
-  const byUpdateTime = allSpeakers.sort((a, b) => {
-    const aTime = a["~syncedDetailsAt"] ?? 0
-    const bTime = b["~syncedDetailsAt"] ?? 0
-    return aTime - bTime
-  })
+  const byUpdateTime = allSpeakers
+    .filter(x => x._years?.includes(year))
+    .sort((a, b) => {
+      const aTime = a["~syncedDetailsAt"] ?? 0
+      const bTime = b["~syncedDetailsAt"] ?? 0
+      return aTime - bTime
+    })
 
   const toUpdate = byUpdateTime.slice(0, quota)
 
@@ -402,10 +411,10 @@ function mergeSpeaker(
     socialurls: newSpeaker.socialurls?.length
       ? newSpeaker.socialurls
       : oldSpeaker.socialurls,
-    ["~years"]: [
+    ["_years"]: [
       ...new Set([
-        ...(oldSpeaker["~years"] || []),
-        ...(newSpeaker["~years"] || []),
+        ...(oldSpeaker["_years"] || []),
+        ...(newSpeaker["_years"] || []),
       ]),
     ].sort(),
   }

@@ -32,7 +32,6 @@
     "start_time_ts": 1695142800,
     "end_date": "2023-09-19",
     "end_time": "16:30:00",
-    "event_type_sort": 5,
     "description": ""
   },
   {
@@ -68,8 +67,7 @@
     "start_time": "10:30:00",
     "start_time_ts": 1695144600,
     "end_date": "2023-09-19",
-    "end_time": "12:00:00",
-    "event_type_sort": 8
+    "end_time": "12:00:00"
   },
   {
     "event_key": "491989",
@@ -117,7 +115,6 @@
     "start_time_ts": 1695144600,
     "end_date": "2023-09-19",
     "end_time": "12:00:00",
-    "event_type_sort": 9,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/cb/Workshop_ Carmen SanDiego.pdf",
@@ -170,7 +167,6 @@
     "start_time_ts": 1695144600,
     "end_date": "2023-09-19",
     "end_time": "12:00:00",
-    "event_type_sort": 9,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/ac/SF GraphQL Conf 2023.pdf",
@@ -229,7 +225,6 @@
     "start_time_ts": 1695144600,
     "end_date": "2023-09-19",
     "end_time": "12:00:00",
-    "event_type_sort": 9,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/c9/GraphQL Hive Workshop.pdf",
@@ -270,7 +265,6 @@
     "start_time_ts": 1695150000,
     "end_date": "2023-09-19",
     "end_time": "13:00:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -306,8 +300,7 @@
     "start_time": "13:00:00",
     "start_time_ts": 1695153600,
     "end_date": "2023-09-19",
-    "end_time": "14:30:00",
-    "event_type_sort": 8
+    "end_time": "14:30:00"
   },
   {
     "event_key": "2",
@@ -358,8 +351,7 @@
     "start_time": "13:00:00",
     "start_time_ts": 1695153600,
     "end_date": "2023-09-19",
-    "end_time": "14:30:00",
-    "event_type_sort": 9
+    "end_time": "14:30:00"
   },
   {
     "event_key": "488403",
@@ -414,7 +406,6 @@
     "start_time_ts": 1695153600,
     "end_date": "2023-09-19",
     "end_time": "14:30:00",
-    "event_type_sort": 9,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/35/GraphQLConf 2023 Mr Toad Workshop.pdf",
@@ -455,7 +446,6 @@
     "start_time_ts": 1695159000,
     "end_date": "2023-09-19",
     "end_time": "15:00:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -491,8 +481,7 @@
     "start_time": "15:00:00",
     "start_time_ts": 1695160800,
     "end_date": "2023-09-19",
-    "end_time": "16:30:00",
-    "event_type_sort": 8
+    "end_time": "16:30:00"
   },
   {
     "event_key": "4",
@@ -536,8 +525,7 @@
     "start_time": "15:00:00",
     "start_time_ts": 1695160800,
     "end_date": "2023-09-19",
-    "end_time": "16:30:00",
-    "event_type_sort": 9
+    "end_time": "16:30:00"
   },
   {
     "event_key": "511225",
@@ -583,8 +571,7 @@
     "start_time": "15:00:00",
     "start_time_ts": 1695160800,
     "end_date": "2023-09-19",
-    "end_time": "16:30:00",
-    "event_type_sort": 9
+    "end_time": "16:30:00"
   },
   {
     "event_key": "511240",
@@ -619,7 +606,6 @@
     "start_time_ts": 1695220200,
     "end_date": "2023-09-20",
     "end_time": "09:00:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -655,7 +641,6 @@
     "start_time_ts": 1695220200,
     "end_date": "2023-09-20",
     "end_time": "18:30:00",
-    "event_type_sort": 5,
     "description": ""
   },
   {
@@ -700,7 +685,6 @@
     "start_time_ts": 1695225600,
     "end_date": "2023-09-20",
     "end_time": "09:15:00",
-    "event_type_sort": 3,
     "description": ""
   },
   {
@@ -745,8 +729,7 @@
     "start_time": "09:15:00",
     "start_time_ts": 1695226500,
     "end_date": "2023-09-20",
-    "end_time": "09:35:00",
-    "event_type_sort": 3
+    "end_time": "09:35:00"
   },
   {
     "event_key": "22",
@@ -790,8 +773,7 @@
     "start_time": "09:35:00",
     "start_time_ts": 1695227700,
     "end_date": "2023-09-20",
-    "end_time": "09:40:00",
-    "event_type_sort": 3
+    "end_time": "09:40:00"
   },
   {
     "event_key": "23",
@@ -835,8 +817,7 @@
     "start_time": "09:40:00",
     "start_time_ts": 1695228000,
     "end_date": "2023-09-20",
-    "end_time": "10:00:00",
-    "event_type_sort": 3
+    "end_time": "10:00:00"
   },
   {
     "event_key": "24",
@@ -882,7 +863,6 @@
     "start_time_ts": 1695229200,
     "end_date": "2023-09-20",
     "end_time": "10:05:00",
-    "event_type_sort": 3,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/a9/Spoiled for choice (sent).pptx.pdf",
@@ -932,8 +912,7 @@
     "start_time": "10:05:00",
     "start_time_ts": 1695229500,
     "end_date": "2023-09-20",
-    "end_time": "10:15:00",
-    "event_type_sort": 3
+    "end_time": "10:15:00"
   },
   {
     "event_key": "26",
@@ -977,7 +956,6 @@
     "start_time_ts": 1695230100,
     "end_date": "2023-09-20",
     "end_time": "10:30:00",
-    "event_type_sort": 3,
     "description": ""
   },
   {
@@ -1013,7 +991,6 @@
     "start_time_ts": 1695231000,
     "end_date": "2023-09-20",
     "end_time": "10:50:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -1049,7 +1026,6 @@
     "start_time_ts": 1695231000,
     "end_date": "2023-09-20",
     "end_time": "19:00:00",
-    "event_type_sort": 7,
     "description": ""
   },
   {
@@ -1096,7 +1072,6 @@
     "start_time_ts": 1695232200,
     "end_date": "2023-09-20",
     "end_time": "11:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/8e/202309_GraphQL_PH_FAIR.pdf",
@@ -1155,8 +1130,7 @@
     "start_time": "10:50:00",
     "start_time_ts": 1695232200,
     "end_date": "2023-09-20",
-    "end_time": "11:20:00",
-    "event_type_sort": 6
+    "end_time": "11:20:00"
   },
   {
     "event_key": "496594",
@@ -1204,7 +1178,6 @@
     "start_time_ts": 1695232200,
     "end_date": "2023-09-20",
     "end_time": "11:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/41/Future_of_Efficiency.pdf",
@@ -1256,8 +1229,7 @@
     "start_time": "11:30:00",
     "start_time_ts": 1695234600,
     "end_date": "2023-09-20",
-    "end_time": "12:00:00",
-    "event_type_sort": 6
+    "end_time": "12:00:00"
   },
   {
     "event_key": "501216",
@@ -1310,8 +1282,7 @@
     "start_time": "11:30:00",
     "start_time_ts": 1695234600,
     "end_date": "2023-09-20",
-    "end_time": "12:00:00",
-    "event_type_sort": 6
+    "end_time": "12:00:00"
   },
   {
     "event_key": "511243",
@@ -1355,8 +1326,7 @@
     "start_time": "11:30:00",
     "start_time_ts": 1695234600,
     "end_date": "2023-09-20",
-    "end_time": "12:00:00",
-    "event_type_sort": 6
+    "end_time": "12:00:00"
   },
   {
     "event_key": "9",
@@ -1391,7 +1361,6 @@
     "start_time_ts": 1695236400,
     "end_date": "2023-09-20",
     "end_time": "13:30:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -1440,7 +1409,6 @@
     "start_time_ts": 1695241800,
     "end_date": "2023-09-20",
     "end_time": "13:40:00",
-    "event_type_sort": 4,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/a6/GraphQL IRL.pdf",
@@ -1494,7 +1462,6 @@
     "start_time_ts": 1695241800,
     "end_date": "2023-09-20",
     "end_time": "14:00:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/a4/Argo.pdf",
@@ -1548,7 +1515,6 @@
     "start_time_ts": 1695241800,
     "end_date": "2023-09-20",
     "end_time": "14:00:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/f9/GraphQL over Internet.pdf",
@@ -1602,7 +1568,6 @@
     "start_time_ts": 1695242700,
     "end_date": "2023-09-20",
     "end_time": "13:55:00",
-    "event_type_sort": 4,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/37/GraphQLConf_Defer_Caching_v2.pdf",
@@ -1656,7 +1621,6 @@
     "start_time_ts": 1695244200,
     "end_date": "2023-09-20",
     "end_time": "14:40:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/e3/Consuming GraphQL APIs in C#.pptx (1).pdf",
@@ -1710,7 +1674,6 @@
     "start_time_ts": 1695244200,
     "end_date": "2023-09-20",
     "end_time": "14:40:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/e2/mutating_meetup_with_graphql.pdf",
@@ -1764,7 +1727,6 @@
     "start_time_ts": 1695244200,
     "end_date": "2023-09-20",
     "end_time": "14:40:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/cd/Deduplicated Incremental Delivery.pdf",
@@ -1825,7 +1787,6 @@
     "start_time_ts": 1695246600,
     "end_date": "2023-09-20",
     "end_time": "15:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/aa/4 Steps to a Successful GraphQL API Program.pdf",
@@ -1877,8 +1838,7 @@
     "start_time": "14:50:00",
     "start_time_ts": 1695246600,
     "end_date": "2023-09-20",
-    "end_time": "15:20:00",
-    "event_type_sort": 6
+    "end_time": "15:20:00"
   },
   {
     "event_key": "501204",
@@ -1924,8 +1884,7 @@
     "start_time": "14:50:00",
     "start_time_ts": 1695246600,
     "end_date": "2023-09-20",
-    "end_time": "15:20:00",
-    "event_type_sort": 6
+    "end_time": "15:20:00"
   },
   {
     "event_key": "19",
@@ -1960,7 +1919,6 @@
     "start_time_ts": 1695248400,
     "end_date": "2023-09-20",
     "end_time": "15:40:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -2009,7 +1967,6 @@
     "start_time_ts": 1695249600,
     "end_date": "2023-09-20",
     "end_time": "15:50:00",
-    "event_type_sort": 4,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/ef/@defer all the slow things.pdf",
@@ -2063,7 +2020,6 @@
     "start_time_ts": 1695249600,
     "end_date": "2023-09-20",
     "end_time": "16:10:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/8a/GraphQL Conf Presentation 2023 - LWC & UI API.pdf",
@@ -2117,7 +2073,6 @@
     "start_time_ts": 1695249600,
     "end_date": "2023-09-20",
     "end_time": "16:10:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/02/GraphQL Conf.pdf",
@@ -2170,7 +2125,6 @@
     "start_time_ts": 1695250500,
     "end_date": "2023-09-20",
     "end_time": "16:05:00",
-    "event_type_sort": 4,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/39/Open source.pdf",
@@ -2222,7 +2176,6 @@
     "start_time_ts": 1695252000,
     "end_date": "2023-09-20",
     "end_time": "16:50:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/17/Querying Blockchain Data with GraphQL - shared.pdf",
@@ -2276,7 +2229,6 @@
     "start_time_ts": 1695252000,
     "end_date": "2023-09-20",
     "end_time": "16:50:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/6c/GraphQL Conf 2023.pdf",
@@ -2330,7 +2282,6 @@
     "start_time_ts": 1695252000,
     "end_date": "2023-09-20",
     "end_time": "16:50:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/54/graphqlconf.pdf",
@@ -2373,8 +2324,7 @@
     "start_time": "17:00:00",
     "start_time_ts": 1695254400,
     "end_date": "2023-09-20",
-    "end_time": "17:30:00",
-    "event_type_sort": 6
+    "end_time": "17:30:00"
   },
   {
     "event_key": "490843",
@@ -2422,7 +2372,6 @@
     "start_time_ts": 1695254400,
     "end_date": "2023-09-20",
     "end_time": "17:30:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/63/GraphQL+CQRS.pdf",
@@ -2474,7 +2423,6 @@
     "start_time_ts": 1695254400,
     "end_date": "2023-09-20",
     "end_time": "17:30:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/2d/why_relay_is_a_must_for_your_graphql_api.pdf",
@@ -2515,8 +2463,7 @@
     "start_time": "17:30:00",
     "start_time_ts": 1695256200,
     "end_date": "2023-09-20",
-    "end_time": "19:00:00",
-    "event_type_sort": 2
+    "end_time": "19:00:00"
   },
   {
     "event_key": "511239",
@@ -2551,7 +2498,6 @@
     "start_time_ts": 1695306600,
     "end_date": "2023-09-21",
     "end_time": "09:00:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -2587,7 +2533,6 @@
     "start_time_ts": 1695306600,
     "end_date": "2023-09-21",
     "end_time": "16:00:00",
-    "event_type_sort": 5,
     "description": ""
   },
   {
@@ -2632,7 +2577,6 @@
     "start_time_ts": 1695312000,
     "end_date": "2023-09-21",
     "end_time": "09:05:00",
-    "event_type_sort": 3,
     "description": ""
   },
   {
@@ -2677,8 +2621,7 @@
     "start_time": "09:05:00",
     "start_time_ts": 1695312300,
     "end_date": "2023-09-21",
-    "end_time": "09:15:00",
-    "event_type_sort": 3
+    "end_time": "09:15:00"
   },
   {
     "event_key": "30",
@@ -2722,7 +2665,6 @@
     "start_time_ts": 1695312900,
     "end_date": "2023-09-21",
     "end_time": "09:25:00",
-    "event_type_sort": 3,
     "description": ""
   },
   {
@@ -2767,8 +2709,7 @@
     "start_time": "09:25:00",
     "start_time_ts": 1695313500,
     "end_date": "2023-09-21",
-    "end_time": "09:35:00",
-    "event_type_sort": 3
+    "end_time": "09:35:00"
   },
   {
     "event_key": "28",
@@ -2812,8 +2753,7 @@
     "start_time": "09:35:00",
     "start_time_ts": 1695314100,
     "end_date": "2023-09-21",
-    "end_time": "09:55:00",
-    "event_type_sort": 3
+    "end_time": "09:55:00"
   },
   {
     "event_key": "32",
@@ -2894,8 +2834,7 @@
     "start_time": "09:55:00",
     "start_time_ts": 1695315300,
     "end_date": "2023-09-21",
-    "end_time": "10:20:00",
-    "event_type_sort": 3
+    "end_time": "10:20:00"
   },
   {
     "event_key": "33",
@@ -2939,7 +2878,6 @@
     "start_time_ts": 1695316800,
     "end_date": "2023-09-21",
     "end_time": "10:30:00",
-    "event_type_sort": 3,
     "description": ""
   },
   {
@@ -2975,7 +2913,6 @@
     "start_time_ts": 1695317400,
     "end_date": "2023-09-21",
     "end_time": "10:50:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -3011,7 +2948,6 @@
     "start_time_ts": 1695317400,
     "end_date": "2023-09-21",
     "end_time": "17:30:00",
-    "event_type_sort": 7,
     "description": ""
   },
   {
@@ -3060,7 +2996,6 @@
     "start_time_ts": 1695318600,
     "end_date": "2023-09-21",
     "end_time": "11:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/b3/Building Tooling that Speaks GraphQL.pdf",
@@ -3113,7 +3048,6 @@
     "start_time_ts": 1695318600,
     "end_date": "2023-09-21",
     "end_time": "11:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/af/GraphQL Conf_ Exposing All of Wix APIs via GraphQL Automatically_ Centralizing GraphQL Schema Generation.pdf",
@@ -3166,7 +3100,6 @@
     "start_time_ts": 1695318600,
     "end_date": "2023-09-21",
     "end_time": "11:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/48/GraphQL is a superpower for your product manager and designer.pdf",
@@ -3218,8 +3151,7 @@
     "start_time": "11:30:00",
     "start_time_ts": 1695321000,
     "end_date": "2023-09-21",
-    "end_time": "12:00:00",
-    "event_type_sort": 6
+    "end_time": "12:00:00"
   },
   {
     "event_key": "493258",
@@ -3267,7 +3199,6 @@
     "start_time_ts": 1695321000,
     "end_date": "2023-09-21",
     "end_time": "12:00:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/d1/Houdini A GraphQL-First Framework.pdf",
@@ -3321,7 +3252,6 @@
     "start_time_ts": 1695321000,
     "end_date": "2023-09-21",
     "end_time": "12:00:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/3b/Sophisticated Schema Mocking.pdf",
@@ -3362,7 +3292,6 @@
     "start_time_ts": 1695322800,
     "end_date": "2023-09-21",
     "end_time": "13:30:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -3409,8 +3338,7 @@
     "start_time": "13:30:00",
     "start_time_ts": 1695328200,
     "end_date": "2023-09-21",
-    "end_time": "13:40:00",
-    "event_type_sort": 4
+    "end_time": "13:40:00"
   },
   {
     "event_key": "492667",
@@ -3458,7 +3386,6 @@
     "start_time_ts": 1695328200,
     "end_date": "2023-09-21",
     "end_time": "14:00:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/cf/Scaling Schema Cardinality.pdf",
@@ -3510,8 +3437,7 @@
     "start_time": "13:30:00",
     "start_time_ts": 1695328200,
     "end_date": "2023-09-21",
-    "end_time": "14:00:00",
-    "event_type_sort": 6
+    "end_time": "14:00:00"
   },
   {
     "event_key": "511226",
@@ -3557,7 +3483,6 @@
     "start_time_ts": 1695329100,
     "end_date": "2023-09-21",
     "end_time": "13:55:00",
-    "event_type_sort": 4,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/b6/GraphQL Conf 2023 - Rate Limiting.pdf",
@@ -3609,8 +3534,7 @@
     "start_time": "14:10:00",
     "start_time_ts": 1695330600,
     "end_date": "2023-09-21",
-    "end_time": "14:40:00",
-    "event_type_sort": 6
+    "end_time": "14:40:00"
   },
   {
     "event_key": "495993",
@@ -3658,7 +3582,6 @@
     "start_time_ts": 1695330600,
     "end_date": "2023-09-21",
     "end_time": "14:40:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/01/Seddik Benaissa.pdf",
@@ -3708,8 +3631,7 @@
     "start_time": "14:10:00",
     "start_time_ts": 1695330600,
     "end_date": "2023-09-21",
-    "end_time": "14:40:00",
-    "event_type_sort": 6
+    "end_time": "14:40:00"
   },
   {
     "event_key": "498924",
@@ -3764,7 +3686,6 @@
     "start_time_ts": 1695333000,
     "end_date": "2023-09-21",
     "end_time": "15:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/3f/GraphQL Conf 2023 - Adoption of GraphQL in Ads Manager.pdf",
@@ -3818,7 +3739,6 @@
     "start_time_ts": 1695333000,
     "end_date": "2023-09-21",
     "end_time": "15:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/d0/Stephen Spalding - Fixing the Billion Dollar Mistake - Client Controlled Nullability.pdf",
@@ -3872,7 +3792,6 @@
     "start_time_ts": 1695333000,
     "end_date": "2023-09-21",
     "end_time": "15:20:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/aa/Scaling the data access by leveraging GraphQL Federation for S2S.pdf",
@@ -3913,7 +3832,6 @@
     "start_time_ts": 1695334800,
     "end_date": "2023-09-21",
     "end_time": "15:40:00",
-    "event_type_sort": 1,
     "description": ""
   },
   {
@@ -3960,8 +3878,7 @@
     "start_time": "15:40:00",
     "start_time_ts": 1695336000,
     "end_date": "2023-09-21",
-    "end_time": "15:50:00",
-    "event_type_sort": 4
+    "end_time": "15:50:00"
   },
   {
     "event_key": "494695",
@@ -4009,7 +3926,6 @@
     "start_time_ts": 1695336000,
     "end_date": "2023-09-21",
     "end_time": "16:10:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/ce/Improving User Experiences with a Nullable Schema_ GraphQL Conf 2023.pdf",
@@ -4059,8 +3975,7 @@
     "start_time": "15:40:00",
     "start_time_ts": 1695336000,
     "end_date": "2023-09-21",
-    "end_time": "16:10:00",
-    "event_type_sort": 6
+    "end_time": "16:10:00"
   },
   {
     "event_key": "14",
@@ -4104,7 +4019,6 @@
     "start_time_ts": 1695336900,
     "end_date": "2023-09-21",
     "end_time": "16:05:00",
-    "event_type_sort": 4,
     "description": ""
   },
   {
@@ -4151,8 +4065,7 @@
     "start_time": "16:10:00",
     "start_time_ts": 1695337800,
     "end_date": "2023-09-21",
-    "end_time": "16:20:00",
-    "event_type_sort": 4
+    "end_time": "16:20:00"
   },
   {
     "event_key": "38",
@@ -4200,7 +4113,6 @@
     "start_time_ts": 1695338400,
     "end_date": "2023-09-21",
     "end_time": "16:50:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/70/Migrating Legacy Services to Federated GraphQL.pdf",
@@ -4252,8 +4164,7 @@
     "start_time": "16:20:00",
     "start_time_ts": 1695338400,
     "end_date": "2023-09-21",
-    "end_time": "16:50:00",
-    "event_type_sort": 6
+    "end_time": "16:50:00"
   },
   {
     "event_key": "511242",
@@ -4299,7 +4210,6 @@
     "start_time_ts": 1695340800,
     "end_date": "2023-09-21",
     "end_time": "17:30:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/c0/Dataloader_3.0_WunderGraph_Jens_Neuse_slides.pdf",
@@ -4355,8 +4265,7 @@
     "start_time": "17:00:00",
     "start_time_ts": 1695340800,
     "end_date": "2023-09-21",
-    "end_time": "17:30:00",
-    "event_type_sort": 6
+    "end_time": "17:30:00"
   },
   {
     "event_key": "37",
@@ -4404,7 +4313,6 @@
     "start_time_ts": 1695340800,
     "end_date": "2023-09-21",
     "end_time": "17:30:00",
-    "event_type_sort": 6,
     "files": [
       {
         "path": "https://static.sched.com/hosted_files/graphqlconf23/a3/ashpak_graphql_conf.pdf",

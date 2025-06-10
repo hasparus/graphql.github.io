@@ -110,7 +110,7 @@ export default function SessionPage({ params }: SessionProps) {
     <div className="bg-[#f4f6f8]">
       <div className="container">
         <div className="py-10">
-          <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 text-[#333333] md:container xs:px-0 lg:justify-between">
+          <section className="mx-auto min-h-[80vh] flex-col justify-center px-2 text-[#333333] md:container lg:justify-between">
             <BackLink year="2024" kind="schedule" />
             <iframe
               className="mx-auto mt-6 aspect-video w-full max-w-4xl rounded-md"
