@@ -106,7 +106,7 @@ export function LongSessionCard({
               // ideally, we'd display the duration of the video, not the projected duration of the talk
               <div className="flex shrink-0 items-center gap-0.5">
                 <ClockIcon className="size-3" />
-                <span className="typography-body-xs text-neu-600">
+                <span className="typography-body-xs text-neu-800">
                   {Math.round(eventDurationMs / (1000 * 60))} min
                 </span>
               </div>
