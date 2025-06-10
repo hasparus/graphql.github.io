@@ -5,7 +5,7 @@ import { Tag } from "@/app/conf/_design-system/tag"
 import ReloadIcon from "@/app/conf/_design-system/pixelarticons/reload.svg?svgr"
 import PlayIcon from "@/app/conf/_design-system/pixelarticons/play.svg?svgr"
 
-import { returningSpeakers, speakerSessions } from "../_data"
+import { speakerSessions } from "../_data"
 import { eventsColors } from "../utils"
 
 export function SpeakerTags({
@@ -31,7 +31,7 @@ export function SpeakerTags({
       )}
 
       <Tag color="hsl(var(--color-neu-500))">
-        {returningSpeakers.has(speaker.username) ? (
+        {speaker._years.length > 1 ? (
           <>
             <ReloadIcon className="-mx-0.5 size-3" />
             returning speaker
