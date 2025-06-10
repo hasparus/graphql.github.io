@@ -230,7 +230,7 @@ async function updateSpeakerDetails(
   )
   const nowUnchanged = comparison.changed
     .filter(change => deepStrictEqualWithoutInternals(change.old, change.new))
-    .map(change => change.old)
+    .map(change => change.new)
 
   comparison.changed = actuallyChanged
   comparison.unchanged.push(...nowUnchanged)
