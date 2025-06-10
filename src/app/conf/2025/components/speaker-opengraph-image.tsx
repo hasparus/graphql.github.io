@@ -58,7 +58,7 @@ export default function SpeakerOpengraphImage({
           <div className="relative flex overflow-hidden border-l-2 border-neu-300">
             <div className="absolute inset-0 z-[1] bg-sec-lighter mix-blend-multiply" />
             <img
-              src={speaker.avatar}
+              src={normalizeProtocolRelativeUrl(speaker.avatar)}
               alt=""
               className="object-cover"
               width={RIGHT_COLUMN_WIDTH_PX}
@@ -132,4 +132,11 @@ export function ConferenceOpengraphImageHeader({
       </div>
     </header>
   )
+}
+
+export function normalizeProtocolRelativeUrl(url: string) {
+  if (url.startsWith("//")) {
+    return `https:${url}`
+  }
+  return url
 }
