@@ -153,7 +153,7 @@ export default function SpeakerOpengraphImage({
               borderLeft: `2px solid ${colors.neu600}`,
             }}
           >
-            <div
+            {/* <div
               style={{
                 position: "absolute",
                 inset: 0,
@@ -170,7 +170,18 @@ export default function SpeakerOpengraphImage({
               }}
               width={RIGHT_COLUMN_WIDTH_PX}
               height={RIGHT_COLUMN_WIDTH_PX}
-            />
+            /> */}
+            <svg
+              viewBox={`0 0 ${RIGHT_COLUMN_WIDTH_PX} ${RIGHT_COLUMN_WIDTH_PX}`}
+              width={RIGHT_COLUMN_WIDTH_PX}
+              height={RIGHT_COLUMN_WIDTH_PX}
+            >
+              <image
+                href={normalizeProtocolRelativeUrl(speaker.avatar)}
+                width={RIGHT_COLUMN_WIDTH_PX}
+                height={RIGHT_COLUMN_WIDTH_PX}
+              />
+            </svg>
           </div>
         )}
       </div>
