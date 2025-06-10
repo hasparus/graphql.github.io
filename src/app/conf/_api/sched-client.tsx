@@ -179,8 +179,9 @@ function preprocessDescription(description: string | undefined | null): string {
 }
 
 function shapeSpeaker(user: SchedSpeaker): SchedSpeaker {
-  const res = {
+  const res: SchedSpeaker = {
     ...user,
+    _years: user._years || [],
     socialurls: user.socialurls || [],
     about: preprocessDescription(user.about),
   }

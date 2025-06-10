@@ -26,7 +26,7 @@ export type SchedSpeaker = {
   socialurls: { service: string; url: string }[]
   /* unix timestamp, ignored when diffing */
   ["~syncedDetailsAt"]?: number
-  /* merged on conflict */
+  /* added on export, merged on conflict */
   _years: ConferenceYear[]
 }
 
