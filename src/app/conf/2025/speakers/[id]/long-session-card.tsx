@@ -56,7 +56,7 @@ export function LongSessionCard({
   return (
     <div
       className={clsx(
-        "group relative border border-neu-200 bg-neu-0 dark:border-neu-100",
+        "group relative flex flex-col justify-between border border-neu-200 bg-neu-0 dark:border-neu-100",
         className,
       )}
       {...props}

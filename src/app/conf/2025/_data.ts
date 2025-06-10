@@ -19,3 +19,33 @@ for (const session of schedule) {
     speakerSessions.get(speaker.username)!.push(session)
   }
 }
+
+export const previousEditionSessions = new Map<
+  SpeakerUsername,
+  ScheduleSession[]
+>()
+
+{
+  const schedule2023 = require("../../../../scripts/sync-sched/schedule-2023.json")
+  const schedule2024 = require("../../../../scripts/sync-sched/schedule-2024.json")
+
+  for (const session of schedule2023) {
+    for (const speaker of session.speakers || []) {
+      if (!previousEditionSessions.has(speaker.username)) {
+        previousEditionSessions.set(speaker.username, [])
+      }
+
+      previousEditionSessions.get(speaker.username)!.push(session)
+    }
+  }
+
+  for (const session of schedule2024) {
+    for (const speaker of session.speakers || []) {
+      if (!previousEditionSessions.has(speaker.username)) {
+        previousEditionSessions.set(speaker.username, [])
+      }
+
+      previousEditionSessions.get(speaker.username)!.push(session)
+    }
+  }
+}

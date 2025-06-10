@@ -3,7 +3,6 @@ import clsx from "clsx"
 import { SchedSpeaker } from "@/app/conf/2023/types"
 import { Tag } from "@/app/conf/_design-system/tag"
 import ReloadIcon from "@/app/conf/_design-system/pixelarticons/reload.svg?svgr"
-import PlayIcon from "@/app/conf/_design-system/pixelarticons/play.svg?svgr"
 
 import { speakerSessions } from "../_data"
 import { eventsColors } from "../utils"
@@ -38,7 +37,8 @@ export function SpeakerTags({
           </>
         ) : (
           <>
-            <PlayIcon className="-mx-1 size-3" /> first time speaker
+            {/* todo: this should probably be a tag manually added in Sched because it suggests it's a debut talk  */}
+            {/* <PlayIcon className="-mx-1 size-3" /> first time speaker */}
           </>
         )}
       </Tag>
