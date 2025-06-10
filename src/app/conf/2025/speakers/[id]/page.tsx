@@ -194,7 +194,7 @@ function SpeakerSessions({
       )}
     >
       {sessions.map(session => (
-        <LongSessionCard key={session.id} session={session} year="2025" />
+        <LongSessionCard key={session.id} session={session} />
       ))}
     </div>
   )
