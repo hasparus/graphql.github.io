@@ -89,7 +89,7 @@ export function SpeakerCard({
       </div>
       <Anchor
         href={`/conf/${year}/speakers/${speaker.username}`}
-        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100"
+        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100 dark:hover:bg-sec-base/[.05]"
         aria-label={`See ${speaker.name.split(" ")[0]}'s sessions`}
       />
     </article>

@@ -19,7 +19,11 @@ export function SpeakerLinks({
   ...rest
 }: SpeakerLinksProps) {
   const speakerUrls = SocialIconType.all
-    .map(social => speaker.socialurls.find(x => x.service === social))
+    .map(social =>
+      speaker.socialurls.find(
+        x => x.service.toLowerCase() === social.toLowerCase(),
+      ),
+    )
     .concat([{ service: "website", url: speaker.url || "" }])
     .filter((x): x is Exclude<typeof x, undefined> => !!x?.url)
     .slice(-3)
