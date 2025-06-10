@@ -1,5 +1,6 @@
 export type ScheduleSession = {
   id: string
+  active: "Y" | "N"
   audience: string
   description: string
   event_end: string
