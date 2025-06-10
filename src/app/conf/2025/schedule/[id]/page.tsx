@@ -55,10 +55,15 @@ export default function SessionPage({ params }: SessionProps) {
     notFound()
   }
 
-  // @ts-expect-error -- fixme
-  session.speakers = (session.speakers || []).map(speaker =>
-    speakers.find(s => s.username === speaker.username),
-  )
+  session.speakers = (session.speakers || []).map(speaker => {
+    const s = speakers.find(s => s.username === speaker.username)
+    if (!s) {
+      throw new Error(
+        `Speaker "${speaker.username}" not found for "${session.name}"`,
+      )
+    }
+    return s
+  })
 
   const eventTitle = getEventTitle(
     session,

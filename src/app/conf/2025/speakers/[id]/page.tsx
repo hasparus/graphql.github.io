@@ -24,7 +24,11 @@ type SpeakerProps = { params: { id: string } }
 
 export function generateMetadata({ params }: SpeakerProps): Metadata {
   const decodedId = decodeURIComponent(params.id)
-  const speaker = speakers.find(s => s.username === decodedId)!
+  const speaker = speakers.find(s => s.username === decodedId)
+
+  if (!speaker) {
+    throw new Error(`Speaker "${decodedId}" not found for details page`)
+  }
 
   const keywords = [speaker.name, speaker.company, speaker.position].filter(
     Boolean,
@@ -46,8 +50,9 @@ export function generateStaticParams() {
 
 export default function SpeakerPage({ params }: SpeakerProps) {
   const speaker = speakers.find(s => s.username === params.id)
+
   if (!speaker) {
-    notFound()
+    throw new Error(`Speaker "${params.id}" not found for details page`)
   }
 
   return (
