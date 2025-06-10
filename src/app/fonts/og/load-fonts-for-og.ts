@@ -21,9 +21,9 @@ export async function loadFontsForOG(): Promise<FontOptions[]> {
       data: await readFile(resolve(cwd, dirname, "HostGrotesk-Regular.ttf")),
       name: "Host Grotesk",
     },
-    // {
-    //   data: await readFile(resolve(cwd, dirname, "CommitMono-400-Regular.otf")),
-    //   name: "Commit Mono",
-    // },
+    {
+      data: await readFile(resolve(cwd, dirname, "CommitMono-400-Regular.ttf")),
+      name: "Commit Mono",
+    },
   ]
 }

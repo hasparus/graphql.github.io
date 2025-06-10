@@ -131,7 +131,7 @@ export default function SpeakerOpengraphImage({
           >
             <span
               style={{
-                fontFamily: "monospace",
+                fontFamily: "'Commit Mono'",
                 fontSize: "1.5rem",
                 fontWeight: "normal",
                 textTransform: "uppercase",
@@ -204,12 +204,13 @@ export function ConferenceOpengraphImageHeader({
           borderRight: `2px solid ${colors.neu600}`,
           padding: "2.5rem",
           paddingRight: "4rem",
+          height: "154px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <div
             style={{
-              fontFamily: "monospace",
+              fontFamily: "'Commit Mono'",
               display: "flex",
               fontWeight: "normal",
               textTransform: "uppercase",
@@ -276,7 +277,7 @@ export function ConferenceOpengraphImageHeader({
             />
             <span
               style={{
-                fontFamily: "monospace",
+                fontFamily: "'Commit Mono'",
                 display: "flex",
                 fontSize: "1.25rem",
                 fontWeight: "normal",
@@ -312,7 +313,7 @@ export function ConferenceOpengraphImageHeader({
             />
             <span
               style={{
-                fontFamily: "monospace",
+                fontFamily: "'Commit Mono'",
                 fontSize: "1.25rem",
                 fontWeight: "normal",
                 textTransform: "uppercase",

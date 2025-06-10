@@ -2,6 +2,8 @@ import SpeakerOpengraphImage from "@/app/conf/2025/components/speaker-opengraph-
 import ScheduleOpengraphImage from "@/app/conf/2025/components/session-opengraph-image"
 import { SchedSpeaker } from "@/app/conf/2023/types"
 
+// todo: the images probably won't work after conversion
+
 /**
  * This is cheaper than maintaining a Storybook config.
  */
