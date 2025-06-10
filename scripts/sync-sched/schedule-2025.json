@@ -42,7 +42,6 @@
     "start_time_ts": 1757318400,
     "end_date": "2025-09-08",
     "end_time": "09:15:00",
-    "event_type_sort": "2",
     "description": ""
   },
   {
@@ -87,7 +86,6 @@
     "start_time": "10:30:00",
     "start_time_ts": 1757496600,
     "end_date": "2025-09-10",
-    "end_time": "10:45:00",
-    "event_type_sort": "1"
+    "end_time": "10:45:00"
   }
 ]
