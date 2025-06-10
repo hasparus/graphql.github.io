@@ -19,7 +19,7 @@ export function SessionTags({ session, className, ...rest }: SessionTagsProps) {
   return (
     <div className={clsx("flex flex-wrap gap-2 md:gap-3", className)} {...rest}>
       {eventType && (
-        <Tag color={eventsColors[session.event_type]}>{eventType}</Tag>
+        <Tag color={eventsColors[session.event_type || ""]}>{eventType}</Tag>
       )}
       {session.audience && (
         <Tag

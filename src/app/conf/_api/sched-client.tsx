@@ -119,8 +119,17 @@ export async function getSchedule(
       // so it creates noise in our diffs, but we don't use it anyway.
       delete (session as Record<string, unknown>)["event_type_sort"]
 
+      let event_type = session.event_type || ""
+      let event_subtype = session.event_subtype || ""
+
+      if (!event_type && event_subtype.includes(" - ")) {
+        ;[event_type, event_subtype] = event_subtype.split(" - ")
+      }
+
       return {
         ...session,
+        event_type,
+        event_subtype,
         description: preprocessDescription(description),
       }
     })

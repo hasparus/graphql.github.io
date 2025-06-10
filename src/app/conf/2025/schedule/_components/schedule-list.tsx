@@ -163,14 +163,17 @@ export function ScheduleList({
                 className="typography-body-sm bg-neu-200 pb-px dark:bg-neu-50"
               >
                 <h3
-                  className="bg-neu-50 py-4 dark:bg-neu-0 lg:mb-px"
+                  className="bg-neu-50 py-4 dark:bg-neu-0"
                   id={`day-${index + 1}`}
                 >
                   {format(parseISO(date), "EEEE, MMMM d")}
                 </h3>
                 {Object.entries(concurrentSessionsGroup).map(
                   ([sessionDate, sessions]) => (
-                    <div key={`concurrent sessions on ${sessionDate}`}>
+                    <div
+                      key={`concurrent sessions on ${sessionDate}`}
+                      className="lg:mt-px"
+                    >
                       <div className="mr-px flex flex-col max-lg:ml-px lg:flex-row">
                         <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:mb-px max-lg:mt-px max-lg:border-x lg:mr-px">
                           <span className="typography-body-sm mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
