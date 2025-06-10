@@ -26,6 +26,10 @@ export function SessionVideo({ video, className }: SessionVideoProps) {
 }
 
 export function findVideo(event: ScheduleSession, eventTitle: string) {
+  if (videos.length === 0) {
+    return null
+  }
+
   const result = findBestMatch(
     `${eventTitle} ${event.speakers!.map(e => e.name).join(" ")}`,
     videos.map(e => e.title),
