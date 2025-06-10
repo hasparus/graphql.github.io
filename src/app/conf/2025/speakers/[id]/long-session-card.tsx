@@ -29,7 +29,7 @@ export function LongSessionCard({
 
   const formattedDate = eventStart.toLocaleDateString("en-US", {
     day: "numeric",
-    month: "short",
+    month: "long",
   })
 
   const year = eventStart.getFullYear()
@@ -70,7 +70,7 @@ export function LongSessionCard({
         <div className="flex items-start justify-between gap-6">
           <SessionTags session={session} />
           {year !== new Date().getFullYear() && (
-            <div className="flex items-center gap-2 border border-neu-400 bg-neu-100 px-2 py-1">
+            <div className="flex items-center gap-2 border border-neu-400 bg-neu-100 px-2 py-1 dark:border-neu-100 dark:bg-neu-50">
               <span className="typography-menu text-neu-900">{year}</span>
             </div>
           )}
@@ -128,16 +128,14 @@ export function LongSessionCard({
         </footer>
       ) : (
         <footer className="flex items-center border-t border-neu-200 text-neu-800 dark:border-neu-100">
-          <div className="flex flex-1 items-center gap-2 border-r border-neu-200 p-4 dark:border-neu-100 lg:p-6 xl:gap-6">
-            <div className="contents flex-col md:max-xl:flex">
-              <div className="flex items-center gap-0.5 whitespace-pre">
-                <CalendarIcon className="size-4 shrink-0 -translate-y-px text-sec-dark" />
-                <span className="typography-body-xs">{formattedDate}</span>
-              </div>
-              <div className="flex items-center gap-0.5">
-                <ClockIcon className="size-4 shrink-0 text-sec-dark" />
-                <span className="typography-body-xs">{formattedTime}</span>
-              </div>
+          <div className="flex flex-1 items-center gap-2 border-r border-neu-200 p-4 dark:border-neu-100 lg:gap-4 lg:p-6 xl:gap-6">
+            <div className="flex items-center gap-0.5 whitespace-pre">
+              <CalendarIcon className="size-4 shrink-0 -translate-y-px text-sec-dark" />
+              <span className="typography-body-xs">{formattedDate}</span>
+            </div>
+            <div className="flex items-center gap-0.5">
+              <ClockIcon className="size-4 shrink-0 text-sec-dark" />
+              <span className="typography-body-xs">{formattedTime}</span>
             </div>
             <div className="flex items-center gap-0.5">
               <PinIcon className="size-4 shrink-0 text-sec-dark" />
