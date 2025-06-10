@@ -34,7 +34,11 @@ function getEventTitle(event: ScheduleSession, speakers: string[]): string {
 type SessionProps = { params: { id: string } }
 
 export function generateMetadata({ params }: SessionProps): Metadata {
-  const event = schedule.find(s => s.id === params.id)!
+  const event = schedule.find(s => s.id === params.id)
+
+  if (!event) {
+    notFound()
+  }
 
   const keywords = [
     event.event_type,
@@ -77,14 +81,20 @@ const Tag = ({
 
 export default function SessionPage({ params }: SessionProps) {
   const event = schedule.find(s => s.id === params.id)
+
   if (!event) {
     notFound()
   }
 
-  // @ts-expect-error -- fixme
-  event.speakers = (event.speakers || []).map(speaker =>
-    speakers.find(s => s.username === speaker.username),
-  )
+  event.speakers = (event.speakers || []).map(speaker => {
+    const s = speakers.find(s => s.username === speaker.username)
+    if (!s) {
+      throw new Error(
+        `Speaker "${speaker.username}" not found for "${event.name}"`,
+      )
+    }
+    return s
+  })
 
   const eventType = event.event_type.endsWith("s")
     ? event.event_type.slice(0, -1)
