@@ -17,9 +17,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
 
-      # Commented out until later PR that changes the ESLint config
-      # - name: Run ESLint
-      #   run: pnpm lint --quiet
+      - name: Run ESLint
+        run: pnpm lint --quiet
 
       - name: Run Prettier Check
         run: pnpm format:check

@@ -1,5 +1,6 @@
 export type ScheduleSession = {
   id: string
+  active: "Y" | "N"
   audience: string
   description: string
   event_end: string
@@ -8,6 +9,10 @@ export type ScheduleSession = {
   event_type: string
   name: string
   venue: string
+  /**
+   * This is actually audience.
+   */
+  company: string
   speakers?: SchedSpeaker[]
   files?: { name: string; path: string }[]
 }

@@ -4,7 +4,6 @@ import { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
 import { readSpeakers } from "../_api/sched-data"
 
 export const schedule: ScheduleSession[] = require("../../../../scripts/sync-sched/schedule-2025.json")
-export const speakers: SchedSpeaker[] = readSpeakers(2025)
 
 type SpeakerUsername = SchedSpeaker["username"]
 
@@ -17,5 +16,39 @@ for (const session of schedule) {
     }
 
     speakerSessions.get(speaker.username)!.push(session)
+  }
+}
+
+export const speakers: SchedSpeaker[] = readSpeakers(2025).filter(speaker =>
+  speakerSessions.has(speaker.username),
+)
+
+export const previousEditionSessions = new Map<
+  SpeakerUsername,
+  ScheduleSession[]
+>()
+
+{
+  const schedule2023 = require("../../../../scripts/sync-sched/schedule-2023.json")
+  const schedule2024 = require("../../../../scripts/sync-sched/schedule-2024.json")
+
+  for (const session of schedule2023) {
+    for (const speaker of session.speakers || []) {
+      if (!previousEditionSessions.has(speaker.username)) {
+        previousEditionSessions.set(speaker.username, [])
+      }
+
+      previousEditionSessions.get(speaker.username)!.push(session)
+    }
+  }
+
+  for (const session of schedule2024) {
+    for (const speaker of session.speakers || []) {
+      if (!previousEditionSessions.has(speaker.username)) {
+        previousEditionSessions.set(speaker.username, [])
+      }
+
+      previousEditionSessions.get(speaker.username)!.push(session)
+    }
   }
 }
