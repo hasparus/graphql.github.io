@@ -1,8 +1,7 @@
 import { Metadata } from "next"
 
 import { schedule } from "../_data"
-import { ScheduleList } from "./_components/schedule-list"
-import { filterCategories2024 } from "./_components/filter-categories"
+import { ScheduleList, FiltersConfig } from "./_components/schedule-list"
 import { eventsColors, HERO_MARQUEE_ITEMS } from "../utils"
 import { Button } from "../../_design-system/button"
 import { GET_TICKETS_LINK } from "../links"
@@ -12,6 +11,12 @@ import { MarqueeRows } from "../components/marquee-rows"
 import { FAQ } from "../faq"
 
 const year = "2025"
+
+const FILTERS: FiltersConfig = {
+  event_type: "Session Format",
+  event_subtype: "Talk Category",
+  company: "Audience",
+}
 
 export const metadata: Metadata = {
   title: "Schedule",
@@ -33,11 +38,7 @@ export default function SchedulePage() {
           eventsColors={eventsColors}
           year={year}
           scheduleData={schedule}
-          filterFields={{
-            event_subtype: "Talk Category",
-            event_type: "Session Format",
-            company: "Audience",
-          }}
+          filterFields={FILTERS}
         />
       </div>
       <div className="gql-conf-navbar-strip border-t border-neu-200 bg-neu-0 py-8 text-neu-900 before:bg-white/40 dark:border-neu-100 before:dark:bg-blk/30 xl:py-16">

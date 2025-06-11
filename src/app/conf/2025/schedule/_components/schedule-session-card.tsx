@@ -14,16 +14,14 @@ function isString(x: unknown): x is string {
 
 export function ScheduleSessionCard({
   session,
-  showEventType,
   year,
   eventsColors,
 }: {
   session: ScheduleSession
-  showEventType: boolean | undefined
   year: `202${number}`
   eventsColors: Record<string, string>
 }) {
-  const eventType = session.event_type
+  let eventType = session.event_type
 
   const speakers = session.speakers
     ? isString(session.speakers)
@@ -38,11 +36,12 @@ export function ScheduleSessionCard({
     speakers.map(s => s.name),
   )
 
+  if (eventType === eventTitle) eventType = ""
+
   const eventColor = eventsColors[session.event_type]
 
   return session.event_type === "Breaks" ? (
     <div className="flex size-full items-center bg-neu-0 px-4 py-2 font-normal">
-      {showEventType ? eventType + " / " : ""}
       {eventTitle}
     </div>
   ) : (
@@ -63,7 +62,6 @@ export function ScheduleSessionCard({
           </Tag>
         )}
         <span className="flex h-full flex-col justify-between gap-y-2">
-          {showEventType ? eventType + " / " : ""}
           <span className="typography-body-md">{eventTitle}</span>
           <span className="flex flex-col">
             {(speakers?.length || 0) > 0 && (

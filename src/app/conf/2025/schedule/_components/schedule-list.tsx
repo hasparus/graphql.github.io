@@ -17,6 +17,11 @@ import {
   ResetFiltersButton,
 } from "./filters"
 
+export interface FiltersConfig
+  extends Partial<
+    Record<keyof ScheduleSession /* key */, string /* label */>
+  > {}
+
 function getSessionsByDay(
   scheduleData: ScheduleSession[],
   filterStates: FilterStates,
@@ -27,7 +32,8 @@ function getSessionsByDay(
 
   const states = Object.entries<FilterStates[keyof FilterStates]>(filterStates)
   const concurrentSessions: ConcurrentSessions = {}
-  for (const session of filteredSortedSchedule) {
+
+  filteredSortedSchedule.forEach(session => {
     for (const [property, filterState] of states) {
       if (
         filterState &&
@@ -36,11 +42,11 @@ function getSessionsByDay(
           session[property as keyof ScheduleSession] as string,
         )
       ) {
-        continue
+        return
       }
     }
     ;(concurrentSessions[session.event_start] ||= []).push(session)
-  }
+  })
 
   const sessionsByDay: ScheduleSessionsByDay = {}
   Object.entries(concurrentSessions).forEach(([date, sessions]) => {
@@ -59,23 +65,21 @@ function getSessionsByDay(
   return sessionsByDay
 }
 
-interface Props {
-  showEventType?: boolean
+export interface ScheduleListProps {
   showFilter?: boolean
   scheduleData: ScheduleSession[]
   year: `202${number}`
   eventsColors: Record<string, string>
-  filterFields: Partial<Record<keyof ScheduleSession, string /* label */>>
+  filterFields: FiltersConfig
 }
 
 export function ScheduleList({
-  showEventType,
   showFilter = true,
   scheduleData,
   year,
   eventsColors,
   filterFields,
-}: Props): ReactElement {
+}: ScheduleListProps): ReactElement {
   const [filtersState, setFiltersState] = useState<FilterStates>(() =>
     FilterStates.initial(
       Object.keys(filterFields) as (keyof ScheduleSession)[],
@@ -165,7 +169,6 @@ export function ScheduleList({
                             <ScheduleSessionCard
                               key={session.id}
                               session={session}
-                              showEventType={showEventType}
                               year={year}
                               eventsColors={eventsColors}
                             />
