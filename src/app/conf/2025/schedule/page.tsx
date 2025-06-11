@@ -30,10 +30,14 @@ export default function SchedulePage() {
       </Hero>
       <div className="gql-conf-container gql-conf-section 2xl:!px-24">
         <ScheduleList
-          filterCategories={filterCategories2024}
           eventsColors={eventsColors}
           year={year}
           scheduleData={schedule}
+          filterFields={{
+            event_subtype: "Talk Category",
+            event_type: "Session Format",
+            company: "Audience",
+          }}
         />
       </div>
       <div className="gql-conf-navbar-strip border-t border-neu-200 bg-neu-0 py-8 text-neu-900 before:bg-white/40 dark:border-neu-100 before:dark:bg-blk/30 xl:py-16">

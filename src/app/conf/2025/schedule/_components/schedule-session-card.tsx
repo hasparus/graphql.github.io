@@ -1,12 +1,11 @@
 import React from "react"
 
-import { SchedSpeaker } from "@/app/conf/2023/types"
+import { SchedSpeaker, ScheduleSession } from "@/app/conf/_api/sched-types"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { Tag } from "@/app/conf/_design-system/tag"
 
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 
-import { type ScheduleSession } from "./session-list"
 import { getEventTitle } from "../../utils"
 
 function isString(x: unknown): x is string {
@@ -24,9 +23,7 @@ export function ScheduleSessionCard({
   year: `202${number}`
   eventsColors: Record<string, string>
 }) {
-  const eventType = session.event_type.endsWith("s")
-    ? session.event_type.slice(0, -1)
-    : session.event_type
+  const eventType = session.event_type
 
   const speakers = session.speakers
     ? isString(session.speakers)
@@ -57,8 +54,11 @@ export function ScheduleSessionCard({
         aria-label={`Read more about "${eventTitle}" by ${speakers.map(s => s.name).join(", ")}`}
       />
       <span className="flex h-full flex-col justify-start">
-        {eventColor && (
-          <Tag className="mb-3" color={eventColor}>
+        {eventType && (
+          <Tag
+            className="mb-3"
+            color={eventColor || "hsl(var(--color-neu-300))"}
+          >
             {eventType}
           </Tag>
         )}

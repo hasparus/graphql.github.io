@@ -1,6 +1,13 @@
 import clsx from "clsx"
 import { useState } from "react"
-import { Combobox } from "@headlessui/react"
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+  ComboboxButton,
+  Label,
+} from "@headlessui/react"
 
 import { Tag } from "@/app/conf/_design-system/tag"
 import { Button } from "@/app/conf/_design-system/button"
@@ -8,8 +15,41 @@ import { Button } from "@/app/conf/_design-system/button"
 import CloseIcon from "@/app/conf/_design-system/pixelarticons/close.svg?svgr"
 import CaretDownIcon from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
 import { eventsColors } from "../../utils"
+import { ScheduleSession } from "@/app/conf/_api/sched-types"
+
+export interface FilterCategoryConfig {
+  property: keyof ScheduleSession
+  label: string
+  options: string[]
+}
+
+export const FilterCategoryConfig = {
+  fromFields: (
+    fields: Partial<Record<keyof ScheduleSession, string /* label */>>,
+    scheduleData: ScheduleSession[],
+  ) => {
+    return Object.entries(fields).map(
+      ([field, label]): FilterCategoryConfig => ({
+        property: field as keyof ScheduleSession,
+        label,
+        options: Array.from(
+          new Set(scheduleData.map(session => session[field])),
+        ).filter((x): x is string => !!x && typeof x === "string"),
+      }),
+    )
+  },
+}
+
+export type CategoryName = keyof ScheduleSession
+
+export interface FilterStates extends Partial<Record<CategoryName, string[]>> {}
+export const FilterStates = {
+  initial: (fields: Array<keyof ScheduleSession>) =>
+    Object.fromEntries(fields.map(field => [field, []])),
+}
+
 type FiltersProps = {
-  categories: { name: string; options: string[] }[]
+  categories: FilterCategoryConfig[]
   filterState: Record<string, string[]>
   onFilterChange: (category: string, newSelectedOptions: string[]) => void
 }
@@ -23,14 +63,14 @@ export function Filters({
     <div className="flex flex-wrap justify-stretch gap-x-2 gap-y-4 pb-10">
       {categories.map(category => (
         <FiltersCombobox
-          key={category.name}
-          label={category.name}
+          key={category.property}
+          label={category.label}
           options={category.options}
-          value={filterState[category.name] || []}
+          value={filterState[category.property] || []}
           onChange={newSelectedOptions => {
-            onFilterChange(category.name, newSelectedOptions)
+            onFilterChange(category.property, newSelectedOptions)
           }}
-          placeholder={`Any ${category.name.toLowerCase()}`}
+          placeholder={`Any ${category.label.toLowerCase()}`}
           className="flex-1"
         />
       ))}
@@ -95,12 +135,12 @@ function FiltersCombobox({
     <Combobox immediate multiple value={value} onChange={onChange}>
       <div className={clsx("flex flex-col", className)}>
         {label && (
-          <Combobox.Label className="typography-menu mb-1 block font-mono font-medium uppercase text-neu-900">
+          <Label className="typography-menu mb-1 block font-mono font-medium uppercase text-neu-900">
             {label}
-          </Combobox.Label>
+          </Label>
         )}
         <label className="relative w-full border border-neu-500 bg-neu-0 p-2 focus-within:outline-none focus-within:ring focus-within:ring-neu-300 dark:border-neu-200 dark:focus-within:ring-neu-200">
-          <Combobox.Input
+          <ComboboxInput
             value={query}
             onChange={e => setQuery(e.target.value)}
             className={clsx(
@@ -109,7 +149,7 @@ function FiltersCombobox({
             placeholder={placeholder}
             autoComplete="true"
           />
-          <Combobox.Button
+          <ComboboxButton
             className={clsx(
               "absolute inset-y-0 right-0 flex items-center px-2 focus:outline-none",
             )}
@@ -118,7 +158,7 @@ function FiltersCombobox({
               className="ui-open:rotate-180 size-5 text-neu-400 transition-transform duration-150 group-hover:text-neu-500"
               aria-hidden="true"
             />
-          </Combobox.Button>
+          </ComboboxButton>
           {value.length > 0 && (
             <div className="inset-y-0 left-0 z-[1] mt-1 flex items-center overflow-x-auto pr-8">
               <div className="flex flex-wrap items-center gap-1">
@@ -136,13 +176,13 @@ function FiltersCombobox({
         </label>
 
         <div className="relative">
-          <Combobox.Options
+          <ComboboxOptions
             className={clsx(
               "absolute z-10 -mt-px max-h-60 w-full overflow-auto border border-neu-500 bg-neu-0 p-1 text-base",
             )}
           >
             {filteredOptions.map(option => (
-              <Combobox.Option key={option} value={option}>
+              <ComboboxOption key={option} value={option}>
                 {({ active, selected }) => (
                   <FilterComboboxOption
                     active={active}
@@ -150,9 +190,9 @@ function FiltersCombobox({
                     option={option}
                   />
                 )}
-              </Combobox.Option>
+              </ComboboxOption>
             ))}
-          </Combobox.Options>
+          </ComboboxOptions>
         </div>
       </div>
     </Combobox>
