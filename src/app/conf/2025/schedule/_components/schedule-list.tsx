@@ -32,6 +32,7 @@ function getSessionsByDay(
 
   const states = Object.entries<FilterStates[keyof FilterStates]>(filterStates)
   const concurrentSessions: ConcurrentSessions = {}
+  const flatFilteredSessions: ScheduleSession[] = []
 
   filteredSortedSchedule.forEach(session => {
     for (const [property, filterState] of states) {
@@ -45,6 +46,8 @@ function getSessionsByDay(
         return
       }
     }
+
+    flatFilteredSessions.push(session)
     ;(concurrentSessions[session.event_start] ||= []).push(session)
   })
 
@@ -62,7 +65,19 @@ function getSessionsByDay(
     }
   })
 
-  return sessionsByDay
+  return {
+    sessionsByDay,
+    enabledOptions: Object.fromEntries(
+      Object.keys(filterStates).map(field => [
+        field,
+        new Set(
+          flatFilteredSessions.map(session =>
+            String(session[field as keyof ScheduleSession]),
+          ),
+        ),
+      ]),
+    ),
+  }
 }
 
 export interface ScheduleListProps {
@@ -86,7 +101,7 @@ export function ScheduleList({
     ),
   )
 
-  const filteredSessions = useMemo(
+  const { sessionsByDay: filteredSessions, enabledOptions } = useMemo(
     () => getSessionsByDay(scheduleData, filtersState),
     [scheduleData, filtersState],
   )
@@ -109,12 +124,14 @@ export function ScheduleList({
               ),
             )
           }
+          className="max-lg:mb-4 max-lg:w-fit max-lg:self-end"
         />
       </div>
       {showFilter && (
         <Filters
           categories={filterCategories}
           filterState={filtersState}
+          enabledOptions={enabledOptions}
           onFilterChange={(category, newSelectedOptions) => {
             setFiltersState(prev => ({
               ...prev,

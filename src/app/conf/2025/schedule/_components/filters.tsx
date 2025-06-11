@@ -21,6 +21,7 @@ export interface FilterCategoryConfig {
   property: keyof ScheduleSession
   label: string
   options: string[]
+  enabledOptions?: Set<string>
 }
 
 export const FilterCategoryConfig = {
@@ -33,7 +34,11 @@ export const FilterCategoryConfig = {
         property: field as keyof ScheduleSession,
         label,
         options: Array.from(
-          new Set(scheduleData.map(session => session[field])),
+          new Set(
+            scheduleData.map(
+              session => session[field as keyof ScheduleSession],
+            ),
+          ),
         ).filter((x): x is string => !!x && typeof x === "string"),
       }),
     )
@@ -51,12 +56,14 @@ export const FilterStates = {
 type FiltersProps = {
   categories: FilterCategoryConfig[]
   filterState: Record<string, string[]>
+  enabledOptions: Record<string, Set<string>>
   onFilterChange: (category: string, newSelectedOptions: string[]) => void
 }
 
 export function Filters({
   categories,
   filterState,
+  enabledOptions,
   onFilterChange,
 }: FiltersProps) {
   return (
@@ -66,6 +73,7 @@ export function Filters({
           key={category.property}
           label={category.label}
           options={category.options}
+          enabledOptions={enabledOptions[category.property]}
           value={filterState[category.property] || []}
           onChange={newSelectedOptions => {
             onFilterChange(category.property, newSelectedOptions)
@@ -109,6 +117,7 @@ export function ResetFiltersButton({
 interface FiltersComboboxProps {
   label: string
   options: string[]
+  enabledOptions: Set<string>
   value: string[]
   onChange: (newSelectedOptions: string[]) => void
   placeholder: string
@@ -117,6 +126,7 @@ interface FiltersComboboxProps {
 function FiltersCombobox({
   label,
   options,
+  enabledOptions,
   value,
   onChange,
   placeholder,
@@ -182,7 +192,11 @@ function FiltersCombobox({
             )}
           >
             {filteredOptions.map(option => (
-              <ComboboxOption key={option} value={option}>
+              <ComboboxOption
+                key={option}
+                value={option}
+                disabled={!enabledOptions.has(option)}
+              >
                 {({ active, selected }) => (
                   <FilterComboboxOption
                     active={active}
@@ -248,6 +262,7 @@ function FilterComboboxOption({
       className={clsx(
         "typography-body-sm relative flex cursor-default select-none items-center p-1 font-sans",
         active && "bg-neu-100 dark:bg-neu-50",
+        "[[data-disabled]_&]:line-through [[data-disabled]_&]:opacity-40",
       )}
     >
       <CheckboxIcon
