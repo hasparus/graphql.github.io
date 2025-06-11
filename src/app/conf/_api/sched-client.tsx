@@ -110,18 +110,34 @@ export async function getSchedule(
     "/session/export",
   )) as ScheduleSession[]
 
-  const result = sessions.map(session => {
-    const { description } = session
+  const result = sessions
+    .filter(session => session.active === "Y")
+    .map(session => {
+      const { description } = session
 
-    // This field is sometimes sent as a string, sometimes as a number,
-    // so it creates noise in our diffs, but we don't use it anyway.
-    delete (session as Record<string, unknown>)["event_type_sort"]
+      // This field is sometimes sent as a string, sometimes as a number,
+      // so it creates noise in our diffs, but we don't use it anyway.
+      delete (session as Record<string, unknown>)["event_type_sort"]
 
-    return {
-      ...session,
-      description: preprocessDescription(description),
-    }
-  })
+      // If Sched form includes just event type or event subtype and its a phrase separated by a dash,
+      // we split it into two fields.
+
+      let event_type = session.event_type || ""
+      let event_subtype = session.event_subtype || ""
+
+      if (!event_type && event_subtype.includes(" - ")) {
+        ;[event_type, event_subtype] = event_subtype.split(" - ")
+      } else if (!event_subtype && event_type.includes(" - ")) {
+        ;[event_type, event_subtype] = event_type.split(" - ")
+      }
+
+      return {
+        ...session,
+        event_type,
+        event_subtype,
+        description: preprocessDescription(description),
+      }
+    })
 
   return result
 }

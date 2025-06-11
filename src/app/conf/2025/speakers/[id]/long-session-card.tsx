@@ -29,7 +29,7 @@ export function LongSessionCard({
 
   const formattedDate = eventStart.toLocaleDateString("en-US", {
     day: "numeric",
-    month: "short",
+    month: "long",
   })
 
   const year = eventStart.getFullYear()
@@ -70,7 +70,7 @@ export function LongSessionCard({
         <div className="flex items-start justify-between gap-6">
           <SessionTags session={session} />
           {year !== new Date().getFullYear() && (
-            <div className="flex items-center gap-2 border border-neu-400 bg-neu-100 px-2 py-1">
+            <div className="flex items-center gap-2 border border-neu-400 bg-neu-100 px-2 py-1 dark:border-neu-100 dark:bg-neu-50">
               <span className="typography-menu text-neu-900">{year}</span>
             </div>
           )}

@@ -33,7 +33,7 @@ export interface SocialIconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 export const SocialIcon = ({ type, ...rest }: SocialIconProps) => {
-  switch (type) {
+  switch (type.toLowerCase()) {
     case "twitter":
       return <TwitterIcon {...rest} />
     case "linkedin":

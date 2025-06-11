@@ -181,6 +181,19 @@ async function updateSpeakerDetails(
     })
 
   const toUpdate = byUpdateTime.slice(0, quota)
+  console.log(`Fetching additional details for ${toUpdate.length} speakers...`)
+  console.log(
+    toUpdate
+      .map(s =>
+        [
+          `- ${s.username.padEnd(32, " ")}`,
+          s["~syncedDetailsAt"]
+            ? `last synced at ${new Date(s["~syncedDetailsAt"]).toLocaleString()}`
+            : "without details yet",
+        ].join("\t"),
+      )
+      .join("\n"),
+  )
 
   const limit = pLimit(5)
   const updated = await Promise.all(
@@ -193,15 +206,20 @@ async function updateSpeakerDetails(
     const location = locations.get(speaker.username)
     if (location) {
       const [key, index] = location
+      const current =
+        key === "changed" ? comparison[key][index].new : comparison[key][index]
+
+      const newValue = mergeSpeaker(current, speaker)
+      const diff = objectDiff({ old: current, new: newValue })
+      if (diff.trim()) {
+        console.log(diff)
+      }
+      newValue["~syncedDetailsAt"] = Date.now()
+
       if (key === "changed") {
-        comparison[key][index].new = mergeSpeaker(
-          comparison[key][index].new,
-          speaker,
-        )
-        comparison[key][index].new["~syncedDetailsAt"] = Date.now()
+        comparison[key][index].new = newValue
       } else {
-        comparison[key][index] = mergeSpeaker(comparison[key][index], speaker)
-        comparison[key][index]["~syncedDetailsAt"] = Date.now()
+        comparison[key][index] = newValue
       }
     }
   }
@@ -212,7 +230,7 @@ async function updateSpeakerDetails(
   )
   const nowUnchanged = comparison.changed
     .filter(change => deepStrictEqualWithoutInternals(change.old, change.new))
-    .map(change => change.old)
+    .map(change => change.new)
 
   comparison.changed = actuallyChanged
   comparison.unchanged.push(...nowUnchanged)
