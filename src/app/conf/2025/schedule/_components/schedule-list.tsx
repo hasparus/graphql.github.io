@@ -32,7 +32,6 @@ function getSessionsByDay(
 
   const states = Object.entries<FilterStates[keyof FilterStates]>(filterStates)
   const concurrentSessions: ConcurrentSessions = {}
-  const flatFilteredSessions: ScheduleSession[] = []
 
   filteredSortedSchedule.forEach(session => {
     for (const [property, filterState] of states) {
@@ -47,7 +46,6 @@ function getSessionsByDay(
       }
     }
 
-    flatFilteredSessions.push(session)
     ;(concurrentSessions[session.event_start] ||= []).push(session)
   })
 
@@ -68,14 +66,37 @@ function getSessionsByDay(
   return {
     sessionsByDay,
     enabledOptions: Object.fromEntries(
-      Object.keys(filterStates).map(field => [
-        field,
-        new Set(
-          flatFilteredSessions.map(session =>
-            String(session[field as keyof ScheduleSession]),
-          ),
-        ),
-      ]),
+      Object.keys(filterStates).map(currentField => {
+        // Apply filters from ALL OTHER fields, not this one
+        const otherFilters = Object.entries(filterStates).filter(
+          ([field]) => field !== currentField,
+        )
+
+        const filteredData = scheduleData.filter(session => {
+          // Check if session passes all OTHER filters
+          for (const [property, filterState] of otherFilters) {
+            const filters = filterState as string[]
+            if (
+              filters &&
+              filters.length > 0 &&
+              !filters.includes(
+                session[property as keyof ScheduleSession] as string,
+              )
+            ) {
+              return false
+            }
+          }
+          return true
+        })
+
+        const enabledOptionsForField = new Set(
+          filteredData
+            .map(session => session[currentField as keyof ScheduleSession])
+            .filter((x): x is string => !!x && typeof x === "string"),
+        )
+
+        return [currentField, enabledOptionsForField]
+      }),
     ),
   }
 }

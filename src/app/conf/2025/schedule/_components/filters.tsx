@@ -21,7 +21,7 @@ export interface FilterCategoryConfig {
   property: keyof ScheduleSession
   label: string
   options: string[]
-  enabledOptions?: Set<string>
+  enabledOptions?: Set<string> | null
 }
 
 export const FilterCategoryConfig = {
@@ -56,7 +56,7 @@ export const FilterStates = {
 type FiltersProps = {
   categories: FilterCategoryConfig[]
   filterState: Record<string, string[]>
-  enabledOptions: Record<string, Set<string>>
+  enabledOptions: Record<string, Set<string> | null> | null
   onFilterChange: (category: string, newSelectedOptions: string[]) => void
 }
 
@@ -195,7 +195,7 @@ function FiltersCombobox({
               <ComboboxOption
                 key={option}
                 value={option}
-                disabled={!enabledOptions.has(option)}
+                disabled={enabledOptions && !enabledOptions.has(option)}
               >
                 {({ active, selected }) => (
                   <FilterComboboxOption
