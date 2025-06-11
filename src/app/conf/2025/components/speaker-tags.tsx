@@ -16,18 +16,17 @@ export function SpeakerTags({
   className?: string
   showEventType?: boolean
 }) {
-  const eventType =
-    showEventType && speakerSessions.get(speaker.username)?.[0]?.event_type
+  const firstTalk = speakerSessions.get(speaker.username)?.[0]
+  let tag = showEventType && firstTalk?.event_subtype
+
+  const tagColor = (tag && eventsColors[tag]) || "hsl(var(--color-sec-dark))"
+  if (tag && tag.includes(" and ")) {
+    tag = tag.replace(" and ", " & ")
+  }
 
   return (
     <div className={clsx("flex basis-0 flex-wrap gap-2", className)}>
-      {eventType && (
-        <Tag color={eventsColors[eventType] || "hsl(var(--color-sec-base))"}>
-          {eventType === "Federation and Composite Schemas"
-            ? "Federation"
-            : eventType}
-        </Tag>
-      )}
+      {tag && <Tag color={tagColor}>{tag}</Tag>}
 
       {speaker._years.length > 1 && (
         <Tag color="hsl(var(--color-neu-500))">

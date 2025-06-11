@@ -1,10 +1,7 @@
 import clsx from "clsx"
 import Image from "next-image-export-optimizer"
 
-import { eventsColors } from "../utils"
-
 import { Anchor } from "../../_design-system/anchor"
-import { Tag } from "../../_design-system/tag"
 import { SchedSpeaker } from "../../2023/types"
 import { StripesDecoration } from "../../_design-system/stripes-decoration"
 
