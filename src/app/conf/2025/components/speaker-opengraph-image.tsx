@@ -151,37 +151,37 @@ export default function SpeakerOpengraphImage({
               display: "flex",
               overflow: "hidden",
               borderLeft: `2px solid ${colors.neu600}`,
+              width: RIGHT_COLUMN_WIDTH_PX + 2,
+              height: RIGHT_COLUMN_WIDTH_PX,
             }}
           >
-            {/* <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                zIndex: 1,
-                backgroundColor: colors.secLighter,
-                mixBlendMode: "multiply",
-              }}
-            />
             <img
               src={normalizeProtocolRelativeUrl(speaker.avatar)}
               alt=""
               style={{
                 objectFit: "cover",
+                // @vercel/og doesn't support mix blend mode
+                // and SVG `<image>` is crashing similarly to
+                // https://github.com/vercel/satori/issues/650.
+                // So we use `sepia` and `hue-rotate` to change
+                // the hue to around 79deg from the design system's
+                // secondary color (yellowish green).
+                filter: "sepia(1) hue-rotate(37.5deg)",
               }}
               width={RIGHT_COLUMN_WIDTH_PX}
               height={RIGHT_COLUMN_WIDTH_PX}
-            /> */}
-            <svg
-              viewBox={`0 0 ${RIGHT_COLUMN_WIDTH_PX} ${RIGHT_COLUMN_WIDTH_PX}`}
-              width={RIGHT_COLUMN_WIDTH_PX}
-              height={RIGHT_COLUMN_WIDTH_PX}
-            >
-              <image
-                href={normalizeProtocolRelativeUrl(speaker.avatar)}
-                width={RIGHT_COLUMN_WIDTH_PX}
-                height={RIGHT_COLUMN_WIDTH_PX}
-              />
-            </svg>
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: RIGHT_COLUMN_WIDTH_PX,
+                height: RIGHT_COLUMN_WIDTH_PX,
+                backgroundColor: colors.secLighter,
+                opacity: 0.25,
+              }}
+            />
           </div>
         )}
       </div>
