@@ -56,7 +56,7 @@ export const FilterStates = {
 type FiltersProps = {
   categories: FilterCategoryConfig[]
   filterState: Record<string, string[]>
-  enabledOptions: Record<string, Set<string> | null> | null
+  enabledOptions: Record<string, Set<string> | null>
   onFilterChange: (category: string, newSelectedOptions: string[]) => void
 }
 
@@ -117,7 +117,7 @@ export function ResetFiltersButton({
 interface FiltersComboboxProps {
   label: string
   options: string[]
-  enabledOptions: Set<string>
+  enabledOptions: Set<string> | null
   value: string[]
   onChange: (newSelectedOptions: string[]) => void
   placeholder: string
@@ -195,7 +195,7 @@ function FiltersCombobox({
               <ComboboxOption
                 key={option}
                 value={option}
-                disabled={enabledOptions && !enabledOptions.has(option)}
+                disabled={enabledOptions ? !enabledOptions.has(option) : false}
               >
                 {({ active, selected }) => (
                   <FilterComboboxOption
