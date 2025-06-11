@@ -18,6 +18,12 @@ export const eventsColors: Record<string, string> = {
   "GraphQL Security": "#CC6BB0",
   "GraphQL Spec": "#6B73CC",
   Scaling: "#8D8D8D",
+  Frontend: "violet",
+  Documentation: "salmon",
+  "Schema Evolution": "thistle",
+  Security: "cornflowerblue",
+  "Case studies": "#894545",
+  "Federation and distributed systems": "#FC8251",
 }
 
 export function getEventTitle(
