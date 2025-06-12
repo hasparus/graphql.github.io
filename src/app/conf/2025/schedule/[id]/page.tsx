@@ -26,7 +26,11 @@ import { formatDescription } from "./format-description"
 type SessionProps = { params: { id: string } }
 
 export function generateMetadata({ params }: SessionProps): Metadata {
-  const event = schedule.find(s => s.id === params.id)!
+  const event = schedule.find(s => s.id === params.id)
+
+  if (!event) {
+    throw new Error(`Session "${params.id}" not found`)
+  }
 
   const keywords = [
     event.event_type,
@@ -39,9 +43,6 @@ export function generateMetadata({ params }: SessionProps): Metadata {
     title: event.name,
     description: event.description,
     keywords: [...layoutMetadata.keywords, ...keywords],
-    openGraph: {
-      images: `/img/__og-image/2024/${event.id}.png`,
-    },
   }
 }
 

@@ -17,4 +17,4 @@ export function readSpeakers(year: ConferenceYear): SchedSpeaker[] {
 }
 
 // TODO: We need to be able to say that a speaker is returning even if they don't share username, only first name and last name.
-//       But this needs to be done without adding to `~years` so we don't show duplicates.
+//       But this needs to be done without adding to `_years` so we don't show duplicates.

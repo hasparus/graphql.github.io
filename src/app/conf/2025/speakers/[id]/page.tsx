@@ -37,9 +37,6 @@ export function generateMetadata({ params }: SpeakerProps): Metadata {
     title: speaker.name,
     description: speaker.about,
     keywords: [...layoutMetadata.keywords, ...keywords],
-    openGraph: {
-      images: `/img/__og-image/2024/${speaker.username}.png`,
-    },
   }
 }
 
@@ -79,9 +76,11 @@ export default function SpeakerPage({ params }: SpeakerProps) {
                   />
                 </div>
 
-                <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
-                  {formatDescription(speaker.about)}
-                </p>
+                {speaker.about && (
+                  <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
+                    {formatDescription(speaker.about)}
+                  </p>
+                )}
 
                 {currentYearSessions.length > 0 && (
                   <>

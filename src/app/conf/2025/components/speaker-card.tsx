@@ -9,6 +9,7 @@ import { SpeakerTags } from "./speaker-tags"
 import { SpeakerLinks } from "./speaker-links"
 
 import styles from "./speaker-card.module.css"
+import { formatSpeakerPosition } from "./format-speaker-position"
 
 export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   isReturning?: boolean
@@ -68,12 +69,7 @@ export function SpeakerCard({
           <div className="flex flex-col gap-1">
             <h3 className="typography-body-lg">{speaker.name}</h3>
             <p className="typography-body-sm line-clamp-1 text-neu-800">
-              {[
-                speaker.position,
-                speaker.company === "-" ? "" : speaker.company,
-              ]
-                .filter(Boolean)
-                .join(", ")}
+              {formatSpeakerPosition(speaker)}
             </p>
             <SpeakerTags speaker={speaker} className="my-3" />
           </div>
