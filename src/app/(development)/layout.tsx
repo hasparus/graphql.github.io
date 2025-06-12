@@ -24,5 +24,4 @@ export default function DevelopmentLayout({
       </ThemeProvider>
     </>
   )
-  // return <>{children}</>
 }
