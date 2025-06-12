@@ -1,5 +1,4 @@
-import type { ScheduleSession } from "@/app/conf/2025/schedule/_components/session-list"
-import type { SchedSpeaker } from "@/app/conf/2023/types"
+import type { SchedSpeaker, ScheduleSession } from "@/app/conf/2023/types"
 import {
   ConferenceOpengraphImageHeader,
   normalizeProtocolRelativeUrl,
