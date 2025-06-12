@@ -1,12 +1,11 @@
 import React from "react"
 
-import { SchedSpeaker } from "@/app/conf/2023/types"
+import { SchedSpeaker, ScheduleSession } from "@/app/conf/_api/sched-types"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { Tag } from "@/app/conf/_design-system/tag"
 
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 
-import { type ScheduleSession } from "./session-list"
 import { getEventTitle } from "../../utils"
 
 function isString(x: unknown): x is string {
@@ -15,18 +14,14 @@ function isString(x: unknown): x is string {
 
 export function ScheduleSessionCard({
   session,
-  showEventType,
   year,
   eventsColors,
 }: {
   session: ScheduleSession
-  showEventType: boolean | undefined
   year: `202${number}`
   eventsColors: Record<string, string>
 }) {
-  const eventType = session.event_type.endsWith("s")
-    ? session.event_type.slice(0, -1)
-    : session.event_type
+  let eventType = session.event_type
 
   const speakers = session.speakers
     ? isString(session.speakers)
@@ -41,11 +36,12 @@ export function ScheduleSessionCard({
     speakers.map(s => s.name),
   )
 
+  if (eventType === eventTitle) eventType = ""
+
   const eventColor = eventsColors[session.event_type]
 
   return session.event_type === "Breaks" ? (
     <div className="flex size-full items-center bg-neu-0 px-4 py-2 font-normal">
-      {showEventType ? eventType + " / " : ""}
       {eventTitle}
     </div>
   ) : (
@@ -57,13 +53,15 @@ export function ScheduleSessionCard({
         aria-label={`Read more about "${eventTitle}" by ${speakers.map(s => s.name).join(", ")}`}
       />
       <span className="flex h-full flex-col justify-start">
-        {eventColor && (
-          <Tag className="mb-3" color={eventColor}>
+        {eventType && (
+          <Tag
+            className="mb-3"
+            color={eventColor || "hsl(var(--color-neu-300))"}
+          >
             {eventType}
           </Tag>
         )}
         <span className="flex h-full flex-col justify-between gap-y-2">
-          {showEventType ? eventType + " / " : ""}
           <span className="typography-body-md">{eventTitle}</span>
           <span className="flex flex-col">
             {(speakers?.length || 0) > 0 && (

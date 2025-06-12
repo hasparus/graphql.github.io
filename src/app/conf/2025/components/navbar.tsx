@@ -53,7 +53,7 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
       <NavbarPlaceholder className="bg-pri-base before:bg-white/30 dark:bg-pri-darker dark:before:bg-blk/40" />
       <header
         className={clsx(
-          "gql-all-anchors-focusable sticky top-0 z-10 w-full border-b border-blk/60 font-mono text-neu-900 antialiased dark:border-white/80",
+          "gql-all-anchors-focusable sticky top-0 z-[100] w-full border-b border-blk/60 font-mono text-neu-900 antialiased dark:border-white/80",
           mobileDrawerOpen && "!border-neu-900 dark:!border-white",
         )}
       >

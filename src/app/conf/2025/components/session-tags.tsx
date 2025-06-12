@@ -21,17 +21,17 @@ export function SessionTags({ session, className, ...rest }: SessionTagsProps) {
       {eventType && (
         <Tag color={eventsColors[session.event_type || ""]}>{eventType}</Tag>
       )}
-      {session.audience && (
+      {session.company && (
         <Tag
-          color={eventsColors[session.audience] || "hsl(var(--color-neu-700))"}
+          color={eventsColors[session.company] || "hsl(var(--color-neu-500))"}
         >
-          {session.audience}
+          {session.company}
         </Tag>
       )}
       {session.event_subtype && (
         <Tag
           color={
-            eventsColors[session.event_subtype] || "hsl(var(--color-sec-base))"
+            eventsColors[session.event_subtype] || "hsl(var(--color-sec-dark))"
           }
         >
           {session.event_subtype}

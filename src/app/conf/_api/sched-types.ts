@@ -9,6 +9,10 @@ export type ScheduleSession = {
   event_type: string
   name: string
   venue: string
+  /**
+   * This is actually audience.
+   */
+  company: string
   speakers?: SchedSpeaker[]
   files?: { name: string; path: string }[]
 }

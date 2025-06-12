@@ -18,6 +18,12 @@ export const eventsColors: Record<string, string> = {
   "GraphQL Security": "#CC6BB0",
   "GraphQL Spec": "#6B73CC",
   Scaling: "#8D8D8D",
+  Frontend: "violet",
+  Documentation: "salmon",
+  "Schema Evolution": "thistle",
+  Security: "cornflowerblue",
+  "Case studies": "#894545",
+  "Federation and distributed systems": "#FC8251",
 }
 
 // We always display tags so thse would duplicate the same word.
@@ -29,6 +35,12 @@ export function getEventTitle(
 ): string {
   let { name } = event
 
+  prefixes.forEach(prefix => {
+    if (name.startsWith(prefix)) {
+      name = name.slice(prefix.length)
+    }
+  })
+
   if (!speakers) {
     return name
   }
@@ -37,12 +49,6 @@ export function getEventTitle(
     const speakerInTitle = name.indexOf(`- ${speaker.replace("ı", "i")}`)
     if (speakerInTitle > -1) {
       name = name.slice(0, speakerInTitle)
-    }
-  })
-
-  prefixes.forEach(prefix => {
-    if (name.startsWith(prefix)) {
-      name = name.slice(prefix.length)
     }
   })
 

@@ -1,54 +1,52 @@
 "use client"
 
 import { format, parseISO, compareAsc } from "date-fns"
-import { ReactElement, useEffect, useState } from "react"
+import { ReactElement, useMemo, useState } from "react"
 
-import { Filters, ResetFiltersButton } from "./filters"
+import { ScheduleSession } from "@/app/conf/_api/sched-types"
 import {
-  type ScheduleSession,
-  CategoryName,
   ConcurrentSessions,
   ScheduleSessionsByDay,
-} from "./session-list"
+} from "@/app/conf/_components/schedule/session-list"
+
 import { ScheduleSessionCard } from "./schedule-session-card"
+import {
+  FilterCategoryConfig,
+  Filters,
+  FilterStates,
+  ResetFiltersButton,
+} from "./filters"
+
+export interface FiltersConfig
+  extends Partial<
+    Record<keyof ScheduleSession /* key */, string /* label */>
+  > {}
 
 function getSessionsByDay(
   scheduleData: ScheduleSession[],
-  initialFilter:
-    | ((sessions: ScheduleSession[]) => ScheduleSession[])
-    | undefined,
-  filters: Record<CategoryName, string[]>,
+  filterStates: FilterStates,
 ) {
-  const data = initialFilter ? initialFilter(scheduleData) : scheduleData
-  const filteredSortedSchedule = (data || []).sort((a, b) =>
+  const filteredSortedSchedule = (scheduleData || []).sort((a, b) =>
     compareAsc(new Date(a.event_start), new Date(b.event_start)),
   )
 
+  const states = Object.entries<FilterStates[keyof FilterStates]>(filterStates)
   const concurrentSessions: ConcurrentSessions = {}
+
   filteredSortedSchedule.forEach(session => {
-    const audienceFilter = filters.Audience
-    const talkCategoryFilter = filters["Talk category"]
-    const eventTypeFilter = filters["Event type"]
-
-    let include = true
-    if (audienceFilter.length > 0) {
-      include = include && audienceFilter.includes((session as any).company)
-    }
-    if (talkCategoryFilter.length > 0) {
-      include = include && talkCategoryFilter.includes(session.event_type)
-    }
-    if (eventTypeFilter.length > 0) {
-      include = include && eventTypeFilter.includes(session.audience)
+    for (const [property, filterState] of states) {
+      if (
+        filterState &&
+        filterState.length > 0 &&
+        !filterState.includes(
+          session[property as keyof ScheduleSession] as string,
+        )
+      ) {
+        return
+      }
     }
 
-    if (!include) {
-      return
-    }
-
-    if (!concurrentSessions[session.event_start]) {
-      concurrentSessions[session.event_start] = []
-    }
-    concurrentSessions[session.event_start].push(session)
+    ;(concurrentSessions[session.event_start] ||= []).push(session)
   })
 
   const sessionsByDay: ScheduleSessionsByDay = {}
@@ -65,49 +63,74 @@ function getSessionsByDay(
     }
   })
 
-  return sessionsByDay
+  return {
+    sessionsByDay,
+    enabledOptions: Object.fromEntries(
+      Object.keys(filterStates).map(currentField => {
+        // Apply filters from ALL OTHER fields, not this one
+        const otherFilters = Object.entries(filterStates).filter(
+          ([field]) => field !== currentField,
+        )
+
+        const filteredData = scheduleData.filter(session => {
+          // Check if session passes all OTHER filters
+          for (const [property, filterState] of otherFilters) {
+            const filters = filterState as string[]
+            if (
+              filters &&
+              filters.length > 0 &&
+              !filters.includes(
+                session[property as keyof ScheduleSession] as string,
+              )
+            ) {
+              return false
+            }
+          }
+          return true
+        })
+
+        const enabledOptionsForField = new Set(
+          filteredData
+            .map(session => session[currentField as keyof ScheduleSession])
+            .filter((x): x is string => !!x && typeof x === "string"),
+        )
+
+        return [currentField, enabledOptionsForField]
+      }),
+    ),
+  }
 }
 
-interface Props {
-  showEventType?: boolean
+export interface ScheduleListProps {
   showFilter?: boolean
   scheduleData: ScheduleSession[]
-  filterSchedule?: (sessions: ScheduleSession[]) => ScheduleSession[]
   year: `202${number}`
   eventsColors: Record<string, string>
-  filterCategories: {
-    name: CategoryName
-    options: string[]
-  }[]
+  filterFields: FiltersConfig
 }
 
 export function ScheduleList({
-  showEventType,
   showFilter = true,
-  filterSchedule,
   scheduleData,
   year,
   eventsColors,
-  filterCategories,
-}: Props): ReactElement {
-  const [filtersState, setFiltersState] = useState<
-    Record<CategoryName, string[]>
-  >({
-    Audience: [],
-    "Talk category": [],
-    "Event type": [],
-  })
-  const [sessionsState, setSessionState] = useState<ScheduleSessionsByDay>(
-    () => {
-      return getSessionsByDay(scheduleData, filterSchedule, filtersState)
-    },
+  filterFields,
+}: ScheduleListProps): ReactElement {
+  const [filtersState, setFiltersState] = useState<FilterStates>(() =>
+    FilterStates.initial(
+      Object.keys(filterFields) as (keyof ScheduleSession)[],
+    ),
   )
 
-  useEffect(() => {
-    setSessionState(
-      getSessionsByDay(scheduleData, filterSchedule, filtersState),
-    )
-  }, [filtersState, scheduleData])
+  const { sessionsByDay: filteredSessions, enabledOptions } = useMemo(
+    () => getSessionsByDay(scheduleData, filtersState),
+    [scheduleData, filtersState],
+  )
+
+  const filterCategories: FilterCategoryConfig[] = useMemo(
+    () => FilterCategoryConfig.fromFields(filterFields, scheduleData),
+    [filterFields, scheduleData],
+  )
 
   return (
     <>
@@ -116,18 +139,20 @@ export function ScheduleList({
         <ResetFiltersButton
           filters={filtersState}
           onReset={() =>
-            setFiltersState({
-              Audience: [],
-              "Talk category": [],
-              "Event type": [],
-            })
+            setFiltersState(
+              FilterStates.initial(
+                Object.keys(filterFields) as (keyof ScheduleSession)[],
+              ),
+            )
           }
+          className="max-lg:mb-4 max-lg:w-fit max-lg:self-end"
         />
       </div>
       {showFilter && (
         <Filters
           categories={filterCategories}
           filterState={filtersState}
+          enabledOptions={enabledOptions}
           onFilterChange={(category, newSelectedOptions) => {
             setFiltersState(prev => ({
               ...prev,
@@ -136,27 +161,24 @@ export function ScheduleList({
           }}
         />
       )}
-      {Object.entries(sessionsState).length === 0 ? (
+      {Object.entries(filteredSessions).length === 0 ? (
         <div className="typography-body-sm">
           <h3 className="mb-5">No sessions found</h3>
         </div>
       ) : (
         <>
           <div className="mb-4 flex space-x-4">
-            {/* Skip registeration prior day for graphql conf 2024 */}
-            {Object.keys(sessionsState)
-              .slice(year === "2024" ? 1 : 0)
-              .map((date, index) => (
-                <a
-                  href={`#day-${(year === "2024" ? 1 : 0) + index + 1}`}
-                  key={date}
-                  className={"typography-link"}
-                >
-                  Day {index + 1}
-                </a>
-              ))}
+            {Object.keys(filteredSessions).map((date, index) => (
+              <a
+                href={`#day-${index + 1}`}
+                key={date}
+                className="typography-link"
+              >
+                Day {index + 1}
+              </a>
+            ))}
           </div>
-          {Object.entries(sessionsState).map(
+          {Object.entries(filteredSessions).map(
             ([date, concurrentSessionsGroup], index) => (
               <div
                 key={date}
@@ -175,7 +197,7 @@ export function ScheduleList({
                       className="lg:mt-px"
                     >
                       <div className="mr-px flex flex-col max-lg:ml-px lg:flex-row">
-                        <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:mb-px max-lg:mt-px max-lg:border-x lg:mr-px">
+                        <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:my-px max-lg:border-x lg:mr-px">
                           <span className="typography-body-sm mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
                             {format(parseISO(sessionDate), "hh:mmaaaa 'PDT'")}
                           </span>
@@ -185,7 +207,6 @@ export function ScheduleList({
                             <ScheduleSessionCard
                               key={session.id}
                               session={session}
-                              showEventType={showEventType}
                               year={year}
                               eventsColors={eventsColors}
                             />
