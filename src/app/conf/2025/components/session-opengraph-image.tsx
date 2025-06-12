@@ -3,13 +3,20 @@ import type { SchedSpeaker } from "@/app/conf/2023/types"
 import {
   ConferenceOpengraphImageHeader,
   normalizeProtocolRelativeUrl,
+  colors,
+  OpengraphImageFooter,
+  fonts,
 } from "./speaker-opengraph-image"
 import { getEventTitle } from "../utils"
 import { formatSpeakerPosition } from "./format-speaker-position"
+import { speakers as allSpeakers } from "../_data"
 
-interface ScheduleOpengraphImageProps
+export interface SessionOpengraphImageProps
   extends React.HTMLAttributes<HTMLElement> {
-  session: Pick<ScheduleSession, "name" | "speakers" | "event_type">
+  session: Pick<
+    ScheduleSession,
+    "name" | "speakers" | "event_type" | "event_subtype"
+  >
   date: string
   year: string
   location: string
@@ -19,19 +26,23 @@ function isString(x: unknown): x is string {
   return Object.prototype.toString.call(x) === "[object String]"
 }
 
-export default function ScheduleOpengraphImage({
+export function SessionOpengraphImage({
   session,
   date,
   location,
   year,
   ...rest
-}: ScheduleOpengraphImageProps) {
+}: SessionOpengraphImageProps) {
   const speakers = session.speakers
     ? isString(session.speakers)
       ? (session.speakers as string)
           .split(",")
           .map(name => ({ name, username: "", avatar: "" }))
-      : (session.speakers as SchedSpeaker[])
+      : session.speakers.map(speaker => {
+          return (
+            allSpeakers.find(s => s.username === speaker.username) || speaker
+          )
+        })
     : []
 
   const eventTitle = getEventTitle(
@@ -41,7 +52,17 @@ export default function ScheduleOpengraphImage({
 
   return (
     <article
-      className="flex h-[630px] w-[1200px] flex-col overflow-hidden border-2 border-neu-300 bg-neu-100"
+      style={{
+        display: "flex",
+        height: "630px",
+        width: "1200px",
+        flexDirection: "column",
+        overflow: "hidden",
+        borderWidth: "2px",
+        borderColor: colors.neu600,
+        backgroundColor: colors.neu100,
+        fontFamily: fonts.sans,
+      }}
       {...rest}
     >
       <ConferenceOpengraphImageHeader
@@ -50,11 +71,28 @@ export default function ScheduleOpengraphImage({
         location={location}
       />
 
-      <div className="flex flex-1 flex-col justify-between p-10">
-        <div className="flex flex-col gap-10">
+      <div
+        style={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: "2.5rem",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "2.5rem",
+          }}
+        >
           <h3
-            className="m-0 font-sans leading-tight text-neu-900"
             style={{
+              margin: 0,
+              fontFamily: fonts.sans,
+              lineHeight: "1.25",
+              color: colors.neu900,
               fontSize: eventTitle.length <= 32 ? "72px" : "32px",
             }}
           >
@@ -63,25 +101,76 @@ export default function ScheduleOpengraphImage({
         </div>
 
         {speakers.length === 1 && speakers[0] && (
-          <div className="flex items-center gap-10">
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-end",
+              gap: "2.5rem",
+            }}
+          >
             {speakers[0]?.avatar && (
-              <div className="relative overflow-hidden">
-                <div className="absolute inset-0 z-[1] bg-sec-lighter mix-blend-multiply" />
+              <div
+                style={{
+                  position: "relative",
+                  overflow: "hidden",
+                  display: "flex",
+                }}
+              >
                 <img
                   src={normalizeProtocolRelativeUrl(speakers[0].avatar)}
                   alt=""
-                  className="size-[120px] object-cover"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "cover",
+                    filter: "sepia(1) hue-rotate(37.5deg)",
+                  }}
                   width={120}
                   height={120}
                 />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "120px",
+                    height: "120px",
+                    backgroundColor: colors.secLighter,
+                    opacity: 0.25,
+                  }}
+                />
               </div>
             )}
-            <div className="flex flex-col gap-4">
-              <h4 className="m-0 font-sans text-[48px] font-normal leading-tight text-neu-900">
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                gap: "1rem",
+              }}
+            >
+              <h4
+                style={{
+                  margin: 0,
+                  fontFamily: fonts.sans,
+                  fontSize: "48px",
+                  fontWeight: "normal",
+                  lineHeight: "1",
+                  color: colors.neu900,
+                }}
+              >
                 {speakers[0].name}
               </h4>
               {"company" in speakers[0] && speakers[0].company && (
-                <span className="font-sans text-[32px] font-normal leading-tight text-neu-700">
+                <span
+                  style={{
+                    fontFamily: fonts.sans,
+                    fontSize: "32px",
+                    fontWeight: "normal",
+                    lineHeight: "1",
+                    color: colors.neu700,
+                  }}
+                >
                   {formatSpeakerPosition(speakers[0] as SchedSpeaker)}
                 </span>
               )}
@@ -90,10 +179,20 @@ export default function ScheduleOpengraphImage({
         )}
 
         {speakers.length > 1 && (
-          <div className="flex flex-col gap-4">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
             <h4
-              className="m-0 font-sans font-normal leading-tight text-neu-900"
               style={{
+                margin: 0,
+                fontFamily: fonts.sans,
+                fontWeight: "normal",
+                lineHeight: "1.25",
+                color: colors.neu900,
                 fontSize: speakers.length < 4 ? "48px" : "32px",
               }}
             >
@@ -103,12 +202,12 @@ export default function ScheduleOpengraphImage({
         )}
       </div>
 
-      {session.event_type && (
-        <footer className="flex items-center border-t-2 border-neu-300 px-16 py-8 pl-10">
-          <span className="font-mono text-2xl font-normal uppercase leading-none text-neu-900">
-            {session.event_type}
-          </span>
-        </footer>
+      {(session.event_type || session.event_subtype) && (
+        <OpengraphImageFooter>
+          {[session.event_type, session.event_subtype]
+            .filter(Boolean)
+            .join(" — ")}
+        </OpengraphImageFooter>
       )}
     </article>
   )

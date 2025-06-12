@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og"
 import { loadFontsForOG } from "@/app/fonts/og/load-fonts-for-og"
 
 import { speakers } from "../../_data"
-import SpeakerOpengraphImage from "../../components/speaker-opengraph-image"
+import { SpeakerOpengraphImage } from "../../components/speaker-opengraph-image"
 
 export const contentType = "image/png"
 export const size = {
@@ -11,7 +11,6 @@ export const size = {
   height: 630,
 }
 
-// This doesn't seem to work?
 export function generateStaticParams() {
   return speakers.map(s => ({ id: s.username }))
 }

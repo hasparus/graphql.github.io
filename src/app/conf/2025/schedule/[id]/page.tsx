@@ -43,9 +43,6 @@ export function generateMetadata({ params }: SessionProps): Metadata {
     title: event.name,
     description: event.description,
     keywords: [...layoutMetadata.keywords, ...keywords],
-    openGraph: {
-      images: `/img/__og-image/2024/${event.id}.png`,
-    },
   }
 }
 

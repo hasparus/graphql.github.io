@@ -1,5 +1,5 @@
-import SpeakerOpengraphImage from "@/app/conf/2025/components/speaker-opengraph-image"
-import ScheduleOpengraphImage from "@/app/conf/2025/components/session-opengraph-image"
+import { SpeakerOpengraphImage } from "@/app/conf/2025/components/speaker-opengraph-image"
+import { SessionOpengraphImage } from "@/app/conf/2025/components/session-opengraph-image"
 import { SchedSpeaker } from "@/app/conf/2023/types"
 
 // todo: the images probably won't work after conversion
@@ -45,11 +45,12 @@ export default function WorkroomPage() {
       />
 
       <p>ScheduleOpengraphImage / no speakers</p>
-      <ScheduleOpengraphImage
+      <SessionOpengraphImage
         session={{
           name: "Welcome & Opening Remarks",
           speakers: [],
           event_type: "",
+          event_subtype: "",
         }}
         date="September 8-10"
         year="2025"
@@ -57,11 +58,12 @@ export default function WorkroomPage() {
       />
 
       <p>ScheduleOpengraphImage / single speaker</p>
-      <ScheduleOpengraphImage
+      <SessionOpengraphImage
         session={{
           name: "The State of Distributed GraphQL",
           speakers: [enisdenjo],
           event_type: "Keynote Sessions",
+          event_subtype: "",
         }}
         date="September 8-10"
         year="2025"
@@ -69,11 +71,12 @@ export default function WorkroomPage() {
       />
 
       <p>ScheduleOpengraphImage / multiple speakers</p>
-      <ScheduleOpengraphImage
+      <SessionOpengraphImage
         session={{
           name: "TSC Panel",
           speakers: [enisdenjo, saihaj],
-          event_type: "Keynote Sessions",
+          event_type: "Developer Experience",
+          event_subtype: "Backend",
         }}
         date="September 8-10"
         year="2025"
@@ -81,7 +84,7 @@ export default function WorkroomPage() {
       />
 
       <p>SpeakerOpengraphImage / very long title</p>
-      <ScheduleOpengraphImage
+      <SessionOpengraphImage
         session={{
           name: "TSC Panel - Lee Byron, GraphQL Foundation; Kewei Qu, Meta; Rob Richard, 1stDibs; Michael Staib, ChilliCream; Moderated by Sasha Solomon, Staff Software Engineer & Tech Lead",
           speakers: [
@@ -104,6 +107,7 @@ export default function WorkroomPage() {
             { ...enisdenjo, name: "Sasha Solomon" },
           ],
           event_type: "Keynote Sessions",
+          event_subtype: "",
         }}
         date="September 8-10"
         year="2025"

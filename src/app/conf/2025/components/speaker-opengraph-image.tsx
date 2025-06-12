@@ -20,16 +20,22 @@ export const colors = {
   priBase: "hsl(319 100% 44.1%)",
 }
 
+export const fonts = {
+  sans: "'Host Grotesk', var(--font-sans)",
+  mono: "'Commit Mono', var(--font-mono)",
+}
+
 const RIGHT_COLUMN_WIDTH_PX = 476
 
-interface SpeakerOpengraphImageProps extends React.HTMLAttributes<HTMLElement> {
+export interface SpeakerOpengraphImageProps
+  extends React.HTMLAttributes<HTMLElement> {
   speaker: SchedSpeaker
   date: string
   year: string
   location: string
 }
 
-export default function SpeakerOpengraphImage({
+export function SpeakerOpengraphImage({
   speaker,
   date,
   year,
@@ -47,7 +53,7 @@ export default function SpeakerOpengraphImage({
         borderWidth: "2px",
         backgroundColor: colors.neu100,
         borderColor: colors.neu600,
-        fontFamily: "'Host Grotesk'",
+        fontFamily: fonts.sans,
       }}
       {...rest}
     >
@@ -105,7 +111,7 @@ export default function SpeakerOpengraphImage({
               >
                 <span
                   style={{
-                    fontFamily: "'Host Grotesk'",
+                    fontFamily: fonts.sans,
                     fontSize: "32px",
                     fontWeight: "normal",
                     lineHeight: "1.25",
@@ -118,30 +124,7 @@ export default function SpeakerOpengraphImage({
             </div>
           </div>
 
-          <footer
-            style={{
-              display: "flex",
-              alignItems: "center",
-              borderTop: `2px solid ${colors.neu600}`,
-              paddingLeft: "2.5rem",
-              paddingRight: "4rem",
-              paddingTop: "2rem",
-              paddingBottom: "2rem",
-            }}
-          >
-            <span
-              style={{
-                fontFamily: "'Commit Mono'",
-                fontSize: "1.5rem",
-                fontWeight: "normal",
-                textTransform: "uppercase",
-                lineHeight: "1",
-                color: colors.neu900,
-              }}
-            >
-              Speakers
-            </span>
-          </footer>
+          <OpengraphImageFooter>Speakers</OpengraphImageFooter>
         </div>
 
         {speaker.avatar && (
@@ -221,7 +204,7 @@ export function ConferenceOpengraphImageHeader({
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <div
             style={{
-              fontFamily: "'Commit Mono'",
+              fontFamily: fonts.mono,
               display: "flex",
               fontWeight: "normal",
               textTransform: "uppercase",
@@ -241,7 +224,14 @@ export function ConferenceOpengraphImageHeader({
               }}
             >
               <GraphQLLogo
-                style={{ height: "3rem", width: "3rem", color: colors.priBase }}
+                style={{
+                  height: "3rem",
+                  width: "3rem",
+                  color: colors.priBase,
+                  /* hack: satori aligns this SVG differently than browsers, it will look off center in /workroom,
+                           but centered in the images */
+                  marginTop: "-6px",
+                }}
               />
               <span>/</span>
               <div
@@ -282,13 +272,14 @@ export function ConferenceOpengraphImageHeader({
               width="24"
               height="24"
               style={{
-                transform: "translateY(-1px)",
+                /* hack: different across satori and browsers */
+                transform: "translateY(-3px)",
                 color: colors.priBase,
               }}
             />
             <span
               style={{
-                fontFamily: "'Commit Mono'",
+                fontFamily: fonts.mono,
                 display: "flex",
                 fontSize: "1.25rem",
                 fontWeight: "normal",
@@ -318,13 +309,14 @@ export function ConferenceOpengraphImageHeader({
               width="24"
               height="24"
               style={{
-                transform: "translateY(-0.5px)",
+                /* hack: different across satori and browsers */
+                transform: "translateY(-2px)",
                 color: colors.priBase,
               }}
             />
             <span
               style={{
-                fontFamily: "'Commit Mono'",
+                fontFamily: fonts.mono,
                 fontSize: "1.25rem",
                 fontWeight: "normal",
                 textTransform: "uppercase",
@@ -346,4 +338,37 @@ export function normalizeProtocolRelativeUrl(url: string) {
     return `https:${url}`
   }
   return url
+}
+
+export function OpengraphImageFooter({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <footer
+      style={{
+        display: "flex",
+        alignItems: "center",
+        borderTop: `2px solid ${colors.neu600}`,
+        paddingLeft: "2.5rem",
+        paddingRight: "4rem",
+        paddingTop: "2rem",
+        paddingBottom: "2rem",
+      }}
+    >
+      <span
+        style={{
+          fontFamily: fonts.mono,
+          fontSize: "1.5rem",
+          fontWeight: "normal",
+          textTransform: "uppercase",
+          lineHeight: "1",
+          color: colors.neu900,
+        }}
+      >
+        {children}
+      </span>
+    </footer>
+  )
 }

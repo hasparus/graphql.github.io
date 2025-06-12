@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og"
 import { loadFontsForOG } from "@/app/fonts/og/load-fonts-for-og"
 
 import { schedule } from "../../_data"
-import ScheduleOpengraphImage from "../../components/session-opengraph-image"
+import { SessionOpengraphImage } from "../../components/session-opengraph-image"
 
 export const contentType = "image/png"
 export const size = {
@@ -15,7 +15,7 @@ export function generateStaticParams() {
   return schedule.filter(s => s.id).map(s => ({ id: s.id }))
 }
 
-export default async function SpeakerOGImage({
+export default async function SessionOGImage({
   params,
 }: {
   params: { id: string }
@@ -31,7 +31,7 @@ export default async function SpeakerOGImage({
 
   return new ImageResponse(
     (
-      <ScheduleOpengraphImage
+      <SessionOpengraphImage
         session={session}
         date="September 8-10"
         year="2025"
