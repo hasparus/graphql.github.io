@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <>
-      <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/30 dark:bg-neu-0 dark:before:bg-blk/40" />
+      <NavbarPlaceholder className="top-0 bg-neu-100 before:bg-white/30 dark:bg-neu-0 dark:before:bg-blk/40" />
       <Hero
         pageName="Code of conduct"
         subtitle="The Linux Foundation"
