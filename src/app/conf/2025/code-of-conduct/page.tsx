@@ -1,0 +1,40 @@
+import type { Metadata } from "next"
+import clsx from "clsx"
+
+import { Anchor } from "@/app/conf/_design-system/anchor"
+import { ServerComponentMarkdown } from "@/app/conf/_components/server-component-markdown"
+
+import { NavbarPlaceholder } from "../components/navbar"
+import "../resources/prose.css"
+
+import markdown from "./code-of-conduct.mdx?raw"
+
+export const metadata: Metadata = {
+  title: "Code of Conduct | GraphQLConf 2025",
+}
+
+export default function ResourcesPage() {
+  return (
+    <>
+      <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/30 dark:bg-neu-0 dark:before:bg-blk/40" />
+      <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
+        <div className="gql-conf-container gql-conf-section gql-prose">
+          <ServerComponentMarkdown
+            markdown={markdown}
+            components={{
+              a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+                return (
+                  <Anchor
+                    {...props}
+                    href={props.href ?? ""}
+                    className={clsx(props.className, "typography-link")}
+                  />
+                )
+              },
+            }}
+          />
+        </div>
+      </main>
+    </>
+  )
+}
