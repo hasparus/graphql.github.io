@@ -7,9 +7,9 @@ import { Button } from "@/app/conf/_design-system/button"
 
 import { NavbarPlaceholder } from "../components/navbar"
 import "../resources/prose.css"
+import { Hero, HeroStripes } from "../components/hero"
 
 import markdown from "./code-of-conduct.mdx?raw"
-import { Hero } from "../components/hero"
 
 export const metadata: Metadata = {
   title: "Code of Conduct | GraphQLConf 2025",
@@ -18,11 +18,18 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <>
-      <NavbarPlaceholder className="top-0 bg-neu-100 before:bg-white/30 dark:bg-neu-0 dark:before:bg-blk/40" />
+      <NavbarPlaceholder className="top-0 bg-neu-100 before:bg-white/30 dark:bg-[#181A12] dark:before:bg-blk/40" />
       <Hero
         pageName="Code of conduct"
         subtitle="The Linux Foundation"
         colorScheme="neutral"
+        stripes={
+          <HeroStripes
+            className="-scale-x-100 dark:data-[loaded=true]:opacity-80"
+            evenClassName="bg-[linear-gradient(180deg,hsl(var(--color-sec-light))_0%,hsl(319deg_100%_90%_/_0.2)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-sec-dark))_0%,hsl(var(--color-neu-100))_100%)]"
+            oddClassName="bg-[linear-gradient(180deg,hsl(319deg_100%_90%_/_0.2)_0%,hsl(var(--color-sec-base))_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-sec-dark))_0%,hsl(var(--color-neu-0))_100%)]"
+          />
+        }
       >
         <Button
           href="https://events.linuxfoundation.org/about/code-of-conduct/"
@@ -56,7 +63,7 @@ export default function ResourcesPage() {
                     {...props}
                     className={clsx(
                       props.className,
-                      "gql-prose-inner -mx-4 w-fit border border-neu-300 bg-neu-50 p-4 xl:my-4",
+                      "gql-prose-inner -mx-4 w-fit border border-neu-300 bg-neu-50 p-4 dark:border-neu-100 dark:bg-neu-50/50 xl:my-4",
                     )}
                   />
                 )
