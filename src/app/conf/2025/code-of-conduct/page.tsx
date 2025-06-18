@@ -10,6 +10,7 @@ import "../resources/prose.css"
 import { Hero, HeroStripes } from "../components/hero"
 
 import markdown from "./code-of-conduct.mdx?raw"
+import { HeroConfCard } from "../components/hero/hero-conf-card"
 
 export const metadata: Metadata = {
   title: "Code of Conduct | GraphQLConf 2025",
@@ -30,6 +31,7 @@ export default function ResourcesPage() {
             oddClassName="bg-[linear-gradient(180deg,hsl(319deg_100%_90%_/_0.2)_0%,hsl(var(--color-sec-base))_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-sec-dark))_0%,hsl(var(--color-neu-0))_100%)]"
           />
         }
+        secondColumn={<HeroConfCard />}
       >
         <Button
           href="https://events.linuxfoundation.org/about/code-of-conduct/"
