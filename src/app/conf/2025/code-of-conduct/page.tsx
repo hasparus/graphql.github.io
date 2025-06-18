@@ -31,6 +31,22 @@ export default function ResourcesPage() {
                   />
                 )
               },
+              ul: (props: React.HTMLAttributes<HTMLUListElement>) => {
+                return (
+                  <ul {...props} className={clsx(props.className, "-mt-6")} />
+                )
+              },
+              Callout: (props: React.HTMLAttributes<HTMLDivElement>) => {
+                return (
+                  <div
+                    {...props}
+                    className={clsx(
+                      props.className,
+                      "gql-prose-inner -mx-4 w-fit border border-neu-300 bg-neu-50 p-4 xl:my-4",
+                    )}
+                  />
+                )
+              },
             }}
           />
         </div>
