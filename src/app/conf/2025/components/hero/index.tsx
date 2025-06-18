@@ -23,8 +23,8 @@ export function Hero(props: HeroProps) {
   return (
     <article
       className={clsx(
-        "gql-conf-navbar-strip relative isolate flex flex-col justify-center text-neu-0 selection:bg-blk/40 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900 dark:selection:bg-white/40 before:dark:bg-blk/40",
-        colorScheme === "primary" ? "bg-pri-base" : "bg-neu-100",
+        "gql-conf-navbar-strip relative isolate flex flex-col justify-center selection:bg-blk/40 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900 dark:selection:bg-white/40 before:dark:bg-blk/40",
+        colorScheme === "primary" ? "bg-pri-base text-neu-0" : "bg-neu-100",
       )}
     >
       <article className="relative">
@@ -33,7 +33,14 @@ export function Hero(props: HeroProps) {
           <div className="flex gap-10 max-md:flex-col md:justify-between">
             {props.pageName ? (
               <div>
-                <span className="typography-h3 text-sec-base">
+                <span
+                  className={clsx(
+                    "typography-h3",
+                    colorScheme === "primary"
+                      ? "text-sec-base"
+                      : "text-pri-base",
+                  )}
+                >
                   {props.year ? `GraphQLConf ${props.year}` : props.subtitle}
                 </span>
                 <h1 className="typography-d1">{props.pageName}</h1>
@@ -50,7 +57,13 @@ export function Hero(props: HeroProps) {
               <span className="typography-body-sm whitespace-pre">
                 hosted by
               </span>
-              <GraphQLFoundationWordmark width={128} height={34.877} />
+              <GraphQLFoundationWordmark
+                width={128}
+                height={34.877}
+                className={
+                  colorScheme === "neutral" ? "[&_path]:fill-primary" : ""
+                }
+              />
             </div>
           </div>
 
