@@ -5,19 +5,28 @@ import GraphQLFoundationWordmark from "../../assets/graphql-foundation-wordmark.
 
 import { ImageLoaded } from "../image-loaded"
 import blurBean from "./blur-bean-cropped.webp"
+import clsx from "clsx"
 
 export type HeroProps = {
   pageName?: string
   children: React.ReactNode
   bottom?: React.ReactNode
+  colorScheme?: "primary" | "neutral"
 } & (
   | { year: string | number; subtitle?: never }
   | { year?: never; subtitle: string }
 )
 
 export function Hero(props: HeroProps) {
+  const colorScheme = props.colorScheme || "primary"
+
   return (
-    <article className="gql-conf-navbar-strip relative isolate flex flex-col justify-center bg-pri-base text-neu-0 selection:bg-blk/40 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900 dark:selection:bg-white/40 before:dark:bg-blk/40">
+    <article
+      className={clsx(
+        "gql-conf-navbar-strip relative isolate flex flex-col justify-center text-neu-0 selection:bg-blk/40 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900 dark:selection:bg-white/40 before:dark:bg-blk/40",
+        colorScheme === "primary" ? "bg-pri-base" : "bg-neu-100",
+      )}
+    >
       <article className="relative">
         <HeroStripes />
         <div className="gql-conf-container mx-auto flex max-w-full flex-col gap-12 overflow-hidden p-4 pt-6 sm:p-8 sm:pt-12 md:gap-12 md:bg-left md:p-12 lg:px-24 lg:pb-16 lg:pt-24">
