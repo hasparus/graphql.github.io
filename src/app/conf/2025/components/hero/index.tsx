@@ -19,7 +19,6 @@ export type HeroProps = {
   bottom?: React.ReactNode
   colorScheme?: "primary" | "neutral"
   stripes?: ReactNode
-  secondColumn?: ReactNode
 } & (
   | { year: string | number; subtitle?: never }
   | { year?: never; subtitle: string }
@@ -63,20 +62,18 @@ export function Hero(props: HeroProps) {
                 </span>
               </h1>
             )}
-            {props.secondColumn || (
-              <div className="flex h-min items-center gap-4">
-                <span className="typography-body-sm whitespace-pre">
-                  hosted by
-                </span>
-                <GraphQLFoundationWordmark
-                  width={128}
-                  height={34.877}
-                  className={
-                    colorScheme === "neutral" ? "[&_path]:fill-primary" : ""
-                  }
-                />
-              </div>
-            )}
+            <div className="flex h-min items-center gap-4">
+              <span className="typography-body-sm whitespace-pre">
+                hosted by
+              </span>
+              <GraphQLFoundationWordmark
+                width={128}
+                height={34.877}
+                className={
+                  colorScheme === "neutral" ? "[&_path]:fill-primary" : ""
+                }
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-8">{props.children}</div>
@@ -87,24 +84,14 @@ export function Hero(props: HeroProps) {
   )
 }
 
-export function HeroDateAndLocation(
-  props: React.HTMLAttributes<HTMLDivElement>,
-) {
+export function HeroDateAndLocation() {
   return (
-    <div
-      {...props}
-      className={clsx(
-        "typography-body-md flex flex-col gap-4 md:flex-row md:gap-6",
-        props.className,
-      )}
-    >
+    <div className="typography-body-md flex flex-col gap-4 md:flex-row md:gap-6">
       <div className="flex items-center gap-2">
         <CalendarIcon className="size-5 sm:size-6" />
-        <span>
-          <time dateTime="2025-09-08">September 08</time>
-          <span>-</span>
-          <time dateTime="2025-09-10">10, 2025</time>
-        </span>
+        <time dateTime="2025-09-08">September 08</time>
+        <span>-</span>
+        <time dateTime="2025-09-10">10, 2025</time>
       </div>
       <div className="flex items-center gap-2">
         <PinIcon className="size-5 sm:size-6" />
