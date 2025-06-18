@@ -19,12 +19,12 @@ export default function ResourcesPage() {
   return (
     <>
       <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/30 dark:bg-neu-0 dark:before:bg-blk/40" />
-      <Hero pageName="Code of Conduct" year="2025">
+      <Hero pageName="Code of conduct" subtitle="The Linux Foundation">
         <Button
-          href="mailto:graphql_events@linuxfoundation.org"
+          href="https://events.linuxfoundation.org/about/code-of-conduct/"
           className="mt-[18px] w-fit"
         >
-          Talk to us
+          See on The Linux Foundation
         </Button>
       </Hero>
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">

@@ -6,34 +6,35 @@ import GraphQLFoundationWordmark from "../../assets/graphql-foundation-wordmark.
 import { ImageLoaded } from "../image-loaded"
 import blurBean from "./blur-bean-cropped.webp"
 
-export function Hero({
-  pageName,
-  year,
-  children,
-  bottom,
-}: {
+export type HeroProps = {
   pageName?: string
-  year: string
   children: React.ReactNode
   bottom?: React.ReactNode
-}) {
+} & (
+  | { year: string | number; subtitle?: never }
+  | { year?: never; subtitle: string }
+)
+
+export function Hero(props: HeroProps) {
   return (
     <article className="gql-conf-navbar-strip relative isolate flex flex-col justify-center bg-pri-base text-neu-0 selection:bg-blk/40 before:bg-white/30 dark:bg-pri-darker dark:text-neu-900 dark:selection:bg-white/40 before:dark:bg-blk/40">
       <article className="relative">
         <HeroStripes />
         <div className="gql-conf-container mx-auto flex max-w-full flex-col gap-12 overflow-hidden p-4 pt-6 sm:p-8 sm:pt-12 md:gap-12 md:bg-left md:p-12 lg:px-24 lg:pb-16 lg:pt-24">
           <div className="flex gap-10 max-md:flex-col md:justify-between">
-            {pageName ? (
+            {props.pageName ? (
               <div>
                 <span className="typography-h3 text-sec-base">
-                  GraphQLConf {year}
+                  {props.year ? `GraphQLConf ${props.year}` : props.subtitle}
                 </span>
-                <h1 className="typography-d1">{pageName}</h1>
+                <h1 className="typography-d1">{props.pageName}</h1>
               </div>
             ) : (
               <h1 className="typography-d1 flex flex-wrap gap-2">
                 <span>GraphQLConf</span>
-                <span className="text-sec-base">{year}</span>
+                <span className="text-sec-base">
+                  {props.year || props.subtitle}
+                </span>
               </h1>
             )}
             <div className="flex h-min items-center gap-4">
@@ -44,10 +45,10 @@ export function Hero({
             </div>
           </div>
 
-          <div className="flex flex-col gap-8">{children}</div>
+          <div className="flex flex-col gap-8">{props.children}</div>
         </div>
       </article>
-      {bottom}
+      {props.bottom}
     </article>
   )
 }
