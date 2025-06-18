@@ -3,11 +3,13 @@ import clsx from "clsx"
 
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { ServerComponentMarkdown } from "@/app/conf/_components/server-component-markdown"
+import { Button } from "@/app/conf/_design-system/button"
 
 import { NavbarPlaceholder } from "../components/navbar"
 import "../resources/prose.css"
 
 import markdown from "./code-of-conduct.mdx?raw"
+import { Hero } from "../components/hero"
 
 export const metadata: Metadata = {
   title: "Code of Conduct | GraphQLConf 2025",
@@ -17,6 +19,14 @@ export default function ResourcesPage() {
   return (
     <>
       <NavbarPlaceholder className="top-0 bg-neu-0 before:bg-white/30 dark:bg-neu-0 dark:before:bg-blk/40" />
+      <Hero pageName="Code of Conduct" year="2025">
+        <Button
+          href="mailto:graphql_events@linuxfoundation.org"
+          className="mt-[18px] w-fit"
+        >
+          Talk to us
+        </Button>
+      </Hero>
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <div className="gql-conf-container gql-conf-section gql-prose">
           <ServerComponentMarkdown
