@@ -6,8 +6,8 @@ import { ServerComponentMarkdown } from "@/app/conf/_components/server-component
 import { Button } from "@/app/conf/_design-system/button"
 
 import { NavbarPlaceholder } from "../components/navbar"
-import "../resources/prose.css"
 import { Hero, HeroStripes } from "../components/hero"
+import "../resources/prose.css"
 
 import markdown from "./code-of-conduct.mdx?raw"
 
@@ -42,6 +42,29 @@ export default function ResourcesPage() {
         <div className="gql-conf-container gql-conf-section gql-prose xl:mb-16 xl:mt-8">
           <ServerComponentMarkdown
             markdown={markdown}
+            extractToc
+            Wrapper={({ children, data }) => {
+              return (
+                <div>
+                  <aside className="gql-sticky-aside row-span-8 -mt-1 w-fit sm:max-xl:grid sm:max-xl:grid-cols-2 sm:max-xl:bg-neu-100 sm:max-xl:p-4 dark:sm:max-xl:bg-neu-50/50">
+                    {data.toc.map(({ value, id, depth }) => (
+                      <a
+                        key={id}
+                        data-depth={depth}
+                        className="raw typography-menu block p-4 py-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 data-[depth=2]:font-semibold dark:hover:bg-neu-50 max-xl:-ml-4 xl:data-[depth=2]:text-lg"
+                        style={{
+                          paddingLeft: (depth - 2) * 16 + 16,
+                        }}
+                        href={`#${id}`}
+                      >
+                        {value}
+                      </a>
+                    ))}
+                  </aside>
+                  {children}
+                </div>
+              )
+            }}
             components={{
               a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
                 return (
