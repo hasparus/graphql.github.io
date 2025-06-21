@@ -49,6 +49,7 @@ export async function ServerComponentMarkdown({
     return render({ data: vfile.data, mdx })
   } catch (error) {
     console.error(error)
+    if (process.env.NODE_ENV === "production") throw error
     return (
       <div>{error instanceof Error ? error.message : "Error loading MDX"}</div>
     )
