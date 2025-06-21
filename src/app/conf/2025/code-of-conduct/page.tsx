@@ -15,6 +15,32 @@ export const metadata: Metadata = {
   title: "Code of Conduct | GraphQLConf 2025",
 }
 
+const components = {
+  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+    return (
+      <Anchor
+        {...props}
+        href={props.href ?? ""}
+        className={clsx(props.className, "typography-link")}
+      />
+    )
+  },
+  ul: (props: React.HTMLAttributes<HTMLUListElement>) => {
+    return <ul {...props} className={clsx(props.className, "-mt-6")} />
+  },
+  Callout: (props: React.HTMLAttributes<HTMLDivElement>) => {
+    return (
+      <div
+        {...props}
+        className={clsx(
+          props.className,
+          "gql-prose-inner -mx-4 w-fit border border-neu-300 bg-neu-50 p-4 dark:border-neu-100 dark:bg-neu-50/50 max-md:border-x-0 xl:my-4",
+        )}
+      />
+    )
+  },
+}
+
 export default function ResourcesPage() {
   return (
     <>
@@ -39,19 +65,19 @@ export default function ResourcesPage() {
         </Button>
       </Hero>
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
-        <div className="gql-conf-container gql-conf-section gql-prose xl:mb-16 xl:mt-8">
+        <div className="gql-conf-container gql-conf-section xl:mb-16 xl:mt-8">
           <ServerComponentMarkdown
             markdown={markdown}
             extractToc
-            Wrapper={({ children, data }) => {
+            render={({ mdx, data }) => {
               return (
-                <div>
-                  <aside className="gql-sticky-aside row-span-8 -mt-1 w-fit sm:max-xl:grid sm:max-xl:grid-cols-2 sm:max-xl:bg-neu-100 sm:max-xl:p-4 dark:sm:max-xl:bg-neu-50/50">
+                <div className="gql-prose md:max-lg:[&>:not(:first-child)]:mx-4">
+                  <aside className="gql-sticky-aside row-span-8 -mt-1 w-fit sm:max-xl:grid sm:max-xl:grid-cols-2 sm:max-xl:bg-neu-100 sm:max-xl:p-4 dark:sm:max-xl:bg-neu-50/50 xl:max-w-[284px]">
                     {data.toc.map(({ value, id, depth }) => (
                       <a
                         key={id}
                         data-depth={depth}
-                        className="raw typography-menu block p-4 py-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 data-[depth=2]:font-semibold dark:hover:bg-neu-50 max-xl:-ml-4 xl:data-[depth=2]:text-lg"
+                        className="raw typography-menu block p-4 py-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 dark:hover:bg-neu-50 max-xl:-ml-4"
                         style={{
                           paddingLeft: (depth - 2) * 16 + 16,
                         }}
@@ -61,36 +87,9 @@ export default function ResourcesPage() {
                       </a>
                     ))}
                   </aside>
-                  {children}
+                  {mdx({ components })}
                 </div>
               )
-            }}
-            components={{
-              a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
-                return (
-                  <Anchor
-                    {...props}
-                    href={props.href ?? ""}
-                    className={clsx(props.className, "typography-link")}
-                  />
-                )
-              },
-              ul: (props: React.HTMLAttributes<HTMLUListElement>) => {
-                return (
-                  <ul {...props} className={clsx(props.className, "-mt-6")} />
-                )
-              },
-              Callout: (props: React.HTMLAttributes<HTMLDivElement>) => {
-                return (
-                  <div
-                    {...props}
-                    className={clsx(
-                      props.className,
-                      "gql-prose-inner -mx-4 w-fit border border-neu-300 bg-neu-50 p-4 dark:border-neu-100 dark:bg-neu-50/50 xl:my-4",
-                    )}
-                  />
-                )
-              },
             }}
           />
         </div>

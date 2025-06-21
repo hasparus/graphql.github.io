@@ -6,7 +6,6 @@ import * as runtime from "react/jsx-runtime"
 import { Root, Element } from "hast"
 import { visit } from "unist-util-visit"
 import { toString } from "hast-util-to-string"
-// @ts-expect-error
 import Slugger from "github-slugger"
 
 /**
@@ -18,17 +17,19 @@ import Slugger from "github-slugger"
  */
 export async function ServerComponentMarkdown({
   markdown,
-  components = {},
   extractToc = false,
-  Wrapper = ({ children }) => children,
+  render = ({ mdx }) => mdx({}),
 }: {
   markdown: string
-  components?: Record<string, React.ComponentType>
   extractToc?: boolean
-  Wrapper?: React.ComponentType<{
-    children: React.ReactNode
+  render?: (props: {
+    mdx: ({
+      components,
+    }: {
+      components?: MdxComponents
+    }) => React.AwaitedReactNode
     data: { toc: TableOfContents }
-  }>
+  }) => React.AwaitedReactNode
 }) {
   try {
     const rehypePlugins = extractToc ? [rehypeExtractTableOfContents] : []
@@ -40,12 +41,12 @@ export async function ServerComponentMarkdown({
       recmaPlugins: [],
     })
 
-    const { default: Mdx } = await run(String(vfile), {
+    const { default: mdx } = await run(vfile, {
       ...runtime,
       baseUrl: import.meta.url,
     })
 
-    return <Wrapper data={vfile.data}>{Mdx({ components })}</Wrapper>
+    return render({ data: vfile.data, mdx })
   } catch (error) {
     console.error(error)
     return (
@@ -55,6 +56,7 @@ export async function ServerComponentMarkdown({
 }
 
 type TableOfContents = Array<{ value: string; id: string; depth: number }>
+type MdxComponents = Record<string, React.ComponentType>
 
 /**
  * Nextra has a built-in plugin like this, but it also steals the heading contents
