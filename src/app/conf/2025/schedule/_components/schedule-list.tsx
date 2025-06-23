@@ -16,7 +16,6 @@ import {
   FilterStates,
   ResetFiltersButton,
 } from "./filters"
-import clsx from "clsx"
 
 export interface FiltersConfig
   extends Partial<
