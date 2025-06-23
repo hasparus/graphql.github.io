@@ -101,6 +101,19 @@ function getSessionsByDay(
   }
 }
 
+const timeFormat = new Intl.DateTimeFormat(undefined, {
+  hour: "2-digit",
+  minute: "2-digit",
+})
+const formatBlockTime = (start: string, end?: string) => {
+  const startDate = parseISO(start)
+  if (end) {
+    const endDate = parseISO(end)
+    return timeFormat.formatRange(startDate, endDate)
+  }
+  return timeFormat.format(startDate)
+}
+
 export interface ScheduleListProps {
   showFilter?: boolean
   scheduleData: ScheduleSession[]
@@ -191,36 +204,64 @@ export function ScheduleList({
                   {format(parseISO(date), "EEEE, MMMM d")}
                 </h3>
                 {Object.entries(concurrentSessionsGroup).map(
-                  ([sessionDate, sessions]) => (
-                    <div
-                      key={`concurrent sessions on ${sessionDate}`}
-                      className="lg:mt-px"
-                    >
-                      <div className="mr-px flex flex-col max-lg:ml-px lg:flex-row">
-                        <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:my-px max-lg:border-x lg:mr-px">
-                          <span className="typography-body-sm mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
-                            {parseISO(sessionDate).toLocaleTimeString(
-                              undefined,
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              },
-                            )}
-                          </span>
+                  ([sessionDate, sessions], i, blocks) => {
+                    const blockEnd = sessions[0]?.event_end
+                    const nextBlockStart = blocks[i + 1]?.[0]
+
+                    const isBreak =
+                      sessions[0]?.event_type
+                        ?.toLowerCase()
+                        .includes("break") ||
+                      blocks[i + 1]?.[1]?.[0]?.event_type
+                        ?.toLowerCase()
+                        .includes("break")
+                    const hasDashedBorder =
+                      blockEnd && blockEnd === nextBlockStart && !isBreak
+
+                    return (
+                      <div
+                        key={`concurrent sessions on ${sessionDate}`}
+                        className="relative lg:mt-px [&_div:has(a:hover)]:z-[1]"
+                      >
+                        <div className="mr-px flex flex-col max-lg:ml-px lg:flex-row">
+                          <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:my-px max-lg:border-x lg:mr-px">
+                            <span className="typography-body-sm mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
+                              {formatBlockTime(sessionDate, blockEnd)}
+                            </span>
+                          </div>
+                          <div className="relative flex w-full flex-col items-end gap-px lg:flex-row lg:items-start">
+                            {sessions.map(session => (
+                              <ScheduleSessionCard
+                                key={session.id}
+                                session={session}
+                                year={year}
+                                eventsColors={eventsColors}
+                              />
+                            ))}
+                          </div>
                         </div>
-                        <div className="relative flex w-full flex-col items-end gap-px lg:flex-row lg:items-start">
-                          {sessions.map(session => (
-                            <ScheduleSessionCard
-                              key={session.id}
-                              session={session}
-                              year={year}
-                              eventsColors={eventsColors}
+                        {hasDashedBorder && (
+                          <svg
+                            className="absolute -bottom-px left-0 h-px w-full text-neu-50"
+                            viewBox="0 0 100 1"
+                            preserveAspectRatio="none"
+                          >
+                            <line
+                              x1="0"
+                              y1="0.5"
+                              x2="100"
+                              y2="0.5"
+                              stroke="currentColor"
+                              strokeWidth="1"
+                              strokeDasharray="4,4"
+                              strokeDashoffset="4"
+                              vectorEffect="non-scaling-stroke"
                             />
-                          ))}
-                        </div>
+                          </svg>
+                        )}
                       </div>
-                    </div>
-                  ),
+                    )
+                  },
                 )}
               </div>
             ),
@@ -237,7 +278,7 @@ function BookmarkOnSched({ year }: { year: `202${number}` }) {
       href={`https://graphqlconf${year}.sched.com`}
       target="_blank"
       rel="noreferrer"
-      className="typography-link mb-8 block w-fit decoration-neu-400"
+      className="typography-link mb-8 block w-fit decoration-neu-400 max-lg:hidden"
     >
       Bookmark sessions & plan your days on Sched
       <svg
