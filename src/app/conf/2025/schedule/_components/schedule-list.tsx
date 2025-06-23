@@ -101,6 +101,19 @@ function getSessionsByDay(
   }
 }
 
+const timeFormat = new Intl.DateTimeFormat(undefined, {
+  hour: "2-digit",
+  minute: "2-digit",
+})
+const formatBlockTime = (start: string, end?: string) => {
+  const startDate = parseISO(start)
+  if (end) {
+    const endDate = parseISO(end)
+    return timeFormat.formatRange(startDate, endDate)
+  }
+  return timeFormat.format(startDate)
+}
+
 export interface ScheduleListProps {
   showFilter?: boolean
   scheduleData: ScheduleSession[]
@@ -199,12 +212,9 @@ export function ScheduleList({
                       <div className="mr-px flex flex-col max-lg:ml-px lg:flex-row">
                         <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:my-px max-lg:border-x lg:mr-px">
                           <span className="typography-body-sm mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
-                            {parseISO(sessionDate).toLocaleTimeString(
-                              undefined,
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              },
+                            {formatBlockTime(
+                              sessionDate,
+                              sessions[0]?.event_end,
                             )}
                           </span>
                         </div>
