@@ -1,6 +1,6 @@
 "use client"
 
-import { format, parseISO, compareAsc } from "date-fns"
+import { parseISO, compareAsc } from "date-fns"
 import { ReactElement, useMemo, useState } from "react"
 
 import { ScheduleSession } from "@/app/conf/_api/sched-types"
@@ -101,6 +101,10 @@ function getSessionsByDay(
   }
 }
 
+/**
+ * September 8 in Amsterdam is Central European Summer Time
+ */
+const CONFERENCE_TIMEZONE = "CEST"
 const timeFormat = new Intl.DateTimeFormat(undefined, {
   hour: "2-digit",
   minute: "2-digit",
@@ -197,12 +201,21 @@ export function ScheduleList({
                 key={date}
                 className="typography-body-sm bg-neu-200 pb-px dark:bg-neu-50"
               >
-                <h3
-                  className="bg-neu-50 py-4 dark:bg-neu-0"
-                  id={`day-${index + 1}`}
-                >
-                  {format(parseISO(date), "EEEE, MMMM d")}
-                </h3>
+                <div className="flex items-center justify-between bg-neu-50 py-4 dark:bg-neu-0">
+                  <h3 id={`day-${index + 1}`}>
+                    {parseISO(date).toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </h3>
+                  <span
+                    className="text-neu-800"
+                    title="All times are displayed in Central European Summer Time"
+                  >
+                    All times are displayed in {CONFERENCE_TIMEZONE}
+                  </span>
+                </div>
                 {Object.entries(concurrentSessionsGroup).map(
                   ([sessionDate, sessions], i, blocks) => {
                     const blockEnd = sessions[0]?.event_end
@@ -225,7 +238,7 @@ export function ScheduleList({
                       >
                         <div className="mr-px flex flex-col max-lg:ml-px lg:flex-row">
                           <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:my-px max-lg:border-x lg:mr-px">
-                            <span className="typography-body-sm mt-3 inline-block w-20 whitespace-nowrap pb-0.5 pl-4 lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
+                            <span className="typography-body-sm mt-3 inline-block w-20 pb-0.5 pl-4 lg:mr-6 lg:w-28 lg:pb-4 lg:pl-0">
                               {formatBlockTime(sessionDate, blockEnd)}
                             </span>
                           </div>
