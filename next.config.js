@@ -9,6 +9,7 @@ import fs from "fs"
 const vercelJSON = JSON.parse(fs.readFileSync("./vercel.json", "utf-8"))
 
 const withNextra = nextra({
+  autoImportThemeStyle: false,
   theme: "nextra-theme-docs",
   themeConfig: "./theme.config.tsx",
   mdxOptions: {

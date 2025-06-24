@@ -48,8 +48,8 @@
     "next-query-params": "^5.0.1",
     "next-sitemap": "^4.2.3",
     "next-with-less": "^3.0.1",
-    "nextra": "3.0.0-alpha.28",
-    "nextra-theme-docs": "3.0.0-alpha.28",
+    "nextra": "^3",
+    "nextra-theme-docs": "^3",
     "numbro": "2.5.0",
     "p-limit": "^4.0.0",
     "parser-front-matter": "1.6.4",
@@ -97,7 +97,7 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "nextra@3.0.0-alpha.28": "patches/nextra@3.0.0-alpha.22.patch"
+      "nextra": "patches/nextra.patch"
     }
   }
 }

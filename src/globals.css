@@ -1,6 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer l-base, l-nextra;
+
+@import "tailwindcss/base" layer(l-base);
+@import "nextra-theme-docs/style.css" layer(l-nextra);
+@import "tailwindcss/utilities";
+@import "tailwindcss/components";
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -284,20 +287,6 @@ div[id^="headlessui-menu-items"] {
 .tag {
   @apply hover:border-transparent hover:bg-primary hover:text-white;
   @apply rounded border border-current px-2.5 py-1 text-sm font-bold transition-colors;
-}
-
-.index {
-  p {
-    @apply mb-5 max-w-2xl text-lg lg:text-xl/9;
-  }
-
-  h2 {
-    @apply mb-10 text-balance text-3xl font-bold lg:text-5xl;
-  }
-
-  pre {
-    @apply bg-white;
-  }
 }
 
 .add,

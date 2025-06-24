@@ -1,49 +1,47 @@
 import Link from "next/link"
-import { CodeA, CodeB, CodeC } from "../code-blocks"
 import { GraphQLLogo } from "@/icons"
-import { clsx } from "clsx"
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
+import CheckIcon from "@/app/conf/_design-system/pixelarticons/check.svg?svgr"
+import { Button } from "@/app/conf/_design-system/button"
 
 export function Hero() {
   return (
-    <div className="[background:url('/img/graph-wash.png'),#171e26_repeat_center_center] xl:py-20">
-      <div className="conf-block container">
-        <section
-          className={clsx(
-            "flex flex-wrap items-center justify-center gap-14 max-sm:flex-col",
-            "[&_h3]:text-2xl [&_h3]:text-white max-lg:[&_h3]:text-center",
-            "[&_pre]:!bg-transparent [&_pre]:ring-0 [&_pre_span]:text-[--shiki-dark]",
-            "[&_h3]:font-extralight",
-            "[&_code]:whitespace-pre-wrap" /* fix scroll on mobile for code-blocks */,
-          )}
-        >
-          <div className="flex flex-col items-center gap-2 max-xl:w-full max-md:grow">
-            <GraphQLLogo className="w-24" />
-            <h1 className="text-3xl text-primary">GraphQL</h1>
-          </div>
+    <div className="relative min-h-screen bg-neu-0">
+      <HeroStripes />
 
-          <div>
-            <h3>Describe your data</h3>
-            <CodeA />
-          </div>
+      <div className="flex max-w-4xl flex-col gap-10 py-24 pl-24 pr-10">
+        <h1 className="typography-h1 max-w-3xl text-neu-900">
+          The query language for modern APIs
+        </h1>
 
-          <div>
-            <h3>Ask for what you want</h3>
-            <CodeB />
-          </div>
+        <ul className="flex flex-col gap-2">
+          {[
+            "Deliver high-performance user experience at scale",
+            "Secure and stabilize your API with a strongly typed schema and validated queries",
+            "Reduce dependencies through efficient, distributed development",
+          ].map((item, index) => (
+            <li key={index} className="flex items-center gap-1">
+              <CheckIcon className="size-6 shrink-0 text-pri-base" />
+              <p className="typography-body-sm text-neu-800">{item}</p>
+            </li>
+          ))}
+        </ul>
 
-          <div>
-            <h3>Get predictable results</h3>
-            <CodeC />
-          </div>
-        </section>
-
-        <Link
-          className="index-button mx-auto mt-10 block w-fit border-white text-white"
-          href="/learn"
-        >
-          Get Started
-        </Link>
+        <div className="flex items-center gap-4">
+          <Button href="/learn">Get Started</Button>
+        </div>
       </div>
+    </div>
+  )
+}
+
+function HeroStripes() {
+  return (
+    <div className="pointer-events-none absolute right-0 top-0 h-full overflow-hidden">
+      <StripesDecoration
+        stripeWidth="5px"
+        oddClassName="bg-gradient-to-b from-sec-base to-pri-lighter"
+      />
     </div>
   )
 }

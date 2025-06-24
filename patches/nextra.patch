@@ -1,0 +1,23 @@
+diff --git a/dist/client/components/image.js b/dist/client/components/image.js
+index 239d72f5921e2d1b7359e569ae5b74c12d7c9d8a..ebeb619da1e3ccb7722e9388c92c1e2192527027 100644
+--- a/dist/client/components/image.js
++++ b/dist/client/components/image.js
+@@ -1,5 +1,5 @@
+ import { jsx } from "react/jsx-runtime";
+-import NextImage from "next/image";
++import NextImage from "next-image-export-optimizer";
+ import { forwardRef } from "react";
+ const Image = forwardRef((props, ref) => {
+   const ComponentToUse = typeof props.src === "object" ? NextImage : "img";
+diff --git a/dist/client/normalize-pages.js b/dist/client/normalize-pages.js
+index 15afee0c1de26f47d781f423e5ec32e33ad925d3..a0cefcd27a794dcfa84f901734240adf9c1f30f4 100644
+--- a/dist/client/normalize-pages.js
++++ b/dist/client/normalize-pages.js
+@@ -92,6 +92,7 @@ function normalizePages({
+             item.items
+           )) {
+             if (!value.href && children.every((i) => i.name !== key)) {
++              console.log({value})
+               throw new Error(
+                 `Validation of "_meta" file has failed.
+ The field key "${metaKey}.items.${key}" in \`_meta\` file refers to a page that cannot be found, remove this key from "_meta" file.`
