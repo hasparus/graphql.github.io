@@ -1,35 +1,39 @@
-import Link from "next/link"
-import { GraphQLLogo } from "@/icons"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 import CheckIcon from "@/app/conf/_design-system/pixelarticons/check.svg?svgr"
 import { Button } from "@/app/conf/_design-system/button"
+import { ImageLoaded } from "@/app/conf/2025/components/image-loaded"
+
+import logoBlurred from "./hero/logo-blurred.png"
 
 export function Hero() {
   return (
-    <div className="relative min-h-screen bg-neu-0">
-      <HeroStripes />
+    <div className="relative bg-neu-0">
+      <div className="gql-conf-container flex flex-col-reverse lg:grid lg:grid-cols-2">
+        <div className="flex max-w-4xl flex-col justify-center gap-4 p-4 lg:min-h-[800px] xl:gap-8 xl:py-24 xl:pl-24 xl:pr-10">
+          <h1 className="typography-h1 max-w-3xl text-neu-900">
+            The query language for modern APIs
+          </h1>
 
-      <div className="flex max-w-4xl flex-col gap-10 py-24 pl-24 pr-10">
-        <h1 className="typography-h1 max-w-3xl text-neu-900">
-          The query language for modern APIs
-        </h1>
+          <ul className="flex flex-col gap-2">
+            {[
+              "Deliver high-performance user experience at scale",
+              "Secure and stabilize your API with a strongly typed schema and validated queries",
+              "Reduce dependencies through efficient, distributed development",
+            ].map((item, index) => (
+              <li key={index} className="flex items-start gap-1">
+                <CheckIcon className="size-6 shrink-0 text-pri-base max-lg:mt-px" />
+                <p className="text-pretty text-neu-800">{item}</p>
+              </li>
+            ))}
+          </ul>
 
-        <ul className="flex flex-col gap-2">
-          {[
-            "Deliver high-performance user experience at scale",
-            "Secure and stabilize your API with a strongly typed schema and validated queries",
-            "Reduce dependencies through efficient, distributed development",
-          ].map((item, index) => (
-            <li key={index} className="flex items-center gap-1">
-              <CheckIcon className="size-6 shrink-0 text-pri-base" />
-              <p className="typography-body-sm text-neu-800">{item}</p>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-center gap-4">
-          <Button href="/learn">Get Started</Button>
+          <div className="flex items-center gap-4">
+            <Button href="/learn" className="max-sm:w-full">
+              Learn more
+            </Button>
+          </div>
         </div>
+        <HeroStripes />
       </div>
     </div>
   )
@@ -37,10 +41,18 @@ export function Hero() {
 
 function HeroStripes() {
   return (
-    <div className="pointer-events-none absolute right-0 top-0 h-full overflow-hidden">
+    <div className="pointer-events-none relative overflow-hidden max-lg:h-[210px]">
+      <ImageLoaded
+        image={logoBlurred}
+        className="relative h-full bg-gradient-to-b from-pri-base to-pri-lighter opacity-0 transition-opacity duration-[1.5s] [mask-position:center_12%] [mask-size:110%] data-[loaded=true]:opacity-100 dark:to-pri-base lg:[mask-position:7%_7%] lg:[mask-size:200%]"
+        style={{
+          maskImage: `url(${logoBlurred.src})`,
+          maskRepeat: "no-repeat",
+        }}
+      />
       <StripesDecoration
         stripeWidth="5px"
-        oddClassName="bg-gradient-to-b from-sec-base to-pri-lighter"
+        oddClassName="bg-gradient-to-b from-sec-base to-pri-lighter dark:from-sec-darker dark:to-pri-darker"
       />
     </div>
   )

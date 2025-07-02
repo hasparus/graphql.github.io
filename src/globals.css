@@ -1,9 +1,13 @@
-@layer l-base, l-nextra;
-
-@import "tailwindcss/base" layer(l-base);
-@import "nextra-theme-docs/style.css" layer(l-nextra);
+@import "./nextra-theme-docs.css";
+@import "tailwindcss/base";
 @import "tailwindcss/utilities";
 @import "tailwindcss/components";
+
+/* #region nextra tweaks (preferably removed later, replaced with components) */
+.nextra-nav-container > nav > div:nth-child(2) {
+  margin-right: auto;
+}
+/* #endregion nextra tweaks */
 
 :root {
   --foreground-rgb: 0, 0, 0;
