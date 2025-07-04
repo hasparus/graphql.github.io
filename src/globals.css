@@ -3,12 +3,6 @@
 @import "tailwindcss/utilities";
 @import "tailwindcss/components";
 
-/* #region nextra tweaks (preferably removed later, replaced with components) */
-.nextra-nav-container > nav > div:nth-child(2) {
-  margin-right: auto;
-}
-/* #endregion nextra tweaks */
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

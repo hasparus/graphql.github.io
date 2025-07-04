@@ -1,5 +1,9 @@
 import { DocsThemeConfig, ThemeSwitch, useConfig } from "nextra-theme-docs"
 import NextLink from "next/link"
+import { useRouter } from "next/router"
+
+import { Navbar } from "@/components/navbar/navbar"
+
 import {
   GraphQLWordmarkLogo,
   StackOverflowIcon,
@@ -7,7 +11,7 @@ import {
   DiscordIcon,
   TwitterIcon,
 } from "./src/icons"
-import { useRouter } from "next/router"
+
 // import { createElement } from "react"
 // import NextImage from "next-image-export-optimizer"
 
@@ -229,6 +233,7 @@ export default {
     content: Footer,
   },
   navbar: {
+    component: Navbar,
     extraContent: <ThemeSwitch lite className="[&_span]:hidden" />,
   },
   toc: {
