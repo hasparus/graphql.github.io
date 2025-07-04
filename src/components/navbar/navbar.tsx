@@ -5,7 +5,7 @@ import NextLink from "next/link"
 import { Button } from "nextra/components"
 import { useFSRoute } from "nextra/hooks"
 import type * as normalizePages from "nextra/normalize-pages"
-import type { ReactElement, ReactNode } from "react"
+import { Fragment, useState, type ReactElement, type ReactNode } from "react"
 import { useMenu, useThemeConfig } from "nextra-theme-docs"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { renderComponent } from "@/components/utils"
@@ -19,62 +19,71 @@ export interface NavBarProps {
 }
 
 const classes = {
-  link: "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none",
+  link: "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none hover:underline underline-offset-2",
 }
 
 function NavbarMenu({
   menu,
   children,
+  onSubmenuOpen,
 }: {
   menu: normalizePages.MenuItem
   children: ReactNode
+  onSubmenuOpen: (open: boolean) => void
 }): ReactElement {
   const routes = Object.fromEntries(
     (menu.children || []).map(route => [route.name, route]),
   )
   return (
     <Menu>
-      <MenuButton
-        className={({ focus }) =>
-          clsx(
-            classes.link,
-            "flex items-center gap-1.5 whitespace-nowrap max-md:hidden",
-            focus && "nextra-focusable",
+      <MenuButton as={Fragment}>
+        {({ focus, open }) => {
+          // I'm sorry, I know this is so cursed.
+          // I need to migrate out of HeadlessUI to something with change handlers.
+          onSubmenuOpen(open)
+
+          return (
+            <button
+              onClick={() => onSubmenuOpen(open)}
+              className={clsx(
+                classes.link,
+                "flex items-center gap-1.5 whitespace-nowrap max-md:hidden",
+                focus && "nextra-focusable",
+              )}
+            >
+              {children}
+            </button>
           )
-        }
-      >
-        {children}
+        }}
       </MenuButton>
       <MenuItems
         transition
-        portal={false}
         modal={false}
         className={({ open }) =>
+          // eslint-disable-next-line tailwindcss/no-custom-classname
           clsx(
+            "gql-navbar-menu-items",
             "motion-reduce:transition-none",
             "focus-visible:outline-none",
             open ? "opacity-100" : "opacity-0",
-            "nextra-scrollbar transition-opacity",
-            "bg-[rgb(var(--nextra-bg),.8)] backdrop-blur-lg", // todo: full screen overlay
+            "nextra-scrollbar overflow-visible transition-opacity",
             "z-20 rounded-md py-1 text-sm",
             // headlessui adds max-height as style, use !important to override
             "!max-h-[min(calc(100vh-5rem),256px)]",
           )
         }
-        anchor={{ to: "top start", gap: 21, padding: 16 }}
+        anchor={{ to: "top start", gap: 21, padding: 16, offset: -8 }}
       >
         {Object.entries(menu.items || {}).map(([key, item]) => (
-          <MenuItem
-            key={key}
-            as={Anchor}
-            href={item.href || routes[key]?.route}
-          >
+          <MenuItem key={key}>
             <Anchor
               href={item.href || routes[key]?.route}
-              className="data-focus:text-gray-900 block py-1.5 pl-3 pr-9 transition-colors rtl:pl-9 rtl:pr-3"
+              className="block py-1.5 pl-2 pr-9"
               target={item.newWindow ? "_blank" : undefined}
             >
-              {item.title}
+              <span className="typography-menu px-3 py-1 underline-offset-2 [[data-active]>&]:underline">
+                {item.title}
+              </span>
             </Anchor>
           </MenuItem>
         ))}
@@ -88,11 +97,12 @@ export function Navbar({ items }: NavBarProps): ReactElement {
 
   const activeRoute = useFSRoute()
   const { menu, setMenu } = useMenu()
+  const [submenuOpen, setSubmenuOpen] = useState(false)
 
   return (
     <div
       className={clsx(
-        "nextra-nav-container _top-0 _z-20 _w-full _bg-transparent print:_hidden",
+        "nextra-nav-container top-0 z-20 w-full bg-transparent print:hidden",
         activeRoute === "/" ? "fixed" : "sticky",
       )}
     >
@@ -122,7 +132,20 @@ export function Navbar({ items }: NavBarProps): ReactElement {
             if (pageOrMenu.type === "menu") {
               const menu = pageOrMenu as normalizePages.MenuItem
               return (
-                <NavbarMenu key={menu.title} menu={menu}>
+                <NavbarMenu
+                  key={menu.title}
+                  menu={menu}
+                  onSubmenuOpen={open => {
+                    if (typeof window !== "undefined") {
+                      if (open) {
+                        document.body.style.overflow = "hidden"
+                      } else {
+                        document.body.style.overflow = "auto"
+                      }
+                    }
+                    setSubmenuOpen(open)
+                  }}
+                >
                   {menu.title}
                 </NavbarMenu>
               )
@@ -147,7 +170,7 @@ export function Navbar({ items }: NavBarProps): ReactElement {
                 className={clsx(
                   classes.link,
                   "whitespace-nowrap max-md:hidden",
-                  isActive && !page.newWindow && "font-medium",
+                  isActive && !page.newWindow && "underline",
                 )}
                 target={page.newWindow ? "_blank" : undefined}
                 aria-current={!page.newWindow && isActive}
@@ -194,6 +217,7 @@ export function Navbar({ items }: NavBarProps): ReactElement {
           )}
         </Button>
       </nav>
+      <SubmenuBackdrop className={submenuOpen ? "opacity-100" : "opacity-0"} />
     </div>
   )
 }
@@ -237,6 +261,17 @@ export function NavbarPlaceholder({
         className,
       )}
       {...rest}
+    />
+  )
+}
+
+function SubmenuBackdrop({ className }: { className: string }) {
+  return (
+    <div
+      className={clsx(
+        "fixed inset-0 top-[calc(var(--nextra-navbar-height)+1px)] bg-[rgb(var(--nextra-bg),.4)] backdrop-blur-[6.4px] transition-opacity",
+        className,
+      )}
     />
   )
 }

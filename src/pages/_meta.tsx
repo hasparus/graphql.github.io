@@ -81,7 +81,7 @@ export default {
   conf: {
     type: "page",
     title: (
-      <span className="[a:has(>&)]:[a:has(>&)]:border [a:has(>&)]:border [a:has(>&)]:border-current [a:has(>&)]:text-pri-base dark:[a:has(>&)]:text-pri-light">
+      <span className="[a:has(>&)]:[a:has(>&)]:border [a:has(>&)]:border [a:has(>&)]:border-current [a:has(>&)]:text-pri-base dark:[a:has(>&)]:text-pri-light [a:hover:has(>&)]:border-transparent">
         GraphQLConf
         <span className="max-xl:hidden"> 2025</span>
       </span>
