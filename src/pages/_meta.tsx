@@ -80,7 +80,12 @@ export default {
   },
   conf: {
     type: "page",
-    title: "GraphQLConf",
+    title: (
+      <span className="[a:has(>&)]:[a:has(>&)]:border [a:has(>&)]:border [a:has(>&)]:border-current [a:has(>&)]:text-pri-base dark:[a:has(>&)]:text-pri-light">
+        GraphQLConf
+        <span className="max-xl:hidden"> 2025</span>
+      </span>
+    ),
     route: "/conf/2025",
   },
   "graphql-js": {

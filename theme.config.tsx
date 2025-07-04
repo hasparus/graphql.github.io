@@ -1,8 +1,8 @@
 import { DocsThemeConfig, ThemeSwitch, useConfig } from "nextra-theme-docs"
 import NextLink from "next/link"
-import { useRouter } from "next/router"
 
 import { Navbar } from "@/components/navbar/navbar"
+import { useRouter } from "next/router"
 
 import {
   GraphQLWordmarkLogo,
@@ -16,7 +16,7 @@ import {
 // import NextImage from "next-image-export-optimizer"
 
 const graphQLLogo = (
-  <GraphQLWordmarkLogo className="nextra-logo h-8" title="GraphQL" />
+  <GraphQLWordmarkLogo className="nextra-logo h-6" title="GraphQL" />
 )
 
 const classes = {
@@ -225,6 +225,10 @@ export default {
     "https://github.com/graphql/graphql.github.io/tree/source",
   color: {
     hue: 319,
+    lightness: {
+      light: 44.1,
+      dark: 90,
+    },
   },
   sidebar: {
     defaultMenuCollapseLevel: 1,
@@ -234,7 +238,9 @@ export default {
   },
   navbar: {
     component: Navbar,
-    extraContent: <ThemeSwitch lite className="[&_span]:hidden" />,
+    extraContent: (
+      <ThemeSwitch lite className="max-lg:hidden [&_span]:hidden" />
+    ),
   },
   toc: {
     backToTop: true,

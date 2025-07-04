@@ -1,5 +1,5 @@
 import { MenuItem, Menu, MenuButton, MenuItems } from "@headlessui/react"
-import cn from "clsx"
+import clsx from "clsx"
 // eslint-disable-next-line no-restricted-imports -- since we don't need newWindow prop
 import NextLink from "next/link"
 import { Button } from "nextra/components"
@@ -19,13 +19,7 @@ export interface NavBarProps {
 }
 
 const classes = {
-  link: cn(
-    "_text-sm contrast-more:_text-gray-700 contrast-more:dark:_text-gray-100",
-  ),
-  active: cn("_font-medium _subpixel-antialiased"),
-  inactive: cn(
-    "_text-gray-600 hover:_text-gray-800 dark:_text-gray-400 dark:hover:_text-gray-200",
-  ),
+  link: "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none",
 }
 
 function NavbarMenu({
@@ -42,33 +36,32 @@ function NavbarMenu({
     <Menu>
       <MenuButton
         className={({ focus }) =>
-          cn(
+          clsx(
             classes.link,
-            classes.inactive,
-            "max-md:_hidden _items-center _whitespace-nowrap _flex _gap-1.5 _ring-inset",
+            "flex items-center gap-1.5 whitespace-nowrap max-md:hidden",
             focus && "nextra-focusable",
           )
         }
       >
         {children}
-        {"->"}
       </MenuButton>
       <MenuItems
         transition
+        portal={false}
+        modal={false}
         className={({ open }) =>
-          cn(
-            "motion-reduce:_transition-none",
-            "nextra-focus",
-            open ? "_opacity-100" : "_opacity-0",
-            "nextra-scrollbar _transition-opacity",
-            "_border _border-black/5 dark:_border-white/20",
-            "_backdrop-blur-lg bg-[rgb(var(--nextra-bg),.8)]", // todo: full screen overlay
-            "_z-20 _rounded-md _py-1 _text-sm",
+          clsx(
+            "motion-reduce:transition-none",
+            "focus-visible:outline-none",
+            open ? "opacity-100" : "opacity-0",
+            "nextra-scrollbar transition-opacity",
+            "bg-[rgb(var(--nextra-bg),.8)] backdrop-blur-lg", // todo: full screen overlay
+            "z-20 rounded-md py-1 text-sm",
             // headlessui adds max-height as style, use !important to override
-            "!_max-h-[min(calc(100vh-5rem),256px)]",
+            "!max-h-[min(calc(100vh-5rem),256px)]",
           )
         }
-        anchor={{ to: "top end", gap: 10, padding: 16 }}
+        anchor={{ to: "top start", gap: 21, padding: 16 }}
       >
         {Object.entries(menu.items || {}).map(([key, item]) => (
           <MenuItem
@@ -97,9 +90,14 @@ export function Navbar({ items }: NavBarProps): ReactElement {
   const { menu, setMenu } = useMenu()
 
   return (
-    <div className="nextra-nav-container _top-0 _z-20 _w-full _bg-transparent print:_hidden fixed">
-      <div className="nextra-nav-container-blur" />
-      <nav className="mx-auto flex h-[var(--nextra-navbar-height)] max-w-[90rem] items-center justify-end gap-4 pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)]">
+    <div
+      className={clsx(
+        "nextra-nav-container _top-0 _z-20 _w-full _bg-transparent print:_hidden",
+        activeRoute === "/" ? "fixed" : "sticky",
+      )}
+    >
+      <BackdropBlur />
+      <nav className="mx-auto flex h-[var(--nextra-navbar-height)] max-w-[90rem] items-center justify-end pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)]">
         {themeConfig.logoLink ? (
           <NextLink
             href={
@@ -107,16 +105,17 @@ export function Navbar({ items }: NavBarProps): ReactElement {
                 ? themeConfig.logoLink
                 : "/"
             }
-            className="nextra-focus flex items-center hover:opacity-75 ltr:mr-auto rtl:ml-auto"
+            className="nextra-focus flex items-center hover:opacity-75"
           >
             {renderComponent(themeConfig.logo)}
           </NextLink>
         ) : (
-          <div className="flex items-center ltr:mr-auto rtl:ml-auto">
+          <div className="flex items-center">
             {renderComponent(themeConfig.logo)}
           </div>
         )}
-        <div className="nextra-scrollbar flex gap-4 overflow-x-auto py-1.5">
+        <div className="flex-1" />
+        <div className="-mx-2 flex overflow-x-auto px-2 py-1.5 lg:gap-2 xl:absolute xl:left-1/2 xl:-translate-x-1/2">
           {items.map(pageOrMenu => {
             if (pageOrMenu.display === "hidden") return null
 
@@ -145,12 +144,10 @@ export function Navbar({ items }: NavBarProps): ReactElement {
               <Anchor
                 href={href}
                 key={href}
-                className={cn(
+                className={clsx(
                   classes.link,
-                  "max-md:_hidden _whitespace-nowrap _ring-inset",
-                  !isActive || page.newWindow
-                    ? classes.inactive
-                    : classes.active,
+                  "whitespace-nowrap max-md:hidden",
+                  isActive && !page.newWindow && "font-medium",
                 )}
                 target={page.newWindow ? "_blank" : undefined}
                 aria-current={!page.newWindow && isActive}
@@ -183,16 +180,63 @@ export function Navbar({ items }: NavBarProps): ReactElement {
         <Button
           aria-label="Menu"
           className={({ active }) =>
-            cn(
-              "nextra-hamburger _rounded md:_hidden",
-              active && "_bg-gray-400/20",
+            clsx(
+              "nextra-hamburger p-2 text-pri-base md:hidden",
+              active && "bg-neu-400/20",
             )
           }
           onClick={() => setMenu(!menu)}
         >
-          {menu ? <CloseIcon /> : <MenuIcon />}
+          {menu ? (
+            <CloseIcon className="size-5" />
+          ) : (
+            <MenuIcon className="size-5" />
+          )}
         </Button>
       </nav>
     </div>
+  )
+}
+
+function BackdropBlur() {
+  const mask = "linear-gradient(to bottom, #000 0% 50%, transparent 50% 100%)"
+  const thickness = "1px"
+  return (
+    <>
+      <div
+        // note: we can't use the background trick to reduce flickering, because we have many section
+        // background colors and big images, so we'd have to change the --bg var with javascript
+        className="pointer-events-none absolute inset-0 -z-10 h-[200%] backdrop-blur-[12.8px]"
+        style={{
+          maskImage: mask,
+          WebkitMaskImage: mask,
+          background:
+            "linear-gradient(to bottom,rgb(var(--nextra-bg),.97) 0%, rgb(var(--nextra-bg),.5) 50% 100%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 h-full translate-y-full bg-white/10"
+        style={{
+          backdropFilter: "blur(8px) brightness(120%) saturate(113%)",
+          maskImage: `linear-gradient(to bottom, black 0, black ${thickness}, transparent ${thickness})`,
+        }}
+      />
+    </>
+  )
+}
+
+export function NavbarPlaceholder({
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      // placeholder: the colors here on `before` must match the ones on Hero `before` strip
+      className={clsx(
+        "absolute h-[calc(var(--nextra-navbar-height)+1px)] w-full before:absolute before:top-0 before:h-[calc(var(--nextra-navbar-height)+1px)] before:w-full",
+        className,
+      )}
+      {...rest}
+    />
   )
 }
