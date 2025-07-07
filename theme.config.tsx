@@ -205,21 +205,22 @@ export default {
       </>
     )
   },
-  banner: {
-    content: (
-      <>
-        📣 GraphQLConf 2025 • Sept 08-10 • Amsterdam • Early bird tickets
-        available &amp; sponsorship opportunities open •{" "}
-        <NextLink
-          href="/conf/2025"
-          className="underline after:font-sans after:content-['_→']"
-        >
-          Learn more
-        </NextLink>
-      </>
-    ),
-    key: "graphqlconf-2024",
-  },
+  // Hidden for now, Design is discussing it.
+  // banner: {
+  //   content: (
+  //     <>
+  //       📣 GraphQLConf 2025 • Sept 08-10 • Amsterdam • Early bird tickets
+  //       available &amp; sponsorship opportunities open •{" "}
+  //       <NextLink
+  //         href="/conf/2025"
+  //         className="underline after:font-sans after:content-['_→']"
+  //       >
+  //         Learn more
+  //       </NextLink>
+  //     </>
+  //   ),
+  //   key: "graphqlconf-2024",
+  // },
   logo: graphQLLogo,
   docsRepositoryBase:
     "https://github.com/graphql/graphql.github.io/tree/source",
