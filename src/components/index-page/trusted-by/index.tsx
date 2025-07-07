@@ -11,6 +11,7 @@ import PayPalWordmark from "./logos/PayPal.svg?svgr"
 import NewYorkTimesWordmark from "./logos/NewYorkTimes.svg?svgr"
 import StarbucksWordmark from "./logos/Starbucks.svg?svgr"
 import ShopifyLockup from "./logos/Shopify.svg?svgr"
+import ShopifyMonotoneLockup from "./logos/ShopifyMonotone.svg?svgr"
 import GitHubLockup from "./logos/GitHub.svg?svgr"
 
 import styles from "./style.module.css"
@@ -25,7 +26,10 @@ const logos: LogoListItem[] = [
     href: "https://aws.amazon.com",
     alt: "AWS",
     component: props => (
-      <AWSLogo {...props} className={clsx(props.className, "w-[110px]")} />
+      <AWSLogo
+        {...props}
+        className={clsx(props.className, "h-[48px] sm:w-[110px]")}
+      />
     ),
   },
 
@@ -67,17 +71,26 @@ const logos: LogoListItem[] = [
   {
     href: "https://starbucks.com",
     alt: "Starbucks",
-    component: props => (
-      <StarbucksWordmark
-        {...props}
-        className={clsx(props.className, "w-[200px] -translate-x-1.5")}
-      />
-    ),
+    component: StarbucksWordmark,
   },
   {
     href: "https://shopify.com",
     alt: "Shopify",
-    component: ShopifyLockup,
+    component: ({ className, ...rest }) => (
+      <div
+        role="img"
+        className={clsx(className, styles.shopify, "relative flex")}
+      >
+        <ShopifyLockup
+          className="w-full opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+          {...rest}
+        />
+        <ShopifyMonotoneLockup
+          className="absolute inset-0 w-full opacity-100 group-hover:opacity-0 group-focus:opacity-0"
+          {...rest}
+        />
+      </div>
+    ),
   },
   {
     href: "https://github.com",
@@ -102,7 +115,7 @@ export function TrustedBy() {
       </div>
       <div
         className={clsx(
-          "mt-6 grid grid-cols-2 justify-center gap-px md:my-12 xl:my-16 xl:grid-cols-5",
+          "my-6 grid grid-cols-2 justify-center gap-px md:my-12 md:grid-cols-5 xl:my-16",
           styles.logos,
         )}
       >
@@ -112,7 +125,7 @@ export function TrustedBy() {
             href={href}
             target="_blank"
             rel="noreferrer"
-            className="flex shrink-0 items-center justify-center bg-neu-0 p-4 hover:bg-neu-100 md:p-6 lg:p-8 xl:p-10"
+            className="group flex shrink-0 items-center justify-center bg-neu-0 p-10 before:inset-2 hover:before:bg-neu-100 dark:hover:before:bg-[#202219]"
           >
             <Component />
           </a>
