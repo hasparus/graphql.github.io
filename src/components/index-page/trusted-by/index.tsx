@@ -102,7 +102,7 @@ export function TrustedBy() {
       </div>
       <div
         className={clsx(
-          "mt-6 flex flex-wrap justify-center bg-neu-400 md:my-12 xl:my-16 xl:grid xl:grid-cols-5 xl:gap-px",
+          "mt-6 grid grid-cols-2 justify-center gap-px md:my-12 xl:my-16 xl:grid-cols-5",
           styles.logos,
         )}
       >
