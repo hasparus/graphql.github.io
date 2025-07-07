@@ -38,7 +38,7 @@ export function Hero(props: HeroProps) {
     >
       <article className="relative">
         {props.stripes || <HeroStripes />}
-        <div className="gql-conf-container mx-auto flex max-w-full flex-col gap-12 overflow-hidden p-4 pt-6 sm:p-8 sm:pt-12 md:gap-12 md:bg-left md:p-12 lg:px-24 lg:pb-16 lg:pt-24">
+        <div className="gql-container mx-auto flex max-w-full flex-col gap-12 overflow-hidden p-4 pt-6 sm:p-8 sm:pt-12 md:gap-12 md:bg-left md:p-12 lg:px-24 lg:pb-16 lg:pt-24">
           <div className="flex gap-10 max-md:flex-col md:justify-between">
             {props.pageName ? (
               <div>

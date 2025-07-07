@@ -11,7 +11,7 @@ export default function WhatToExpectSection({
 }: WhatToExpectSectionProps) {
   return (
     <section
-      className={clsx("gql-conf-section flex gap-6 max-md:flex-col", className)}
+      className={clsx("gql-section flex gap-6 max-md:flex-col", className)}
       {...rest}
     >
       <h3 className="typography-h2 md:flex-1">What to expect</h3>

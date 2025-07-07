@@ -33,7 +33,7 @@ export default function WorkroomPage() {
   }
 
   return (
-    <main className="gql-conf-section gql-conf-container [&>p]:pt-8 [&>p]:font-mono [&>p]:text-sm [&>p]:text-neu-600">
+    <main className="gql-section gql-container [&>p]:pt-8 [&>p]:font-mono [&>p]:text-sm [&>p]:text-neu-600">
       <p>SpeakerOpengraphImage</p>
       <SpeakerOpengraphImage
         speaker={enisdenjo}

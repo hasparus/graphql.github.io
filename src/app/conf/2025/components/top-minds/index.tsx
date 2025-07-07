@@ -71,7 +71,7 @@ export default function TopMindsSection({
   return (
     <section
       className={clsx(
-        "gql-conf-section flex justify-center max-md:flex-col [@media(767px<width<807px)]:px-6 [@media(807px<=width<858px)]:px-12",
+        "gql-section flex justify-center max-md:flex-col [@media(767px<width<807px)]:px-6 [@media(807px<=width<858px)]:px-12",
         className,
       )}
       {...rest}
