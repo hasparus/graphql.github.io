@@ -8,6 +8,9 @@ import shopifyLogo from "../../../public/users/logos/shopify.png"
 import NextImage from "next-image-export-optimizer"
 import { clsx } from "clsx"
 
+/**
+ * @deprecated
+ */
 export function WhoIsUsing() {
   return (
     <div className="index-gradient">
