@@ -11,7 +11,7 @@ import { HowItWorks } from "./how-it-works"
 
 export function IndexPage() {
   return (
-    <div className="index">
+    <div className="bg-neu-0">
       <Hero />
       <TrustedBy />
       <HowItWorks />
