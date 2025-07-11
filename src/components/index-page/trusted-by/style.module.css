@@ -1,13 +1,4 @@
 .logos {
-  background-image: radial-gradient(
-    ellipse at 50% 50%,
-    hsl(var(--color-neu-600)) 0%,
-    transparent 75%
-  );
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-
   & .shopify > svg {
     transition: opacity 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
   }

@@ -520,6 +520,17 @@ div[id^="headlessui-menu-items"] {
   --navbar-h: var(--nextra-navbar-height);
 }
 
+.gql-radial-gradient {
+  background-image: radial-gradient(
+    ellipse at 50% 50%,
+    hsl(var(--color-neu-600)) 0%,
+    transparent 75%
+  );
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 :root {
   --navbar-h: 70px;
 }

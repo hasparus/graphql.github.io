@@ -115,7 +115,7 @@ export function TrustedBy() {
       </div>
       <div
         className={clsx(
-          "my-6 grid grid-cols-2 justify-center gap-px md:my-12 md:grid-cols-5 xl:my-16",
+          "gql-radial-gradient my-6 grid grid-cols-2 justify-center gap-px md:my-12 md:grid-cols-5 xl:my-16",
           styles.logos,
         )}
       >

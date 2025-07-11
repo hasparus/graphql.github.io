@@ -13,7 +13,7 @@ export function HowItWorks() {
         How it works
       </span>
       <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
-      <ol className="list-none">
+      <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
         <ListItem text="Describe your data" code={<CodeA />} />
         <ListItem text="Ask for what you want" code={<CodeB />} />
         <ListItem text="Get predictable results" code={<CodeC />} />
@@ -34,9 +34,13 @@ function ListItem({
   code: React.ReactNode
 }) {
   return (
-    <li className="typography-body-md pt-4 [counter-increment:list-item] before:typography-body-sm before:mr-2 before:inline-flex before:size-5 before:translate-y-[-0.5px] before:items-center before:justify-center before:bg-neu-200 before:p-1 before:text-neu-800 before:content-[counter(list-item)] lg:pt-6">
-      {text}
-      <div className="mt-4 lg:mt-6">{code}</div>
+    <li className="[counter-increment:list-item]">
+      <div className="typography-body-md bg-neu-0 py-4 before:typography-body-sm before:mr-2 before:inline-flex before:size-5 before:translate-y-[-0.5px] before:items-center before:justify-center before:bg-neu-200 before:p-1 before:text-neu-800 before:content-[counter(list-item)] md:py-6 md:before:ml-6">
+        {text}
+      </div>
+      <div className="mt-px bg-neu-0 md:pl-2 md:pt-2 max-md:[&_code>span]:!pl-0 [&_pre]:ring-0">
+        {code}
+      </div>
     </li>
   )
 }
