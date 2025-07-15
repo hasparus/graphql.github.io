@@ -8,9 +8,9 @@ import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
 export function ProvenSolution() {
   return (
-    <section className="dark relative overflow-hidden bg-pri-dark text-white dark:bg-pri-darker xl:py-20">
+    <section className="dark relative overflow-hidden bg-pri-dark text-white dark:bg-pri-darker">
       <Stripes />
-      <div className="gql-container py-8">
+      <div className="gql-container py-8 xl:py-16">
         <div className="gql-section relative">
           <SectionLabel className="mb-6 !text-sec-light">
             Business perspective
