@@ -115,7 +115,7 @@ function Stripes() {
     >
       {/* todo: ensure colors in dark mode are correct */}
       <StripesDecoration
-        evenClassName="bg-[linear-gradient(180deg,hsl(var(--color-pri-light)/0.2)_20%,hsl(var(--color-pri-base))_150%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-base))_20%,hsl(var(--color-pri-darker))_150%)]"
+        evenClassName="bg-[linear-gradient(180deg,hsl(var(--color-pri-light)/0.2)_20%,hsl(var(--color-pri-base))_150%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-base)/.9)_20%,hsl(var(--color-pri-darker))_150%)]"
         oddClassName="bg-[linear-gradient(180deg,hsl(var(--color-pri-light))_20%,hsl(var(--color-pri-lighter)/.9)_150%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-darker)/.9)_20%,hsl(var(--color-pri-base)/.8)_150%)]"
       />
     </ImageLoaded>
