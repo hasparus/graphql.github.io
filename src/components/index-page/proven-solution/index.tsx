@@ -62,7 +62,11 @@ export function ProvenSolution() {
               ]}
             />
           </div>
-          <Button className="mx-auto mt-8 w-fit lg:mt-16" href="/learn">
+          <Button
+            className="mx-auto mt-8 w-fit lg:mt-16"
+            // todo: this should link to the Business Agregator page
+            href="/learn"
+          >
             Learn more
           </Button>
         </div>
