@@ -9,6 +9,7 @@ import { BringYourOwnCode } from "./bring-your-own-code"
 import { WhoIsUsing } from "./who-is-using"
 import { HowItWorks } from "./how-it-works"
 import { ProvenSolution } from "./proven-solution"
+import { FivePillars } from "./five-pillars"
 
 export function IndexPage() {
   return (
@@ -17,6 +18,7 @@ export function IndexPage() {
       <TrustedBy />
       <HowItWorks />
       <ProvenSolution />
+      <FivePillars />
       <section className="conf-block container flex max-w-3xl flex-col items-center text-center">
         <h2>A query language for your API</h2>
         <p>
