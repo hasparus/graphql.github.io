@@ -48,22 +48,20 @@ export function FivePillars() {
       </h2>
 
       <div className="gql-radial-gradient gap-px">
-        {pillars.map((pillar, index) => (
-          <div key={pillar.title}>
+        {pillars.map(({ title, icon: Icon, description }, index) => (
+          <div key={title}>
             <div className="flex flex-col items-center gap-2 bg-neu-0 py-6 max-lg:text-center lg:flex-row lg:items-center lg:gap-8 lg:py-8">
               <div className="flex items-center max-lg:flex-col lg:w-[520px] lg:shrink-0">
                 <div className="p-6">
-                  <pillar.icon className="size-6 text-pri-base" />
+                  <Icon className="size-6 text-pri-base" />
                 </div>
                 <h3 className="typography-h3 lg:flex lg:h-[86px] lg:flex-1 lg:items-center lg:p-4">
-                  {pillar.title}
+                  {title}
                 </h3>
               </div>
-              <div className="lg:flex-1">
-                <p className="typography-body-lg mt-6 lg:mt-0">
-                  {pillar.description}
-                </p>
-              </div>
+              <p className="typography-body-lg mt-6 lg:mt-0 lg:flex-1">
+                {description}
+              </p>
             </div>
             {index < pillars.length - 1 && <Separator />}
           </div>
