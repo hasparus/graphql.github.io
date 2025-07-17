@@ -6,7 +6,7 @@ import ZapIcon from "@/app/conf/_design-system/pixelarticons/zap.svg?svgr"
 import BullseyeIcon from "@/app/conf/_design-system/pixelarticons/bullseye.svg?svgr"
 import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
 
-const pillars = [
+const items = [
   {
     icon: GiftIcon,
     title: "Product-centric",
@@ -48,7 +48,7 @@ export function FivePillars() {
       </h2>
 
       <div className="gql-radial-gradient gap-px">
-        {pillars.map(({ title, icon: Icon, description }, index) => (
+        {items.map(({ title, icon: Icon, description }, index) => (
           <div key={title}>
             <div className="flex flex-col gap-2 bg-neu-0 py-6 max-sm:text-center lg:flex-row lg:items-center lg:gap-8 lg:py-8">
               <div className="flex items-center max-sm:flex-col lg:w-[430px] lg:shrink-0 xl:w-[520px]">
@@ -63,7 +63,7 @@ export function FivePillars() {
                 {description}
               </p>
             </div>
-            {index < pillars.length - 1 && <Separator />}
+            {index < items.length - 1 && <Separator />}
           </div>
         ))}
       </div>
