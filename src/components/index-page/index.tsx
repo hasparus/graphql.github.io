@@ -10,6 +10,7 @@ import { WhoIsUsing } from "./who-is-using"
 import { HowItWorks } from "./how-it-works"
 import { ProvenSolution } from "./proven-solution"
 import { FivePillars } from "./five-pillars"
+import { PoweredByCommunity } from "./powered-by-community"
 
 export function IndexPage() {
   return (
@@ -19,6 +20,7 @@ export function IndexPage() {
       <HowItWorks />
       <ProvenSolution />
       <FivePillars />
+      <PoweredByCommunity />
       <section className="conf-block container flex max-w-3xl flex-col items-center text-center">
         <h2>A query language for your API</h2>
         <p>
