@@ -11,6 +11,7 @@ import { HowItWorks } from "./how-it-works"
 import { ProvenSolution } from "./proven-solution"
 import { FivePillars } from "./five-pillars"
 import { PoweredByCommunity } from "./powered-by-community"
+import { GraphQLAdvantages } from "./graphql-advantages"
 
 export function IndexPage() {
   return (
@@ -21,6 +22,7 @@ export function IndexPage() {
       <ProvenSolution />
       <FivePillars />
       <PoweredByCommunity />
+      <GraphQLAdvantages />
       <section className="conf-block container flex max-w-3xl flex-col items-center text-center">
         <h2>A query language for your API</h2>
         <p>
