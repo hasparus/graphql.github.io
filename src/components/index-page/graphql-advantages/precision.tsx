@@ -99,12 +99,17 @@ export function PrecisionFigure() {
       <Pre data-filename="Query" className="p-4">
         {"{"}
         {"\n  "}
-        {/* todo: change this color to brand colors globally */}
-        <span className="!text-pri-base">{"hero"}</span>
+        <span className="!text-pri-base dark:!text-pri-light">{"hero"}</span>
         {" {"}
-        <span className="!text-pri-base">{"\n    name"}</span>
+        <span className="!text-pri-base dark:!text-pri-light">
+          {"\n    name"}
+        </span>
         {"\n    height\n    mass".split("").map((char, i) => (
-          <span key={i} id={"ch" + i} className="hidden !text-pri-base">
+          <span
+            key={i}
+            id={"ch" + i}
+            className="hidden !text-pri-base dark:!text-pri-light"
+          >
             {char === "\n" ? <br /> : char}
           </span>
         ))}

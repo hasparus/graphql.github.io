@@ -39,7 +39,7 @@ export function Pre({
         <div
           className={cn(
             classes.filename,
-            "rounded-t-md border border-b-0 border-neu-200 bg-neu-0/[.64] px-4 py-2 text-sm text-neu-0/[.64] text-neu-800 backdrop-blur-[6px] dark:border-neu-50",
+            "flex items-center gap-1.5 rounded-t-md border border-b-0 border-neu-200 bg-neu-0/[.64] px-4 py-2 text-sm text-neu-0/[.64] text-neu-800 backdrop-blur-[6px] dark:border-neu-50",
           )}
         >
           {Icon && <Icon className="_h-4 _w-auto _max-w-6 _shrink-0" />}

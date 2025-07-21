@@ -9,6 +9,10 @@
 }
 
 :global(.nextra-codeblocks) {
+  & .pre pre {
+    height: 100%;
+  }
+
   & .pre:not(:last-child) pre {
     border-right: none;
     border-bottom-right-radius: 0;
