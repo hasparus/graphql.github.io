@@ -33,7 +33,6 @@ export function IndexPage() {
           easier to evolve APIs over time, and enables powerful developer tools.
         </p>
       </section>
-      <PredictableResults />
       <SingleRequest />
       <TypeSystem />
       <PowerFulTools />

@@ -49,6 +49,3 @@ export const QueryHeroFriends = () => (
 export const ResponseHeroFriends = () => (
   <_ResponseHeroFriends components={components} />
 )
-export const PredictableResult = () => (
-  <_PredictableResult components={components} />
-)

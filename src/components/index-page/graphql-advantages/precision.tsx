@@ -1,11 +1,25 @@
-import { useEffect, useRef } from "react"
-import { PredictableResult } from "../../code-blocks"
-import { Pre } from "nextra/components"
+import { ComponentPropsWithoutRef, useEffect, useRef } from "react"
+import { Pre, Code } from "nextra/components"
 import { clsx } from "clsx"
-import classes from "./index.module.css"
 
-export function PredictableResults() {
+import PredictableResult from "../../code-blocks/predictable-result.mdx"
+
+import classes from "./precision.module.css"
+
+const components = {
+  pre: (props: ComponentPropsWithoutRef<typeof Pre>) => (
+    <Pre
+      {...props}
+      className={clsx(props.className, "!bg-neu-0/[.48]")}
+      tabIndex={-1}
+    />
+  ),
+  code: Code,
+}
+
+export function PrecisionFigure() {
   const ref = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const showResponse = (num: Number) => {
       const lines = ref.current!.querySelectorAll(
@@ -66,51 +80,35 @@ export function PredictableResults() {
 
     return () => clearTimeout(timer)
   }, [])
+
+  const Pre = components.pre
+
   return (
-    <div className="index-gradient">
-      <section
-        className="conf-block container flex flex-col justify-around gap-14 lg:flex-row-reverse lg:items-start lg:*:w-1/2"
-        id="predictable-results"
-      >
-        <div className="max-lg:text-center">
-          <h2>
-            Ask for what you need, <br className="max-lg:hidden" />
-            get exactly that
-          </h2>
-          {/*[Illustration: just a simple query and response?]*/}
-          <p>
-            Send a GraphQL query to your API and get exactly what you need,
-            nothing more and nothing less. GraphQL queries always return
-            predictable results. Apps using GraphQL are fast and stable because
-            they control the data they get, not the server.
-          </p>
-        </div>
-        <div
-          ref={ref}
-          className="nextra-codeblocks flex *:w-1/2 [&_pre]:!h-48"
-          aria-hidden
-        >
-          <Pre data-filename="Query" className="p-4">
-            {"{"}
-            {"\n  hero {"}
-            {"\n    name"}
-            {"\n    height\n    mass".split("").map((char, i) => (
-              <span key={i} id={"ch" + i} className="hidden">
-                {char === "\n" ? <br /> : char}
-              </span>
-            ))}
-            <span
-              className={clsx(
-                "-mb-0.5 ml-px inline-block h-4 w-2 !bg-primary/50",
-                classes.cursor,
-              )}
-            />
-            {"\n  }"}
-            {"\n}"}
-          </Pre>
-          <PredictableResult />
-        </div>
-      </section>
+    <div
+      ref={ref}
+      id="predictable-results"
+      className="nextra-codeblocks flex bg-gradient-to-b from-transparent to-sec-lighter px-[14px] py-[30px] *:w-1/2 dark:to-sec-darker/25 [&_pre]:!h-48"
+      aria-hidden
+    >
+      <Pre data-filename="Query" className="p-4">
+        {"{"}
+        {"\n  hero {"}
+        {"\n    name"}
+        {"\n    height\n    mass".split("").map((char, i) => (
+          <span key={i} id={"ch" + i} className="hidden">
+            {char === "\n" ? <br /> : char}
+          </span>
+        ))}
+        <span
+          className={clsx(
+            "-mb-0.5 ml-px inline-block h-4 w-2 !bg-pri-base/50 dark:!bg-sec-base/50",
+            classes.cursor,
+          )}
+        />
+        {"\n  }"}
+        {"\n}"}
+      </Pre>
+      <PredictableResult components={components} />
     </div>
   )
 }

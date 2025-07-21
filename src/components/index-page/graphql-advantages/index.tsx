@@ -2,9 +2,11 @@ import { Button } from "@/app/conf/_design-system/button"
 import { SectionLabel } from "@/app/conf/_design-system/section-label"
 import { ReactNode } from "react"
 
+import { PrecisionFigure } from "./precision"
+
 export function GraphQLAdvantages() {
   return (
-    <section className="bg-neu-50">
+    <section className="bg-neu-50 dark:bg-neu-50/25">
       <div className="gql-container gql-section">
         <SectionLabel>GraphQL advantages</SectionLabel>
         <div className="mt-8 flex flex-col gap-y-10">
@@ -12,7 +14,7 @@ export function GraphQLAdvantages() {
             name="Precision"
             bigText="Ask for what you need, get exactly that"
             text="Send a GraphQL query to your API and get precisely the data you request — no over-fetching, no under-fetching. Predictable responses keep apps efficient and performant."
-            figure={null}
+            figure={<PrecisionFigure />}
             cta={
               <Button href="/learn" variant="secondary">
                 Learn GraphQL
@@ -106,7 +108,7 @@ function Subsection({
       </strong>
       <div className="max-lg:mt-6 lg:![grid-column:2]">{figure}</div>
       <p className="typography-body-lg my-6 lg:mb-4 lg:mt-8">{text}</p>
-      {cta}
+      <div>{cta}</div>
     </article>
   )
 }
