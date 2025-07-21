@@ -1,6 +1,8 @@
 import { ComponentPropsWithoutRef, useEffect, useRef } from "react"
-import { Pre, Code } from "nextra/components"
+import { Code } from "nextra/components"
 import { clsx } from "clsx"
+
+import { Pre } from "@/components/pre"
 
 import PredictableResult from "../../code-blocks/predictable-result.mdx"
 

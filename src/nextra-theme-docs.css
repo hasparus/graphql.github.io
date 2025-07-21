@@ -2994,39 +2994,3 @@ body.nextra-banner-hidden .\[body\.nextra-banner-hidden_\&\]\:_hidden {
 div:hover > .\[div\:hover\>\&\]\:_opacity-100 {
   opacity: 1;
 }
-
-/* code blocks */
-.nextra-code {
-  --border-color: hsl(var(--color-neu-200));
-
-  & ._h-12 {
-    height: unset;
-  }
-  
-  & > div:first-child /* file name */ {
-    padding-top: 8px;
-    padding-bottom: 8px;
-    color: hsl(var(--color-neu-800));
-    font-size: 14px;
-    background-color: hsl(var(--color-neu-0) / 0.64);
-    backdrop-filter: blur(6px);
-    border: 1px solid var(--border-color);
-    border-bottom: none;
-  }
-}
-
-.dark .nextra-code {
-  --border-color: hsl(var(--color-neu-50));
-}
-
-.nextra-codeblocks div.nextra-code:not(:last-child) > div:first-child {
-  border-right: none;
-}
-.nextra-code pre {
-  box-shadow: none;
-  border: 1px solid var(--border-color);
-}
-.nextra-codeblocks div.nextra-code:not(:last-child) pre {
-  border-right: none;
-}
-    

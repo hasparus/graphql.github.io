@@ -1,4 +1,6 @@
-import { Code, Pre } from "nextra/components"
+import { Code } from "nextra/components"
+
+import { Pre } from "@/components/pre"
 
 import _CodeA from "./describe-your-data.mdx"
 import _CodeB from "./ask-for-what-you-want.mdx"
