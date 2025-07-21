@@ -10,7 +10,11 @@ const components = {
   pre: (props: ComponentPropsWithoutRef<typeof Pre>) => (
     <Pre
       {...props}
-      className={clsx(props.className, "!bg-neu-0/[.48]")}
+      // todo: this bg style might need to become global for all code blocks
+      className={clsx(
+        props.className,
+        "!bg-neu-0/[.48] pr-4 backdrop-blur-[6px] max-xs:[&_span]:!text-xs",
+      )}
       tabIndex={-1}
     />
   ),
@@ -87,21 +91,24 @@ export function PrecisionFigure() {
     <div
       ref={ref}
       id="predictable-results"
-      className="nextra-codeblocks flex bg-gradient-to-b from-transparent to-sec-lighter px-[14px] py-[30px] *:w-1/2 dark:to-sec-darker/25 [&_pre]:!h-48"
+      className="nextra-codeblocks flex w-full bg-gradient-to-b from-transparent to-sec-lighter px-[14px] py-[30px] *:w-1/2 dark:to-sec-darker/25 xl:px-[46px] [&_pre]:!h-48"
       aria-hidden
     >
       <Pre data-filename="Query" className="p-4">
         {"{"}
-        {"\n  hero {"}
-        {"\n    name"}
+        {"\n  "}
+        {/* todo: change this color to brand colors globally */}
+        <span className="!text-pri-base">{"hero"}</span>
+        {" {"}
+        <span className="!text-pri-base">{"\n    name"}</span>
         {"\n    height\n    mass".split("").map((char, i) => (
-          <span key={i} id={"ch" + i} className="hidden">
+          <span key={i} id={"ch" + i} className="hidden !text-pri-base">
             {char === "\n" ? <br /> : char}
           </span>
         ))}
         <span
           className={clsx(
-            "-mb-0.5 ml-px inline-block h-4 w-2 !bg-pri-base/50 dark:!bg-sec-base/50",
+            "-mb-0.5 ml-px inline-block h-4 w-2 !bg-pri-base/50 dark:!bg-pri-light/60",
             classes.cursor,
           )}
         />

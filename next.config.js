@@ -6,6 +6,7 @@ import withLess from "next-with-less"
 import fs from "fs"
 
 import { remarkGraphiQLComment } from "./src/remark-graphiql-comment.js"
+import { syntaxHighlightingThemes } from "./src/_design-system/syntax/index.js"
 
 const vercelJSON = JSON.parse(fs.readFileSync("./vercel.json", "utf-8"))
 
@@ -15,6 +16,9 @@ const withNextra = nextra({
   themeConfig: "./theme.config.tsx",
   mdxOptions: {
     remarkPlugins: [remarkGraphiQLComment],
+    rehypePrettyCodeOptions: {
+      theme: syntaxHighlightingThemes,
+    },
   },
 })
 

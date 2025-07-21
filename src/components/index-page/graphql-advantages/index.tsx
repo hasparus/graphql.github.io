@@ -9,7 +9,7 @@ export function GraphQLAdvantages() {
     <section className="bg-neu-50 dark:bg-neu-50/25">
       <div className="gql-container gql-section">
         <SectionLabel>GraphQL advantages</SectionLabel>
-        <div className="mt-8 flex flex-col gap-y-10">
+        <div className="mt-8 flex flex-col gap-y-10 lg:gap-y-16 xl:gap-y-24">
           <Subsection
             name="Precision"
             bigText="Ask for what you need, get exactly that"
@@ -99,16 +99,18 @@ function Subsection({
   text: ReactNode
 }) {
   return (
-    <article className="grid lg:grid-cols-2 lg:*:[grid-column:1]">
-      <h3 className="typography-body-sm w-min items-center justify-center bg-sec-light px-1 py-[1.5px] font-normal dark:bg-sec-darker">
+    <article className="grid gap-x-4 lg:grid-cols-2 lg:*:[grid-column:1] xl:gap-x-12">
+      <h3 className="typography-body-sm size-min items-center justify-center bg-sec-light px-1 py-[1.5px] font-normal dark:bg-sec-darker">
         {name}
       </h3>
       <strong className="typography-h3 mt-4 font-normal lg:mt-8">
         {bigText}
       </strong>
-      <div className="max-lg:mt-6 lg:![grid-column:2]">{figure}</div>
+      <div className="flex max-lg:mt-6 max-sm:-mx-4 lg:row-start-1 lg:row-end-5 lg:![grid-column:2]">
+        {figure}
+      </div>
       <p className="typography-body-lg my-6 lg:mb-4 lg:mt-8">{text}</p>
-      <div>{cta}</div>
+      <div className="self-end lg:justify-self-start">{cta}</div>
     </article>
   )
 }
