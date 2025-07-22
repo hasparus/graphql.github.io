@@ -1,4 +1,7 @@
 {
+  "name": "k-colorable light, based on Min Light",
+  "type": "light",
+  "semanticHighlighting": true,
   "colors": {
     "activityBar.background": "#f6f6f6",
     "activityBar.foreground": "#9E9E9E",
@@ -24,7 +27,7 @@
     "diffEditor.insertedTextBackground": "#b7e7a44b",
     "diffEditor.removedTextBackground": "#e597af52",
     "editor.background": "#ffffff",
-    "editor.foreground": "#212121",
+    "editor.foreground": "#6E7557",
     "editor.lineHighlightBorder": "#f2f2f2",
     "editorBracketMatch.background": "#E7F3FF",
     "editorBracketMatch.border": "#c8e1ff",
@@ -108,8 +111,6 @@
     "titleBar.border": "#FFFFFF00",
     "titleBar.inactiveBackground": "#f6f6f6"
   },
-  "displayName": "Min Light",
-  "name": "min-light",
   "tokenColors": [
     {
       "settings": {
@@ -121,9 +122,7 @@
         "keyword.operator.accessor",
         "meta.group.braces.round.function.arguments",
         "meta.template.expression",
-        "markup.fenced_code meta.embedded.block",
-        "punctuation.operation.graphql",
-        "punctuation"
+        "markup.fenced_code meta.embedded.block"
       ],
       "settings": {
         "foreground": "#363A2C"
@@ -216,10 +215,11 @@
         "meta.instance.constructor",
         "entity.other.attribute-name",
         "entity.name.function",
-        "constant.keyword.clojure"
+        "constant.keyword.clojure",
+        "variable.parameter.graphql"
       ],
       "settings": {
-        "foreground": "#6f42c1"
+        "foreground": "#0E0F0B"
       }
     },
     {
@@ -308,7 +308,12 @@
       "settings": {
         "foreground": "#E10198"
       }
+    },
+    {
+      "scope": ["punctuation", "meta.selectionset.graphql"],
+      "settings": {
+        "foreground": "#6E7557"
+      }
     }
-  ],
-  "type": "light"
+  ]
 }

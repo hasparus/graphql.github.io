@@ -3,6 +3,7 @@ import { SectionLabel } from "@/app/conf/_design-system/section-label"
 import { ReactNode } from "react"
 
 import { PrecisionFigure } from "./precision"
+import { OptimizationFigure } from "./optimization"
 
 export function GraphQLAdvantages() {
   return (
@@ -58,7 +59,7 @@ export function GraphQLAdvantages() {
             name="Versionless"
             bigText="Evolve without versions"
             text="Add new fields and types without impacting existing queries. Deprecate outdated fields while keeping APIs clean and future-proof. By using a single evolving version, GraphQL APIs give apps continuous access to new features and encourage more maintainable server code."
-            figure={null}
+            figure={<OptimizationFigure />}
             cta={
               <Button
                 href="/learn/schema-design/#versioning"
