@@ -4,6 +4,7 @@ import { ReactNode } from "react"
 
 import { PrecisionFigure } from "./precision"
 import { OptimizationFigure } from "./optimization"
+import { ProductivityFigure } from "./productivity"
 
 export function GraphQLAdvantages() {
   return (
@@ -26,7 +27,7 @@ export function GraphQLAdvantages() {
             name="Optimization"
             bigText="Retrieve multiple resources in one request"
             text="GraphQL seamlessly follows relationships between data, eliminating multiple API calls. While typical REST APIs require loading from multiple URLs, GraphQL APIs get all the data your app needs in a single request. Ideal for complex queries and optimizing network performance."
-            figure={null}
+            figure={<OptimizationFigure />}
             cta={
               <Button href="/learn" variant="secondary">
                 Read the docs
@@ -37,7 +38,7 @@ export function GraphQLAdvantages() {
             name="Productivity"
             bigText="Move faster with powerful, community-built tools"
             text="Know exactly what you can request without leaving editor. Highlight potential issues before sending a query and take advantage of improved code intelligence. GraphQL makes it easy to build powerful tools. And many of them, like GraphiQL, are open source and built by the GraphQL community."
-            figure={null}
+            figure={<ProductivityFigure />}
             cta={
               <Button href="/community/tools-and-libraries" variant="secondary">
                 Explore GraphQL tools
@@ -59,7 +60,7 @@ export function GraphQLAdvantages() {
             name="Versionless"
             bigText="Evolve without versions"
             text="Add new fields and types without impacting existing queries. Deprecate outdated fields while keeping APIs clean and future-proof. By using a single evolving version, GraphQL APIs give apps continuous access to new features and encourage more maintainable server code."
-            figure={<OptimizationFigure />}
+            figure={null}
             cta={
               <Button
                 href="/learn/schema-design/#versioning"

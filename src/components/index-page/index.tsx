@@ -2,7 +2,6 @@ import { Hero } from "./hero"
 import { TrustedBy } from "./trusted-by"
 import { SingleRequest } from "./single-request"
 import { TypeSystem } from "./type-system"
-import { PowerFulTools } from "./powerful-tools"
 import { WithoutVersion } from "./without-version"
 import { BringYourOwnCode } from "./bring-your-own-code"
 import { WhoIsUsing } from "./who-is-using"
@@ -34,7 +33,6 @@ export function IndexPage() {
       </section>
       <SingleRequest />
       <TypeSystem />
-      <PowerFulTools />
       <WithoutVersion />
       <BringYourOwnCode />
       <WhoIsUsing />
