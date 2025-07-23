@@ -27,7 +27,7 @@
     "diffEditor.insertedTextBackground": "#b7e7a44b",
     "diffEditor.removedTextBackground": "#e597af52",
     "editor.background": "#ffffff",
-    "editor.foreground": "#6E7557",
+    "editor.foreground": "#4f533f",
     "editor.lineHighlightBorder": "#f2f2f2",
     "editorBracketMatch.background": "#E7F3FF",
     "editorBracketMatch.border": "#c8e1ff",
@@ -193,7 +193,6 @@
         "entity.name.tag.yaml",
         "support.function.node",
         "support.type.property-name.json",
-        "punctuation.separator.key-value",
         "punctuation.definition.template-expression"
       ],
       "settings": {
@@ -270,7 +269,6 @@
       "scope": [
         "punctuation.definition.arguments",
         "punctuation.definition.dict",
-        "punctuation.separator",
         "meta.function-call.arguments"
       ],
       "settings": {

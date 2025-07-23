@@ -1,10 +1,12 @@
 import { Button } from "@/app/conf/_design-system/button"
 import { SectionLabel } from "@/app/conf/_design-system/section-label"
 import { ReactNode } from "react"
+import { clsx } from "clsx"
 
 import { PrecisionFigure } from "./precision"
 import { OptimizationFigure } from "./optimization"
 import { ProductivityFigure } from "./productivity"
+import { ConsistencyFigure } from "./consistency"
 
 export function GraphQLAdvantages() {
   return (
@@ -48,8 +50,8 @@ export function GraphQLAdvantages() {
           <Subsection
             name="Consistency"
             bigText="Build confidently with a type-safe schema"
-            text="GraphQL APIs are structured around types and fields, not rigid endpoints. This ensures data consistency, self-documentation, and clear, actionable errors. Apps can use types to avoid writing manual parsing code."
-            figure={null}
+            text="GraphQL APIs are structured around types and fields, not endpoints. This ensures data consistency, self-documentation, and clear, actionable errors. Apps can use types to avoid writing manual parsing code."
+            figure={<ConsistencyFigure />}
             cta={
               <Button href="/learn/schema" variant="secondary">
                 Learn more about GraphQL schemas
@@ -93,26 +95,35 @@ function Subsection({
   cta,
   figure,
   text,
+  className,
 }: {
   name: string
   bigText: ReactNode
   cta: ReactNode
   figure: ReactNode
   text: ReactNode
+  className?: string
 }) {
   return (
-    <article className="grid gap-x-4 lg:grid-cols-2 lg:*:[grid-column:1] xl:gap-x-12">
+    <article
+      className={clsx(
+        "grid gap-x-4 lg:grid-cols-2 lg:*:[grid-column:1] xl:gap-x-16 2xl:gap-x-24",
+        className,
+      )}
+    >
       <h3 className="typography-body-sm size-min items-center justify-center bg-sec-light px-1 py-[1.5px] font-normal dark:bg-sec-darker">
         {name}
       </h3>
-      <strong className="typography-h3 mt-4 font-normal lg:mt-8">
+      <strong className="typography-h3 mt-4 text-balance font-normal lg:mt-8">
         {bigText}
       </strong>
-      <div className="flex max-lg:mt-6 max-sm:-mx-4 lg:row-start-1 lg:row-end-5 lg:![grid-column:2]">
+      <div className="flex max-lg:mt-6 max-sm:-mx-4 lg:row-start-1 lg:row-end-6 lg:![grid-column:2]">
         {figure}
       </div>
-      <p className="typography-body-lg my-6 lg:mb-4 lg:mt-8">{text}</p>
-      <div className="self-end lg:justify-self-start">{cta}</div>
+      <p className="typography-body-lg my-6 text-pretty lg:mb-4 lg:mt-8">
+        {text}
+      </p>
+      <div className="self-end lg:justify-self-start xl:mt-2">{cta}</div>
     </article>
   )
 }

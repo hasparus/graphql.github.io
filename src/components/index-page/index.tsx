@@ -1,7 +1,6 @@
 import { Hero } from "./hero"
 import { TrustedBy } from "./trusted-by"
 import { SingleRequest } from "./single-request"
-import { TypeSystem } from "./type-system"
 import { WithoutVersion } from "./without-version"
 import { BringYourOwnCode } from "./bring-your-own-code"
 import { WhoIsUsing } from "./who-is-using"
@@ -32,7 +31,6 @@ export function IndexPage() {
         </p>
       </section>
       <SingleRequest />
-      <TypeSystem />
       <WithoutVersion />
       <BringYourOwnCode />
       <WhoIsUsing />
