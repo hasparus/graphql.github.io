@@ -21,7 +21,9 @@ export function GenericOpengraphImage({
   pageTitle,
   ...rest
 }: GenericOpengraphImageProps) {
-  const basePath = process.env.VERCEL_URL || process.env.__NEXT_PRIVATE_ORIGIN
+  const basePath =
+    `https://${process.env.VERCEL_URL}` || process.env.__NEXT_PRIVATE_ORIGIN
+
   const height = 630
 
   return (
