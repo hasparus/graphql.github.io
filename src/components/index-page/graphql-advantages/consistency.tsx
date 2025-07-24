@@ -1,23 +1,10 @@
-import { ComponentPropsWithoutRef, useEffect, useRef } from "react"
-import { clsx } from "clsx"
+import { useEffect, useRef } from "react"
 import { Code } from "nextra/components"
 
-import { Pre } from "@/components/pre"
-
-import { Query, Schema } from "../../code-blocks"
+import { LandingPagePre, Query, Schema } from "../../code-blocks"
 
 const components = {
-  pre: (props: ComponentPropsWithoutRef<typeof Pre>) => (
-    <Pre
-      {...props}
-      // todo: this bg style might need to become global for all code blocks
-      className={clsx(
-        props.className,
-        "!bg-neu-0/[.48] backdrop-blur-[6px] [scrollbar-width:none] [&::-webkit-scrollbar]:size-0 max-xs:[&_span]:!text-xs",
-      )}
-      tabIndex={-1}
-    />
-  ),
+  pre: LandingPagePre,
   code: Code,
 }
 

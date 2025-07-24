@@ -308,38 +308,6 @@ div[id^="headlessui-menu-items"] {
   }
 }
 
-.step0,
-.step6 {
-  .v2 {
-    @apply opacity-0;
-  }
-}
-
-.step1 .v2 code > span:nth-child(5) {
-  @apply add;
-}
-
-.step2 .v3 code > span:nth-child(6) {
-  @apply add;
-}
-
-.step3 .v4 code > {
-  span:nth-child(7),
-  span:nth-last-child(-n + 5) {
-    @apply add;
-  }
-}
-
-.step4 {
-  .v4 code > span:nth-child(6) {
-    @apply remove;
-  }
-
-  .v5 code > span:nth-child(6) {
-    @apply add;
-  }
-}
-
 .index-button {
   @apply rounded-md border border-current px-6 py-2.5 transition-colors;
 
@@ -401,60 +369,6 @@ div[id^="headlessui-menu-items"] {
 
 .index-gradient {
   @apply bg-gradient-to-b from-transparent to-primary/5 dark:to-primary/10;
-}
-
-.type-evolution {
-  @apply w-full overflow-hidden;
-
-  #typeEvolveView {
-    @apply relative left-0 flex h-full select-none;
-
-    .v1,
-    .v2,
-    .v3,
-    .v4 {
-      @apply w-1/2 shrink-0 border-r dark:border-neutral-800;
-    }
-
-    .v5 {
-      @apply w-full shrink-0;
-    }
-
-    &.step1 {
-      .v2 {
-        opacity: 1;
-        transition: opacity 0.5s ease-in-out;
-      }
-    }
-
-    &.step2 {
-      left: calc(-1 * 50%);
-      transition: left 0.5s ease-in-out;
-    }
-
-    &.step3 {
-      left: calc(-2 * 50%);
-      transition: left 0.5s ease-in-out;
-    }
-
-    &.step4 {
-      left: calc(-3 * 50%);
-      transition: left 0.5s ease-in-out;
-    }
-
-    &.step5 {
-      left: calc(-4 * 50%);
-      transition: left 0.5s ease-in-out;
-    }
-
-    &.step6 {
-      .v5 {
-        left: calc(-4 * 50%);
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-      }
-    }
-  }
 }
 
 .apiIndex {
