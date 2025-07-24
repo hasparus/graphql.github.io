@@ -72,6 +72,7 @@ export function GenericOpengraphImage({
           src={`${basePath}${graphqlLogoStripes.src}`}
           style={{ position: "absolute", right: 0, bottom: -5 }}
           height={height - OG_IMAGE_HEADER_HEIGHT}
+          width={673}
         />
       </div>
     </article>
