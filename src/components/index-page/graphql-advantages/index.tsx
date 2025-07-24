@@ -7,6 +7,7 @@ import { PrecisionFigure } from "./precision"
 import { OptimizationFigure } from "./optimization"
 import { ProductivityFigure } from "./productivity"
 import { ConsistencyFigure } from "./consistency"
+import { VersionlessFigure } from "./versionless"
 
 export function GraphQLAdvantages() {
   return (
@@ -62,7 +63,7 @@ export function GraphQLAdvantages() {
             name="Versionless"
             bigText="Evolve without versions"
             text="Add new fields and types without impacting existing queries. Deprecate outdated fields while keeping APIs clean and future-proof. By using a single evolving version, GraphQL APIs give apps continuous access to new features and encourage more maintainable server code."
-            figure={null}
+            figure={<VersionlessFigure />}
             cta={
               <Button
                 href="/learn/schema-design/#versioning"

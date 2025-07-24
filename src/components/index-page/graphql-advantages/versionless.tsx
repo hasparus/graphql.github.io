@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react"
-import { V1, V2, V3, V4, V5 } from "../code-blocks"
 import { clsx } from "clsx"
 
-export function WithoutVersion() {
+import { V1, V2, V3, V4, V5 } from "../../code-blocks"
+
+export function VersionlessFigure() {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
