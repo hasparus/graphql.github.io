@@ -15,7 +15,7 @@ const components = {
       // todo: this bg style might need to become global for all code blocks
       className={clsx(
         props.className,
-        "!bg-neu-0/[.48] pr-4 backdrop-blur-[6px] max-xs:[&_span]:!text-xs",
+        "!bg-neu-0/[.48] pr-4 leading-[21px] backdrop-blur-[6px] max-xs:leading-[16px] max-xs:[&_span]:!text-xs",
       )}
       tabIndex={-1}
     />
