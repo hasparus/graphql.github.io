@@ -2,7 +2,6 @@ import { Hero } from "./hero"
 import { TrustedBy } from "./trusted-by"
 import { SingleRequest } from "./single-request"
 import { BringYourOwnCode } from "./bring-your-own-code"
-import { WhoIsUsing } from "./who-is-using"
 import { HowItWorks } from "./how-it-works"
 import { ProvenSolution } from "./proven-solution"
 import { FivePillars } from "./five-pillars"
@@ -31,7 +30,6 @@ export function IndexPage() {
       </section>
       <SingleRequest />
       <BringYourOwnCode />
-      <WhoIsUsing />
     </div>
   )
 }

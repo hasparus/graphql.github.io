@@ -32,7 +32,7 @@ export function VersionlessFigure() {
 
   return (
     <section
-      className="flex w-full bg-gradient-to-b from-pri-lighter/[.05] to-pri-lighter/40 px-[14px] py-[30px] dark:from-sec-darker/[.01] dark:to-pri-light/10 xl:px-[46px]"
+      className="flex w-full max-w-[100vw] bg-gradient-to-b from-pri-lighter/[.05] to-pri-lighter/40 px-[14px] py-[30px] dark:from-sec-darker/[.01] dark:to-pri-light/10 max-[360px]:px-0 xl:px-[46px] max-[360px]:[&_div]:rounded-none"
       id="without-versions"
     >
       <div

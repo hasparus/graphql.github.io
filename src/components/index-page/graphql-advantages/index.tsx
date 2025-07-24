@@ -11,8 +11,8 @@ import { VersionlessFigure } from "./versionless"
 
 export function GraphQLAdvantages() {
   return (
-    <section className="bg-neu-50 dark:bg-neu-50/25">
-      <div className="gql-container gql-section">
+    <section className="overflow-x-hidden bg-neu-50 dark:bg-neu-50/25">
+      <div className="gql-container gql-section lg:py-16">
         <SectionLabel>GraphQL advantages</SectionLabel>
         <div className="mt-8 flex flex-col gap-y-10 lg:gap-y-16 xl:gap-y-24">
           <Subsection
