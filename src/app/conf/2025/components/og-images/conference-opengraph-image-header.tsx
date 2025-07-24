@@ -4,6 +4,8 @@ import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 import { GraphQLLogo } from "../graphql-conf-logo-link"
 import { colors, fonts, RIGHT_COLUMN_WIDTH_PX } from "./speaker-opengraph-image"
 
+export const OG_IMAGE_HEADER_HEIGHT = 154
+
 export function ConferenceOpengraphImageHeader({
   year,
   date,
@@ -33,7 +35,7 @@ export function ConferenceOpengraphImageHeader({
           borderRight: `2px solid ${colors.neu600}`,
           padding: "2.5rem",
           paddingRight: "4rem",
-          height: "154px",
+          height: OG_IMAGE_HEADER_HEIGHT,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>

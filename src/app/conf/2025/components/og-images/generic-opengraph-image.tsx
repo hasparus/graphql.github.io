@@ -1,6 +1,8 @@
 import { colors, fonts } from "./speaker-opengraph-image"
-import { ConferenceOpengraphImageHeader } from "./conference-opengraph-image-header"
-import { normalizeProtocolRelativeUrl } from "./normalize-protocol-relative-url"
+import {
+  ConferenceOpengraphImageHeader,
+  OG_IMAGE_HEADER_HEIGHT,
+} from "./conference-opengraph-image-header"
 
 import graphqlLogoStripes from "./graphql-logo-stripes.png"
 
@@ -19,11 +21,14 @@ export function GenericOpengraphImage({
   pageTitle,
   ...rest
 }: GenericOpengraphImageProps) {
+  const basePath = process.env.VERCEL_URL || process.env.__NEXT_PRIVATE_ORIGIN
+  const height = 630
+
   return (
     <article
       style={{
         display: "flex",
-        height: "630px",
+        height,
         width: "1200px",
         flexDirection: "column",
         overflow: "hidden",
@@ -45,7 +50,7 @@ export function GenericOpengraphImage({
           display: "flex",
           flex: 1,
           flexDirection: "column",
-          justifyContent: "end",
+          justifyContent: "flex-end",
           padding: "2.5rem",
           position: "relative",
         }}
@@ -62,8 +67,9 @@ export function GenericOpengraphImage({
           {pageTitle}
         </h1>
         <img
-          src={graphqlLogoStripes.src}
-          style={{ position: "absolute", right: 0, bottom: -4 }}
+          src={`${basePath}${graphqlLogoStripes.src}`}
+          style={{ position: "absolute", right: 0, bottom: -5 }}
+          height={height - OG_IMAGE_HEADER_HEIGHT}
         />
       </div>
     </article>
