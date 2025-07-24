@@ -8,6 +8,7 @@ import { OptimizationFigure } from "./optimization"
 import { ProductivityFigure } from "./productivity"
 import { ConsistencyFigure } from "./consistency"
 import { VersionlessFigure } from "./versionless"
+import { IntegrationFigure } from "./integration"
 
 export function GraphQLAdvantages() {
   return (
@@ -77,7 +78,7 @@ export function GraphQLAdvantages() {
             name="Integration"
             bigText="Bring your own data and code"
             text="GraphQL is storage-agnostic — integrate databases, REST APIs, and third-party services into a single, cohesive data layer. Write GraphQL APIs that leverage your existing data and code with GraphQL engines available in many languages."
-            figure={null}
+            figure={<IntegrationFigure />}
             cta={
               <Button href="/learn" variant="secondary">
                 Learn more about this
