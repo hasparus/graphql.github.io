@@ -33,7 +33,7 @@ export function ConferenceFooterBox({
           Amsterdam, Netherlands
         </div>
 
-        <div className="flex w-[73.5px] items-center justify-center">
+        <div className="flex w-[min(calc(25%-.5px),73.5px)] items-center justify-center">
           <ArrowDownIcon className="size-10 -rotate-90 text-pri-lighter transition group-hover:translate-x-0.5 group-hover:text-neu-900" />
         </div>
       </div>
