@@ -21,7 +21,6 @@ export function IndexPage() {
       <GraphQLAdvantages />
       <QuotesFromTheIndustry />
       <JoinTheCommunity />
-      <BringYourOwnCode />
     </div>
   )
 }

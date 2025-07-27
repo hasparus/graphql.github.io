@@ -75,7 +75,28 @@ export default {
     defaultMenuCollapseLevel: 1,
   },
   footer: {
-    component: Footer,
+    component: () => (
+      <Footer
+        extraLinks={[
+          {
+            title: "Community Grant",
+            route: "https://graphql.org/foundation/community-grant/",
+          },
+          {
+            title: "Code of Conduct",
+            route: "https://graphql.org/codeofconduct/",
+          },
+          {
+            title: "Brand",
+            route: "https://graphql.org/brand/",
+          },
+          // {
+          //   title: "Swag Shop",
+          //   route: "https://store.graphql.org/",
+          // },
+        ]}
+      />
+    ),
     content: "Copyright © 2025 The GraphQL Foundation. All rights reserved.",
   },
   navbar: {
