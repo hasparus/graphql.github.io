@@ -1,6 +1,5 @@
 import { Hero } from "./hero"
 import { TrustedBy } from "./trusted-by"
-import { BringYourOwnCode } from "./bring-your-own-code"
 import { HowItWorks } from "./how-it-works"
 import { ProvenSolution } from "./proven-solution"
 import { FivePillars } from "./five-pillars"
