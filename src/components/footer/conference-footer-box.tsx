@@ -22,7 +22,7 @@ export function ConferenceFooterBox({
     >
       <div className="flex flex-1 flex-col gap-4 border-b border-pri-lighter p-4 dark:border-pri-light/50">
         <h2 className="font-mono text-2xl uppercase leading-none md:text-3xl">
-          Join GraphQLConf 2025
+          <span className="max-xs:hidden">Join</span> GraphQLConf 2025
         </h2>
       </div>
 
