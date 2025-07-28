@@ -11,7 +11,7 @@ import { DataColocation } from "./data-colocation"
 
 export function IndexPage() {
   return (
-    <div className="bg-neu-0">
+    <div className="gql-all-anchors-focusable bg-neu-0">
       <Hero />
       <TrustedBy />
       <HowItWorks />
