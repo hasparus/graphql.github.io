@@ -85,7 +85,7 @@ export function TestimonialsList({
           className="flex shrink-0 snap-start flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
         >
           <div>
-            <p className="typography-body-lg max-w-[calc(100vw-32px)] !leading-[1.1] max-md:text-center md:max-w-[544px]">
+            <p className="typography-body-lg max-w-[100vw] !leading-[1.1] max-md:text-center sm:max-w-[calc(100vw-32px)] md:max-w-[544px]">
               {testimonial.quote}
             </p>
             <AuthorNameAndRole

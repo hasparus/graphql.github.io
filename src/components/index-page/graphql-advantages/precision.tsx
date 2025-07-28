@@ -93,7 +93,7 @@ export function PrecisionFigure() {
     <div
       ref={ref}
       id="predictable-results"
-      className="nextra-codeblocks flex w-full max-w-[100vw] bg-gradient-to-b from-transparent to-sec-lighter px-[14px] py-[30px] *:w-1/2 dark:to-sec-darker/25 max-[360px]:px-0 xl:px-[46px] max-[360px]:[&_:is(.rounded-t-md,pre)]:rounded-none [&_pre]:!h-48"
+      className="nextra-codeblocks flex w-full max-w-[100vw] bg-gradient-to-b from-transparent to-sec-lighter px-[14px] py-[30px] *:w-1/2 dark:to-sec-darker/25 max-[360px]:px-0 sm:max-w-[calc(100vw-32px)] xl:px-[46px] max-[360px]:[&_:is(.rounded-t-md,pre)]:rounded-none [&_pre]:!h-48"
       aria-hidden
     >
       <Pre data-filename="Query" className="p-4">
