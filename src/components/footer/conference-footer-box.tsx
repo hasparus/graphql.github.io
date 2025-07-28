@@ -16,7 +16,7 @@ export function ConferenceFooterBox({
     <Anchor
       href={href}
       className={clsx(
-        "dark group relative inline-flex flex-col bg-pri-base text-neu-900 after:absolute after:inset-0 hover:after:bg-white/[.025] dark:bg-pri-dark",
+        "dark gql-focus-visible group relative inline-flex flex-col bg-pri-base text-neu-900 after:absolute after:inset-0 hover:after:bg-white/[.025] dark:bg-pri-dark",
         className,
       )}
     >

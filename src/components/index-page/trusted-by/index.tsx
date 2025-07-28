@@ -32,7 +32,6 @@ const logos: LogoListItem[] = [
       />
     ),
   },
-
   // todo: Netflix?
   // {
   //   href: "https://netflix.com",
@@ -125,7 +124,7 @@ export function TrustedBy() {
             href={href}
             target="_blank"
             rel="noreferrer"
-            className="group relative flex shrink-0 items-center justify-center bg-neu-0 p-10 *:z-[1] before:absolute before:inset-2 hover:before:bg-neu-100/50 dark:hover:before:bg-[#202219]"
+            className="group relative flex shrink-0 items-center justify-center bg-neu-0 p-10 *:z-[1] before:absolute before:inset-2 hover:before:bg-neu-100/50 focus-visible:z-[1] dark:hover:before:bg-[#202219]"
           >
             <Component />
           </a>
