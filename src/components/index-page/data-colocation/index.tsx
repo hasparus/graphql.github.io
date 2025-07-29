@@ -1,3 +1,4 @@
+import * as React from "react"
 import { clsx } from "clsx"
 import { Code } from "nextra/components"
 import {
@@ -18,7 +19,13 @@ import json from "./data-colocation.json"
 import Query from "./data-colocation.mdx"
 import "./data-colocation.css"
 import { useOnClickOutside } from "@/app/conf/_design-system/utils/useOnClickOutside"
-import React from "react"
+
+const highlightedFragments = {
+  GetFriendList: 1,
+  FriendList: 2,
+  FriendListItem: 3,
+  FriendInfo: 4,
+}
 
 const components = {
   pre: (props: ComponentPropsWithoutRef<typeof Pre>) => (
@@ -33,10 +40,14 @@ const components = {
     />
   ),
   code: ({ children, ...rest }: ComponentPropsWithoutRef<typeof Code>) => {
+    let sectorIndex: number | undefined
+    let depth = 0
+
     if (children) {
       children = React.Children.map(children, child => {
         if (isSpanElement(child)) {
           let children = (child as ReactElement).props.children
+
           if (isSpanElement(children)) {
             children = children.props.children
           } else if (Array.isArray(children)) {
@@ -48,17 +59,31 @@ const components = {
                 return child
               })
               .join("")
+          }
 
-            if (children.includes("fragment FriendInfo")) {
-              return cloneElement(child, {
-                ...child.props,
-                "data-sector": "4",
-              } as React.HTMLAttributes<HTMLSpanElement>)
+          if (/query|fragment/.test(children)) {
+            for (const [name, index] of Object.entries(highlightedFragments)) {
+              if (children.includes(` ${name} `)) sectorIndex = index
+              depth++
             }
+          }
+
+          if (children.includes("{")) depth++
+          if (children.includes("}")) {
+            depth--
+            if (depth === 0) sectorIndex = undefined
+          }
+
+          if (sectorIndex) {
+            return cloneElement(child, {
+              ...child.props,
+              "data-sector": sectorIndex,
+            } as React.HTMLAttributes<HTMLSpanElement>)
           }
 
           return child
         }
+
         return child
       })
     }

@@ -19,10 +19,14 @@
 }
 
 .sector-ring {
+  & [data-sector] {
+    @apply ring-2 ring-transparent ring-offset-2 ring-offset-transparent transition-shadow duration-200 ease-in;
+  }
+
   [data-active-sector="1"] & [data-sector="1"],
   [data-active-sector="2"] & [data-sector="2"],
   [data-active-sector="3"] & [data-sector="3"],
   [data-active-sector="4"] & [data-sector="4"] {
-    @apply ring-2 ring-neu-500 ring-offset-2 dark:ring-neu-400 dark:ring-offset-neu-0;
+    @apply ring-2 ring-neu-500 duration-200 ease-out dark:ring-neu-400 dark:ring-offset-neu-0;
   }
 }
