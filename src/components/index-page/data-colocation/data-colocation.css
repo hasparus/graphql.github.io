@@ -1,0 +1,25 @@
+.sector-opacity {
+  & [data-sector] {
+    transition: opacity 0.2s ease-out;
+  }
+
+  [data-active-sector] & [data-sector] {
+    opacity: 0.4;
+  }
+
+  [data-active-sector="1"] & [data-sector="1"],
+  [data-active-sector="2"] & [data-sector="2"],
+  [data-active-sector="3"] & [data-sector="3"],
+  [data-active-sector="4"] & [data-sector="4"] {
+    opacity: 1;
+  }
+}
+
+.sector-ring {
+  [data-active-sector="1"] & [data-sector="1"],
+  [data-active-sector="2"] & [data-sector="2"],
+  [data-active-sector="3"] & [data-sector="3"],
+  [data-active-sector="4"] & [data-sector="4"] {
+    @apply ring-2 ring-neu-500 ring-offset-2;
+  }
+}

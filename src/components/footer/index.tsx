@@ -61,9 +61,9 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
                   )}
                 </h3>
               )}
-              {section.links.map(link => (
+              {section.links.map((link, i) => (
                 <Anchor
-                  key={link.route}
+                  key={i}
                   href={link.route}
                   className="gql-focus-visible block p-4 underline-offset-4 hover:underline focus-visible:!-outline-offset-4 md:px-6 2xl:px-10"
                 >

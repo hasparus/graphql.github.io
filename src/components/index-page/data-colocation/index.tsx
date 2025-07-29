@@ -1,6 +1,6 @@
 import { clsx } from "clsx"
 import { Code } from "nextra/components"
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, useRef } from "react"
 
 import { Pre } from "@/components/pre"
 import { SectionLabel } from "@/app/conf/_design-system/section-label"
@@ -8,8 +8,11 @@ import InfoIcon from "@/app/conf/_design-system/pixelarticons/info.svg?svgr"
 
 import { ComponentTree } from "./component-tree"
 import { FriendList } from "./friend-list"
+
 import json from "./data-colocation.json"
 import Query from "./data-colocation.mdx"
+import "./data-colocation.css"
+import { useOnClickOutside } from "@/app/conf/_design-system/utils/useOnClickOutside"
 
 const components = {
   pre: (props: ComponentPropsWithoutRef<typeof Pre>) => (
@@ -27,8 +30,63 @@ const components = {
 }
 
 export function DataColocation() {
+  const markSector = (event: React.MouseEvent<HTMLElement>) => {
+    const target =
+      event.target && event.target instanceof HTMLElement ? event.target : null
+
+    const sectorElement = target?.closest("[data-sector]") as HTMLElement | null
+    const sector = sectorElement?.dataset.sector
+
+    if (!sector) return
+
+    const currentTarget = event.currentTarget
+
+    if (currentTarget.dataset.activeSector !== sector) {
+      currentTarget.dataset.activeSector = sector
+    }
+  }
+
+  const unmarkSector = (event: React.MouseEvent<HTMLElement>) => {
+    console.log("unmarkSector", window.matchMedia("(hover: none)").matches)
+    if (window.matchMedia("(hover: none)").matches) return
+
+    const target =
+      event.relatedTarget && event.relatedTarget instanceof HTMLElement
+        ? event.relatedTarget
+        : null
+
+    const currentTarget = event.currentTarget
+
+    const sectorElement = target?.closest("[data-sector]") as HTMLElement | null
+    const targetSector = sectorElement?.dataset.sector
+    const currentActiveSector = currentTarget.dataset.activeSector
+
+    if (!targetSector) {
+      delete currentTarget.dataset.activeSector
+      return
+    }
+
+    if (!currentActiveSector) return
+
+    currentTarget.dataset.activeSector = targetSector
+  }
+
+  const ref = useRef<HTMLDivElement>(null)
+  useOnClickOutside(ref, event => {
+    console.log("clicked outside")
+    if (event.currentTarget && event.currentTarget instanceof HTMLElement) {
+      delete event.currentTarget.dataset.activeSector
+    }
+  })
+
   return (
-    <section className="gql-container gql-section flex flex-wrap justify-between gap-4 sm:max-xl:gap-y-8 xl:p-24">
+    <section
+      ref={ref}
+      className="gql-container gql-section flex flex-wrap justify-between gap-4 sm:max-xl:gap-y-8 xl:p-24"
+      onMouseOver={markSector}
+      onMouseOut={unmarkSector}
+      onPointerDown={markSector}
+    >
       <div className="shrink">
         <header>
           <SectionLabel>Data Colocation</SectionLabel>
@@ -51,7 +109,9 @@ export function DataColocation() {
       <article className="flex flex-wrap divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x xl:rounded-lg">
         <div className="flex grow flex-col gap-y-4 lg:flex-col-reverse lg:p-4">
           <FigureInfo />
-          <FriendList friends={json.friends} />
+          <div className="sector-ring">
+            <FriendList friends={json.friends} />
+          </div>
         </div>
         <div className="flex grow *:w-full *:rounded-lg *:border *:border-neu-100 *:bg-neu-50/50 lg:p-4">
           <Query components={components} />
@@ -63,8 +123,8 @@ export function DataColocation() {
 
 function FigureInfo() {
   return (
-    <div className="flex w-full grow gap-2 xl:max-w-[240px]">
-      <InfoIcon className="size-5 shrink-0 translate-y-[0.5px]" />
+    <div className="flex w-full grow gap-2 hover-none:items-center xl:max-w-[240px]">
+      <InfoIcon className="size-4 shrink-0 hover-hover:size-5 hover-hover:translate-y-[0.5px]" />
       <p className="typography-body-sm text-neu-800">
         <span className="hover-hover:hidden">Click on</span>
         <span className="hover-none:hidden">Hover over</span> the components to
