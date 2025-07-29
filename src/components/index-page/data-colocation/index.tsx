@@ -1,6 +1,11 @@
 import { clsx } from "clsx"
 import { Code } from "nextra/components"
-import { ComponentPropsWithoutRef, useRef } from "react"
+import {
+  cloneElement,
+  ComponentPropsWithoutRef,
+  ReactElement,
+  useRef,
+} from "react"
 
 import { Pre } from "@/components/pre"
 import { SectionLabel } from "@/app/conf/_design-system/section-label"
@@ -13,6 +18,7 @@ import json from "./data-colocation.json"
 import Query from "./data-colocation.mdx"
 import "./data-colocation.css"
 import { useOnClickOutside } from "@/app/conf/_design-system/utils/useOnClickOutside"
+import React from "react"
 
 const components = {
   pre: (props: ComponentPropsWithoutRef<typeof Pre>) => (
@@ -21,12 +27,53 @@ const components = {
       // todo: this bg style might need to become global for all code blocks
       className={clsx(
         props.className,
-        "!border-none pr-4 leading-[1.459em] backdrop-blur-[6px] max-xs:leading-[16px] max-xs:[&_span]:!text-xs",
+        "sector-opacity !border-none pr-4 leading-[1.459em] backdrop-blur-[6px] max-xs:leading-[16px] max-xs:[&_span]:!text-xs",
       )}
       tabIndex={-1}
     />
   ),
-  code: Code,
+  code: ({ children, ...rest }: ComponentPropsWithoutRef<typeof Code>) => {
+    if (children) {
+      children = React.Children.map(children, child => {
+        if (isSpanElement(child)) {
+          let children = (child as ReactElement).props.children
+          if (isSpanElement(children)) {
+            children = children.props.children
+          } else if (Array.isArray(children)) {
+            children = children
+              .map(child => {
+                if (isSpanElement(child)) {
+                  return child.props.children
+                }
+                return child
+              })
+              .join("")
+
+            if (children.includes("fragment FriendInfo")) {
+              return cloneElement(child, {
+                ...child.props,
+                "data-sector": "4",
+              } as React.HTMLAttributes<HTMLSpanElement>)
+            }
+          }
+
+          return child
+        }
+        return child
+      })
+    }
+    return <Code {...rest}>{children}</Code>
+  },
+}
+
+function isSpanElement(
+  child: React.ReactNode,
+): child is ReactElement<{ children: React.ReactNode }> {
+  return (
+    typeof child === "object" &&
+    !!child &&
+    (child as ReactElement).type === "span"
+  )
 }
 
 export function DataColocation() {
