@@ -12,6 +12,7 @@ interface PreProps extends ComponentPropsWithoutRef<"pre"> {
   "data-language"?: string
   "data-word-wrap"?: ""
   icon?: FC<{ className?: string }>
+  containerClassName?: string
 }
 
 export function Pre({
@@ -22,6 +23,7 @@ export function Pre({
   "data-language": _language,
   "data-word-wrap": hasWordWrap,
   icon: Icon,
+  containerClassName,
   ...props
 }: PreProps): ReactElement {
   const preRef = useRef<HTMLPreElement | null>(null)
@@ -34,7 +36,7 @@ export function Pre({
   )
 
   return (
-    <div className={cn(classes.pre, "relative")}>
+    <div className={cn(classes.pre, "relative", containerClassName)}>
       {filename && (
         <div
           className={cn(

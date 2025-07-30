@@ -8,12 +8,14 @@ import { GraphQLAdvantages } from "./graphql-advantages"
 import { QuotesFromTheIndustry } from "./quotes-from-the-industry"
 import { JoinTheCommunity } from "./join-the-community"
 import { DataColocation } from "./data-colocation"
+import { WhatIsGraphQL } from "./what-is-graphql"
 
 export function IndexPage() {
   return (
     <div className="gql-all-anchors-focusable bg-neu-0">
       <Hero />
       <TrustedBy />
+      <WhatIsGraphQL />
       <HowItWorks />
       <ProvenSolution />
       <FivePillars />
