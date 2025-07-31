@@ -52,42 +52,33 @@ function ClientEdges({
   )
 }
 
-function ServerEdges() {
+function ServerEdges({ highlighted }: { highlighted?: number }) {
+  const paths = [
+    "M696 159.5H811.5V75H1176",
+    "M696 175.5L833.5 175.5V112H1104.5",
+    "M696 191.5H855.5V148.5H1176",
+    "M696 206.5L876 206.5V184.5H1104",
+    "M696 220.5H704.5H1176",
+    "M696 234.5L876 234.5V256.5H1104",
+    "M696 249.5H855.5V292.5H1176",
+    "M696 265.5L833.5 265.5V329H1104",
+    "M696 281.5H811.5V366H1176",
+  ] as const
+
   return (
     <>
-      <path
-        d="M696 249.5H855.5V292.5H1176"
-        stroke="url(#paint9_linear_671_9150)"
-      />
-      <path d="M696 220.5H704.5H1176" stroke="url(#paint10_linear_671_9150)" />
-      <path
-        d="M696 281.5H811.5V366H1176"
-        stroke="url(#paint11_linear_671_9150)"
-      />
-      <path
-        d="M696 265.5L833.5 265.5V329H1104"
-        stroke="url(#paint12_linear_671_9150)"
-      />
-      <path
-        d="M696 234.5L876 234.5V256.5H1104"
-        stroke="url(#paint13_linear_671_9150)"
-      />
-      <path
-        d="M696 191.5H855.5V148.5H1176"
-        stroke="url(#paint14_linear_671_9150)"
-      />
-      <path
-        d="M696 159.5H811.5V75H1176"
-        stroke="url(#paint15_linear_671_9150)"
-      />
-      <path
-        d="M696 175.5L833.5 175.5V112H1104.5"
-        stroke="url(#paint16_linear_671_9150)"
-      />
-      <path
-        d="M696 206.5L876 206.5V184.5H1104"
-        stroke="url(#paint17_linear_671_9150)"
-      />
+      {paths.map((d, index) => (
+        <path
+          key={index}
+          d={d}
+          stroke={
+            highlighted === index
+              ? `url(#paint_sr_dark_linear_671_9150)`
+              : `url(#paint_sr_light_linear_671_9150)`
+          }
+          strokeWidth={highlighted === index ? "2" : "1"}
+        />
+      ))}
     </>
   )
 }
@@ -159,44 +150,44 @@ function ClientBoxes({ highlighted }: { highlighted?: number }) {
   )
 }
 
-function ServerBoxes() {
+function ServerBoxes({ highlighted }: { highlighted?: number }) {
+  /* eslint-disable react/jsx-key */
+  const boxes = [
+    ["translate(1176, 48)", <LabirynthIcon />],
+    ["translate(1104, 84)", <ServerIcon />],
+    ["translate(1176, 120)", <ModemIcon />],
+    ["translate(1104, 156)", <CloudIcon />],
+    ["translate(1176, 192)", <ServerIcon />],
+    ["translate(1104, 228)", <LabirynthIcon />],
+    ["translate(1176, 264)", <ServerIcon />],
+    ["translate(1104, 300)", <ServerIcon />],
+    ["translate(1176, 336)", <CloudIcon />],
+  ] as const
+  /* eslint-enable react/jsx-key */
+
   return (
     <>
-      <Box transform="translate(1176, 48)">
-        <LabirynthIcon />
-      </Box>
-
-      <Box transform="translate(1104, 84)">
-        <ServerIcon />
-      </Box>
-
-      <Box transform="translate(1176, 120)">
-        <ModemIcon />
-      </Box>
-
-      <Box transform="translate(1104, 156)">
-        <CloudIcon />
-      </Box>
-
-      <Box transform="translate(1176, 192)">
-        <ServerIcon />
-      </Box>
-
-      <Box transform="translate(1104, 228)">
-        <LabirynthIcon />
-      </Box>
-
-      <Box transform="translate(1176, 264)">
-        <ServerIcon />
-      </Box>
-
-      <Box transform="translate(1104, 300)">
-        <ServerIcon />
-      </Box>
-
-      <Box transform="translate(1176, 336)">
-        <CloudIcon />
-      </Box>
+      {boxes.map(([transform, children], index) => {
+        const isHighlighted = index === highlighted
+        return (
+          <Box
+            key={index}
+            transform={transform}
+            fill={
+              isHighlighted
+                ? "hsl(var(--color-neu-300))"
+                : "hsl(var(--color-neu-100))"
+            }
+            className={
+              isHighlighted
+                ? "[&_path]:fill-neu-800 dark:[&_path]:fill-neu-0"
+                : undefined
+            }
+          >
+            {children}
+          </Box>
+        )
+      })}
     </>
   )
 }
@@ -213,8 +204,8 @@ function SVGDefinitions() {
         y2="41.7739"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
+        <stop stopColor="hsl(var(--color-neu-100))" />
+        <stop offset="1" stopColor="hsl(var(--color-neu-600))" />
       </linearGradient>
       <linearGradient
         id="paint_lr_dark_linear_671_9150"
@@ -224,107 +215,31 @@ function SVGDefinitions() {
         y2="-17.6347"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#DBDED3" />
-        <stop offset="1" stopColor="#6D7557" />
+        <stop stopColor="hsl(var(--color-neu-700))" />
+        <stop offset="1" stopColor="hsl(var(--color-neu-300))" />
       </linearGradient>
+
       <linearGradient
-        id="paint9_linear_671_9150"
+        id="paint_sr_light_linear_671_9150"
         x1="696"
-        y1="320.46"
+        y1="0"
         x2="937.904"
-        y2="320.46"
+        y2="0"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
+        <stop stopColor="hsl(var(--color-neu-100))" />
+        <stop offset="1" stopColor="hsl(var(--color-neu-600))" />
       </linearGradient>
       <linearGradient
-        id="paint10_linear_671_9150"
+        id="paint_sr_dark_linear_671_9150"
         x1="696"
-        y1="222.15"
+        y1="0"
         x2="937.904"
-        y2="222.15"
+        y2="0"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint11_linear_671_9150"
-        x1="696"
-        y1="420.945"
-        x2="937.904"
-        y2="420.945"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint12_linear_671_9150"
-        x1="696"
-        y1="370.29"
-        x2="875.922"
-        y2="370.29"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint13_linear_671_9150"
-        x1="696"
-        y1="270.805"
-        x2="875.922"
-        y2="270.805"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint14_linear_671_9150"
-        x1="696"
-        y1="120.54"
-        x2="937.904"
-        y2="120.54"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint15_linear_671_9150"
-        x1="696"
-        y1="20.0546"
-        x2="937.904"
-        y2="20.0546"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint16_linear_671_9150"
-        x1="696"
-        y1="70.7097"
-        x2="875.922"
-        y2="70.7097"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint17_linear_671_9150"
-        x1="696"
-        y1="170.195"
-        x2="875.922"
-        y2="170.195"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
+        <stop stopColor="hsl(var(--color-neu-700))" />
+        <stop offset="1" stopColor="hsl(var(--color-neu-300))" />
       </linearGradient>
       <clipPath id="clip0_671_9150">
         <rect x="514" y="113.5" width="220" height="220" rx="8" fill="white" />
@@ -366,8 +281,8 @@ export function Wires({ className }: { className?: string }) {
       >
         <ClientEdges highlighted={step === 0 ? 0 : undefined} />
         <ClientBoxes highlighted={step === 0 ? 0 : undefined} />
-        <ServerEdges />
-        <ServerBoxes />
+        <ServerEdges highlighted={step === 1 ? 0 : undefined} />
+        <ServerBoxes highlighted={step === 1 ? 0 : undefined} />
         <SVGDefinitions />
       </svg>
       <QueryMdx components={components} />
