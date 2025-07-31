@@ -17,7 +17,11 @@ import QueryMdx from "./api-gateway-query.mdx"
 import clsx from "clsx"
 import { ComponentPropsWithoutRef, useReducer } from "react"
 
-function ClientEdges({ pathHighlighted }: { pathHighlighted: number }) {
+function ClientEdges({
+  highlighted: pathHighlighted,
+}: {
+  highlighted?: number
+}) {
   const paths = [
     "M514.5 220H424.5V76H72",
     "M446 220H424.5V112H144",
@@ -92,15 +96,20 @@ function Box({
   transform,
   fill = "hsl(var(--color-neu-100))",
   children,
+  className,
 }: {
   transform: string
   fill?: string
   children: React.ReactNode
+  className?: string
 }) {
   return (
     <g
       transform={transform}
-      className="[&>path]:translate-x-4 [&>path]:translate-y-4 [:where(&>path:not([fill]))]:fill-neu-600"
+      className={clsx(
+        "[&>path]:translate-x-4 [&>path]:translate-y-4 [:where(&>path:not([fill]))]:fill-neu-600",
+        className,
+      )}
     >
       <rect width="56" height="56" fill={fill} />
       {children}
@@ -108,44 +117,44 @@ function Box({
   )
 }
 
-function ClientBoxes() {
+function ClientBoxes({ highlighted }: { highlighted?: number }) {
+  /* eslint-disable react/jsx-key */
+  const boxes = [
+    ["translate(16, 48)", <DesktopIcon />],
+    ["translate(88, 84)", <PhoneIcon />],
+    ["translate(16, 120)", <PhoneIcon />],
+    ["translate(88, 156)", <WristwatchIcon />],
+    ["translate(16, 192)", <TelevisionIcon />],
+    ["translate(88, 228)", <DesktopIcon />],
+    ["translate(16, 264)", <TabletIcon />],
+    ["translate(88, 300)", <PhoneIcon />],
+    ["translate(16, 336)", <WristwatchIcon />],
+  ] as const
+  /* eslint-enable react/jsx-key */
+
   return (
     <>
-      <Box transform="translate(16, 48)" fill="hsl(var(--color-neu-300))">
-        <DesktopIcon className="fill-neu-800 dark:fill-neu-0" />
-      </Box>
-
-      <Box transform="translate(88, 84)">
-        <PhoneIcon />
-      </Box>
-
-      <Box transform="translate(16, 120)">
-        <PhoneIcon />
-      </Box>
-
-      <Box transform="translate(88, 156)">
-        <WristwatchIcon />
-      </Box>
-
-      <Box transform="translate(16, 192)">
-        <TelevisionIcon />
-      </Box>
-
-      <Box transform="translate(88, 228)">
-        <DesktopIcon />
-      </Box>
-
-      <Box transform="translate(16, 264)">
-        <TabletIcon />
-      </Box>
-
-      <Box transform="translate(88, 300)">
-        <PhoneIcon />
-      </Box>
-
-      <Box transform="translate(16, 336)">
-        <WristwatchIcon />
-      </Box>
+      {boxes.map(([transform, children], index) => {
+        const isHighlighted = index === highlighted
+        return (
+          <Box
+            key={index}
+            transform={transform}
+            fill={
+              isHighlighted
+                ? "hsl(var(--color-neu-300))"
+                : "hsl(var(--color-neu-100))"
+            }
+            className={
+              isHighlighted
+                ? "[&_path]:fill-neu-800 dark:[&_path]:fill-neu-0"
+                : undefined
+            }
+          >
+            {children}
+          </Box>
+        )
+      })}
     </>
   )
 }
@@ -341,7 +350,7 @@ const components = {
 export function Wires({ className }: { className?: string }) {
   // 1: Query visible, first client wire selected.
   const STEPS = 3
-  const [step, inc] = useReducer(x => (x + 1) % STEPS, 0)
+  const [step, inc] = useReducer(x => (x + 1) % STEPS, 1)
 
   return (
     <div className={clsx(className, "relative")}>
@@ -355,13 +364,13 @@ export function Wires({ className }: { className?: string }) {
         aria-label="GraphQL allows you to build API Gateways to bring data from multiple sources to your clients in a single query"
         className="relative h-auto w-full"
       >
-        <ClientEdges pathHighlighted={step === 0 ? 0 : 0} />
-        <ClientBoxes />
+        <ClientEdges highlighted={step === 0 ? 0 : undefined} />
+        <ClientBoxes highlighted={step === 0 ? 0 : undefined} />
         <ServerEdges />
         <ServerBoxes />
         <SVGDefinitions />
       </svg>
-      {/* <QueryMdx components={components} /> */}
+      <QueryMdx components={components} />
     </div>
   )
 }
