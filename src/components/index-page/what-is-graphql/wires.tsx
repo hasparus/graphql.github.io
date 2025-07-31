@@ -22,20 +22,20 @@ function ClientEdges() {
     <>
       <path
         d="M446 220L424.5 220V291.75H72"
-        stroke="url(#paint0_linear_671_9150)"
+        stroke="url(#paint4_linear_671_9150)"
       />
-      <path d="M446 220H424.5V147H72" stroke="url(#paint1_linear_671_9150)" />
-      <path d="M528 220H514.206L72 220" stroke="url(#paint2_linear_671_9150)" />
-      <path d="M528 220H424.772V365H72" stroke="url(#paint3_linear_671_9150)" />
+      <path d="M446 220H424.5V147H72" stroke="url(#paint4_linear_671_9150)" />
+      <path d="M528 220H514.206L72 220" stroke="url(#paint4_linear_671_9150)" />
+      <path d="M528 220H424.772V365H72" stroke="url(#paint4_linear_671_9150)" />
       <path d="M446 220H424.5V112H144" stroke="url(#paint4_linear_671_9150)" />
       <path
         d="M528.5 220H424.5V328H144"
-        stroke="url(#paint5_linear_671_9150)"
+        stroke="url(#paint4_linear_671_9150)"
       />
-      <path d="M446 220H424.5V184H144" stroke="url(#paint6_linear_671_9150)" />
+      <path d="M446 220H424.5V184H144" stroke="url(#paint4_linear_671_9150)" />
       <path
         d="M528 220L424.866 220V256H144"
-        stroke="url(#paint7_linear_671_9150)"
+        stroke="url(#paint4_linear_671_9150)"
       />
       <path
         d="M514.5 220H424.5V76H72"
@@ -46,7 +46,6 @@ function ClientEdges() {
   )
 }
 
-// Connection paths from center to server (right side)
 function ServerEdges() {
   return (
     <>
@@ -196,88 +195,11 @@ function SVGDefinitions() {
   return (
     <defs>
       <linearGradient
-        id="paint0_linear_671_9150"
-        x1="446"
-        y1="338.567"
-        x2="124.035"
-        y2="338.567"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint1_linear_671_9150"
-        x1="446"
-        y1="99.8575"
-        x2="204.096"
-        y2="99.8575"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint2_linear_671_9150"
-        x1="528"
-        y1="218.35"
-        x2="135.443"
-        y2="218.35"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint3_linear_671_9150"
-        x1="454"
-        y1="459.285"
-        x2="125.148"
-        y2="459.285"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
         id="paint4_linear_671_9150"
         x1="446"
         y1="41.7739"
         x2="266.078"
         y2="41.7739"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint5_linear_671_9150"
-        x1="446"
-        y1="398.551"
-        x2="266.078"
-        y2="398.551"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint6_linear_671_9150"
-        x1="446"
-        y1="160.591"
-        x2="266.078"
-        y2="160.591"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F3F4F0" />
-        <stop offset="1" stopColor="#A0A88A" />
-      </linearGradient>
-      <linearGradient
-        id="paint7_linear_671_9150"
-        x1="446.394"
-        y1="279.409"
-        x2="266.237"
-        y2="279.409"
         gradientUnits="userSpaceOnUse"
       >
         <stop stopColor="#F3F4F0" />
@@ -415,6 +337,9 @@ const components = {
 }
 
 export function Wires({ className }: { className?: string }) {
+  // Step 1 in the demonstration:
+  // Query visible, first client wire selected.
+
   return (
     <div className={clsx(className, "relative")}>
       <svg
@@ -427,12 +352,12 @@ export function Wires({ className }: { className?: string }) {
         className="relative h-auto w-full"
       >
         <ClientEdges />
-        <ServerEdges />
         <ClientBoxes />
+        <ServerEdges />
         <ServerBoxes />
         <SVGDefinitions />
       </svg>
-      <QueryMdx components={components} />
+      {/* <QueryMdx components={components} /> */}
     </div>
   )
 }

@@ -5,7 +5,7 @@ import { Wires } from "./wires"
 
 export function WhatIsGraphQL() {
   return (
-    <section className="gql-container gql-section">
+    <section id="what-is-graphql" className="gql-container gql-section">
       <SectionLabel>Introduction</SectionLabel>
       <div className="justify-between gap-4 lg:flex">
         <h2 className="typography-h2 mt-6">What is GraphQL?</h2>
