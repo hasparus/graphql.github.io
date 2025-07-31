@@ -372,6 +372,8 @@ export function Wires({ className }: { className?: string }) {
   const STEPS = 3
   const [step, inc] = useReducer(x => (x + 1) % STEPS, 1)
 
+  // TODO: Increment from 0 to 1 and 1 to 2 on `repeatEvent` in client and server edges.
+
   return (
     <div className={clsx(className, "relative")}>
       <svg
