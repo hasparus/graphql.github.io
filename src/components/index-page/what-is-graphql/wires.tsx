@@ -52,7 +52,7 @@ function ClientEdges({
   )
 }
 
-function ServerEdges({ highlighted }: { highlighted?: number }) {
+function ServerEdges({ highlighted }: { highlighted: number[] }) {
   const paths = [
     "M696 159.5H811.5V75H1176",
     "M696 175.5L833.5 175.5V112H1104.5",
@@ -67,18 +67,21 @@ function ServerEdges({ highlighted }: { highlighted?: number }) {
 
   return (
     <>
-      {paths.map((d, index) => (
-        <path
-          key={index}
-          d={d}
-          stroke={
-            highlighted === index
-              ? `url(#paint_sr_dark_linear_671_9150)`
-              : `url(#paint_sr_light_linear_671_9150)`
-          }
-          strokeWidth={highlighted === index ? "2" : "1"}
-        />
-      ))}
+      {paths.map((d, index) => {
+        const isHighlighted = highlighted?.includes(index)
+        return (
+          <path
+            key={index}
+            d={d}
+            strokeWidth={isHighlighted ? 2 : 1}
+            stroke={
+              isHighlighted
+                ? `url(#${index % 2 ? "paint_sr_pri_highlight_linear_671_9150" : "paint_sr_sec_highlight_linear_671_9150"})`
+                : "url(#paint_sr_light_linear_671_9150)"
+            }
+          />
+        )
+      })}
     </>
   )
 }
@@ -150,37 +153,41 @@ function ClientBoxes({ highlighted }: { highlighted?: number }) {
   )
 }
 
-function ServerBoxes({ highlighted }: { highlighted?: number }) {
+function ServerBoxes({ highlighted }: { highlighted: number[] }) {
   /* eslint-disable react/jsx-key */
   const boxes = [
     ["translate(1176, 48)", <LabirynthIcon />],
     ["translate(1104, 84)", <ServerIcon />],
     ["translate(1176, 120)", <ModemIcon />],
     ["translate(1104, 156)", <CloudIcon />],
-    ["translate(1176, 192)", <ServerIcon />],
-    ["translate(1104, 228)", <LabirynthIcon />],
-    ["translate(1176, 264)", <ServerIcon />],
-    ["translate(1104, 300)", <ServerIcon />],
-    ["translate(1176, 336)", <CloudIcon />],
+    ["translate(1176, 192)", <LabirynthIcon />],
+    ["translate(1104, 228)", <ModemIcon />],
+    ["translate(1176, 264)", <CloudIcon />],
+    ["translate(1104, 300)", <CloudIcon />],
+    ["translate(1176, 336)", <ServerIcon />],
   ] as const
   /* eslint-enable react/jsx-key */
 
   return (
     <>
       {boxes.map(([transform, children], index) => {
-        const isHighlighted = index === highlighted
+        const isHighlighted = highlighted.includes(index)
         return (
           <Box
             key={index}
             transform={transform}
             fill={
               isHighlighted
-                ? "hsl(var(--color-neu-300))"
+                ? index % 2
+                  ? "hsl(var(--color-pri-lighter))"
+                  : "hsl(var(--color-sec-light))"
                 : "hsl(var(--color-neu-100))"
             }
             className={
               isHighlighted
-                ? "[&_path]:fill-neu-800 dark:[&_path]:fill-neu-0"
+                ? index % 2
+                  ? "[&_path]:fill-pri-darker dark:[&_path]:fill-pri-lighter"
+                  : "[&_path]:fill-sec-darker dark:[&_path]:fill-sec-lighter"
                 : undefined
             }
           >
@@ -230,17 +237,30 @@ function SVGDefinitions() {
         <stop stopColor="hsl(var(--color-neu-100))" />
         <stop offset="1" stopColor="hsl(var(--color-neu-600))" />
       </linearGradient>
+
       <linearGradient
-        id="paint_sr_dark_linear_671_9150"
+        id="paint_sr_sec_highlight_linear_671_9150"
         x1="696"
         y1="0"
         x2="937.904"
         y2="0"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="hsl(var(--color-neu-700))" />
-        <stop offset="1" stopColor="hsl(var(--color-neu-300))" />
+        <stop stopColor="hsl(var(--color-sec-dark))" />
+        <stop offset="1" stopColor="hsl(var(--color-sec-light))" />
       </linearGradient>
+      <linearGradient
+        id="paint_sr_pri_highlight_linear_671_9150"
+        x1="696"
+        y1="0"
+        x2="937.904"
+        y2="0"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="hsl(var(--color-pri-dark))" />
+        <stop offset="1" stopColor="hsl(var(--color-pri-lighter))" />
+      </linearGradient>
+
       <clipPath id="clip0_671_9150">
         <rect x="514" y="113.5" width="220" height="220" rx="8" fill="white" />
       </clipPath>
@@ -281,8 +301,8 @@ export function Wires({ className }: { className?: string }) {
       >
         <ClientEdges highlighted={step === 0 ? 0 : undefined} />
         <ClientBoxes highlighted={step === 0 ? 0 : undefined} />
-        <ServerEdges highlighted={step === 1 ? 0 : undefined} />
-        <ServerBoxes highlighted={step === 1 ? 0 : undefined} />
+        <ServerEdges highlighted={step === 1 ? [1, 6] : []} />
+        <ServerBoxes highlighted={step === 1 ? [1, 6] : []} />
         <SVGDefinitions />
       </svg>
       <QueryMdx components={components} />
