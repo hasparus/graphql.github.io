@@ -15,33 +15,35 @@ import {
 
 import QueryMdx from "./api-gateway-query.mdx"
 import clsx from "clsx"
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, useReducer } from "react"
 
-function ClientEdges() {
+function ClientEdges({ pathHighlighted }: { pathHighlighted: number }) {
+  const paths = [
+    "M514.5 220H424.5V76H72",
+    "M446 220H424.5V112H144",
+    "M446 220H424.5V147H72",
+    "M446 220H424.5V184H144",
+    "M528 220H514.206L72 220",
+    "M528 220L424.866 220V256H144",
+    "M446 220L424.5 220V291.75H72",
+    "M528.5 220H424.5V328H144",
+    "M528 220H424.772V365H72",
+  ]
+
   return (
     <>
-      <path
-        d="M446 220L424.5 220V291.75H72"
-        stroke="url(#paint4_linear_671_9150)"
-      />
-      <path d="M446 220H424.5V147H72" stroke="url(#paint4_linear_671_9150)" />
-      <path d="M528 220H514.206L72 220" stroke="url(#paint4_linear_671_9150)" />
-      <path d="M528 220H424.772V365H72" stroke="url(#paint4_linear_671_9150)" />
-      <path d="M446 220H424.5V112H144" stroke="url(#paint4_linear_671_9150)" />
-      <path
-        d="M528.5 220H424.5V328H144"
-        stroke="url(#paint4_linear_671_9150)"
-      />
-      <path d="M446 220H424.5V184H144" stroke="url(#paint4_linear_671_9150)" />
-      <path
-        d="M528 220L424.866 220V256H144"
-        stroke="url(#paint4_linear_671_9150)"
-      />
-      <path
-        d="M514.5 220H424.5V76H72"
-        stroke="url(#paint8_linear_671_9150)"
-        stroke-width="2"
-      />
+      {paths.map((path, index) => (
+        <path
+          key={index}
+          d={path}
+          stroke={
+            pathHighlighted === index
+              ? `url(#paint_lr_dark_linear_671_9150)`
+              : `url(#paint_lr_light_linear_671_9150)`
+          }
+          strokeWidth={pathHighlighted === index ? "2" : "1"}
+        />
+      ))}
     </>
   )
 }
@@ -195,7 +197,7 @@ function SVGDefinitions() {
   return (
     <defs>
       <linearGradient
-        id="paint4_linear_671_9150"
+        id="paint_lr_light_linear_671_9150"
         x1="446"
         y1="41.7739"
         x2="266.078"
@@ -206,7 +208,7 @@ function SVGDefinitions() {
         <stop offset="1" stopColor="#A0A88A" />
       </linearGradient>
       <linearGradient
-        id="paint8_linear_671_9150"
+        id="paint_lr_dark_linear_671_9150"
         x1="446"
         y1="-17.6347"
         x2="204.096"
@@ -337,12 +339,14 @@ const components = {
 }
 
 export function Wires({ className }: { className?: string }) {
-  // Step 1 in the demonstration:
-  // Query visible, first client wire selected.
+  // 1: Query visible, first client wire selected.
+  const STEPS = 3
+  const [step, inc] = useReducer(x => (x + 1) % STEPS, 0)
 
   return (
     <div className={clsx(className, "relative")}>
       <svg
+        id="what-is-graphql--wires"
         width="1248"
         height="448"
         viewBox="0 0 1248 448"
@@ -351,7 +355,7 @@ export function Wires({ className }: { className?: string }) {
         aria-label="GraphQL allows you to build API Gateways to bring data from multiple sources to your clients in a single query"
         className="relative h-auto w-full"
       >
-        <ClientEdges />
+        <ClientEdges pathHighlighted={step === 0 ? 0 : 0} />
         <ClientBoxes />
         <ServerEdges />
         <ServerBoxes />
