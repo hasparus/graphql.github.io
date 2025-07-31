@@ -223,8 +223,10 @@ export function Navbar({ items }: NavBarProps): ReactElement {
 }
 
 function BackdropBlur() {
-  const mask = "linear-gradient(to bottom, #000 0% 50%, transparent 50% 100%)"
   const thickness = "1px"
+
+  const mask = "linear-gradient(to bottom, #000 0% 50%, transparent 50% 100%)"
+  const edgeMask = `linear-gradient(to bottom, black 0, black ${thickness}, transparent ${thickness})`
   return (
     <>
       <div
@@ -240,7 +242,8 @@ function BackdropBlur() {
         className="pointer-events-none absolute inset-0 h-full translate-y-full bg-white/10"
         style={{
           backdropFilter: "blur(8px) brightness(120%) saturate(113%)",
-          maskImage: `linear-gradient(to bottom, black 0, black ${thickness}, transparent ${thickness})`,
+          maskImage: edgeMask,
+          WebkitMaskImage: edgeMask,
         }}
       />
     </>
