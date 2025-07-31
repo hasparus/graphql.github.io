@@ -15,13 +15,9 @@ import {
 
 import QueryMdx from "./api-gateway-query.mdx"
 import clsx from "clsx"
-import { ComponentPropsWithoutRef, useReducer } from "react"
+import { ComponentPropsWithoutRef, ReactNode, useReducer } from "react"
 
-function ClientEdges({
-  highlighted: pathHighlighted,
-}: {
-  highlighted?: number
-}) {
+function ClientEdges({ highlighted }: { highlighted?: number }) {
   const paths = [
     "M514.5 220H424.5V76H72",
     "M446 220H424.5V112H144",
@@ -36,18 +32,21 @@ function ClientEdges({
 
   return (
     <>
-      {paths.map((path, index) => (
-        <path
-          key={index}
-          d={path}
-          stroke={
-            pathHighlighted === index
-              ? `url(#paint_lr_dark_linear_671_9150)`
-              : `url(#paint_lr_light_linear_671_9150)`
-          }
-          strokeWidth={pathHighlighted === index ? "2" : "1"}
-        />
-      ))}
+      {moveHighlightedToTop(
+        highlighted,
+        paths.map((path, index) => (
+          <path
+            key={index}
+            d={path}
+            stroke={
+              highlighted === index
+                ? `url(#paint_lr_dark_linear_671_9150)`
+                : `url(#paint_lr_light_linear_671_9150)`
+            }
+            strokeWidth={highlighted === index ? "2" : "1"}
+          />
+        )),
+      )}
     </>
   )
 }
@@ -74,11 +73,13 @@ function ServerEdges({ highlighted }: { highlighted: number[] }) {
             key={index}
             d={d}
             strokeWidth={isHighlighted ? 2 : 1}
-            stroke={
+            className={clsx(
               isHighlighted
-                ? `url(#${index % 2 ? "paint_sr_pri_highlight_linear_671_9150" : "paint_sr_sec_highlight_linear_671_9150"})`
-                : "url(#paint_sr_light_linear_671_9150)"
-            }
+                ? index % 2
+                  ? "stroke-[url(#paint_sr_pri_highlight_linear_671_9150)] motion-reduce:stroke-[url(#paint_sr_pri_highlight_linear_static_671_9150)]"
+                  : "stroke-[url(#paint_sr_sec_highlight_linear_671_9150)] motion-reduce:stroke-[url(#paint_sr_sec_highlight_linear_static_671_9150)]"
+                : "stroke-[url(#paint_sr_light_linear_671_9150)]",
+            )}
           />
         )
       })}
@@ -186,8 +187,8 @@ function ServerBoxes({ highlighted }: { highlighted: number[] }) {
             className={
               isHighlighted
                 ? index % 2
-                  ? "[&_path]:fill-pri-darker dark:[&_path]:fill-pri-lighter"
-                  : "[&_path]:fill-sec-darker dark:[&_path]:fill-sec-lighter"
+                  ? "dark:[&_path]:fill-pri-lighter [&_rect]:fill-pri-darker"
+                  : "dark:[&_path]:fill-sec-lighter [&_rect]:fill-sec-darker"
                 : undefined
             }
           >
@@ -211,8 +212,15 @@ function SVGDefinitions() {
         y2="41.7739"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="hsl(var(--color-neu-100))" />
-        <stop offset="1" stopColor="hsl(var(--color-neu-600))" />
+        <stop
+          stopColor="hsl(var(--color-neu-100))"
+          className="dark:[stop-color:hsl(var(--color-neu-50))]"
+        />
+        <stop
+          offset="1"
+          stopColor="hsl(var(--color-neu-600))"
+          className="dark:[stop-color:hsl(var(--color-neu-100))]"
+        />
       </linearGradient>
       <linearGradient
         id="paint_lr_dark_linear_671_9150"
@@ -234,31 +242,109 @@ function SVGDefinitions() {
         y2="0"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="hsl(var(--color-neu-100))" />
-        <stop offset="1" stopColor="hsl(var(--color-neu-600))" />
+        <stop
+          stopColor="hsl(var(--color-neu-100))"
+          className="dark:[stop-color:hsl(var(--color-neu-0))]"
+        />
+        <stop
+          offset="1"
+          stopColor="hsl(var(--color-neu-600))"
+          className="dark:[stop-color:hsl(var(--color-neu-100))]"
+        />
       </linearGradient>
 
-      <linearGradient
-        id="paint_sr_sec_highlight_linear_671_9150"
-        x1="696"
-        y1="0"
-        x2="937.904"
-        y2="0"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="hsl(var(--color-sec-dark))" />
-        <stop offset="1" stopColor="hsl(var(--color-sec-light))" />
+      <linearGradient id="paint_sr_sec_highlight_linear_static_671_9150">
+        <stop
+          stopColor="hsl(var(--color-sec-dark))"
+          className="dark:[stop-color:hsl(var(--color-sec-light))]"
+        />
+        <stop
+          offset="1"
+          stopColor="hsl(var(--color-sec-light))"
+          className="dark:[stop-color:hsl(var(--color-sec-darker))]"
+        />
       </linearGradient>
-      <linearGradient
-        id="paint_sr_pri_highlight_linear_671_9150"
-        x1="696"
-        y1="0"
-        x2="937.904"
-        y2="0"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="hsl(var(--color-pri-dark))" />
-        <stop offset="1" stopColor="hsl(var(--color-pri-lighter))" />
+      <linearGradient id="paint_sr_sec_highlight_linear_671_9150">
+        <stop
+          stopColor="hsl(var(--color-sec-light))"
+          className="dark:[stop-color:hsl(var(--color-sec-darker))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-2.562;1.438;-2.562"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-sec-dark))"
+          className="dark:[stop-color:hsl(var(--color-sec-light))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-1.562;2.438;-1.562"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-sec-light))"
+          className="dark:[stop-color:hsl(var(--color-sec-darker))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-0.562;3.438;-0.562"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </stop>
+      </linearGradient>
+
+      <linearGradient id="paint_sr_pri_highlight_linear_static_671_9150">
+        <stop
+          stopColor="hsl(var(--color-pri-dark))"
+          className="dark:[stop-color:hsl(var(--color-pri-light))]"
+        />
+        <stop
+          offset="1"
+          stopColor="hsl(var(--color-pri-lighter))"
+          className="dark:[stop-color:hsl(var(--color-pri-darker))]"
+        />
+      </linearGradient>
+      <linearGradient id="paint_sr_pri_highlight_linear_671_9150">
+        <stop
+          stopColor="hsl(var(--color-pri-lighter))"
+          className="dark:[stop-color:hsl(var(--color-pri-darker))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-2.562;1.438;-2.562"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-pri-dark))"
+          className="dark:[stop-color:hsl(var(--color-pri-light))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-1.562;2.438;-1.562"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-pri-lighter))"
+          className="dark:[stop-color:hsl(var(--color-pri-darker))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-0.562;3.438;-0.562"
+            dur="10s"
+            repeatCount="indefinite"
+          />
+        </stop>
       </linearGradient>
 
       <clipPath id="clip0_671_9150">
@@ -283,7 +369,6 @@ const components = {
 }
 
 export function Wires({ className }: { className?: string }) {
-  // 1: Query visible, first client wire selected.
   const STEPS = 3
   const [step, inc] = useReducer(x => (x + 1) % STEPS, 1)
 
@@ -308,4 +393,11 @@ export function Wires({ className }: { className?: string }) {
       <QueryMdx components={components} />
     </div>
   )
+}
+
+function moveHighlightedToTop(index: number | undefined, nodes: ReactNode[]) {
+  if (index === undefined) return nodes
+  const newNodes = nodes.filter((_, i) => i !== index)
+  newNodes.push(nodes[index] as ReactNode)
+  return newNodes
 }

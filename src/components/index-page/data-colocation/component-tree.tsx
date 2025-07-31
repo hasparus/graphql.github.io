@@ -175,7 +175,7 @@ function Fork(props: React.SVGProps<SVGSVGElement>) {
       <path d="M40.5 8V0M1 16V8m79 8V8" vectorEffect="non-scaling-stroke" />
       <path
         d="m1 8 79-.00001"
-        stroke-linecap="square"
+        strokeLinecap="square"
         vectorEffect="non-scaling-stroke"
       />
     </svg>
