@@ -406,12 +406,40 @@ function SVGDefinitions() {
         </stop>
       </linearGradient>
 
-      <clipPath id="clip0_671_9150">
-        <rect x="514" y="113.5" width="220" height="220" rx="8" fill="white" />
-      </clipPath>
-      <clipPath id="clip1_671_9150">
-        <path d="M514 113.5H734V333.5H514V113.5Z" fill="white" />
-      </clipPath>
+      <filter id="what-is-graphql--code-backdrop">
+        <feGaussianBlur stdDeviation="0 16" in="SourceGraphic" result="blur" />
+        <feBlend
+          in="blur"
+          in2="SourceGraphic"
+          mode="multiply"
+          result="multiply"
+        />
+        <feColorMatrix
+          type="saturate"
+          values="2.0"
+          in="multiply"
+          result="saturated"
+        />
+        <feGaussianBlur stdDeviation="0 2" in="saturated" result="blur1" />
+        <feColorMatrix
+          type="saturate"
+          values="1.7"
+          in="blur1"
+          result="blur1sat"
+        />
+        <feGaussianBlur stdDeviation="0 1" in="saturated" result="blur2" />
+        <feBlend in="blur1sat" in2="blur2" mode="multiply" result="blur" />
+      </filter>
+      <filter id="what-is-graphql--code-backdrop-2">
+        <feMorphology operator="erode" radius="0 2" />
+        <feComponentTransfer>
+          <feFuncR type="linear" slope="1.5" />
+          <feFuncG type="linear" slope="1.5" />
+          <feFuncB type="linear" slope="1.5" />
+          <feFuncA type="linear" slope="1" />
+        </feComponentTransfer>
+        <feGaussianBlur stdDeviation="16" />
+      </filter>
     </defs>
   )
 }
@@ -421,7 +449,8 @@ const components = {
     <Pre
       {...props}
       containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-75"
-      className="!bg-transparent backdrop-blur-xl"
+      // the border color on white and black backgrounds blends into border-neu-200 (and border-neu-50 in dark mode)
+      className="overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] dark:before:bg-[rgba(235,252,191,0.23)] dark:after:bg-[linear-gradient(to_right,transparent,transparent)]"
     />
   ),
   code: Code,
@@ -445,7 +474,6 @@ export function Wires({ className }: { className?: string }) {
     return () => animate?.removeEventListener("repeatEvent", inc)
   }, [])
 
-  // TODO: Increment from 0 to 1 and 1 to 2 on `repeatEvent` in client and server edges.
   return (
     <div className={clsx(className, "relative", classes.wires)}>
       <svg
