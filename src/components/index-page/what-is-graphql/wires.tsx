@@ -431,7 +431,7 @@ function SVGDefinitions() {
         <feBlend in="blur1sat" in2="blur2" mode="multiply" result="blur" />
       </filter>
       <filter id="what-is-graphql--code-backdrop-2">
-        <feMorphology operator="erode" radius="0 2" />
+        <feMorphology operator="erode" radius="2 2" />
         <feComponentTransfer>
           <feFuncR type="linear" slope="1.5" />
           <feFuncG type="linear" slope="1.5" />
@@ -439,6 +439,25 @@ function SVGDefinitions() {
           <feFuncA type="linear" slope="1" />
         </feComponentTransfer>
         <feGaussianBlur stdDeviation="16" />
+      </filter>
+      <filter id="what-is-graphql--code-backdrop-2-dark">
+        <feMorphology in="SourceGraphic" operator="dilate" radius="0 2" />
+        <feGaussianBlur stdDeviation="16" result="blur" />
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.01 0.5"
+          numOctaves="1"
+          seed="5"
+          result="turbulence"
+        />
+        <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+        <feDisplacementMap
+          in="blur"
+          in2="softMap"
+          scale="110"
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
       </filter>
     </defs>
   )
@@ -450,7 +469,7 @@ const components = {
       {...props}
       containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-75"
       // the border color on white and black backgrounds blends into border-neu-200 (and border-neu-50 in dark mode)
-      className="overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] dark:before:bg-[rgba(235,252,191,0.23)] dark:after:bg-[linear-gradient(to_right,transparent,transparent)]"
+      className="overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] dark:before:border-[rgba(235,252,191,0.2)] dark:before:bg-none dark:before:backdrop-blur-xl dark:before:[backdrop-filter:url(#what-is-graphql--code-backdrop-2-dark)] dark:after:bg-[linear-gradient(to_right,hsl(var(--color-neu-0)/0.5),hsl(var(--color-neu-0)/.8)_10%,hsl(var(--color-neu-0)/.8)_90%,hsl(var(--color-neu-0)/0.5))] dark:after:[backdrop-filter:blur(24px)]"
     />
   ),
   code: Code,
