@@ -312,6 +312,16 @@
       "settings": {
         "foreground": "#6E7557"
       }
+    },
+    {
+      "scope": [
+        "keyword.type.graphql",
+        "keyword.operation.graphql",
+        "keyword.fragment.graphql"
+      ],
+      "settings": {
+        "foreground": "#990069"
+      }
     }
   ]
 }
