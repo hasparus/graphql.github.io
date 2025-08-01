@@ -421,7 +421,7 @@ const components = {
     <Pre
       {...props}
       containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-75"
-      className="bg-neu-0"
+      className="!bg-transparent backdrop-blur-xl"
     />
   ),
   code: Code,
