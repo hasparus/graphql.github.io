@@ -109,7 +109,7 @@ export function DataColocation() {
     const sectorElement = target?.closest("[data-sector]") as HTMLElement | null
     const sector = sectorElement?.dataset.sector
 
-    if (!sector) return
+    if (sector == null) return
 
     const currentTarget = event.currentTarget
 
@@ -119,7 +119,6 @@ export function DataColocation() {
   }
 
   const unmarkSector = (event: React.MouseEvent<HTMLElement>) => {
-    console.log("unmarkSector", window.matchMedia("(hover: none)").matches)
     if (window.matchMedia("(hover: none)").matches) return
 
     const target =
@@ -143,17 +142,19 @@ export function DataColocation() {
     currentTarget.dataset.activeSector = targetSector
   }
 
-  const ref = useRef<HTMLDivElement>(null)
-  useOnClickOutside(ref, event => {
-    console.log("clicked outside")
-    if (event.currentTarget && event.currentTarget instanceof HTMLElement) {
-      delete event.currentTarget.dataset.activeSector
+  const sectionRef = useRef<HTMLElement>(null)
+  const figureRef = useRef<HTMLElement>(null)
+  const componentTreeRef = useRef<HTMLDivElement>(null)
+  useOnClickOutside([figureRef, componentTreeRef], () => {
+    const section = sectionRef.current
+    if (section && section.dataset.activeSector) {
+      delete section.dataset.activeSector
     }
   })
 
   return (
     <section
-      ref={ref}
+      ref={sectionRef}
       className="gql-container gql-section flex flex-wrap justify-between gap-4 sm:max-xl:gap-y-8 xl:p-24"
       onMouseOver={markSector}
       onMouseOut={unmarkSector}
@@ -169,6 +170,7 @@ export function DataColocation() {
           </p>
         </header>
         <ComponentTree
+          ref={componentTreeRef}
           className="mt-6 md:mt-8 lg:mt-12 xl:mt-16"
           names={[
             "Server",
@@ -178,7 +180,10 @@ export function DataColocation() {
           ]}
         />
       </div>
-      <article className="flex flex-wrap divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x xl:rounded-lg">
+      <article
+        className="flex flex-wrap divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x xl:rounded-lg"
+        ref={figureRef}
+      >
         <div className="flex grow flex-col gap-y-4 lg:flex-col-reverse lg:p-4">
           <FigureInfo />
           <div className="sector-ring">

@@ -1,5 +1,6 @@
 import ModemIcon from "@/app/conf/_design-system/pixelarticons/modem.svg?svgr"
 import clsx from "clsx"
+import { forwardRef } from "react"
 
 const INNER_BOX_SIZE = 16
 
@@ -7,13 +8,13 @@ interface ComponentTreeProps extends React.HTMLAttributes<HTMLDivElement> {
   names: [string, string, string, string]
 }
 
-export function ComponentTree({
-  names,
-  className,
-  ...rest
-}: ComponentTreeProps) {
+export const ComponentTree = forwardRef(function ComponentTree(
+  { names, className, ...rest }: ComponentTreeProps,
+  ref: React.Ref<HTMLDivElement>,
+) {
   return (
     <div
+      ref={ref}
       className={clsx(
         "sector-opacity mx-auto flex max-w-[500px] justify-between [--gap-x:20px] md:gap-x-10 md:[--gap-x:32px] 3xl:gap-x-20",
         className,
@@ -57,7 +58,7 @@ export function ComponentTree({
           className="flex size-12 items-center justify-center bg-neu-100 dark:bg-neu-50"
           data-sector="1"
         >
-          <ModemIcon className="size-6 text-neu-600" />
+          <ModemIcon className="pointer-events-none size-6 text-neu-600" />
         </div>
 
         <div className="h-4 w-px bg-neu-300 dark:bg-neu-100" />
@@ -107,7 +108,7 @@ export function ComponentTree({
       </div>
     </div>
   )
-}
+})
 
 interface NestedBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   bgColor: string
