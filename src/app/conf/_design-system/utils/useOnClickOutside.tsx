@@ -8,11 +8,9 @@ export function useOnClickOutside(
     const listener = (event: MouseEvent) => {
       const path = event.composedPath()
       if (refs.every(ref => !ref.current || !path.includes(ref.current))) {
-        console.log("clicked outside", refs)
         handler(event)
         return
       }
-      console.log("clicked inside", refs)
     }
 
     document.addEventListener("click", listener)
