@@ -493,6 +493,8 @@ export function Wires({ className }: { className?: string }) {
     return () => animate?.removeEventListener("repeatEvent", inc)
   }, [])
 
+  // todo: highlight the lines in step 3
+
   return (
     <div className={clsx(className, "relative", classes.wires)}>
       <svg

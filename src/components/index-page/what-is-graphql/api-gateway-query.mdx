@@ -1,9 +1,10 @@
 ```graphql
-{
-  project(name: "GraphQL") {
-    tagline
-    contributors {
-      name
+query getCity($city: String) {
+  cities(name: $city) {
+    population
+    weather {
+      temperature
+      precipitation
     }
   }
 }
