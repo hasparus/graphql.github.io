@@ -1,0 +1,9 @@
+.wires {
+  & rect,
+  & path {
+    transition:
+      fill 1s linear,
+      stroke 1s linear,
+      opacity 1s linear;
+  }
+}
