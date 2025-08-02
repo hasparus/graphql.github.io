@@ -681,18 +681,6 @@ video {
 ._rounded-full {
   border-radius: 9999px;
 }
-._rounded-lg {
-  border-radius: 0.5rem;
-}
-._rounded-md {
-  border-radius: 0.375rem;
-}
-._rounded-sm {
-  border-radius: 0.125rem;
-}
-._rounded-xl {
-  border-radius: 0.75rem;
-}
 ._rounded-b-md {
   border-bottom-right-radius: 0.375rem;
   border-bottom-left-radius: 0.375rem;
@@ -957,15 +945,7 @@ video {
   text-align: center;
 }
 ._font-mono {
-  font-family:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    Liberation Mono,
-    Courier New,
-    monospace;
+  @apply font-mono;
 }
 ._text-2xl {
   font-size: 1.5rem;
@@ -2993,4 +2973,10 @@ body.nextra-banner-hidden .\[body\.nextra-banner-hidden_\&\]\:_hidden {
 }
 div:hover > .\[div\:hover\>\&\]\:_opacity-100 {
   opacity: 1;
+}
+
+kbd._border._gap-1 {
+  border-bottom-width: 2px;
+  border-color: hsl(var(--color-neu-300));
+  gap: 0.125rem;
 }

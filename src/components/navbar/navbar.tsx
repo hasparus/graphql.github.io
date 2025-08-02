@@ -183,7 +183,8 @@ export function Navbar({ items }: NavBarProps): ReactElement {
 
         {process.env.NEXTRA_SEARCH &&
           renderComponent(themeConfig.search.component, {
-            className: "max-md:_hidden",
+            className:
+              "max-md:_hidden [&>input]:bg-neu-0/[.55] [&>input::placeholder]:text-neu-700 [&>input]:text-neu-900",
           })}
 
         {themeConfig.project.link ? (
