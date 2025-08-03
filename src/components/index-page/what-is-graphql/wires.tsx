@@ -23,6 +23,7 @@ import {
   ServerIcon,
 } from "./icons"
 import QueryMdx from "./api-gateway-query.mdx"
+import ResponseMdx from "./api-gateway-response.mdx"
 import classes from "./wires.module.css"
 
 function ClientEdges({
@@ -478,8 +479,8 @@ const components = {
 }
 
 export function Wires({ className }: { className?: string }) {
-  const STEPS = 2
-  const [step, inc] = useReducer(x => (x + 1) % STEPS, 0)
+  const STEPS = 3
+  const [step, inc] = useReducer(x => (x + 1) % STEPS, 2)
 
   const ref = useRef<SVGSVGElement>(null)
 
@@ -495,18 +496,8 @@ export function Wires({ className }: { className?: string }) {
     return () => animate?.removeEventListener("repeatEvent", inc)
   }, [])
 
-  // todo: highlight the lines in step 3
-
   return (
-    <div
-      className={clsx(
-        className,
-        "relative isolate",
-        classes.wires,
-        step === 1 && classes.highlightsQuery,
-        step === 2 && classes.highlightsResponse,
-      )}
-    >
+    <div className={clsx(className, "relative isolate", classes.wires)}>
       <svg
         id="what-is-graphql--wires"
         width="1248"
@@ -520,11 +511,37 @@ export function Wires({ className }: { className?: string }) {
       >
         <ClientEdges highlightedEdge={0} highlightedVisible={step === 0} />
         <ClientBoxes highlighted={step === 0 ? 0 : undefined} />
-        <ServerEdges highlighted={[1, 6]} highlightedVisible={step === 1} />
-        <ServerBoxes highlighted={step === 1 ? [1, 6] : []} />
+        <ServerEdges highlighted={[1, 6]} highlightedVisible={step > 0} />
+        <ServerBoxes highlighted={step > 0 ? [1, 6] : []} />
         <SVGDefinitions />
       </svg>
-      <QueryMdx components={components} />
+      <div
+        className={clsx(
+          "absolute inset-0 transition-opacity",
+          classes.highlightsQuery,
+        )}
+        style={{
+          opacity: step < 2 ? 1 : 0,
+          transitionDelay: step < 2 ? "0s" : "0.5s",
+          ...(step === 1 && {
+            "--highlight-opacity": 1,
+          }),
+        }}
+      >
+        <QueryMdx components={components} />
+      </div>
+      <div
+        className={clsx(
+          "absolute inset-0 transition-opacity [&>pre]:bg-neu-0",
+          classes.highlightsResponse,
+        )}
+        style={{
+          opacity: step === 2 ? 1 : 0,
+          transitionDelay: step === 2 ? "0s" : "0.5s",
+        }}
+      >
+        <ResponseMdx components={components} />
+      </div>
     </div>
   )
 }
