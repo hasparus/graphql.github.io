@@ -13,7 +13,7 @@ export function FriendList({ friends }: FriendList) {
       <h4 className="typography-body-lg border-b border-neu-200 bg-neu-50 px-3 py-2 dark:border-neu-100 dark:bg-neu-50/50">
         Friends
       </h4>
-      <ul className="flex flex-col gap-6 p-3 lg:p-6 max-sm:[&>*:not(:first-child)]:hidden">
+      <ul className="flex flex-col gap-6 p-3 lg:p-6 max-md:[&>*:not(:first-child)]:hidden">
         {friends.map(friend => (
           <FriendListItem key={friend.name} {...friend} />
         ))}

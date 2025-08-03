@@ -155,23 +155,23 @@ export function DataColocation() {
   return (
     <section
       ref={sectionRef}
-      className="gql-container gql-section flex flex-wrap justify-between gap-4 sm:max-xl:gap-y-8 xl:p-24"
+      className="gql-container gql-section flex justify-between gap-4 max-xl:flex-wrap sm:max-xl:gap-y-8 xl:p-24"
       onMouseOver={markSector}
       onMouseOut={unmarkSector}
       onPointerDown={markSector}
     >
-      <div className="shrink">
+      <div className="basis-full justify-between gap-x-8 sm:max-xl:flex lg:shrink">
         <header>
           <SectionLabel>Data Colocation</SectionLabel>
           <h2 className="typography-h2 mt-6">Data Colocation</h2>
-          <p className="typography-body-md mt-6 text-pretty xl:max-w-[438px]">
+          <p className="typography-body-md mt-6 text-pretty lg:max-w-[500px] xl:max-w-[438px]">
             GraphQL fragments let you reuse common field selections across
             queries, making your code more maintainable and consistent.
           </p>
         </header>
         <ComponentTree
           ref={componentTreeRef}
-          className="mt-6 md:mt-8 lg:mt-12 xl:mt-16"
+          className="mt-6 max-sm:mx-auto md:mt-8 lg:mt-12 xl:mt-16"
           names={[
             "Server",
             "<FriendList>",
@@ -181,10 +181,10 @@ export function DataColocation() {
         />
       </div>
       <article
-        className="flex flex-wrap divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x xl:rounded-lg"
+        className="flex divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 max-md:flex-col lg:rounded-lg lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x"
         ref={figureRef}
       >
-        <div className="flex grow flex-col gap-y-4 lg:flex-col-reverse lg:p-4">
+        <div className="flex grow flex-col gap-y-4 sm:flex-col-reverse lg:p-4">
           <FigureInfo />
           <div className="sector-ring">
             <FriendList friends={json.friends} />

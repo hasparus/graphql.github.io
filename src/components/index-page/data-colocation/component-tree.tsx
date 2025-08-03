@@ -16,7 +16,7 @@ export const ComponentTree = forwardRef(function ComponentTree(
     <div
       ref={ref}
       className={clsx(
-        "sector-opacity mx-auto flex max-w-[500px] justify-between [--gap-x:20px] md:gap-x-10 md:[--gap-x:32px] 3xl:gap-x-20",
+        "sector-opacity flex max-w-[500px] justify-between [--gap-x:20px] md:gap-x-10 md:[--gap-x:32px] 3xl:gap-x-20",
         className,
       )}
       {...rest}
