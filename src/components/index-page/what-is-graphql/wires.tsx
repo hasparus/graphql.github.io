@@ -1,5 +1,15 @@
-import { Pre } from "@/components/pre"
+import clsx from "clsx"
+import {
+  ComponentPropsWithoutRef,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useRef,
+} from "react"
+
 import { Code } from "nextra/components"
+
+import { Pre } from "@/components/pre"
 
 import {
   DesktopIcon,
@@ -12,17 +22,7 @@ import {
   ModemIcon,
   ServerIcon,
 } from "./icons"
-
 import QueryMdx from "./api-gateway-query.mdx"
-import clsx from "clsx"
-import {
-  ComponentPropsWithoutRef,
-  ReactNode,
-  useEffect,
-  useReducer,
-  useRef,
-} from "react"
-
 import classes from "./wires.module.css"
 
 function ClientEdges({
@@ -469,8 +469,10 @@ const components = {
       {...props}
       containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-75"
       // the border color on white and black backgrounds blends into border-neu-200 (and border-neu-50 in dark mode)
-      className="overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] dark:before:border-[rgba(235,252,191,0.2)] dark:before:bg-none dark:before:backdrop-blur-xl dark:before:[backdrop-filter:url(#what-is-graphql--code-backdrop-2-dark)] dark:after:bg-[linear-gradient(to_right,hsl(var(--color-neu-0)/0.5),hsl(var(--color-neu-0)/.8)_10%,hsl(var(--color-neu-0)/.8)_90%,hsl(var(--color-neu-0)/0.5))] dark:after:[backdrop-filter:blur(24px)]"
-    />
+      className="overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] dark:before:border-[rgba(235,252,191,0.2)] dark:before:bg-none dark:before:backdrop-blur-xl dark:before:[backdrop-filter:url(#what-is-graphql--code-backdrop-2-dark)] dark:after:bg-[linear-gradient(to_right,hsl(var(--color-neu-0)/0.5),hsl(var(--color-neu-0)/.8)_10%,hsl(var(--color-neu-0)/.8)_83%,hsl(var(--color-neu-0)/0.4))] dark:after:[backdrop-filter:blur(24px)]"
+    >
+      {props.children}
+    </Pre>
   ),
   code: Code,
 }
@@ -496,7 +498,15 @@ export function Wires({ className }: { className?: string }) {
   // todo: highlight the lines in step 3
 
   return (
-    <div className={clsx(className, "relative", classes.wires)}>
+    <div
+      className={clsx(
+        className,
+        "relative isolate",
+        classes.wires,
+        step === 1 && classes.highlightsQuery,
+        step === 2 && classes.highlightsResponse,
+      )}
+    >
       <svg
         id="what-is-graphql--wires"
         width="1248"

@@ -19,6 +19,7 @@ import json from "./data-colocation.json"
 import Query from "./data-colocation.mdx"
 import "./data-colocation.css"
 import { useOnClickOutside } from "@/app/conf/_design-system/utils/useOnClickOutside"
+import { isSpanElement } from "@/app/conf/_design-system/utils/isSpanElement"
 
 const highlightedFragments = {
   GetFriendList: 1,
@@ -39,12 +40,15 @@ const components = {
       tabIndex={-1}
     />
   ),
-  code: ({ children, ...rest }: ComponentPropsWithoutRef<typeof Code>) => {
-    let sectorIndex: number | undefined
-    let depth = 0
+  code: function Code2({
+    children,
+    ...rest
+  }: ComponentPropsWithoutRef<typeof Code>) {
+    const childrenTransformed = React.useMemo(() => {
+      let sectorIndex: number | undefined
+      let depth = 0
 
-    if (children) {
-      children = React.Children.map(children, child => {
+      return React.Children.map(children, child => {
         if (isSpanElement(child)) {
           let children = (child as ReactElement).props.children
 
@@ -86,19 +90,10 @@ const components = {
 
         return child
       })
-    }
-    return <Code {...rest}>{children}</Code>
-  },
-}
+    }, [children])
 
-function isSpanElement(
-  child: React.ReactNode,
-): child is ReactElement<{ children: React.ReactNode }> {
-  return (
-    typeof child === "object" &&
-    !!child &&
-    (child as ReactElement).type === "span"
-  )
+    return <Code {...rest}>{childrenTransformed}</Code>
+  },
 }
 
 export function DataColocation() {

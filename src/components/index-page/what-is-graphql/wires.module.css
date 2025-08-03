@@ -7,3 +7,26 @@
       opacity 1s linear;
   }
 }
+
+.highlightsQuery {
+  & pre > code:global(.nextra-code) > span {
+    transition: background-color 1s ease-out;
+    transition-delay: 1s;
+
+    &:nth-child(2),
+    &:nth-child(3) {
+      @apply bg-pri-lighter/20 dark:bg-pri-light/5;
+    }
+    &:nth-child(4) {
+      @apply bg-gradient-to-b from-pri-lighter/20 to-sec-lighter/20 dark:from-pri-light/5 dark:to-sec-light/5;
+      background-image: linear-gradient(
+        to bottom in oklab,
+        var(--tw-gradient-stops)
+      );
+    }
+    &:nth-child(5),
+    &:nth-child(6) {
+      @apply bg-sec-light/20 dark:bg-sec-light/5;
+    }
+  }
+}
