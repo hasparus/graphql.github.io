@@ -96,7 +96,7 @@ export default {
 
 function Emphasis({ children }: { children: React.ReactNode }) {
   return (
-    <span className="[a:has(>&)]:[a:has(>&)]:border [a:has(>&)]:border [a:has(>&)]:border-current [a:has(>&)]:text-pri-base dark:[a:has(>&)]:text-pri-light [a:hover:has(>&)]:border-transparent">
+    <span className="[a:has(>&)]:[a:has(>&)]:border [a:has(>&)]:border [a:has(>&)]:border-current [a:has(>&)]:text-pri-base dark:[a:has(>&)]:text-pri-light [a:hover:has(>&)]:border-transparent [a:hover:has(>&)]:no-underline">
       {children}
     </span>
   )
