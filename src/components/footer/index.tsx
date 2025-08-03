@@ -27,9 +27,15 @@ const FOOTER_SECTIONS: FooterSection[] = [
     title: "Learn",
     route: "/learn",
     links: [
-      { title: "Introduction to GraphQL", route: "/learn" },
+      { title: "Introduction", route: "/learn" },
+      { title: "Best Practices", route: "/learn/best-practices" },
       {
-        title: "Frequently Asked Questions",
+        title: (
+          <span>
+            <span className="max-md:hidden">Frequently Asked Questions</span>
+            <span className="md:hidden">FAQ</span>
+          </span>
+        ),
         route: "/faq",
       },
       {
@@ -43,7 +49,7 @@ const FOOTER_SECTIONS: FooterSection[] = [
     links: [
       { title: "GitHub", route: "https://github.com/graphql" },
       {
-        title: "GraphQL Specification",
+        title: "Specification",
         route: "/spec",
       },
       { title: "Libraries & Tools", route: "/code" },
@@ -65,11 +71,15 @@ const FOOTER_SECTIONS: FooterSection[] = [
         route: "/community/events",
       },
       {
-        title: "Contribute to GraphQL",
+        title: (
+          <span>
+            Contribute<span className="max-md:hidden"> to GraphQL</span>
+          </span>
+        ),
         route: "/community/contribute/essential-links",
       },
       { title: "Landscape", route: "/landscape" },
-      { title: "Shop", route: "/shop" },
+      { title: "Shop", route: "https://store.graphql.org/" },
     ],
   },
   {
@@ -81,11 +91,11 @@ const FOOTER_SECTIONS: FooterSection[] = [
         route: "/foundation",
       },
       {
-        title: "GraphQL Community Grant",
+        title: "Community Grant",
         route: "/foundation/community-grant",
       },
       {
-        title: "Logo and Brand Guidelines",
+        title: "Brand Guidelines",
         route: "/brand",
       },
       {
@@ -111,6 +121,9 @@ export function Footer() {
           <NextLink href="/" className="nextra-logo flex items-center">
             <GraphQLWordmarkLogo className="h-6" title="GraphQL" />
           </NextLink>
+          <div className="typography-menu flex items-center *:rounded-none dark:*:text-neu-900 md:hidden">
+            {renderComponent(themeConfig.themeSwitch.component)}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-px bg-neu-400 py-px dark:bg-neu-100 lg:grid-cols-5">
@@ -129,7 +142,9 @@ export function Footer() {
                       {section.title}
                     </Anchor>
                   ) : (
-                    <span className="block p-4 3xl:px-10">{section.title}</span>
+                    <span className="block p-4 md:px-6 2xl:px-10">
+                      {section.title}
+                    </span>
                   )}
                 </h3>
               )}
@@ -158,10 +173,10 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="relative flex items-center justify-between gap-4 p-4 md:px-6 2xl:px-10">
+        <div className="relative flex items-center justify-between gap-4 p-4 max-md:justify-center md:px-6 2xl:px-10">
           {themeConfig.darkMode && (
             // todo: new theme switch component
-            <div className="typography-menu flex items-center *:rounded-none dark:*:text-neu-900">
+            <div className="typography-menu flex items-center *:rounded-none dark:*:text-neu-900 max-md:hidden">
               {renderComponent(themeConfig.themeSwitch.component)}
             </div>
           )}
