@@ -22,12 +22,84 @@ interface FooterSection {
   links: FooterLink[]
 }
 
-const FOOTER_SECTIONS_COUNT = 4
-const MAX_LINKS_PER_SECTION = 5
-const CONFERENCE_YEAR = 2025
+const FOOTER_SECTIONS: FooterSection[] = [
+  {
+    title: "Learn",
+    route: "/learn",
+    links: [
+      { title: "Introduction to GraphQL", route: "/learn" },
+      {
+        title: "Frequently Asked Questions",
+        route: "/faq",
+      },
+      {
+        title: "Training Courses",
+        route: "/community/resources/training-courses",
+      },
+    ],
+  },
+  {
+    title: "Code",
+    links: [
+      { title: "GitHub", route: "https://github.com/graphql" },
+      {
+        title: "GraphQL Specification",
+        route: "/spec",
+      },
+      { title: "Libraries & Tools", route: "/code" },
+      {
+        title: "Services & Vendors",
+        route: "/code/?tags=services",
+      },
+    ],
+  },
+  {
+    title: "Community",
+    links: [
+      {
+        title: "Resources",
+        route: "/community/resources/official-channels",
+      },
+      {
+        title: "Events & Meetups",
+        route: "/community/events",
+      },
+      {
+        title: "Contribute to GraphQL",
+        route: "/community/contribute/essential-links",
+      },
+      { title: "Landscape", route: "/landscape" },
+      { title: "Shop", route: "/shop" },
+    ],
+  },
+  {
+    title: "& More",
+    links: [
+      { title: "Blog", route: "/blog" },
+      {
+        title: "GraphQL Foundation",
+        route: "/foundation",
+      },
+      {
+        title: "GraphQL Community Grant",
+        route: "/foundation/community-grant",
+      },
+      {
+        title: "Logo and Brand Guidelines",
+        route: "/brand",
+      },
+      {
+        title: "Code of Conduct",
+        route: "/codeofconduct",
+      },
+    ],
+  },
+]
 
-export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
-  const { sections, hasConferenceBox } = useFooterSections(extraLinks)
+const CONFERENCE_YEAR = 2025
+const HAS_CONFERENCE_BOX = true
+
+export function Footer() {
   const themeConfig = useThemeConfig()
 
   return (
@@ -42,7 +114,7 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
         </div>
 
         <div className="grid grid-cols-2 gap-px bg-neu-400 py-px dark:bg-neu-100 lg:grid-cols-5">
-          {sections.map((section, i) => (
+          {FOOTER_SECTIONS.map((section, i) => (
             <div
               className="typography-menu relative bg-neu-100 py-4 dark:bg-neu-0 lg:py-6 3xl:py-10"
               key={i}
@@ -73,7 +145,7 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
             </div>
           ))}
           <div className="flex flex-col max-lg:contents">
-            {hasConferenceBox && (
+            {HAS_CONFERENCE_BOX && (
               <ConferenceFooterBox
                 href={`/conf/${CONFERENCE_YEAR}`}
                 className="z-[2] col-span-full flex-1 max-lg:row-start-1"
@@ -150,43 +222,4 @@ function Stripes() {
       />
     </div>
   )
-}
-
-function useFooterSections(extraLinks: FooterLink[]): {
-  sections: FooterSection[]
-  hasConferenceBox: boolean
-} {
-  const { normalizePagesResult } = useConfig()
-
-  const sections: FooterSection[] = []
-  const singleLinks: FooterLink[] = []
-  let hasConferenceBox = false
-
-  for (const item of normalizePagesResult.topLevelNavbarItems) {
-    if (
-      (item.type === "page" || item.type === "menu") &&
-      item.children?.length &&
-      sections.length < FOOTER_SECTIONS_COUNT - 1
-    ) {
-      sections.push({
-        title: item.title,
-        route: item.route,
-        links: (item.children || [])
-          .filter(child => child.route)
-          .slice(0, MAX_LINKS_PER_SECTION)
-          .map(child => ({ title: child.title, route: child.route })),
-      })
-    } else if (singleLinks.length < MAX_LINKS_PER_SECTION) {
-      if (item.route && item.route.startsWith("/conf/")) {
-        hasConferenceBox = true
-      } else {
-        singleLinks.push({ title: item.title, route: item.route })
-      }
-    }
-  }
-
-  singleLinks.push(...extraLinks)
-  sections.push({ links: singleLinks })
-
-  return { sections, hasConferenceBox }
 }
