@@ -40,7 +40,8 @@
       );
     }
     &:nth-child(5),
-    &:nth-child(6) {
+    &:nth-child(6),
+    &:nth-child(7) {
       @apply bg-sec-light/20 dark:bg-sec-light/5;
     }
   }
@@ -59,7 +60,7 @@
       @apply bg-pri-lighter/20 dark:bg-pri-light/5;
     }
     &:nth-child(6) {
-      @apply bg-gradient-to-b from-pri-lighter/20 to-sec-lighter/20 dark:from-pri-light/5 dark:to-sec-light/5;
+      @apply bg-gradient-to-b from-pri-lighter/20 to-sec-light/20 dark:from-pri-light/5 dark:to-sec-light/5;
       background-image: linear-gradient(
         to bottom in oklch,
         var(--tw-gradient-stops)
@@ -68,7 +69,7 @@
     &:nth-child(7),
     &:nth-child(8),
     &:nth-child(9) {
-      @apply bg-sec-lighter/20 dark:bg-sec-light/5;
+      @apply bg-sec-light/20 dark:bg-sec-light/5;
     }
   }
 }

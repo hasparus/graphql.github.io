@@ -496,6 +496,10 @@ export function Wires({ className }: { className?: string }) {
     return () => animate?.removeEventListener("repeatEvent", inc)
   }, [])
 
+  useEffect(() => {
+    document.addEventListener("click", inc)
+  }, [])
+
   return (
     <div className={clsx(className, "relative isolate", classes.wires)}>
       <svg
@@ -517,12 +521,11 @@ export function Wires({ className }: { className?: string }) {
       </svg>
       <div
         className={clsx(
-          "absolute inset-0 transition-opacity",
+          "absolute inset-0 transition duration-[5s]",
           classes.highlightsQuery,
         )}
         style={{
-          opacity: step < 2 ? 1 : 0,
-          transitionDelay: step < 2 ? "0s" : "0.5s",
+          transform: step < 2 ? "translateY(0)" : "translateY(-100%)",
           ...(step === 1 && {
             "--highlight-opacity": 1,
           }),
@@ -532,12 +535,11 @@ export function Wires({ className }: { className?: string }) {
       </div>
       <div
         className={clsx(
-          "absolute inset-0 transition-opacity [&>pre]:bg-neu-0",
+          "absolute inset-0 transition duration-[5s] [&>pre]:bg-neu-0",
           classes.highlightsResponse,
         )}
         style={{
-          opacity: step === 2 ? 1 : 0,
-          transitionDelay: step === 2 ? "0s" : "0.5s",
+          transform: step === 2 ? "translateY(0)" : "translateY(100%)",
         }}
       >
         <ResponseMdx components={components} />
