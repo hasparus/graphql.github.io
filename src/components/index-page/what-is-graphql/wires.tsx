@@ -470,7 +470,7 @@ const components = {
       {...props}
       containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-75"
       // the border color on white and black backgrounds blends into border-neu-200 (and border-neu-50 in dark mode)
-      className="overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] dark:before:border-[rgba(235,252,191,0.2)] dark:before:bg-none dark:before:backdrop-blur-xl dark:before:[backdrop-filter:url(#what-is-graphql--code-backdrop-2-dark)] dark:after:bg-[linear-gradient(to_right,hsl(var(--color-neu-0)/0.5),hsl(var(--color-neu-0)/.8)_10%,hsl(var(--color-neu-0)/.8)_83%,hsl(var(--color-neu-0)/0.4))] dark:after:[backdrop-filter:blur(24px)]"
+      className="safari:after:[backdrop-filter:blur(12px)] overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] dark:before:border-[rgba(235,252,191,0.2)] dark:before:bg-none dark:before:backdrop-blur-xl dark:before:[backdrop-filter:url(#what-is-graphql--code-backdrop-2-dark)] dark:after:bg-[linear-gradient(to_right,hsl(var(--color-neu-0)/0.5),hsl(var(--color-neu-0)/.8)_10%,hsl(var(--color-neu-0)/.8)_83%,hsl(var(--color-neu-0)/0.4))] dark:after:[backdrop-filter:blur(24px)]"
     >
       {props.children}
     </Pre>
@@ -480,7 +480,7 @@ const components = {
 
 export function Wires({ className }: { className?: string }) {
   const STEPS = 3
-  const [step, inc] = useReducer(x => (x + 1) % STEPS, 2)
+  const [step, inc] = useReducer(x => (x + 1) % STEPS, 0)
 
   const ref = useRef<SVGSVGElement>(null)
 
@@ -497,8 +497,18 @@ export function Wires({ className }: { className?: string }) {
   }, [])
 
   useEffect(() => {
-    document.addEventListener("click", inc)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      console.log(e.key)
+      if (e.key === "x") {
+        inc()
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
   }, [])
+
+  console.log({ step })
 
   return (
     <div className={clsx(className, "relative isolate", classes.wires)}>
@@ -520,27 +530,22 @@ export function Wires({ className }: { className?: string }) {
         <SVGDefinitions />
       </svg>
       <div
-        className={clsx(
-          "absolute inset-0 transition duration-[5s]",
-          classes.highlightsQuery,
-        )}
-        style={{
-          transform: step < 2 ? "translateY(0)" : "translateY(-100%)",
-          ...(step === 1 && {
-            "--highlight-opacity": 1,
-          }),
-        }}
+        aria-hidden={step === 2}
+        className={clsx("absolute inset-0 transition", classes.highlightsQuery)}
+        style={
+          {
+            "--highlight-opacity": step === 1 ? 1 : 0,
+          } as React.CSSProperties
+        }
       >
         <QueryMdx components={components} />
       </div>
       <div
+        aria-hidden={step !== 2}
         className={clsx(
-          "absolute inset-0 transition duration-[5s] [&>pre]:bg-neu-0",
+          "absolute inset-0 translate-y-full",
           classes.highlightsResponse,
         )}
-        style={{
-          transform: step === 2 ? "translateY(0)" : "translateY(100%)",
-        }}
       >
         <ResponseMdx components={components} />
       </div>

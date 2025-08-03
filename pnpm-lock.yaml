@@ -19,6 +19,9 @@ importers:
       '@headlessui/react':
         specifier: ^2.2.4
         version: 2.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@igorkowalczyk/is-browser':
+        specifier: ^5.1.0
+        version: 5.1.0(tailwindcss@3.4.17)
       '@radix-ui/react-radio-group':
         specifier: ^1.2.2
         version: 1.2.2(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1225,6 +1228,12 @@ packages:
 
   '@iconify/utils@2.3.0':
     resolution: {integrity: sha512-GmQ78prtwYW6EtzXRU1rY+KwOKfz32PD7iJh6Iyqw68GiKuoZ2A6pRtzWONz5VQJbp50mEjXh/7NkumtrAgRKA==}
+
+  '@igorkowalczyk/is-browser@5.1.0':
+    resolution: {integrity: sha512-OwyO+ocRLbo/iQsTBlCbx8S33esB35LgH4xhJJZk6MzpMKv8UFzEKWpzg2KI02syrPXvJ3hlU//Cq8fwxp/3sQ==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || >=4.0.0'
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -6760,6 +6769,10 @@ snapshots:
       mlly: 1.7.4
     transitivePeerDependencies:
       - supports-color
+
+  '@igorkowalczyk/is-browser@5.1.0(tailwindcss@3.4.17)':
+    dependencies:
+      tailwindcss: 3.4.17
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
