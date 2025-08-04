@@ -516,7 +516,13 @@ export function Wires({ className }: { className?: string }) {
   )
 
   return (
-    <div className={clsx(className, "relative isolate", styles.wires)}>
+    <div
+      className={clsx(
+        className,
+        "relative isolate max-sm:flex max-sm:min-h-[240px] max-sm:items-center",
+        styles.wires,
+      )}
+    >
       <svg
         id="what-is-graphql--wires"
         width="1248"
