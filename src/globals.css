@@ -446,3 +446,10 @@ html:has([role="listbox"][data-open]),
 html:has([role="menu"][data-open]) {
   overflow: visible !important;
 }
+
+@supports (background: -webkit-named-image(i)) {
+  html {
+    /* Safari moves the fixed Navbar when overscrolling and it looks bad */
+    overscroll-behavior-y: none;
+  }
+}
