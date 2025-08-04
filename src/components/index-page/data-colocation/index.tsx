@@ -179,7 +179,7 @@ export function DataColocation() {
         className="flex divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 max-md:flex-col lg:rounded-lg lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x"
         ref={figureRef}
       >
-        <div className="flex grow flex-col gap-y-4 sm:flex-col-reverse lg:p-4">
+        <div className="flex shrink-0 grow flex-col gap-y-4 sm:flex-col-reverse lg:p-4">
           <FigureInfo />
           <div className="sector-ring">
             <FriendList friends={json.friends} />
