@@ -72,7 +72,24 @@ export default withLess(
             {
               loader: "@svgr/webpack",
               options: {
-                dimensions: false, // **adds** viewBox.
+                typescript: true,
+                svgoConfig: {
+                  plugins: [
+                    {
+                      name: "preset-default",
+                      params: {
+                        overrides: {
+                          minifyStyles: false,
+                          removeViewBox: false,
+                          removeTitle: false,
+                        },
+                      },
+                    },
+                    "removeXMLNS",
+                    "removeXlink",
+                    "prefixIds",
+                  ],
+                },
               },
             },
           ],

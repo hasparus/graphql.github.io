@@ -19,7 +19,7 @@
       fill: hsl(var(--color-neu-600));
     }
 
-    @media (prefers-color-scheme: dark) {
+    html[class~="dark"] & {
       &:not(:hover) svg,
       &:not(:hover) path {
         fill: hsl(var(--color-neu-200));
