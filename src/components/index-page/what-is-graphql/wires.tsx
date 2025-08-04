@@ -482,19 +482,38 @@ export function Wires({ className }: { className?: string }) {
 
   const ref = useRef<SVGSVGElement>(null)
 
+  // set to true by manual interaction: we skip the next animation end
+  // if the animation finishes right after the user's click
+  const shouldAvoidDoubleSpin = useRef(false)
+
   useEffect(() => {
     const animate = document.querySelector(
       "#paint_sr_pri_highlight_linear_671_9150 animate",
     )
 
-    if (animate && animate instanceof SVGAnimateElement) {
-      animate.addEventListener("repeatEvent", inc)
+    const onAnimationRepeat = () => {
+      if (shouldAvoidDoubleSpin.current) return
+      inc()
     }
 
-    return () => animate?.removeEventListener("repeatEvent", inc)
+    if (animate && animate instanceof SVGAnimateElement) {
+      animate.addEventListener("repeatEvent", onAnimationRepeat)
+    }
+
+    return () => animate?.removeEventListener("repeatEvent", onAnimationRepeat)
   }, [])
 
-  const onBackgroundClick = useMemo(() => throttle(inc, 150), [])
+  const onBackgroundClick = useMemo(
+    () =>
+      throttle(() => {
+        inc()
+        shouldAvoidDoubleSpin.current = true
+        setTimeout(() => {
+          shouldAvoidDoubleSpin.current = false
+        }, 750)
+      }, 500),
+    [],
+  )
 
   return (
     <div className={clsx(className, "relative isolate", styles.wires)}>
@@ -547,7 +566,7 @@ export function Wires({ className }: { className?: string }) {
           step === 2
             ? "[transform:rotateX(0deg)_translateY(0px)_translateZ(150px)]"
             : step === 1
-              ? "duration-0 [transform:rotateX(90deg)_translateY(60px)_translateZ(150px)]"
+              ? "!duration-0 [transform:rotateX(90deg)_translateY(60px)_translateZ(150px)]"
               : "[transform:rotateX(-90deg)_translateY(-60px)_translateZ(150px)]",
         )}
       >

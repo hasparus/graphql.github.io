@@ -2977,6 +2977,12 @@ div:hover > .\[div\:hover\>\&\]\:_opacity-100 {
 
 kbd._border._gap-1 {
   border-bottom-width: 2px;
-  border-color: hsl(var(--color-neu-300));
   gap: 0.125rem;
+  border-color: hsl(var(--color-neu-300));
+  color: hsl(var(--color-neu-700));
+
+  .dark & {
+    border-color: hsl(var(--color-neu-100) / 0.8);
+    color: hsl(var(--color-neu-500));
+  }
 }
