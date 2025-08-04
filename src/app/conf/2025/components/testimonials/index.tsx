@@ -33,7 +33,7 @@ const testimonials: Testimonial[] = [
       name: "Nicolai Draslov",
       role: "Danish Agency for Digital Government",
       avatar:
-        "https://media.licdn.com/dms/image/v2/C4E03AQGlrdt3GpJI9w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1528203207471?e=1753920000&v=beta&t=H6CMhDZFoXJxGUu4XYwC_rEX9Jjwh7OdPIDm8JaeXAU",
+        "https://vnckqn1t2xchefuj.public.blob.vercel-storage.com/nicolai.webp",
     },
   },
   {
@@ -75,14 +75,14 @@ export function TestimonialsList({
   return (
     <div
       className={clsx(
-        "flex w-full snap-x snap-mandatory flex-row gap-10 overflow-x-auto px-4 py-6 lg:mt-16 lg:py-16",
+        "flex w-full flex-row gap-10 overflow-x-auto px-4 py-6 lg:mt-16 lg:py-16",
         className,
       )}
     >
       {testimonials.map((testimonial, i) => (
         <div
           key={i}
-          className="flex shrink-0 snap-start flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
+          className="flex shrink-0 flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
         >
           <div>
             <p className="typography-body-lg max-w-[100vw] !leading-[1.1] max-md:text-center sm:max-w-[calc(100vw-32px)] md:max-w-[544px]">
