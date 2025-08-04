@@ -9,5 +9,8 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "tailwindCSS.classFunctions": ["clsx"]
+  "tailwindCSS.classFunctions": ["clsx"],
+  "editor.quickSuggestions": {
+    "strings": "on"
+  }
 }

@@ -3,6 +3,7 @@ import {
   ComponentPropsWithoutRef,
   ReactNode,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
 } from "react"
@@ -24,7 +25,8 @@ import {
 } from "./icons"
 import QueryMdx from "./api-gateway-query.mdx"
 import ResponseMdx from "./api-gateway-response.mdx"
-import classes from "./wires.module.css"
+import styles from "./wires.module.css"
+import { throttle } from "@/app/conf/_design-system/utils/throttle"
 
 function ClientEdges({
   highlightedEdge,
@@ -171,14 +173,9 @@ function ClientBoxes({ highlighted }: { highlighted?: number }) {
           <Box
             key={index}
             transform={transform}
-            fill={
-              isHighlighted
-                ? "hsl(var(--color-neu-300))"
-                : "hsl(var(--color-neu-100))"
-            }
             className={
               isHighlighted
-                ? "[&_path]:fill-neu-800 dark:[&_path]:fill-neu-0 dark:[&_rect]:fill-neu-400"
+                ? "[&_path]:fill-neu-800 dark:[&_path]:fill-neu-0 [&_rect]:fill-neu-300 dark:[&_rect]:fill-neu-400"
                 : undefined
             }
           >
@@ -468,9 +465,10 @@ const components = {
   pre: (props: ComponentPropsWithoutRef<typeof Pre>) => (
     <Pre
       {...props}
-      containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-75"
+      tabIndex={-1}
+      containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-75 pointer-events-auto"
       // the border color on white and black backgrounds blends into border-neu-200 (and border-neu-50 in dark mode)
-      className="safari:after:[backdrop-filter:blur(12px)] overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] dark:before:border-[rgba(235,252,191,0.2)] dark:before:bg-none dark:before:backdrop-blur-xl dark:before:[backdrop-filter:url(#what-is-graphql--code-backdrop-2-dark)] dark:after:bg-[linear-gradient(to_right,hsl(var(--color-neu-0)/0.5),hsl(var(--color-neu-0)/.8)_10%,hsl(var(--color-neu-0)/.8)_83%,hsl(var(--color-neu-0)/0.4))] dark:after:[backdrop-filter:blur(24px)]"
+      className="overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] safari:after:[backdrop-filter:blur(12px)] dark:before:border-[rgba(235,252,191,0.2)] dark:before:bg-none dark:before:backdrop-blur-xl dark:before:[backdrop-filter:url(#what-is-graphql--code-backdrop-2-dark)] dark:after:bg-[linear-gradient(to_right,hsl(var(--color-neu-0)/0.5),hsl(var(--color-neu-0)/.8)_10%,hsl(var(--color-neu-0)/.8)_83%,hsl(var(--color-neu-0)/0.4))] dark:after:[backdrop-filter:blur(24px)]"
     >
       {props.children}
     </Pre>
@@ -496,22 +494,10 @@ export function Wires({ className }: { className?: string }) {
     return () => animate?.removeEventListener("repeatEvent", inc)
   }, [])
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      console.log(e.key)
-      if (e.key === "x") {
-        inc()
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown)
-    return () => document.removeEventListener("keydown", handleKeyDown)
-  }, [])
-
-  console.log({ step })
+  const onBackgroundClick = useMemo(() => throttle(inc, 150), [])
 
   return (
-    <div className={clsx(className, "relative isolate", classes.wires)}>
+    <div className={clsx(className, "relative isolate", styles.wires)}>
       <svg
         id="what-is-graphql--wires"
         width="1248"
@@ -529,12 +515,25 @@ export function Wires({ className }: { className?: string }) {
         <ServerBoxes highlighted={step > 0 ? [1, 6] : []} />
         <SVGDefinitions />
       </svg>
+      <button
+        tabIndex={-1}
+        onClick={onBackgroundClick}
+        aria-label={step === 2 ? "Show query again" : "Next step"}
+        className="absolute inset-0 outline-none"
+      />
       <div
         aria-hidden={step === 2}
-        className={clsx("absolute inset-0 transition", classes.highlightsQuery)}
+        className={clsx(
+          "pointer-events-none absolute inset-0 transition duration-[600ms]",
+          styles.highlightsQuery,
+          step === 2
+            ? "[transform:rotateX(90deg)_translateY(60px)_translateZ(150px)]"
+            : "[transform:rotateX(0deg)_translateY(0px)_translateZ(150px)]",
+        )}
         style={
           {
             "--highlight-opacity": step === 1 ? 1 : 0,
+            animation: step === 2 ? `${styles["query-exit"]} 600ms` : undefined,
           } as React.CSSProperties
         }
       >
@@ -543,8 +542,13 @@ export function Wires({ className }: { className?: string }) {
       <div
         aria-hidden={step !== 2}
         className={clsx(
-          "absolute inset-0 translate-y-full",
-          classes.highlightsResponse,
+          "pointer-events-none absolute inset-0 transition duration-[600ms]",
+          styles.highlightsResponse,
+          step === 2
+            ? "[transform:rotateX(0deg)_translateY(0px)_translateZ(150px)]"
+            : step === 1
+              ? "duration-0 [transform:rotateX(90deg)_translateY(60px)_translateZ(150px)]"
+              : "[transform:rotateX(-90deg)_translateY(-60px)_translateZ(150px)]",
         )}
       >
         <ResponseMdx components={components} />

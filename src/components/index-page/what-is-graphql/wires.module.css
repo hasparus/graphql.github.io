@@ -10,6 +10,8 @@
 
 .highlightsQuery,
 .highlightsResponse {
+  overflow: hidden;
+
   & pre > code:global(.nextra-code) > span {
     position: relative;
 
@@ -71,5 +73,14 @@
     &:nth-child(9) {
       @apply bg-sec-light/20 dark:bg-sec-light/5;
     }
+  }
+}
+
+@keyframes query-exit {
+  from {
+    transform: rotateX(0deg) translateY(0px) translateZ(150px);
+  }
+  to {
+    transform: rotateX(-90deg) translateY(60px) translateZ(150px);
   }
 }
