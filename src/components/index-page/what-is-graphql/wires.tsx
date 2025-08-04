@@ -481,10 +481,7 @@ export function Wires({ className }: { className?: string }) {
   const [step, inc] = useReducer(x => (x + 1) % STEPS, 0)
 
   const ref = useRef<SVGSVGElement>(null)
-
-  // set to true by manual interaction: we skip the next animation end
-  // if the animation finishes right after the user's click
-  const shouldAvoidDoubleSpin = useRef(false)
+  const backgroundRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const animate = document.querySelector(
@@ -492,7 +489,8 @@ export function Wires({ className }: { className?: string }) {
     )
 
     const onAnimationRepeat = () => {
-      if (shouldAvoidDoubleSpin.current) return
+      // we avoid spinning a second time if the user has just clicked the button
+      if (backgroundRef.current?.disabled) return
       inc()
     }
 
@@ -506,10 +504,12 @@ export function Wires({ className }: { className?: string }) {
   const onBackgroundClick = useMemo(
     () =>
       throttle(() => {
+        const button = backgroundRef.current
+        if (!button) return
+        button.disabled = true
         inc()
-        shouldAvoidDoubleSpin.current = true
         setTimeout(() => {
-          shouldAvoidDoubleSpin.current = false
+          button.disabled = false
         }, 750)
       }, 500),
     [],
@@ -541,6 +541,7 @@ export function Wires({ className }: { className?: string }) {
         <SVGDefinitions />
       </svg>
       <button
+        ref={backgroundRef}
         tabIndex={-1}
         onClick={onBackgroundClick}
         aria-label={step === 2 ? "Show query again" : "Next step"}
