@@ -160,8 +160,8 @@ export function DataColocation() {
           <SectionLabel>Data Colocation</SectionLabel>
           <h2 className="typography-h2 mt-6">Data Colocation</h2>
           <p className="typography-body-md mt-6 text-pretty lg:max-w-[500px] xl:max-w-[438px]">
-            GraphQL fragments let you reuse common field selections across
-            queries, making your code more maintainable and consistent.
+            GraphQL fragments let you define each component’s data needs close
+            to it, and satisfy them with a single query.
           </p>
         </header>
         <ComponentTree
@@ -176,7 +176,7 @@ export function DataColocation() {
         />
       </div>
       <article
-        className="flex divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 max-md:flex-col lg:rounded-lg lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x"
+        className="flex shrink-0 divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 max-md:flex-col lg:rounded-lg lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x"
         ref={figureRef}
       >
         <div className="flex shrink-0 grow flex-col gap-y-4 sm:flex-col-reverse lg:p-4">
