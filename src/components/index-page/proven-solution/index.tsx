@@ -103,11 +103,11 @@ function ProvenSolutionCard({
 }
 
 function Stripes() {
-  // todo: rotate to top right corner on mobile
   return (
     <ImageLoaded
       role="presentation"
       image={blurBean}
+      fetchPriority="low"
       // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
       className="pointer-events-none absolute inset-0 opacity-0 transition-[translate] duration-[400ms] ease-linear [mask-position:center_calc(100%+65vw)] [mask-size:200%] data-[loaded=true]:opacity-100 max-lg:rotate-[180deg] max-lg:scale-x-[-1] lg:[mask-position:center_500px] lg:[mask-size:150%] xl:translate-y-1/2 xl:[mask-position:center_top] xl:max-3xl:translate-y-[50%]"
       style={{
@@ -117,7 +117,6 @@ function Stripes() {
         WebkitMaskRepeat: "no-repeat",
       }}
     >
-      {/* todo: ensure colors in dark mode are correct */}
       <StripesDecoration
         evenClassName="bg-[linear-gradient(180deg,hsl(var(--color-pri-light)/0.2)_20%,hsl(var(--color-pri-base))_150%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-base)/.9)_20%,hsl(var(--color-pri-darker))_150%)]"
         oddClassName="bg-[linear-gradient(180deg,hsl(var(--color-pri-light))_20%,hsl(var(--color-pri-lighter)/.9)_150%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-darker)/.9)_20%,hsl(var(--color-pri-base)/.8)_150%)]"
