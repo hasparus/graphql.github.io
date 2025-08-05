@@ -7,7 +7,7 @@ import logoBlurred from "./hero/logo-blurred.png"
 
 export function Hero() {
   return (
-    <div className="relative bg-neu-50 dark:bg-neu-0">
+    <div className="relative bg-neu-50 dark:bg-neu-50/10">
       <div className="gql-container flex flex-col-reverse lg:grid lg:grid-cols-2">
         <div className="flex max-w-4xl flex-col justify-center gap-4 p-4 lg:min-h-[800px] xl:gap-8 xl:py-24 xl:pl-24 xl:pr-10">
           <h1 className="typography-h1 max-w-3xl text-neu-900">
