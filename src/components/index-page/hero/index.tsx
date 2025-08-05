@@ -28,12 +28,8 @@ export function Hero() {
           </ul>
 
           <div className="flex items-center gap-4">
-            <Button
-              href="/learn"
-              className="max-sm:w-full"
-              aria-label="Learn more about GraphQL"
-            >
-              Learn more
+            <Button href="/learn" className="max-sm:w-full">
+              Learn more<span className="sr-only"> about GraphQL</span>
             </Button>
           </div>
         </div>
