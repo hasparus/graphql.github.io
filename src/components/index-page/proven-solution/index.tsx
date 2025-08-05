@@ -66,6 +66,7 @@ export function ProvenSolution() {
             className="mx-auto mt-8 w-fit lg:mt-16"
             // todo: this should link to the Business Agregator page
             href="/learn"
+            aria-label="Learn more about GraphQL"
           >
             Learn more
           </Button>

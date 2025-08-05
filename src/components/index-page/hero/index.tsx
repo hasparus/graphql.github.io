@@ -3,7 +3,7 @@ import CheckIcon from "@/app/conf/_design-system/pixelarticons/check.svg?svgr"
 import { Button } from "@/app/conf/_design-system/button"
 import { ImageLoaded } from "@/app/conf/2025/components/image-loaded"
 
-import logoBlurred from "./hero/logo-blurred.png"
+import logoBlurred from "./logo-blurred.webp"
 
 export function Hero() {
   return (
@@ -28,7 +28,11 @@ export function Hero() {
           </ul>
 
           <div className="flex items-center gap-4">
-            <Button href="/learn" className="max-sm:w-full">
+            <Button
+              href="/learn"
+              className="max-sm:w-full"
+              aria-label="Learn more about GraphQL"
+            >
               Learn more
             </Button>
           </div>
