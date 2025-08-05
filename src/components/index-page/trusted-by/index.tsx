@@ -121,6 +121,7 @@ export function TrustedBy() {
         {logos.map(({ alt, href, component: Component }) => (
           <a
             key={alt}
+            aria-label={alt}
             href={href}
             target="_blank"
             rel="noreferrer"
