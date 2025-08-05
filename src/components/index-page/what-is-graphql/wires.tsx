@@ -64,7 +64,7 @@ function ClientEdges({
                 key={index + "h"}
                 d={path}
                 stroke="url(#paint_lr_dark_linear_671_9150)"
-                strokeWidth="2"
+                strokeWidth="3"
                 className={highlightedVisible ? "opacity-100" : "opacity-0"}
               />
             )}
@@ -110,7 +110,7 @@ function ServerEdges({
               <path
                 key={index + "h"}
                 d={d}
-                strokeWidth={2}
+                strokeWidth={3}
                 className={clsx(
                   highlightedVisible ? "opacity-100" : "opacity-0",
                   index % 2

@@ -4,7 +4,8 @@
     transition:
       fill 1s linear,
       stroke 1s linear,
-      opacity 1s linear;
+      opacity 1s linear,
+      stroke-width 1s linear;
   }
 }
 
