@@ -61,8 +61,12 @@ export function QuotesFromTheIndustry() {
   return (
     <div className="gql-container py-8 max-md:px-4 md:pb-16 md:pt-24 md:[mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
       <div className="gql-section !py-0">
-        <SectionLabel>Quotes from the industry</SectionLabel>
-        <h2 className="typography-h2 mt-6">Loved by world-class devs</h2>
+        <SectionLabel className="max-sm:-ml-1 max-sm:justify-center">
+          Quotes from the industry
+        </SectionLabel>
+        <h2 className="typography-h2 mt-6 text-balance max-sm:text-center">
+          Loved by world‑class devs
+        </h2>
       </div>
       <TestimonialsList
         testimonials={testimonials}

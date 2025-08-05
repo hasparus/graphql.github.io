@@ -82,7 +82,7 @@ export function TestimonialsList({
       {testimonials.map((testimonial, i) => (
         <div
           key={i}
-          className="flex shrink-0 flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
+          className="flex max-w-full shrink-0 flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
         >
           <div>
             <p className="typography-body-lg max-w-[100vw] !leading-[1.1] max-md:text-center sm:max-w-[calc(100vw-32px)] md:max-w-[544px]">

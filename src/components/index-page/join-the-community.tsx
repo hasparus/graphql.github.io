@@ -5,7 +5,7 @@ import { DiscordIcon } from "@/icons"
 
 export function JoinTheCommunity() {
   return (
-    <section className="gql-section lg:pb-16 xl:pb-24">
+    <section className="gql-section max-sm:px-0 lg:pb-16 xl:pb-24">
       <div className="gql-container typography-body-lg flex bg-pri-dark text-white dark:bg-pri-darker max-lg:flex-col">
         <div className="border-pri-light p-6 max-lg:border-b lg:border-r lg:p-16">
           <h2 className="typography-h2 text-balance">Join the community</h2>
