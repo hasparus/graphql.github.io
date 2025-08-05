@@ -255,7 +255,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-2.562;1.438;-2.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
@@ -263,7 +263,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-1.562;2.438;-1.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
@@ -274,7 +274,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-0.562;3.438;-0.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
@@ -329,7 +329,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-2.562;1.438;-2.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
@@ -340,7 +340,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-1.562;2.438;-1.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
@@ -351,7 +351,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-0.562;3.438;-0.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
@@ -376,7 +376,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-2.562;1.438;-2.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
@@ -387,7 +387,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-1.562;2.438;-1.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
@@ -398,7 +398,7 @@ function SVGDefinitions() {
           <animate
             attributeName="offset"
             values="-0.562;3.438;-0.562"
-            dur="10s"
+            dur="5s"
             repeatCount="indefinite"
           />
         </stop>
