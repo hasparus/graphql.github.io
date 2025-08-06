@@ -50,7 +50,7 @@ const FOOTER_SECTIONS: FooterSection[] = [
       { title: "GitHub", route: "https://github.com/graphql" },
       {
         title: "Specification",
-        route: "/spec",
+        route: "https://spec.graphql.org",
       },
       { title: "Libraries & Tools", route: "/code" },
       {
@@ -78,7 +78,7 @@ const FOOTER_SECTIONS: FooterSection[] = [
         ),
         route: "/community/contribute/essential-links",
       },
-      { title: "Landscape", route: "/landscape" },
+      { title: "Landscape", route: "https://landscape.graphql.org" },
       { title: "Shop", route: "https://store.graphql.org/" },
     ],
   },
