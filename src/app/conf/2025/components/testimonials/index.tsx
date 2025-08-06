@@ -114,6 +114,7 @@ export function TestimonialAuthor({
           width={128}
           height={128}
           className="size-16 saturate-[.1] xl:size-32"
+          fetchPriority="low"
         />
         <div className="absolute inset-0 z-[1] bg-pri-darker opacity-80 mix-blend-plus-lighter" />
         <Stripes />
