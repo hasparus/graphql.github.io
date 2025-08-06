@@ -97,7 +97,6 @@ function ServerEdges({
     <>
       {paths.map((d, index) => {
         const isHighlighted = highlighted?.includes(index)
-        console.log(d, index, isHighlighted && index + "h")
         return (
           <Fragment key={index}>
             <path
