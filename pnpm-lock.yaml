@@ -163,6 +163,10 @@ importers:
       use-query-params:
         specifier: ^2.2.1
         version: 2.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    optionalDependencies:
+      playwright:
+        specifier: ^1.54.2
+        version: 1.54.2
     devDependencies:
       '@graphql-eslint/eslint-plugin':
         specifier: 4.3.0
@@ -218,9 +222,6 @@ importers:
       eslint-plugin-tailwindcss:
         specifier: 3.17.5
         version: 3.17.5(tailwindcss@3.4.17)
-      playwright:
-        specifier: ^1.54.2
-        version: 1.54.2
       prettier:
         specifier: 3.5.3
         version: 3.5.3
