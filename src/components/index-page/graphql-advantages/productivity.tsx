@@ -13,6 +13,8 @@ export function ProductivityFigure() {
           loop
           playsInline
           className="hidden dark:block"
+          // @ts-expect-error @types/react doesn't support fetchPriority yet
+          fetchpriority="low"
         >
           <source
             src={`${VIDEOS_DIR}/graphiql-dark.mp4`}
