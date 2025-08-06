@@ -1,6 +1,7 @@
 import clsx from "clsx"
 import {
   ComponentPropsWithoutRef,
+  Fragment,
   ReactNode,
   useEffect,
   useMemo,
@@ -52,23 +53,21 @@ function ClientEdges({
       {moveHighlightedToTop(
         highlightedEdge,
         paths.map((path, index) => (
-          <>
+          <Fragment key={index}>
             <path
-              key={index}
               d={path}
               stroke="url(#paint_lr_light_linear_671_9150)"
               strokeWidth="1"
             />
             {highlightedEdge === index && (
               <path
-                key={index + "h"}
                 d={path}
                 stroke="url(#paint_lr_dark_linear_671_9150)"
                 strokeWidth="3"
                 className={highlightedVisible ? "opacity-100" : "opacity-0"}
               />
             )}
-          </>
+          </Fragment>
         )),
       )}
     </>
@@ -98,17 +97,16 @@ function ServerEdges({
     <>
       {paths.map((d, index) => {
         const isHighlighted = highlighted?.includes(index)
+        console.log(d, index, isHighlighted && index + "h")
         return (
-          <>
+          <Fragment key={index}>
             <path
-              key={index}
               d={d}
               strokeWidth={1}
               className="stroke-[url(#paint_sr_light_linear_671_9150)]"
             />
             {isHighlighted && (
               <path
-                key={index + "h"}
                 d={d}
                 strokeWidth={3}
                 className={clsx(
@@ -119,7 +117,7 @@ function ServerEdges({
                 )}
               />
             )}
-          </>
+          </Fragment>
         )
       })}
     </>
