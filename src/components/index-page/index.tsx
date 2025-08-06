@@ -1,3 +1,5 @@
+import Head from "next/head"
+
 import { Hero } from "./hero"
 import { TrustedBy } from "./trusted-by"
 import { HowItWorks } from "./how-it-works"
@@ -13,6 +15,12 @@ import { WhatIsGraphQL } from "./what-is-graphql"
 export function IndexPage() {
   return (
     <div className="gql-all-anchors-focusable bg-neu-0">
+      <Head>
+        <meta
+          name="description"
+          content="GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data."
+        />
+      </Head>
       <Hero />
       <TrustedBy />
       <WhatIsGraphQL />
