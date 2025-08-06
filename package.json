@@ -17,7 +17,8 @@
     "lint:docs:ci": "eslint --ignore-path .gitignore src/pages/learn --format eslint-formatter-github",
     "postbuild": "next-sitemap",
     "prebuild": "tsx src/get-github-info.ts",
-    "test": "echo \"no tests\" && exit 1",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
     "validate:snippets": "node scripts/validate-snippets.js"
   },
   "dependencies": {
@@ -75,6 +76,7 @@
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "4.3.0",
     "@next/eslint-plugin-next": "^15.3.3",
+    "@playwright/test": "^1.54.2",
     "@svgr/webpack": "^8.1.0",
     "@types/codemirror": "5.60.16",
     "@types/hast": "3.0.4",
@@ -90,6 +92,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-tailwindcss": "3.17.5",
+    "playwright": "^1.54.2",
     "prettier": "3.5.3",
     "prettier-plugin-pkg": "^0.20.0",
     "prettier-plugin-tailwindcss": "^0.6.12",
