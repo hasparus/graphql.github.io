@@ -544,6 +544,7 @@ export function Wires({ className }: { className?: string }) {
         aria-label={step === 2 ? "Show query again" : "Next step"}
         className="absolute inset-0 outline-none"
       />
+
       <div
         aria-hidden={step === 2}
         className={clsx(
@@ -565,6 +566,7 @@ export function Wires({ className }: { className?: string }) {
       <div
         aria-hidden={step !== 2}
         className={clsx(
+          "[&_pre]:[anchor-name:--response-pre]",
           "pointer-events-none absolute inset-0 transition duration-[600ms]",
           styles.highlightsResponse,
           step === 2
@@ -576,6 +578,7 @@ export function Wires({ className }: { className?: string }) {
       >
         <ResponseMdx components={components} />
       </div>
+      <Curtain />
     </div>
   )
 }
@@ -585,4 +588,17 @@ function moveHighlightedToTop(index: number | undefined, nodes: ReactNode[]) {
   const newNodes = nodes.filter((_, i) => i !== index)
   newNodes.push(nodes[index] as ReactNode)
   return newNodes
+}
+
+function Curtain() {
+  return (
+    <div
+      // we obscure part of the rotation with gradient so it's not garish
+      className="pointer-events-none absolute bottom-0 left-[anchor(left)] right-[anchor(right)] z-[2] h-[calc((100%-anchor-size(height))/2)] -translate-x-1/2 [position-anchor:--response-pre] max-md:hidden"
+      style={{
+        background:
+          "linear-gradient(to bottom, hsl(var(--color-neu-0)/0), hsl(var(--color-neu-0)) 50%)",
+      }}
+    />
+  )
 }
