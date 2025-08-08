@@ -132,8 +132,10 @@ export function UseCases({
                   role="none" // we already have one copy of this tab
                   onPointerDown={() => setSelectedIndex(i)}
                   onFocus={() => setSelectedIndex(i)}
-                  aria-selected={i === selectedIndex ? "true" : undefined}
-                  className="z-[1] flex w-full items-center justify-between gap-6 border-b border-sec-dark px-3 py-4 text-left first:border-t hover:bg-sec-light aria-selected:bg-sec-light dark:bg-sec-darker dark:hover:bg-neu-100/25 dark:aria-selected:bg-sec-darker max-lg:dark:bg-neu-50 lg:hidden"
+                  className={clsx(
+                    "z-[1] flex w-full items-center justify-between gap-6 border-b border-sec-dark px-3 py-4 text-left first:border-t hover:bg-sec-light dark:bg-sec-darker dark:hover:bg-neu-100/25 max-lg:dark:bg-neu-50 lg:hidden",
+                    i === selectedIndex && "bg-sec-light dark:bg-sec-darker",
+                  )}
                 >
                   <span className="typography-body-lg text-neu-900">
                     {useCase.label}
