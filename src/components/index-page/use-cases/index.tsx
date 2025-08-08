@@ -128,6 +128,7 @@ export function UseCases({
               <Fragment key={useCase.label}>
                 <button
                   type="button"
+                  role="tab"
                   onPointerDown={() => setSelectedIndex(i)}
                   onFocus={() => setSelectedIndex(i)}
                   aria-selected={i === selectedIndex ? "true" : undefined}
