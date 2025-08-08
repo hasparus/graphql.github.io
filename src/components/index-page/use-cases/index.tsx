@@ -5,6 +5,9 @@ import { useState } from "react"
 
 import { Button } from "@/app/conf/_design-system/button"
 import ArrowRightIcon from "./arrow-right.svg?svgr"
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
+
+import blurBean from "./blur-bean.webp"
 
 type UseCase = {
   label: string
@@ -64,25 +67,25 @@ export function UseCases({
       {...props}
     >
       <div className="mx-auto flex max-w-[1440px] *:basis-1/2 max-lg:flex-col 3xl:min-h-[800px]">
-        <div className="relative flex flex-col border-sec-dark bg-sec-light p-4 lg:border-r lg:p-8 xl:p-16">
+        <div className="relative flex flex-col bg-sec-light p-4 dark:bg-neu-50 dark:text-neu-900 lg:p-8 xl:p-16">
           <h2 className="typography-h2">Is GraphQL right for&nbsp;me?</h2>
-          <p className="typography-body-lg mt-6 text-neu-800">
+          <p className="typography-body-lg mt-6 text-balance text-neu-800">
             Choose a use case most relevant for your project and learn how
             GraphQL can help you build faster, modern solutions.
           </p>
 
           <div className="3xl:flex-1" />
-          <ul className="mt-8 divide-y divide-sec-dark border border-sec-dark">
+          <ul className="mt-8 divide-y divide-sec-dark border border-sec-dark lg:mt-16">
             {USE_CASES.map((useCase, i) => (
               <li key={useCase.label}>
                 <button
                   type="button"
                   onClick={() => setSelectedIndex(i)}
                   aria-selected={i === selectedIndex ? "true" : undefined}
-                  className="flex w-full items-center justify-between gap-6 px-3 py-4 text-left transition-colors hover:bg-sec-lighter aria-selected:bg-sec-base aria-selected:hover:bg-sec-lighter"
+                  className="group flex w-full items-center justify-between gap-6 px-3 py-4 text-left transition-colors hover:bg-sec-lighter aria-selected:bg-sec-base aria-selected:hover:bg-sec-lighter hover:dark:bg-neu-100/25 dark:aria-selected:bg-sec-darker"
                 >
                   <span className="typography-body-lg">{useCase.label}</span>
-                  <ArrowRightIcon className="size-10 shrink-0 text-sec-dark opacity-0 group-aria-selected:opacity-100" />
+                  <ArrowRightIcon className="size-10 shrink-0 text-sec-dark opacity-0 transition-opacity group-hover:opacity-100 group-aria-selected:opacity-100 dark:text-neu-900" />
                 </button>
               </li>
             ))}
@@ -90,10 +93,10 @@ export function UseCases({
           <div className="3xl:flex-1" />
         </div>
 
-        <article className="relative flex h-auto flex-col bg-sec-base p-8 md:p-12 lg:p-16">
+        <article className="relative flex h-auto flex-col bg-sec-base p-8 dark:bg-sec-darker md:p-12 lg:p-16">
           <Stripes />
           <div className="z-10 my-auto max-h-[528px] max-w-2xl">
-            <h3 className="typography-body-lg text-sec-darker">
+            <h3 className="typography-body-lg text-sec-darker dark:text-sec-lighter">
               {selected.label}
             </h3>
             <p className="typography-h3 mt-10 text-neu-800">
@@ -112,41 +115,24 @@ export function UseCases({
   )
 }
 
-const maskEven =
-  "repeating-linear-gradient(to right, transparent, transparent 12px, black 12px, black 24px)"
-const maskOdd =
-  "repeating-linear-gradient(to right, black, black 12px, transparent 12px, transparent 24px)"
-
 function Stripes() {
-  const mask = "linear-gradient(125deg, transparent 68%, hsl(0 0 0 / 0.8))"
+  const mask = `url(${blurBean.src})`
   return (
     <div
       role="presentation"
-      className="pointer-events-none absolute inset-0 bottom-[-20px] -z-10 translate-x-0.5 translate-y-12 ease-linear max-lg:hidden"
+      className="pointer-events-none absolute inset-0"
       style={{
         maskImage: mask,
         WebkitMaskImage: mask,
+        maskPosition: "bottom 150% right 50%",
+        WebkitMaskPosition: "bottom 150% right 50%",
+        maskRepeat: "no-repeat",
+        WebkitMaskRepeat: "no-repeat",
       }}
     >
-      <div
-        className="absolute inset-0"
-        style={{
-          maskImage: maskOdd,
-          WebkitMaskImage: maskOdd,
-          maskPosition: "right",
-          backgroundImage:
-            "linear-gradient(0deg, hsl(var(--color-sec-lighter)) 0%, rgba(133, 185, 19, 0.00) 100%)",
-        }}
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          maskImage: maskEven,
-          WebkitMaskImage: maskEven,
-          maskPosition: "right",
-          backgroundImage:
-            "linear-gradient(0deg, hsl(var(--color-sec-dark)) 0%, hsl(var(--color-sec-base)) 100%)",
-        }}
+      <StripesDecoration
+        evenClassName="bg-[linear-gradient(0deg,_hsl(var(--color-sec-dark))_0%,_hsl(var(--color-sec-base))_100%)] dark:bg-[linear-gradient(0deg,_hsl(var(--color-sec-dark))_0%,_hsl(var(--color-sec-darker))_100%)]"
+        oddClassName="bg-[linear-gradient(0deg,_hsl(var(--color-sec-lighter))_0%,_hsl(79_81%_40%/0)_100%)] dark:bg-[linear-gradient(0deg,_hsl(var(--color-neu-dark))_0%,_rgba(133,185,19,0.00)_100%)]"
       />
     </div>
   )
