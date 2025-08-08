@@ -104,6 +104,7 @@ export function UseCases({
             {USE_CASES.map((useCase, i) => (
               <button
                 role="tab"
+                aria-controls={`graphql-use-case-${i}`}
                 type="button"
                 key={useCase.label}
                 tabIndex={i === 0 ? 0 : -1}
@@ -123,12 +124,16 @@ export function UseCases({
 
         <article className="relative flex h-auto flex-col bg-sec-base dark:bg-sec-darker">
           <Stripes />
-          <div className="flex flex-1 justify-center overflow-hidden max-lg:flex-col lg:items-center">
+          <div
+            role="tablist"
+            className="flex flex-1 justify-center overflow-hidden max-lg:flex-col lg:items-center"
+          >
             {USE_CASES.map((useCase, i) => (
               <Fragment key={useCase.label}>
                 <button
                   type="button"
                   role="tab"
+                  aria-controls={`graphql-use-case-${i}`}
                   onPointerDown={() => setSelectedIndex(i)}
                   onFocus={() => setSelectedIndex(i)}
                   aria-selected={i === selectedIndex ? "true" : undefined}
@@ -141,6 +146,7 @@ export function UseCases({
                 </button>
                 <div
                   role="tabpanel"
+                  id={`graphql-use-case-${i}`}
                   className={clsx(
                     "relative h-full flex-1 p-8 lg:p-12 xl:p-16",
                     selectedIndex === i ? "border-b border-sec-dark" : "hidden",
