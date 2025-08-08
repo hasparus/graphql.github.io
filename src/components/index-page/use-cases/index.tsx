@@ -1,7 +1,7 @@
 "use client"
 
 import clsx from "clsx"
-import { useState, Fragment } from "react"
+import { useState, Fragment, ReactNode } from "react"
 
 import { Button } from "@/app/conf/_design-system/button"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
@@ -11,7 +11,7 @@ import blurBean from "./blur-bean.webp"
 
 type UseCase = {
   label: string
-  description: string
+  description: ReactNode
   cta: string
   href: string
 }
@@ -26,36 +26,50 @@ const USE_CASES: UseCase[] = [
   },
   {
     label: "A mobile app",
-    description:
-      "Fetch only the data you need to minimize payload size and round-trips. Build resilient UIs that work well on variable networks.",
-    cta: "Mobile Patterns",
-    href: "TODO",
+    description: (
+      <>
+        GraphQL lets you request exactly what you need in one call with no
+        overfetching to preserve battery and work on slow networks. With
+        libraries like{" "}
+        <a
+          className="typography-link"
+          href="https://nearform.com/open-source/urql/docs/graphcache/offline/#offline-behavior"
+        >
+          GraphCache
+        </a>{" "}
+        your app can work offline on planes and trains, and versionless schema
+        evolution makes it easy to iterate without breaking old versions of the
+        app.
+      </>
+    ),
+    cta: "Performance Optimization",
+    href: "/learn/performance",
   },
   {
     label: "A frontend-heavy app with advanced UI needs",
     description:
-      "Co-locate queries with components and keep state consistent. Compose data from many backends without bespoke endpoints.",
-    cta: "Frontend Integration Guide",
-    href: "TODO",
+      "GraphQL makes building complex UIs easier by allowing components to declare their data needs directly alongside their code with no performance hit. You can aggregate data from multiple services into a single request and maintain consistent state without creating custom endpoints for every view.",
+    cta: "GraphQL Queries",
+    href: "/learn/queries",
   },
   {
     label: "An app with real-time updates",
     description:
-      "Use subscriptions for low-latency updates while keeping the schema as the single contract for clients and servers.",
+      "Replace polling and complex WebSocket management with GraphQL subscriptions. Your app gets notified instantly when data changes, using the same queries and types you already have. Real-time becomes part of your API instead of a separate system to maintain.",
     cta: "Real-time with Subscriptions",
-    href: "TODO",
+    href: "/learn/subscriptions",
   },
   {
     label: "A simple full stack TypeScript app",
     description:
-      "Strong types end-to-end with code generation and great DX. Ship faster without compromising correctness.",
-    cta: "Full Stack TS Starter",
-    href: "TODO",
+      "Define your GraphQL schema once and GraphQL Codegen does the rest. Your frontend gets perfectly typed API calls, your backend stays in sync, and any schema changes immediately show up as TypeScript errors throughout your app. Full-stack type safety reduces bugs and makes pivots and refactors easier.",
+    cta: "Schema-First Development",
+    href: "/learn/schema",
   },
   {
     label: "An AI-powered app",
     description:
-      "Build apps with soft core with GraphQL MCP, using GraphQL schema introspection to give access and teach an LLM about your data.",
+      "Build apps with soft core using GraphQL MCP. Your schema documents itself, so AI agents can discover your API capabilities, understand data relationships, and generate valid queries without custom integration work.",
     cta: "MCP GraphQL",
     href: "https://github.com/graphql/graphql-mcp",
   },
@@ -70,6 +84,7 @@ export function UseCases({
 
   return (
     <section
+      id="graphql-use-cases"
       className={clsx("gql-container dark:text-neu-0", className)}
       {...props}
     >
