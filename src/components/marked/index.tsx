@@ -1,4 +1,4 @@
-import { MiniGraphiQL } from "./mini-graphiQL"
+import dynamic from "next/dynamic"
 import { StarWarsSchema } from "./swapi-schema"
 import { UsersSchema } from "./users-schema"
 
@@ -14,6 +14,8 @@ type Metadata = {
   variables?: unknown
   schema?: SchemaKey
 }
+
+const MiniGraphiQL = dynamic(() => import("./mini-graphiQL"), { ssr: true })
 
 export function Marked({ children }: { children: string }) {
   const codeMatch = children.match(/```graphql\s*\n([\s\S]*?)```/)
