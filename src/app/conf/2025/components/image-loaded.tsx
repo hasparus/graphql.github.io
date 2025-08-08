@@ -7,14 +7,9 @@ const _cache = new Map<string, HTMLImageElement>()
 
 export interface ImageLoadedProps extends React.HTMLAttributes<HTMLDivElement> {
   image: string | StaticImageData
-  fetchPriority?: "high" | "low" | "auto"
 }
 
-export function ImageLoaded({
-  image,
-  fetchPriority = "auto",
-  ...rest
-}: ImageLoadedProps) {
+export function ImageLoaded({ image, ...rest }: ImageLoadedProps) {
   const [loaded, setLoaded] = useState(false)
   const src = typeof image === "string" ? image : image.src
 
@@ -32,11 +27,10 @@ export function ImageLoaded({
     } else {
       img = new Image()
       img.src = src
-      img.fetchPriority = fetchPriority
       img.addEventListener("load", () => setLoaded(true))
       _cache.set(src, img)
     }
-  }, [src, fetchPriority])
+  }, [src])
 
   return <div data-loaded={alreadyLoaded || loaded} {...rest} />
 }
