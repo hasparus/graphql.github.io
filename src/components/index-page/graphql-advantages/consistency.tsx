@@ -49,7 +49,7 @@ export function ConsistencyFigure() {
   return (
     <section
       id="type-system"
-      className="nextra-codeblocks flex w-full bg-gradient-to-b from-transparent to-sec-lighter px-[14px] py-[30px] dark:to-sec-darker/25 max-[360px]:px-0 xl:px-[46px] max-[360px]:[&_:is(.rounded-t-md,pre)]:rounded-none [&_pre]:!h-[370px] md:[&_pre]:!h-[420px]"
+      className="nextra-codeblocks flex w-full bg-gradient-to-b from-transparent to-sec-lighter px-[14px] py-[30px] dark:to-sec-darker/25 max-[380px]:px-0 xl:px-[46px] max-[380px]:[&_:is(.rounded-t-md,pre)]:rounded-none [&_pre]:!h-[370px] md:[&_pre]:!h-[420px]"
     >
       <div
         className="nextra-codeblocks grid w-full grid-cols-2 [&_.highlighted]:!bg-pri-lighter/50 dark:[&_.highlighted]:!bg-neu-200/10"

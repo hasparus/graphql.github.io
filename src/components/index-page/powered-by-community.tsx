@@ -4,7 +4,7 @@ import ArrowDownIcon from "@/app/conf/_design-system/pixelarticons/arrow-down.sv
 
 export function PoweredByCommunity() {
   return (
-    <section className="gql-section max-sm:px-0 lg:pb-16 xl:pb-24">
+    <section className="gql-section max-sm:px-0 lg:pb-16 lg:max-xl:px-0 xl:pb-24">
       <div className="gql-container dark typography-body-lg flex bg-pri-darker text-neu-900 max-lg:flex-col">
         <div className="border-pri-light p-6 max-lg:border-b lg:border-r lg:p-16">
           <h2 className="typography-h2 text-balance">

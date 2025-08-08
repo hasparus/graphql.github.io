@@ -1,11 +1,11 @@
 "use client"
 
 import clsx from "clsx"
-import { useState } from "react"
+import { useState, Fragment } from "react"
 
 import { Button } from "@/app/conf/_design-system/button"
-import ArrowRightIcon from "./arrow-right.svg?svgr"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
+import ArrowDownIcon from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
 
 import blurBean from "./blur-bean.webp"
 
@@ -29,28 +29,35 @@ const USE_CASES: UseCase[] = [
     description:
       "Fetch only the data you need to minimize payload size and round-trips. Build resilient UIs that work well on variable networks.",
     cta: "Mobile Patterns",
-    href: "/learn/best-practices#mobile",
+    href: "TODO",
   },
   {
     label: "A frontend-heavy app with advanced UI needs",
     description:
       "Co-locate queries with components and keep state consistent. Compose data from many backends without bespoke endpoints.",
     cta: "Frontend Integration Guide",
-    href: "/learn/queries#components",
+    href: "TODO",
   },
   {
     label: "An app with real-time updates",
     description:
       "Use subscriptions for low-latency updates while keeping the schema as the single contract for clients and servers.",
     cta: "Real-time with Subscriptions",
-    href: "/learn/subscriptions",
+    href: "TODO",
   },
   {
     label: "A simple full stack TypeScript app",
     description:
       "Strong types end-to-end with code generation and great DX. Ship faster without compromising correctness.",
     cta: "Full Stack TS Starter",
-    href: "/learn#typescript",
+    href: "TODO",
+  },
+  {
+    label: "An AI-powered app",
+    description:
+      "Build apps with soft core with GraphQL MCP, using GraphQL schema introspection to give access and teach an LLM about your data.",
+    cta: "MCP GraphQL",
+    href: "https://github.com/graphql/graphql-mcp",
   },
 ]
 
@@ -75,39 +82,71 @@ export function UseCases({
           </p>
 
           <div className="3xl:flex-1" />
-          <ul className="mt-8 divide-y divide-sec-dark border border-sec-dark lg:mt-16">
+          <div
+            role="tablist"
+            className="mt-8 divide-y divide-sec-dark border border-sec-dark max-lg:sr-only lg:mt-16"
+          >
             {USE_CASES.map((useCase, i) => (
-              <li key={useCase.label}>
-                <button
-                  type="button"
-                  onClick={() => setSelectedIndex(i)}
-                  aria-selected={i === selectedIndex ? "true" : undefined}
-                  className="group flex w-full items-center justify-between gap-6 px-3 py-4 text-left transition-colors hover:bg-sec-lighter aria-selected:bg-sec-base aria-selected:hover:bg-sec-lighter hover:dark:bg-neu-100/25 dark:aria-selected:bg-sec-darker"
-                >
-                  <span className="typography-body-lg">{useCase.label}</span>
-                  <ArrowRightIcon className="size-10 shrink-0 text-sec-dark opacity-0 transition-opacity group-hover:opacity-100 group-aria-selected:opacity-100 dark:text-neu-900" />
-                </button>
-              </li>
+              <button
+                role="tab"
+                type="button"
+                key={useCase.label}
+                tabIndex={i === 0 ? 0 : -1}
+                onKeyDown={arrowsMoveSideways}
+                onPointerDown={() => setSelectedIndex(i)}
+                onFocus={() => setSelectedIndex(i)}
+                aria-selected={i === selectedIndex ? "true" : undefined}
+                className="gql-focus-visible group flex w-full items-center justify-between gap-6 border-b border-sec-dark px-3 py-4 text-left transition-colors hover:bg-sec-lighter aria-selected:bg-sec-base aria-selected:hover:bg-sec-lighter hover:dark:bg-neu-100/25 dark:aria-selected:bg-sec-darker"
+              >
+                <span className="typography-body-lg">{useCase.label}</span>
+                <ArrowDownIcon className="size-10 shrink-0 -rotate-90 text-sec-dark opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 group-aria-selected:opacity-100 dark:text-neu-900" />
+              </button>
             ))}
-          </ul>
+          </div>
           <div className="3xl:flex-1" />
         </div>
 
-        <article className="relative flex h-auto flex-col bg-sec-base p-8 dark:bg-sec-darker md:p-12 lg:p-16">
+        <article className="relative flex h-auto flex-col bg-sec-base dark:bg-sec-darker">
           <Stripes />
-          <div className="z-10 my-auto max-h-[528px] max-w-2xl">
-            <h3 className="typography-body-lg text-sec-darker dark:text-sec-lighter">
-              {selected.label}
-            </h3>
-            <p className="typography-h3 mt-10 text-neu-800">
-              {selected.description}
-            </p>
-            <div className="mt-8 flex xl:mt-[120px]">
-              <Button href={selected.href} variant="primary">
-                {selected.cta}
-                <ArrowRightIcon className="size-6 shrink-0 text-neu-0" />
-              </Button>
-            </div>
+          <div className="flex flex-1 justify-center overflow-hidden max-lg:flex-col lg:items-center">
+            {USE_CASES.map((useCase, i) => (
+              <Fragment key={useCase.label}>
+                <button
+                  type="button"
+                  onPointerDown={() => setSelectedIndex(i)}
+                  onFocus={() => setSelectedIndex(i)}
+                  aria-selected={i === selectedIndex ? "true" : undefined}
+                  className="z-[1] flex w-full items-center justify-between gap-6 border-b border-sec-dark px-3 py-4 text-left first:border-t hover:bg-sec-light aria-selected:bg-sec-light dark:bg-sec-darker dark:hover:bg-neu-100/25 dark:aria-selected:bg-sec-darker max-lg:dark:bg-neu-50 lg:hidden"
+                >
+                  <span className="typography-body-lg text-neu-900">
+                    {useCase.label}
+                  </span>
+                  <ArrowDownIcon className="size-6 shrink-0 text-sec-dark transition-transform [[aria-selected=false]>&]:rotate-180" />
+                </button>
+                <div
+                  role="tabpanel"
+                  className={clsx(
+                    "relative h-full flex-1 p-8 lg:p-12 xl:p-16",
+                    selectedIndex === i ? "border-b border-sec-dark" : "hidden",
+                  )}
+                >
+                  <div className="relative z-10 my-auto max-h-[528px] max-w-2xl">
+                    <h3 className="typography-body-lg text-sec-darker dark:text-sec-lighter max-lg:hidden">
+                      {useCase.label}
+                    </h3>
+                    <p className="typography-h3 text-neu-800 lg:mt-10 lg:max-xl:text-xl">
+                      {useCase.description}
+                    </p>
+                    <div className="mt-8 flex xl:mt-[120px]">
+                      <Button href={useCase.href} variant="primary">
+                        {useCase.cta}
+                        <ArrowDownIcon className="size-6 shrink-0 -rotate-90 text-neu-0" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Fragment>
+            ))}
           </div>
         </article>
       </div>
@@ -136,4 +175,20 @@ function Stripes() {
       />
     </div>
   )
+}
+
+function arrowsMoveSideways(event: React.KeyboardEvent<HTMLButtonElement>) {
+  if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+    const previousElement = event.currentTarget.previousElementSibling
+    if (previousElement) {
+      event.preventDefault()
+      ;(previousElement as HTMLElement).focus()
+    }
+  } else if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+    const nextElement = event.currentTarget.nextElementSibling
+    if (nextElement) {
+      event.preventDefault()
+      ;(nextElement as HTMLElement).focus()
+    }
+  }
 }
