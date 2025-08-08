@@ -17,7 +17,7 @@ const USE_CASES: UseCase[] = [
   {
     label: "A large backend with many services",
     description:
-      "GraphQL serves as a unified data layer across multiple services. You simplify API management, reduce cross-team dependencies, and keep the API surface flexible and maintainable.",
+      "GraphQL serves as a unified data layer across multiple services. This way you simplify API management and reduce dependencies between teams. It enables efficient data fetching while keeping the API surface flexible and maintainable.",
     cta: "Best Practices for Large-Scale Systems",
     href: "/learn/best-practices",
   },
@@ -60,17 +60,18 @@ export function UseCases({
 
   return (
     <section
-      className={clsx("gql-section gql-container dark:text-neu-0", className)}
+      className={clsx("gql-container dark:text-neu-0", className)}
       {...props}
     >
-      <div className="flex *:basis-1/2 max-lg:flex-col">
-        <div className="border-sec-dark bg-sec-light p-4 lg:border-r lg:p-8 xl:p-16">
+      <div className="mx-auto flex max-w-[1440px] *:basis-1/2 max-lg:flex-col 3xl:min-h-[800px]">
+        <div className="relative flex flex-col border-sec-dark bg-sec-light p-4 lg:border-r lg:p-8 xl:p-16">
           <h2 className="typography-h2">Is GraphQL right for&nbsp;me?</h2>
           <p className="typography-body-lg mt-6 text-neu-800">
             Choose a use case most relevant for your project and learn how
             GraphQL can help you build faster, modern solutions.
           </p>
 
+          <div className="3xl:flex-1" />
           <ul className="mt-8 divide-y divide-sec-dark border border-sec-dark">
             {USE_CASES.map((useCase, i) => (
               <li key={useCase.label}>
@@ -81,23 +82,27 @@ export function UseCases({
                   className="flex w-full items-center justify-between gap-6 px-3 py-4 text-left transition-colors hover:bg-sec-lighter aria-selected:bg-sec-base aria-selected:hover:bg-sec-lighter"
                 >
                   <span className="typography-body-lg">{useCase.label}</span>
-                  <ArrowRightIcon className="size-5 shrink-0 text-sec-dark" />
+                  <ArrowRightIcon className="size-10 shrink-0 text-sec-dark opacity-0 group-aria-selected:opacity-100" />
                 </button>
               </li>
             ))}
           </ul>
+          <div className="3xl:flex-1" />
         </div>
 
-        <article className="relative flex h-auto flex-col bg-pri-light p-8 md:p-12 lg:p-16">
+        <article className="relative flex h-auto flex-col bg-sec-base p-8 md:p-12 lg:p-16">
           <Stripes />
-          <div className="z-10 max-w-2xl">
-            <h3 className="typography-h3 text-neu-900">{selected.label}</h3>
-            <p className="typography-body-lg mt-6 text-neu-700">
+          <div className="z-10 my-auto max-h-[528px] max-w-2xl">
+            <h3 className="typography-body-lg text-sec-darker">
+              {selected.label}
+            </h3>
+            <p className="typography-h3 mt-10 text-neu-800">
               {selected.description}
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex xl:mt-[120px]">
               <Button href={selected.href} variant="primary">
                 {selected.cta}
+                <ArrowRightIcon className="size-6 shrink-0 text-neu-0" />
               </Button>
             </div>
           </div>
