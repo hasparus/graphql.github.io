@@ -11,6 +11,7 @@ import { QuotesFromTheIndustry } from "./quotes-from-the-industry"
 import { JoinTheCommunity } from "./join-the-community"
 import { DataColocation } from "./data-colocation"
 import { WhatIsGraphQL } from "./what-is-graphql"
+import { UseCases } from "./use-cases"
 
 export function IndexPage() {
   return (
@@ -30,6 +31,7 @@ export function IndexPage() {
       <PoweredByCommunity />
       <GraphQLAdvantages />
       <DataColocation />
+      <UseCases />
       <QuotesFromTheIndustry />
       <JoinTheCommunity />
     </div>
