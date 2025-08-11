@@ -6,7 +6,7 @@
   "packageManager": "pnpm@9.15.9",
   "scripts": {
     "analyze": "ANALYZE=true next build",
-    "build": "next build && next-image-export-optimizer",
+    "build": "pnpm playwright install chromium --only-shell && next build && next-image-export-optimizer",
     "check:links": "lychee --verbose --no-progress './src/pages/**/*.mdx' --base https://graphql.org",
     "dev": "next",
     "format": "pnpm format:check --write",
