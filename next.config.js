@@ -176,7 +176,6 @@ const config = {
 
 const withBundleAnalyzer = nextBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
-  analyzerMode: "json",
 })
 
 export default withBundleAnalyzer(withLess(withNextra(config)))
@@ -187,23 +186,21 @@ function mermaidConfig() {
     /** @type {import("rehype-mermaid").RehypeMermaidOptions} */ ({
       mermaidConfig: {
         fontFamily: "var(--font-mono, monospace)",
-        theme: "base",
+        theme: "null",
         look: "classic",
-        themeVariables: {
-          background: "var(--color-neu-0)",
-          primaryColor: "var(--color-sec-base)",
-          primaryTextColor: "var(--color-neu-900)",
-          primaryBorderColor: "var(--color-pri-base)",
-          secondaryColor: "var(--color-pri-base)",
-          secondaryTextColor: "var(--color-neu-900)",
-          secondaryBorderColor: "var(--color-pri-base)",
-          tertiaryColor: "var(--color-pri-base)",
-          tertiaryTextColor: "var(--color-neu-900)",
-          tertiaryBorderColor: "var(--color-pri-base)",
-          textColor: "var(--color-neu-900)",
-          mainBkg: "var(--color-neu-100)",
-          lineColor: "var(--color-neu-400)",
-        },
+        themeCSS: `
+          .node rect {
+            fill: hsl(var(--color-neu-50));
+            stroke: hsl(var(--color-neu-300));
+          }
+          .label text, span {
+            fill: hsl(var(--color-neu-900));
+            color: hsl(var(--color-neu-900));
+          }
+          .flowchart-link {
+            stroke: hsl(var(--color-neu-500));
+          }
+        `,
       },
     }),
   ]
