@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   nextra:
-    hash: ytqsrocfyxyupt7yg3khzgrhfe
+    hash: 6ssvmycplmexou7j5jtwzrnhmy
     path: patches/nextra.patch
 
 importers:
@@ -105,10 +105,10 @@ importers:
         version: 3.0.1(less-loader@12.2.0(less@4.2.1))(less@4.2.1)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       nextra:
         specifier: 3.3.1
-        version: 3.3.1(patch_hash=ytqsrocfyxyupt7yg3khzgrhfe)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
+        version: 3.3.1(patch_hash=6ssvmycplmexou7j5jtwzrnhmy)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       nextra-theme-docs:
         specifier: 3.3.1
-        version: 3.3.1(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nextra@3.3.1(patch_hash=ytqsrocfyxyupt7yg3khzgrhfe)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 3.3.1(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nextra@3.3.1(patch_hash=6ssvmycplmexou7j5jtwzrnhmy)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       numbro:
         specifier: 2.5.0
         version: 2.5.0
@@ -136,6 +136,9 @@ importers:
       react-use-measure:
         specifier: ^2.1.7
         version: 2.1.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rehype-mermaid:
+        specifier: ^3.0.0
+        version: 3.0.0(playwright@1.54.2)
       rss:
         specifier: 1.2.2
         version: 1.2.2
@@ -1073,6 +1076,10 @@ packages:
 
   '@formatjs/intl-localematcher@0.5.10':
     resolution: {integrity: sha512-af3qATX+m4Rnd9+wHcjJ4w2ijq+rAVP3CCinJQvFv1kgSu1W6jypUmvleJxcewdxmutM8dmIRZFxO/IQBZmP2Q==}
+
+  '@fortawesome/fontawesome-free@6.7.2':
+    resolution: {integrity: sha512-JUOtgFW6k9u4Y+xeIaEiLr3+cjoUPiAuLXoyKOJSia6Duzb7pq+A76P9ZdPDoAoxHdHzq6gE9/jKBGXlZT8FbA==}
+    engines: {node: '>=6'}
 
   '@graphql-eslint/eslint-plugin@4.3.0':
     resolution: {integrity: sha512-9UTJfYNGAK5GuFapsNvA+508ke8YPc9Yt6mgT4Lc+gS18p53oG5wmXd3jdmNeVOfxhUefJcJbn925vIrjg/8/g==}
@@ -4006,6 +4013,14 @@ packages:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
 
+  mermaid-isomorphic@3.0.4:
+    resolution: {integrity: sha512-XQTy7H1XwHK3DPEHf+ZNWiqUEd9BwX3Xws38R9Fj2gx718srmgjlZoUzHr+Tca+O+dqJOJsAJaKzCoP65QDfDg==}
+    peerDependencies:
+      playwright: '1'
+    peerDependenciesMeta:
+      playwright:
+        optional: true
+
   mermaid@11.7.0:
     resolution: {integrity: sha512-/1/5R0rt0Z1Ak0CuznAnCF3HtQgayRXUz6SguzOwN4L+DuCobz0UxnQ+ZdTSZ3AugKVVh78tiVmsHpHWV25TCw==}
 
@@ -4155,6 +4170,10 @@ packages:
   mimic-fn@4.0.0:
     resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==}
     engines: {node: '>=12'}
+
+  mini-svg-data-uri@1.4.4:
+    resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
+    hasBin: true
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -4801,6 +4820,14 @@ packages:
 
   rehype-katex@7.0.0:
     resolution: {integrity: sha512-h8FPkGE00r2XKU+/acgqwWUlyzve1IiOKwsEkg4pDL3k48PiE0Pt+/uLtVHDVkN1yA4iurZN6UES8ivHVEQV6Q==}
+
+  rehype-mermaid@3.0.0:
+    resolution: {integrity: sha512-fxrD5E4Fa1WXUjmjNDvLOMT4XB1WaxcfycFIWiYU0yEMQhcTDElc9aDFnbDFRLxG1Cfo1I3mfD5kg4sjlWaB+Q==}
+    peerDependencies:
+      playwright: '1'
+    peerDependenciesMeta:
+      playwright:
+        optional: true
 
   rehype-parse@9.0.0:
     resolution: {integrity: sha512-WG7nfvmWWkCR++KEkZevZb/uw41E8TsH4DsY9UxsTbIXCVGbAs4S+r8FrQ+OtH5EEQAs+5UxKC42VinkmpA1Yw==}
@@ -6601,6 +6628,8 @@ snapshots:
   '@formatjs/intl-localematcher@0.5.10':
     dependencies:
       tslib: 2.8.1
+
+  '@fortawesome/fontawesome-free@6.7.2': {}
 
   '@graphql-eslint/eslint-plugin@4.3.0(@types/node@22.10.5)(eslint@8.57.1)(graphql@16.10.0)(typescript@5.8.3)':
     dependencies:
@@ -10033,6 +10062,15 @@ snapshots:
 
   merge2@1.4.1: {}
 
+  mermaid-isomorphic@3.0.4(playwright@1.54.2):
+    dependencies:
+      '@fortawesome/fontawesome-free': 6.7.2
+      mermaid: 11.7.0
+    optionalDependencies:
+      playwright: 1.54.2
+    transitivePeerDependencies:
+      - supports-color
+
   mermaid@11.7.0:
     dependencies:
       '@braintree/sanitize-url': 7.1.1
@@ -10368,6 +10406,8 @@ snapshots:
 
   mimic-fn@4.0.0: {}
 
+  mini-svg-data-uri@1.4.4: {}
+
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -10494,7 +10534,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  nextra-theme-docs@3.3.1(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nextra@3.3.1(patch_hash=ytqsrocfyxyupt7yg3khzgrhfe)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  nextra-theme-docs@3.3.1(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(nextra@3.3.1(patch_hash=6ssvmycplmexou7j5jtwzrnhmy)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@headlessui/react': 2.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
@@ -10502,13 +10542,13 @@ snapshots:
       flexsearch: 0.7.43
       next: 14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-themes: 0.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      nextra: 3.3.1(patch_hash=ytqsrocfyxyupt7yg3khzgrhfe)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
+      nextra: 3.3.1(patch_hash=6ssvmycplmexou7j5jtwzrnhmy)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       scroll-into-view-if-needed: 3.1.0
       zod: 3.22.4
 
-  nextra@3.3.1(patch_hash=ytqsrocfyxyupt7yg3khzgrhfe)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3):
+  nextra@3.3.1(patch_hash=6ssvmycplmexou7j5jtwzrnhmy)(@types/react@18.3.23)(next@14.2.29(@babel/core@7.26.0)(@playwright/test@1.54.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.8.3):
     dependencies:
       '@formatjs/intl-localematcher': 0.5.10
       '@headlessui/react': 2.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11033,6 +11073,22 @@ snapshots:
       katex: 0.16.10
       unist-util-visit-parents: 6.0.1
       vfile: 6.0.1
+
+  rehype-mermaid@3.0.0(playwright@1.54.2):
+    dependencies:
+      '@types/hast': 3.0.4
+      hast-util-from-html-isomorphic: 2.0.0
+      hast-util-to-text: 4.0.0
+      mermaid-isomorphic: 3.0.4(playwright@1.54.2)
+      mini-svg-data-uri: 1.4.4
+      space-separated-tokens: 2.0.2
+      unified: 11.0.5
+      unist-util-visit-parents: 6.0.1
+      vfile: 6.0.1
+    optionalDependencies:
+      playwright: 1.54.2
+    transitivePeerDependencies:
+      - supports-color
 
   rehype-parse@9.0.0:
     dependencies:

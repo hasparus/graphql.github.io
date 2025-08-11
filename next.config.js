@@ -1,10 +1,12 @@
 /* eslint-env node */
+// @ts-check
 
 import nextra from "nextra"
 import path from "node:path"
 import withLess from "next-with-less"
 import nextBundleAnalyzer from "@next/bundle-analyzer"
 import fs from "fs"
+import rehypeMermaid from "rehype-mermaid"
 
 import { remarkGraphiQLComment } from "./src/remark-graphiql-comment.js"
 import { syntaxHighlightingThemes } from "./src/_design-system/syntax/index.js"
@@ -17,6 +19,7 @@ const withNextra = nextra({
   themeConfig: "./theme.config.tsx",
   mdxOptions: {
     remarkPlugins: [remarkGraphiQLComment],
+    rehypePlugins: [mermaidConfig()],
     rehypePrettyCodeOptions: {
       theme: syntaxHighlightingThemes,
     },
@@ -173,6 +176,35 @@ const config = {
 
 const withBundleAnalyzer = nextBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
+  analyzerMode: "json",
 })
 
 export default withBundleAnalyzer(withLess(withNextra(config)))
+
+function mermaidConfig() {
+  return [
+    rehypeMermaid,
+    /** @type {import("rehype-mermaid").RehypeMermaidOptions} */ ({
+      mermaidConfig: {
+        fontFamily: "var(--font-mono, monospace)",
+        theme: "base",
+        look: "classic",
+        themeVariables: {
+          background: "var(--color-neu-0)",
+          primaryColor: "var(--color-sec-base)",
+          primaryTextColor: "var(--color-neu-900)",
+          primaryBorderColor: "var(--color-pri-base)",
+          secondaryColor: "var(--color-pri-base)",
+          secondaryTextColor: "var(--color-neu-900)",
+          secondaryBorderColor: "var(--color-pri-base)",
+          tertiaryColor: "var(--color-pri-base)",
+          tertiaryTextColor: "var(--color-neu-900)",
+          tertiaryBorderColor: "var(--color-pri-base)",
+          textColor: "var(--color-neu-900)",
+          mainBkg: "var(--color-neu-100)",
+          lineColor: "var(--color-neu-400)",
+        },
+      },
+    }),
+  ]
+}
