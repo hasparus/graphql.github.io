@@ -1059,13 +1059,6 @@ video {
   --tw-text-opacity: 1;
   color: rgb(154 52 18 / var(--tw-text-opacity, 1));
 }
-._text-primary-600 {
-  --tw-text-opacity: 1;
-  color: hsl(
-    var(--nextra-primary-hue) var(--nextra-primary-saturation)
-      calc(var(--nextra-primary-lightness) + 0%) / var(--tw-text-opacity, 1)
-  );
-}
 ._text-primary-800 {
   --tw-text-opacity: 1;
   color: hsl(
@@ -1955,11 +1948,7 @@ body:is(html[class~="dark"] *) {
 }
 .nextra-content {
   --tw-text-opacity: 1;
-  color: rgb(51 65 85 / var(--tw-text-opacity, 1));
-}
-.nextra-content:is(html[class~="dark"] *) {
-  --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity, 1));
+  color: hsl(var(--color-neu-800) / var(--tw-text-opacity, 1));
 }
 @media (max-width: 767px) {
   .nextra-sidebar-container {
@@ -2351,13 +2340,6 @@ body,
   .contrast-more\:_font-bold {
     font-weight: 700;
   }
-  .contrast-more\:\!_text-primary-600 {
-    --tw-text-opacity: 1 !important;
-    color: hsl(
-      var(--nextra-primary-hue) var(--nextra-primary-saturation)
-        calc(var(--nextra-primary-lightness) + 0%) / var(--tw-text-opacity, 1)
-    ) !important;
-  }
   .contrast-more\:_text-current {
     color: currentColor;
   }
@@ -2539,13 +2521,6 @@ body,
 .dark\:_text-orange-300:is(html[class~="dark"] *) {
   --tw-text-opacity: 1;
   color: rgb(253 186 116 / var(--tw-text-opacity, 1));
-}
-.dark\:_text-primary-600:is(html[class~="dark"] *) {
-  --tw-text-opacity: 1;
-  color: hsl(
-    var(--nextra-primary-hue) var(--nextra-primary-saturation)
-      calc(var(--nextra-primary-lightness) + 0%) / var(--tw-text-opacity, 1)
-  );
 }
 .dark\:_text-red-200:is(html[class~="dark"] *) {
   --tw-text-opacity: 1;
@@ -2968,6 +2943,9 @@ body,
     rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
     scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+
+/* additions */
+
 body.nextra-banner-hidden .\[body\.nextra-banner-hidden_\&\]\:_hidden {
   display: none;
 }
@@ -2984,5 +2962,16 @@ kbd._border._gap-1 {
   .dark & {
     border-color: hsl(var(--color-neu-100) / 0.8);
     color: hsl(var(--color-neu-500));
+  }
+}
+
+.nextra-search-results {
+  & .\_text-primary-600 {
+    color: hsl(var(--color-pri-base));
+  }
+}
+.dark .nextra-search-results {
+  & .\_text-primary-600 {
+    color: hsl(var(--color-pri-light));
   }
 }
