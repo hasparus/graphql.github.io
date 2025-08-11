@@ -28,7 +28,6 @@ export function Pre({
 }: PreProps): ReactElement {
   const preRef = useRef<HTMLPreElement | null>(null)
 
-
   const copyButton = copy === "" && (
     <CopyToClipboard
       tabIndex={props.tabIndex}
