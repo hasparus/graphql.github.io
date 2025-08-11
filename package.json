@@ -116,7 +116,8 @@
   ],
   "pnpm": {
     "patchedDependencies": {
-      "nextra": "patches/nextra.patch"
+      "nextra": "patches/nextra.patch",
+      "nextra-theme-docs": "patches/nextra-theme-docs.patch"
     }
   }
 }
