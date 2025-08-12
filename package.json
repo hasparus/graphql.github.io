@@ -76,6 +76,9 @@
     "unist-util-visit": "^5.0.0",
     "use-query-params": "^2.2.1"
   },
+  "optionalDependencies": {
+    "playwright": "^1.54.2"
+  },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "4.3.0",
     "@next/eslint-plugin-next": "^15.3.3",
@@ -103,9 +106,6 @@
     "remark-lint-heading-increment": "3.1.2",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
-  },
-  "optionalDependencies": {
-    "playwright": "^1.54.2"
   },
   "browserslist": [
     "chrome >0 and last 2.5 years",

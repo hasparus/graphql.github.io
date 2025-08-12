@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   mermaid-isomorphic:
-    hash: ld6sp7y6cdebjld2ntwvzk2m3e
+    hash: tt5abewtk4kmqtpqfe2f44hnpa
     path: patches/mermaid-isomorphic.patch
   nextra:
     hash: 6ssvmycplmexou7j5jtwzrnhmy
@@ -10184,7 +10184,7 @@ snapshots:
 
   merge2@1.4.1: {}
 
-  mermaid-isomorphic@3.0.4(patch_hash=ld6sp7y6cdebjld2ntwvzk2m3e)(playwright@1.54.2):
+  mermaid-isomorphic@3.0.4(patch_hash=tt5abewtk4kmqtpqfe2f44hnpa)(playwright@1.54.2):
     dependencies:
       '@fortawesome/fontawesome-free': 6.7.2
       mermaid: 11.7.0
@@ -11206,7 +11206,7 @@ snapshots:
       '@types/hast': 3.0.4
       hast-util-from-html-isomorphic: 2.0.0
       hast-util-to-text: 4.0.0
-      mermaid-isomorphic: 3.0.4(patch_hash=ld6sp7y6cdebjld2ntwvzk2m3e)(playwright@1.54.2)
+      mermaid-isomorphic: 3.0.4(patch_hash=tt5abewtk4kmqtpqfe2f44hnpa)(playwright@1.54.2)
       mini-svg-data-uri: 1.4.4
       space-separated-tokens: 2.0.2
       unified: 11.0.5

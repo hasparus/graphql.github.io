@@ -1,5 +1,5 @@
 diff --git a/dist/mermaid-isomorphic.js b/dist/mermaid-isomorphic.js
-index aa5dc09a5dfb58a98d3f12cd2fc473caddd97b0d..588061772d8dad6c5ddcf0794cce93fbb5bfdbe2 100644
+index aa5dc09a5dfb58a98d3f12cd2fc473caddd97b0d..d0fa3ca8e690233d0b50e4f992ab6ac33c11585b 100644
 --- a/dist/mermaid-isomorphic.js
 +++ b/dist/mermaid-isomorphic.js
 @@ -1,4 +1,5 @@
@@ -27,7 +27,7 @@ index aa5dc09a5dfb58a98d3f12cd2fc473caddd97b0d..588061772d8dad6c5ddcf0794cce93fb
 +    let { browserType = playwright, launchOptions } = options;
 +
 +    if (process.env.CI) {
-+        if (browserType) {
++        if (options.browserType) {
 +            throw new Error('options.browserType is not supported because @hasparus patched it to run on Vercel builds, sorry');
 +        }
 +        browserType = {
