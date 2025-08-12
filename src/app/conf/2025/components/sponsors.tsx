@@ -4,7 +4,6 @@ import Netflix from "public/img/conf/Sponsors/Netflix.svg?svgr"
 
 import { clsx } from "clsx"
 import { ChevronRight } from "../../_design-system/pixelarticons/chevron-right"
-import { ComponentPropsWithoutRef } from "react"
 
 interface Sponsor {
   icon:
@@ -13,6 +12,7 @@ interface Sponsor {
     | React.FC<React.HTMLAttributes<HTMLDivElement>>
   name: string
   link: string
+  className?: string
 }
 
 const sponsorDiamond: Sponsor[] = []
@@ -58,19 +58,19 @@ const sponsorSilver: Sponsor[] = [
   },
   {
     icon: (props: React.HTMLAttributes<HTMLDivElement>) => (
-      <div {...props} className={clsx(props.className, "relative")}>
+      <div {...props} className={clsx(props.className, "relative size-full")}>
         <img
           src={
             new URL("/public/img/conf/Sponsors/Meta.svg", import.meta.url).href
           }
-          className="absolute inset-0 dark:hidden"
+          className="absolute inset-0 size-full object-cover dark:hidden"
         />
         <img
           src={
             new URL("/public/img/conf/Sponsors/Meta-dark.svg", import.meta.url)
               .href
           }
-          className="absolute inset-0 hidden dark:block"
+          className="absolute inset-0 hidden size-full object-cover dark:block"
         />
       </div>
     ),
@@ -135,15 +135,18 @@ function Tier({ tier, logoHeight }: { tier: Tier; logoHeight: number }) {
         <ChevronRight className="shrink-0 translate-y-[-0.5px]" />
         {tier.name}
       </h3>
-      <div className="flex flex-wrap justify-center gap-y-4">
-        {tier.items.map(({ link, icon: Icon, name }, i) => (
+      <div className="flex min-w-[70%] flex-wrap justify-center gap-y-4">
+        {tier.items.map(({ link, icon: Icon, name, className }, i) => (
           <a
             key={i}
             href={link}
             target="_blank"
             rel="noreferrer"
             title={name}
-            className="group flex min-h-24 items-center justify-center hover:bg-neu-500/10 dark:opacity-90 dark:hover:opacity-100"
+            className={clsx(
+              "group flex min-h-24 grow basis-1/2 items-center justify-center hover:bg-neu-500/10 dark:opacity-90 dark:hover:opacity-100",
+              className,
+            )}
           >
             <Icon
               className="aspect-[3] w-auto max-w-[80%] shrink-0"
