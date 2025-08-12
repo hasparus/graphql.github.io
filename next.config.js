@@ -185,20 +185,28 @@ function mermaidConfig() {
     rehypeMermaid,
     /** @type {import("rehype-mermaid").RehypeMermaidOptions} */ ({
       mermaidConfig: {
-        fontFamily: "var(--font-mono, monospace)",
+        fontFamily: "var(--font-sans)", // we can't use monospace here because it's way too wide
         theme: "null",
         look: "classic",
+        flowchart: {
+          defaultRenderer: "elk",
+          padding: 6,
+        },
         themeCSS: `
           .node rect {
-            fill: hsl(var(--color-neu-50));
-            stroke: hsl(var(--color-neu-300));
+            fill: var(--mermaid-node-fill);
+            stroke: var(--mermaid-node-stroke);
           }
           .label text, span {
             fill: hsl(var(--color-neu-900));
             color: hsl(var(--color-neu-900));
           }
           .flowchart-link {
-            stroke: hsl(var(--color-neu-500));
+            stroke: var(--mermaid-arrow);
+          }
+          .marker {
+            stroke: var(--mermaid-arrow);
+            fill: var(--mermaid-arrow);
           }
         `,
       },

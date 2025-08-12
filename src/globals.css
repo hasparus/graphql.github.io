@@ -453,3 +453,26 @@ html:has([role="menu"][data-open]) {
     overscroll-behavior-y: none;
   }
 }
+
+.flowchart {
+  --mermaid-node-fill: hsl(var(--color-neu-100));
+  --mermaid-node-stroke: hsl(var(--color-neu-200));
+  --mermaid-arrow: hsl(var(--color-neu-500));
+
+  margin: 1.5rem auto 0 auto;
+
+  & .label text,
+  span {
+    font-size: 14px !important;
+  }
+
+  & div:has(> .nodeLabel) {
+    display: unset !important;
+  }
+}
+
+.dark .flowchart {
+  --mermaid-node-fill: hsl(var(--color-neu-50) / 0.5);
+  --mermaid-node-stroke: hsl(var(--color-neu-100));
+  --mermaid-arrow: hsl(var(--color-neu-300));
+}
