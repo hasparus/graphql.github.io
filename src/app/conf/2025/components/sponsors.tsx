@@ -142,7 +142,7 @@ function Tier({ tier, logoHeight }: { tier: Tier; logoHeight: number }) {
             target="_blank"
             rel="noreferrer"
             title={name}
-            className="group flex min-h-24 grow basis-1/2 items-center justify-center hover:bg-neu-500/10 dark:opacity-90 dark:hover:opacity-100"
+            className="group flex min-h-24 grow items-center justify-center hover:bg-neu-500/10 dark:opacity-90 dark:hover:opacity-100 md:basis-1/2"
           >
             <Icon
               className="aspect-[3] w-auto max-w-[80%] shrink-0"
