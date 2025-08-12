@@ -12,7 +12,6 @@ interface Sponsor {
     | React.FC<React.HTMLAttributes<HTMLDivElement>>
   name: string
   link: string
-  className?: string
 }
 
 const sponsorDiamond: Sponsor[] = []
@@ -136,17 +135,14 @@ function Tier({ tier, logoHeight }: { tier: Tier; logoHeight: number }) {
         {tier.name}
       </h3>
       <div className="flex min-w-[70%] flex-wrap justify-center gap-y-4">
-        {tier.items.map(({ link, icon: Icon, name, className }, i) => (
+        {tier.items.map(({ link, icon: Icon, name }, i) => (
           <a
             key={i}
             href={link}
             target="_blank"
             rel="noreferrer"
             title={name}
-            className={clsx(
-              "group flex min-h-24 grow basis-1/2 items-center justify-center hover:bg-neu-500/10 dark:opacity-90 dark:hover:opacity-100",
-              className,
-            )}
+            className="group flex min-h-24 grow basis-1/2 items-center justify-center hover:bg-neu-500/10 dark:opacity-90 dark:hover:opacity-100"
           >
             <Icon
               className="aspect-[3] w-auto max-w-[80%] shrink-0"
