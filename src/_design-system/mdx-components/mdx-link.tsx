@@ -11,8 +11,6 @@ export const MdxLink = forwardRef<
     <Anchor
       {...props}
       ref={ref}
-      // we remove `text-underline-position` from default Nextra link styles, because Neue Montreal font
-      // has a different underline position than system fonts, and it looks bad in Safari.
       className={clsx(
         "typography-link text-neu-900 decoration-from-font underline-offset-2",
         props.className,
