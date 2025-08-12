@@ -6,7 +6,7 @@
   "packageManager": "pnpm@9.15.9",
   "scripts": {
     "analyze": "ANALYZE=true next build",
-    "build": "pnpm playwright install chromium --only-shell && next build && next-image-export-optimizer",
+    "build": "pnpm playwright install-deps && pnpm playwright install chromium --only-shell && next build && next-image-export-optimizer",
     "check:links": "lychee --verbose --no-progress './src/pages/**/*.mdx' --base https://graphql.org",
     "dev": "next",
     "format": "pnpm format:check --write",
@@ -74,9 +74,6 @@
     "unist-util-visit": "^5.0.0",
     "use-query-params": "^2.2.1"
   },
-  "optionalDependencies": {
-    "playwright": "^1.54.2"
-  },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "4.3.0",
     "@next/eslint-plugin-next": "^15.3.3",
@@ -96,6 +93,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-tailwindcss": "3.17.5",
+    "playwright": "^1.54.2",
     "prettier": "3.5.3",
     "prettier-plugin-pkg": "^0.20.0",
     "prettier-plugin-tailwindcss": "^0.6.12",
