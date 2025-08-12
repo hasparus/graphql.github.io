@@ -6,7 +6,7 @@
   "packageManager": "pnpm@9.15.9",
   "scripts": {
     "analyze": "ANALYZE=true next build",
-    "build": "pnpm playwright install-deps && pnpm playwright install chromium --only-shell && next build && next-image-export-optimizer",
+    "build": "next build && next-image-export-optimizer",
     "check:links": "lychee --verbose --no-progress './src/pages/**/*.mdx' --base https://graphql.org",
     "dev": "next",
     "format": "pnpm format:check --write",
@@ -27,6 +27,7 @@
     "@igorkowalczyk/is-browser": "^5.1.0",
     "@next/bundle-analyzer": "^15.4.5",
     "@radix-ui/react-radio-group": "^1.2.2",
+    "@sparticuz/chromium": "^138.0.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
     "@tailwindcss/typography": "^0.5.15",
@@ -57,6 +58,7 @@
     "numbro": "2.5.0",
     "p-limit": "^4.0.0",
     "parser-front-matter": "1.6.4",
+    "playwright-core": "^1.54.2",
     "postcss": "^8.4.49",
     "postcss-import": "^16.1.1",
     "react": "^18.3.1",
@@ -93,7 +95,6 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-tailwindcss": "3.17.5",
-    "playwright": "^1.54.2",
     "prettier": "3.5.3",
     "prettier-plugin-pkg": "^0.20.0",
     "prettier-plugin-tailwindcss": "^0.6.12",
@@ -102,6 +103,9 @@
     "remark-lint-heading-increment": "3.1.2",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
+  },
+  "optionalDependencies": {
+    "playwright": "^1.54.2"
   },
   "browserslist": [
     "chrome >0 and last 2.5 years",
@@ -115,7 +119,8 @@
   "pnpm": {
     "patchedDependencies": {
       "nextra": "patches/nextra.patch",
-      "nextra-theme-docs": "patches/nextra-theme-docs.patch"
+      "nextra-theme-docs": "patches/nextra-theme-docs.patch",
+      "mermaid-isomorphic": "patches/mermaid-isomorphic.patch"
     }
   }
 }
