@@ -113,9 +113,9 @@ export function TestimonialAuthor({
           alt={author.name}
           width={128}
           height={128}
-          className="size-16 saturate-0 xl:size-32"
+          className="size-16 saturate-[.1] xl:size-32"
         />
-        <div className="absolute inset-0 z-[1] bg-pri-darker mix-blend-plus-lighter" />
+        <div className="absolute inset-0 z-[1] bg-pri-darker opacity-80 mix-blend-plus-lighter" />
         <Stripes />
       </div>
       <AuthorNameAndRole author={author} className="contents md:hidden" />

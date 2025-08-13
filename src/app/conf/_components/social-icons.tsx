@@ -13,10 +13,15 @@ const anchorProps = {
   rel: "noreferrer",
 }
 
+export interface SocialIconsProps extends React.HTMLAttributes<HTMLDivElement> {
+  count?: 4 | 6
+}
+
 export function SocialIcons({
   className,
+  count = 6,
   ...rest
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: SocialIconsProps) {
   return (
     <div
       className={clsx(
@@ -40,12 +45,19 @@ export function SocialIcons({
       >
         <LinkedInIcon />
       </a>
-      <a href="https://youtube.com/@GraphQLFoundation" {...anchorProps}>
-        <YouTubeIcon className="fill-current" />
-      </a>
-      <a href="https://facebook.com/groups/graphql.community" {...anchorProps}>
-        <FacebookIcon />
-      </a>
+      {count === 6 && (
+        <>
+          <a href="https://youtube.com/@GraphQLFoundation" {...anchorProps}>
+            <YouTubeIcon className="fill-current" />
+          </a>
+          <a
+            href="https://facebook.com/groups/graphql.community"
+            {...anchorProps}
+          >
+            <FacebookIcon />
+          </a>
+        </>
+      )}
     </div>
   )
 }
