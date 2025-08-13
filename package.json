@@ -6,6 +6,8 @@
   "packageManager": "pnpm@9.15.9",
   "scripts": {
     "build": "next build && next-image-export-optimizer",
+    "serve": "pnpx serve out",
+    "analyze": "ANALYZE=true next build",
     "check:links": "lychee --verbose --no-progress './src/pages/**/*.mdx' --base https://graphql.org",
     "dev": "next",
     "format": "pnpm format:check --write",
@@ -15,13 +17,14 @@
     "lint:docs:ci": "eslint --ignore-path .gitignore src/pages/learn --format eslint-formatter-github",
     "postbuild": "next-sitemap",
     "prebuild": "tsx src/get-github-info.ts",
-    "start": "next start",
     "test": "echo \"no tests\" && exit 1",
     "validate:snippets": "node scripts/validate-snippets.js"
   },
   "dependencies": {
     "@graphql-tools/schema": "10.0.23",
     "@headlessui/react": "^2.2.4",
+    "@igorkowalczyk/is-browser": "^5.1.0",
+    "@next/bundle-analyzer": "^15.4.5",
     "@radix-ui/react-radio-group": "^1.2.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",

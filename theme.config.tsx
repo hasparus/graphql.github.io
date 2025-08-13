@@ -45,7 +45,7 @@ export default {
       </>
     )
   },
-  // Hidden for now, Design is discussing it.
+  // Hidden for now, new design is done, but not implemented yet.
   // banner: {
   //   content: (
   //     <>
@@ -75,28 +75,7 @@ export default {
     defaultMenuCollapseLevel: 1,
   },
   footer: {
-    component: () => (
-      <Footer
-        extraLinks={[
-          {
-            title: "Community Grant",
-            route: "https://graphql.org/foundation/community-grant/",
-          },
-          {
-            title: "Code of Conduct",
-            route: "https://graphql.org/codeofconduct/",
-          },
-          {
-            title: "Brand",
-            route: "https://graphql.org/brand/",
-          },
-          // {
-          //   title: "Swag Shop",
-          //   route: "https://store.graphql.org/",
-          // },
-        ]}
-      />
-    ),
+    component: () => <Footer />,
     content: "Copyright © 2025 The GraphQL Foundation. All rights reserved.",
   },
   navbar: {

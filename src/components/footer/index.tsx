@@ -22,12 +22,94 @@ interface FooterSection {
   links: FooterLink[]
 }
 
-const FOOTER_SECTIONS_COUNT = 4
-const MAX_LINKS_PER_SECTION = 5
-const CONFERENCE_YEAR = 2025
+const FOOTER_SECTIONS: FooterSection[] = [
+  {
+    title: "Learn",
+    route: "/learn",
+    links: [
+      { title: "Introduction", route: "/learn" },
+      { title: "Best Practices", route: "/learn/best-practices" },
+      {
+        title: (
+          <span>
+            <span className="max-md:hidden">Frequently Asked Questions</span>
+            <span className="md:hidden">FAQ</span>
+          </span>
+        ),
+        route: "/faq",
+      },
+      {
+        title: "Training Courses",
+        route: "/community/resources/training-courses",
+      },
+    ],
+  },
+  {
+    title: "Code",
+    links: [
+      { title: "GitHub", route: "https://github.com/graphql" },
+      {
+        title: "Specification",
+        route: "/spec",
+      },
+      { title: "Libraries & Tools", route: "/code" },
+      {
+        title: "Services & Vendors",
+        route: "/code/?tags=services",
+      },
+    ],
+  },
+  {
+    title: "Community",
+    links: [
+      {
+        title: "Resources",
+        route: "/community/resources/official-channels",
+      },
+      {
+        title: "Events & Meetups",
+        route: "/community/events",
+      },
+      {
+        title: (
+          <span>
+            Contribute<span className="max-md:hidden"> to GraphQL</span>
+          </span>
+        ),
+        route: "/community/contribute/essential-links",
+      },
+      { title: "Landscape", route: "/landscape" },
+      { title: "Shop", route: "https://store.graphql.org/" },
+    ],
+  },
+  {
+    title: "& More",
+    links: [
+      { title: "Blog", route: "/blog" },
+      {
+        title: "GraphQL Foundation",
+        route: "/foundation",
+      },
+      {
+        title: "Community Grant",
+        route: "/foundation/community-grant",
+      },
+      {
+        title: "Brand Guidelines",
+        route: "/brand",
+      },
+      {
+        title: "Code of Conduct",
+        route: "/codeofconduct",
+      },
+    ],
+  },
+]
 
-export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
-  const { sections, hasConferenceBox } = useFooterSections(extraLinks)
+const CONFERENCE_YEAR = 2025
+const HAS_CONFERENCE_BOX = true
+
+export function Footer() {
   const themeConfig = useThemeConfig()
 
   return (
@@ -39,10 +121,13 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
           <NextLink href="/" className="nextra-logo flex items-center">
             <GraphQLWordmarkLogo className="h-6" title="GraphQL" />
           </NextLink>
+          <div className="typography-menu flex items-center *:rounded-none dark:*:text-neu-900 md:hidden">
+            {renderComponent(themeConfig.themeSwitch.component)}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-px bg-neu-400 py-px dark:bg-neu-100 lg:grid-cols-5">
-          {sections.map((section, i) => (
+          {FOOTER_SECTIONS.map((section, i) => (
             <div
               className="typography-menu relative bg-neu-100 py-4 dark:bg-neu-0 lg:py-6 3xl:py-10"
               key={i}
@@ -57,7 +142,9 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
                       {section.title}
                     </Anchor>
                   ) : (
-                    <span className="block p-4 3xl:px-10">{section.title}</span>
+                    <span className="block p-4 md:px-6 2xl:px-10">
+                      {section.title}
+                    </span>
                   )}
                 </h3>
               )}
@@ -73,7 +160,7 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
             </div>
           ))}
           <div className="flex flex-col max-lg:contents">
-            {hasConferenceBox && (
+            {HAS_CONFERENCE_BOX && (
               <ConferenceFooterBox
                 href={`/conf/${CONFERENCE_YEAR}`}
                 className="z-[2] col-span-full flex-1 max-lg:row-start-1"
@@ -86,10 +173,10 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
           </div>
         </div>
 
-        <div className="relative flex items-center justify-between gap-4 p-4 md:px-6 2xl:px-10">
+        <div className="relative flex items-center justify-between gap-4 p-4 max-md:justify-center md:px-6 2xl:px-10">
           {themeConfig.darkMode && (
             // todo: new theme switch component
-            <div className="typography-menu flex items-center *:rounded-none dark:*:text-neu-900">
+            <div className="typography-menu flex items-center *:rounded-none dark:*:text-neu-900 max-md:hidden">
               {renderComponent(themeConfig.themeSwitch.component)}
             </div>
           )}
@@ -150,43 +237,4 @@ function Stripes() {
       />
     </div>
   )
-}
-
-function useFooterSections(extraLinks: FooterLink[]): {
-  sections: FooterSection[]
-  hasConferenceBox: boolean
-} {
-  const { normalizePagesResult } = useConfig()
-
-  const sections: FooterSection[] = []
-  const singleLinks: FooterLink[] = []
-  let hasConferenceBox = false
-
-  for (const item of normalizePagesResult.topLevelNavbarItems) {
-    if (
-      (item.type === "page" || item.type === "menu") &&
-      item.children?.length &&
-      sections.length < FOOTER_SECTIONS_COUNT - 1
-    ) {
-      sections.push({
-        title: item.title,
-        route: item.route,
-        links: (item.children || [])
-          .filter(child => child.route)
-          .slice(0, MAX_LINKS_PER_SECTION)
-          .map(child => ({ title: child.title, route: child.route })),
-      })
-    } else if (singleLinks.length < MAX_LINKS_PER_SECTION) {
-      if (item.route && item.route.startsWith("/conf/")) {
-        hasConferenceBox = true
-      } else {
-        singleLinks.push({ title: item.title, route: item.route })
-      }
-    }
-  }
-
-  singleLinks.push(...extraLinks)
-  sections.push({ links: singleLinks })
-
-  return { sections, hasConferenceBox }
 }

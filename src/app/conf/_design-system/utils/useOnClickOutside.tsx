@@ -1,15 +1,16 @@
 import { useEffect } from "react"
 
 export function useOnClickOutside(
-  ref: React.RefObject<HTMLElement | null>,
+  refs: React.RefObject<HTMLElement | null>[],
   handler: (event: MouseEvent) => void,
 ) {
   useEffect(() => {
     const listener = (event: MouseEvent) => {
-      if (ref.current && event.composedPath().includes(ref.current)) {
+      const path = event.composedPath()
+      if (refs.every(ref => !ref.current || !path.includes(ref.current))) {
+        handler(event)
         return
       }
-      handler(event)
     }
 
     document.addEventListener("click", listener)

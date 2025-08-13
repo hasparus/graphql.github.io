@@ -7,10 +7,8 @@
   fill="#1f70c1"
 >
   <style>
-    @media (prefers-color-scheme: dark) {
-      .st0 {
-        fill: #fff;
-      }
+    html[class~="dark"] .st0 {
+      fill: #fff;
     }
   </style>
   <path

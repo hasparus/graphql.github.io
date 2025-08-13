@@ -4,10 +4,8 @@
   xml:space="preserve"
 >
   <style>
-    @media (prefers-color-scheme: dark) {
-      .st0 {
-        fill: #fff;
-      }
+    html[class~="dark"] .st0 {
+      fill: #fff;
     }
   </style>
   <path

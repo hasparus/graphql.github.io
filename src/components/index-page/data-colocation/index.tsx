@@ -19,6 +19,7 @@ import json from "./data-colocation.json"
 import Query from "./data-colocation.mdx"
 import "./data-colocation.css"
 import { useOnClickOutside } from "@/app/conf/_design-system/utils/useOnClickOutside"
+import { isSpanElement } from "@/app/conf/_design-system/utils/isSpanElement"
 
 const highlightedFragments = {
   GetFriendList: 1,
@@ -39,12 +40,15 @@ const components = {
       tabIndex={-1}
     />
   ),
-  code: ({ children, ...rest }: ComponentPropsWithoutRef<typeof Code>) => {
-    let sectorIndex: number | undefined
-    let depth = 0
+  code: function Code2({
+    children,
+    ...rest
+  }: ComponentPropsWithoutRef<typeof Code>) {
+    const childrenTransformed = React.useMemo(() => {
+      let sectorIndex: number | undefined
+      let depth = 0
 
-    if (children) {
-      children = React.Children.map(children, child => {
+      return React.Children.map(children, child => {
         if (isSpanElement(child)) {
           let children = (child as ReactElement).props.children
 
@@ -86,19 +90,10 @@ const components = {
 
         return child
       })
-    }
-    return <Code {...rest}>{children}</Code>
-  },
-}
+    }, [children])
 
-function isSpanElement(
-  child: React.ReactNode,
-): child is ReactElement<{ children: React.ReactNode }> {
-  return (
-    typeof child === "object" &&
-    !!child &&
-    (child as ReactElement).type === "span"
-  )
+    return <Code {...rest}>{childrenTransformed}</Code>
+  },
 }
 
 export function DataColocation() {
@@ -109,7 +104,7 @@ export function DataColocation() {
     const sectorElement = target?.closest("[data-sector]") as HTMLElement | null
     const sector = sectorElement?.dataset.sector
 
-    if (!sector) return
+    if (sector == null) return
 
     const currentTarget = event.currentTarget
 
@@ -119,7 +114,6 @@ export function DataColocation() {
   }
 
   const unmarkSector = (event: React.MouseEvent<HTMLElement>) => {
-    console.log("unmarkSector", window.matchMedia("(hover: none)").matches)
     if (window.matchMedia("(hover: none)").matches) return
 
     const target =
@@ -143,33 +137,36 @@ export function DataColocation() {
     currentTarget.dataset.activeSector = targetSector
   }
 
-  const ref = useRef<HTMLDivElement>(null)
-  useOnClickOutside(ref, event => {
-    console.log("clicked outside")
-    if (event.currentTarget && event.currentTarget instanceof HTMLElement) {
-      delete event.currentTarget.dataset.activeSector
+  const sectionRef = useRef<HTMLElement>(null)
+  const figureRef = useRef<HTMLElement>(null)
+  const componentTreeRef = useRef<HTMLDivElement>(null)
+  useOnClickOutside([figureRef, componentTreeRef], () => {
+    const section = sectionRef.current
+    if (section && section.dataset.activeSector) {
+      delete section.dataset.activeSector
     }
   })
 
   return (
     <section
-      ref={ref}
-      className="gql-container gql-section flex flex-wrap justify-between gap-4 sm:max-xl:gap-y-8 xl:p-24"
+      ref={sectionRef}
+      className="gql-container gql-section flex justify-between gap-4 max-xl:flex-wrap sm:max-xl:gap-y-8 xl:p-24"
       onMouseOver={markSector}
       onMouseOut={unmarkSector}
       onPointerDown={markSector}
     >
-      <div className="shrink">
+      <div className="basis-full justify-between gap-x-8 sm:max-xl:flex lg:shrink">
         <header>
           <SectionLabel>Data Colocation</SectionLabel>
           <h2 className="typography-h2 mt-6">Data Colocation</h2>
-          <p className="typography-body-md mt-6 text-pretty xl:max-w-[438px]">
-            GraphQL fragments let you reuse common field selections across
-            queries, making your code more maintainable and consistent.
+          <p className="typography-body-md mt-6 text-pretty lg:max-w-[500px] xl:max-w-[438px]">
+            GraphQL fragments let you define each component’s data needs close
+            to it, and satisfy them with a single query.
           </p>
         </header>
         <ComponentTree
-          className="mt-6 md:mt-8 lg:mt-12 xl:mt-16"
+          ref={componentTreeRef}
+          className="mt-6 max-sm:mx-auto md:mt-8 lg:mt-12 xl:mt-16"
           names={[
             "Server",
             "<FriendList>",
@@ -178,8 +175,11 @@ export function DataColocation() {
           ]}
         />
       </div>
-      <article className="flex flex-wrap divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x xl:rounded-lg">
-        <div className="flex grow flex-col gap-y-4 lg:flex-col-reverse lg:p-4">
+      <article
+        className="flex shrink-0 divide-neu-100 dark:divide-neu-50 dark:shadow-[0_.5px_20px_0_hsl(0_0_0/.25)] max-xl:w-full max-lg:gap-4 max-md:flex-col lg:rounded-lg lg:shadow-[0_.5px_20px_0_hsl(var(--color-neu-400))] lg:dark:bg-neu-50/10 xl:divide-x"
+        ref={figureRef}
+      >
+        <div className="flex shrink-0 grow flex-col gap-y-4 sm:flex-col-reverse lg:p-4">
           <FigureInfo />
           <div className="sector-ring">
             <FriendList friends={json.friends} />

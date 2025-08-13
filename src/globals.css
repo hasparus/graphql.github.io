@@ -103,14 +103,6 @@ div[id^="headlessui-menu-items"] {
     @apply first:mr-0 hover:!text-primary;
   }
 
-  button[id^="headlessui-menu-button"] {
-    @apply hover:text-primary;
-
-    + div > a {
-      @apply hover:text-primary;
-    }
-  }
-
   .nextra-search {
     @apply ml-auto;
 
@@ -453,4 +445,11 @@ div[id^="headlessui-menu-items"] {
 html:has([role="listbox"][data-open]),
 html:has([role="menu"][data-open]) {
   overflow: visible !important;
+}
+
+@supports (background: -webkit-named-image(i)) {
+  html {
+    /* Safari moves the fixed Navbar when overscrolling and it looks bad */
+    overscroll-behavior-y: none;
+  }
 }

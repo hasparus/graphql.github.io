@@ -13,18 +13,19 @@ export function ProductivityFigure() {
           loop
           playsInline
           className="hidden dark:block"
+          // @ts-expect-error @types/react doesn't support fetchPriority yet
+          fetchpriority="low"
         >
-          <source src={`${VIDEOS_DIR}/graphiql-dark.mp4`} type="video/mp4" />
-        </video>
-        <video
-          disablePictureInPicture
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="block dark:hidden"
-        >
-          <source src={`${VIDEOS_DIR}/graphiql-light.mp4`} type="video/mp4" />
+          <source
+            src={`${VIDEOS_DIR}/graphiql-dark.mp4`}
+            media="(prefers-color-scheme: dark)"
+            type="video/mp4"
+          />
+          <source
+            src={`${VIDEOS_DIR}/graphiql-light.mp4`}
+            media="(prefers-color-scheme: light)"
+            type="video/mp4"
+          />
         </video>
         <div
           /* the video is cropped a bit short at the bottom, so we're adding missing padding */

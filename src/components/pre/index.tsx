@@ -12,6 +12,7 @@ interface PreProps extends ComponentPropsWithoutRef<"pre"> {
   "data-language"?: string
   "data-word-wrap"?: ""
   icon?: FC<{ className?: string }>
+  containerClassName?: string
 }
 
 export function Pre({
@@ -22,19 +23,21 @@ export function Pre({
   "data-language": _language,
   "data-word-wrap": hasWordWrap,
   icon: Icon,
+  containerClassName,
   ...props
 }: PreProps): ReactElement {
   const preRef = useRef<HTMLPreElement | null>(null)
 
   const copyButton = copy === "" && (
     <CopyToClipboard
+      tabIndex={props.tabIndex}
       className={filename ? "_ml-auto" : ""}
       getValue={() => preRef.current?.querySelector("code")?.textContent || ""}
     />
   )
 
   return (
-    <div className={cn(classes.pre, "relative")}>
+    <div className={cn(classes.pre, "relative", containerClassName)}>
       {filename && (
         <div
           className={cn(

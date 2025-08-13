@@ -78,14 +78,14 @@ const logos: LogoListItem[] = [
     component: ({ className, ...rest }) => (
       <div
         role="img"
-        className={clsx(className, styles.shopify, "relative flex")}
+        className={clsx(styles.shopify, "relative size-full flex-col")}
       >
         <ShopifyLockup
-          className="w-full opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+          className="size-full opacity-0 group-hover:opacity-100 group-focus:opacity-100"
           {...rest}
         />
         <ShopifyMonotoneLockup
-          className="absolute inset-0 w-full opacity-100 group-hover:opacity-0 group-focus:opacity-0"
+          className="absolute inset-0 size-full opacity-100 group-hover:opacity-0 group-focus:opacity-0"
           {...rest}
         />
       </div>
@@ -121,12 +121,13 @@ export function TrustedBy() {
         {logos.map(({ alt, href, component: Component }) => (
           <a
             key={alt}
+            aria-label={alt}
             href={href}
             target="_blank"
             rel="noreferrer"
             className="group relative flex shrink-0 items-center justify-center bg-neu-0 p-10 *:z-[1] before:absolute before:inset-2 hover:before:bg-neu-100/50 focus-visible:z-[1] dark:hover:before:bg-[#202219]"
           >
-            <Component />
+            <Component className="size-full" />
           </a>
         ))}
       </div>

@@ -6,10 +6,8 @@
   fill="#1C2A33"
 >
   <style>
-    @media (prefers-color-scheme: dark) {
-      .meta path {
-        fill: #fff;
-      }
+    html[class~="dark"] .meta path {
+      fill: #fff;
     }
   </style>
   <g class="meta" clip-path="url(#clip0_1645_25515)">

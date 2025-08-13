@@ -3,6 +3,8 @@ import type { Config } from "tailwindcss"
 import typography from "@tailwindcss/typography"
 import plugin from "tailwindcss/plugin"
 import containerQueries from "@tailwindcss/container-queries"
+import browserPlugin from "@igorkowalczyk/is-browser"
+
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./theme.config.tsx"],
   theme: {
@@ -199,6 +201,7 @@ const config: Config = {
       })
     }),
     tailwindMediaHover(),
+    browserPlugin,
   ],
   darkMode: ["class", 'html[class~="dark"]'],
 }
