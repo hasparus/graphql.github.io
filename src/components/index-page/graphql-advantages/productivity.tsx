@@ -12,7 +12,8 @@ export function ProductivityFigure() {
           muted
           loop
           playsInline
-          className="hidden dark:block"
+          // the video is irrelevant to screen readers as its soundless
+          aria-hidden
           // @ts-expect-error @types/react doesn't support fetchPriority yet
           fetchpriority="low"
         >

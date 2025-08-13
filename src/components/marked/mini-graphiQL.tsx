@@ -12,7 +12,13 @@ import { marked } from "marked"
 
 import { graphql, formatError, parse, typeFromAST } from "graphql"
 
-export class MiniGraphiQL extends Component {
+export type MiniGraphiQLProps = {
+  schema: GraphQLSchema
+  query: string
+  variables: string
+}
+
+export default class MiniGraphiQL extends Component<MiniGraphiQLProps> {
   // Lifecycle
 
   constructor(props) {

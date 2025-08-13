@@ -5,9 +5,8 @@
   "private": true,
   "packageManager": "pnpm@9.15.9",
   "scripts": {
-    "build": "next build && next-image-export-optimizer",
-    "serve": "pnpx serve out",
     "analyze": "ANALYZE=true next build",
+    "build": "next build && next-image-export-optimizer",
     "check:links": "lychee --verbose --no-progress './src/pages/**/*.mdx' --base https://graphql.org",
     "dev": "next",
     "format": "pnpm format:check --write",
@@ -17,7 +16,9 @@
     "lint:docs:ci": "eslint --ignore-path .gitignore src/pages/learn --format eslint-formatter-github",
     "postbuild": "next-sitemap",
     "prebuild": "tsx src/get-github-info.ts",
-    "test": "echo \"no tests\" && exit 1",
+    "serve": "pnpx serve out",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
     "validate:snippets": "node scripts/validate-snippets.js"
   },
   "dependencies": {
@@ -72,9 +73,13 @@
     "unist-util-visit": "^5.0.0",
     "use-query-params": "^2.2.1"
   },
+  "optionalDependencies": {
+    "playwright": "^1.54.2"
+  },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "4.3.0",
     "@next/eslint-plugin-next": "^15.3.3",
+    "@playwright/test": "^1.54.2",
     "@svgr/webpack": "^8.1.0",
     "@types/codemirror": "5.60.16",
     "@types/hast": "3.0.4",
@@ -99,6 +104,15 @@
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   },
+  "browserslist": [
+    "chrome >0 and last 2.5 years",
+    "edge >0 and last 2.5 years",
+    "safari >0 and last 2.5 years",
+    "firefox >0 and last 2.5 years",
+    "and_chr >0 and last 2.5 years",
+    "and_ff >0 and last 2.5 years",
+    "ios >0 and last 2.5 years"
+  ],
   "pnpm": {
     "patchedDependencies": {
       "nextra": "patches/nextra.patch"
