@@ -51,7 +51,7 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
                 <h3 className="font-bold lg:mb-4 3xl:mb-10">
                   {section.route ? (
                     <Anchor
-                      className="gql-focus-visible block p-4 underline-offset-4 hover:underline md:px-6 2xl:px-10"
+                      className="gql-focus-visible block p-4 underline-offset-4 hover:underline focus-visible:!-outline-offset-4 md:px-6 2xl:px-10"
                       href={section.route}
                     >
                       {section.title}
@@ -61,11 +61,11 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
                   )}
                 </h3>
               )}
-              {section.links.map(link => (
+              {section.links.map((link, i) => (
                 <Anchor
-                  key={link.route}
+                  key={i}
                   href={link.route}
-                  className="gql-focus-visible block p-4 underline-offset-4 hover:underline md:px-6 2xl:px-10"
+                  className="gql-focus-visible block p-4 underline-offset-4 hover:underline focus-visible:!-outline-offset-4 md:px-6 2xl:px-10"
                 >
                   {link.title}
                 </Anchor>
@@ -81,7 +81,7 @@ export function Footer({ extraLinks }: { extraLinks: FooterLink[] }) {
             )}
             <SocialIcons
               count={4}
-              className="col-span-full gap-px text-pri-base *:flex *:flex-1 *:items-center *:justify-center *:bg-neu-100 *:dark:bg-neu-0 max-sm:*:aspect-square lg:*:aspect-square [&>a:focus]:text-current [&>a:focus]:ring-transparent [&>a:hover]:bg-neu-0/90 [&>a:hover]:text-current [&_svg]:!h-8"
+              className="gql-all-anchors-focusable col-span-full gap-px text-pri-base *:flex *:flex-1 *:items-center *:justify-center *:bg-neu-100 *:dark:bg-neu-0 max-sm:*:aspect-square lg:*:aspect-square [&>a:focus]:text-current [&>a:focus]:!-outline-offset-[6px] [&>a:focus]:ring-transparent [&>a:hover]:bg-neu-0/90 [&>a:hover]:text-current [&_svg]:!h-8"
             />
           </div>
         </div>

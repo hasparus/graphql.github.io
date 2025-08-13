@@ -7,10 +7,11 @@ import { PoweredByCommunity } from "./powered-by-community"
 import { GraphQLAdvantages } from "./graphql-advantages"
 import { QuotesFromTheIndustry } from "./quotes-from-the-industry"
 import { JoinTheCommunity } from "./join-the-community"
+import { DataColocation } from "./data-colocation"
 
 export function IndexPage() {
   return (
-    <div className="bg-neu-0">
+    <div className="gql-all-anchors-focusable bg-neu-0">
       <Hero />
       <TrustedBy />
       <HowItWorks />
@@ -18,6 +19,7 @@ export function IndexPage() {
       <FivePillars />
       <PoweredByCommunity />
       <GraphQLAdvantages />
+      <DataColocation />
       <QuotesFromTheIndustry />
       <JoinTheCommunity />
     </div>

@@ -66,7 +66,7 @@ export function QuotesFromTheIndustry() {
       </div>
       <TestimonialsList
         testimonials={testimonials}
-        className="lg:!mt-0 lg:*:px-16"
+        className="gql-focus-visible focus-visible:!-outline-offset-4 lg:!mt-0 lg:*:px-16"
       />
     </div>
   )

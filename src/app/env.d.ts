@@ -12,7 +12,7 @@ declare module "*.svg?svgr" {
   export default content
 }
 
-declare module "*.mdx?raw" {
+declare module "*?raw" {
   const content: string
   export default content
 }

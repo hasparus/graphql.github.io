@@ -198,7 +198,16 @@ const config: Config = {
         },
       })
     }),
+    tailwindMediaHover(),
   ],
   darkMode: ["class", 'html[class~="dark"]'],
 }
+
 export default config
+
+function tailwindMediaHover() {
+  return plugin(({ addVariant }) => {
+    addVariant("hover-hover", "@media (hover: hover)")
+    addVariant("hover-none", "@media (hover: none)")
+  })
+}
