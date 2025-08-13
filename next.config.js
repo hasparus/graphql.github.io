@@ -3,8 +3,9 @@
 import nextra from "nextra"
 import path from "node:path"
 import withLess from "next-with-less"
-import { remarkGraphiQLComment } from "./src/remark-graphiql-comment.js"
 import fs from "fs"
+
+import { remarkGraphiQLComment } from "./src/remark-graphiql-comment.js"
 
 const vercelJSON = JSON.parse(fs.readFileSync("./vercel.json", "utf-8"))
 

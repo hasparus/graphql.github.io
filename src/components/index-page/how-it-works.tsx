@@ -1,43 +1,46 @@
-import Link from "next/link"
+import { ChevronRight } from "@/app/conf/_design-system/pixelarticons/chevron-right"
+import { Button } from "@/app/conf/_design-system/button"
+
 import { CodeA, CodeB, CodeC } from "../code-blocks"
-import { clsx } from "clsx"
+
+const TRY_IT_OUT_URL = "https://graphql.org/swapi-graphql"
 
 export function HowItWorks() {
   return (
-    <div className="[background:url('/img/graph-wash.png'),#171e26_repeat_center_center] xl:py-20">
-      <div className="conf-block container">
-        <section
-          className={clsx(
-            "flex flex-wrap items-center justify-center gap-14 max-sm:flex-col",
-            "[&_h3]:text-2xl [&_h3]:text-white max-lg:[&_h3]:text-center",
-            "[&_pre]:!bg-transparent [&_pre]:ring-0 [&_pre_span]:text-[--shiki-dark]",
-            "[&_h3]:font-extralight",
-            "[&_code]:whitespace-pre-wrap" /* fix scroll on mobile for code-blocks */,
-          )}
-        >
-          <div>
-            <h3>Describe your data</h3>
-            <CodeA />
-          </div>
+    <section className="gql-container gql-section xl:py-20">
+      <span className="mb-6 flex w-[80px] shrink-0 items-center gap-1 self-start whitespace-nowrap font-mono text-sm/none font-normal uppercase text-pri-base">
+        <ChevronRight className="shrink-0 translate-y-[-0.5px]" />
+        How it works
+      </span>
+      <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
+      <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
+        <ListItem text="Describe your data" code={<CodeA />} />
+        <ListItem text="Ask for what you want" code={<CodeB />} />
+        <ListItem text="Get predictable results" code={<CodeC />} />
+      </ol>
 
-          <div>
-            <h3>Ask for what you want</h3>
-            <CodeB />
-          </div>
+      <Button className="mx-auto mt-8 w-fit lg:mt-16" href={TRY_IT_OUT_URL}>
+        Try it out live
+      </Button>
+    </section>
+  )
+}
 
-          <div>
-            <h3>Get predictable results</h3>
-            <CodeC />
-          </div>
-        </section>
-
-        <Link
-          className="index-button mx-auto mt-10 block w-fit border-white text-white"
-          href="/TODO"
-        >
-          Try it out live
-        </Link>
+function ListItem({
+  text,
+  code,
+}: {
+  text: React.ReactNode
+  code: React.ReactNode
+}) {
+  return (
+    <li className="[counter-increment:list-item]">
+      <div className="typography-body-md bg-neu-0 py-4 before:typography-body-sm before:mr-2 before:inline-flex before:size-5 before:translate-y-[-0.5px] before:items-center before:justify-center before:bg-neu-200 before:p-1 before:text-neu-800 before:content-[counter(list-item)] md:py-6 md:before:ml-6">
+        {text}
       </div>
-    </div>
+      <div className="mt-px bg-neu-0 md:pl-2 md:pt-2 max-md:[&_code>span]:!pl-0 [&_pre]:ring-0">
+        {code}
+      </div>
+    </li>
   )
 }

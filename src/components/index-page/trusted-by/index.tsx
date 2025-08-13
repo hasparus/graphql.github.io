@@ -115,7 +115,7 @@ export function TrustedBy() {
       </div>
       <div
         className={clsx(
-          "my-6 grid grid-cols-2 justify-center gap-px md:my-12 md:grid-cols-5 xl:my-16",
+          "gql-radial-gradient my-6 grid grid-cols-2 justify-center gap-px md:my-12 md:grid-cols-5 xl:my-16",
           styles.logos,
         )}
       >
@@ -125,7 +125,7 @@ export function TrustedBy() {
             href={href}
             target="_blank"
             rel="noreferrer"
-            className="group flex shrink-0 items-center justify-center bg-neu-0 p-10 before:inset-2 hover:before:bg-neu-100 dark:hover:before:bg-[#202219]"
+            className="group relative flex shrink-0 items-center justify-center bg-neu-0 p-10 *:z-[1] before:absolute before:inset-2 hover:before:bg-neu-100/50 dark:hover:before:bg-[#202219]"
           >
             <Component />
           </a>
