@@ -1,16 +1,12 @@
 import { Hero } from "./hero"
 import { TrustedBy } from "./trusted-by"
-import { PredictableResults } from "./predictable-results"
 import { SingleRequest } from "./single-request"
-import { TypeSystem } from "./type-system"
-import { PowerFulTools } from "./powerful-tools"
-import { WithoutVersion } from "./without-version"
 import { BringYourOwnCode } from "./bring-your-own-code"
-import { WhoIsUsing } from "./who-is-using"
 import { HowItWorks } from "./how-it-works"
 import { ProvenSolution } from "./proven-solution"
 import { FivePillars } from "./five-pillars"
 import { PoweredByCommunity } from "./powered-by-community"
+import { GraphQLAdvantages } from "./graphql-advantages"
 
 export function IndexPage() {
   return (
@@ -21,6 +17,7 @@ export function IndexPage() {
       <ProvenSolution />
       <FivePillars />
       <PoweredByCommunity />
+      <GraphQLAdvantages />
       <section className="conf-block container flex max-w-3xl flex-col items-center text-center">
         <h2>A query language for your API</h2>
         <p>
@@ -31,13 +28,8 @@ export function IndexPage() {
           easier to evolve APIs over time, and enables powerful developer tools.
         </p>
       </section>
-      <PredictableResults />
       <SingleRequest />
-      <TypeSystem />
-      <PowerFulTools />
-      <WithoutVersion />
       <BringYourOwnCode />
-      <WhoIsUsing />
     </div>
   )
 }

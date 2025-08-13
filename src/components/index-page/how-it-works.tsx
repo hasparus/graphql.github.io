@@ -35,7 +35,7 @@ function ListItem({
       <div className="typography-body-md bg-neu-0 py-4 before:typography-body-sm before:mr-2 before:inline-flex before:size-5 before:translate-y-[-0.5px] before:items-center before:justify-center before:bg-neu-200 before:p-1 before:text-neu-800 before:content-[counter(list-item)] dark:before:bg-neu-50 md:py-6 md:before:ml-6">
         {text}
       </div>
-      <div className="mt-px bg-neu-0 md:pl-2 md:pt-2 max-md:[&_code>span]:!pl-0 [&_pre]:ring-0">
+      <div className="mt-px bg-neu-0 md:pl-2 md:pt-2 max-md:[&_code>span]:!pl-0 [&_pre]:border-none [&_pre]:ring-0">
         {code}
       </div>
     </li>
