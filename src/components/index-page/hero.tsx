@@ -7,7 +7,7 @@ import logoBlurred from "./hero/logo-blurred.png"
 
 export function Hero() {
   return (
-    <div className="relative bg-neu-0">
+    <div className="relative bg-neu-50 dark:bg-neu-0">
       <div className="gql-conf-container flex flex-col-reverse lg:grid lg:grid-cols-2">
         <div className="flex max-w-4xl flex-col justify-center gap-4 p-4 lg:min-h-[800px] xl:gap-8 xl:py-24 xl:pl-24 xl:pr-10">
           <h1 className="typography-h1 max-w-3xl text-neu-900">
@@ -44,7 +44,7 @@ function HeroStripes() {
     <div className="pointer-events-none relative overflow-hidden max-lg:h-[210px]">
       <ImageLoaded
         image={logoBlurred}
-        className="relative h-full bg-gradient-to-b from-pri-base to-pri-lighter opacity-0 transition-opacity duration-[1.5s] [mask-position:center_12%] [mask-size:110%] data-[loaded=true]:opacity-100 dark:to-pri-base lg:[mask-position:7%_7%] lg:[mask-size:200%]"
+        className="relative h-full bg-gradient-to-b from-pri-base to-pri-lighter opacity-0 transition-opacity duration-[1.5s] [mask-position:center_12%] [mask-size:110%] data-[loaded=true]:opacity-100 dark:to-pri-base sm:[mask-size:auto_300%] lg:[mask-position:7%_7%] lg:[mask-size:200%]"
         style={{
           maskImage: `url(${logoBlurred.src})`,
           maskRepeat: "no-repeat",

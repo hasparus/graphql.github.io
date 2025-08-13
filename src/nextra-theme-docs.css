@@ -2087,56 +2087,6 @@ body,
     background-color: rgb(var(--nextra-bg));
   }
 }
-.nextra-nav-container-blur {
-  pointer-events: none;
-  z-index: -1;
-  --tw-shadow: 0 2px 4px #00000005, 0 1px 0 #0000000f;
-  --tw-shadow-colored:
-    0 2px 4px var(--tw-shadow-color), 0 1px 0 var(--tw-shadow-color);
-  box-shadow:
-    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-    var(--tw-shadow);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-.nextra-nav-container-blur:is(html[class~="dark"] *) {
-  --tw-shadow: 0 -1px 0 #ffffff1a inset;
-  --tw-shadow-colored: inset 0 -1px 0 var(--tw-shadow-color);
-  box-shadow:
-    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-    var(--tw-shadow);
-}
-@media (prefers-contrast: more) {
-  .nextra-nav-container-blur {
-    --tw-shadow: 0 0 0 1px #000;
-    --tw-shadow-colored: 0 0 0 1px var(--tw-shadow-color);
-    box-shadow:
-      var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-      var(--tw-shadow);
-  }
-  .nextra-nav-container-blur:is(html[class~="dark"] *) {
-    --tw-shadow: 0 0 0 1px #fff;
-    --tw-shadow-colored: 0 0 0 1px var(--tw-shadow-color);
-    box-shadow:
-      var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
-      var(--tw-shadow);
-  }
-}
-.nextra-nav-container-blur {
-  background-color: rgba(var(--nextra-bg), 0.7);
-  --tw-backdrop-blur: blur(12px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
-    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
-    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
-    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
-    var(--tw-backdrop-sepia);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
-    var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
-    var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
-    var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
-    var(--tw-backdrop-sepia);
-}
 .nextra-toc-footer,
 .nextra-sidebar-footer {
   border-top-width: 1px;

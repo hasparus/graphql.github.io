@@ -1,5 +1,9 @@
 import { DocsThemeConfig, ThemeSwitch, useConfig } from "nextra-theme-docs"
 import NextLink from "next/link"
+
+import { Navbar } from "@/components/navbar/navbar"
+import { useRouter } from "next/router"
+
 import {
   GraphQLWordmarkLogo,
   StackOverflowIcon,
@@ -7,12 +11,12 @@ import {
   DiscordIcon,
   TwitterIcon,
 } from "./src/icons"
-import { useRouter } from "next/router"
+
 // import { createElement } from "react"
 // import NextImage from "next-image-export-optimizer"
 
 const graphQLLogo = (
-  <GraphQLWordmarkLogo className="nextra-logo h-8" title="GraphQL" />
+  <GraphQLWordmarkLogo className="nextra-logo h-6" title="GraphQL" />
 )
 
 const classes = {
@@ -201,26 +205,31 @@ export default {
       </>
     )
   },
-  banner: {
-    content: (
-      <>
-        📣 GraphQLConf 2025 • Sept 08-10 • Amsterdam • Early bird tickets
-        available &amp; sponsorship opportunities open •{" "}
-        <NextLink
-          href="/conf/2025"
-          className="underline after:font-sans after:content-['_→']"
-        >
-          Learn more
-        </NextLink>
-      </>
-    ),
-    key: "graphqlconf-2024",
-  },
+  // Hidden for now, Design is discussing it.
+  // banner: {
+  //   content: (
+  //     <>
+  //       📣 GraphQLConf 2025 • Sept 08-10 • Amsterdam • Early bird tickets
+  //       available &amp; sponsorship opportunities open •{" "}
+  //       <NextLink
+  //         href="/conf/2025"
+  //         className="underline after:font-sans after:content-['_→']"
+  //       >
+  //         Learn more
+  //       </NextLink>
+  //     </>
+  //   ),
+  //   key: "graphqlconf-2024",
+  // },
   logo: graphQLLogo,
   docsRepositoryBase:
     "https://github.com/graphql/graphql.github.io/tree/source",
   color: {
     hue: 319,
+    lightness: {
+      light: 44.1,
+      dark: 90,
+    },
   },
   sidebar: {
     defaultMenuCollapseLevel: 1,
@@ -229,7 +238,10 @@ export default {
     content: Footer,
   },
   navbar: {
-    extraContent: <ThemeSwitch lite className="[&_span]:hidden" />,
+    component: Navbar,
+    extraContent: (
+      <ThemeSwitch lite className="max-lg:hidden [&_span]:hidden" />
+    ),
   },
   toc: {
     backToTop: true,
