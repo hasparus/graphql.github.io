@@ -1,49 +1,59 @@
-import Link from "next/link"
-import { CodeA, CodeB, CodeC } from "../code-blocks"
-import { GraphQLLogo } from "@/icons"
-import { clsx } from "clsx"
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
+import CheckIcon from "@/app/conf/_design-system/pixelarticons/check.svg?svgr"
+import { Button } from "@/app/conf/_design-system/button"
+import { ImageLoaded } from "@/app/conf/2025/components/image-loaded"
+
+import logoBlurred from "./hero/logo-blurred.png"
 
 export function Hero() {
   return (
-    <div className="[background:url('/img/graph-wash.png'),#171e26_repeat_center_center] xl:py-20">
-      <div className="conf-block container">
-        <section
-          className={clsx(
-            "flex flex-wrap items-center justify-center gap-14 max-sm:flex-col",
-            "[&_h3]:text-2xl [&_h3]:text-white max-lg:[&_h3]:text-center",
-            "[&_pre]:!bg-transparent [&_pre]:ring-0 [&_pre_span]:text-[--shiki-dark]",
-            "[&_h3]:font-extralight",
-            "[&_code]:whitespace-pre-wrap" /* fix scroll on mobile for code-blocks */,
-          )}
-        >
-          <div className="flex flex-col items-center gap-2 max-xl:w-full max-md:grow">
-            <GraphQLLogo className="w-24" />
-            <h1 className="text-3xl text-primary">GraphQL</h1>
-          </div>
+    <div className="relative bg-neu-0">
+      <div className="gql-conf-container flex flex-col-reverse lg:grid lg:grid-cols-2">
+        <div className="flex max-w-4xl flex-col justify-center gap-4 p-4 lg:min-h-[800px] xl:gap-8 xl:py-24 xl:pl-24 xl:pr-10">
+          <h1 className="typography-h1 max-w-3xl text-neu-900">
+            The query language for modern APIs
+          </h1>
 
-          <div>
-            <h3>Describe your data</h3>
-            <CodeA />
-          </div>
+          <ul className="flex flex-col gap-2">
+            {[
+              "Deliver high-performance user experience at scale",
+              "Secure and stabilize your API with a strongly typed schema and validated queries",
+              "Reduce dependencies through efficient, distributed development",
+            ].map((item, index) => (
+              <li key={index} className="flex items-start gap-1">
+                <CheckIcon className="size-6 shrink-0 text-pri-base max-lg:mt-px" />
+                <p className="text-pretty text-neu-800">{item}</p>
+              </li>
+            ))}
+          </ul>
 
-          <div>
-            <h3>Ask for what you want</h3>
-            <CodeB />
+          <div className="flex items-center gap-4">
+            <Button href="/learn" className="max-sm:w-full">
+              Learn more
+            </Button>
           </div>
-
-          <div>
-            <h3>Get predictable results</h3>
-            <CodeC />
-          </div>
-        </section>
-
-        <Link
-          className="index-button mx-auto mt-10 block w-fit border-white text-white"
-          href="/learn"
-        >
-          Get Started
-        </Link>
+        </div>
+        <HeroStripes />
       </div>
+    </div>
+  )
+}
+
+function HeroStripes() {
+  return (
+    <div className="pointer-events-none relative overflow-hidden max-lg:h-[210px]">
+      <ImageLoaded
+        image={logoBlurred}
+        className="relative h-full bg-gradient-to-b from-pri-base to-pri-lighter opacity-0 transition-opacity duration-[1.5s] [mask-position:center_12%] [mask-size:110%] data-[loaded=true]:opacity-100 dark:to-pri-base lg:[mask-position:7%_7%] lg:[mask-size:200%]"
+        style={{
+          maskImage: `url(${logoBlurred.src})`,
+          maskRepeat: "no-repeat",
+        }}
+      />
+      <StripesDecoration
+        stripeWidth="5px"
+        oddClassName="bg-gradient-to-b from-sec-base to-pri-lighter dark:from-sec-darker dark:to-pri-darker"
+      />
     </div>
   )
 }

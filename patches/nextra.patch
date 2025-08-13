@@ -1,0 +1,26 @@
+diff --git a/dist/client/components/image.js b/dist/client/components/image.js
+index 239d72f5921e2d1b7359e569ae5b74c12d7c9d8a..ebeb619da1e3ccb7722e9388c92c1e2192527027 100644
+--- a/dist/client/components/image.js
++++ b/dist/client/components/image.js
+@@ -1,5 +1,5 @@
+ import { jsx } from "react/jsx-runtime";
+-import NextImage from "next/image";
++import NextImage from "next-image-export-optimizer";
+ import { forwardRef } from "react";
+ const Image = forwardRef((props, ref) => {
+   const ComponentToUse = typeof props.src === "object" ? NextImage : "img";
+diff --git a/dist/client/normalize-pages.js b/dist/client/normalize-pages.js
+index 15afee0c1de26f47d781f423e5ec32e33ad925d3..fefd01736bd2b778df275bf50ac48384d5f63845 100644
+--- a/dist/client/normalize-pages.js
++++ b/dist/client/normalize-pages.js
+@@ -103,7 +103,9 @@ The field key "${metaKey}.items.${key}" in \`_meta\` file refers to a page that
+     }
+     if (item) continue;
+     if (typeof window === "undefined") {
+-      const isValid = metaItem.type === "separator" || metaItem.type === "menu" || metaItem.href;
++      const isValid = metaItem.type === "separator" || metaItem.type === "menu" || metaItem.href
++      // workaround
++      || metaKey === 'conf';
+       if (!isValid) {
+         throw new Error(
+           `Validation of "_meta" file has failed.

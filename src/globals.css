@@ -1,6 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "./nextra-theme-docs.css";
+@import "tailwindcss/base";
+@import "tailwindcss/utilities";
+@import "tailwindcss/components";
+
+/* #region nextra tweaks (preferably removed later, replaced with components) */
+.nextra-nav-container > nav > div:nth-child(2) {
+  margin-right: auto;
+}
+/* #endregion nextra tweaks */
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -284,20 +291,6 @@ div[id^="headlessui-menu-items"] {
 .tag {
   @apply hover:border-transparent hover:bg-primary hover:text-white;
   @apply rounded border border-current px-2.5 py-1 text-sm font-bold transition-colors;
-}
-
-.index {
-  p {
-    @apply mb-5 max-w-2xl text-lg lg:text-xl/9;
-  }
-
-  h2 {
-    @apply mb-10 text-balance text-3xl font-bold lg:text-5xl;
-  }
-
-  pre {
-    @apply bg-white;
-  }
 }
 
 .add,
