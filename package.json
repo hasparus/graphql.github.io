@@ -27,6 +27,7 @@
     "@igorkowalczyk/is-browser": "^5.1.0",
     "@next/bundle-analyzer": "^15.4.5",
     "@radix-ui/react-radio-group": "^1.2.2",
+    "@sparticuz/chromium": "^138.0.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
     "@tailwindcss/typography": "^0.5.15",
@@ -57,12 +58,14 @@
     "numbro": "2.5.0",
     "p-limit": "^4.0.0",
     "parser-front-matter": "1.6.4",
+    "playwright-core": "^1.54.2",
     "postcss": "^8.4.49",
     "postcss-import": "^16.1.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-medium-image-zoom": "5.2.13",
     "react-use-measure": "^2.1.7",
+    "rehype-mermaid": "^3.0.0",
     "rss": "1.2.2",
     "server-only": "0.0.1",
     "string-similarity": "^4.0.4",
@@ -115,7 +118,9 @@
   ],
   "pnpm": {
     "patchedDependencies": {
-      "nextra": "patches/nextra.patch"
+      "nextra": "patches/nextra.patch",
+      "nextra-theme-docs": "patches/nextra-theme-docs.patch",
+      "mermaid-isomorphic": "patches/mermaid-isomorphic.patch"
     }
   }
 }

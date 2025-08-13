@@ -192,7 +192,7 @@ const config: Config = {
 
       addBase({
         ".typography-link": {
-          color: "theme('colors.neu-800')",
+          color: "hsl(var(--color-neu-900) / var(--tw-text-opacity, 1))",
           textDecoration: "underline",
           "&:hover": {
             textDecoration: "none",

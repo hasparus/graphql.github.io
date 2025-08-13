@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 
 import { GraphQLWordmarkLogo } from "./src/icons"
 import { Footer } from "@/components/footer"
+import { mdxComponents } from "@/_design-system/mdx-components"
 
 const graphQLLogo = (
   <GraphQLWordmarkLogo className="nextra-logo h-6" title="GraphQL" />
@@ -12,7 +13,8 @@ const graphQLLogo = (
 
 export default {
   backgroundColor: {
-    dark: "27,27,27",
+    light: "251,251,249",
+    dark: "13.7,14.7,10.8",
   },
   head: function useHead() {
     const { frontMatter, title: pageTitle } = useConfig()
@@ -90,10 +92,5 @@ export default {
   search: {
     placeholder: "Search…",
   },
-  // TODO: @dimaMachina try to remove pnpm patch for `nextra` package later
-  // components: {
-  //   // Override `next/image` imports from `nextra-theme-docs`
-  //   img: (props: any) =>
-  //     createElement(typeof props.src === "object" ? NextImage : "img", props),
-  // },
+  components: mdxComponents,
 } satisfies DocsThemeConfig

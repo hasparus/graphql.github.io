@@ -1,0 +1,43 @@
+diff --git a/dist/index.d.mts b/dist/index.d.mts
+index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..6671e29326be99861058895916185910452ced17 100644
+--- a/dist/index.d.mts
++++ b/dist/index.d.mts
+@@ -1421,3 +1421,19 @@ declare function ThemeSwitch({ lite, className }: ThemeSwitchProps): ReactElemen
+ declare function Layout({ children, themeConfig, pageOpts }: NextraThemeLayoutProps): ReactElement;
+ 
+ export { Bleed, Collapse, type PartialDocsThemeConfig as DocsThemeConfig, Link, LocaleSwitch, Navbar, NotFoundPage, SkipNavContent, SkipNavLink, ThemeSwitch, Layout as default, getComponents, useConfig, useMenu, useThemeConfig };
++
++export type ActiveAnchor = Record<
++  string,
++  {
++    isActive?: boolean
++    aboveHalfViewport: boolean
++    index: number
++    insideHalfViewport: boolean
++  }
++>
++
++export declare const useActiveAnchor: () => ActiveAnchor
++export declare const useSetActiveAnchor: () => Dispatch<SetStateAction<ActiveAnchor>>
++export declare const useIntersectionObserver: () => IntersectionObserver | null
++export declare const useSlugs: () => WeakMap<any, any>
++
+diff --git a/dist/index.js b/dist/index.js
+index 56201641fd965dcc5ab7c5df53e444c41293c00e..860b8cfd297e82da041c4d8287ed266691d75a0e 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -100,10 +100,10 @@ IntersectionObserverContext.displayName = "IntersectionObserver";
+ var slugs = /* @__PURE__ */ new WeakMap();
+ var SlugsContext = createContext(slugs);
+ SlugsContext.displayName = "Slugs";
+-var useActiveAnchor = () => useContext(ActiveAnchorContext);
+-var useSetActiveAnchor = () => useContext(SetActiveAnchorContext);
+-var useIntersectionObserver = () => useContext(IntersectionObserverContext);
+-var useSlugs = () => useContext(SlugsContext);
++export var useActiveAnchor = () => useContext(ActiveAnchorContext);
++export var useSetActiveAnchor = () => useContext(SetActiveAnchorContext);
++export var useIntersectionObserver = () => useContext(IntersectionObserverContext);
++export var useSlugs = () => useContext(SlugsContext);
+ var ActiveAnchorProvider = ({
+   children
+ }) => {

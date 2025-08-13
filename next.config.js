@@ -1,10 +1,12 @@
 /* eslint-env node */
+// @ts-check
 
 import nextra from "nextra"
 import path from "node:path"
 import withLess from "next-with-less"
 import nextBundleAnalyzer from "@next/bundle-analyzer"
 import fs from "fs"
+import rehypeMermaid from "rehype-mermaid"
 
 import { remarkGraphiQLComment } from "./src/remark-graphiql-comment.js"
 import { syntaxHighlightingThemes } from "./src/_design-system/syntax/index.js"
@@ -17,6 +19,7 @@ const withNextra = nextra({
   themeConfig: "./theme.config.tsx",
   mdxOptions: {
     remarkPlugins: [remarkGraphiQLComment],
+    rehypePlugins: [mermaidConfig()],
     rehypePrettyCodeOptions: {
       theme: syntaxHighlightingThemes,
     },
@@ -176,3 +179,37 @@ const withBundleAnalyzer = nextBundleAnalyzer({
 })
 
 export default withBundleAnalyzer(withLess(withNextra(config)))
+
+function mermaidConfig() {
+  return [
+    rehypeMermaid,
+    /** @type {import("rehype-mermaid").RehypeMermaidOptions} */ ({
+      mermaidConfig: {
+        fontFamily: "var(--font-sans)", // we can't use monospace here because it's way too wide
+        theme: "null",
+        look: "classic",
+        flowchart: {
+          defaultRenderer: "elk",
+          padding: 6,
+        },
+        themeCSS: `
+          .node rect {
+            fill: var(--mermaid-node-fill);
+            stroke: var(--mermaid-node-stroke);
+          }
+          .label text, span {
+            fill: hsl(var(--color-neu-900));
+            color: hsl(var(--color-neu-900));
+          }
+          .flowchart-link {
+            stroke: var(--mermaid-arrow);
+          }
+          .marker {
+            stroke: var(--mermaid-arrow);
+            fill: var(--mermaid-arrow);
+          }
+        `,
+      },
+    }),
+  ]
+}
