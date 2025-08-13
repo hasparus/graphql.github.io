@@ -8,6 +8,7 @@ import { WithoutVersion } from "./without-version"
 import { BringYourOwnCode } from "./bring-your-own-code"
 import { WhoIsUsing } from "./who-is-using"
 import { HowItWorks } from "./how-it-works"
+import { ProvenSolution } from "./proven-solution"
 
 export function IndexPage() {
   return (
@@ -15,6 +16,7 @@ export function IndexPage() {
       <Hero />
       <TrustedBy />
       <HowItWorks />
+      <ProvenSolution />
       <section className="conf-block container flex max-w-3xl flex-col items-center text-center">
         <h2>A query language for your API</h2>
         <p>

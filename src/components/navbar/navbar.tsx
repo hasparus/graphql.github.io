@@ -228,9 +228,7 @@ function BackdropBlur() {
   return (
     <>
       <div
-        // note: we can't use the background trick to reduce flickering, because we have many section
-        // background colors and big images, so we'd have to change the --bg var with javascript
-        className="pointer-events-none absolute inset-0 -z-10 h-[200%] backdrop-blur-[12.8px]"
+        className="pointer-events-none absolute inset-0 -z-10 h-[200%] backdrop-blur-[6.4px]"
         style={{
           maskImage: mask,
           WebkitMaskImage: mask,
