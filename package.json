@@ -22,7 +22,7 @@
     "validate:snippets": "node scripts/validate-snippets.js"
   },
   "dependencies": {
-    "@graphql-tools/schema": "10.0.23",
+    "@graphql-tools/schema": "10.0.25",
     "@headlessui/react": "^2.2.4",
     "@igorkowalczyk/is-browser": "^5.1.0",
     "@next/bundle-analyzer": "^15.4.5",
@@ -80,7 +80,7 @@
     "playwright": "^1.54.2"
   },
   "devDependencies": {
-    "@graphql-eslint/eslint-plugin": "4.3.0",
+    "@graphql-eslint/eslint-plugin": "4.4.0",
     "@next/eslint-plugin-next": "^15.3.3",
     "@playwright/test": "^1.54.2",
     "@svgr/webpack": "^8.1.0",

@@ -589,6 +589,11 @@
       "source": "/landscape",
       "destination": "https://landscape.graphql.org",
       "permanent": true
+    },
+    {
+      "source": "/conf/2025/event-resources",
+      "destination": "https://sites.google.com/linuxfoundation.org/graphqlconf2025event-resources/event-resources",
+      "permanent": false
     }
   ]
 }

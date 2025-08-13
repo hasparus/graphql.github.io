@@ -109,6 +109,7 @@ const config = {
 
     return config
   },
+  // Comment this out if you're working on OG images.
   output: "export",
   images: {
     loader: "custom",

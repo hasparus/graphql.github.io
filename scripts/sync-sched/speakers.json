@@ -61,6 +61,30 @@
       "~syncedDetailsAt": 1749502251756
     },
     {
+      "username": "adam.miskiewicz",
+      "company": "Airbnb",
+      "position": "Viaduct Platform Lead",
+      "name": "Adam Miskiewicz",
+      "about": "Adam is a Senior Staff Software Engineer at Airbnb, where he leads platform architecture with a focus on performance, developer experience, and large-scale GraphQL systems. He’s one of the core architects behind Viaduct, Airbnb’s multi-tenant GraphQL platform, and is known for turning complex ideas into scalable, developer-friendly infrastructure. When he's not deep in Kotlin or shaping deployment strategy, he's probably pushing teams to move faster — safely.",
+      "location": "",
+      "url": "",
+      "avatar": "//avatars.sched.co/8/82/23352721/avatar.jpg.320x320px.jpg?bfd",
+      "socialurls": [
+        {
+          "service": "Twitter",
+          "url": "https://x.com/skevy"
+        },
+        {
+          "service": "LinkedIn",
+          "url": "https://www.linkedin.com/in/adammiskiewicz/"
+        }
+      ],
+      "_years": [
+        2025
+      ],
+      "~syncedDetailsAt": 1753974079549
+    },
+    {
       "username": "adam.sayah",
       "company": "Solo.io",
       "position": "Product Manager",
@@ -168,7 +192,7 @@
         2023,
         2025
       ],
-      "~syncedDetailsAt": 1750287969593
+      "~syncedDetailsAt": 1753215856700
     },
     {
       "username": "alex_reilly.7ldur4l",
@@ -217,26 +241,6 @@
         2023
       ],
       "~syncedDetailsAt": 1749497543087
-    },
-    {
-      "username": "aleymet",
-      "company": "Bouygues Telecom",
-      "position": "Principal Engineer, Senior Architect (freelance)",
-      "name": "Arnaud Leymet",
-      "about": "A dedicated Senior Solutions Architect & Staff Engineer with a proven ability to lead projects and drive software development initiatives. I thrive in dynamic environments, leveraging my strong technical skills, deep product knowledge and collaborative approach to drive innovation and deliver composable and impactful solutions.",
-      "location": "",
-      "url": "https://arnley.com",
-      "avatar": "//avatars.sched.co/4/80/23098717/avatar.jpg.320x320px.jpg?ed8",
-      "socialurls": [
-        {
-          "service": "LinkedIn",
-          "url": "https://linkedin.com/in/arnley"
-        }
-      ],
-      "_years": [
-        2025
-      ],
-      "~syncedDetailsAt": 1750287969593
     },
     {
       "username": "amanda1988",
@@ -326,7 +330,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1750287969593
+      "~syncedDetailsAt": 1753215856700
     },
     {
       "username": "andrei.bocan",
@@ -342,7 +346,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1750287969594
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "andrew.doyle1",
@@ -479,7 +483,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "ardatanrikulu",
@@ -581,7 +585,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "benjie3",
@@ -607,7 +611,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1750287969594
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "BoD",
@@ -622,7 +626,22 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753467946105
+    },
+    {
+      "username": "borisbesemer",
+      "company": "Vercel",
+      "position": "Senior Technical Consultant",
+      "name": "Boris Besemer",
+      "about": "",
+      "location": "The Netherlands",
+      "url": "",
+      "avatar": "//avatars.sched.co/c/f5/23301917/avatar.jpg.320x320px.jpg?2f8",
+      "socialurls": [],
+      "_years": [
+        2025
+      ],
+      "~syncedDetailsAt": 1753215856699
     },
     {
       "username": "brandon.r.minnick",
@@ -741,7 +760,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036945383
+      "~syncedDetailsAt": 1754671960621
     },
     {
       "username": "christian.ernst",
@@ -810,7 +829,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "danadajian",
@@ -845,7 +864,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1753974079549
     },
     {
       "username": "danielle.man",
@@ -880,12 +899,12 @@
     {
       "username": "dipro",
       "company": "monday.com",
-      "position": "",
+      "position": "Senior Developer Advocate",
       "name": "Dipro Bhowmik",
       "about": "",
       "location": "",
       "url": "",
-      "avatar": "",
+      "avatar": "//avatars.sched.co/3/ee/23187254/avatar.jpg.320x320px.jpg?c12",
       "socialurls": [],
       "_years": [
         2025
@@ -935,7 +954,7 @@
         2023,
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "dotan1",
@@ -959,7 +978,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "dotansimha",
@@ -1043,11 +1062,11 @@
         2023,
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "erikwrede2",
-      "company": "fulfillmenttools",
+      "company": "Strawberry-GraphQL",
       "position": "Software Engineer",
       "name": "Erik Wrede",
       "about": "Erik is a Software Engineer and GraphQL enthusiast that enjoys building full-stack GraphQL solutions. As a member of the GraphQL-Python Maintainer Team and Core Dev at Strawberry-GraphQL, he’s passionate about improving the developer experience and creating exciting new GraphQL tooling. Erik is excited about building performant and scalable solutions and is always eager to chat about new features, developments and the latest advancements in tech.",
@@ -1065,9 +1084,10 @@
         }
       ],
       "_years": [
-        2024
+        2024,
+        2025
       ],
-      "~syncedDetailsAt": 1749501888881
+      "~syncedDetailsAt": 1752072949897
     },
     {
       "username": "ernie.turner1",
@@ -1106,12 +1126,12 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1753974079550
     },
     {
       "username": "fbjork",
       "company": "Grafbase",
-      "position": "Founder & CEO",
+      "position": "CEO",
       "name": "Fredrik Björk",
       "about": "",
       "location": "",
@@ -1150,7 +1170,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750182478137
+      "~syncedDetailsAt": 1752072949897
     },
     {
       "username": "gabe210",
@@ -1165,7 +1185,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1753974079550
     },
     {
       "username": "gabrielschulhof",
@@ -1287,7 +1307,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1753974079550
     },
     {
       "username": "hello2358",
@@ -1352,7 +1372,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "ivan.goncharov.ua",
@@ -1367,7 +1387,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1753974079550
     },
     {
       "username": "jamie855",
@@ -1421,7 +1441,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1753974079550
     },
     {
       "username": "jared_cheney.7rad60v",
@@ -1446,7 +1466,7 @@
     {
       "username": "jasonkuhrt",
       "company": "The Guild",
-      "position": "Mr.",
+      "position": "",
       "name": "Jason Kuhrt",
       "about": "I am a builder passionate about system design, developer experience, static typing, and functional programming. Educated in design theory, practice, and social responsibility, I fell into code via open source gateways like Wordpress, jQuery, Node.js, and GitHub. My love for open source continues today in TypeScript and GraphQL. In my personal life, close to my heart are the backpacking trips I take my two boys on yearly across the beautiful rugged Canadian wilderness.",
       "location": "",
@@ -1461,7 +1481,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750182512347
+      "~syncedDetailsAt": 1752072949897
     },
     {
       "username": "jeff.auriemma",
@@ -1487,7 +1507,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753974079549
     },
     {
       "username": "jeff737",
@@ -1507,7 +1527,22 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1754078014495
+    },
+    {
+      "username": "jem28",
+      "company": "Graphile",
+      "position": "Community Operations",
+      "name": "Jem Gillam",
+      "about": "Jem wears many hats: admin, marketing, video editor, QA, customer relations, operations, and so much more; but chief among them is community - fostering, moderation, outreach and collaboration are all in a day's work for them. Often working behind the scenes on GraphQL-related projects, they were key to the GraphQL Stars initiative, organized the SMEs program, and are the lead on a new program launching this year. In their spare time, Jem is a keen volunteer and loves to crochet and bake.",
+      "location": "Chandlers Ford, UK",
+      "url": "https://github.com/jemgillam",
+      "avatar": "//avatars.sched.co/f/8a/23300543/avatar.jpg.320x320px.jpg?afe",
+      "socialurls": [],
+      "_years": [
+        2025
+      ],
+      "~syncedDetailsAt": 1753215856699
     },
     {
       "username": "jens63",
@@ -1546,7 +1581,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036922058
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "jesperrasmussen",
@@ -1566,7 +1601,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750182512347
+      "~syncedDetailsAt": 1752072949897
     },
     {
       "username": "jim.barton",
@@ -1605,7 +1640,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "jordaneldredge",
@@ -1644,7 +1679,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "juancarlosjr97",
@@ -1668,7 +1703,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036945383
+      "~syncedDetailsAt": 1754671960621
     },
     {
       "username": "kamilkisiela",
@@ -1698,7 +1733,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "keerthan.ekbote",
@@ -1861,7 +1896,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "ldebruijn",
@@ -1897,7 +1932,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "lee_byron.25krdom6",
@@ -1951,7 +1986,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "lyonwj1",
@@ -2000,7 +2035,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754671960621
     },
     {
       "username": "mail1232",
@@ -2015,7 +2050,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "mansi.mittal",
@@ -2050,7 +2085,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750182515121
+      "~syncedDetailsAt": 1752072949897
     },
     {
       "username": "marion84",
@@ -2077,6 +2112,26 @@
       "~syncedDetailsAt": 1749505650884
     },
     {
+      "username": "mark1437",
+      "company": "Yelp",
+      "position": "Software Engineer",
+      "name": "Mark Larah",
+      "about": "Mark leads GraphQL infrastructure and tooling at Yelp.",
+      "location": "",
+      "url": "",
+      "avatar": "//avatars.sched.co/e/b9/23416744/avatar.jpg.320x320px.jpg?fb2",
+      "socialurls": [
+        {
+          "service": "Twitter",
+          "url": "https://x.com/mark_larah"
+        }
+      ],
+      "_years": [
+        2025
+      ],
+      "~syncedDetailsAt": 1754671960621
+    },
+    {
       "username": "martijn.walraven",
       "company": "Apollo",
       "position": "Software Engineer",
@@ -2090,7 +2145,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754671960621
     },
     {
       "username": "martinbonnin42",
@@ -2105,7 +2160,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287969593
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "marybriskin",
@@ -2149,9 +2204,9 @@
     {
       "username": "matt1575",
       "company": "Apollo GraphQL",
-      "position": "CTO & Co-Founder",
+      "position": "CEO & Co-Founder",
       "name": "Matt DeBergalis",
-      "about": "Matt DeBerglis is the Chief Technology Officer and Co-Founder of Apollo GraphQL, where he is responsible for pioneering the next frontier of the company’s cutting-edge technology. Prior to Apollo, Matt was the co-founder of Meteor Development Group and co-creator of Meteor.js, which grew to become one of the most popular open-source projects in the world for developing full-stack web apps with JavaScript. He attended MIT and resides in the San Francisco Bay Area with his family.",
+      "about": "Matt DeBergalis is the Chief Executive Officer and Co-Founder of Apollo GraphQL, where he is responsible for pioneering the next frontier of the company’s cutting-edge technology. Prior to Apollo, Matt was the co-founder of Meteor Development Group and co-creator of Meteor.js, which grew to become one of the most popular open-source projects in the world for developing full-stack web apps with JavaScript. He attended MIT and resides in the San Francisco Bay Area with his family.",
       "location": "",
       "url": "",
       "avatar": "//avatars.sched.co/c/59/7503056/avatar.jpg.320x320px.jpg?f15",
@@ -2160,7 +2215,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "matteo.collina1",
@@ -2174,23 +2229,23 @@
       "socialurls": [
         {
           "service": "Twitter",
-          "url": "https://twitter.com/matteocollina"
+          "url": "https://twitter.com/matteocollins"
         }
       ],
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750182515122
+      "~syncedDetailsAt": 1752072949898
     },
     {
       "username": "mauricio.montalvo.guzman",
       "company": "Pinterest",
       "position": "Senior Software Engineer",
       "name": "Mauricio Montalvo",
-      "about": "I’m a software engineer with 11 years of professional experience, I consider myself full stack but my career has been focused in FE development in the last years, I love creating UIs using ReactJS and GraphQL.\nAt Pinterest, I’m part of the Web team that’s exploring the introduction of GraphQL in our systems, I’ve worked on this for 2 years now, leading a GQL migration project since Q3 2023.\n\nI think helping others and sharing knowledge is one of the best ways to improve in your career as a dev.",
+      "about": "I’m a software engineer with 11 years of professional experience, I consider myself full stack but my career has been focused in FE development in the last years, I love creating UIs using ReactJS and GraphQL.\nAt Pinterest, I’m part of the Web team that’s exploring the introduction of GraphQL in our systems, I’ve worked on this for 3years now, leading a GQL migration project since Q3 2023.\n\nI think helping others and sharing knowledge is one of the best ways to improve in your career as a dev.",
       "location": "",
       "url": "",
-      "avatar": "//avatars.sched.co/8/d4/21066831/avatar.jpg.320x320px.jpg?2b4",
+      "avatar": "//avatars.sched.co/8/d4/21066831/avatar.jpg.320x320px.jpg?3d6",
       "socialurls": [],
       "_years": [
         2024,
@@ -2271,7 +2326,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036945383
+      "~syncedDetailsAt": 1754671960621
     },
     {
       "username": "michael.astle",
@@ -2286,7 +2341,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752072949898
     },
     {
       "username": "michael.bleigh",
@@ -2325,7 +2380,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "omribruchim",
@@ -2356,7 +2411,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036945383
+      "~syncedDetailsAt": 1754671960622
     },
     {
       "username": "patrick.arminio",
@@ -2464,7 +2519,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753974079549
     },
     {
       "username": "rachit_sengupta",
@@ -2538,14 +2593,14 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "rickbijkerk54",
       "company": "Bol",
-      "position": "Software Engineer @ Bol",
+      "position": "Software Engineer",
       "name": "Rick Bijkerk",
-      "about": "todo",
+      "about": "Software Engineer living in the Netherlands, working for Bol sinds 2021",
       "location": "",
       "url": "",
       "avatar": "//avatars.sched.co/d/6a/19320231/avatar.jpg.320x320px.jpg?4cd",
@@ -2553,14 +2608,14 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "robert.balicki",
       "company": "Pinterest",
       "position": "Staff Engineer",
       "name": "Robert Balicki",
-      "about": "Robert Balicki works as a software engineer at Jetty. He used to have hair down to his shoulders and play in a rock band.",
+      "about": "Robert is an engineer at Pinterest, where he helps the company adopt Relay and GraphQL. He was previously on the Relay team at Meta.",
       "location": "",
       "url": "",
       "avatar": "//avatars.sched.co/5/8b/18743858/avatar.jpg.320x320px.jpg?7d6",
@@ -2570,7 +2625,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036945383
+      "~syncedDetailsAt": 1754671960622
     },
     {
       "username": "robrichard87",
@@ -2586,7 +2641,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1751036945383
+      "~syncedDetailsAt": 1754671960622
     },
     {
       "username": "ruben.cagnie",
@@ -2632,7 +2687,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287969593
+      "~syncedDetailsAt": 1753215856699
     },
     {
       "username": "saihajpreet.singh",
@@ -2671,7 +2726,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "sanvertarmur",
@@ -2690,13 +2745,13 @@
     },
     {
       "username": "sasanders26",
-      "company": "Highnote",
-      "position": "Senior Technical Writer",
+      "company": "Docker",
+      "position": "Technical Writer",
       "name": "Sarah Sanders",
-      "about": "Sarah is a Senior Technical Writer based in San Francisco, CA. She specializes in API and Developer Documentation and uses her expertise to lead Highnote's GraphQL API Docs efforts.",
-      "location": "San Francisco, CA",
+      "about": "Sarah is a Technical Writer at Docker, located in Philadelphia, PA. She specializes in writing developer and API documentation, with a deep focus on GraphQL developer experience. As an active contributor to the GraphQL project, she's passionate about creating educational resources and developer tools that make GraphQL more approachable.",
+      "location": "Philadelphia, PA",
       "url": "",
-      "avatar": "//avatars.sched.co/4/50/21066861/avatar.jpg.320x320px.jpg?2f0",
+      "avatar": "//avatars.sched.co/4/50/21066861/avatar.jpg.320x320px.jpg?67a",
       "socialurls": [
         {
           "service": "LinkedIn",
@@ -2704,9 +2759,10 @@
         }
       ],
       "_years": [
-        2024
+        2024,
+        2025
       ],
-      "~syncedDetailsAt": 1749502079623
+      "~syncedDetailsAt": 1753215856699
     },
     {
       "username": "sasha177",
@@ -2849,7 +2905,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "siva27",
@@ -2884,7 +2940,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750605030205
+      "~syncedDetailsAt": 1753974079549
     },
     {
       "username": "spencer211",
@@ -2966,7 +3022,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "suresh_muthu",
@@ -3061,6 +3117,21 @@
       "~syncedDetailsAt": 1749568381878
     },
     {
+      "username": "thorekoritzius",
+      "company": "Independent",
+      "position": "Machine Learning Software Engineer",
+      "name": "Thore Koritzius",
+      "about": "Thore is an ML Engineer with a passion for building and deploying multimodal LLMs. He enjoys working on the full stack of AI systems—from training embedding models and optimizing RAG pipelines to deploying on-premises LLM infrastructure. Thore is also a GraphQL and Rust enthusiast who loves exploring modern developer tools and building high-performance systems. His journey into AI started with research on Physics-Informed Neural Networks during his Master’s thesis, and he's been excited about pushing the boundaries of applied machine learning ever since.",
+      "location": "",
+      "url": "",
+      "avatar": "//avatars.sched.co/c/bd/23218043/avatar.jpg.320x320px.jpg?02e",
+      "socialurls": [],
+      "_years": [
+        2025
+      ],
+      "~syncedDetailsAt": 1752072949897
+    },
+    {
       "username": "tim.hall.engr",
       "company": "Postman",
       "position": "Technical Lead",
@@ -3097,7 +3168,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "tristan119",
@@ -3118,21 +3189,6 @@
         2023
       ],
       "~syncedDetailsAt": 1749568381879
-    },
-    {
-      "username": "tshikhare",
-      "company": "Netflix",
-      "position": "Software Engineer",
-      "name": "Tejas Shikhare",
-      "about": "Tejas is a member of the GraphQL Platform Team at Netflix. He spent the last six years building Netflix's Federated GraphQL platform infrastructure and tooling while also helping to migrate Netflix’s consumer-facing APIs to GraphQL. Most recently, he has been exploring GraphQL's applicability to the emerging trend of Server-Driven UI. In addition to GraphQL, he enjoys working with distributed systems and has a passion for building developer tools and education.",
-      "location": "",
-      "url": "",
-      "avatar": "//avatars.sched.co/f/06/21543712/avatar.jpg.320x320px.jpg?c60",
-      "socialurls": [],
-      "_years": [
-        2025
-      ],
-      "~syncedDetailsAt": 1750182478137
     },
     {
       "username": "tushar.mathur",
@@ -3237,7 +3293,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287964144
+      "~syncedDetailsAt": 1752503797083
     },
     {
       "username": "vmjohnson999",
@@ -3257,7 +3313,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1751036941512
+      "~syncedDetailsAt": 1754671960621
     },
     {
       "username": "watson17",
@@ -3270,9 +3326,10 @@
       "avatar": "//avatars.sched.co/4/84/19024254/avatar.jpg.320x320px.jpg?838",
       "socialurls": [],
       "_years": [
-        2024
+        2024,
+        2025
       ],
-      "~syncedDetailsAt": 1749502251756
+      "~syncedDetailsAt": 1753467946105
     },
     {
       "username": "x65han",
@@ -3287,7 +3344,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287969593
+      "~syncedDetailsAt": 1753215856699
     },
     {
       "username": "yaacovcr",
@@ -3356,7 +3413,7 @@
     {
       "username": "yehudar",
       "company": "JFrog",
-      "position": "Application Security Researcher, JFrog",
+      "position": "Application Security Researcher",
       "name": "Yehuda Rosenberg",
       "about": "I'm an Application Security Researcher passionate about breaking assumptions in modern web technologies. From protocol quirks to real-world vulnerabilities, I explore how small oversights lead to big security issues. My work often blends offensive research with practical defense, aiming to make the internet a little safer and a lot more interesting.",
       "location": "",
@@ -3366,22 +3423,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1750287969593
-    },
-    {
-      "username": "zach.fetters",
-      "company": "Apollo GraphQL",
-      "position": "Staff Software Engineer",
-      "name": "Zach FettersMoore",
-      "about": "Engineer at Apollo GraphQL, working on the Apollo iOS Library",
-      "location": "",
-      "url": "",
-      "avatar": "//avatars.sched.co/c/02/23098822/avatar.jpg.320x320px.jpg?df2",
-      "socialurls": [],
-      "_years": [
-        2025
-      ],
-      "~syncedDetailsAt": 1750287969593
+      "~syncedDetailsAt": 1753215856699
     }
   ]
 }
