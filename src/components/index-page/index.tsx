@@ -1,4 +1,5 @@
 import { Hero } from "./hero"
+import { TrustedBy } from "./trusted-by"
 import { PredictableResults } from "./predictable-results"
 import { SingleRequest } from "./single-request"
 import { TypeSystem } from "./type-system"
@@ -12,6 +13,7 @@ export function IndexPage() {
   return (
     <div className="index">
       <Hero />
+      <TrustedBy />
       <HowItWorks />
       <section className="conf-block container flex max-w-3xl flex-col items-center text-center">
         <h2>A query language for your API</h2>

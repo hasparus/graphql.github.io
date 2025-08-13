@@ -269,7 +269,7 @@ function SubmenuBackdrop({ className }: { className: string }) {
   return (
     <div
       className={clsx(
-        "fixed inset-0 top-[calc(var(--nextra-navbar-height)+1px)] bg-[rgb(var(--nextra-bg),.4)] backdrop-blur-[6.4px] transition-opacity",
+        "pointer-events-none fixed inset-0 top-[calc(var(--nextra-navbar-height)+1px)] bg-[rgb(var(--nextra-bg),.4)] backdrop-blur-[6.4px] transition-opacity",
         className,
       )}
     />

@@ -52,7 +52,7 @@ export function Testimonials({ className, ...rest }: TestimonialsProps) {
   return (
     <section
       className={clsx(
-        "gql-conf-container py-8 max-md:px-4 md:pb-16 md:pt-24 md:[mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]",
+        "gql-container py-8 max-md:px-4 md:pb-16 md:pt-24 md:[mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]",
         className,
       )}
       {...rest}

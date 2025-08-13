@@ -503,11 +503,11 @@ div[id^="headlessui-menu-items"] {
   @apply focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[5px] focus-visible:outline-neu-900;
 }
 
-.gql-conf-container {
+.gql-container {
   @apply mx-auto w-full max-w-[120rem];
 }
 
-.gql-conf-section {
+.gql-section {
   @apply px-4 py-8 lg:px-12 xl:gap-x-24 xl:px-24 3xl:px-[240px];
 }
 
