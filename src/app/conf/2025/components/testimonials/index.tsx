@@ -6,7 +6,7 @@ import maskBlur from "./mask.webp"
 
 export interface TestimonialsProps extends React.HTMLAttributes<HTMLElement> {}
 
-interface Testimonial {
+export interface Testimonial {
   quote: string
   author: {
     name: string
@@ -60,30 +60,51 @@ export function Testimonials({ className, ...rest }: TestimonialsProps) {
       <h2 className="typography-h2 text-center text-neu-800">
         How was the previous edition?
       </h2>
-      <div className="flex w-full snap-x snap-mandatory flex-row gap-10 overflow-x-auto px-4 py-6 lg:mt-16 lg:py-16">
-        {testimonials.map((testimonial, i) => (
-          <div
-            key={i}
-            className="flex shrink-0 snap-start flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
-          >
-            <div>
-              <p className="typography-body-lg max-w-[calc(100vw-32px)] !leading-[1.1] max-md:text-center md:max-w-[544px]">
-                {testimonial.quote}
-              </p>
-              <AuthorNameAndRole
-                author={testimonial.author}
-                className="mt-4 max-md:hidden"
-              />
-            </div>
-            <TestimonialAuthor author={testimonial.author} />
-          </div>
-        ))}
-      </div>
+      <TestimonialsList testimonials={testimonials} />
     </section>
   )
 }
 
-function TestimonialAuthor({ author }: { author: Testimonial["author"] }) {
+export function TestimonialsList({
+  testimonials,
+  className,
+}: {
+  testimonials: Testimonial[]
+  className?: string
+}) {
+  return (
+    <div
+      className={clsx(
+        "flex w-full snap-x snap-mandatory flex-row gap-10 overflow-x-auto px-4 py-6 lg:mt-16 lg:py-16",
+        className,
+      )}
+    >
+      {testimonials.map((testimonial, i) => (
+        <div
+          key={i}
+          className="flex shrink-0 snap-start flex-row-reverse items-center gap-6 max-md:flex-col md:px-10"
+        >
+          <div>
+            <p className="typography-body-lg max-w-[calc(100vw-32px)] !leading-[1.1] max-md:text-center md:max-w-[544px]">
+              {testimonial.quote}
+            </p>
+            <AuthorNameAndRole
+              author={testimonial.author}
+              className="mt-4 max-md:hidden"
+            />
+          </div>
+          <TestimonialAuthor author={testimonial.author} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function TestimonialAuthor({
+  author,
+}: {
+  author: Testimonial["author"]
+}) {
   return (
     <div className="relative flex shrink-0 flex-col items-center justify-center whitespace-pre md:px-6 lg:h-full lg:px-8">
       <div className="relative bg-neu-500 dark:bg-neu-200 dark:opacity-90">
