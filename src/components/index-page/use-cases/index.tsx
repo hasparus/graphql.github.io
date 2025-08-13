@@ -112,7 +112,7 @@ export function UseCases({
                 onPointerDown={() => setSelectedIndex(i)}
                 onFocus={() => setSelectedIndex(i)}
                 aria-selected={i === selectedIndex ? "true" : undefined}
-                className="gql-focus-visible group flex w-full items-center justify-between gap-6 border-b border-sec-dark px-3 py-4 text-left transition-colors hover:bg-sec-lighter aria-selected:bg-sec-base aria-selected:hover:bg-sec-lighter hover:dark:bg-neu-100/25 dark:aria-selected:bg-sec-darker"
+                className="gql-focus-visible group flex w-full items-center justify-between gap-6 border-sec-dark px-3 py-4 text-left transition-colors hover:bg-sec-lighter aria-selected:bg-sec-base aria-selected:hover:bg-sec-lighter hover:dark:bg-neu-100/25 dark:aria-selected:bg-sec-darker"
               >
                 <span className="typography-body-lg">{useCase.label}</span>
                 <ArrowDownIcon className="size-10 shrink-0 -rotate-90 text-sec-dark opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 group-aria-selected:opacity-100 dark:text-neu-900" />
@@ -133,8 +133,7 @@ export function UseCases({
                   onPointerDown={() => setSelectedIndex(i)}
                   onFocus={() => setSelectedIndex(i)}
                   className={clsx(
-                    "z-[1] flex w-full items-center justify-between gap-6 border-b border-sec-dark px-3 py-4 text-left first:border-t hover:bg-sec-light dark:bg-sec-darker dark:hover:bg-neu-100/25 max-lg:dark:bg-neu-50 lg:hidden",
-                    i === selectedIndex && "bg-sec-light dark:bg-sec-darker",
+                    "z-[1] flex w-full items-center justify-between gap-6 border-b border-sec-dark bg-sec-light px-3 py-4 text-left first:border-t hover:bg-sec-lighter dark:bg-sec-darker dark:hover:bg-sec-dark max-lg:dark:bg-neu-50 lg:hidden",
                   )}
                 >
                   <span className="typography-body-lg text-neu-900">
