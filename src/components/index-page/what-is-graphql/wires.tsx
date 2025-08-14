@@ -755,7 +755,7 @@ function MobileDiagram() {
   return (
     <svg
       width="310"
-      height="502"
+      height="450"
       viewBox="0 0 310 502"
       fill="none"
       preserveAspectRatio="xMidYMid"
