@@ -8,6 +8,7 @@ import {
   useReducer,
   useRef,
 } from "react"
+import { throttle } from "@/app/conf/_design-system/utils/throttle"
 
 import { Code } from "nextra/components"
 
@@ -27,32 +28,33 @@ import {
 import QueryMdx from "./api-gateway-query.mdx"
 import ResponseMdx from "./api-gateway-response.mdx"
 import styles from "./wires.module.css"
-import { throttle } from "@/app/conf/_design-system/utils/throttle"
+
+const bigScreenClientEdges = [
+  "M514.5 220H424.5V76H72",
+  "M446 220H424.5V112H144",
+  "M446 220H424.5V147H72",
+  "M446 220H424.5V184H144",
+  "M528 220H514.206L72 220",
+  "M528 220L424.866 220V256H144",
+  "M446 220L424.5 220V291.75H72",
+  "M528.5 220H424.5V328H144",
+  "M528 220H424.772V365H72",
+]
 
 function ClientEdges({
   highlightedEdge,
   highlightedVisible,
+  edges,
 }: {
   highlightedEdge?: number
   highlightedVisible: boolean
+  edges: string[]
 }) {
-  const paths = [
-    "M514.5 220H424.5V76H72",
-    "M446 220H424.5V112H144",
-    "M446 220H424.5V147H72",
-    "M446 220H424.5V184H144",
-    "M528 220H514.206L72 220",
-    "M528 220L424.866 220V256H144",
-    "M446 220L424.5 220V291.75H72",
-    "M528.5 220H424.5V328H144",
-    "M528 220H424.772V365H72",
-  ]
-
   return (
     <>
       {moveHighlightedToTop(
         highlightedEdge,
-        paths.map((path, index) => (
+        edges.map((path, index) => (
           <Fragment key={index}>
             <path
               d={path}
@@ -74,28 +76,30 @@ function ClientEdges({
   )
 }
 
+const bigScreenServerEdges = [
+  "M696 159.5H811.5V75H1176",
+  "M696 175.5L833.5 175.5V112H1104.5",
+  "M696 191.5H855.5V148.5H1176",
+  "M696 206.5L876 206.5V184.5H1104",
+  "M696 220.5H704.5H1176",
+  "M696 234.5L876 234.5V256.5H1104",
+  "M696 249.5H855.5V292.5H1176",
+  "M696 265.5L833.5 265.5V329H1104",
+  "M696 281.5H811.5V366H1176",
+]
+
 function ServerEdges({
   highlighted,
   highlightedVisible,
+  edges,
 }: {
   highlighted: number[]
   highlightedVisible: boolean
+  edges: string[]
 }) {
-  const paths = [
-    "M696 159.5H811.5V75H1176",
-    "M696 175.5L833.5 175.5V112H1104.5",
-    "M696 191.5H855.5V148.5H1176",
-    "M696 206.5L876 206.5V184.5H1104",
-    "M696 220.5H704.5H1176",
-    "M696 234.5L876 234.5V256.5H1104",
-    "M696 249.5H855.5V292.5H1176",
-    "M696 265.5L833.5 265.5V329H1104",
-    "M696 281.5H811.5V366H1176",
-  ] as const
-
   return (
     <>
-      {paths.map((d, index) => {
+      {edges.map((d, index) => {
         const isHighlighted = highlighted?.includes(index)
         return (
           <Fragment key={index}>
@@ -147,21 +151,27 @@ function Box({
   )
 }
 
-function ClientBoxes({ highlighted }: { highlighted?: number }) {
-  /* eslint-disable react/jsx-key */
-  const boxes = [
-    ["translate(16, 48)", <DesktopIcon />],
-    ["translate(88, 84)", <PhoneIcon />],
-    ["translate(16, 120)", <PhoneIcon />],
-    ["translate(88, 156)", <WristwatchIcon />],
-    ["translate(16, 192)", <TelevisionIcon />],
-    ["translate(88, 228)", <DesktopIcon />],
-    ["translate(16, 264)", <TabletIcon />],
-    ["translate(88, 300)", <PhoneIcon />],
-    ["translate(16, 336)", <WristwatchIcon />],
-  ] as const
-  /* eslint-enable react/jsx-key */
+/* eslint-disable react/jsx-key */
+const bigScreenClientBoxes: Array<[string, React.ReactNode]> = [
+  ["translate(16, 48)", <DesktopIcon />],
+  ["translate(88, 84)", <PhoneIcon />],
+  ["translate(16, 120)", <PhoneIcon />],
+  ["translate(88, 156)", <WristwatchIcon />],
+  ["translate(16, 192)", <TelevisionIcon />],
+  ["translate(88, 228)", <DesktopIcon />],
+  ["translate(16, 264)", <TabletIcon />],
+  ["translate(88, 300)", <PhoneIcon />],
+  ["translate(16, 336)", <WristwatchIcon />],
+]
+/* eslint-enable react/jsx-key */
 
+function ClientBoxes({
+  highlighted,
+  boxes,
+}: {
+  highlighted?: number
+  boxes: Array<[string, React.ReactNode]>
+}) {
   return (
     <>
       {boxes.map(([transform, children], index) => {
@@ -184,21 +194,27 @@ function ClientBoxes({ highlighted }: { highlighted?: number }) {
   )
 }
 
-function ServerBoxes({ highlighted }: { highlighted: number[] }) {
-  /* eslint-disable react/jsx-key */
-  const boxes = [
-    ["translate(1176, 48)", <LabirynthIcon />],
-    ["translate(1104, 84)", <ServerIcon />],
-    ["translate(1176, 120)", <ModemIcon />],
-    ["translate(1104, 156)", <CloudIcon />],
-    ["translate(1176, 192)", <LabirynthIcon />],
-    ["translate(1104, 228)", <ModemIcon />],
-    ["translate(1176, 264)", <CloudIcon />],
-    ["translate(1104, 300)", <CloudIcon />],
-    ["translate(1176, 336)", <ServerIcon />],
-  ] as const
-  /* eslint-enable react/jsx-key */
+/* eslint-disable react/jsx-key */
+const bigScreenServerBoxes: Array<[string, React.ReactNode]> = [
+  ["translate(1176, 48)", <LabirynthIcon />],
+  ["translate(1104, 84)", <ServerIcon />],
+  ["translate(1176, 120)", <ModemIcon />],
+  ["translate(1104, 156)", <CloudIcon />],
+  ["translate(1176, 192)", <LabirynthIcon />],
+  ["translate(1104, 228)", <ModemIcon />],
+  ["translate(1176, 264)", <CloudIcon />],
+  ["translate(1104, 300)", <CloudIcon />],
+  ["translate(1176, 336)", <ServerIcon />],
+]
+/* eslint-enable react/jsx-key */
 
+function ServerBoxes({
+  highlighted,
+  boxes,
+}: {
+  highlighted: number[]
+  boxes: Array<[string, React.ReactNode]>
+}) {
   return (
     <>
       {boxes.map(([transform, children], index) => {
@@ -520,6 +536,7 @@ export function Wires({ className }: { className?: string }) {
         styles.wires,
       )}
     >
+      <MobileDiagram />
       <svg
         id="what-is-graphql--wires"
         width="1248"
@@ -531,10 +548,24 @@ export function Wires({ className }: { className?: string }) {
         className="relative h-auto w-full"
         ref={ref}
       >
-        <ClientEdges highlightedEdge={0} highlightedVisible={step === 0} />
-        <ClientBoxes highlighted={step === 0 ? 0 : undefined} />
-        <ServerEdges highlighted={[1, 6]} highlightedVisible={step > 0} />
-        <ServerBoxes highlighted={step > 0 ? [1, 6] : []} />
+        <ClientEdges
+          highlightedEdge={0}
+          highlightedVisible={step === 0}
+          edges={bigScreenClientEdges}
+        />
+        <ClientBoxes
+          highlighted={step === 0 ? 0 : undefined}
+          boxes={bigScreenClientBoxes}
+        />
+        <ServerEdges
+          highlighted={[1, 6]}
+          highlightedVisible={step > 0}
+          edges={bigScreenServerEdges}
+        />
+        <ServerBoxes
+          highlighted={step > 0 ? [1, 6] : []}
+          boxes={bigScreenServerBoxes}
+        />
         <SVGDefinitions />
       </svg>
       <button
@@ -601,4 +632,8 @@ function Curtain() {
       }}
     />
   )
+}
+
+function MobileDiagram() {
+  return <svg>{/* HERE */}</svg>
 }
