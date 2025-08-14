@@ -141,11 +141,11 @@ function Box({
     <g
       transform={transform}
       className={clsx(
-        "fill-neu-100 [&>path]:translate-x-4 [&>path]:translate-y-4 [:where(&>path:not([fill]))]:fill-neu-600",
+        "fill-neu-100 [&>path]:translate-x-3 [&>path]:translate-y-3 sm:[&>path]:translate-x-4 sm:[&>path]:translate-y-4 [:where(&>path:not([fill]))]:fill-neu-600",
         className,
       )}
     >
-      <rect width="56" height="56" />
+      <rect className="size-[48px] sm:size-[56px]" />
       {children}
     </g>
   )
@@ -545,7 +545,7 @@ export function Wires({ className }: { className?: string }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="GraphQL allows you to build API Gateways to bring data from multiple sources to your clients in a single query"
-        className="relative h-auto w-full"
+        className="relative h-auto w-full max-sm:hidden"
         ref={ref}
       >
         <ClientEdges
@@ -634,6 +634,140 @@ function Curtain() {
   )
 }
 
+// Mobile diagram data
+/* eslint-disable react/jsx-key */
+const mobileClientBoxes: Array<[string, React.ReactNode]> = [
+  ["translate(0, 0)", <DesktopIcon />],
+  ["translate(65, 0)", <PhoneIcon />],
+  ["translate(130, 0)", <PhoneIcon />],
+  ["translate(195, 0)", <WristwatchIcon />],
+  ["translate(260, 0)", <TelevisionIcon />],
+]
+
+const mobileServerBoxes: Array<[string, React.ReactNode]> = [
+  ["translate(2, 454)", <LabirynthIcon />],
+  ["translate(67, 454)", <ServerIcon />],
+  ["translate(132, 454)", <ModemIcon />],
+  ["translate(197, 454)", <CloudIcon />],
+  ["translate(262, 454)", <CloudIcon />],
+]
+/* eslint-enable react/jsx-key */
+
+function MobileClientEdges() {
+  return (
+    <>
+      <path
+        d="M154 157L154 85L219 85L219 48"
+        stroke="url(#smallscreen_linear1)"
+      />
+      <path
+        d="M154 157L154 84.9209L88 84.9209L88 48"
+        stroke="url(#smallscreen_linear1)"
+      />
+      <path
+        d="M154 107.855L154 157L155 48"
+        stroke="url(#smallscreen_linear1)"
+      />
+      <path
+        d="M154 157L154.002 85L284 85L284 48"
+        stroke="url(#smallscreen_linear1)"
+      />
+      <path
+        d="M154 158L154 136.031L154 85L24 84.8443L24 48"
+        stroke="url(#smallscreen_linear1)"
+        strokeWidth="2"
+      />
+    </>
+  )
+}
+
+function MobileServerEdges() {
+  return (
+    <>
+      <path
+        d="M130.094 344L130.094 426L91.6745 426L91.6745 454"
+        stroke="url(#smallscrean_linear2)"
+      />
+      <path
+        d="M156.002 344L156.002 345.948L156.002 454"
+        stroke="url(#smallscrean_linear2)"
+      />
+      <path
+        d="M101.504 344L101.504 398.5L26.0075 398.5L26.0075 454"
+        stroke="url(#smallscrean_linear2)"
+      />
+      <path
+        d="M181.918 344L181.916 426L220.335 426L220.337 454"
+        stroke="url(#smallscrean_linear2)"
+      />
+      <path
+        d="M210.512 344L210.512 398L286.008 398L286.008 454"
+        stroke="url(#smallscrean_linear2)"
+      />
+    </>
+  )
+}
+
+function MobileSVGDefinitions() {
+  return (
+    <defs>
+      <linearGradient
+        id="smallscreen_linear1"
+        x1="0.142323"
+        y1="124.751"
+        x2="0.142321"
+        y2="-122.582"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop
+          stopColor="hsl(var(--color-neu-100))"
+          className="dark:[stop-color:hsl(var(--color-neu-50))]"
+        />
+        <stop
+          offset="1"
+          stopColor="hsl(var(--color-neu-600))"
+          className="dark:[stop-color:hsl(var(--color-neu-100))]"
+        />
+      </linearGradient>
+      <linearGradient
+        id="smallscrean_linear2"
+        x1="66.6927"
+        y1="344"
+        x2="66.6927"
+        y2="399.436"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop
+          stopColor="hsl(var(--color-neu-100))"
+          className="dark:[stop-color:hsl(var(--color-neu-50))]"
+        />
+        <stop
+          offset="1"
+          stopColor="hsl(var(--color-neu-600))"
+          className="dark:[stop-color:hsl(var(--color-neu-100))]"
+        />
+      </linearGradient>
+    </defs>
+  )
+}
+
 function MobileDiagram() {
-  return <svg>{/* HERE */}</svg>
+  return (
+    <svg
+      width="310"
+      height="502"
+      viewBox="0 0 310 502"
+      fill="none"
+      preserveAspectRatio="xMidYMid"
+      xmlns="http://www.w3.org/2000/svg"
+      className="mx-auto sm:hidden"
+      aria-label="GraphQL allows you to build API Gateways to bring data from multiple sources to your clients in a single query"
+    >
+      <MobileClientEdges />
+      <ClientBoxes boxes={mobileClientBoxes} />
+      <MobileServerEdges />
+      <ServerBoxes highlighted={[]} boxes={mobileServerBoxes} />
+      <MobileSVGDefinitions />
+    </svg>
+  )
 }
