@@ -92,10 +92,16 @@ function ServerEdges({
   highlighted,
   highlightedVisible,
   edges,
+  baseStroke,
+  oddStroke,
+  evenStroke,
 }: {
   highlighted: number[]
   highlightedVisible: boolean
   edges: string[]
+  baseStroke: string
+  oddStroke: string
+  evenStroke: string
 }) {
   return (
     <>
@@ -103,20 +109,14 @@ function ServerEdges({
         const isHighlighted = highlighted?.includes(index)
         return (
           <Fragment key={index}>
-            <path
-              d={d}
-              strokeWidth={1}
-              className="stroke-[url(#paint_sr_light_linear_671_9150)]"
-            />
+            <path d={d} strokeWidth={1} className={baseStroke} />
             {isHighlighted && (
               <path
                 d={d}
                 strokeWidth={3}
                 className={clsx(
                   highlightedVisible ? "opacity-100" : "opacity-0",
-                  index % 2
-                    ? "stroke-[url(#paint_sr_pri_highlight_linear_671_9150)] motion-reduce:stroke-[url(#paint_sr_pri_highlight_linear_static_671_9150)]"
-                    : "stroke-[url(#paint_sr_sec_highlight_linear_671_9150)] motion-reduce:stroke-[url(#paint_sr_sec_highlight_linear_static_671_9150)]",
+                  index % 2 ? oddStroke : evenStroke,
                 )}
               />
             )}
@@ -562,6 +562,9 @@ export function Wires({ className }: { className?: string }) {
           highlighted={[1, 6]}
           highlightedVisible={step > 0}
           edges={bigScreenServerEdges}
+          baseStroke="stroke-[url(#paint_sr_light_linear_671_9150)]"
+          oddStroke="stroke-[url(#paint_sr_pri_highlight_linear_671_9150)] motion-reduce:stroke-[url(#paint_sr_pri_highlight_linear_static_671_9150)]"
+          evenStroke="stroke-[url(#paint_sr_sec_highlight_linear_671_9150)] motion-reduce:stroke-[url(#paint_sr_sec_highlight_linear_static_671_9150)]"
         />
         <ServerBoxes
           highlighted={step > 0 ? [1, 6] : []}
@@ -661,32 +664,13 @@ const mobileServerBoxes: Array<[string, React.ReactNode]> = [
 ]
 /* eslint-enable react/jsx-key */
 
-function MobileServerEdges() {
-  return (
-    <>
-      <path
-        d="M130.094 344L130.094 426L91.6745 426L91.6745 454"
-        stroke="url(#smallscrean_linear2)"
-      />
-      <path
-        d="M156.002 344L156.002 345.948L156.002 454"
-        stroke="url(#smallscrean_linear2)"
-      />
-      <path
-        d="M101.504 344L101.504 398.5L26.0075 398.5L26.0075 454"
-        stroke="url(#smallscrean_linear2)"
-      />
-      <path
-        d="M181.918 344L181.916 426L220.335 426L220.337 454"
-        stroke="url(#smallscrean_linear2)"
-      />
-      <path
-        d="M210.512 344L210.512 398L286.008 398L286.008 454"
-        stroke="url(#smallscrean_linear2)"
-      />
-    </>
-  )
-}
+const mobileServerEdges = [
+  "M181.918 344L181.916 426L220.335 426L220.337 454",
+  "M210.512 344L210.512 398L286.008 398L286.008 454",
+  "M156.002 344L156.002 345.948L156.002 454",
+  "M101.504 344L101.504 398.5L26.0075 398.5L26.0075 454",
+  "M130.094 344L130.094 426L91.6745 426L91.6745 454",
+]
 
 function MobileSVGDefinitions() {
   return (
@@ -749,7 +733,7 @@ function MobileSVGDefinitions() {
       </linearGradient>
 
       <linearGradient
-        id="smallscrean_linear2"
+        id="smallscreen_linear2"
         x1="66.6927"
         y1="344"
         x2="66.6927"
@@ -765,6 +749,90 @@ function MobileSVGDefinitions() {
           stopColor="hsl(var(--color-neu-600))"
           className="dark:[stop-color:hsl(var(--color-neu-100))]"
         />
+      </linearGradient>
+
+      <linearGradient
+        id="smallscreen_linear2_pri"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop
+          stopColor="hsl(var(--color-pri-lighter))"
+          className="dark:[stop-color:hsl(var(--color-pri-darker))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-2.562;1.438;-2.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-pri-dark))"
+          className="dark:[stop-color:hsl(var(--color-pri-light))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-1.562;2.438;-1.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-pri-lighter))"
+          className="dark:[stop-color:hsl(var(--color-pri-darker))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-0.562;3.438;-0.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
+      </linearGradient>
+
+      <linearGradient
+        id="smallscreen_linear2_sec"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop
+          stopColor="hsl(var(--color-sec-light))"
+          className="dark:[stop-color:hsl(var(--color-sec-darker))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-2.562;1.438;-2.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-sec-dark))"
+          className="dark:[stop-color:hsl(var(--color-sec-light))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-1.562;2.438;-1.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-sec-light))"
+          className="dark:[stop-color:hsl(var(--color-sec-darker))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-0.562;3.438;-0.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
       </linearGradient>
     </defs>
   )
@@ -789,9 +857,22 @@ function MobileDiagram({ step }: { step: number }) {
         baseStroke="url(#smallscreen_linear1)"
         highlightedStroke="url(#smallscreen_linear1_high)"
       />
-      <ClientBoxes boxes={mobileClientBoxes} />
-      <MobileServerEdges />
-      <ServerBoxes highlighted={[]} boxes={mobileServerBoxes} />
+      <ClientBoxes
+        boxes={mobileClientBoxes}
+        highlighted={step === 0 ? 0 : undefined}
+      />
+      <ServerEdges
+        edges={mobileServerEdges}
+        highlighted={[1, 4]}
+        highlightedVisible={step > 0}
+        baseStroke="stroke-[url(#smallscreen_linear2)]"
+        evenStroke="stroke-[url(#smallscreen_linear2_pri)]"
+        oddStroke="stroke-[url(#smallscreen_linear2_sec)]"
+      />
+      <ServerBoxes
+        highlighted={step > 0 ? [1, 4] : []}
+        boxes={mobileServerBoxes}
+      />
       <MobileSVGDefinitions />
     </svg>
   )
