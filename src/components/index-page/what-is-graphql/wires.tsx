@@ -45,10 +45,14 @@ function ClientEdges({
   highlightedEdge,
   highlightedVisible,
   edges,
+  baseStroke = "url(#paint_lr_light_linear_671_9150)",
+  highlightedStroke = "url(#paint_lr_dark_linear_671_9150)",
 }: {
   highlightedEdge?: number
   highlightedVisible: boolean
   edges: string[]
+  baseStroke?: string
+  highlightedStroke?: string
 }) {
   return (
     <>
@@ -56,15 +60,11 @@ function ClientEdges({
         highlightedEdge,
         edges.map((path, index) => (
           <Fragment key={index}>
-            <path
-              d={path}
-              stroke="url(#paint_lr_light_linear_671_9150)"
-              strokeWidth="1"
-            />
+            <path d={path} stroke={baseStroke} strokeWidth="1" />
             {highlightedEdge === index && (
               <path
                 d={path}
-                stroke="url(#paint_lr_dark_linear_671_9150)"
+                stroke={highlightedStroke}
                 strokeWidth="3"
                 className={highlightedVisible ? "opacity-100" : "opacity-0"}
               />
@@ -479,7 +479,7 @@ const components = {
     <Pre
       {...props}
       tabIndex={-1}
-      containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-75 pointer-events-auto"
+      containerClassName="!absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 max-sm:scale-90 pointer-events-auto"
       // the border color on white and black backgrounds blends into border-neu-200 (and border-neu-50 in dark mode)
       className="overflow-hidden border-none !bg-transparent before:absolute before:inset-0 before:-z-10 before:rounded-md before:border before:border-transparent before:bg-[rgba(55,72,13,0.12)] before:bg-clip-border before:[backdrop-filter:url(#what-is-graphql--code-backdrop)] after:absolute after:inset-[1.5px] after:z-[-9] after:rounded-[5px] after:bg-[linear-gradient(to_right,transparent,hsl(var(--color-neu-0))_15%,hsl(var(--color-neu-0))_85%,transparent)] after:[backdrop-filter:url(#what-is-graphql--code-backdrop-2)] safari:after:[backdrop-filter:blur(12px)] dark:before:border-[rgba(235,252,191,0.2)] dark:before:bg-none dark:before:backdrop-blur-xl dark:before:[backdrop-filter:url(#what-is-graphql--code-backdrop-2-dark)] dark:after:bg-[linear-gradient(to_right,hsl(var(--color-neu-0)/0.5),hsl(var(--color-neu-0)/.8)_10%,hsl(var(--color-neu-0)/.8)_83%,hsl(var(--color-neu-0)/0.4))] dark:after:[backdrop-filter:blur(24px)]"
     >
@@ -514,6 +514,7 @@ export function Wires({ className }: { className?: string }) {
     return () => animate?.removeEventListener("repeatEvent", onAnimationRepeat)
   }, [])
 
+  // todo: remove this per Uri's request OR switch it to development only
   const onBackgroundClick = useMemo(
     () =>
       throttle(() => {
@@ -536,7 +537,7 @@ export function Wires({ className }: { className?: string }) {
         styles.wires,
       )}
     >
-      <MobileDiagram />
+      <MobileDiagram step={step} />
       <svg
         id="what-is-graphql--wires"
         width="1248"
@@ -545,7 +546,7 @@ export function Wires({ className }: { className?: string }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="GraphQL allows you to build API Gateways to bring data from multiple sources to your clients in a single query"
-        className="relative h-auto w-full max-sm:hidden"
+        className="relative h-auto min-h-[320px] w-full max-sm:hidden"
         ref={ref}
       >
         <ClientEdges
@@ -634,7 +635,14 @@ function Curtain() {
   )
 }
 
-// Mobile diagram data
+const mobileClientEdges = [
+  "M154 157L155 85L24 84.8443L24 48",
+  "M154 157L154 84.9209L88 84.9209L88 48",
+  "M154 107.855L154 157L155 48",
+  "M154 157L154 85L219 85L219 48",
+  "M154 157L154.002 85L284 85L284 48",
+]
+
 /* eslint-disable react/jsx-key */
 const mobileClientBoxes: Array<[string, React.ReactNode]> = [
   ["translate(0, 0)", <DesktopIcon />],
@@ -652,34 +660,6 @@ const mobileServerBoxes: Array<[string, React.ReactNode]> = [
   ["translate(262, 454)", <CloudIcon />],
 ]
 /* eslint-enable react/jsx-key */
-
-function MobileClientEdges() {
-  return (
-    <>
-      <path
-        d="M154 157L154 85L219 85L219 48"
-        stroke="url(#smallscreen_linear1)"
-      />
-      <path
-        d="M154 157L154 84.9209L88 84.9209L88 48"
-        stroke="url(#smallscreen_linear1)"
-      />
-      <path
-        d="M154 107.855L154 157L155 48"
-        stroke="url(#smallscreen_linear1)"
-      />
-      <path
-        d="M154 157L154.002 85L284 85L284 48"
-        stroke="url(#smallscreen_linear1)"
-      />
-      <path
-        d="M154 158L154 136.031L154 85L24 84.8443L24 48"
-        stroke="url(#smallscreen_linear1)"
-        strokeWidth="2"
-      />
-    </>
-  )
-}
 
 function MobileServerEdges() {
   return (
@@ -730,6 +710,45 @@ function MobileSVGDefinitions() {
         />
       </linearGradient>
       <linearGradient
+        id="smallscreen_linear1_high"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop
+          stopColor="hsl(var(--color-neu-300))"
+          className="dark:[stop-color:hsl(var(--color-neu-200))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-2.562;1.438;-2.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop stopColor="hsl(var(--color-neu-700))">
+          <animate
+            attributeName="offset"
+            values="-1.562;2.438;-1.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
+        <stop
+          stopColor="hsl(var(--color-neu-300))"
+          className="dark:[stop-color:hsl(var(--color-neu-200))]"
+        >
+          <animate
+            attributeName="offset"
+            values="-0.562;3.438;-0.562"
+            begin="2.5s"
+            dur="5s"
+            repeatCount="indefinite"
+          />
+        </stop>
+      </linearGradient>
+
+      <linearGradient
         id="smallscrean_linear2"
         x1="66.6927"
         y1="344"
@@ -751,11 +770,11 @@ function MobileSVGDefinitions() {
   )
 }
 
-function MobileDiagram() {
+function MobileDiagram({ step }: { step: number }) {
   return (
     <svg
       width="310"
-      height="450"
+      height="490"
       viewBox="0 0 310 502"
       fill="none"
       preserveAspectRatio="xMidYMid"
@@ -763,7 +782,13 @@ function MobileDiagram() {
       className="mx-auto sm:hidden"
       aria-label="GraphQL allows you to build API Gateways to bring data from multiple sources to your clients in a single query"
     >
-      <MobileClientEdges />
+      <ClientEdges
+        edges={mobileClientEdges}
+        highlightedEdge={0}
+        highlightedVisible={step === 0}
+        baseStroke="url(#smallscreen_linear1)"
+        highlightedStroke="url(#smallscreen_linear1_high)"
+      />
       <ClientBoxes boxes={mobileClientBoxes} />
       <MobileServerEdges />
       <ServerBoxes highlighted={[]} boxes={mobileServerBoxes} />
