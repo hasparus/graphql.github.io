@@ -17,7 +17,7 @@ export function Hero() {
 
           <ul className="flex flex-col gap-2">
             {[
-              "Deliver high-performance user experience at scale",
+              "Deliver high-performance user experience at any scale",
               "Secure and stabilize your API with a strongly typed schema and validated queries",
               "Reduce dependencies through efficient, distributed development",
             ].map((item, index) => (
