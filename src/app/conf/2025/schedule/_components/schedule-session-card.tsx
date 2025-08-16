@@ -36,6 +36,14 @@ export function ScheduleSessionCard({
 }) {
   let eventType = session.event_type
 
+  if (
+    session.event_type === "GraphQL in Production" ||
+    session.event_type === "Developer Experience" ||
+    session.event_type === "Session Presentations"
+  ) {
+    eventType = session.event_subtype
+  }
+
   const speakers = session.speakers
     ? isString(session.speakers)
       ? (session.speakers as string)
@@ -51,7 +59,8 @@ export function ScheduleSessionCard({
 
   if (eventType === eventTitle) eventType = ""
 
-  const eventColor = eventsColors[session.event_type]
+  const eventColor =
+    eventsColors[session.event_subtype] || eventsColors[session.event_type]
 
   let blockTimeFraction = 1
   if (blockEnd.getTime() !== new Date(session.event_end).getTime()) {
