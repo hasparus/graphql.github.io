@@ -11,6 +11,8 @@ import {
 import { Pre } from "@/components/pre"
 import { SectionLabel } from "@/app/conf/_design-system/section-label"
 import InfoIcon from "@/app/conf/_design-system/pixelarticons/info.svg?svgr"
+import { useOnClickOutside } from "@/app/conf/_design-system/utils/useOnClickOutside"
+import { isSpanElement } from "@/app/conf/_design-system/utils/isSpanElement"
 
 import { ComponentTree } from "./component-tree"
 import { FriendList } from "./friend-list"
@@ -18,8 +20,6 @@ import { FriendList } from "./friend-list"
 import json from "./data-colocation.json"
 import Query from "./data-colocation.mdx"
 import "./data-colocation.css"
-import { useOnClickOutside } from "@/app/conf/_design-system/utils/useOnClickOutside"
-import { isSpanElement } from "@/app/conf/_design-system/utils/isSpanElement"
 
 const highlightedFragments = {
   GetFriendList: 1,
