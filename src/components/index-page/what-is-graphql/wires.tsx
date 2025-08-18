@@ -494,7 +494,6 @@ export function Wires({ className }: { className?: string }) {
   const [step, inc] = useReducer(x => (x + 1) % STEPS, 0)
 
   const ref = useRef<SVGSVGElement>(null)
-  const backgroundRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const animate = document.querySelector(
@@ -502,8 +501,6 @@ export function Wires({ className }: { className?: string }) {
     )
 
     const onAnimationRepeat = () => {
-      // we avoid spinning a second time if the user has just clicked the button
-      if (backgroundRef.current?.disabled) return
       inc()
     }
 
@@ -513,21 +510,6 @@ export function Wires({ className }: { className?: string }) {
 
     return () => animate?.removeEventListener("repeatEvent", onAnimationRepeat)
   }, [])
-
-  // todo: remove this per Uri's request OR switch it to development only
-  const onBackgroundClick = useMemo(
-    () =>
-      throttle(() => {
-        const button = backgroundRef.current
-        if (!button) return
-        button.disabled = true
-        inc()
-        setTimeout(() => {
-          button.disabled = false
-        }, 750)
-      }, 500),
-    [],
-  )
 
   return (
     <div
@@ -572,13 +554,10 @@ export function Wires({ className }: { className?: string }) {
         />
         <SVGDefinitions />
       </svg>
-      <button
-        ref={backgroundRef}
-        tabIndex={-1}
-        onClick={onBackgroundClick}
-        aria-label={step === 2 ? "Show query again" : "Next step"}
-        className="absolute inset-0 outline-none"
-      />
+
+      {process.env.NODE_ENV === "development" && (
+        <NextStepButton onClick={inc} />
+      )}
 
       <div
         aria-hidden={step === 2}
@@ -877,3 +856,34 @@ function MobileDiagram({ step }: { step: number }) {
     </svg>
   )
 }
+
+const NextStepButton =
+  process.env.NODE_ENV === "development"
+    ? ({ onClick }: { onClick: () => void }) => {
+        const backgroundRef = useRef<HTMLButtonElement>(null)
+
+        const onBackgroundClick = useMemo(
+          () =>
+            throttle(() => {
+              const button = backgroundRef.current
+              if (!button) return
+              button.disabled = true
+              onClick()
+              setTimeout(() => {
+                button.disabled = false
+              }, 750)
+            }, 500),
+          [],
+        )
+
+        return (
+          <button
+            ref={backgroundRef}
+            tabIndex={-1}
+            onClick={onBackgroundClick}
+            aria-label="Next step"
+            className="absolute inset-0 outline-none"
+          />
+        )
+      }
+    : () => null
