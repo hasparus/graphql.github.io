@@ -108,7 +108,7 @@ const sponsorTiers: Tier[] = [
 
 export function Sponsors({ heading }: SponsorsProps) {
   return (
-    <section className="gql-section mx-auto py-16">
+    <section id="sponsors" className="gql-section mx-auto py-16">
       <h1 className="typography-h2">{heading}</h1>
 
       <div className="mt-10 md:mt-16">

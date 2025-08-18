@@ -51,16 +51,15 @@ export default {
   // banner: {
   //   content: (
   //     <>
-  //       📣 GraphQLConf 2025 • Sept 08-10 • Amsterdam • Early bird tickets
-  //       available &amp; sponsorship opportunities open •{" "}
-  //       <NextLink
-  //         href="/conf/2025"
-  //         className="underline after:font-sans after:content-['_→']"
-  //       >
-  //         Learn more
-  //       </NextLink>
-  //     </>
-  //   ),
+  //     📣 GraphQLConf 2025 • Sept 08-10 • Amsterdam •{" "}
+  //     <NextLink
+  //       href="/conf/2025"
+  //       className="underline after:font-sans after:content-['_→']"
+  //     >
+  //       Register Today!
+  //     </NextLink>
+  //   </>
+  // )
   //   key: "graphqlconf-2024",
   // },
   logo: graphQLLogo,

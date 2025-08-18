@@ -261,7 +261,7 @@ async function updateSpeakerDetails(
 }
 
 function help() {
-  return console.log("Usage: tsx sync.ts --year <year>")
+  return console.log("Usage: tsx sync.ts --year <year> --quota <number>")
 }
 
 function partitionRemovedSpeakers(
