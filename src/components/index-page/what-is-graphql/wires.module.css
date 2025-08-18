@@ -85,3 +85,12 @@
     transform: rotateX(-90deg) translateY(60px) translateZ(150px);
   }
 }
+
+@keyframes query-exit-sm {
+  from {
+    transform: rotateY(0deg) translateX(0px) translateZ(150px);
+  }
+  to {
+    transform: rotateY(90deg) translateX(60px) translateZ(150px);
+  }
+}

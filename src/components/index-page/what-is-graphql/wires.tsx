@@ -561,17 +561,20 @@ export function Wires({ className }: { className?: string }) {
 
       <div
         aria-hidden={step === 2}
+        data-step={step}
         className={clsx(
           "pointer-events-none absolute inset-0 transition duration-[600ms]",
           styles.highlightsQuery,
           step === 2
-            ? "[transform:rotateX(90deg)_translateY(60px)_translateZ(150px)]"
-            : "[transform:rotateX(0deg)_translateY(0px)_translateZ(150px)]",
+            ? "[transform:rotateX(90deg)_translateY(60px)_translateZ(150px)] max-sm:[transform:rotateY(-90deg)_translateX(-60px)_translateZ(150px)]"
+            : "[transform:rotateX(0deg)_translateY(0px)_translateZ(150px)] max-sm:[transform:rotateY(0deg)_translateX(0px)_translateZ(150px)]",
+          "data-[step=2]:[animation:--animation] max-sm:data-[step=2]:[animation:--animation-sm]",
         )}
         style={
           {
+            "--animation": `${styles["query-exit"]} 600ms`,
+            "--animation-sm": `${styles["query-exit-sm"]} 600ms`,
             "--highlight-opacity": step === 1 ? 1 : 0,
-            animation: step === 2 ? `${styles["query-exit"]} 600ms` : undefined,
           } as React.CSSProperties
         }
       >
@@ -586,8 +589,8 @@ export function Wires({ className }: { className?: string }) {
           step === 2
             ? "[transform:rotateX(0deg)_translateY(0px)_translateZ(150px)]"
             : step === 1
-              ? "!duration-0 [transform:rotateX(90deg)_translateY(60px)_translateZ(150px)]"
-              : "[transform:rotateX(-90deg)_translateY(-60px)_translateZ(150px)]",
+              ? "!duration-0 [transform:rotateX(90deg)_translateY(60px)_translateZ(150px)] max-sm:[transform:rotateY(-90deg)_translateX(-60px)_translateZ(150px)]"
+              : "[transform:rotateX(-90deg)_translateY(-60px)_translateZ(150px)] max-sm:[transform:rotateY(90deg)_translateX(60px)_translateZ(150px)]",
         )}
       >
         <ResponseMdx components={components} />
