@@ -106,7 +106,7 @@ export function TrustedBy() {
           GraphQL is open source and trusted by the industry
         </h2>
         <p className="typography-body-md max-w-[624px] text-neu-700">
-          Facebook's mobile apps have been powered by GraphQL since 2012. A
+          Facebook's mobile apps have been powered by GraphQL since 2012. The
           GraphQL spec was open-sourced in 2015. Now it is used by
           industry-leading companies worldwide and supported by the GraphQL
           Foundation, hosted since 2018 by the non-profit Linux Foundation.
