@@ -132,7 +132,7 @@ export function Sponsors({ heading }: SponsorsProps) {
               <Tier
                 key={tier.name}
                 tier={tier}
-                logoHeight={220 - sponsorTiers.indexOf(tier) * 24}
+                logoHeight={236 - sponsorTiers.indexOf(tier) * 32}
               />
             ),
         )}
@@ -148,7 +148,7 @@ function Tier({ tier, logoHeight }: { tier: Tier; logoHeight: number }) {
         <ChevronRight className="shrink-0 translate-y-[-0.5px]" />
         {tier.name}
       </h3>
-      <div className="flex min-w-[70%] flex-wrap justify-center gap-y-4">
+      <div className="flex min-w-[70%] flex-wrap justify-center gap-y-4 lg:grid lg:w-full lg:grid-cols-2 lg:gap-4">
         {tier.items.map(({ link, icon: Icon, name }, i) => (
           <a
             key={i}
