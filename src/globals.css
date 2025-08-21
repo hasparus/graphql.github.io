@@ -112,15 +112,6 @@ div[id^="headlessui-menu-items"] {
   }
 }
 
-/*._max-w-\[90rem\] {*/
-/*  !* TODO: maybe add to nextra as option to configure width? *!*/
-/*  @apply container;*/
-/*}*/
-
-.miniGraphiQL {
-  @apply !rounded-md border-2 !shadow-none dark:border-neutral-900 dark:!bg-neutral-900/10 dark:brightness-200;
-}
-
 .result-window {
   @apply !rounded-none border-l-2 !shadow-none dark:border-neutral-900;
 }
