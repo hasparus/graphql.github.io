@@ -22,3 +22,6 @@ jobs:
 
       - name: Run Prettier Check
         run: pnpm format:check
+
+      - name: Run Playwright
+        run: pnpm test
