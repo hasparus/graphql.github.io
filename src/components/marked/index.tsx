@@ -21,21 +21,9 @@ export function Marked({ children }: { children: string }) {
   const codeMatch = children.match(/```graphql\s*\n([\s\S]*?)```/)
   const blockContent = codeMatch?.[1]
   const [firstLine, ...rest] = (blockContent || "").split("\n")
-  // First line must contain the metadata JSON comment: # { … }
-  const metaMatch = firstLine.match(/^\s*#\s*({.*})\s*$/)
 
-  if (!metaMatch) {
-    throw new Error(
-      `Invalid GraphiQL metadata JSON: ${firstLine}. MiniGraphQL shouldn't be used here.`,
-    )
-  }
-
-  let meta: Metadata
-  try {
-    meta = JSON.parse(metaMatch[1]) as Metadata
-  } catch {
-    throw new Error(`Invalid GraphiQL metadata JSON: ${metaMatch[1]}`)
-  }
+  const metaMatch = firstLine.match(/^\s*#\s*({.*})\s*$/)?.[1] ?? "{}"
+  const meta = JSON.parse(metaMatch) as Metadata
 
   const query = rest.join("\n")
   const variables = meta.variables
