@@ -12,6 +12,13 @@ export function HowItWorks() {
       <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
       <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
         <ListItem text="Describe your data" code={<CodeA />} />
+
+        {/* TODO: Instead of importing CodeB and CodeC, we'll refactor MiniGraphiQL and dynamically import it here. 
+            Required changes: 
+            - [ ] Move VariableEditor and QueryEditor to separate files.
+            - [ ] Import them here with the raw code snippets.
+            
+        */}
         <ListItem text="Ask for what you want" code={<CodeB />} />
         <ListItem text="Get predictable results" code={<CodeC />} />
       </ol>
