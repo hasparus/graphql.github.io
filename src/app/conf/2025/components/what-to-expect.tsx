@@ -28,10 +28,10 @@ export default function WhatToExpectSection({
 function ListItem({ number, text }: { number: string | number; text: string }) {
   return (
     <li className="list-none bg-gradient-to-r from-[#CDF27E] p-6 dark:from-[#507501]">
-      <span className="inline-block w-[87px] text-[72px]/none [text-box:trim-both_cap_alphabetic]">
+      <span className="inline-block text-[72px]/none [text-box:trim-both_cap_alphabetic]">
         {number}
       </span>{" "}
-      <span className="typography-menu ml-10 inline-block">{text}</span>
+      <span className="typography-menu mb-2 inline-block">{text}</span>
     </li>
   )
 }
