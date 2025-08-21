@@ -19,7 +19,7 @@ export function Hero() {
             {[
               "Deliver high-performance user experience at any scale",
               "Secure and stabilize your API with a strongly typed schema and validated requests",
-              "Reduce dependencies through efficient, distributed development",
+              "Reduce communication overhead through efficient, distributed development",
             ].map((item, index) => (
               <li key={index} className="flex items-start gap-1">
                 <CheckIcon className="size-6 shrink-0 text-pri-base max-lg:mt-px" />
