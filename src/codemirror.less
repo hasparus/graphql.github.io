@@ -8,6 +8,8 @@
   /* Set height, width, borders, and global font properties here */
   height: 300px;
   .code-font();
+  background: var(--cm-background);
+  color: var(--cm-foreground);
 }
 
 /* PADDING */
@@ -21,14 +23,16 @@
 
 .CodeMirror-scrollbar-filler,
 .CodeMirror-gutter-filler {
-  background-color: white; /* The little square between H and V scrollbars */
+  background-color: var(
+    --cm-background
+  ); /* The little square between H and V scrollbars */
 }
 
 /* GUTTER */
 
 .CodeMirror-gutters {
-  border-right: 1px solid #ddd;
-  background-color: #f7f7f7;
+  border-right: 1px solid var(--cm-gutter-border);
+  background-color: var(--cm-gutter-background);
   white-space: nowrap;
 }
 .CodeMirror-linenumbers {
@@ -37,7 +41,7 @@
   padding: 0 3px 0 5px;
   min-width: 20px;
   text-align: right;
-  color: #999;
+  color: var(--cm-line-number);
   white-space: nowrap;
 }
 
@@ -51,7 +55,7 @@
 /* CURSOR */
 
 .CodeMirror-cursor {
-  border-left: 1px solid black;
+  border-left: 1px solid var(--cm-cursor);
   border-right: none;
   width: 0;
 }
@@ -146,63 +150,6 @@
   text-decoration: line-through;
 }
 
-.cm-s-default .cm-keyword {
-  color: #708;
-}
-.cm-s-default .cm-atom {
-  color: #219;
-}
-.cm-s-default .cm-number {
-  color: #164;
-}
-.cm-s-default .cm-def {
-  color: #00f;
-}
-.cm-s-default .cm-variable,
-.cm-s-default .cm-punctuation,
-.cm-s-default .cm-property,
-.cm-s-default .cm-operator {
-}
-.cm-s-default .cm-variable-2 {
-  color: #05a;
-}
-.cm-s-default .cm-variable-3 {
-  color: #085;
-}
-.cm-s-default .cm-comment {
-  color: #a50;
-}
-.cm-s-default .cm-string {
-  color: #a11;
-}
-.cm-s-default .cm-string-2 {
-  color: #f50;
-}
-.cm-s-default .cm-meta {
-  color: #555;
-}
-.cm-s-default .cm-qualifier {
-  color: #555;
-}
-.cm-s-default .cm-builtin {
-  color: #30a;
-}
-.cm-s-default .cm-bracket {
-  color: #997;
-}
-.cm-s-default .cm-tag {
-  color: #170;
-}
-.cm-s-default .cm-attribute {
-  color: #00c;
-}
-.cm-s-default .cm-hr {
-  color: #999;
-}
-.cm-s-default .cm-link {
-  color: #00c;
-}
-
 .cm-s-default .cm-error {
   color: #f00;
 }
@@ -237,7 +184,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror {
   position: relative;
   overflow: hidden;
-  background: white;
+  background: var(--cm-background);
 }
 
 .CodeMirror-scroll {
@@ -407,10 +354,10 @@ div.CodeMirror-dragcursors {
 }
 
 .CodeMirror-selected {
-  background: #d9d9d9;
+  background: var(--cm-selection);
 }
 .CodeMirror-focused .CodeMirror-selected {
-  background: #d7d4f0;
+  background: var(--cm-selection);
 }
 .CodeMirror-crosshair {
   cursor: crosshair;
@@ -418,12 +365,12 @@ div.CodeMirror-dragcursors {
 .CodeMirror-line::selection,
 .CodeMirror-line > span::selection,
 .CodeMirror-line > span > span::selection {
-  background: #d7d4f0;
+  background: var(--cm-selection);
 }
 .CodeMirror-line::-moz-selection,
 .CodeMirror-line > span::-moz-selection,
 .CodeMirror-line > span > span::-moz-selection {
-  background: #d7d4f0;
+  background: var(--cm-selection);
 }
 
 .cm-searching {
@@ -592,7 +539,7 @@ span.CodeMirror-selectedtext {
 /* Hint */
 
 .CodeMirror-hints {
-  background: white;
+  background: var(--cm-hints-background);
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
@@ -609,7 +556,7 @@ span.CodeMirror-selectedtext {
 }
 
 .CodeMirror-hints-wrapper {
-  background: white;
+  background: var(--cm-hints-background);
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
@@ -629,7 +576,7 @@ span.CodeMirror-selectedtext {
 
 .CodeMirror-hint {
   border-top: solid 1px #f7f7f7;
-  color: #333;
+  color: var(--cm-hints-foreground);
   cursor: pointer;
   margin: 0;
   max-width: 300px;
@@ -639,9 +586,9 @@ span.CodeMirror-selectedtext {
 }
 
 li.CodeMirror-hint-active {
-  background-color: #08f;
-  border-top-color: white;
-  color: white;
+  background-color: var(--cm-hints-active-background);
+  border-top-color: var(--cm-hints-active-background);
+  color: var(--cm-hints-active-foreground);
 }
 
 .CodeMirror-hint-information {
@@ -687,8 +634,8 @@ li.CodeMirror-hint-active {
 /* Lint override */
 
 div.CodeMirror-lint-tooltip {
-  background-color: white;
-  color: #333;
+  background-color: var(--cm-hints-background);
+  color: var(--cm-hints-foreground);
   border: 0;
   border-radius: 2px;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
@@ -724,74 +671,139 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 
 /* COLORS */
 
+/* CSS Custom Properties for Theme Colors */
+:root {
+  /* Light theme colors (matching Shiki light.json) */
+  --cm-comment: #c2c3c5;
+  --cm-punctuation: #6e7557;
+  --cm-keyword: #e10198;
+  --cm-keyword-graphql: #990069;
+  --cm-def: #0e0f0b;
+  --cm-property: #0e0f0b;
+  --cm-qualifier: #1c92a9;
+  --cm-attribute: #8b2bb9;
+  --cm-number: #1976d2;
+  --cm-string: #2b5581;
+  --cm-builtin: #1976d2;
+  --cm-string-2: #0b7fc7;
+  --cm-variable: #e10198;
+  --cm-meta: #b33086;
+  --cm-atom: #1976d2;
+
+  /* Editor UI colors - light theme */
+  --cm-background: #ffffff;
+  --cm-foreground: #4f533f;
+  --cm-gutter-background: #f7f7f7;
+  --cm-gutter-border: #ddd;
+  --cm-line-number: #999;
+  --cm-cursor: #000000;
+  --cm-selection: #d7d4f0;
+  --cm-hints-background: #ffffff;
+  --cm-hints-foreground: #333;
+  --cm-hints-active-background: #08f;
+  --cm-hints-active-foreground: #ffffff;
+}
+
+.dark {
+  /* Dark theme colors (matching Shiki dark.json) */
+  --cm-comment: #6a737d;
+  --cm-punctuation: #6e7557;
+  --cm-keyword: #c2f653;
+  --cm-keyword-graphql: #c2f653;
+  --cm-def: #dbf6a2;
+  --cm-property: #dbf6a2;
+  --cm-qualifier: #1c92a9;
+  --cm-attribute: #8b2bb9;
+  --cm-number: #79b8ff;
+  --cm-string: #9ecbff;
+  --cm-builtin: #79b8ff;
+  --cm-string-2: #0b7fc7;
+  --cm-variable: #dbf6a2;
+  --cm-meta: #ff99e0;
+  --cm-atom: #79b8ff;
+
+  /* Editor UI colors - dark theme */
+  --cm-background: #24292c;
+  --cm-foreground: #cfd3c5;
+  --cm-gutter-background: #1f2425;
+  --cm-gutter-border: #1b1f20;
+  --cm-line-number: #6a737d;
+  --cm-cursor: #c8e1ff;
+  --cm-selection: #3392ff44;
+  --cm-hints-background: #24292c;
+  --cm-hints-foreground: #e1e4e8;
+  --cm-hints-active-background: #044289;
+  --cm-hints-active-foreground: #ffffff;
+}
+
 /* Comment */
 .cm-comment {
-  color: #999;
+  color: var(--cm-comment);
 }
 
 /* Punctuation */
 .cm-punctuation {
-  color: #555;
+  color: var(--cm-punctuation);
 }
 
 /* Keyword */
 .cm-keyword {
-  color: #b11a04;
+  color: var(--cm-keyword);
 }
 
 /* OperationName, FragmentName */
 .cm-def {
-  color: #d2054e;
+  color: var(--cm-def);
 }
 
 /* FieldName */
 .cm-property {
-  color: #1f61a0;
+  color: var(--cm-property);
 }
 
 /* FieldAlias */
 .cm-qualifier {
-  color: #1c92a9;
+  color: var(--cm-qualifier);
 }
 
 /* ArgumentName and ObjectFieldName */
 .cm-attribute {
-  color: #8b2bb9;
+  color: var(--cm-attribute);
 }
 
 /* Number */
 .cm-number {
-  color: #2882f9;
+  color: var(--cm-number);
 }
 
 /* String */
 .cm-string {
-  color: #d64292;
+  color: var(--cm-string);
 }
 
 /* Boolean */
 .cm-builtin {
-  color: #d47509;
+  color: var(--cm-builtin);
 }
 
 /* EnumValue */
 .cm-string-2 {
-  color: #0b7fc7;
+  color: var(--cm-string-2);
 }
 
 /* Variable */
 .cm-variable {
-  color: #397d13;
+  color: var(--cm-variable);
 }
 
 /* Directive */
 .cm-meta {
-  color: #b33086;
+  color: var(--cm-meta);
 }
 
 /* Type */
 .cm-atom {
-  color: #ca9800;
+  color: var(--cm-atom);
 }
 
 /* CM override */
@@ -810,10 +822,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   flex-direction: row;
   position: relative;
 
-  background: white;
-  box-shadow:
-    inset 0 0 0 1px #eee,
-    inset 4px 0 0 #eee;
+  background: transparent;
+
   border-radius: 3px;
   margin-left: -4px;
 
@@ -867,9 +877,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 }
 
 .result-window {
-  /*background: #fbfafa;*/
-  box-shadow: inset 5px 0px 4px -3px rgba(0, 0, 0, 0.2);
-
   position: absolute;
   left: 50%;
   top: 0;
@@ -877,7 +884,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   height: 100%;
   right: 0;
 
-  box-shadow: inset 0 0 0 1px #eee;
   border-radius: 3px;
 }
 
