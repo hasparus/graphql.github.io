@@ -33,7 +33,7 @@ const testimonials: Testimonial[] = [
       name: "Nicolai Draslov",
       role: "Danish Agency for Digital Government",
       avatar:
-        "https://media.licdn.com/dms/image/v2/C4E03AQGlrdt3GpJI9w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1528203207471?e=1753920000&v=beta&t=H6CMhDZFoXJxGUu4XYwC_rEX9Jjwh7OdPIDm8JaeXAU",
+        "https://papbiaw4uxaspq2o.public.blob.vercel-storage.com/nicolai.webp",
     },
   },
   {
@@ -92,9 +92,10 @@ function TestimonialAuthor({ author }: { author: Testimonial["author"] }) {
           alt={author.name}
           width={128}
           height={128}
-          className="size-16 saturate-0 xl:size-32"
+          className="size-16 saturate-[.1] xl:size-32"
+          fetchPriority="low"
         />
-        <div className="absolute inset-0 z-[1] bg-pri-darker mix-blend-plus-lighter" />
+        <div className="absolute inset-0 z-[1] bg-pri-darker opacity-80 mix-blend-plus-lighter" />
         <Stripes />
       </div>
       <AuthorNameAndRole author={author} className="contents md:hidden" />
