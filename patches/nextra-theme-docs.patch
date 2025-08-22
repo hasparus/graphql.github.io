@@ -23,7 +23,7 @@ index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..6671e29326be99861058895916185910
 +export declare const useSlugs: () => WeakMap<any, any>
 +
 diff --git a/dist/index.js b/dist/index.js
-index 56201641fd965dcc5ab7c5df53e444c41293c00e..860b8cfd297e82da041c4d8287ed266691d75a0e 100644
+index 56201641fd965dcc5ab7c5df53e444c41293c00e..b0344053f3e0682eda3dd23e142abc5458f9a683 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -100,10 +100,10 @@ IntersectionObserverContext.displayName = "IntersectionObserver";
@@ -41,3 +41,12 @@ index 56201641fd965dcc5ab7c5df53e444c41293c00e..860b8cfd297e82da041c4d8287ed2666
  var ActiveAnchorProvider = ({
    children
  }) => {
+@@ -2502,7 +2502,7 @@ var DEFAULT_COMPONENTS = {
+         ),
+         children: [
+           /* @__PURE__ */ jsx26(
+-            Sidebar,
++            themeConfig.sidebar.component,
+             {
+               docsDirectories,
+               fullDirectories: directories,

@@ -1,11 +1,11 @@
 import { DocsThemeConfig, ThemeSwitch, useConfig } from "nextra-theme-docs"
-
-import { Navbar } from "@/components/navbar/navbar"
 import { useRouter } from "next/router"
 
-import { GraphQLWordmarkLogo } from "./src/icons"
-import { Footer } from "@/components/footer"
+import { Navbar } from "@/components/navbar/navbar"
 import { mdxComponents } from "@/_design-system/mdx-components"
+import { GraphQLWordmarkLogo } from "@/icons"
+import { Footer } from "@/components/footer"
+import { Sidebar } from "@/components/sidebar"
 
 const graphQLLogo = (
   <GraphQLWordmarkLogo className="nextra-logo h-6" title="GraphQL" />
@@ -74,6 +74,7 @@ export default {
   },
   sidebar: {
     defaultMenuCollapseLevel: 1,
+    component: Sidebar,
   },
   footer: {
     component: () => <Footer />,
