@@ -1,9 +1,25 @@
-import { Component } from "react";
+import { Component } from "react"
+import { EditorView, keymap } from "@codemirror/view"
+import { EditorState } from "@codemirror/state"
+import { history, historyKeymap, defaultKeymap } from "@codemirror/commands"
+import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language"
+import { autocompletion, completionKeymap } from "@codemirror/autocomplete"
+import { graphql, updateSchema } from "cm6-graphql"
+import { GraphQLSchema } from "graphql"
+
+interface QueryEditorProps {
+  schema?: GraphQLSchema
+  value?: string
+  onEdit?: (value: string) => void
+  onRunQuery?: () => void
+  runQuery?: () => void
+  onHintInformationRender?: (el: HTMLElement) => void
+}
 
 /**
  * QueryEditor
  *
- * Maintains an instance of CodeMirror responsible for editing a GraphQL query.
+ * Maintains an instance of CodeMirror 6 responsible for editing a GraphQL query.
  *
  * Props:
  *
@@ -12,9 +28,14 @@ import { Component } from "react";
  *   - onEdit: A function called when the editor changes, given the edited text.
  *
  */
-export class QueryEditor extends Component {
-  constructor(props) {
-    super()
+export class QueryEditor extends Component<QueryEditorProps> {
+  private view: EditorView | null = null
+  private domNode: HTMLDivElement | null = null
+  private cachedValue: string
+  private ignoreChangeEvent = false
+
+  constructor(props: QueryEditorProps) {
+    super(props)
 
     // Keep a cached version of the value, this cache will be updated when the
     // editor is updated, which can later be used to protect the editor from
@@ -27,129 +48,115 @@ export class QueryEditor extends Component {
    * React component.
    */
   getCodeMirror() {
-    return this.editor
+    return this.view
   }
 
   componentDidMount() {
-    const CodeMirror = require("codemirror")
-    require("codemirror/addon/hint/show-hint")
-    require("codemirror/addon/comment/comment")
-    require("codemirror/addon/edit/matchbrackets")
-    require("codemirror/addon/edit/closebrackets")
-    require("codemirror/addon/lint/lint")
-    require("codemirror/keymap/sublime")
-    require("codemirror-graphql/hint")
-    require("codemirror-graphql/lint")
-    require("codemirror-graphql/mode")
+    if (!this.domNode) return
 
-    this.editor = CodeMirror(this.domNode, {
-      value: this.props.value || "",
-      viewportMargin: Infinity,
-      tabSize: 2,
-      mode: "graphql",
-      theme: "graphiql", // <-- here?
-      keyMap: "sublime",
-      autoCloseBrackets: true,
-      matchBrackets: true,
-      showCursorWhenSelecting: true,
-      lint: {
-        schema: this.props.schema,
-        onUpdateLinting: this._didLint.bind(this),
-      },
-      hintOptions: {
-        schema: this.props.schema,
-        closeOnUnfocus: true,
-        completeSingle: false,
-      },
-      extraKeys: {
-        "Cmd-Space": () => this.editor.showHint({ completeSingle: false }),
-        "Ctrl-Space": () => this.editor.showHint({ completeSingle: false }),
-        "Alt-Space": () => this.editor.showHint({ completeSingle: false }),
-        "Shift-Space": () => this.editor.showHint({ completeSingle: false }),
-
-        "Cmd-Enter": () => {
+    // Create key bindings
+    const runQueryBinding = keymap.of([
+      {
+        key: "Cmd-Enter",
+        run: () => {
           if (this.props.onRunQuery) {
             this.props.onRunQuery()
           }
+          return true
         },
-        "Ctrl-Enter": () => {
+      },
+      {
+        key: "Ctrl-Enter",
+        run: () => {
           if (this.props.onRunQuery) {
             this.props.onRunQuery()
           }
+          return true
         },
-
-        // Editor improvements
-        "Ctrl-Left": "goSubwordLeft",
-        "Ctrl-Right": "goSubwordRight",
-        "Alt-Left": "goGroupLeft",
-        "Alt-Right": "goGroupRight",
       },
+    ])
+
+    // Create editor state
+    const state = EditorState.create({
+      doc: this.props.value || "",
+      extensions: [
+        history(),
+        keymap.of([...historyKeymap, ...completionKeymap, ...defaultKeymap]),
+        runQueryBinding,
+        syntaxHighlighting(defaultHighlightStyle),
+        graphql(this.props.schema),
+        autocompletion(),
+        EditorView.updateListener.of(update => {
+          if (update.docChanged && !this.ignoreChangeEvent) {
+            this.cachedValue = update.state.doc.toString()
+            if (this.props.onEdit) {
+              this.props.onEdit(this.cachedValue)
+            }
+          }
+        }),
+        EditorView.theme({
+          ".cm-editor": {
+            fontSize: "inherit",
+            fontFamily: "inherit",
+          },
+          ".cm-focused": {
+            outline: "none",
+          },
+        }),
+      ],
     })
 
-    this.editor.on("change", this._onEdit.bind(this))
-    this.editor.on("keyup", this._onKeyUp.bind(this))
-    this.editor.on("hasCompletion", this._onHasCompletion.bind(this))
+    // Create editor view
+    this.view = new EditorView({
+      state,
+      parent: this.domNode,
+    })
   }
 
   componentWillUnmount() {
-    this.editor = null
+    if (this.view) {
+      this.view.destroy()
+      this.view = null
+    }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: QueryEditorProps) {
+    if (!this.view) return
+
     // Ensure the changes caused by this update are not interpreted as
     // user-input changes which could otherwise result in an infinite
     // event loop.
     this.ignoreChangeEvent = true
-    if (this.props.schema !== prevProps.schema) {
-      this.editor.options.lint.schema = this.props.schema
-      this.editor.options.hintOptions.schema = this.props.schema
-      CodeMirror.signal(this.editor, "change", this.editor)
+
+    if (this.props.schema !== prevProps.schema && this.props.schema) {
+      updateSchema(this.view, this.props.schema)
     }
+
     if (
       this.props.value !== prevProps.value &&
       this.props.value !== this.cachedValue
     ) {
-      this.cachedValue = this.props.value
-      this.editor.setValue(this.props.value)
+      this.cachedValue = this.props.value || ""
+      this.view.dispatch({
+        changes: {
+          from: 0,
+          to: this.view.state.doc.length,
+          insert: this.props.value || "",
+        },
+      })
     }
+
     this.ignoreChangeEvent = false
-  }
-
-  _didLint(annotations) {
-    if (annotations.length === 0) {
-      this.props.runQuery()
-    }
-  }
-
-  _onKeyUp(cm, event) {
-    const code = event.keyCode
-    if (
-      (code >= 65 && code <= 90) || // letters
-      (!event.shiftKey && code >= 48 && code <= 57) || // numbers
-      (event.shiftKey && code === 189) || // underscore
-      (event.shiftKey && code === 50) || // @
-      (event.shiftKey && code === 57) // (
-    ) {
-      this.editor.execCommand("autocomplete")
-    }
-  }
-
-  _onEdit() {
-    if (!this.ignoreChangeEvent) {
-      this.cachedValue = this.editor.getValue()
-      if (this.props.onEdit) {
-        this.props.onEdit(this.cachedValue)
-      }
-    }
-  }
-
-  _onHasCompletion(cm, data) {
-    onHasCompletion(cm, data, this.props.onHintInformationRender)
   }
 
   render() {
     return (
-      <div className="query-editor" ref={e => (this.domNode = e)}>
+      <div
+        className="query-editor"
+        ref={e => {
+          this.domNode = e
+        }}
+      >
         <span className="editor-name rounded-tl">Operation</span>
       </div>
     )

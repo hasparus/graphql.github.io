@@ -7,16 +7,19 @@
  */
 
 import { Component } from "react"
-import { marked } from "marked"
 
-import { graphql, formatError, GraphQLSchema } from "graphql"
+import { graphql, GraphQLSchema } from "graphql"
 
 import { QueryEditor } from "./query-editor"
+import { VariableEditor } from "./variable-editor"
+import { ResultViewer } from "./result-viewer"
+import { getVariableToType } from "./get-variable-to-type"
 
 export type MiniGraphiQLProps = {
   schema: GraphQLSchema
   query: string
   variables: string
+  rootValue?: any
 }
 
 interface MiniGraphiQLState {
@@ -73,7 +76,7 @@ export default class MiniGraphiQL extends Component<
         ) : (
           editor
         )}
-        <ResultViewer value={this.state.response} />
+        <ResultViewer value={this.state.response || undefined} />
       </div>
     )
   }
@@ -102,12 +105,20 @@ export default class MiniGraphiQL extends Component<
         rootValue: this.props.rootValue,
       })
 
+      let resultToSerialize: any = result
       if (result.errors) {
-        result.errors = result.errors.map(formatError)
+        // Convert errors to serializable format
+        const serializedErrors = result.errors.map(error => ({
+          message: error.message,
+          locations: error.locations,
+          path: error.path
+        }))
+        // Replace errors with serialized version for JSON.stringify
+        resultToSerialize = { ...result, errors: serializedErrors }
       }
 
       if (queryID === this._editorQueryID) {
-        this.setState({ response: JSON.stringify(result, null, 2) })
+        this.setState({ response: JSON.stringify(resultToSerialize, null, 2) })
       }
     } catch (error) {
       if (queryID === this._editorQueryID) {
@@ -116,11 +127,11 @@ export default class MiniGraphiQL extends Component<
     }
   }
 
-  _handleEditQuery(value) {
+  _handleEditQuery(value: string) {
     this.setState({ query: value })
   }
 
-  _handleEditVariables(value) {
+  _handleEditVariables(value: string) {
     this.setState({ variables: value })
   }
 }

@@ -29,8 +29,9 @@ export function Hero() {
           </ul>
 
           <div className="flex items-center gap-4">
-            <Button href="/learn" className="max-sm:w-full">
-              Learn more<span className="sr-only"> about GraphQL</span>
+            <Button href="/learn/#try-it-out">Try it out</Button>
+            <Button href="/learn">
+              <span className="sr-only">Read the </span> Docs
             </Button>
           </div>
         </div>

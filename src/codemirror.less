@@ -1,9 +1,40 @@
 @import "variables.less";
 
-/* Code Mirror */
+/* Code Mirror 6 & Compatibility */
 
-/* BASICS */
+/* BASICS - CodeMirror 6 */
+.cm-editor {
+  /* Set height, width, borders, and global font properties here */
+  height: 300px;
+  .code-font();
+  background: var(--cm-background);
+  color: var(--cm-foreground);
+  position: relative;
+  overflow: hidden;
+}
 
+.cm-scroller {
+  overflow: auto;
+  position: relative;
+}
+
+.cm-content {
+  min-height: 1px;
+  cursor: text;
+  padding: 4px 0;
+}
+
+.cm-line {
+  padding: 0 4px;
+  line-height: inherit;
+  color: inherit;
+}
+
+.cm-focused {
+  outline: none;
+}
+
+/* Compatibility aliases for CodeMirror 5 */
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   height: 300px;
@@ -808,7 +839,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 
 /* CM override */
 
-.CodeMirror {
+.CodeMirror,
+.cm-editor {
   .code-font();
 }
 
@@ -846,7 +878,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   }
 }
 
-.query-editor .CodeMirror {
+.query-editor .CodeMirror,
+.query-editor .cm-editor {
   height: auto;
   min-height: 100px;
   margin: 0px 7px 35px;
@@ -864,11 +897,13 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
     width: auto;
   }
 
-  .query-editor .CodeMirror {
+  .query-editor .CodeMirror,
+  .query-editor .cm-editor {
     margin-bottom: 21px;
   }
 
-  .variable-editor .CodeMirror {
+  .variable-editor .CodeMirror,
+  .variable-editor .cm-editor {
     height: auto;
     min-height: 30px;
     margin: 0 7px;
@@ -887,7 +922,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   border-radius: 3px;
 }
 
-.result-window .CodeMirror {
+.result-window .CodeMirror,
+.result-window .cm-editor {
   background: none;
   height: 100%;
   padding-bottom: 45px;
