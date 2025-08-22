@@ -12,5 +12,8 @@
   "tailwindCSS.classFunctions": ["clsx"],
   "editor.quickSuggestions": {
     "strings": "on"
-  }
+  },
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "**/node_modules/lucide-react"
+  ]
 }
