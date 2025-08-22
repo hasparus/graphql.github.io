@@ -2,7 +2,9 @@ import { Component } from "react"
 import { EditorView } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 import { json } from "@codemirror/lang-json"
-import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language"
+import { oneDark } from "./codemirror-one-dark"
+
+import "./syntax-highlighting.css"
 
 interface ResultViewerProps {
   value?: string
@@ -28,21 +30,7 @@ export class ResultViewer extends Component<ResultViewerProps> {
     // Create read-only editor state for JSON results
     const state = EditorState.create({
       doc: this.props.value || "",
-      extensions: [
-        EditorState.readOnly.of(true),
-        EditorView.editable.of(false),
-        json(),
-        syntaxHighlighting(defaultHighlightStyle),
-        EditorView.theme({
-          ".cm-editor": {
-            fontSize: "inherit",
-            fontFamily: "inherit",
-          },
-          ".cm-focused": {
-            outline: "none",
-          },
-        }),
-      ],
+      extensions: [EditorState.readOnly.of(true), json(), oneDark],
     })
 
     // Create editor view

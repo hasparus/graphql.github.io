@@ -1,0 +1,322 @@
+/* CodeMirror 6 Syntax Highlighting with Light/Dark Mode Support */
+
+/* CSS Custom Properties for Theme Colors */
+:root {
+  /* Light theme colors (matching Shiki light.json) */
+  --cm-comment: #c2c3c5;
+  --cm-punctuation: #6e7557;
+  --cm-keyword: #990069;
+  --cm-def: hsl(var(--color-pri-base));
+  --cm-property: #0e0f0b;
+  --cm-qualifier: #1c92a9;
+  --cm-attribute: #8b2bb9;
+  --cm-number: #1976d2;
+  --cm-string: #2b5581;
+  --cm-builtin: #1976d2;
+  --cm-string-2: #0b7fc7;
+  --cm-variable: #e10198;
+  --cm-meta: #b33086;
+  --cm-atom: #1976d2;
+
+  /* Editor UI colors - light theme */
+  --cm-background: #ffffff;
+  --cm-foreground: #4f533f;
+  --cm-gutter-background: #f7f7f7;
+  --cm-gutter-border: #ddd;
+  --cm-line-number: #999;
+  --cm-cursor: #000000;
+  --cm-selection: #d7d4f0;
+  --cm-hints-background: #ffffff;
+  --cm-hints-foreground: #333;
+  --cm-hints-active-background: #08f;
+  --cm-hints-active-foreground: #ffffff;
+}
+
+.dark {
+  /* Dark theme colors (matching Shiki dark.json) */
+  --cm-comment: #6a737d;
+  --cm-punctuation: #6e7557;
+  --cm-keyword: #c2f653;
+  --cm-def: #dbf6a2;
+  --cm-property: #dbf6a2;
+  --cm-qualifier: #1c92a9;
+  --cm-attribute: #8b2bb9;
+  --cm-number: #79b8ff;
+  --cm-string: #9ecbff;
+  --cm-builtin: #79b8ff;
+  --cm-string-2: #0b7fc7;
+  --cm-variable: #dbf6a2;
+  --cm-meta: #ff99e0;
+  --cm-atom: #79b8ff;
+
+  /* Editor UI colors - dark theme */
+  --cm-background: #24292c;
+  --cm-foreground: #cfd3c5;
+  --cm-gutter-background: #1f2425;
+  --cm-gutter-border: #1b1f20;
+  --cm-line-number: #6a737d;
+  --cm-cursor: #c8e1ff;
+  --cm-selection: #3392ff44;
+  --cm-hints-background: #24292c;
+  --cm-hints-foreground: #e1e4e8;
+  --cm-hints-active-background: #044289;
+  --cm-hints-active-foreground: #ffffff;
+}
+
+/* CodeMirror 6 Editor Base Styles */
+.cm-editor {
+  height: 300px;
+  font-family: inherit;
+  font-size: inherit;
+  background: var(--cm-background);
+  color: var(--cm-foreground);
+  position: relative;
+  overflow: hidden;
+}
+
+.cm-scroller {
+  overflow: auto;
+  position: relative;
+}
+
+.cm-content {
+  min-height: 1px;
+  cursor: text;
+  padding: 4px 0;
+}
+
+.cm-line {
+  padding: 0 4px;
+  line-height: inherit;
+  color: inherit;
+}
+
+.cm-focused {
+  outline: none;
+}
+
+/* Syntax Highlighting Classes */
+.cm-comment {
+  color: var(--cm-comment);
+}
+
+.cm-punctuation {
+  color: var(--cm-punctuation);
+}
+
+.cm-keyword {
+  color: var(--cm-keyword);
+}
+
+.cm-def {
+  color: var(--cm-def);
+}
+
+.cm-property {
+  color: var(--cm-property);
+}
+
+.cm-qualifier {
+  color: var(--cm-qualifier);
+}
+
+.cm-attribute {
+  color: var(--cm-attribute);
+}
+
+.cm-number {
+  color: var(--cm-number);
+}
+
+.cm-string {
+  color: var(--cm-string);
+}
+
+.cm-builtin {
+  color: var(--cm-builtin);
+}
+
+.cm-string-2 {
+  color: var(--cm-string-2);
+}
+
+.cm-variable {
+  color: var(--cm-variable);
+}
+
+.cm-meta {
+  color: var(--cm-meta);
+}
+
+.cm-atom {
+  color: var(--cm-atom);
+}
+
+/* Editor UI Elements */
+.cm-gutters {
+  border-right: 1px solid var(--cm-gutter-border);
+  background-color: var(--cm-gutter-background);
+  white-space: nowrap;
+}
+
+.cm-gutter {
+  white-space: normal;
+  height: 100%;
+  display: inline-block;
+  margin-bottom: -30px;
+}
+
+.cm-lineNumbers .cm-gutterElement {
+  padding: 0 3px 0 5px;
+  min-width: 20px;
+  text-align: right;
+  color: var(--cm-line-number);
+  white-space: nowrap;
+}
+
+.cm-cursor {
+  border-left: 1px solid var(--cm-cursor);
+  border-right: none;
+  width: 0;
+}
+
+.cm-selectionBackground {
+  background: var(--cm-selection);
+}
+
+.cm-focused .cm-selectionBackground {
+  background: var(--cm-selection);
+}
+
+/* Autocomplete/Hints */
+.cm-tooltip {
+  background: var(--cm-hints-background);
+  color: var(--cm-hints-foreground);
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.cm-tooltip-autocomplete {
+  background: var(--cm-hints-background);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  margin-left: -6px;
+  position: absolute;
+  z-index: 10;
+}
+
+.cm-completionLabel {
+  color: var(--cm-hints-foreground);
+}
+
+.cm-completionDetail {
+  color: var(--cm-comment);
+}
+
+.cm-completionMatchedText {
+  text-decoration: underline;
+}
+
+.cm-completionIcon {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+
+.cm-tooltip-autocomplete li {
+  border-top: solid 1px #f7f7f7;
+  color: var(--cm-hints-foreground);
+  cursor: pointer;
+  margin: 0;
+  max-width: 300px;
+  overflow: hidden;
+  padding: 2px 6px;
+  white-space: pre;
+}
+
+.dark .cm-tooltip-autocomplete li {
+  border-top-color: #333;
+}
+
+.cm-tooltip-autocomplete li:hover {
+  background-color: var(--cm-hints-active-background);
+  color: var(--cm-hints-active-foreground);
+}
+
+/* Lint Markers */
+.cm-lintRange {
+  background-position: left bottom;
+  background-repeat: repeat-x;
+}
+
+.cm-lintRange-error {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJDw4cOCW1/KIAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHElEQVQI12NggIL/DAz/GdA5/xkY/qPKMDAwAADLZwf5rvm+LQAAAABJRU5ErkJggg==");
+}
+
+.cm-lintRange-warning {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJFhQXEbhTg7YAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAMklEQVQI12NkgIIvJ3QXMjAwdDN+OaEbysDA4MPAwNDNwMCwiOHLCd1zX07o6kBVGQEAKBANtobskNMAAAAASUVORK5CYII=");
+}
+
+.cm-diagnostic {
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  position: relative;
+}
+
+.cm-diagnostic-error {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAHlBMVEW7AAC7AACxAAC7AAC7AAAAAAC4AAC5AAD///+7AAAUdclpAAAABnRSTlMXnORSiwCK0ZKSAAAATUlEQVR42mWPOQ7AQAgDuQLx/z8csYRmPRIFIwRGnosRrpamvkKi0FTIiMASR3hhKW+hAN6/tIWhu9PDWiTGNEkTtIOucA5Oyr9ckPgAWm0GPBog6v4AAAAASUVORK5CYII=");
+}
+
+.cm-diagnostic-warning {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAANlBMVEX/uwDvrwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD6twD/uwAAAADurwD2tQD7uAD+ugAAAAD/uwDhmeTRAAAADHRSTlMJ8mN1EYcbmiixgACm7WbuAAAAVklEQVR42n3PUQqAIBBFUU1LLc3u/jdbOJoW1P08DA9Gba8+YWJ6gNJoNYIBzAA2chBth5kLmG9YUoG0NHAUwFXwO9LuBQL1giCQb8gC9Oro2vp5rncCIY8L8uEx5ZkAAAAASUVORK5CYII=");
+}
+
+.cm-tooltip-lint {
+  background-color: var(--cm-hints-background);
+  color: var(--cm-hints-foreground);
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  font-family: inherit;
+  font-size: inherit;
+  padding: 6px 10px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+/* Matching brackets */
+.cm-matchingBracket {
+  color: #555;
+  text-decoration: underline;
+}
+
+.cm-nonmatchingBracket {
+  color: #f00;
+}
+
+/* Active line */
+.cm-activeLine {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark .cm-activeLine {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.cm-searchMatch {
+  background: #ffa;
+  background: rgba(255, 255, 0, 0.4);
+}
+
+.cm-searchMatch-selected {
+  background: #ff8;
+  background: rgba(255, 255, 0, 0.6);
+}

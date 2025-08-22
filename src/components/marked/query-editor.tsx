@@ -2,16 +2,21 @@ import { Component } from "react"
 import { EditorView, keymap } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 import { history, historyKeymap, defaultKeymap } from "@codemirror/commands"
-import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language"
-import { autocompletion, completionKeymap } from "@codemirror/autocomplete"
+import { bracketMatching } from "@codemirror/language"
+import {
+  autocompletion,
+  closeBrackets,
+  completionKeymap,
+} from "@codemirror/autocomplete"
 import { graphql, updateSchema } from "cm6-graphql"
 import { GraphQLSchema } from "graphql"
+import { oneDark } from "./codemirror-one-dark"
+import "./syntax-highlighting.css"
 
 interface QueryEditorProps {
   schema?: GraphQLSchema
   value?: string
   onEdit?: (value: string) => void
-  onRunQuery?: () => void
   runQuery?: () => void
   onHintInformationRender?: (el: HTMLElement) => void
 }
@@ -54,38 +59,30 @@ export class QueryEditor extends Component<QueryEditorProps> {
   componentDidMount() {
     if (!this.domNode) return
 
-    // Create key bindings
     const runQueryBinding = keymap.of([
       {
         key: "Cmd-Enter",
-        run: () => {
-          if (this.props.onRunQuery) {
-            this.props.onRunQuery()
-          }
-          return true
-        },
+        run: () => (this.props.runQuery?.(), true),
       },
       {
         key: "Ctrl-Enter",
-        run: () => {
-          if (this.props.onRunQuery) {
-            this.props.onRunQuery()
-          }
-          return true
-        },
+        run: () => (this.props.runQuery?.(), true),
       },
     ])
 
-    // Create editor state
     const state = EditorState.create({
       doc: this.props.value || "",
       extensions: [
         history(),
+        closeBrackets(),
+        bracketMatching(),
         keymap.of([...historyKeymap, ...completionKeymap, ...defaultKeymap]),
         runQueryBinding,
-        syntaxHighlighting(defaultHighlightStyle),
-        graphql(this.props.schema),
-        autocompletion(),
+        oneDark,
+        graphql(this.props.schema, {}),
+        autocompletion({
+          icons: false,
+        }),
         EditorView.updateListener.of(update => {
           if (update.docChanged && !this.ignoreChangeEvent) {
             this.cachedValue = update.state.doc.toString()
@@ -93,15 +90,6 @@ export class QueryEditor extends Component<QueryEditorProps> {
               this.props.onEdit(this.cachedValue)
             }
           }
-        }),
-        EditorView.theme({
-          ".cm-editor": {
-            fontSize: "inherit",
-            fontFamily: "inherit",
-          },
-          ".cm-focused": {
-            outline: "none",
-          },
         }),
       ],
     })

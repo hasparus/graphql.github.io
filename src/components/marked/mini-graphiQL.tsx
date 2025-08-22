@@ -62,7 +62,7 @@ export default class MiniGraphiQL extends Component<
     )
 
     return (
-      <div className="miniGraphiQL">
+      <div className="flex text-sm *:w-1/2">
         {Object.keys(this.state.variableToType).length > 0 ? (
           <div className="hasVariables">
             {editor}
@@ -91,10 +91,10 @@ export default class MiniGraphiQL extends Component<
     this.setState({
       variableToType: getVariableToType(this.props.schema, this.state.query),
     })
-    this._runQuery()
+    this._runQuery({ manual: true })
   }
 
-  async _runQuery() {
+  async _runQuery(options: { manual: boolean }) {
     this._editorQueryID++
     const queryID = this._editorQueryID
     try {
@@ -107,11 +107,17 @@ export default class MiniGraphiQL extends Component<
 
       let resultToSerialize: any = result
       if (result.errors) {
+        if (!options.manual) {
+          // if the query was ran on edit, we display errors on the left side
+          // so we can just return instead of showing the resulting error
+          return
+        }
+
         // Convert errors to serializable format
         const serializedErrors = result.errors.map(error => ({
           message: error.message,
           locations: error.locations,
-          path: error.path
+          path: error.path,
         }))
         // Replace errors with serialized version for JSON.stringify
         resultToSerialize = { ...result, errors: serializedErrors }
@@ -129,6 +135,7 @@ export default class MiniGraphiQL extends Component<
 
   _handleEditQuery(value: string) {
     this.setState({ query: value })
+    void this._runQuery({ manual: false })
   }
 
   _handleEditVariables(value: string) {
