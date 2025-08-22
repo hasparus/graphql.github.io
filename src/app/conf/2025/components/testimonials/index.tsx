@@ -33,7 +33,7 @@ const testimonials: Testimonial[] = [
       name: "Nicolai Draslov",
       role: "Danish Agency for Digital Government",
       avatar:
-        "https://media.licdn.com/dms/image/v2/C4E03AQGlrdt3GpJI9w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1528203207471?e=1753920000&v=beta&t=H6CMhDZFoXJxGUu4XYwC_rEX9Jjwh7OdPIDm8JaeXAU",
+        "https://vnckqn1t2xchefuj.public.blob.vercel-storage.com/nicolai.webp",
     },
   },
   {
