@@ -62,7 +62,7 @@ export default class MiniGraphiQL extends Component<
     )
 
     return (
-      <div className="flex text-sm *:w-1/2">
+      <div className="[&:not(:first-child)]:_mt-6 grid grid-cols-2 border border-neu-200 text-sm dark:border-neu-50">
         {Object.keys(this.state.variableToType).length > 0 ? (
           <div className="hasVariables">
             {editor}

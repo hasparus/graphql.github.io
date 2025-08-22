@@ -39,6 +39,7 @@ export function Pre({
   return (
     <div className={cn(classes.pre, "relative", containerClassName)}>
       {filename && (
+        // TODO: Extract this as a component for import in MiniGraphiQL
         <div
           className={cn(
             classes.filename,
@@ -52,7 +53,7 @@ export function Pre({
       )}
       <pre
         className={cn(
-          "nextra-focus overflow-x-auto border border-neu-200 py-4 text-[.9em] subpixel-antialiased contrast-more:contrast-150 dark:border-neu-50",
+          "nextra-focus overflow-x-auto border border-neu-200 py-4 subpixel-antialiased contrast-more:contrast-150 dark:border-neu-50",
           filename ? "rounded-b-md" : "rounded-md",
           className,
         )}

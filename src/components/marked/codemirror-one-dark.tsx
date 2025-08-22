@@ -4,86 +4,83 @@ import { HighlightStyle, syntaxHighlighting } from "@codemirror/language"
 import { tags as t } from "@lezer/highlight"
 
 /// The editor theme styles for One Dark using CSS custom properties.
-export const oneDarkTheme = EditorView.theme(
-  {
-    "&": {
-      color: "var(--cm-foreground)",
-      backgroundColor: "var(--cm-background)",
-    },
+export const oneDarkTheme = EditorView.theme({
+  "&": {
+    color: "var(--cm-foreground)",
+    backgroundColor: "var(--cm-background)",
+  },
 
-    ".cm-content": {
-      caretColor: "var(--cm-cursor)",
-    },
+  ".cm-content": {
+    caretColor: "var(--cm-cursor)",
+  },
 
-    ".cm-cursor, .cm-dropCursor": { borderLeftColor: "var(--cm-cursor)" },
-    "&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection":
-      { backgroundColor: "var(--cm-selection)" },
+  ".cm-cursor, .cm-dropCursor": { borderLeftColor: "var(--cm-cursor)" },
+  "&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection":
+    { backgroundColor: "var(--cm-selection)" },
 
-    ".cm-panels": {
-      backgroundColor: "var(--cm-background)",
-      color: "var(--cm-foreground)",
-    },
-    ".cm-panels.cm-panels-top": {
-      borderBottom: "2px solid var(--cm-gutter-border)",
-    },
-    ".cm-panels.cm-panels-bottom": {
-      borderTop: "2px solid var(--cm-gutter-border)",
-    },
+  ".cm-panels": {
+    backgroundColor: "var(--cm-background)",
+    color: "var(--cm-foreground)",
+  },
+  ".cm-panels.cm-panels-top": {
+    borderBottom: "2px solid var(--cm-gutter-border)",
+  },
+  ".cm-panels.cm-panels-bottom": {
+    borderTop: "2px solid var(--cm-gutter-border)",
+  },
 
-    ".cm-searchMatch": {
-      backgroundColor: "#72a1ff59",
-      outline: "1px solid #457dff",
-    },
-    ".cm-searchMatch.cm-searchMatch-selected": {
-      backgroundColor: "#6199ff2f",
-    },
+  ".cm-searchMatch": {
+    backgroundColor: "#72a1ff59",
+    outline: "1px solid #457dff",
+  },
+  ".cm-searchMatch.cm-searchMatch-selected": {
+    backgroundColor: "#6199ff2f",
+  },
 
-    ".cm-activeLine": { backgroundColor: "rgba(255, 255, 255, 0.05)" },
-    ".cm-selectionMatch": { backgroundColor: "#aafe661a" },
+  ".cm-activeLine": { backgroundColor: "rgba(255, 255, 255, 0.05)" },
+  ".cm-selectionMatch": { backgroundColor: "#aafe661a" },
 
-    "&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket": {
-      backgroundColor: "#bad0f847",
-    },
+  "&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket": {
+    backgroundColor: "#bad0f847",
+  },
 
-    ".cm-gutters": {
-      backgroundColor: "var(--cm-gutter-background)",
-      color: "var(--cm-line-number)",
-      border: "none",
-      borderRight: "1px solid var(--cm-gutter-border)",
-    },
+  ".cm-gutters": {
+    backgroundColor: "var(--cm-gutter-background)",
+    color: "var(--cm-line-number)",
+    border: "none",
+    borderRight: "1px solid var(--cm-gutter-border)",
+  },
 
-    ".cm-activeLineGutter": {
-      backgroundColor: "var(--cm-gutter-background)",
-    },
+  ".cm-activeLineGutter": {
+    backgroundColor: "var(--cm-gutter-background)",
+  },
 
-    ".cm-foldPlaceholder": {
-      backgroundColor: "transparent",
-      border: "none",
-      color: "#ddd",
-    },
+  ".cm-foldPlaceholder": {
+    backgroundColor: "transparent",
+    border: "none",
+    color: "#ddd",
+  },
 
-    ".cm-tooltip": {
-      border: "none",
-      backgroundColor: "var(--cm-hints-background)",
-      color: "var(--cm-hints-foreground)",
-    },
-    ".cm-tooltip .cm-tooltip-arrow:before": {
-      borderTopColor: "transparent",
-      borderBottomColor: "transparent",
-    },
-    ".cm-tooltip .cm-tooltip-arrow:after": {
-      borderTopColor: "var(--cm-hints-background)",
-      borderBottomColor: "var(--cm-hints-background)",
-    },
-    ".cm-tooltip-autocomplete": {
-      "& > ul > li[aria-selected]": {
-        backgroundColor: "var(--cm-hints-active-background)",
-        color: "var(--cm-hints-active-foreground)",
-      },
+  ".cm-tooltip": {
+    border: "none",
+    backgroundColor: "var(--cm-hints-background)",
+    color: "var(--cm-hints-foreground)",
+  },
+  ".cm-tooltip .cm-tooltip-arrow:before": {
+    borderTopColor: "transparent",
+    borderBottomColor: "transparent",
+  },
+  ".cm-tooltip .cm-tooltip-arrow:after": {
+    borderTopColor: "var(--cm-hints-background)",
+    borderBottomColor: "var(--cm-hints-background)",
+  },
+  ".cm-tooltip-autocomplete": {
+    "& > ul > li[aria-selected]": {
+      backgroundColor: "var(--cm-hints-active-background)",
+      color: "var(--cm-hints-active-foreground)",
     },
   },
-  { dark: true },
-)
+})
 
 /// The highlighting style for code using CSS custom properties.
 export const oneDarkHighlightStyle = HighlightStyle.define([

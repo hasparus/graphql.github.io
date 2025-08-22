@@ -1,16 +1,16 @@
-import { Component } from "react";
-import { EditorView } from "@codemirror/view";
-import { EditorState } from "@codemirror/state";
-import { json } from "@codemirror/lang-json";
-import { history } from "@codemirror/commands";
-import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
+import { Component } from "react"
+import { EditorView } from "@codemirror/view"
+import { EditorState } from "@codemirror/state"
+import { json } from "@codemirror/lang-json"
+import { history } from "@codemirror/commands"
+import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language"
 
 interface VariableEditorProps {
-  value: string;
-  variableToType?: any;
-  onEdit?: (value: string) => void;
-  onRunQuery?: () => void;
-  onHintInformationRender?: (el: HTMLElement) => void;
+  value: string
+  variableToType?: any
+  onEdit?: (value: string) => void
+  onRunQuery?: () => void
+  onHintInformationRender?: (el: HTMLElement) => void
 }
 
 /**
@@ -26,22 +26,22 @@ interface VariableEditorProps {
  *
  */
 export class VariableEditor extends Component<VariableEditorProps> {
-  private view: EditorView | null = null;
-  private domNode: HTMLDivElement | null = null;
-  private cachedValue: string;
-  private ignoreChangeEvent = false;
+  private view: EditorView | null = null
+  private domNode: HTMLDivElement | null = null
+  private cachedValue: string
+  private ignoreChangeEvent = false
 
   constructor(props: VariableEditorProps) {
-    super(props);
+    super(props)
 
     // Keep a cached version of the value, this cache will be updated when the
     // editor is updated, which can later be used to protect the editor from
     // unnecessary updates during the update lifecycle.
-    this.cachedValue = props.value || "";
+    this.cachedValue = props.value || ""
   }
 
   componentDidMount() {
-    if (!this.domNode) return;
+    if (!this.domNode) return
 
     // Create editor state for JSON (variables are JSON)
     const state = EditorState.create({
@@ -50,70 +50,75 @@ export class VariableEditor extends Component<VariableEditorProps> {
         history(),
         json(),
         syntaxHighlighting(defaultHighlightStyle),
-        EditorView.updateListener.of((update) => {
+        EditorView.updateListener.of(update => {
           if (update.docChanged && !this.ignoreChangeEvent) {
-            this.cachedValue = update.state.doc.toString();
+            this.cachedValue = update.state.doc.toString()
             if (this.props.onEdit) {
-              this.props.onEdit(this.cachedValue);
+              this.props.onEdit(this.cachedValue)
             }
           }
         }),
         EditorView.theme({
           ".cm-editor": {
             fontSize: "inherit",
-            fontFamily: "inherit"
+            fontFamily: "inherit",
           },
           ".cm-focused": {
-            outline: "none"
-          }
-        })
-      ]
-    });
+            outline: "none",
+          },
+        }),
+      ],
+    })
 
     // Create editor view
     this.view = new EditorView({
       state,
-      parent: this.domNode
-    });
+      parent: this.domNode,
+    })
   }
 
   componentDidUpdate(prevProps: VariableEditorProps) {
-    if (!this.view) return;
+    if (!this.view) return
 
     // Ensure the changes caused by this update are not interpreted as
     // user-input changes which could otherwise result in an infinite
     // event loop.
-    this.ignoreChangeEvent = true;
-    
+    this.ignoreChangeEvent = true
+
     if (
       this.props.value !== prevProps.value &&
       this.props.value !== this.cachedValue
     ) {
-      this.cachedValue = this.props.value;
+      this.cachedValue = this.props.value
       this.view.dispatch({
         changes: {
           from: 0,
           to: this.view.state.doc.length,
-          insert: this.props.value || ""
-        }
-      });
+          insert: this.props.value || "",
+        },
+      })
     }
-    
-    this.ignoreChangeEvent = false;
+
+    this.ignoreChangeEvent = false
   }
 
   componentWillUnmount() {
     if (this.view) {
-      this.view.destroy();
-      this.view = null;
+      this.view.destroy()
+      this.view = null
     }
   }
 
   render() {
     return (
-      <div className="variable-editor" ref={e => { this.domNode = e; }}>
+      <div
+        className="variable-editor"
+        ref={e => {
+          this.domNode = e
+        }}
+      >
         <span className="editor-name">Variables</span>
       </div>
-    );
+    )
   }
 }
