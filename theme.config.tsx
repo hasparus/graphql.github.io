@@ -5,7 +5,7 @@ import { Navbar } from "@/components/navbar/navbar"
 import { mdxComponents } from "@/_design-system/mdx-components"
 import { GraphQLWordmarkLogo } from "@/icons"
 import { Footer } from "@/components/footer"
-import { Sidebar } from "@/components/sidebar"
+import { NextraMdxWrapper } from "@/components/nextra-mdx-wrapper"
 
 const graphQLLogo = (
   <GraphQLWordmarkLogo className="nextra-logo h-6" title="GraphQL" />
@@ -74,7 +74,6 @@ export default {
   },
   sidebar: {
     defaultMenuCollapseLevel: 1,
-    component: Sidebar,
   },
   footer: {
     component: () => <Footer />,
@@ -92,5 +91,5 @@ export default {
   search: {
     placeholder: "Search…",
   },
-  components: mdxComponents,
+  components: { ...mdxComponents, wrapper: NextraMdxWrapper },
 } satisfies DocsThemeConfig

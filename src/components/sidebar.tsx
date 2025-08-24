@@ -1,6 +1,5 @@
 /**
  * @file sidebar module extracted from Nextra 3.3.1
- * @description
  */
 
 import cn from "clsx"
@@ -21,7 +20,7 @@ import {
   useState,
 } from "react"
 import scrollIntoView from "scroll-into-view-if-needed"
-import { renderComponent } from "../utils"
+import { renderComponent } from "./utils"
 import {
   useActiveAnchor,
   useMenu,
@@ -30,7 +29,7 @@ import {
   LocaleSwitch,
 } from "nextra-theme-docs"
 
-import { Anchor } from "../../app/conf/_design-system/anchor"
+import { Anchor } from "../app/conf/_design-system/anchor"
 
 const TreeState: Record<string, boolean> = Object.create(null)
 
