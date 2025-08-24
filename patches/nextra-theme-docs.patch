@@ -1,5 +1,5 @@
 diff --git a/dist/index.d.mts b/dist/index.d.mts
-index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..c26af21e9bf3e8b1a2641b9d91c597575c30bfd9 100644
+index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..aadd6228910ee3ebafccfae8672cb9ae1b0bca3c 100644
 --- a/dist/index.d.mts
 +++ b/dist/index.d.mts
 @@ -1421,3 +1421,25 @@ declare function ThemeSwitch({ lite, className }: ThemeSwitchProps): ReactElemen
@@ -22,7 +22,7 @@ index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..c26af21e9bf3e8b1a2641b9d91c59757
 +export declare const useIntersectionObserver: () => IntersectionObserver | null
 +export declare const useSlugs: () => WeakMap<any, any>
 +
-+export declare const Breadcrumb: (props: { activeElement: Item[] }) => ReactElement | null
++export declare const Breadcrumb: (props: { activePath: Item[] }) => ReactElement | null
 +export declare const NavLinks: (props: NavLinkProps) => ReactElement | null
 +export interface NavLinkProps {
 +  currentIndex: number
