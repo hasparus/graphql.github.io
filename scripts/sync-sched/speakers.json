@@ -82,7 +82,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312971
     },
     {
       "username": "adam.sayah",
@@ -107,6 +107,21 @@
         2023
       ],
       "~syncedDetailsAt": 1749497543087
+    },
+    {
+      "username": "adam427",
+      "company": "Amazon",
+      "position": "Software Development Engineer",
+      "name": "Adam Cervantes",
+      "about": "Adam is currently a software development engineer at Amazon's Buyer Abuse Prevention team. For the last 4 years, Adam has been helping prevent returns abuse on Amazon.com. One of his projects was to consolidate the data the team needs into a single, cohesive, GraphQL API.",
+      "location": "",
+      "url": "",
+      "avatar": "//avatars.sched.co/b/ad/3141026/avatar.jpg.320x320px.jpg?90d",
+      "socialurls": [],
+      "_years": [
+        2025
+      ],
+      "~syncedDetailsAt": 1756202302380
     },
     {
       "username": "aditi_rajawat",
@@ -192,7 +207,7 @@
         2023,
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312971
     },
     {
       "username": "alex_reilly.7ldur4l",
@@ -330,7 +345,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312971
     },
     {
       "username": "andrei.bocan",
@@ -346,7 +361,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1755532095188
+      "~syncedDetailsAt": 1756202312971
     },
     {
       "username": "andrew.doyle1",
@@ -508,7 +523,7 @@
         2023,
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312971
     },
     {
       "username": "arkenflame",
@@ -1186,7 +1201,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302380
     },
     {
       "username": "gabrielschulhof",
@@ -1308,7 +1323,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302380
     },
     {
       "username": "hello2358",
@@ -1384,11 +1399,16 @@
       "location": "Lviv",
       "url": "https://apis.guru",
       "avatar": "//avatars.sched.co/d/6f/23096422/avatar.jpg.320x320px.jpg?958",
-      "socialurls": [],
+      "socialurls": [
+        {
+          "service": "LinkedIn",
+          "url": "https://www.linkedin.com/in/igoncharov/"
+        }
+      ],
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302380
     },
     {
       "username": "jamie855",
@@ -1442,7 +1462,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302380
     },
     {
       "username": "jared_cheney.7rad60v",
@@ -1587,7 +1607,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302380
     },
     {
       "username": "jesperrasmussen",
@@ -1646,7 +1666,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302381
     },
     {
       "username": "jordaneldredge",
@@ -1685,7 +1705,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302381
     },
     {
       "username": "juancarlosjr97",
@@ -1754,7 +1774,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312970
     },
     {
       "username": "keerthan.ekbote",
@@ -2007,7 +2027,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302381
     },
     {
       "username": "lyonwj1",
@@ -2071,7 +2091,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202302381
     },
     {
       "username": "mansi.mittal",
@@ -2086,7 +2106,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "marco.reni",
@@ -2181,7 +2201,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "marybriskin",
@@ -2362,7 +2382,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "michael.bleigh",
@@ -2401,7 +2421,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "omribruchim",
@@ -2614,7 +2634,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "rickbijkerk54",
@@ -2629,7 +2649,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "robert.balicki",
@@ -2708,7 +2728,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "saihajpreet.singh",
@@ -2747,7 +2767,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "sanvertarmur",
@@ -2762,7 +2782,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "sasanders26",
@@ -3028,7 +3048,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202309111
     },
     {
       "username": "suresh_muthu",
@@ -3135,7 +3155,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312970
     },
     {
       "username": "tim.hall.engr",
@@ -3174,7 +3194,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312970
     },
     {
       "username": "tristan119",
@@ -3299,7 +3319,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312970
     },
     {
       "username": "vmjohnson999",
@@ -3350,7 +3370,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1755532095187
+      "~syncedDetailsAt": 1756202312970
     },
     {
       "username": "yaacovcr",
