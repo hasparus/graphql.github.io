@@ -3,6 +3,7 @@ import type { Config } from "tailwindcss"
 import typography from "@tailwindcss/typography"
 import plugin from "tailwindcss/plugin"
 import containerQueries from "@tailwindcss/container-queries"
+
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}", "./theme.config.tsx"],
   theme: {

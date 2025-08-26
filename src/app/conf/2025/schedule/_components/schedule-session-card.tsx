@@ -79,7 +79,7 @@ export function ScheduleSessionCard({
       // eslint-disable-next-line tailwindcss/no-contradicting-classname
       className={clsx(
         "[--bg:hsl(var(--color-neu-0))] [&:has(>a:hover)]:[--bg:hsl(var(--color-neu-0)/.9)] dark:[&:has(>a:hover)]:[--bg:hsl(var(--color-neu-0)/.8)]",
-        "group relative size-full p-4 font-normal no-underline ring-neu-400 focus-visible:z-[1] dark:ring-neu-100 [&:has(>a:hover)]:ring-1",
+        "group relative size-full p-4 font-normal no-underline ring-neu-400 @container focus-visible:z-[1] dark:ring-neu-100 [&:has(>a:hover)]:ring-1",
         blockTimeFraction < 1 && "[--bg:hsl(var(--color-neu-0)/50)]",
       )}
       style={
@@ -133,12 +133,12 @@ export function ScheduleSessionCard({
             )}
             <span className="mt-4 flex items-center gap-2 xl:mt-6">
               <span className="typography-body-xs flex items-center gap-0.5">
-                <PinIcon className="size-4 text-pri-base" />
+                <PinIcon className="size-4 text-pri-base [@container(width<240px)]:hidden" />
                 {session.venue}
               </span>
               {blockTimeFraction < 1 && (
                 <span className="typography-body-xs flex items-center gap-0.5">
-                  <ClockIcon className="size-4 text-pri-base" />
+                  <ClockIcon className="size-4 text-pri-base [@container(width<240px)]:hidden" />
                   {Math.round(
                     (new Date(session.event_end).getTime() -
                       new Date(session.event_start).getTime()) /
@@ -151,7 +151,7 @@ export function ScheduleSessionCard({
                 eventTitle={eventTitle}
                 session={session}
                 speakers={session.speakers || []}
-                className="ml-auto"
+                className="ml-auto [&_[data-text]]:hidden @[300px]:[&_[data-text]]:inline"
               />
             </span>
           </span>
@@ -204,7 +204,9 @@ function AddToCalendarLink({
           )}
         >
           <CalendarIcon className="size-4 shrink-0 text-pri-base" />
-          <span className="typography-body-xs">Add to calendar</span>
+          <span data-text className="typography-body-xs">
+            Add to calendar
+          </span>
         </MenuButton>
       </div>
       <Transition
