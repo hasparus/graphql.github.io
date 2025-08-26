@@ -1,5 +1,39 @@
 [
   {
+    "event_key": "929646",
+    "active": "Y",
+    "pinned": "N",
+    "name": "Canal Cruise - Separate Registration Required by 3 September",
+    "event_start": "2025-09-07 16:00",
+    "event_end": "2025-09-07 17:00",
+    "event_type": "Breaks / Networking / Special Events",
+    "description": "GraphQLConf Canal Cruise - Separate Registration Required\n\nJoin us on Sunday 7 September for this pre GraphQLConf'25 event, a must-do activity in Amsterdam; a wonderful canal cruise in the historical city centre of Amsterdam.\n\nInitiative by the local Amsterdam GraphQL Meetup group.\n\nA great opportunity to meet your peer-attendees of the GraphQLConf'25 during this great sight-seeing activity.\n\nPlease RSVP by Wednesday September 3rd!\n\nLocation: in the city centre (tba exact location)\nDuration of the canal cruise: 16:00-17:00 on Sunday 7 September\nPlease be 15:45 at the location (to buy the ticket etc).\n\nCost per person: 10-15 euro* (depending on the number of attendees)\n*not included in the conference ticket",
+    "goers": "0",
+    "seats": "0",
+    "invite_only": "N",
+    "id": "04a893e9dfa070fae1dfa767608ad0c0",
+    "event_start_year": "2025",
+    "event_start_month": "September",
+    "event_start_month_short": "Sep",
+    "event_start_day": "7",
+    "event_start_weekday": "Sunday",
+    "event_start_weekday_short": "Sun",
+    "event_start_time": "16:00",
+    "event_end_year": "2025",
+    "event_end_month": "September",
+    "event_end_month_short": "Sep",
+    "event_end_day": "7",
+    "event_end_weekday": "Sunday",
+    "event_end_weekday_short": "Sun",
+    "event_end_time": "17:00",
+    "start_date": "2025-09-07",
+    "start_time": "16:00:00",
+    "start_time_ts": 1757253600,
+    "end_date": "2025-09-07",
+    "end_time": "17:00:00",
+    "event_subtype": ""
+  },
+  {
     "event_key": "929642",
     "active": "Y",
     "pinned": "N",
@@ -482,7 +516,7 @@
     "event_key": "929631",
     "active": "Y",
     "pinned": "N",
-    "name": "Sponsored Session: Schema Design Patterns: Leveraging Existing REST APIs for Rapid GraphQL Adoption - Speaker To Be Announced",
+    "name": "Sponsored Session: Schema Design Patterns: Leveraging Existing REST APIs for Rapid GraphQL Adoption - Michael Watson, Apollo GraphQL",
     "event_start": "2025-09-08 10:45",
     "event_end": "2025-09-08 11:15",
     "event_type": "Developer Experience",
@@ -494,6 +528,15 @@
     "audience": "Any",
     "id": "9ef7eaa509478085ff75215c2b664f23",
     "venue_id": "2152800",
+    "speakers": [
+      {
+        "username": "watson17",
+        "id": "19024254",
+        "name": "Michael Watson",
+        "company": "Apollo GraphQL",
+        "custom_order": 0
+      }
+    ],
     "event_start_year": "2025",
     "event_start_month": "September",
     "event_start_month_short": "Sep",
@@ -3848,7 +3891,7 @@
     "event_key": "923860",
     "active": "Y",
     "pinned": "N",
-    "name": "Reintroducing Apollo Client: V4 and Beyond - Jerel Miller & Lenz Weber-Tronic, Apollo GraphQL",
+    "name": "Reintroducing Apollo Client: V4 and Beyond - Lenz Weber-Tronic, Apollo GraphQL",
     "event_start": "2025-09-10 13:40",
     "event_end": "2025-09-10 14:10",
     "event_type": "Developer Experience",
@@ -3862,18 +3905,11 @@
     "venue_id": "2152800",
     "speakers": [
       {
-        "username": "jerel.miller",
-        "id": "23098762",
-        "name": "Jerel Miller",
-        "company": "Apollo GraphQL",
-        "custom_order": 0
-      },
-      {
         "username": "mail1232",
         "id": "23098771",
         "name": "Lenz Weber-Tronic",
         "company": "Apollo GraphQL",
-        "custom_order": 1
+        "custom_order": 0
       }
     ],
     "event_start_year": "2025",
