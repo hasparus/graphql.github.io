@@ -4,15 +4,16 @@ import {
 } from "@/app/conf/2025/components/testimonials"
 import { SectionLabel } from "@/app/conf/_design-system/section-label"
 
+import mateoCollina from "./mateo-collina.webp"
+
 const testimonials: Testimonial[] = [
   {
     quote:
-      "GraphQL is evolving to new use cases every day and it's really a competitive advantage to experience them first hand with everyone that matters.",
+      "GraphQL gives us enterprise performance with start-up agility: streamlined queries, lean payloads, live updates, and lightning-fast responses help our customers focus on building their applications, not building around them.",
     author: {
-      name: "Vincent Desmares",
-      role: "Teamstarter, CTO",
-      avatar:
-        "https://avatars.sched.co/d/cc/21066875/avatar.jpg.320x320px.jpg?f80",
+      name: "Matteo Collina",
+      role: "Platformatic, Co-Founder & CTO",
+      avatar: mateoCollina.src,
     },
   },
   {
