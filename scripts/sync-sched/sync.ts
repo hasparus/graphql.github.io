@@ -96,7 +96,6 @@ async function sync(
   console.log("Getting schedule and speakers list...")
 
   const schedule = getSchedule(ctx)
-  console.dir(await schedule, { depth: 9, maxArrayLength: null })
   const thisYearSpeakers = getSpeakers(ctx)
   const existingSchedule = readFile(scheduleFilePath, "utf-8").then(JSON.parse)
   const existingSpeakers = readFile(speakersFilePath, "utf-8").then(JSON.parse)
