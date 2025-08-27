@@ -63,9 +63,9 @@ const USE_CASES: UseCase[] = [
   {
     label: "An AI-powered app",
     description:
-      "Build apps with soft core using GraphQL MCP. Your schema documents itself, so AI agents can discover your API capabilities, understand data relationships, and generate valid queries without custom integration work.",
-    cta: "MCP GraphQL",
-    href: "https://github.com/blurrah/mcp-graphql",
+      "GraphQL’s self-describing schemas, strong typing, and composability make it perfect for Model Context Protocol servers and applications with LLMs at their cores. Models can explore your API capabilities, understand data relationships, and dynamically interact with your system.",
+    cta: "GraphQL & AI",
+    href: "/blog/2025-07-03-graphql-supercharging-ai/",
   },
 ]
 
