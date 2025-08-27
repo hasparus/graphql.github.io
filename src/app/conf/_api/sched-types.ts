@@ -2,6 +2,9 @@ export type ScheduleSession = {
   id: string
   active: "Y" | "N"
   audience: string
+  /**
+   * can include HTML tags
+   */
   description: string
   event_end: string
   event_start: string
