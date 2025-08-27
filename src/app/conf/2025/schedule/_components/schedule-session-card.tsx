@@ -8,6 +8,7 @@ import {
   MenuItems,
   Transition,
 } from "@headlessui/react"
+import { stripHtml } from "string-strip-html"
 
 import { SchedSpeaker, ScheduleSession } from "@/app/conf/_api/sched-types"
 import { Anchor } from "@/app/conf/_design-system/anchor"
@@ -132,10 +133,12 @@ export function ScheduleSessionCard({
               </span>
             )}
             <span className="mt-4 flex items-center gap-2 xl:mt-6">
-              <span className="typography-body-xs flex items-center gap-0.5">
-                <PinIcon className="size-4 text-pri-base [@container(width<240px)]:hidden" />
-                {session.venue}
-              </span>
+              {session.venue && (
+                <span className="typography-body-xs flex items-center gap-0.5">
+                  <PinIcon className="size-4 text-pri-base [@container(width<240px)]:hidden" />
+                  {session.venue}
+                </span>
+              )}
               {blockTimeFraction < 1 && (
                 <span className="typography-body-xs flex items-center gap-0.5">
                   <ClockIcon className="size-4 text-pri-base [@container(width<240px)]:hidden" />
@@ -176,7 +179,7 @@ function AddToCalendarLink({
     title: eventTitle,
     start: session.event_start,
     end: session.event_end,
-    description: session.description,
+    description: stripHtml(session.description).result,
     location: session.venue,
     organizer: {
       name: `GraphQLConf ${new Date().getFullYear()}`,

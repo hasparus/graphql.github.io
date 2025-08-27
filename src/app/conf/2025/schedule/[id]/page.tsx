@@ -104,13 +104,17 @@ export default function SessionPage({ params }: SessionProps) {
                   </>
                 )}
 
-                <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
-                  Session speakers
-                </h3>
-                <SessionSpeakers
-                  session={session}
-                  className="-mx-px -mb-px last:xl:pb-24"
-                />
+                {!!session.speakers?.length && (
+                  <>
+                    <h3 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-16">
+                      Session speakers
+                    </h3>
+                    <SessionSpeakers
+                      session={session}
+                      className="-mx-px -mb-px last:xl:pb-24"
+                    />
+                  </>
+                )}
 
                 {!!session.files?.length && (
                   <>
@@ -255,9 +259,13 @@ function SessionDescription({ session }: { session: ScheduleSession }) {
   return (
     <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
       <h3 className="typography-h2 min-w-[320px]">Session description</h3>
-      <p className="typography-body-lg whitespace-pre-wrap">
-        {formattedDescription}
-      </p>
+      <p
+        className="typography-body-lg whitespace-pre-wrap"
+        dangerouslySetInnerHTML={{
+          // the description was partially sanitized when syncinc data from sched
+          __html: formattedDescription,
+        }}
+      />
     </div>
   )
 }
