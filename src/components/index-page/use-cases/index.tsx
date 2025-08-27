@@ -30,13 +30,7 @@ const USE_CASES: UseCase[] = [
       <>
         GraphQL lets you request exactly what you need in one call with no
         overfetching to preserve battery and work on slow networks. With
-        libraries like{" "}
-        <a
-          className="typography-link"
-          href="https://nearform.com/open-source/urql/docs/graphcache/offline/#offline-behavior"
-        >
-          GraphCache
-        </a>{" "}
+        a persistent normalized cache,
         your app can work offline on planes and trains, and versionless schema
         evolution makes it easy to iterate without breaking old versions of the
         app.
