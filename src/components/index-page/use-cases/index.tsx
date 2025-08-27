@@ -71,7 +71,7 @@ const USE_CASES: UseCase[] = [
     description:
       "Build apps with soft core using GraphQL MCP. Your schema documents itself, so AI agents can discover your API capabilities, understand data relationships, and generate valid queries without custom integration work.",
     cta: "MCP GraphQL",
-    href: "https://github.com/graphql/graphql-mcp",
+    href: "https://github.com/blurrah/mcp-graphql",
   },
 ]
 
