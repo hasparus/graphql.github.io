@@ -17,13 +17,20 @@ const testimonials: Testimonial[] = [
     },
   },
   {
-    quote:
-      "GraphQL is evolving to new use cases every day and it's really a competitive advantage to experience them first hand with everyone that matters.",
+    quote: (
+      <>
+        GraphQL is the best developer tool for creating and managing performant
+        APIs at scale, both for producers and consumers. It can query any source
+        and expose anything back, including real time data. It gives
+        understanding of your API usage that no other
+        spec&nbsp;can&nbsp;provide.
+      </>
+    ),
     author: {
-      name: "Vincent Desmares",
-      role: "Teamstarter, CTO",
+      name: "Uri Goldshtein",
+      role: "The Guild, Founder & CEO",
       avatar:
-        "https://avatars.sched.co/d/cc/21066875/avatar.jpg.320x320px.jpg?f80",
+        "https://avatars.sched.co/8/2b/14900013/avatar.jpg.320x320px.jpg?9f1",
     },
   },
   {
