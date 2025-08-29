@@ -1,5 +1,5 @@
 {
-  "name": "k-colorable light, based on Min Light",
+  "name": "k-colorable light",
   "type": "light",
   "semanticHighlighting": true,
   "colors": {
@@ -160,12 +160,6 @@
       }
     },
     {
-      "scope": ["comment", "string.quoted.docstring.multi"],
-      "settings": {
-        "foreground": "#c2c3c5"
-      }
-    },
-    {
       "scope": [
         "constant.numeric",
         "constant.language",
@@ -321,6 +315,46 @@
       ],
       "settings": {
         "foreground": "#990069"
+      }
+    },
+    {
+      "scope": ["meta.diff.header.git"],
+      "settings": {
+        "fontStyle": "underline bold"
+      }
+    },
+    {
+      "scope": ["meta.diff.index.git", "meta.diff.range"],
+      "settings": {
+        "foreground": "#6E7557",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": ["meta.diff.header.from-file"],
+      "settings": { "foreground": "#BD0026", "fontStyle": "italic" }
+    },
+    {
+      "scope": ["meta.diff.header.to-file"],
+      "settings": { "foreground": "#558900", "fontStyle": "italic" }
+    },
+    {
+      "scope": ["markup.deleted.diff"],
+      "settings": { "foreground": "#B31D28" }
+    },
+    {
+      "scope": ["markup.inserted.diff"],
+      "settings": { "foreground": "#558900" }
+    },
+    {
+      "scope": [
+        "comment",
+        "string.quoted.docstring.multi",
+        "punctuation.definition.comment"
+      ],
+      "settings": {
+        "foreground": "#9FA88A",
+        "fontStyle": "italic"
       }
     }
   ]

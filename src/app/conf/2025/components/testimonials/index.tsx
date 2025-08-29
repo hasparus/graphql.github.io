@@ -7,7 +7,7 @@ import maskBlur from "./mask.webp"
 export interface TestimonialsProps extends React.HTMLAttributes<HTMLElement> {}
 
 export interface Testimonial {
-  quote: string
+  quote: React.ReactNode
   author: {
     name: string
     role: string

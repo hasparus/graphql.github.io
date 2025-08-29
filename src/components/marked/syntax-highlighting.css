@@ -1,9 +1,5 @@
-/* CodeMirror 6 Syntax Highlighting with Light/Dark Mode Support */
-
-/* CSS Custom Properties for Theme Colors */
 :root {
-  /* Light theme colors (matching Shiki light.json) */
-  --cm-comment: #c2c3c5;
+  --cm-comment: #6e7557;
   --cm-punctuation: #6e7557;
   --cm-keyword: #990069;
   --cm-def: hsl(var(--color-pri-base));
@@ -11,14 +7,13 @@
   --cm-qualifier: #1c92a9;
   --cm-attribute: #8b2bb9;
   --cm-number: #1976d2;
-  --cm-string: #2b5581;
+  --cm-string: #609a06;
   --cm-builtin: #1976d2;
   --cm-string-2: #0b7fc7;
   --cm-variable: #e10198;
   --cm-meta: #b33086;
   --cm-atom: #1976d2;
 
-  /* Editor UI colors - light theme */
   --cm-background: #ffffff;
   --cm-foreground: #4f533f;
   --cm-gutter-background: #f7f7f7;

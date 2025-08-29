@@ -191,7 +191,20 @@ function preprocessDescription(description: string | undefined | null): string {
 
   // respecting <li> and <a> tags doesn't make sense, because speakers don't use them consistently
   // we'll improve how the descriptions look later down the tree in the session details page
-  return stripHtml(res).result
+  return stripHtml(res, {
+    ignoreTags: [
+      "a",
+      "b",
+      "i",
+      "em",
+      "strong",
+      "code",
+      "pre",
+      "ul",
+      "ol",
+      "li",
+    ],
+  }).result
 }
 
 function shapeSpeaker(user: SchedSpeaker): SchedSpeaker {
