@@ -5,6 +5,7 @@ import { WordWrapIcon } from "nextra/icons"
 import { Button, CopyToClipboard } from "nextra/components"
 
 import classes from "./pre.module.css"
+import { CodeBlockLabel } from "./code-block-label"
 
 interface PreProps extends ComponentPropsWithoutRef<"pre"> {
   "data-filename"?: string
@@ -39,17 +40,7 @@ export function Pre({
   return (
     <div className={cn(classes.pre, "relative", containerClassName)}>
       {filename && (
-        // TODO: Extract this as a component for import in MiniGraphiQL
-        <div
-          className={cn(
-            classes.filename,
-            "flex items-center gap-1.5 rounded-t-md border border-b-0 border-neu-200 bg-neu-0/[.64] px-4 py-2 text-sm text-neu-0/[.64] text-neu-800 backdrop-blur-[6px] dark:border-neu-50",
-          )}
-        >
-          {Icon && <Icon className="_h-4 _w-auto _max-w-6 _shrink-0" />}
-          <span className="_truncate">{filename}</span>
-          {copyButton}
-        </div>
+        <CodeBlockLabel text={filename} icon={Icon} button={copyButton} />
       )}
       <pre
         className={cn(

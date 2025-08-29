@@ -18,11 +18,11 @@
     border-bottom-right-radius: 0;
   }
 
-  & :not(:last-child) .filename {
+  & :not(:last-child) .label {
     border-top-right-radius: 0;
   }
 
-  & :not(:first-child) .filename {
+  & :not(:first-child) .label {
     border-top-left-radius: 0;
   }
 
