@@ -17,9 +17,9 @@ export function Hero() {
 
           <ul className="flex flex-col gap-2">
             {[
-              "Deliver high-performance user experience at any scale",
-              "Secure and stabilize your API with a strongly typed schema and validated requests",
-              "Reduce communication overhead through efficient, distributed development",
+              "Typesafe schemas, secure requests",
+              "Frictionless distributed development",
+              "Data driven UI at scale",
             ].map((item, index) => (
               <li key={index} className="flex items-start gap-1">
                 <CheckIcon className="size-6 shrink-0 text-pri-base max-lg:mt-px" />
