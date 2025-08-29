@@ -58,15 +58,6 @@ export class VariableEditor extends Component<VariableEditorProps> {
             }
           }
         }),
-        EditorView.theme({
-          ".cm-editor": {
-            fontSize: "inherit",
-            fontFamily: "inherit",
-          },
-          ".cm-focused": {
-            outline: "none",
-          },
-        }),
       ],
     })
 

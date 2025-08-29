@@ -171,6 +171,10 @@
   background: var(--cm-selection);
 }
 
+.cm-focused.cm-focused {
+  outline: none;
+}
+
 .cm-focused .cm-selectionBackground {
   background: var(--cm-selection);
 }
