@@ -29,17 +29,10 @@ const USE_CASES: UseCase[] = [
     description: (
       <>
         GraphQL lets you request exactly what you need in one call with no
-        overfetching to preserve battery and work on slow networks. With
-        libraries like{" "}
-        <a
-          className="typography-link"
-          href="https://nearform.com/open-source/urql/docs/graphcache/offline/#offline-behavior"
-        >
-          GraphCache
-        </a>{" "}
-        your app can work offline on planes and trains, and versionless schema
-        evolution makes it easy to iterate without breaking old versions of the
-        app.
+        overfetching to preserve battery and work on slow networks. With a
+        persistent normalized cache, your app can work offline on planes and
+        trains, and versionless schema evolution makes it easy to iterate
+        without breaking old versions of the app.
       </>
     ),
     cta: "Performance Optimization",
@@ -69,9 +62,9 @@ const USE_CASES: UseCase[] = [
   {
     label: "An AI-powered app",
     description:
-      "Build apps with soft core using GraphQL MCP. Your schema documents itself, so AI agents can discover your API capabilities, understand data relationships, and generate valid queries without custom integration work.",
-    cta: "MCP GraphQL",
-    href: "https://github.com/graphql/graphql-mcp",
+      "GraphQL’s self-describing schemas, strong typing, and composability make it perfect for Model Context Protocol servers and applications with LLMs at their cores. Models can explore your API capabilities, understand data relationships, and dynamically interact with your system.",
+    cta: "GraphQL & AI",
+    href: "/blog/2025-07-03-graphql-supercharging-ai/",
   },
 ]
 

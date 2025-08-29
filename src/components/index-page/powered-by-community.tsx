@@ -36,7 +36,7 @@ export function PoweredByCommunity() {
             href="/community/foundation"
             className="flex items-center justify-between gap-4 whitespace-pre px-6 py-8 hover:bg-white/10 focus-visible:!-outline-offset-8 lg:h-1/3 lg:px-8 lg:pr-12 xl:gap-6"
           >
-            Learn about GraphQL Foundation
+            Learn about the GraphQL Foundation
             <ArrowDownIcon className="size-10 -rotate-90 text-pri-light" />
           </Anchor>
         </div>

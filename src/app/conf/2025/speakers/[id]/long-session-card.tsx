@@ -15,6 +15,7 @@ import React, { Fragment } from "react"
 import { SessionTags } from "../../components/session-tags"
 import { Menu, MenuItem, MenuItems, Transition } from "@headlessui/react"
 import { MenuButton } from "@headlessui/react"
+import { stripHtml } from "string-strip-html"
 
 export interface LongSessionCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -172,7 +173,7 @@ function AddToCalendarLink({
     title: eventTitle,
     start: session.event_start,
     end: session.event_end,
-    description: session.description,
+    description: stripHtml(session.description).result,
     location: session.venue,
     organizer: {
       name: `GraphQLConf ${new Date().getFullYear()}`,

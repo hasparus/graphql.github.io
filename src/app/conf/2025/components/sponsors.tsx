@@ -1,6 +1,7 @@
 import Grafbase from "public/img/conf/Sponsors/Grafbase.svg?svgr"
 import Apollo from "public/img/conf/Sponsors/Apollo.svg?svgr"
 import Netflix from "public/img/conf/Sponsors/Netflix.svg?svgr"
+import TheGuild from "public/img/conf/Sponsors/TheGuild.svg?svgr"
 
 import { clsx } from "clsx"
 import { ChevronRight } from "../../_design-system/pixelarticons/chevron-right"
@@ -31,6 +32,19 @@ const sponsorGold: Sponsor[] = [
     ),
     name: "Apollo",
     link: "https://www.apollographql.com",
+  },
+  {
+    icon: (props: React.SVGProps<SVGElement>) => (
+      <TheGuild
+        {...props}
+        className={clsx(
+          props.className,
+          "[&_path]:fill-[#15252D] dark:[&_path]:fill-white",
+        )}
+      />
+    ),
+    name: "The Guild",
+    link: "https://the-guild.dev/graphql/hive",
   },
 ]
 
@@ -118,7 +132,7 @@ export function Sponsors({ heading }: SponsorsProps) {
               <Tier
                 key={tier.name}
                 tier={tier}
-                logoHeight={220 - sponsorTiers.indexOf(tier) * 24}
+                logoHeight={236 - sponsorTiers.indexOf(tier) * 32}
               />
             ),
         )}
@@ -134,7 +148,7 @@ function Tier({ tier, logoHeight }: { tier: Tier; logoHeight: number }) {
         <ChevronRight className="shrink-0 translate-y-[-0.5px]" />
         {tier.name}
       </h3>
-      <div className="flex min-w-[70%] flex-wrap justify-center gap-y-4">
+      <div className="flex min-w-[70%] flex-wrap justify-center gap-y-4 lg:grid lg:w-full lg:grid-cols-2 lg:gap-4">
         {tier.items.map(({ link, icon: Icon, name }, i) => (
           <a
             key={i}
