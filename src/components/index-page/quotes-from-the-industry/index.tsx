@@ -35,7 +35,7 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "The rich ecosystem of powerful tooling enables companies to deliver delightful long-lived APIs rapidly without sacrificing performance or scalability. From solo devs to huge organizations, GraphQL has proven itself time and time again as the right API for mobile and web apps!",
+      "The rich ecosystem of powerful tooling enables companies to deliver delightful long-lived APIs rapidly without sacrificing performance or scalability. From solo devs to huge organizations, GraphQL has proven itself time and time again as the right API for mobile and web apps.",
     author: {
       name: "Benjie Gillam",
       role: "Graphile, Director",
