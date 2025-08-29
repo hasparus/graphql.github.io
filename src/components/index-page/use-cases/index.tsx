@@ -29,11 +29,10 @@ const USE_CASES: UseCase[] = [
     description: (
       <>
         GraphQL lets you request exactly what you need in one call with no
-        overfetching to preserve battery and work on slow networks. With
-        a persistent normalized cache,
-        your app can work offline on planes and trains, and versionless schema
-        evolution makes it easy to iterate without breaking old versions of the
-        app.
+        overfetching to preserve battery and work on slow networks. With a
+        persistent normalized cache, your app can work offline on planes and
+        trains, and versionless schema evolution makes it easy to iterate
+        without breaking old versions of the app.
       </>
     ),
     cta: "Performance Optimization",
