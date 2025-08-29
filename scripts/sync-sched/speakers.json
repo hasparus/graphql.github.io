@@ -65,7 +65,7 @@
       "company": "Airbnb",
       "position": "Viaduct Platform Lead",
       "name": "Adam Miskiewicz",
-      "about": "Adam is a Senior Staff Software Engineer at Airbnb, where he leads platform architecture with a focus on performance, developer experience, and large-scale GraphQL systems. He’s one of the core architects behind Viaduct, Airbnb’s multi-tenant GraphQL platform, and is known for turning complex ideas into scalable, developer-friendly infrastructure. When he's not deep in Kotlin or shaping deployment strategy, he's probably pushing teams to move faster — safely.",
+      "about": "Adam is a Principal Software Engineer at Airbnb, where he leads platform architecture with a focus on performance, developer experience, and large-scale GraphQL systems. He’s one of the core architects behind Viaduct, Airbnb’s multi-tenant GraphQL platform, and is known for turning complex ideas into scalable, developer-friendly infrastructure. When he's not deep in Kotlin or shaping deployment strategy, he's probably pushing teams to move faster — safely.",
       "location": "",
       "url": "",
       "avatar": "//avatars.sched.co/8/82/23352721/avatar.jpg.320x320px.jpg?bfd",
@@ -107,6 +107,21 @@
         2023
       ],
       "~syncedDetailsAt": 1749497543087
+    },
+    {
+      "username": "adam427",
+      "company": "Amazon",
+      "position": "Software Development Engineer",
+      "name": "Adam Cervantes",
+      "about": "Adam is currently a software development engineer at Amazon's Buyer Abuse Prevention team. For the last 4 years, Adam has been helping prevent returns abuse on Amazon.com. One of his projects was to consolidate the data the team needs into a single, cohesive, GraphQL API.",
+      "location": "",
+      "url": "",
+      "avatar": "//avatars.sched.co/b/ad/3141026/avatar.jpg.320x320px.jpg?90d",
+      "socialurls": [],
+      "_years": [
+        2025
+      ],
+      "~syncedDetailsAt": 1756236819315
     },
     {
       "username": "aditi_rajawat",
@@ -979,7 +994,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819315
     },
     {
       "username": "dotansimha",
@@ -1377,12 +1392,12 @@
     },
     {
       "username": "ivan.goncharov.ua",
-      "company": "ApolloGraphQL",
-      "position": "Staff Software Engineer",
+      "company": "KeenEthics",
+      "position": "Head of R&D",
       "name": "Ivan Goncharov",
       "about": "Ivan has been active in the GraphQL community since its early days and is currently a member of the GraphQL Technical Steering Committee.",
-      "location": "",
-      "url": "",
+      "location": "Lviv",
+      "url": "https://apis.guru",
       "avatar": "//avatars.sched.co/d/6f/23096422/avatar.jpg.320x320px.jpg?958",
       "socialurls": [],
       "_years": [
@@ -1528,7 +1543,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819315
     },
     {
       "username": "jem28",
@@ -1573,21 +1588,6 @@
         2023
       ],
       "~syncedDetailsAt": 1749505650884
-    },
-    {
-      "username": "jerel.miller",
-      "company": "Apollo GraphQL",
-      "position": "Principal Software Engineer",
-      "name": "Jerel Miller",
-      "about": "Jerel is a Colorado native with a brief stint in Portland Oregon. He loves to code and learn about all sorts of programming patterns. He is an avid Denver Broncos fan and loves to play the bass.",
-      "location": "",
-      "url": "",
-      "avatar": "//avatars.sched.co/6/6e/23098762/avatar.jpg.320x320px.jpg?2ea",
-      "socialurls": [],
-      "_years": [
-        2025
-      ],
-      "~syncedDetailsAt": 1754078014495
     },
     {
       "username": "jesperrasmussen",
@@ -1646,7 +1646,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819315
     },
     {
       "username": "jordaneldredge",
@@ -1685,7 +1685,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819315
     },
     {
       "username": "juancarlosjr97",
@@ -1739,7 +1739,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819316
     },
     {
       "username": "kbahl",
@@ -1917,7 +1917,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819316
     },
     {
       "username": "ldebruijn",
@@ -1953,7 +1953,7 @@
         2024,
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819316
     },
     {
       "username": "lee_byron.25krdom6",
@@ -2007,7 +2007,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819315
     },
     {
       "username": "lyonwj1",
@@ -2071,7 +2071,7 @@
       "_years": [
         2025
       ],
-      "~syncedDetailsAt": 1754078014495
+      "~syncedDetailsAt": 1756236819315
     },
     {
       "username": "mansi.mittal",
