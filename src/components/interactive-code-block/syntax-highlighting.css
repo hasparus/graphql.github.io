@@ -29,7 +29,7 @@
 
 .dark {
   /* Dark theme colors (matching Shiki dark.json) */
-  --cm-comment: #6a737d;
+  --cm-comment: #737373;
   --cm-punctuation: #6e7557;
   --cm-keyword: #c2f653;
   --cm-def: #dbf6a2;
@@ -45,11 +45,11 @@
   --cm-atom: #79b8ff;
 
   /* Editor UI colors - dark theme */
-  --cm-background: #000;
+  --cm-background: hsl(var(--color-neu-800) / 0.025);
   --cm-foreground: #cfd3c5;
   --cm-gutter-background: #1f2425;
   --cm-gutter-border: #1b1f20;
-  --cm-line-number: #6a737d;
+  --cm-line-number: #737373;
   --cm-cursor: #c8e1ff;
   --cm-selection: #3392ff44;
   --cm-hints-foreground: #e1e4e8;

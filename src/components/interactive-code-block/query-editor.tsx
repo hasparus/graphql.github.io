@@ -10,7 +10,7 @@ import {
 } from "@codemirror/autocomplete"
 import { graphql, updateSchema } from "cm6-graphql"
 import { GraphQLSchema } from "graphql"
-import { oneDark } from "./codemirror-one-dark"
+import { codeMirrorThemeExtension } from "./codemirror-theme"
 import "./syntax-highlighting.css"
 
 interface QueryEditorProps {
@@ -78,7 +78,7 @@ export class QueryEditor extends Component<QueryEditorProps> {
         bracketMatching(),
         keymap.of([...historyKeymap, ...completionKeymap, ...defaultKeymap]),
         runQueryBinding,
-        oneDark,
+        codeMirrorThemeExtension,
         graphql(this.props.schema, {}),
         autocompletion({
           icons: false,
@@ -144,9 +144,7 @@ export class QueryEditor extends Component<QueryEditorProps> {
         ref={e => {
           this.domNode = e
         }}
-      >
-        <span className="editor-name rounded-tl">Operation</span>
-      </div>
+      />
     )
   }
 }

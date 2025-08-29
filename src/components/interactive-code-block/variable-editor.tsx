@@ -107,9 +107,7 @@ export class VariableEditor extends Component<VariableEditorProps> {
         ref={e => {
           this.domNode = e
         }}
-      >
-        <span className="editor-name">Variables</span>
-      </div>
+      />
     )
   }
 }

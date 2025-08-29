@@ -93,7 +93,7 @@
     "@types/codemirror": "5.60.16",
     "@types/hast": "3.0.4",
     "@types/node": "^22.10.5",
-    "@types/react": "^18.3.18",
+    "@types/react": "^18.3.23",
     "@types/rss": "0.0.32",
     "@types/string-similarity": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "7.18.0",
@@ -111,7 +111,7 @@
     "remark-lint-first-heading-level": "3.1.2",
     "remark-lint-heading-increment": "3.1.2",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "browserslist": [
     "chrome >0 and last 2.5 years",

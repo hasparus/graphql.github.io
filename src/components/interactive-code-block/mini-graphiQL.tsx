@@ -14,12 +14,12 @@ import { QueryEditor } from "./query-editor"
 import { VariableEditor } from "./variable-editor"
 import { ResultViewer } from "./result-viewer"
 import { getVariableToType } from "./get-variable-to-type"
+import { StarWarsSchema } from "./swapi-schema"
+import { UsersSchema } from "./users-schema"
+import { CodeBlockLabel } from "@/components/pre/code-block-label"
 
 export type MiniGraphiQLProps = {
-  schema: GraphQLSchema
-  query: string
-  variables: string
-  rootValue?: any
+  children: string
 }
 
 interface MiniGraphiQLState {
@@ -27,6 +27,19 @@ interface MiniGraphiQLState {
   variables: string
   response: string | null
   variableToType: Record<string, string>
+}
+
+const SCHEMA_MAP = {
+  StarWars: StarWarsSchema,
+  Users: UsersSchema,
+} as const
+
+type SchemaKey = keyof typeof SCHEMA_MAP
+
+type Metadata = {
+  graphiql?: boolean
+  variables?: unknown
+  schema?: SchemaKey
 }
 
 export default class MiniGraphiQL extends Component<
@@ -37,46 +50,77 @@ export default class MiniGraphiQL extends Component<
 
   _editorQueryID = 0
 
+  schema: GraphQLSchema
+
   constructor(props: MiniGraphiQLProps) {
     super(props)
-    const query = props.query.replace(/^\s+/, "")
 
-    // Initialize state
+    const codeMatch = this.props.children.match(/```graphql\s*\n([\s\S]*?)```/)
+    const blockContent = codeMatch?.[1]
+    const [firstLine, ...rest] = (blockContent || "").split("\n")
+
+    const metaMatch = firstLine.match(/^\s*#\s*({.*})\s*$/)?.[1] ?? "{}"
+    const meta = JSON.parse(metaMatch) as Metadata
+
+    const query = rest.join("\n").replace(/^\s+/, "")
+    const variables = meta.variables
+      ? JSON.stringify(meta.variables, null, 2)
+      : ""
+    this.schema = SCHEMA_MAP[meta.schema ?? "StarWars"]
+
     this.state = {
       query: query,
-      variables: props.variables,
+      variables: variables,
       response: null,
-      variableToType: getVariableToType(props.schema, query),
+      variableToType: getVariableToType(this.schema, query),
     }
   }
 
   render() {
     const editor = (
-      <QueryEditor
-        key="query-editor"
-        schema={this.props.schema}
-        value={this.state.query}
-        onEdit={this._handleEditQuery.bind(this)}
-        runQuery={this._runQueryFromEditor.bind(this)}
-      />
+      <div className="flex flex-col">
+        <CodeBlockLabel
+          text="Operation"
+          className="border-b border-neu-200 bg-[--cm-background] dark:border-neu-50"
+        />
+        <QueryEditor
+          key="query-editor"
+          schema={this.schema}
+          value={this.state.query}
+          onEdit={this._handleEditQuery.bind(this)}
+          runQuery={this._runQueryFromEditor.bind(this)}
+        />
+      </div>
     )
 
     return (
       <div className="[&:not(:first-child)]:_mt-6 grid grid-cols-2 border border-neu-200 text-sm dark:border-neu-50">
         {Object.keys(this.state.variableToType).length > 0 ? (
-          <div className="hasVariables">
+          <div className="hasVariables flex flex-col">
             {editor}
-            <VariableEditor
-              value={this.state.variables}
-              variableToType={this.state.variableToType}
-              onEdit={this._handleEditVariables.bind(this)}
-              onRunQuery={this._runQuery.bind(this)}
-            />
+            <div className="flex flex-col border-neu-200 dark:border-neu-50">
+              <CodeBlockLabel
+                text="Variables"
+                className="border-b border-neu-200 bg-[--cm-background] dark:border-neu-50"
+              />
+              <VariableEditor
+                value={this.state.variables}
+                variableToType={this.state.variableToType}
+                onEdit={this._handleEditVariables.bind(this)}
+                onRunQuery={() => void this._runQuery.bind(this)}
+              />
+            </div>
           </div>
         ) : (
           editor
         )}
-        <ResultViewer value={this.state.response || undefined} />
+        <div className="flex flex-col border-l border-neu-200 dark:border-neu-50">
+          <CodeBlockLabel
+            text="Response"
+            className="border-b border-neu-200 bg-[--cm-background] dark:border-neu-50"
+          />
+          <ResultViewer value={this.state.response || undefined} />
+        </div>
       </div>
     )
   }
@@ -89,7 +133,7 @@ export default class MiniGraphiQL extends Component<
 
   _runQueryFromEditor() {
     this.setState({
-      variableToType: getVariableToType(this.props.schema, this.state.query),
+      variableToType: getVariableToType(this.schema, this.state.query),
     })
     this._runQuery({ manual: true })
   }
@@ -99,10 +143,9 @@ export default class MiniGraphiQL extends Component<
     const queryID = this._editorQueryID
     try {
       const result = await graphql({
-        schema: this.props.schema,
+        schema: this.schema,
         source: this.state.query,
         variableValues: JSON.parse(this.state.variables || "{}"),
-        rootValue: this.props.rootValue,
       })
 
       let resultToSerialize: any = result

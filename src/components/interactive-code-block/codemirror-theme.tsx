@@ -3,8 +3,7 @@ import { Extension } from "@codemirror/state"
 import { HighlightStyle, syntaxHighlighting } from "@codemirror/language"
 import { tags as t } from "@lezer/highlight"
 
-/// The editor theme styles for One Dark using CSS custom properties.
-export const oneDarkTheme = EditorView.theme({
+export const editorTheme = EditorView.theme({
   "&": {
     color: "var(--cm-foreground)",
     backgroundColor: "var(--cm-background)",
@@ -82,8 +81,7 @@ export const oneDarkTheme = EditorView.theme({
   },
 })
 
-/// The highlighting style for code using CSS custom properties.
-export const oneDarkHighlightStyle = HighlightStyle.define([
+export const syntaxTheme = HighlightStyle.define([
   { tag: t.keyword, class: "cm-keyword" },
   {
     tag: [t.name, t.deleted, t.character, t.propertyName, t.macroName],
@@ -132,8 +130,7 @@ export const oneDarkHighlightStyle = HighlightStyle.define([
   },
 ])
 
-/// Extension to enable the One Dark theme using CSS custom properties.
-export const oneDark: Extension = [
-  oneDarkTheme,
-  syntaxHighlighting(oneDarkHighlightStyle),
+export const codeMirrorThemeExtension: Extension = [
+  editorTheme,
+  syntaxHighlighting(syntaxTheme),
 ]

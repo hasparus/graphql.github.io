@@ -1,6 +1,6 @@
 import { visit } from "unist-util-visit"
 
-const MINI_GRAPHIQL_COMPONENT = "InteractiveCodeblock"
+const MINI_GRAPHIQL_COMPONENT = "InteractiveCodeBlock"
 const MINI_GRAPHIQL_PATH = "@/components/interactive-code-block"
 
 export const remarkGraphiQLComment = () => ast => {

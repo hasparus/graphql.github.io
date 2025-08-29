@@ -112,14 +112,6 @@ div[id^="headlessui-menu-items"] {
   }
 }
 
-.result-window {
-  @apply !rounded-none border-l-2 !shadow-none dark:border-neutral-900;
-}
-
-.variable-editor {
-  @apply border-t-2 before:!bg-transparent dark:border-neutral-900;
-}
-
 .CodeMirror-selected {
   @apply !bg-primary/50 dark:bg-primary/40;
 }

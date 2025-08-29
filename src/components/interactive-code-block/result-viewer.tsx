@@ -3,7 +3,7 @@ import { EditorView } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 // todo: perhaps custom grammar to match the shiki highlighting?
 import { json } from "@codemirror/lang-json"
-import { oneDark } from "./codemirror-one-dark"
+import { codeMirrorThemeExtension } from "./codemirror-theme"
 
 import "./syntax-highlighting.css"
 
@@ -31,7 +31,11 @@ export class ResultViewer extends Component<ResultViewerProps> {
     // Create read-only editor state for JSON results
     const state = EditorState.create({
       doc: this.props.value || "",
-      extensions: [EditorState.readOnly.of(true), json(), oneDark],
+      extensions: [
+        EditorState.readOnly.of(true),
+        json(),
+        codeMirrorThemeExtension,
+      ],
     })
 
     // Create editor view
@@ -71,9 +75,7 @@ export class ResultViewer extends Component<ResultViewerProps> {
         ref={e => {
           this.domNode = e
         }}
-      >
-        <span className="editor-name rounded-tr">Response</span>
-      </div>
+      />
     )
   }
 }
