@@ -4,7 +4,7 @@ import {
 } from "@/app/conf/2025/components/testimonials"
 import { SectionLabel } from "@/app/conf/_design-system/section-label"
 
-import mateoCollina from "./mateo-collina.webp"
+import matteoCollina from "./matteo-collina.webp"
 
 const testimonials: Testimonial[] = [
   {
@@ -13,7 +13,7 @@ const testimonials: Testimonial[] = [
     author: {
       name: "Matteo Collina",
       role: "Platformatic, Co-Founder & CTO",
-      avatar: mateoCollina.src,
+      avatar: matteoCollina.src,
     },
   },
   {
@@ -35,32 +35,11 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "GraphQL is evolving to new use cases every day and it's really a competitive advantage to experience them first hand with everyone that matters.",
+      "The rich ecosystem of powerful tooling enables organizations to deliver long-lived APIs rapidly without sacrificing performance or scalability. From solo devs to huge companies, GraphQL has proven itself time and time again - if you need a performant and low-maintenance API for your mobile and web apps, look no further!",
     author: {
-      name: "Vincent Desmares",
-      role: "Teamstarter, CTO",
-      avatar:
-        "https://avatars.sched.co/d/cc/21066875/avatar.jpg.320x320px.jpg?f80",
-    },
-  },
-  {
-    quote:
-      "GraphQL is evolving to new use cases every day and it's really a competitive advantage to experience them first hand with everyone that matters.",
-    author: {
-      name: "Vincent Desmares",
-      role: "Teamstarter, CTO",
-      avatar:
-        "https://avatars.sched.co/d/cc/21066875/avatar.jpg.320x320px.jpg?f80",
-    },
-  },
-  {
-    quote:
-      "GraphQL is evolving to new use cases every day and it's really a competitive advantage to experience them first hand with everyone that matters.",
-    author: {
-      name: "Vincent Desmares",
-      role: "Teamstarter, CTO",
-      avatar:
-        "https://avatars.sched.co/d/cc/21066875/avatar.jpg.320x320px.jpg?f80",
+      name: "Benjie Gillam",
+      role: "Graphile, Director",
+      avatar: "https://avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg",
     },
   },
 ]
