@@ -3,13 +3,12 @@ import { graphql, GraphQLSchema } from "graphql"
 
 import { QueryEditor } from "@/components/interactive-code-block/query-editor"
 import { ResultViewer } from "@/components/interactive-code-block/result-viewer"
+import { getVariableToType } from "@/components/interactive-code-block/get-variable-to-type"
+import { VariableEditor } from "@/components/interactive-code-block/variable-editor"
+import { CodeBlockLabel } from "@/components/pre/code-block-label"
 
 import { HowItWorksListItem } from "./how-it-works-list-item"
-import { getVariableToType } from "../../interactive-code-block/get-variable-to-type"
-import { CodeBlockLabel } from "../../pre/code-block-label"
-import { VariableEditor } from "../../interactive-code-block/variable-editor"
 import { PlayButton } from "./play-button"
-import { run } from "node:test"
 
 const INITIAL_QUERY_TEXT = `{
   project(name: "GraphQL") {

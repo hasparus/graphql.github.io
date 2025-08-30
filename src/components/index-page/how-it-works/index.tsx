@@ -1,11 +1,12 @@
-import { Button } from "@/app/conf/_design-system/button"
-import { SectionLabel } from "@/app/conf/_design-system/section-label"
-import { CodeA, CodeB, CodeC } from "../../code-blocks"
-
 import { useRef } from "react"
 import { useInView } from "motion/react"
-import { HowItWorksListItem } from "./how-it-works-list-item"
 import dynamic from "next/dynamic"
+
+import { Button } from "@/app/conf/_design-system/button"
+import { SectionLabel } from "@/app/conf/_design-system/section-label"
+import { CodeA, CodeB, CodeC } from "@/components/code-blocks"
+
+import { HowItWorksListItem } from "./how-it-works-list-item"
 import { PlayButton } from "./play-button"
 
 const InteractiveEditor = dynamic(import("./interactive-editor"), {
