@@ -71,7 +71,7 @@ export class ResultViewer extends Component<ResultViewerProps> {
   render() {
     return (
       <div
-        className="result-window"
+        className="result-window h-full"
         ref={e => {
           this.domNode = e
         }}

@@ -103,7 +103,7 @@ export class VariableEditor extends Component<VariableEditorProps> {
   render() {
     return (
       <div
-        className="variable-editor"
+        className="variable-editor h-full"
         ref={e => {
           this.domNode = e
         }}

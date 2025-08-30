@@ -78,7 +78,7 @@ export default class MiniGraphiQL extends Component<
 
   render() {
     const editor = (
-      <div className="flex flex-col">
+      <div className="flex flex-1 flex-col">
         <CodeBlockLabel
           text="Operation"
           className="border-b border-neu-200 bg-[--cm-background] dark:border-neu-50"
@@ -101,7 +101,7 @@ export default class MiniGraphiQL extends Component<
             <div className="flex flex-col border-neu-200 dark:border-neu-50">
               <CodeBlockLabel
                 text="Variables"
-                className="border-b border-neu-200 bg-[--cm-background] dark:border-neu-50"
+                className="border-y border-neu-200 bg-[--cm-background] dark:border-neu-50"
               />
               <VariableEditor
                 value={this.state.variables}
@@ -177,11 +177,14 @@ export default class MiniGraphiQL extends Component<
   }
 
   _handleEditQuery(value: string) {
-    this.setState({ query: value })
-    void this._runQuery({ manual: false })
+    this.setState({ query: value }, () => {
+      void this._runQuery({ manual: false })
+    })
   }
 
   _handleEditVariables(value: string) {
-    this.setState({ variables: value })
+    this.setState({ variables: value }, () => {
+      void this._runQuery({ manual: false })
+    })
   }
 }

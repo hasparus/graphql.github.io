@@ -140,7 +140,7 @@ export class QueryEditor extends Component<QueryEditorProps> {
   render() {
     return (
       <div
-        className="query-editor flex flex-col [&>:last-child]:basis-full"
+        className="query-editor flex h-full flex-col [&>:last-child]:basis-full"
         ref={e => {
           this.domNode = e
         }}
