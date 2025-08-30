@@ -25,7 +25,7 @@ export function HowItWorks() {
       <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
       <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
         <HowItWorksListItem text="Describe your data" code={<CodeA />} />
-        {/* TODO: There's a blink on transition. We need to mount the new editor before unmounting the old one. */}
+        {/* TODO: There's a blink on transition sometimes. We need to mount the new editor before unmounting the old one. */}
         {inView ? (
           <InteractiveEditor />
         ) : (
