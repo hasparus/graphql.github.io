@@ -1,0 +1,129 @@
+import React, { useState } from "react"
+import { graphql, GraphQLSchema } from "graphql"
+
+import { QueryEditor } from "@/components/interactive-code-block/query-editor"
+import { ResultViewer } from "@/components/interactive-code-block/result-viewer"
+
+import { HowItWorksListItem } from "./how-it-works-list-item"
+import { getVariableToType } from "../../interactive-code-block/get-variable-to-type"
+import { CodeBlockLabel } from "../../pre/code-block-label"
+import { VariableEditor } from "../../interactive-code-block/variable-editor"
+import { PlayButton } from "./play-button"
+import { run } from "node:test"
+
+const INITIAL_QUERY_TEXT = `{
+  project(name: "GraphQL") {
+    tagline
+  }
+}`
+
+const INITIAL_RESULTS_TEXT = `{
+  "project": {
+    "tagline": "A query language for APIs"
+  }
+}`
+
+const schema = new GraphQLSchema({
+  types: [],
+})
+
+export default function InteractiveEditor() {
+  const [query, setQuery] = useState(INITIAL_QUERY_TEXT)
+  const [results, setResults] = useState(INITIAL_RESULTS_TEXT)
+  const [variableTypes, setVariableTypes] = useState<Record<string, string>>({})
+  const [variables, setVariables] = useState("")
+  const editorQueryId = React.useRef(0)
+
+  async function runQuery(options: { manual: boolean }) {
+    editorQueryId.current++
+    const queryID = editorQueryId.current
+    try {
+      const result = await graphql({
+        schema: schema,
+        source: query,
+        variableValues: {},
+      })
+
+      let resultToSerialize: any = result
+      if (result.errors) {
+        if (!options.manual) {
+          // if the query was ran on edit, we display errors on the left side
+          // so we can just return instead of showing the resulting error
+          return
+        }
+
+        // Convert errors to serializable format
+        const serializedErrors = result.errors.map(error => ({
+          message: error.message,
+          locations: error.locations,
+          path: error.path,
+        }))
+        // Replace errors with serialized version for JSON.stringify
+        resultToSerialize = { ...result, errors: serializedErrors }
+      }
+
+      if (queryID === editorQueryId.current) {
+        setResults(JSON.stringify(resultToSerialize, null, 2))
+      }
+    } catch (error) {
+      if (queryID === editorQueryId.current) {
+        setResults(JSON.stringify(error, null, 2))
+      }
+    }
+  }
+
+  const editor = (
+    <QueryEditor
+      value={query}
+      schema={schema}
+      onEdit={() => {
+        setQuery(query)
+        runQuery({ manual: false })
+      }}
+      runQuery={() => {
+        setVariableTypes(getVariableToType(schema, query))
+        runQuery({ manual: true })
+      }}
+    />
+  )
+
+  return (
+    <>
+      <HowItWorksListItem
+        text="Ask for what you want"
+        icon={
+          <PlayButton
+            onClick={() => {
+              void runQuery({ manual: true })
+            }}
+          />
+        }
+        code={
+          Object.keys(variableTypes).length > 0 ? (
+            <div className="hasVariables flex flex-col">
+              {editor}
+              <div className="flex flex-col border-neu-200 dark:border-neu-50">
+                <CodeBlockLabel
+                  text="Variables"
+                  className="border-b border-neu-200 bg-[--cm-background] dark:border-neu-50"
+                />
+                <VariableEditor
+                  value={variables}
+                  variableToType={variableTypes}
+                  onEdit={setVariables}
+                  onRunQuery={() => void runQuery({ manual: false })}
+                />
+              </div>
+            </div>
+          ) : (
+            editor
+          )
+        }
+      />
+      <HowItWorksListItem
+        text="Get predictable results"
+        code={<ResultViewer value={results} />}
+      />
+    </>
+  )
+}

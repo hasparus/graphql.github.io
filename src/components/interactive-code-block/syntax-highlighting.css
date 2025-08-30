@@ -75,6 +75,8 @@
 
   & .cm-scroller {
     line-height: 1.5;
+    font-family: var(--font-mono);
+    -webkit-font-smoothing: auto;
   }
 }
 
