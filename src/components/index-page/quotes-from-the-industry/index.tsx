@@ -35,7 +35,7 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "The rich ecosystem of powerful tooling enables companies and organizations to tap into the GraphQL hivemind, delivering delightful, long-lived APIs rapidly without sacrificing performance or scalability. From solo developers to distributed teams in huge companies, GraphQL has proven itself time and time again - if you need a solid, performant, and low-maintenance API for your mobile and web apps, look no further!",
+      "The rich ecosystem of powerful tooling enables companies to deliver delightful long-lived APIs rapidly without sacrificing performance or scalability. From solo devs to huge organizations, GraphQL has proven itself time and time again as the right API for mobile and web apps.",
     author: {
       name: "Benjie Gillam",
       role: "Graphile, Director",
