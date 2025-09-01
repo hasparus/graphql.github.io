@@ -8,7 +8,10 @@ export function PlayButton({
   return (
     <Button
       variant="tertiary"
-      className={clsx("ml-auto h-min !p-1", className)}
+      className={clsx(
+        "ml-auto h-min !p-0.5 !text-neu-800 before:absolute before:-inset-3 hover:!text-neu-900",
+        className,
+      )}
       onClick={props.onClick}
     >
       <svg fill="currentColor" viewBox="0 0 24 24" className="size-4">
