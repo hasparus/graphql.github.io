@@ -89,7 +89,7 @@ export const syntaxTheme = HighlightStyle.define([
   },
   { tag: [t.function(t.variableName), t.labelName], class: "cm-variable" },
   { tag: [t.color, t.constant(t.name), t.standard(t.name)], class: "cm-atom" },
-  { tag: [t.definition(t.name), t.separator], class: "cm-def" },
+  { tag: [t.definition(t.name)], class: "cm-def" },
   {
     tag: [
       t.typeName,
