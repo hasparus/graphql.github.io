@@ -3,7 +3,7 @@ import { EditorView } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 import { json } from "@codemirror/lang-json"
 import { history } from "@codemirror/commands"
-import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language"
+import { codeMirrorThemeExtension } from "./codemirror-theme"
 
 interface VariableEditorProps {
   value: string
@@ -43,13 +43,12 @@ export class VariableEditor extends Component<VariableEditorProps> {
   componentDidMount() {
     if (!this.domNode) return
 
-    // Create editor state for JSON (variables are JSON)
     const state = EditorState.create({
       doc: this.props.value || "",
       extensions: [
         history(),
         json(),
-        syntaxHighlighting(defaultHighlightStyle),
+        codeMirrorThemeExtension,
         EditorView.updateListener.of(update => {
           if (update.docChanged && !this.ignoreChangeEvent) {
             this.cachedValue = update.state.doc.toString()
