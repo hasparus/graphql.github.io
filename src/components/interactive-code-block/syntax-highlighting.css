@@ -57,7 +57,6 @@
   --cm-hints-active-foreground: #ffffff;
 }
 
-/* CodeMirror 6 Editor Base Styles */
 .cm-editor {
   font-family: inherit;
   font-size: inherit;
@@ -75,6 +74,7 @@
 
   & .cm-scroller {
     line-height: 1.5;
+    font-family: var(--font-mono);
   }
 }
 
