@@ -108,15 +108,16 @@ export function TestimonialAuthor({
   return (
     <div className="relative flex shrink-0 flex-col items-center justify-center whitespace-pre md:px-6 lg:h-full lg:px-8">
       <div className="relative bg-neu-500 dark:bg-neu-200 dark:opacity-90">
-        <Image
+        <img // we're not using next-image-export-optimizer because these images are small
+          // and it fails to download and optimize avatars from Sched
           src={author.avatar}
           alt={author.name}
           width={128}
           height={128}
-          className="size-16 saturate-[.1] xl:size-32"
+          className="size-16 saturate-[.1] dark:opacity-90 xl:size-32"
           fetchPriority="low"
         />
-        <div className="absolute inset-0 z-[1] bg-pri-darker opacity-80 mix-blend-plus-lighter" />
+        <div className="absolute inset-0 z-[1] bg-pri-darker opacity-80 mix-blend-plus-lighter dark:mix-blend-color" />
         <Stripes />
       </div>
       <AuthorNameAndRole author={author} className="contents md:hidden" />
