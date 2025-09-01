@@ -112,6 +112,7 @@ export const syntaxTheme = HighlightStyle.define([
       t.regexp,
       t.link,
       t.special(t.string),
+      t.separator,
     ],
     class: "cm-punctuation",
   },
