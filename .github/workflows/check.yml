@@ -3,7 +3,7 @@ name: Lint and check formatting
 on: pull_request
 
 jobs:
-  prettier-check:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

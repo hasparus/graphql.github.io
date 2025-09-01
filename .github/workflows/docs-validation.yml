@@ -6,10 +6,10 @@ name: Docs validation
 on:
   pull_request:
     branches:
-      - main
+      - source
   push:
     branches:
-      - main
+      - source
 
 jobs:
   link-check:
