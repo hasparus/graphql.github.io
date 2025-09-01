@@ -1,12 +1,10 @@
 import type { AppProps } from "next/app"
-import { Roboto_Flex, Roboto_Mono } from "next/font/google"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 
 import { NewFontsStyleTag } from "@/app/fonts"
 
 import "@/globals.css"
-import "@/codemirror.less"
 import "@/app/colors.css"
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID

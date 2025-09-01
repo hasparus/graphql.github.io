@@ -5,9 +5,9 @@ test.describe("interactive examples", () => {
     page,
   }) => {
     await page.goto("/learn")
-    await page.waitForSelector(".CodeMirror", { timeout: 10000 })
+    await page.waitForSelector(".cm-editor", { timeout: 10000 })
 
-    const editors = page.locator(".miniGraphiQL")
+    const editors = page.locator(".cm-editor")
     let heroEditor: Locator | null = null
 
     for (let i = 0; i < (await editors.count()); i++) {
@@ -23,12 +23,7 @@ test.describe("interactive examples", () => {
       throw new Error("Could not find hero GraphQL editor")
     }
 
-    const codeMirrorEditor = heroEditor.locator(".CodeMirror").first()
-    await expect(codeMirrorEditor).toBeVisible()
-
-    await codeMirrorEditor.click()
-
-    const codeLines = codeMirrorEditor.locator(".CodeMirror-line")
+    const codeLines = heroEditor.locator(".cm-line")
 
     // Find the line containing "name" and click after it
     for (let i = 0; i < (await codeLines.count()); i++) {
@@ -47,12 +42,16 @@ test.describe("interactive examples", () => {
     await page.keyboard.type("ap")
     await page.keyboard.press("Control+Space")
 
-    const autoCompleteMenu = page.locator(".CodeMirror-hints")
+    const autoCompleteMenu = page.locator(".cm-tooltip-autocomplete")
     await expect(autoCompleteMenu).toBeVisible({ timeout: 5000 })
 
     const appearsInSuggestion = page
-      .locator(".CodeMirror-hints li")
+      .locator(".cm-completionLabel")
       .filter({ hasText: "appearsIn" })
+
+    expect(page.locator(".cm-completionDetail").first()).toHaveText(
+      "[Episode]!",
+    )
 
     if (await appearsInSuggestion.isVisible()) {
       await appearsInSuggestion.click()
@@ -60,7 +59,7 @@ test.describe("interactive examples", () => {
       await page.keyboard.press("Enter")
     }
 
-    const resultViewer = heroEditor.locator(".result-window")
+    const resultViewer = page.locator(".result-window").first()
     await expect(resultViewer).toBeVisible()
 
     await expect
@@ -91,7 +90,7 @@ test.describe("interactive examples", () => {
     await page.waitForLoadState("networkidle")
 
     // Find the mutation example that has GraphiQL enabled
-    const editors = page.locator(".miniGraphiQL")
+    const editors = page.locator(".cm-editor")
     let mutationEditor: Locator | null = null
 
     for (let i = 0; i < (await editors.count()); i++) {

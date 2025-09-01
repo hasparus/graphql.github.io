@@ -96,19 +96,19 @@ export function PrecisionFigure() {
       className="nextra-codeblocks flex w-full max-w-[100vw] bg-gradient-to-b from-transparent to-sec-lighter px-[14px] py-[30px] *:w-1/2 dark:to-sec-darker/25 max-[380px]:px-0 sm:max-w-[calc(100vw-32px)] xl:px-[46px] max-[380px]:[&_:is(.rounded-t-md,pre)]:rounded-none [&_pre]:!h-48"
       aria-hidden
     >
-      <Pre data-filename="Query" className="p-4">
+      <Pre data-filename="Query" className="p-4 text-[#6E7557]">
         {"{"}
         {"\n  "}
-        <span className="!text-pri-base dark:!text-pri-light">{"hero"}</span>
+        <span className="!text-pri-base dark:!text-sec-light">{"hero"}</span>
         {" {"}
-        <span className="!text-pri-base dark:!text-pri-light">
+        <span className="!text-pri-base dark:!text-sec-light">
           {"\n    name"}
         </span>
         {"\n    height\n    mass".split("").map((char, i) => (
           <span
             key={i}
             id={"ch" + i}
-            className="hidden !text-pri-base dark:!text-pri-light"
+            className="hidden !text-pri-base dark:!text-sec-light"
           >
             {char === "\n" ? <br /> : char}
           </span>

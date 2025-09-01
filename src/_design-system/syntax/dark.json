@@ -1,5 +1,5 @@
 {
-  "name": "k-colorable dark, based on GitHub Dark",
+  "name": "k-colorable-dark",
   "type": "dark",
   "semanticHighlighting": true,
   "colors": {
@@ -191,7 +191,7 @@
     {
       "scope": ["comment", "punctuation.definition.comment", "string.comment"],
       "settings": {
-        "foreground": "#6a737d"
+        "foreground": "#737373"
       }
     },
     {
