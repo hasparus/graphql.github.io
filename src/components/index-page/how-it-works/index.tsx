@@ -25,6 +25,7 @@ export function HowItWorks() {
     <section ref={sectionRef} className="gql-container gql-section xl:py-20">
       <SectionLabel className="mb-6">How it works</SectionLabel>
       <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
+      {/* todo: we need to wrap this in a vertical scrollview with max width about 420px as we now use position: absolute for dynamic content */}
       <div className="relative">
         <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
           <HowItWorksListItem text="Describe your data" code={<CodeA />} />
