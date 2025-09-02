@@ -577,8 +577,23 @@
     },
     {
       "source": "/schedule/",
-      "destination": "/conf/2024/schedule/",
+      "destination": "/conf/2025/schedule/",
       "permanent": false
+    },
+    {
+      "source": "/spec",
+      "destination": "https://spec.graphql.org",
+      "permanent": true
+    },
+    {
+      "source": "/landscape",
+      "destination": "https://landscape.graphql.org",
+      "permanent": true
+    },
+    {
+      "source": "/docs",
+      "destination": "/learn",
+      "permanent": true
     },
     {
       "source": "/conf/2025/event-resources",

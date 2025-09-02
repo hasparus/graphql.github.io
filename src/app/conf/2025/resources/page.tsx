@@ -36,7 +36,7 @@ export default function ResourcesPage() {
         </Button>
       </Hero>
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
-        <div className="gql-conf-container gql-conf-section gql-prose xl:mb-16 xl:mt-8">
+        <div className="gql-container gql-section gql-prose xl:mb-16 xl:mt-8">
           <Resources />
         </div>
       </main>

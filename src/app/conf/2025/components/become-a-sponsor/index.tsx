@@ -9,7 +9,7 @@ export function BecomeASponsor() {
   return (
     <section className="relative overflow-hidden">
       <Stripes />
-      <div className="gql-conf-container gql-conf-section xl:py-16">
+      <div className="gql-container gql-section xl:py-16">
         <header className="flex flex-col gap-x-48 gap-y-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="typography-h2">Become a Sponsor</h2>
