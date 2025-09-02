@@ -139,7 +139,9 @@ export function UseCases({
                   id={`graphql-use-case-${i}`}
                   className={clsx(
                     "relative h-full flex-1 p-8 lg:p-12 xl:p-16",
-                    selectedIndex === i ? "border-b border-sec-dark" : "hidden",
+                    selectedIndex === i
+                      ? "max-lg:border-b max-lg:border-sec-dark"
+                      : "hidden",
                   )}
                 >
                   <div className="relative z-10 my-auto max-h-[528px] max-w-2xl">
