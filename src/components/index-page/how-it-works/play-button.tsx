@@ -17,6 +17,7 @@ export function PlayButton({
       <svg fill="currentColor" viewBox="0 0 24 24" className="size-4">
         <path d="M10 20H8V4h2v2h2v3h2v2h2v2h-2v2h-2v3h-2v2z" />
       </svg>
+      <span className="sr-only">Run query</span>
     </Button>
   )
 }
