@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { graphql, GraphQLSchema } from "graphql"
+import { graphql } from "graphql"
 
 import { QueryEditor } from "@/components/interactive-code-block/query-editor"
 import { ResultViewer } from "@/components/interactive-code-block/result-viewer"
@@ -9,22 +9,9 @@ import { CodeBlockLabel } from "@/components/pre/code-block-label"
 
 import { HowItWorksListItem } from "./how-it-works-list-item"
 import { PlayButton } from "./play-button"
+import { projectsSchema as schema, INITIAL_QUERY_TEXT, INITIAL_RESULTS_TEXT } from "./schema"
 
-const INITIAL_QUERY_TEXT = `{
-  project(name: "GraphQL") {
-    tagline
-  }
-}`
 
-const INITIAL_RESULTS_TEXT = `{
-  "project": {
-    "tagline": "A query language for APIs"
-  }
-}`
-
-const schema = new GraphQLSchema({
-  types: [],
-})
 
 export default function InteractiveEditor() {
   const [query, setQuery] = useState(INITIAL_QUERY_TEXT)
@@ -38,9 +25,9 @@ export default function InteractiveEditor() {
     const queryID = editorQueryId.current
     try {
       const result = await graphql({
-        schema: schema,
+        schema,
         source: query,
-        variableValues: {},
+        variableValues: JSON.parse(variables || "{}"),
       })
 
       let resultToSerialize: any = result
@@ -75,8 +62,8 @@ export default function InteractiveEditor() {
     <QueryEditor
       value={query}
       schema={schema}
-      onEdit={() => {
-        setQuery(query)
+      onEdit={newQuery => {
+        setQuery(newQuery)
         runQuery({ manual: false })
       }}
       runQuery={() => {
