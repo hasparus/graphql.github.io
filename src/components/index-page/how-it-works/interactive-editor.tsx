@@ -22,13 +22,16 @@ export default function InteractiveEditor() {
   const [variables, setVariables] = useState("")
   const editorQueryId = React.useRef(0)
 
-  async function runQuery(options: { manual: boolean }) {
+  async function runQuery(
+    options: { manual: boolean },
+    source: string = query,
+  ) {
     editorQueryId.current++
     const queryID = editorQueryId.current
     try {
       const result = await graphql({
         schema,
-        source: query,
+        source,
         variableValues: JSON.parse(variables || "{}"),
       })
 
@@ -66,7 +69,7 @@ export default function InteractiveEditor() {
       schema={schema}
       onEdit={newQuery => {
         setQuery(newQuery)
-        runQuery({ manual: false })
+        runQuery({ manual: false }, newQuery)
       }}
       runQuery={() => {
         setVariableTypes(getVariableToType(schema, query))
@@ -110,7 +113,7 @@ export default function InteractiveEditor() {
       />
       <HowItWorksListItem
         text="Get predictable results"
-        code={<ResultViewer value={results} />}
+        code={<ResultViewer value={results} vainlyExtractData />}
       />
     </>
   )
