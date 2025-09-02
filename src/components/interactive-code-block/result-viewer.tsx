@@ -9,6 +9,7 @@ import "./syntax-highlighting.css"
 
 interface ResultViewerProps {
   value?: string
+  vainlyExtractData?: boolean
 }
 
 /**
@@ -59,11 +60,23 @@ export class ResultViewer extends Component<ResultViewerProps> {
   componentDidUpdate() {
     if (!this.view) return
 
+    let value = this.props.value || ""
+    if (this.props.vainlyExtractData) {
+      try {
+        const json = JSON.parse(value)
+        if (json && typeof json === "object" && "data" in json) {
+          value = JSON.stringify(json.data, null, 2)
+        }
+      } catch {
+        // ignore
+      }
+    }
+
     this.view.dispatch({
       changes: {
         from: 0,
         to: this.view.state.doc.length,
-        insert: this.props.value || "",
+        insert: value,
       },
     })
   }
