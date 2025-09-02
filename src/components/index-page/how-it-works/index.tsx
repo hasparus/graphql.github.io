@@ -9,7 +9,7 @@ import { CodeA, CodeB, CodeC } from "@/components/code-blocks"
 import { HowItWorksListItem } from "./how-it-works-list-item"
 import { PlayButton } from "./play-button"
 
-const InteractiveEditor = dynamic(import("./interactive-editor"), {
+const InteractiveEditor = dynamic(() => import("./interactive-editor"), {
   ssr: false,
 })
 
@@ -17,31 +17,34 @@ const TRY_IT_OUT_URL = "https://graphql.org/swapi-graphql"
 
 export function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null)
+  // todo: we could technically consider loading the chunk on hover or focus,
+  // just so people scrolling through the page don't download CodeMirror
   const inView = useInView(sectionRef)
 
   return (
     <section ref={sectionRef} className="gql-container gql-section xl:py-20">
       <SectionLabel className="mb-6">How it works</SectionLabel>
       <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
-      <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
-        <HowItWorksListItem text="Describe your data" code={<CodeA />} />
-        {/* TODO: There's a blink on transition sometimes. We need to mount the new editor before unmounting the old one. */}
-        {inView ? (
-          <InteractiveEditor />
-        ) : (
-          <>
-            <HowItWorksListItem
-              text="Ask for what you want"
-              icon={<PlayButton />}
-              code={<CodeB />}
-            />
-            <HowItWorksListItem
-              text="Get predictable results"
-              code={<CodeC />}
-            />
-          </>
+      <div className="relative">
+        <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
+          <HowItWorksListItem text="Describe your data" code={<CodeA />} />
+          <HowItWorksListItem
+            text="Ask for what you want"
+            icon={<PlayButton />}
+            code={<CodeB />}
+          />
+          <HowItWorksListItem text="Get predictable results" code={<CodeC />} />
+        </ol>
+        {inView && (
+          <ol
+            // this is rendered *on top* of the static version to avoid layout shift
+            className="absolute inset-0 list-none gap-px lg:grid lg:grid-cols-3"
+          >
+            <div className="pointer-events-none" />
+            <InteractiveEditor />
+          </ol>
         )}
-      </ol>
+      </div>
 
       <Button className="mx-auto mt-8 w-fit lg:mt-16" href={TRY_IT_OUT_URL}>
         Try GraphiQL
