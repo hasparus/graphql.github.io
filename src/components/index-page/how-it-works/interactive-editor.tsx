@@ -9,9 +9,11 @@ import { CodeBlockLabel } from "@/components/pre/code-block-label"
 
 import { HowItWorksListItem } from "./how-it-works-list-item"
 import { PlayButton } from "./play-button"
-import { projectsSchema as schema, INITIAL_QUERY_TEXT, INITIAL_RESULTS_TEXT } from "./schema"
-
-
+import {
+  projectsSchema as schema,
+  INITIAL_QUERY_TEXT,
+  INITIAL_RESULTS_TEXT,
+} from "./schema"
 
 export default function InteractiveEditor() {
   const [query, setQuery] = useState(INITIAL_QUERY_TEXT)
@@ -91,7 +93,7 @@ export default function InteractiveEditor() {
               <div className="flex flex-col border-neu-200 dark:border-neu-50">
                 <CodeBlockLabel
                   text="Variables"
-                  className="border-b border-neu-200 bg-[--cm-background] dark:border-neu-50"
+                  className="border-b border-neu-200 bg-transparent dark:border-neu-50"
                 />
                 <VariableEditor
                   value={variables}
