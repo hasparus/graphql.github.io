@@ -135,9 +135,7 @@ export async function getSchedule(
         ...session,
         event_type,
         event_subtype,
-        description: preprocessDescription(description, {
-          allowSomeHtml: true,
-        }),
+        description: preprocessDescription(description),
       }
     })
 
@@ -185,10 +183,7 @@ export async function getSpeakerDetails(
   return shapeSpeaker(data as SchedSpeaker)
 }
 
-function preprocessDescription(
-  description: string | undefined | null,
-  options: { allowSomeHtml?: boolean } = {},
-): string {
+function preprocessDescription(description: string | undefined | null): string {
   let res = description || ""
 
   // we respect manual line breaks
@@ -197,9 +192,18 @@ function preprocessDescription(
   // respecting <li> and <a> tags doesn't make sense, because speakers don't use them consistently
   // we'll improve how the descriptions look later down the tree in the session details page
   return stripHtml(res, {
-    ignoreTags: options.allowSomeHtml
-      ? ["a", "b", "i", "em", "strong", "code", "pre", "ul", "ol", "li"]
-      : [],
+    ignoreTags: [
+      "a",
+      "b",
+      "i",
+      "em",
+      "strong",
+      "code",
+      "pre",
+      "ul",
+      "ol",
+      "li",
+    ],
   }).result
 }
 
