@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import Image from "next-image-export-optimizer"
 
 import { Button } from "@/app/conf/_design-system/button"
 
@@ -6,6 +7,8 @@ import { Hero, HeroStripes } from "../../components/hero"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { CalendarIcon } from "../../../_design-system/pixelarticons/calendar-icon"
 import { PinIcon } from "../../../_design-system/pixelarticons/pin-icon"
+
+import heroPhoto from "./hero-photo.webp"
 
 export const metadata: Metadata = {
   title: "GraphQL Day at FOST",
@@ -28,19 +31,34 @@ export default function ResourcesPage() {
         colorScheme="neutral"
         stripes={
           <HeroStripes
-            className="-scale-x-100 dark:data-[loaded=true]:opacity-80"
+            className="-scale-x-100 [--color-sec-base:181deg_97.8%_36.1%] [--color-sec-dark:181deg_98.3%_23.1%] [--color-sec-light:181deg_74.3%_80.2%] dark:data-[loaded=true]:opacity-80"
             evenClassName="bg-[linear-gradient(180deg,hsl(var(--color-sec-light))_0%,hsl(319deg_100%_90%_/_0.2)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-sec-dark))_0%,hsl(var(--color-neu-100))_100%)]"
             oddClassName="bg-[linear-gradient(180deg,hsl(319deg_100%_90%_/_0.2)_0%,hsl(var(--color-sec-base))_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-sec-dark))_0%,hsl(var(--color-neu-0))_100%)]"
           />
         }
         rightContent={null}
+        bottom={
+          <div className="z-[2]">
+            <Image
+              src={heroPhoto}
+              width={1920}
+              height={560}
+              alt="a black and white photo of CNIT in La Defense, Paris"
+              className="mx-auto h-[560px] w-[1920px] max-w-full object-cover"
+            />
+          </div>
+        }
       >
         <HeroDateAndLocation />
         <div className="flex items-center gap-4 max-md:flex-col">
           <Button href={CFP_LINK} className="md:w-fit">
             Submit a proposal
           </Button>
-          <Button className="md:w-fit" href={TICKETS_LINK} variant="secondary">
+          <Button
+            className="backdrop-blur-xl md:w-fit"
+            href={TICKETS_LINK}
+            variant="secondary"
+          >
             Get your tickets
           </Button>
         </div>
