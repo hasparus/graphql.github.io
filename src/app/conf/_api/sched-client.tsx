@@ -135,9 +135,7 @@ export async function getSchedule(
         ...session,
         event_type,
         event_subtype,
-        description: preprocessDescription(description, {
-          allowSomeHtml: true,
-        }),
+        description: preprocessDescription(description),
       }
     })
 
