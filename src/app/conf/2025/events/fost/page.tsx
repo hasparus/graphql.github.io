@@ -4,6 +4,7 @@ import Image from "next-image-export-optimizer"
 import { Button } from "@/app/conf/_design-system/button"
 import { Accordion } from "@/app/conf/_design-system/accordion"
 
+import GraphQLFoundationWordmark from "../../assets/graphql-foundation-wordmark.svg?svgr"
 import { Hero, HeroStripes } from "../../components/hero"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { CalendarIcon } from "../../../_design-system/pixelarticons/calendar-icon"
@@ -11,6 +12,7 @@ import { PinIcon } from "../../../_design-system/pixelarticons/pin-icon"
 import { CtaCardSection } from "../../components/cta-card-section"
 
 import heroPhoto from "./hero-photo.webp"
+import { Anchor } from "../../../_design-system/anchor"
 
 export const metadata: Metadata = {
   title: "GraphQL Day at FOST",
@@ -20,8 +22,6 @@ const CFP_LINK =
   "https://docs.google.com/forms/d/1ElXceLzWftBvcEwrqYZSt8TqfVbrSFohtfmSFONolSk/preview"
 const TICKETS_LINK =
   "https://ticket.apidays.global/event/apidays-paris-2025/3cccd07f-acb2-466e-8d91-cb1f208ecf42"
-
-const API_DAYS_COLOR = "#02B3B6"
 
 export default function ResourcesPage() {
   return (
@@ -68,12 +68,12 @@ export default function ResourcesPage() {
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <div className="gql-container">
           <AboutEventSection />
-          <WhatToExpectSection />
           <ExpertMeetupSection />
           <VenueAndLocationSection />
+          <EventPartnersSection />
         </div>
         <CtaCardSection
-          title="Join the community"
+          title="Stay in the know"
           description="Meet the experts, share best practices, and discover the latest innovations shaping the future of APIs."
         >
           <div className="flex gap-4 max-sm:flex-col sm:items-center">
@@ -107,16 +107,16 @@ function HeroDateAndLocation() {
 
 function AboutEventSection() {
   return (
-    <section className="gql-section flex gap-6 max-md:flex-col">
-      <h3 className="typography-h2 md:flex-1">About GraphQL Day</h3>
+    <section className="gql-section flex gap-6 bg-neu-100 max-md:flex-col xl:py-12">
+      <h3 className="typography-h2 md:flex-[.5]">About</h3>
       <div className="flex flex-col gap-6 md:flex-1">
         <p className="typography-body-lg">
           Join us for a special GraphQL Day as part of the Future of Software
-          Week, co-located with API Days Paris. This focused event brings
+          Week, co‑located with API Days Paris. This focused event brings
           together GraphQL practitioners, innovators, and thought leaders for a
           day of deep technical discussions and hands-on learning.
         </p>
-        <p className="typography-body-lg">
+        <p className="typography-body-lg text-pretty">
           Whether you're already using GraphQL in production or just getting
           started, this is your opportunity to connect with the community, share
           best practices, and discover the latest developments in the GraphQL
@@ -127,60 +127,32 @@ function AboutEventSection() {
   )
 }
 
-function WhatToExpectSection() {
-  return (
-    <section className="gql-section flex gap-6 max-md:flex-col">
-      <h3 className="typography-h2 md:flex-1">What to expect</h3>
-      <ul className="flex flex-col gap-6 uppercase md:flex-1">
-        <ListItem number="8+" text="Expert talks" />
-        <ListItem number="12+" text="Speakers" />
-        <ListItem number="3" text="Lightning talks" />
-        <ListItem number="2" text="Panel discussions" />
-        <ListItem number="300+" text="Attendees" />
-      </ul>
-    </section>
-  )
-}
-
-function ListItem({ number, text }: { number: string | number; text: string }) {
-  return (
-    <li className="list-none bg-gradient-to-r from-[#CDF27E] p-6 dark:from-[#507501]">
-      <span className="inline-block text-[72px]/none [text-box:trim-both_cap_alphabetic]">
-        {number}
-      </span>{" "}
-      <span className="typography-menu mb-2 inline-block">{text}</span>
-    </li>
-  )
-}
-
 function ExpertMeetupSection() {
   return (
-    <section className="gql-section">
-      <h3 className="typography-h2 mb-12">
-        Meet the experts, share your experience
-      </h3>
+    <section className="gql-section xl:py-12">
+      <h3 className="typography-h2 mb-12">Why attend GraphQL Day?</h3>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <ExpertCard
+        <Card
           title="Technical Deep Dives"
           description="Learn advanced patterns, performance optimization techniques, and architectural decisions from teams running GraphQL at scale."
         />
-        <ExpertCard
+        <Card
           title="Best Practices Exchange"
           description="Share your learnings and challenges with fellow practitioners. Discover how others solve common GraphQL problems."
         />
-        <ExpertCard
+        <Card
           title="Innovation Showcase"
           description="Explore cutting-edge tools, upcoming features, and experimental approaches that are shaping GraphQL's future."
         />
-        <ExpertCard
+        <Card
           title="Community Building"
           description="Connect with the European GraphQL community. Build relationships that extend beyond the conference."
         />
-        <ExpertCard
+        <Card
           title="Hands-on Learning"
           description="Interactive sessions where you can experiment with new tools and techniques in real-time."
         />
-        <ExpertCard
+        <Card
           title="Q&A Sessions"
           description="Direct access to library maintainers and core contributors. Get your specific questions answered."
         />
@@ -189,15 +161,9 @@ function ExpertMeetupSection() {
   )
 }
 
-function ExpertCard({
-  title,
-  description,
-}: {
-  title: string
-  description: string
-}) {
+function Card({ title, description }: { title: string; description: string }) {
   return (
-    <article className="flex flex-col gap-4 border border-neu-200 p-6 dark:border-neu-700">
+    <article className="flex flex-col gap-4 border border-neu-200 p-6">
       <h4 className="typography-h3">{title}</h4>
       <p className="typography-body-md text-neu-700 dark:text-neu-300">
         {description}
@@ -208,7 +174,7 @@ function ExpertCard({
 
 function VenueAndLocationSection() {
   return (
-    <section className="gql-section">
+    <section className="gql-section xl:py-12">
       <h3 className="typography-h2 mb-12">Venue & Location</h3>
       <div className="flex gap-x-12 gap-y-10 max-lg:flex-col">
         <article className="flex flex-col gap-6 lg:flex-1">
@@ -223,21 +189,19 @@ function VenueAndLocationSection() {
           </p>
           <div className="typography-body-lg">
             <address className="not-italic">
-              Centre des nouvelles industries et technologies (CNIT)
+              Centre des nouvelles industries et technologies
               <br />
               2 Pl. de la Défense
               <br />
               92800 Puteaux, France
             </address>
           </div>
-          <Button href="https://maps.app.goo.gl/example" className="w-fit">
-            View on Google Maps
-          </Button>
         </article>
 
         <div className="lg:flex-1">
           <h4 className="typography-h3 mb-6">Getting There</h4>
           <Accordion
+            className="lg:min-h-[327px]"
             items={[
               {
                 title: "By Metro/RER",
@@ -279,7 +243,7 @@ function VenueAndLocationSection() {
         </div>
       </div>
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1311.5979270428409!2d2.2390248!3d48.8926045!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66502128aae1f%3A0xe5e22af4aa16ed38!2sWestfield%20CNIT!5e0!3m2!1sen!2spl!4v1756917405738!5m2!1sen!2spl"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57929.22297036571!2d2.1992477079806285!3d48.896253935132876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66502128aae1f%3A0xe5e22af4aa16ed38!2sWestfield%20CNIT!5e0!3m2!1sen!2spl!4v1756923974711!5m2!1sen!2spl"
         width="100%"
         height="450"
         allowFullScreen
@@ -287,6 +251,49 @@ function VenueAndLocationSection() {
         referrerPolicy="no-referrer-when-downgrade"
         className="mt-4"
       />
+    </section>
+  )
+}
+
+function EventPartnersSection() {
+  return (
+    <section className="gql-section">
+      <h3 className="typography-h2 mb-12 text-center">Event Partners</h3>
+      <div className="flex flex-col gap-8">
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-12 max-md:flex-col md:gap-16">
+            <div className="flex items-center justify-center">
+              <Anchor
+                href="https://www.apidays.global/events/paris"
+                className="p-8 hover:bg-neu-100"
+              >
+                <img
+                  src="https://cdn.prod.website-files.com/67a0938d08d1902cd6974340/68112b11f6895235885793a7_Apidays%20logo%20v2.png"
+                  alt="API Days"
+                  className="h-24 w-auto object-contain invert dark:invert-0"
+                />
+              </Anchor>
+            </div>
+            <span className="typography-h2 text-neu-400 lg:typography-d1 max-md:hidden">
+              &
+            </span>
+            <div className="flex items-center justify-center">
+              <Anchor
+                href="https://graphql.org/community/foundation/"
+                className="p-8 hover:bg-neu-100"
+              >
+                <GraphQLFoundationWordmark className="h-24 w-auto [&_g]:fill-neu-900" />
+              </Anchor>
+            </div>
+          </div>
+        </div>
+
+        <p className="typography-body-lg mx-auto max-w-2xl text-pretty text-center">
+          GraphQL Day is organized by API&nbsp;Days and GraphQL Foundation, as
+          part of the Future of Software Week.
+          {/* todo: link to some FOST page? */}
+        </p>
+      </div>
     </section>
   )
 }
