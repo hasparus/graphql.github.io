@@ -5,7 +5,6 @@ const COMBINED_REGEX =
 export function formatDescription(text: string): string {
   return text.replace(COMBINED_REGEX, (match, anchorTag, standaloneUrl) => {
     if (anchorTag) {
-      // Handle existing anchor tag
       const linkMatch = anchorTag.match(
         /<a\s+([^>]*href\s*=\s*[^>]*)>(.*?)<\/a>/i,
       )
@@ -31,7 +30,6 @@ export function formatDescription(text: string): string {
         )
       }
 
-      // Format URL content to show just domain
       const urlContent = content.replace(
         /https?:\/\/[^\s]+/g,
         (url: string) => {
@@ -41,7 +39,6 @@ export function formatDescription(text: string): string {
 
       return `<a ${attrs}>${urlContent}</a>`
     } else if (standaloneUrl) {
-      // Handle standalone URL
       const displayUrl = standaloneUrl.replace(/^https?:\/\//, "")
       return `<a href="${standaloneUrl}" target="_blank" rel="noopener noreferrer" class="typography-link">${displayUrl}</a>`
     }
