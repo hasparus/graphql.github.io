@@ -19,6 +19,7 @@ export type HeroProps = {
   bottom?: React.ReactNode
   colorScheme?: "primary" | "neutral"
   stripes?: ReactNode
+  rightContent?: ReactNode
 } & (
   | { year: string | number; subtitle?: never }
   | { year?: never; subtitle: string }
@@ -62,18 +63,22 @@ export function Hero(props: HeroProps) {
                 </span>
               </h1>
             )}
-            <div className="flex h-min items-center gap-4">
-              <span className="typography-body-sm whitespace-pre">
-                hosted by
-              </span>
-              <GraphQLFoundationWordmark
-                width={128}
-                height={34.877}
-                className={
-                  colorScheme === "neutral" ? "[&_path]:fill-primary" : ""
-                }
-              />
-            </div>
+            {props.rightContent !== undefined ? (
+              props.rightContent
+            ) : (
+              <div className="flex h-min items-center gap-4">
+                <span className="typography-body-sm whitespace-pre">
+                  hosted by
+                </span>
+                <GraphQLFoundationWordmark
+                  width={128}
+                  height={34.877}
+                  className={
+                    colorScheme === "neutral" ? "[&_path]:fill-primary" : ""
+                  }
+                />
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col gap-8">{props.children}</div>
