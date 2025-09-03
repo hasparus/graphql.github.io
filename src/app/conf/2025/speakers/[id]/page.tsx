@@ -77,9 +77,12 @@ export default function SpeakerPage({ params }: SpeakerProps) {
                 </div>
 
                 {speaker.about && (
-                  <p className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]">
-                    {formatDescription(speaker.about)}
-                  </p>
+                  <p
+                    className="typography-body-lg mx-auto box-content max-w-[800px] px-4 py-8 lg:px-8 lg:py-16 xl:px-24 xl:pb-24 xl:text-[32px]"
+                    dangerouslySetInnerHTML={{
+                      __html: formatDescription(speaker.about),
+                    }}
+                  />
                 )}
 
                 {currentYearSessions.length > 0 && (

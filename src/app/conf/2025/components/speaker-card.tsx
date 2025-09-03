@@ -10,6 +10,7 @@ import { SpeakerLinks } from "./speaker-links"
 
 import styles from "./speaker-card.module.css"
 import { formatSpeakerPosition } from "./format-speaker-position"
+import { formatDescription } from "../schedule/[id]/format-description"
 
 export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   isReturning?: boolean
@@ -74,9 +75,12 @@ export function SpeakerCard({
             <SpeakerTags speaker={speaker} className="my-3" />
           </div>
           {speaker.about && (
-            <p className="typography-body-sm line-clamp-3 text-neu-800">
-              {speaker.about}
-            </p>
+            <p
+              className="typography-body-sm line-clamp-3 text-neu-800"
+              dangerouslySetInnerHTML={{
+                __html: formatDescription(speaker.about),
+              }}
+            />
           )}
         </div>
       </div>
