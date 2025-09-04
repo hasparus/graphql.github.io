@@ -6,6 +6,7 @@ pnpm-lock.yaml
 !src/pages/community/foundation/community-grant.mdx
 !src/pages/blog/2025-05-31-graphiql-4/index.mdx
 !src/pages/blog/2025-06-10-graphiql-5/index.mdx
+!src/pages/blog/2025-06-19-multioption-inputs-with-oneof/index.mdx
 *.jpg
 
 scripts/sync-sched/*.json
