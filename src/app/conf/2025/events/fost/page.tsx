@@ -274,23 +274,12 @@ function EventPartnersSection() {
                 />
               </Anchor>
             </div>
-            <span className="typography-h2 text-neu-400 lg:typography-d1 max-md:hidden">
-              &
-            </span>
-            <div className="flex items-center justify-center">
-              <Anchor
-                href="https://graphql.org/community/foundation/"
-                className="p-8 hover:bg-neu-100"
-              >
-                <GraphQLFoundationWordmark className="h-24 w-auto [&_g]:fill-neu-900" />
-              </Anchor>
-            </div>
           </div>
         </div>
 
         <p className="typography-body-lg mx-auto max-w-2xl text-pretty text-center">
-          GraphQL Day is organized by API&nbsp;Days and GraphQL Foundation, as
-          part of the Future of Software Technology.
+          GraphQL Day is organized by API&nbsp;Days as part of the Future of
+          Software Technology.
           {/* todo: link to some FOST page? */}
         </p>
       </div>
