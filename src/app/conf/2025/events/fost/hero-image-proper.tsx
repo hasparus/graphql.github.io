@@ -19,7 +19,7 @@ export function HeroImageProper() {
     <img
       id="hero-image"
       suppressHydrationWarning
-      className="absolute inset-0 size-full object-cover opacity-0 duration-75"
+      className="absolute inset-0 size-full object-cover opacity-0 duration-150"
       width={heroPhoto.width}
       height={heroPhoto.height}
     />
