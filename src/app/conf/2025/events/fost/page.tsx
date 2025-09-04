@@ -1,10 +1,8 @@
 import { Metadata } from "next"
-import Image from "next-image-export-optimizer"
 
 import { Button } from "@/app/conf/_design-system/button"
 import { Accordion } from "@/app/conf/_design-system/accordion"
 
-import GraphQLFoundationWordmark from "../../assets/graphql-foundation-wordmark.svg?svgr"
 import { Hero, HeroStripes } from "../../components/hero"
 import { NavbarPlaceholder } from "../../components/navbar"
 import { CalendarIcon } from "../../../_design-system/pixelarticons/calendar-icon"
@@ -13,6 +11,7 @@ import { CtaCardSection } from "../../components/cta-card-section"
 
 import heroPhoto from "./hero-photo.webp"
 import { Anchor } from "../../../_design-system/anchor"
+import { HeroImageProper } from "./hero-image-proper"
 
 export const metadata: Metadata = {
   title: "GraphQL Day at FOST",
@@ -23,7 +22,7 @@ const CFP_LINK =
 const TICKETS_LINK =
   "https://ticket.apidays.global/event/apidays-paris-2025/3cccd07f-acb2-466e-8d91-cb1f208ecf42"
 
-export default function ResourcesPage() {
+export default function GraphQLDayAtFostPage() {
   return (
     <>
       <NavbarPlaceholder className="top-0 bg-neu-100 before:bg-white/30 dark:bg-[#181A12] dark:before:bg-blk/40" />
@@ -40,15 +39,26 @@ export default function ResourcesPage() {
         }
         rightContent={null}
         bottom={
-          <div className="z-[2]">
-            <Image
-              src={heroPhoto}
-              width={1920}
-              height={560}
-              alt="five speakers at GraphQLConf 2024"
-              className="mx-auto h-[560px] w-[1920px] max-w-full object-cover"
+          <>
+            <link
+              rel="preload"
+              as="image"
+              href={heroPhoto.src}
+              fetchPriority="high"
             />
-          </div>
+            <div className="relative z-[2] h-[560px] w-full max-w-screen-3xl">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `url(data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoQAAgAAgA0JaQAD4hQ1bRHv9agAPw6PbleVhieTGWViJa7p/xj1kZN5VmPYZVd5JMgbm4C0P9r5kfkE8X/4/+ZENqggLde+OX4K4liSlOou0oAAAA=)`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center center",
+                }}
+              />
+              <div className="absolute inset-0 backdrop-blur-lg" />
+              <HeroImageProper />
+            </div>
+          </>
         }
       >
         <HeroDateAndLocation />
