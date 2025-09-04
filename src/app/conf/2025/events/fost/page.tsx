@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 }
 
 const CFP_LINK =
-  "https://docs.google.com/forms/d/1ElXceLzWftBvcEwrqYZSt8TqfVbrSFohtfmSFONolSk/preview"
+  "https://apidaysglobal.typeform.com/speak?typeform-source=www.apidays.global"
 const TICKETS_LINK =
   "https://ticket.apidays.global/event/apidays-paris-2025/3cccd07f-acb2-466e-8d91-cb1f208ecf42"
 
@@ -29,7 +29,7 @@ export default function ResourcesPage() {
       <NavbarPlaceholder className="top-0 bg-neu-100 before:bg-white/30 dark:bg-[#181A12] dark:before:bg-blk/40" />
       <Hero
         pageName="GraphQL Day at FOST"
-        subtitle="Future Of Software Week"
+        subtitle="Future Of Software Technology"
         colorScheme="neutral"
         stripes={
           <HeroStripes
@@ -290,7 +290,7 @@ function EventPartnersSection() {
 
         <p className="typography-body-lg mx-auto max-w-2xl text-pretty text-center">
           GraphQL Day is organized by API&nbsp;Days and GraphQL Foundation, as
-          part of the Future of Software Week.
+          part of the Future of Software Technology.
           {/* todo: link to some FOST page? */}
         </p>
       </div>
