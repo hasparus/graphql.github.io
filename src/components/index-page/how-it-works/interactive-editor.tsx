@@ -1,18 +1,18 @@
-import React, { useState } from "react"
 import { graphql } from "graphql"
+import React, { useState } from "react"
 
+import { getVariableToType } from "@/components/interactive-code-block/get-variable-to-type"
 import { QueryEditor } from "@/components/interactive-code-block/query-editor"
 import { ResultViewer } from "@/components/interactive-code-block/result-viewer"
-import { getVariableToType } from "@/components/interactive-code-block/get-variable-to-type"
 import { VariableEditor } from "@/components/interactive-code-block/variable-editor"
 import { CodeBlockLabel } from "@/components/pre/code-block-label"
 
 import { HowItWorksListItem } from "./how-it-works-list-item"
 import { PlayButton } from "./play-button"
 import {
-  projectsSchema as schema,
   INITIAL_QUERY_TEXT,
   INITIAL_RESULTS_TEXT,
+  projectsSchema as schema,
 } from "./schema"
 
 export default function InteractiveEditor() {
@@ -91,7 +91,7 @@ export default function InteractiveEditor() {
         }
         code={
           Object.keys(variableTypes).length > 0 ? (
-            <div className="hasVariables flex flex-col">
+            <div className="flex flex-col">
               {editor}
               <div className="flex flex-col border-neu-200 dark:border-neu-50">
                 <CodeBlockLabel

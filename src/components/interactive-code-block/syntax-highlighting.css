@@ -63,6 +63,7 @@
   background: var(--cm-background);
   color: var(--cm-foreground);
   position: relative;
+  max-height: 184px;
 
   & .cm-content {
     padding: 16px 0;
@@ -75,6 +76,7 @@
   & .cm-scroller {
     line-height: 1.5;
     font-family: var(--font-mono);
+    overflow: auto;
     -webkit-font-smoothing: auto;
   }
 }
