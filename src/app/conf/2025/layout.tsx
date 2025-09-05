@@ -58,7 +58,7 @@ export default function Layout({
           { children: "Speakers", href: "/#speakers" },
           { children: "GraphQLConf 2024", href: "/conf/2024" },
           { children: "FAQ", href: "#faq" },
-          { children: "Contact Us", href: "/conf/2025/faq/#contact" },
+          { children: "Contact Us", href: "/conf/2025/resources/#contact" },
           { children: "GraphQL", href: "/" },
           { children: "GraphQL Foundation", href: "/foundation" },
           [

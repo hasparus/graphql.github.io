@@ -133,6 +133,11 @@ export function ScheduleList({
     [filterFields, scheduleData],
   )
 
+  const firstDay = Object.values(filteredSessions)[0]
+  // if the first day has less than 3 sessions, it's probably a "day zero" with extra events or workshops
+  const firstDayIsDayZero = Object.keys(firstDay).length < 3
+  const startIndex = firstDayIsDayZero ? 0 : 1
+
   return (
     <>
       <div className="flex justify-between gap-1 max-lg:flex-col">
@@ -171,11 +176,11 @@ export function ScheduleList({
           <div className="mb-4 flex space-x-4">
             {Object.keys(filteredSessions).map((date, index) => (
               <a
-                href={`#day-${index + 1}`}
+                href={`#day-${index + startIndex}`}
                 key={date}
                 className="typography-link"
               >
-                Day {index + 1}
+                Day {index + startIndex}
               </a>
             ))}
           </div>
@@ -187,7 +192,7 @@ export function ScheduleList({
               >
                 <h3
                   className="bg-neu-50 py-4 dark:bg-neu-0"
-                  id={`day-${index + 1}`}
+                  id={`day-${index + startIndex}`}
                 >
                   {format(parseISO(date), "EEEE, MMMM d")}
                 </h3>

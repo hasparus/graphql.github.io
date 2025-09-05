@@ -17,8 +17,10 @@
     "postbuild": "next-sitemap",
     "prebuild": "tsx src/get-github-info.ts",
     "serve": "pnpx serve out",
-    "test": "playwright test",
+    "test": "playwright test && pnpm test:unit",
+    "test:e2e": "playwright test",
     "test:ui": "playwright test --ui",
+    "test:unit": "node --import=tsx --test 'src/**/*.test.tsx'",
     "validate:snippets": "node scripts/validate-snippets.js"
   },
   "dependencies": {
@@ -130,7 +132,9 @@
       "mermaid-isomorphic": "patches/mermaid-isomorphic.patch"
     },
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "iframe-resizer",
+      "sharp"
     ]
   }
 }
