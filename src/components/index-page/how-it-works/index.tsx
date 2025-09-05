@@ -34,16 +34,11 @@ export function HowItWorks() {
         <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
           <HowItWorksListItem text="Describe your data" code={<CodeA />} />
           <HowItWorksListItem
-            inert={inView}
             text="Ask for what you want"
             icon={<PlayButton disabled={inView} />}
             code={<CodeB />}
           />
-          <HowItWorksListItem
-            inert={inView}
-            text="Get predictable results"
-            code={<CodeC />}
-          />
+          <HowItWorksListItem text="Get predictable results" code={<CodeC />} />
         </ol>
         {inView && (
           <ol
