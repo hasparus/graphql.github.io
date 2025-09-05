@@ -19,6 +19,7 @@ import ClockIcon from "@/app/conf/_design-system/pixelarticons/clock.svg?svgr"
 
 import { getEventTitle } from "../../utils"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
+import { formatBlockTime } from "./format-block-time"
 
 function isString(x: unknown): x is string {
   return Object.prototype.toString.call(x) === "[object String]"
@@ -29,11 +30,13 @@ export function ScheduleSessionCard({
   year,
   eventsColors,
   blockEnd,
+  durationVisible,
 }: {
   session: ScheduleSession
   year: `202${number}`
   eventsColors: Record<string, string>
   blockEnd: Date
+  durationVisible: boolean
 }) {
   let eventType = session.event_type
 
@@ -139,17 +142,7 @@ export function ScheduleSessionCard({
                   {session.venue}
                 </span>
               )}
-              {blockTimeFraction < 1 && (
-                <span className="typography-body-xs flex items-center gap-0.5">
-                  <ClockIcon className="size-4 text-pri-base [@container(width<240px)]:hidden" />
-                  {Math.round(
-                    (new Date(session.event_end).getTime() -
-                      new Date(session.event_start).getTime()) /
-                      (1000 * 60),
-                  )}{" "}
-                  min
-                </span>
-              )}
+              {durationVisible && <SessionDuration session={session} />}
               <AddToCalendarLink
                 eventTitle={eventTitle}
                 session={session}
@@ -161,6 +154,29 @@ export function ScheduleSessionCard({
         </span>
       </span>
     </div>
+  )
+}
+
+function SessionDuration({
+  session,
+}: {
+  session: ScheduleSession
+}): React.ReactNode {
+  const durationMs =
+    new Date(session.event_end).getTime() -
+    new Date(session.event_start).getTime()
+
+  // if a session is longer than 3 hourse, we show the time range
+  const formattedTime =
+    durationMs > 1000 * 60 * 60 * 3
+      ? formatBlockTime(session.event_start, new Date(session.event_end))
+      : `${Math.round(durationMs / (1000 * 60))} min`
+
+  return (
+    <span className="typography-body-xs flex items-center gap-0.5">
+      <ClockIcon className="size-4 text-pri-base [@container(width<240px)]:hidden" />
+      {formattedTime}
+    </span>
   )
 }
 
