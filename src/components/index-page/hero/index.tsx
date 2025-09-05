@@ -29,7 +29,7 @@ export function Hero() {
           </ul>
 
           <div className="flex items-center gap-4">
-            <Button href="/learn/#try-it-out">Try it out</Button>
+            <Button href="/#try-it-out">Try it out</Button>
             <Button href="/learn" variant="secondary">
               <span className="sr-only">Read the </span> Docs
             </Button>
@@ -57,8 +57,8 @@ function HeroStripes() {
         image={logoBlurred}
         className="relative h-full bg-gradient-to-b from-pri-base to-pri-lighter opacity-0 transition-opacity duration-[1.5s] [mask-position:center_12%] [mask-size:110%] data-[loaded=true]:opacity-100 dark:to-pri-base sm:[mask-size:auto_300%] lg:[mask-position:7%_7%] lg:[mask-size:200%]"
         style={{
-          maskImage: `var(--src)`,
-          WebkitMaskImage: `var(--src)`,
+          maskImage: `url(${logoBlurred.src})`,
+          WebkitMaskImage: `url(${logoBlurred.src})`,
           maskRepeat: "no-repeat",
           WebkitMaskRepeat: "no-repeat",
         }}
