@@ -94,7 +94,10 @@ export default class MiniGraphiQL extends Component<
     )
 
     return (
-      <div className="[&:not(:first-child)]:_mt-6 grid grid-cols-2 border border-neu-200 text-sm dark:border-neu-50">
+      <div
+        className="[&:not(:first-child)]:_mt-6 grid grid-cols-2 border border-neu-200 text-sm dark:border-neu-50"
+        suppressHydrationWarning
+      >
         {Object.keys(this.state.variableToType).length > 0 ? (
           <div className="flex flex-col">
             {editor}
