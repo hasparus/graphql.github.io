@@ -4,11 +4,12 @@ import {
   GraphQLString,
   GraphQLNonNull,
   GraphQLList,
+  GraphQLInt,
+  GraphQLID,
 } from "graphql"
 
 const PROJECT_NAME = "GraphQL"
 const PROJECT_TAGLINE = "A query language for APIs"
-const PROJECT_WEBSITE = "https://graphql.org"
 
 export const INITIAL_QUERY_TEXT = `{
   project(name: "${PROJECT_NAME}") {
@@ -22,29 +23,73 @@ export const INITIAL_RESULTS_TEXT = `{
   }
 }`
 
+/**
+ * NOTE:
+ * Contributors data will be synced from scripts/sync-landing-schema/data.json
+ * and should provide GitHub handles and (optionally) websites for each user.
+ */
+interface User {
+  id: string
+  website?: string
+}
+
 interface Project {
   name: string
   tagline: string
-  website: string
 }
 
 const projects: Project[] = [
   {
     name: PROJECT_NAME,
     tagline: PROJECT_TAGLINE,
-    website: PROJECT_WEBSITE,
   },
   {
     name: "GraphiQL",
     tagline: "Ecosystem for building browser & IDE tools.",
-    website: "https://github.com/graphql/graphiql",
   },
   {
     name: "graphql-js",
     tagline: "A reference implementation of GraphQL for JavaScript",
-    website: "https://graphql.org/graphql-js/",
   },
 ]
+
+const UserType = new GraphQLObjectType<User>({
+  name: "User",
+  fields: {
+    id: {
+      type: new GraphQLNonNull(GraphQLString),
+      description: "GitHub handle of the contributor",
+    },
+    website: {
+      type: GraphQLString,
+      description: "Personal website of the contributor",
+    },
+  },
+})
+
+function getContributorsForProject(
+  project: Project,
+  opts: { first?: number; after?: string | null } = {},
+): User[] {
+  // TODO: Load from scripts/sync-landing-schema/data.json once available
+  const all: User[] = []
+  const { first, after } = opts
+
+  let startIndex = 0
+  if (after) {
+    const idx = all.findIndex(u => u.id === after)
+    if (idx === -1) {
+      return []
+    }
+    startIndex = idx + 1
+  }
+
+  const sliced = all.slice(startIndex)
+  if (typeof first === "number" && first >= 0) {
+    return sliced.slice(0, first)
+  }
+  return sliced
+}
 
 const ProjectType = new GraphQLObjectType<Project>({
   name: "Project",
@@ -57,9 +102,25 @@ const ProjectType = new GraphQLObjectType<Project>({
       type: GraphQLString,
       description: "A short description of what the project does",
     },
-    website: {
-      type: GraphQLString,
-      description: "The project website URL",
+    contributors: {
+      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(UserType))),
+      description: "List of contributors to the project",
+      args: {
+        first: {
+          type: GraphQLInt,
+          description: "Limits the number of contributors returned",
+        },
+        after: {
+          type: GraphQLID,
+          description: "Cursor (User.handle) after which to start",
+        },
+      },
+      resolve: (project, args) => {
+        return getContributorsForProject(project, {
+          first: args?.first,
+          after: args?.after ?? null,
+        })
+      },
     },
   },
 })
