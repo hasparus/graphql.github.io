@@ -90,6 +90,7 @@
   },
   "devDependencies": {
     "@graphql-eslint/eslint-plugin": "4.4.0",
+    "@graphql-eslint/parser": "^0.1.0",
     "@next/eslint-plugin-next": "^15.3.3",
     "@playwright/test": "^1.54.2",
     "@svgr/webpack": "^8.1.0",

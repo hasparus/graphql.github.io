@@ -112,7 +112,7 @@ const ProjectType = new GraphQLObjectType<Project>({
         },
         after: {
           type: GraphQLID,
-          description: "Cursor (User.handle) after which to start",
+          description: "Cursor (User.id) after which to start",
         },
       },
       resolve: (project, args) => {
