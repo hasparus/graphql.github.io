@@ -4,7 +4,11 @@ import dynamic from "next/dynamic"
 
 import { Button } from "@/app/conf/_design-system/button"
 import { SectionLabel } from "@/app/conf/_design-system/section-label"
-import { CodeA, CodeB, CodeC } from "@/components/code-blocks"
+import {
+  HowItWorks_Schema,
+  HowItWorks_Query,
+  HowItWorks_Result,
+} from "@/components/code-blocks"
 
 import { HowItWorksListItem } from "./how-it-works-list-item"
 import { PlayButton } from "./play-button"
@@ -32,13 +36,19 @@ export function HowItWorks() {
       <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
       <div className="relative">
         <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
-          <HowItWorksListItem text="Describe your data" code={<CodeA />} />
+          <HowItWorksListItem
+            text="Describe your data"
+            code={<HowItWorks_Schema />}
+          />
           <HowItWorksListItem
             text="Ask for what you want"
             icon={<PlayButton disabled={inView} />}
-            code={<CodeB />}
+            code={<HowItWorks_Query />}
           />
-          <HowItWorksListItem text="Get predictable results" code={<CodeC />} />
+          <HowItWorksListItem
+            text="Get predictable results"
+            code={<HowItWorks_Result />}
+          />
         </ol>
         {inView && (
           <ol

@@ -8,8 +8,6 @@ import {
 
 const PROJECT_NAME = "GraphQL"
 const PROJECT_TAGLINE = "A query language for APIs"
-const PROJECT_DESCRIPTION =
-  "GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data."
 const PROJECT_WEBSITE = "https://graphql.org"
 
 export const INITIAL_QUERY_TEXT = `{
@@ -27,7 +25,6 @@ export const INITIAL_RESULTS_TEXT = `{
 interface Project {
   name: string
   tagline: string
-  description: string
   website: string
 }
 
@@ -35,15 +32,17 @@ const projects: Project[] = [
   {
     name: PROJECT_NAME,
     tagline: PROJECT_TAGLINE,
-    description: PROJECT_DESCRIPTION,
     website: PROJECT_WEBSITE,
   },
   {
     name: "GraphiQL",
     tagline: "Ecosystem for building browser & IDE tools.",
-    description:
-      "GraphiQL is the reference implementation of this monorepo, GraphQL IDE, an official project under the GraphQL Foundation. The code uses the permissive MIT license.",
     website: "https://github.com/graphql/graphiql",
+  },
+  {
+    name: "graphql-js",
+    tagline: "A reference implementation of GraphQL for JavaScript",
+    website: "https://graphql.org/graphql-js/",
   },
 ]
 
@@ -57,10 +56,6 @@ const ProjectType = new GraphQLObjectType<Project>({
     tagline: {
       type: GraphQLString,
       description: "A short description of what the project does",
-    },
-    description: {
-      type: GraphQLString,
-      description: "A detailed description of the project",
     },
     website: {
       type: GraphQLString,
