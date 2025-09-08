@@ -17,6 +17,8 @@ import {
   ResetFiltersButton,
 } from "./filters"
 import { formatBlockTime } from "./format-block-time"
+import { useCurrentTimeMarker } from "./use-current-time-marker"
+import { Button } from "@/app/conf/_design-system/button"
 
 export interface FiltersConfig
   extends Partial<
@@ -138,21 +140,32 @@ export function ScheduleList({
   const firstDayIsDayZero = Object.keys(firstDay).length < 3
   const startIndex = firstDayIsDayZero ? 0 : 1
 
+  const { getTimeMarker } = useCurrentTimeMarker()
+
   return (
     <>
       <div className="flex justify-between gap-1 max-lg:flex-col">
         <BookmarkOnSched year={year} />
-        <ResetFiltersButton
-          filters={filtersState}
-          onReset={() =>
-            setFiltersState(
-              FilterStates.initial(
-                Object.keys(filterFields) as (keyof ScheduleSession)[],
-              ),
-            )
-          }
-          className="max-lg:mb-4 max-lg:w-fit max-lg:self-end"
-        />
+        <div className="flex gap-2">
+          <Button
+            href="#current-time-marker"
+            variant="tertiary"
+            className="hidden h-fit items-center gap-x-2 bg-neu-100 !p-2 text-neu-700 transition-opacity hover:bg-neu-200/80 hover:text-neu-900 disabled:opacity-0 [body:has(#current-time-marker)_&]:flex"
+          >
+            Scroll to current block
+          </Button>
+          <ResetFiltersButton
+            filters={filtersState}
+            onReset={() =>
+              setFiltersState(
+                FilterStates.initial(
+                  Object.keys(filterFields) as (keyof ScheduleSession)[],
+                ),
+              )
+            }
+            className="max-lg:mb-4 max-lg:w-fit max-lg:self-end"
+          />
+        </div>
       </div>
       {showFilter && (
         <Filters
@@ -229,6 +242,16 @@ export function ScheduleList({
                         blockEnd.getTime(),
                     )
 
+                    let timeMarker = getTimeMarker(sessionDate, blockEnd)
+                    // if end times differ and blockEnd is far from start, we treat this as a long event, like "solutions showcase"
+                    if (
+                      endTimesDiffer &&
+                      blockEnd.getTime() - new Date(sessionDate).getTime() >
+                        1000 * 60 * 60 * 2
+                    ) {
+                      timeMarker = null
+                    }
+
                     return (
                       <div
                         key={`concurrent sessions on ${sessionDate}`}
@@ -256,6 +279,18 @@ export function ScheduleList({
                             ))}
                           </div>
                         </div>
+                        {timeMarker && (
+                          <div
+                            id="current-time-marker"
+                            className="typography-body-xs pointer-events-none absolute -right-1 z-10 -translate-y-full font-mono tabular-nums text-pri-base before:absolute before:inset-x-0 before:bottom-0 before:border-b before:border-pri-base before:opacity-80 after:absolute after:bottom-0 after:left-[-100vw] after:w-screen after:border-t after:border-pri-base after:opacity-20 dark:text-pri-light dark:before:border-pri-light dark:after:border-pri-light max-xl:bg-neu-0 xl:translate-x-full"
+                            style={{
+                              top: `${timeMarker.positionPercentage}%`,
+                            }}
+                          >
+                            <span className="max-2xl:hidden">now: </span>
+                            {timeMarker.currentTime}
+                          </div>
+                        )}
                         {hasDashedBorder && (
                           <svg
                             className="absolute -bottom-px left-0 h-px w-full text-neu-50"
