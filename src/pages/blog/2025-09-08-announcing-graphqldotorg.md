@@ -33,7 +33,7 @@ Beyond the visual refresh, this redesign showcases some interesting technical de
 
 **Creative Problem-Solving:** That smooth rotation animation you'll see? It's not just for aesthetics. [It's actually the only way to animate the element without breaking the highlight effects](https://stackoverflow.com/questions/74085350/backdrop-filter-doesnt-apply-if-parents-opacity-is-less-than-1) from the underlying wire graphics. Sometimes constraints lead to the most elegant solutions.
 
-**Developer Experience:** We discovered it's faster to iterate on syntax highlighting themes in VSCode than in our Nextra-shiki setup. This led us to accidentally[ create an entirely new custom syntax highlighting theme](https://github.com/hasparus/k-colorable) as a side effect of the redesign process.
+**Developer Experience:** We discovered it's faster to iterate on syntax highlighting themes in VSCode than in our Nextra-shiki setup. This led us to publish a [ syntax highlighting theme](https://github.com/hasparus/k-colorable) as a side effect of the redesign process.
 
 ## Explore the New Experience
 
