@@ -1,6 +1,6 @@
 ---
 title: "Introducing the New GraphQL.org: A Decade of Evolution, Redesigned"
-tags: ["announcement"]
+tags: ["announcements"]
 date: 2025-09-08
 byline: Saihajpreet Singh & Piotr Monwid-Olechnowicz
 ---
