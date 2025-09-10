@@ -14,7 +14,8 @@ export function Tag({ color, children, style, className, ...rest }: TagProps) {
       {...rest}
     >
       <span
-        className="absolute inset-0 opacity-20"
+        // eslint-disable-next-line tailwindcss/no-custom-classname
+        className="Tag--bg absolute inset-0 opacity-20"
         style={{
           backgroundColor: color,
         }}

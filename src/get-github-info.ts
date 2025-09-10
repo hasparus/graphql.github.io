@@ -1,25 +1,86 @@
 import fg from "fast-glob"
 import fs from "fs/promises"
 import grayMatter from "gray-matter"
-import { getGitHubStats } from "../scripts/sort-libraries/get-github-stats"
+import {
+  getGitHubStats,
+  type GitHubInfo,
+} from "../scripts/sort-libraries/get-github-stats"
 
 async function main() {
   const filePaths = await fg("./src/code/**/*.md")
 
-  const githubStats: Record<string, unknown> = {}
+  const errors: Error[] = []
+
+  const newState = new Map<string /* repo name */, GitHubInfo>()
+  const filePathToRepoName = new Map<
+    string /* file path */,
+    string /* repo name */
+  >()
 
   for (const [index, filePath] of filePaths.entries()) {
-    const content = await fs.readFile(filePath, "utf8")
-    const { data } = grayMatter(content)
-    if (data.github) {
-      githubStats[data.github] = await getGitHubStats(data.github)
+    try {
+      const content = await fs.readFile(filePath, "utf8")
+      const { data } = grayMatter(content)
+      if (data.github) {
+        const stats = await getGitHubStats(data.github)
+        if (stats) {
+          newState.set(data.github, stats)
+        }
+      }
+      console.info("✅ Done for", filePath, index + 1, "of", filePaths.length)
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error(String(err))
+      errors.push(error)
+      console.error(
+        "❌ Error for",
+        filePath,
+        index + 1,
+        "of",
+        filePaths.length,
+        err,
+      )
     }
-    console.info("✅ Done for", filePath, index + 1, "of", filePaths.length)
   }
-  await fs.writeFile(
-    "./src/github-stats.json",
-    JSON.stringify(githubStats, null, 2),
-  )
+
+  if (errors.length > 0) {
+    if (process.env.VERCEL) {
+      console.error(
+        "We don't want to fail the deployment, so we'll use the old github-stats.json file.",
+      )
+      return
+    } else {
+      throw new Error("Errors occurred while fetching GitHub stats.")
+    }
+  }
+
+  // If a .mdx file was removed, we also remove the package from the JSON.
+  // If it errored for some reason, we don't do anything.
+  // If we got it, we overwrite.
+  {
+    const dataPath = "./src/github-stats.json"
+    const data = await fs.readFile(dataPath, "utf8")
+    const existingStats = JSON.parse(data) as Record<string, object>
+
+    const result: Record<string, object> = {}
+    const brandNewKeys = new Set(newState.keys())
+
+    for (const [repoName, stats] of Object.entries(existingStats)) {
+      const mdxFileExists = filePathToRepoName.has(repoName)
+      if (mdxFileExists) {
+        brandNewKeys.delete(repoName)
+        result[repoName] = {
+          ...stats,
+          ...newState.get(repoName),
+        }
+      }
+    }
+
+    for (const repoName of brandNewKeys) {
+      result[repoName] = newState.get(repoName)!
+    }
+
+    await fs.writeFile(dataPath, JSON.stringify(result, null, 2))
+  }
 }
 
-main()
+main().catch(() => process.exit(1))
