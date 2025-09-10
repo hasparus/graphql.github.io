@@ -7,12 +7,27 @@ import {
 } from "../sort-libraries/get-github-stats"
 
 const DATA_PATH = new URL("./github-stats.json", import.meta.url).pathname
+const LAST_RUN_PATH = new URL("./last-success.isodate", import.meta.url)
+  .pathname
 const CODE_DIR = new URL("../../src/code", import.meta.url).pathname
 
 async function main() {
   const filePaths = await fg("./**/*.md", { cwd: CODE_DIR, absolute: true })
 
   const errors: Error[] = []
+
+  {
+    // we only sync once every two hours
+    const TWO_HOURS = 2 * 60 * 60 * 1000
+    const lastRun = await fs.readFile(LAST_RUN_PATH, "utf8").catch(() => "")
+    const twoHoursAgo = new Date(Date.now() - TWO_HOURS)
+    if (lastRun && new Date(lastRun).getTime() > twoHoursAgo.getTime()) {
+      console.info(
+        "Skipping sync of GitHub stars, last run was within two hours.",
+      )
+      return
+    }
+  }
 
   const newState = new Map<string /* repo name */, GitHubInfo>()
   const filePathToRepoName = new Map<
@@ -82,6 +97,7 @@ async function main() {
     }
 
     await fs.writeFile(DATA_PATH, JSON.stringify(result, null, 2))
+    await fs.writeFile(LAST_RUN_PATH, new Date().toISOString())
   }
 }
 
