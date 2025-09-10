@@ -7,7 +7,7 @@ import {
   RubyGemsIcon,
   ChevronLeftIcon,
 } from "@/icons"
-import { Card, Tag } from "@/components"
+import { Card } from "@/components"
 import NextLink from "next/link"
 import NextHead from "next/head"
 import { useMounted } from "nextra/hooks"
@@ -30,6 +30,17 @@ import {
 import { clsx } from "clsx"
 import { getComponents } from "nextra-theme-docs"
 import { RadioGroup, RadioGroupItem } from "@/components/radio"
+import { Button } from "@/app/conf/_design-system/button"
+import { Tag } from "@/app/conf/_design-system/tag"
+
+type PackageInfo = {
+  name: string
+  description: string
+  url: string
+  github: string
+  npm: string
+  gem?: string
+}
 
 type CodePageProps = {
   allTags: {
@@ -39,14 +50,7 @@ type CodePageProps = {
   }[]
   data: {
     tags: string[]
-    frontMatter: {
-      name: string
-      description: string
-      url: string
-      github: string
-      npm: string
-      gem?: string
-    }
+    frontMatter: PackageInfo
     stars?: number
     formattedStars?: string
     lastRelease?: string
@@ -187,11 +191,9 @@ export function CodePage({ allTags, data }: CodePageProps) {
           key="meta-og-description"
         />
       </NextHead>
-      <div className="container py-10 md:py-20">
-        <h1 className="text-4xl font-extrabold md:text-7xl">
-          Code Using GraphQL
-        </h1>
-        <div className="my-10 flex max-w-[700px] items-center border-b border-current pb-2.5 text-2xl font-extrabold">
+      <div className="container py-8 md:pt-16">
+        <h1 className="typography-h1">Code Using GraphQL</h1>
+        <div className="typography-h3 my-10 flex max-w-[700px] items-center border-b border-current pb-2.5">
           <div
             className={clsx(
               "flex shrink-0",
@@ -201,6 +203,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
             {inputTags}
           </div>
           <input
+            // TODO: This should also do a fuzzy full text search, not just search on tags.
             value={search}
             onChange={e => setSearch(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -213,26 +216,27 @@ export function CodePage({ allTags, data }: CodePageProps) {
           />
           <MagnifyingGlassIcon className="shrink-0" />
         </div>
-        <div className="roboto-mono flex flex-wrap gap-3 md:gap-5">
+        <div className="flex flex-wrap gap-2">
           {queryTags.map(({ tag, count, name }) => {
             const isTagMatchSearch =
               !search || name.toLowerCase().includes(search.toLowerCase())
             if (!isTagMatchSearch) return
+
             return (
               <NextLink
                 href={`/community/tools-and-libraries/?tags=${tag}`}
                 key={tag}
                 data-tag={tag}
-                className={clsx(
-                  "tag",
-                  mounted &&
-                    (queryParamsTags as string[]).includes(tag) &&
-                    "bg-primary",
-                )}
                 onClick={handleQuery}
                 title={`${mounted && (queryParamsTags as string[]).includes(tag) ? "Remove" : "Add"} tag "${name}"`}
+                className="flex"
               >
-                {name} ({count})
+                <Tag
+                  className="!capitalize lg:!text-sm [&:has(:hover)_.Tag--bg]:opacity-50"
+                  color="hsl(var(--color-neu-500)/.8)"
+                >
+                  {name} ({count})
+                </Tag>
               </NextLink>
             )
           })}
@@ -258,7 +262,8 @@ export function CodePage({ allTags, data }: CodePageProps) {
         </div>
       </RadioGroup>
 
-      <div className="container grid gap-10 py-20 md:grid-cols-2">
+      {/* todo: add md:*:h-full when the readme opens in a modal */}
+      <div className="container grid gap-2 py-8 md:grid-cols-2 md:gap-4">
         {(sort === "alphabetical"
           ? [...newData].sort((a, b) =>
               a.frontMatter.name.localeCompare(b.frontMatter.name),
@@ -273,75 +278,46 @@ export function CodePage({ allTags, data }: CodePageProps) {
             license,
             compiledSource,
           }) => {
-            const { name, description, url, github, npm, gem } = frontMatter
+            const { name, description } = frontMatter
             const hasMetadata = formattedStars || lastRelease || license
             return (
               <Card
                 key={`${name}${tags.toString()}`}
                 className={clsx(
-                  "h-max !p-0",
+                  "flex h-max flex-col !p-0",
                   "min-w-0", // hack to avoid overflow when opening details
                 )}
               >
-                <div className="flex grow flex-col gap-7 p-8 lg:p-12">
-                  <div className="flex items-center gap-6 [&_a:hover]:text-primary [&_a]:transition-colors">
-                    <span className="grow break-all text-3xl font-extrabold">
-                      {name}
-                    </span>
-                    {url && (
-                      <a href={url} target="_blank" rel="noreferrer">
-                        <GlobeIcon />
-                      </a>
-                    )}
-                    {github && (
-                      <a
-                        href={`https://github.com/${github}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <GitHubIcon />
-                      </a>
-                    )}
-                    {npm && (
-                      <a
-                        href={`https://npmjs.com/package/${npm}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <NPMIcon />
-                      </a>
-                    )}
-                    {gem && (
-                      <a
-                        href={`https://rubygems.org/gems/${gem}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <RubyGemsIcon />
-                      </a>
-                    )}
+                <div className="flex grow flex-col gap-7 p-4 lg:p-8">
+                  <div className="flex items-center gap-2">
+                    <span className="typography-h3 grow break-all">{name}</span>
+                    <PackageLinks data={frontMatter} />
                   </div>
-                  <div className="roboto-mono flex gap-2">
+                  <div className="flex gap-2">
                     {tags.map(tag => (
-                      <Tag
+                      <NextLink
                         key={tag}
-                        // @ts-expect-error -- fixme
-                        as={NextLink}
                         href={`/community/tools-and-libraries/?tags=${tag}`}
-                        className="cursor-pointer transition-colors hover:!bg-primary hover:text-white"
+                        className="flex [&:has(:hover)_.Tag--bg]:opacity-50"
                       >
-                        {allTagsMap.get(tag)!.name}
-                      </Tag>
+                        <Tag
+                          className="cursor-pointer !capitalize"
+                          color="hsl(var(--color-neu-400))" // todo: tags could be color coded like on the conference page
+                        >
+                          {allTagsMap.get(tag)!.name}
+                        </Tag>
+                      </NextLink>
                     ))}
                   </div>
                   <Markdown className="line-clamp-4 grow lg:text-lg [&_a]:text-primary">
                     {description}
                   </Markdown>
+                  <div className="flex-1" />
                   {hasMetadata && (
                     <div
                       className={clsx(
                         "flex items-center gap-5 max-md:text-xs",
-                        "[&>:not(:last-child)]:border-r [&>:not(:last-child)]:border-gray-500 [&>:not(:last-child)]:pr-5",
+                        "[&>:not(:last-child)]:border-r [&>:not(:last-child)]:border-neu-500 [&>:not(:last-child)]:pr-5",
                       )}
                     >
                       {lastRelease && <span>Last release {lastRelease}</span>}
@@ -357,11 +333,11 @@ export function CodePage({ allTags, data }: CodePageProps) {
                 </div>
 
                 {compiledSource && (
-                  <details className="bg-[#f0f0f0] dark:bg-[#2f2f2f]">
+                  <details className="bg-neu-100">
                     <summary
                       className={clsx(
-                        "flex justify-between px-8 py-5 font-bold text-primary lg:px-12 dark:[[open]>&]:shadow-[-5px_10px_30px_20px_#1b1b1b4d]",
-                        "[[open]>&]:shadow-[0_6px_21px_0_#1b1b1b33]",
+                        "flex justify-between px-8 py-5 text-primary lg:px-12 dark:[[open]>&]:shadow-[-5px_10px_30px_20px_#1b1b1b4d]",
+                        "[[open]>&]:bg-neu-200",
                         "cursor-pointer",
                       )}
                     >
@@ -405,3 +381,44 @@ const RemoteContent = memo(function RemoteContent({
   })
   return <MDXContent components={components} />
 })
+
+function PackageLinks({ data }: { data: PackageInfo }) {
+  const { url, github, npm, gem } = data
+
+  return (
+    <>
+      {url && (
+        <Button href={url} variant="tertiary" isIconButton>
+          <GlobeIcon className="size-5" />
+        </Button>
+      )}
+      {github && (
+        <Button
+          href={`https://github.com/${github}`}
+          variant="tertiary"
+          isIconButton
+        >
+          <GitHubIcon className="size-5" />
+        </Button>
+      )}
+      {npm && (
+        <Button
+          href={`https://npmjs.com/package/${npm}`}
+          variant="tertiary"
+          isIconButton
+        >
+          <NPMIcon className="size-5" viewBox="0 0 30 30" />
+        </Button>
+      )}
+      {gem && (
+        <Button
+          href={`https://rubygems.org/gems/${gem}`}
+          variant="tertiary"
+          isIconButton
+        >
+          <RubyGemsIcon className="size-5" />
+        </Button>
+      )}
+    </>
+  )
+}
