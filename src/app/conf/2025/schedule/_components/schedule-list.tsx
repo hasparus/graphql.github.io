@@ -17,6 +17,8 @@ import {
   ResetFiltersButton,
 } from "./filters"
 import { formatBlockTime } from "./format-block-time"
+import { useCurrentTimeMarker } from "./use-current-time-marker"
+import { Button } from "@/app/conf/_design-system/button"
 
 export interface FiltersConfig
   extends Partial<
@@ -138,21 +140,32 @@ export function ScheduleList({
   const firstDayIsDayZero = Object.keys(firstDay).length < 3
   const startIndex = firstDayIsDayZero ? 0 : 1
 
+  const { getTimeMarker } = useCurrentTimeMarker()
+
   return (
     <>
       <div className="flex justify-between gap-1 max-lg:flex-col">
         <BookmarkOnSched year={year} />
-        <ResetFiltersButton
-          filters={filtersState}
-          onReset={() =>
-            setFiltersState(
-              FilterStates.initial(
-                Object.keys(filterFields) as (keyof ScheduleSession)[],
-              ),
-            )
-          }
-          className="max-lg:mb-4 max-lg:w-fit max-lg:self-end"
-        />
+        <div className="flex gap-2 max-lg:mb-4">
+          <Button
+            href="#current-time-marker"
+            variant="tertiary"
+            className="hidden h-fit items-center gap-x-2 bg-neu-100 !p-2 text-neu-700 transition-opacity hover:bg-neu-200/80 hover:text-neu-900 disabled:opacity-0 [body:has(#current-time-marker)_&]:flex"
+          >
+            Scroll to current block
+          </Button>
+          <ResetFiltersButton
+            filters={filtersState}
+            onReset={() =>
+              setFiltersState(
+                FilterStates.initial(
+                  Object.keys(filterFields) as (keyof ScheduleSession)[],
+                ),
+              )
+            }
+            className="max-lg:w-fit max-lg:self-end"
+          />
+        </div>
       </div>
       {showFilter && (
         <Filters
@@ -223,6 +236,22 @@ export function ScheduleList({
                       blockEnd.getTime() === nextBlockStart?.getTime() &&
                       !isBreak
 
+                    const endTimesDiffer = sessions.some(
+                      session =>
+                        new Date(session.event_end).getTime() !==
+                        blockEnd.getTime(),
+                    )
+
+                    let timeMarker = getTimeMarker(sessionDate, blockEnd)
+                    // if end times differ and blockEnd is far from start, we treat this as a long event, like "solutions showcase"
+                    if (
+                      endTimesDiffer &&
+                      blockEnd.getTime() - new Date(sessionDate).getTime() >
+                        1000 * 60 * 60 * 2
+                    ) {
+                      timeMarker = null
+                    }
+
                     return (
                       <div
                         key={`concurrent sessions on ${sessionDate}`}
@@ -231,7 +260,10 @@ export function ScheduleList({
                         <div className="mr-px flex flex-col max-lg:ml-px lg:flex-row">
                           <div className="relative border-neu-50 bg-neu-50 dark:bg-neu-0 max-lg:-mx-px max-lg:my-px max-lg:border-x lg:mr-px">
                             <span className="typography-body-sm mt-3 inline-block w-28 whitespace-nowrap pb-0.5 pl-4 lg:mr-6 lg:pb-4 lg:pl-0">
-                              {formatBlockTime(sessionDate, blockEnd)}
+                              {formatBlockTime(
+                                sessionDate,
+                                endTimesDiffer ? undefined : blockEnd,
+                              )}
                             </span>
                           </div>
                           <div className="relative flex w-full flex-col items-end gap-px lg:flex-row lg:items-start">
@@ -242,10 +274,23 @@ export function ScheduleList({
                                 year={year}
                                 eventsColors={eventsColors}
                                 blockEnd={blockEnd}
+                                durationVisible={endTimesDiffer}
                               />
                             ))}
                           </div>
                         </div>
+                        {timeMarker && (
+                          <div
+                            id="current-time-marker"
+                            className="typography-body-xs pointer-events-none absolute -right-1 z-10 -translate-y-full font-mono tabular-nums text-pri-base before:absolute before:inset-x-0 before:bottom-0 before:border-b before:border-pri-base before:opacity-80 after:absolute after:bottom-0 after:left-[-100vw] after:w-screen after:border-t after:border-pri-base after:opacity-20 dark:text-pri-light dark:before:border-pri-light dark:after:border-pri-light max-xl:bg-neu-0 xl:translate-x-full"
+                            style={{
+                              top: `${timeMarker.positionPercentage}%`,
+                            }}
+                          >
+                            <span className="max-2xl:hidden">now: </span>
+                            {timeMarker.currentTime}
+                          </div>
+                        )}
                         {hasDashedBorder && (
                           <svg
                             className="absolute -bottom-px left-0 h-px w-full text-neu-50"

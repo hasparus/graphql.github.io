@@ -288,11 +288,11 @@ export function CodePage({ allTags, data }: CodePageProps) {
                   "min-w-0", // hack to avoid overflow when opening details
                 )}
               >
-                <div className="flex grow flex-col gap-7 p-4 lg:p-8">
-                  <div className="flex items-center gap-2">
+                <article className="flex grow flex-col gap-7 p-4 lg:p-8">
+                  <header className="flex items-center gap-2">
                     <span className="typography-h3 grow break-all">{name}</span>
                     <PackageLinks data={frontMatter} />
-                  </div>
+                  </header>
                   <div className="flex gap-2">
                     {tags.map(tag => (
                       <NextLink
@@ -330,7 +330,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                       {license && <span>{license}</span>}
                     </div>
                   )}
-                </div>
+                </article>
 
                 {compiledSource && (
                   <details className="bg-neu-100">

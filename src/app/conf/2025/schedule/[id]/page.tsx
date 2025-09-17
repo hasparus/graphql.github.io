@@ -23,6 +23,7 @@ import { Button } from "@/app/conf/_design-system/button"
 import { SessionTags } from "../../components/session-tags"
 import { formatDescription } from "./format-description"
 import { formatBlockTime } from "../_components/format-block-time"
+import DownloadIcon from "@/app/conf/_design-system/pixelarticons/download.svg?svgr"
 
 type SessionProps = { params: { id: string } }
 
@@ -123,15 +124,35 @@ export default function SessionPage({ params }: SessionProps) {
                     <h3 className="typography-h2 my-8 px-2 sm:px-3 lg:my-16">
                       Session resources
                     </h3>
-                    <section>
-                      {session.files?.map(({ path }) => (
-                        <iframe
-                          key={path}
-                          src={path}
-                          className="aspect-video size-full"
-                        />
+                    <ul className="flex max-w-full flex-col gap-y-2">
+                      {session.files?.map(({ path, name }) => (
+                        <li key={path}>
+                          <iframe
+                            src={path}
+                            className="aspect-video size-full"
+                          />
+                          <div className="flex items-stretch justify-between overflow-hidden">
+                            <a
+                              className="typography-link flex items-center truncate p-3 leading-none text-neu-700 max-xs:hidden sm:px-6"
+                              href={path}
+                            >
+                              <span className="inline-block truncate">
+                                {name}
+                              </span>
+                            </a>
+                            <Button
+                              href={path}
+                              variant="tertiary"
+                              className="shrink-0"
+                              download
+                            >
+                              Download
+                              <DownloadIcon className="size-6" />
+                            </Button>
+                          </div>
+                        </li>
                       ))}
-                    </section>
+                    </ul>
                   </>
                 )}
               </div>
@@ -145,8 +166,13 @@ export default function SessionPage({ params }: SessionProps) {
               title="Get your ticket"
               description="Join three transformative days of expert insights and innovation to shape the next decade of APIs!"
             >
-              <Button variant="primary" href={GET_TICKETS_LINK}>
-                Get tickets
+              <Button
+                disabled
+                className="opacity-55"
+                variant="primary"
+                href={GET_TICKETS_LINK}
+              >
+                Sold out
               </Button>
             </CtaCardSection>
             <div className="py-8">
