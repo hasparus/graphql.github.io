@@ -3,23 +3,19 @@
   "repositories": {
     "graphql/graphiql": {
       "lastCursor": "b3c42a65160ba4878b5ea87d9e72385889856464 4096",
-      "lastProcessed": "2025-09-17T22:12:11.813Z",
-      "status": "in-progress"
+      "lastProcessed": "2025-09-17T22:19:23.392Z"
     },
     "graphql/graphql-spec": {
       "lastCursor": "43ae7baced54e37c68676b1ac5902e6223dcb078 650",
-      "lastProcessed": "2025-09-17T22:12:10.606Z",
-      "status": "in-progress"
+      "lastProcessed": "2025-09-17T22:19:22.172Z"
     },
     "graphql/graphql-wg": {
       "lastCursor": "139d0b9cbe74756974c7e637d85e0283beb36297 2077",
-      "lastProcessed": "2025-09-17T22:12:11.054Z",
-      "status": "in-progress"
+      "lastProcessed": "2025-09-17T22:19:22.573Z"
     },
     "graphql/graphql-js": {
       "lastCursor": "60ae6c48b9c78332bf3d6036e7d931a3617d0674 3244",
-      "lastProcessed": "2025-09-17T22:12:11.387Z",
-      "status": "in-progress"
+      "lastProcessed": "2025-09-17T22:19:22.933Z"
     }
   }
 }

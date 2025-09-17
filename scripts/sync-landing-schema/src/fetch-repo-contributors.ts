@@ -128,6 +128,7 @@ export async function fetchRepoContributors(
     ...state.repositories[repoSlug],
     ...(processedAnyCommits && after && { lastCursor: after }),
     lastProcessed: new Date().toISOString(),
+    status: undefined,
   }
   await writeState(state)
   log(`Finished processing ${repoSlug}.`)
