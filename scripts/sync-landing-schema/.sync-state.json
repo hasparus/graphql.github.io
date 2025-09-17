@@ -6,6 +6,24 @@
       "lastCursor": "b3c42a65160ba4878b5ea87d9e72385889856464 4096",
       "lastProcessed": "2025-09-17T21:49:19.053Z",
       "contributorsCount": 280
+    },
+    "graphql/graphql-spec": {
+      "status": "completed",
+      "lastCursor": "43ae7baced54e37c68676b1ac5902e6223dcb078 650",
+      "lastProcessed": "2025-09-17T21:53:22.050Z",
+      "contributorsCount": 127
+    },
+    "graphql/graphql-wg": {
+      "status": "completed",
+      "lastCursor": "139d0b9cbe74756974c7e637d85e0283beb36297 2077",
+      "lastProcessed": "2025-09-17T21:53:42.812Z",
+      "contributorsCount": 201
+    },
+    "graphql/graphql-js": {
+      "status": "completed",
+      "lastCursor": "60ae6c48b9c78332bf3d6036e7d931a3617d0674 3244",
+      "lastProcessed": "2025-09-17T21:54:10.171Z",
+      "contributorsCount": 192
     }
   }
 }

@@ -1,9 +1,9 @@
-import { setTimeout as sleep } from "node:timers/promises";
-import { execute } from "./execute.ts";
-import { QUERY } from "./query.ts";
-import { log, warn } from "./logger.ts";
-import type { State } from "./state.ts";
-import { writeState } from "./state.ts";
+import { setTimeout as sleep } from "node:timers/promises"
+import { execute } from "./execute.ts"
+import { QUERY } from "./query.ts"
+import { log, warn } from "./logger.ts"
+import type { State } from "./state.ts"
+import { writeState } from "./state.ts"
 
 /**
  * Fetch contributors (by commit authors tied to GitHub users) for a single repo.
@@ -16,29 +16,29 @@ export async function fetchRepoContributors(
   accessToken: string,
   state: State,
   options: {
-    forceRefresh?: boolean;
-    onProgress?: (data: { page: number; repoSlug: string }) => void;
-  } = {}
+    forceRefresh?: boolean
+    onProgress?: (data: { page: number; repoSlug: string }) => void
+  } = {},
 ) {
-  const repoSlug = `${owner}/${repo}`;
-  const repoState = state.repositories[repoSlug];
+  const repoSlug = `${owner}/${repo}`
+  const repoState = state.repositories[repoSlug]
 
   const contributors = new Map<
     string /* handle */,
     { contributions: number; website?: string }
-  >();
+  >()
 
   let after: string | null = options.forceRefresh
     ? null
-    : repoState?.lastCursor || null;
+    : repoState?.lastCursor || null
 
   if (options.forceRefresh) {
-    log(`Force refreshing ${repoSlug}, deleting existing state.`);
-    delete state.repositories[repoSlug];
+    log(`Force refreshing ${repoSlug}, deleting existing state.`)
+    delete state.repositories[repoSlug]
   }
 
-  let page = 0;
-  let hasMore = true;
+  let page = 0
+  let hasMore = true
 
   const fetchMore = () =>
     execute(
@@ -51,71 +51,71 @@ export async function fetchRepoContributors(
       {
         Authorization: `Bearer ${accessToken}`,
         "User-Agent": "graphql.org contributors sync client",
-      }
-    );
+      },
+    )
 
   while (hasMore) {
-    const response = await fetchMore();
+    const response = await fetchMore()
 
     if (response.errors?.length) {
       throw new Error(
         `GitHub GraphQL errors for ${repoSlug}: ${response.errors
           .map((e: { message: string }) => e.message)
-          .join("; ")}`
-      );
+          .join("; ")}`,
+      )
     }
 
-    const repoData = response.data?.repository;
+    const repoData = response.data?.repository
     if (!repoData) {
-      warn(`Repository not found: ${repoSlug}`);
-      break;
+      warn(`Repository not found: ${repoSlug}`)
+      break
     }
 
-    const defaultBranchRef = repoData.defaultBranchRef;
+    const defaultBranchRef = repoData.defaultBranchRef
     if (!defaultBranchRef?.target) {
-      warn(`Default branch not found for ${repoSlug}`);
-      break;
+      warn(`Default branch not found for ${repoSlug}`)
+      break
     }
 
     if (!("history" in defaultBranchRef.target)) {
-      warn(`History not found for ${repoSlug}`);
-      break;
+      warn(`History not found for ${repoSlug}`)
+      break
     }
 
-    const history = defaultBranchRef.target.history;
+    const history = defaultBranchRef.target.history
 
     for (const node of history.nodes || []) {
-      const user = node?.author?.user;
-      if (!user?.login) continue;
-      const prev = contributors.get(user.login);
+      const user = node?.author?.user
+      if (!user?.login) continue
+      const prev = contributors.get(user.login)
       if (prev) {
-        prev.contributions += 1;
-        prev.website ||= user.websiteUrl;
+        prev.contributions += 1
+        prev.website ||= user.websiteUrl
       } else {
         contributors.set(user.login, {
           contributions: 1,
           website: user.websiteUrl ?? undefined,
-        });
+        })
       }
     }
 
-    const hasNext = history.pageInfo?.hasNextPage;
-    after = history.pageInfo?.endCursor || null;
-    hasMore = !!hasNext;
-    page += 1;
+    const hasNext = history.pageInfo?.hasNextPage
+    after = history.pageInfo?.endCursor || null
+    hasMore = !!hasNext
+    page += 1
 
     state.repositories[repoSlug] = {
       ...state.repositories[repoSlug],
       status: "in-progress",
       lastCursor: after,
-    };
-    await writeState(state);
-    log(`Processed page ${page} for ${repoSlug}.`);
+    }
+    await writeState(state)
+    log(`processed page ${page}`, repoSlug)
     if (options.onProgress) {
-      options.onProgress({ page, repoSlug });
+      options.onProgress({ page, repoSlug })
     }
 
-    if (page % 5 === 0) await sleep(200);
+    if (page % 5 === 0) await sleep(200)
   }
 
   state.repositories[repoSlug] = {
@@ -123,10 +123,9 @@ export async function fetchRepoContributors(
     status: "completed",
     lastProcessed: new Date().toISOString(),
     contributorsCount: contributors.size,
-  };
-  await writeState(state);
-  log(`Finished processing ${repoSlug}.`);
+  }
+  await writeState(state)
+  log(`Finished processing ${repoSlug}.`)
 
-  return contributors;
+  return contributors
 }
-
