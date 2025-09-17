@@ -1,5 +1,5 @@
 function formatMessage(message: string, context?: string): string {
-  const timestamp = new Date().toLocaleDateString()
+  const timestamp = new Date().toLocaleTimeString()
   const prefix = context ? `${timestamp} | ${context} |` : `${timestamp} |`
   return `${prefix} ${message}`
 }

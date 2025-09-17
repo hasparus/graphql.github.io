@@ -16,16 +16,11 @@ export interface State {
   repositories: {
     [repository: string]: RepositoryState
   }
-  metadata: {
-    totalContributors?: number
-    lastFullSync?: string
-  }
 }
 
 const initialState: State = {
   version: 1,
   repositories: {},
-  metadata: {},
 }
 
 export async function readState(): Promise<State> {

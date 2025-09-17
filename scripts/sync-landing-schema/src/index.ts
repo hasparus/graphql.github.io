@@ -149,9 +149,7 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   }
 
   const onProgress = (data: { page: number; repoSlug: string }) => {
-    process.stderr.write(
-      `Fetching commits for ${data.repoSlug}: page ${data.page}`,
-    )
+    logger.log(`fetching page ${data.page}`, data.repoSlug)
   }
 
   const onContributorFound = (

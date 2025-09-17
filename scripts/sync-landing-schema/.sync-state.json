@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "repositories": {
+    "graphql/graphiql": {
+      "status": "completed",
+      "lastCursor": "b3c42a65160ba4878b5ea87d9e72385889856464 4096",
+      "lastProcessed": "2025-09-17T21:49:19.053Z",
+      "contributorsCount": 280
+    }
+  }
+}
