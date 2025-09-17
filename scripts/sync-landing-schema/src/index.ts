@@ -50,10 +50,16 @@ export async function getContributors(
   }
 
   let existingData: ContributorsForProjects = {}
-  try {
-    existingData = JSON.parse(await readFile(outPath, "utf8"))
-  } catch (error) {
-    logger.log("No existing data.json found, starting fresh.")
+  if (!options.forceRefresh) {
+    try {
+      existingData = JSON.parse(await readFile(outPath, "utf8"))
+    } catch (error) {
+      logger.log("No existing data.json found, starting fresh.")
+    }
+  } else {
+    logger.log(
+      "Force refresh: starting with empty data to prevent double-counting",
+    )
   }
 
   const perProject = new Map<string, Map<string, Contributor>>()
@@ -70,9 +76,11 @@ export async function getContributors(
 
   for (const fullName of repos) {
     const repoState = state.repositories[fullName]
-    if (repoState?.status === "completed" && !options.forceRefresh) {
-      logger.log(`Skipping ${fullName}, already completed.`)
-      continue
+    const lastProcessed = repoState?.lastProcessed
+    if (lastProcessed) {
+      logger.log(`Syncing ${fullName} (last synced: ${lastProcessed})`)
+    } else {
+      logger.log(`Syncing ${fullName} (first time)`)
     }
 
     const project = repoToProject[fullName]

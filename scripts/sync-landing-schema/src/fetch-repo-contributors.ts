@@ -35,10 +35,15 @@ export async function fetchRepoContributors(
   if (options.forceRefresh) {
     log(`Force refreshing ${repoSlug}, deleting existing state.`)
     delete state.repositories[repoSlug]
+  } else if (after) {
+    log(`Resuming ${repoSlug} from cursor: ${after.substring(0, 10)}...`)
+  } else {
+    log(`Starting fresh sync for ${repoSlug}`)
   }
 
   let page = 0
   let hasMore = true
+  let processedAnyCommits = false
 
   const fetchMore = () =>
     execute(
@@ -85,6 +90,7 @@ export async function fetchRepoContributors(
     const history = defaultBranchRef.target.history
 
     for (const node of history.nodes || []) {
+      processedAnyCommits = true
       const user = node?.author?.user
       if (!user?.login) continue
       const prev = contributors.get(user.login)
@@ -107,7 +113,7 @@ export async function fetchRepoContributors(
     state.repositories[repoSlug] = {
       ...state.repositories[repoSlug],
       status: "in-progress",
-      lastCursor: after,
+      ...(processedAnyCommits && after && { lastCursor: after }),
     }
     await writeState(state)
     log(`processed page ${page}`, repoSlug)
@@ -120,9 +126,8 @@ export async function fetchRepoContributors(
 
   state.repositories[repoSlug] = {
     ...state.repositories[repoSlug],
-    status: "completed",
+    ...(processedAnyCommits && after && { lastCursor: after }),
     lastProcessed: new Date().toISOString(),
-    contributorsCount: contributors.size,
   }
   await writeState(state)
   log(`Finished processing ${repoSlug}.`)

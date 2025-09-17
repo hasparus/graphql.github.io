@@ -7,8 +7,7 @@ const TEMP_STATE_FILE = ".sync-state.json.tmp"
 export interface RepositoryState {
   lastCursor?: string
   lastProcessed?: string
-  contributorsCount?: number
-  status: "completed" | "in-progress" | "error"
+  status?: "in-progress" | "error"
 }
 
 export interface State {
