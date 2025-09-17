@@ -18,9 +18,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const outPath = resolve(__dirname, "data.json")
 
 export const REPO_TO_PROJECT: Record<RepoRef, string> = {
-  "graphql/graphql-spec": "GraphQL",
-  "graphql/graphql-wg": "GraphQL",
-  "graphql/graphql-js": "graphql-js",
+  // "graphql/graphql-spec": "GraphQL",
+  // "graphql/graphql-wg": "GraphQL",
+  // "graphql/graphql-js": "graphql-js",
   "graphql/graphiql": "GraphiQL",
 }
 
