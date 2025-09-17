@@ -40,10 +40,10 @@ const config: CodegenConfig = {
               'import("$1.ts")',
             )
 
-          // switch type-only modules to type import
+          // convert all imports to type imports
           content = content.replace(
-            /import\s+({[^}]+})\s+from\s+['"]@graphql-typed-document-node\/core['"];?/g,
-            'import type $1 from "@graphql-typed-document-node/core";',
+            /import\s+({[^}]+})\s+from\s+['"]([^'"]+)['"];?/g,
+            'import type $1 from "$2";',
           )
 
           await writeFile(`./generated/${file}`, content)

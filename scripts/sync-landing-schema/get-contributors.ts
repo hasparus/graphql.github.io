@@ -3,10 +3,10 @@ import { readFile, writeFile } from "node:fs/promises"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import { dirname, resolve } from "node:path"
 
-import { ExecutionResult } from "graphql"
+import type { ExecutionResult } from "graphql"
 
 import { graphql } from "./generated/index.ts"
-import { TypedDocumentString } from "./generated/graphql.ts"
+import type { TypedDocumentString } from "./generated/graphql.ts"
 
 type RepoRef = `${string}/${string}`
 
@@ -190,8 +190,9 @@ async function fetchRepoContributors(
       break
     }
 
-    if (defaultBranchRef.target.__typename !== "Commit") {
-      throw new Error(`Invalid typename for ${owner}/${repo}`)
+    if (!("history" in defaultBranchRef.target)) {
+      console.warn(`History not found for ${owner}/${repo}`)
+      break
     }
 
     const history = defaultBranchRef.target.history
@@ -245,20 +246,17 @@ async function execute<TResult, TVariables>(
   variables?: TVariables,
   headers?: Record<string, string>,
 ): Promise<ExecutionResult<TResult>> {
-  const response = await fetch("https://graphql.org/graphql/", {
+  const response = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/graphql-response+json",
       ...headers,
     },
-    body: JSON.stringify({
-      query,
-      variables,
-    }),
+    body: JSON.stringify({ query, variables }),
   })
 
   if (!response.ok) {
+    console.error("Network response was not ok:", response)
     throw new Error("Network response was not ok")
   }
 
