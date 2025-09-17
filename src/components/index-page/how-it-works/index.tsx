@@ -53,9 +53,8 @@ export function HowItWorks() {
         {inView && (
           <ol
             // this is rendered *on top* of the static version to avoid layout shift
-            className="absolute inset-0 list-none gap-px lg:grid lg:grid-cols-3"
+            className="pointer-events-none absolute inset-0 list-none gap-px *:pointer-events-auto lg:grid lg:grid-cols-3 lg:[&>:first-child]:col-start-2"
           >
-            <div className="pointer-events-none" />
             <InteractiveEditor />
           </ol>
         )}
