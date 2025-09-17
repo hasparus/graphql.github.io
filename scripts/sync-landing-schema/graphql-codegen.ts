@@ -15,7 +15,7 @@ const config: CodegenConfig = {
       },
     },
   },
-  documents: ["./*.ts"],
+  documents: ["./src/*.ts"],
   generates: {
     "./generated/": {
       preset: "client",
