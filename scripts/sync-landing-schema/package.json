@@ -1,12 +1,15 @@
 {
   "name": "@graphql-website/sync-landing-schema",
   "private": true,
+  "type": "module",
+  "main": "./get-contributors.ts",
   "scripts": {
     "codegen": "gql-gen --config graphql-codegen.ts",
-    "download": "node get-contributors.ts"
+    "start": "node get-contributors.ts"
   },
   "dependencies": {
     "@graphql-codegen/cli": "^6.0.0",
-    "@graphql-codegen/graphql-modules-preset": "^5.0.0"
+    "@graphql-codegen/graphql-modules-preset": "^5.0.0",
+    "@graphql-typed-document-node/core": "^3.2.0"
   }
 }

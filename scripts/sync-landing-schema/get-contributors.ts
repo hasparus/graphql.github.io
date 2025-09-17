@@ -1,10 +1,12 @@
-import { setTimeout as sleep } from "timers/promises"
-import { readFileSync, writeFileSync } from "node:fs"
+import { setTimeout as sleep } from "node:timers/promises"
+import { readFile, writeFile } from "node:fs/promises"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import { dirname, resolve } from "node:path"
-import { graphql } from "./generated"
+
 import { ExecutionResult } from "graphql"
-import { TypedDocumentString } from "./generated/graphql"
+
+import { graphql } from "./generated/index.ts"
+import { TypedDocumentString } from "./generated/graphql.ts"
 
 type RepoRef = `${string}/${string}`
 
@@ -52,7 +54,9 @@ export const REPO_TO_PROJECT: Record<RepoRef, string> = {
  */
 export async function getContributors(
   repoToProject: Record<RepoRef, string> = REPO_TO_PROJECT,
-): Promise<ExecutionResult<typeof QUERY>> {
+): Promise<
+  Record<string, Array<{ id: string; website?: string; contributions: number }>>
+> {
   const accessToken = process.env.GITHUB_ACCESS_TOKEN
   if (!accessToken) {
     console.warn(
@@ -117,7 +121,10 @@ export async function getContributors(
   )
 
   // Convert to the requested output shape and sort by contributions
-  const result: ExecutionResult<typeof QUERY> = {}
+  const result: Record<
+    string,
+    Array<{ id: string; website?: string; contributions: number }>
+  > = {}
   for (const [project, map] of perProject) {
     const arr = Array.from(map.values()).sort(
       (a, b) => b.contributions - a.contributions,
@@ -138,23 +145,30 @@ async function fetchRepoContributors(
   repo: string,
   accessToken: string,
 ) {
-  // login -> { contributions, website }
-  const counts = new Map<string, { contributions: number; website?: string }>()
+  const contributors = new Map<
+    string /* handle */,
+    { contributions: number; website?: string }
+  >()
   let after: string | null = null
   let page = 0
   let hasMore = true
 
-  while (hasMore) {
-    const response = await execute(QUERY, {
-      owner,
-      name: repo,
-      after,
-    }, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'User-Agent': 'graphql.org contributors sync client',
+  const fetchMore = () =>
+    execute(
+      QUERY,
+      {
+        owner,
+        name: repo,
+        after,
       },
-    })
+      {
+        Authorization: `Bearer ${accessToken}`,
+        "User-Agent": "graphql.org contributors sync client",
+      },
+    )
+
+  while (hasMore) {
+    const response = await fetchMore()
 
     if (response.errors?.length) {
       throw new Error(
@@ -164,46 +178,49 @@ async function fetchRepoContributors(
       )
     }
 
-    const repoDataRaw = response.data?[0].
-    if (!repoDataRaw) {
+    const repoData = response.data?.repository
+    if (!repoData) {
       console.warn(`Repository not found: ${owner}/${repo}`)
       break
     }
-    const repoData = repoDataRaw as NonNullable<RepoHistoryPage["repository"]>
 
     const defaultBranchRef = repoData.defaultBranchRef
-    if (!defaultBranchRef || !defaultBranchRef.target) {
+    if (!defaultBranchRef?.target) {
       console.warn(`Default branch not found for ${owner}/${repo}`)
       break
     }
+
+    if (defaultBranchRef.target.__typename !== "Commit") {
+      throw new Error(`Invalid typename for ${owner}/${repo}`)
+    }
+
     const history = defaultBranchRef.target.history
 
-    for (const node of history.nodes) {
-      const user = node.author?.user
+    for (const node of history.nodes || []) {
+      const user = node?.author?.user
       if (!user?.login) continue
-      const prev = counts.get(user.login)
+      const prev = contributors.get(user.login)
       if (prev) {
         prev.contributions += 1
         // keep existing website unless we don't have one and GitHub provides it
-        if (!prev.website && user.websiteUrl) prev.website = user.websiteUrl
+        prev.website ||= user.websiteUrl
       } else {
-        counts.set(user.login, {
+        contributors.set(user.login, {
           contributions: 1,
           website: user.websiteUrl ?? undefined,
         })
       }
     }
 
-    const hasNext = history.pageInfo.hasNextPage
-    after = history.pageInfo.endCursor
-    hasMore = hasNext
+    const hasNext = history.pageInfo?.hasNextPage
+    after = history.pageInfo?.endCursor || null
+    hasMore = !!hasNext
     page += 1
 
-    // Brief backoff every few pages to be nicer to the API
     if (page % 5 === 0) await sleep(200)
   }
 
-  return counts
+  return contributors
 }
 
 // CLI entrypoint: when executed directly, write contributors to data.json next to this file
@@ -211,8 +228,8 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const __dirname = dirname(fileURLToPath(import.meta.url))
   const outPath = resolve(__dirname, "data.json")
   getContributors()
-    .then(data => {
-      writeFileSync(outPath, JSON.stringify(data, null, 2) + "\n", "utf8")
+    .then(async data => {
+      await writeFile(outPath, JSON.stringify(data, null, 2) + "\n", "utf8")
       console.log(
         `Wrote ${Object.values(data).reduce((n, arr) => n + arr.length, 0)} contributors across ${Object.keys(data).length} projects to ${outPath}`,
       )
@@ -225,9 +242,9 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
 
 async function execute<TResult, TVariables>(
   query: TypedDocumentString<TResult, TVariables>,
-  headers?: Record<string, string>,
   variables?: TVariables,
-) {
+  headers?: Record<string, string>,
+): Promise<ExecutionResult<TResult>> {
   const response = await fetch("https://graphql.org/graphql/", {
     method: "POST",
     headers: {
@@ -245,5 +262,5 @@ async function execute<TResult, TVariables>(
     throw new Error("Network response was not ok")
   }
 
-  return response.json() as ExecutionResult<TResult>
+  return (await response.json()) as ExecutionResult<TResult>
 }
