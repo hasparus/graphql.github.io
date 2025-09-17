@@ -1431,6 +1431,12 @@
     "start_time_ts": 1757334300,
     "end_date": "2025-09-08",
     "end_time": "14:55:00",
+    "files": [
+      {
+        "path": "https://static.sched.com/hosted_files/graphqlconf2025/8d/Unlocking Federation Security at Scale.pdf",
+        "name": "Unlocking Federation Security at Scale.pdf"
+      }
+    ],
     "event_subtype": "Security"
   },
   {
