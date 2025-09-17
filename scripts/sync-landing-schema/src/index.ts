@@ -5,6 +5,14 @@ import { dirname, resolve } from "node:path"
 import { fetchRepoContributors } from "./fetch-repo-contributors.ts"
 
 type RepoRef = `${string}/${string}`
+interface Contributor {
+  id: string
+  website?: string
+  contributions: number
+}
+type ContributorsForProjects = {
+  [projectName: string]: Contributor[]
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const outPath = resolve(__dirname, "data.json")
@@ -21,14 +29,10 @@ export const REPO_TO_PROJECT: Record<RepoRef, string> = {
  * - Uses GitHub GraphQL API (v4) with a personal access token in env GITHUB_ACCESS_TOKEN
  * - Aggregates contributors across multiple repos that map to the same project
  * - Sorts contributors per project by contributions (desc)
- *
- * Returns a map: { [projectName]: Array<{ id, website?, contributions }> }
  */
 export async function getContributors(
   repoToProject: Record<RepoRef, string> = REPO_TO_PROJECT,
-): Promise<
-  Record<string, Array<{ id: string; website?: string; contributions: number }>>
-> {
+): Promise<ContributorsForProjects> {
   const accessToken = process.env.GITHUB_ACCESS_TOKEN
   if (!accessToken) {
     console.warn(
