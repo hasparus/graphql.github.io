@@ -2,40 +2,12 @@ import { setTimeout as sleep } from "node:timers/promises"
 import { readFile, writeFile } from "node:fs/promises"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import { dirname, resolve } from "node:path"
-
-import type { ExecutionResult } from "graphql"
-
-import { graphql } from "./generated/index.ts"
-import type { TypedDocumentString } from "./generated/graphql.ts"
+import { fetchRepoContributors } from "./fetch-repo-contributors.ts"
 
 type RepoRef = `${string}/${string}`
 
-const QUERY = graphql(`
-  query RepoContributors($owner: String!, $name: String!, $after: String) {
-    repository(owner: $owner, name: $name) {
-      defaultBranchRef {
-        target {
-          ... on Commit {
-            history(first: 100, after: $after) {
-              pageInfo {
-                hasNextPage
-                endCursor
-              }
-              nodes {
-                author {
-                  user {
-                    login
-                    websiteUrl
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`)
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const outPath = resolve(__dirname, "data.json")
 
 export const REPO_TO_PROJECT: Record<RepoRef, string> = {
   "graphql/graphql-spec": "GraphQL",
@@ -134,100 +106,8 @@ export async function getContributors(
   return result
 }
 
-/**
- * Fetch contributors (by commit authors tied to GitHub users) for a single repo.
- * Traverses the full commit history of the default branch using pagination.
- *
- * Returns a Map: login -> { contributions, website }
- */
-async function fetchRepoContributors(
-  owner: string,
-  repo: string,
-  accessToken: string,
-) {
-  const contributors = new Map<
-    string /* handle */,
-    { contributions: number; website?: string }
-  >()
-  let after: string | null = null
-  let page = 0
-  let hasMore = true
-
-  const fetchMore = () =>
-    execute(
-      QUERY,
-      {
-        owner,
-        name: repo,
-        after,
-      },
-      {
-        Authorization: `Bearer ${accessToken}`,
-        "User-Agent": "graphql.org contributors sync client",
-      },
-    )
-
-  while (hasMore) {
-    const response = await fetchMore()
-
-    if (response.errors?.length) {
-      throw new Error(
-        `GitHub GraphQL errors for ${owner}/${repo}: ${response.errors
-          .map((e: { message: string }) => e.message)
-          .join("; ")}`,
-      )
-    }
-
-    const repoData = response.data?.repository
-    if (!repoData) {
-      console.warn(`Repository not found: ${owner}/${repo}`)
-      break
-    }
-
-    const defaultBranchRef = repoData.defaultBranchRef
-    if (!defaultBranchRef?.target) {
-      console.warn(`Default branch not found for ${owner}/${repo}`)
-      break
-    }
-
-    if (!("history" in defaultBranchRef.target)) {
-      console.warn(`History not found for ${owner}/${repo}`)
-      break
-    }
-
-    const history = defaultBranchRef.target.history
-
-    for (const node of history.nodes || []) {
-      const user = node?.author?.user
-      if (!user?.login) continue
-      const prev = contributors.get(user.login)
-      if (prev) {
-        prev.contributions += 1
-        // keep existing website unless we don't have one and GitHub provides it
-        prev.website ||= user.websiteUrl
-      } else {
-        contributors.set(user.login, {
-          contributions: 1,
-          website: user.websiteUrl ?? undefined,
-        })
-      }
-    }
-
-    const hasNext = history.pageInfo?.hasNextPage
-    after = history.pageInfo?.endCursor || null
-    hasMore = !!hasNext
-    page += 1
-
-    if (page % 5 === 0) await sleep(200)
-  }
-
-  return contributors
-}
-
 // CLI entrypoint: when executed directly, write contributors to data.json next to this file
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  const __dirname = dirname(fileURLToPath(import.meta.url))
-  const outPath = resolve(__dirname, "data.json")
   getContributors()
     .then(async data => {
       await writeFile(outPath, JSON.stringify(data, null, 2) + "\n", "utf8")
@@ -239,26 +119,4 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
       console.error("Failed to write contributors data.json:", err)
       process.exitCode = 1
     })
-}
-
-async function execute<TResult, TVariables>(
-  query: TypedDocumentString<TResult, TVariables>,
-  variables?: TVariables,
-  headers?: Record<string, string>,
-): Promise<ExecutionResult<TResult>> {
-  const response = await fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...headers,
-    },
-    body: JSON.stringify({ query, variables }),
-  })
-
-  if (!response.ok) {
-    console.error("Network response was not ok:", response)
-    throw new Error("Network response was not ok")
-  }
-
-  return (await response.json()) as ExecutionResult<TResult>
 }
