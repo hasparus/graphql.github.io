@@ -1,8 +1,7 @@
 import { Component } from "react"
 import { EditorView } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
-// todo: perhaps custom grammar to match the shiki highlighting?
-import { json } from "@codemirror/lang-json"
+import { json } from "./codemirror-json"
 import { codeMirrorThemeExtension } from "./codemirror-theme"
 
 import "./syntax-highlighting.css"
