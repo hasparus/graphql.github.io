@@ -298,12 +298,16 @@
 }
 
 /* Active line */
-.cm-activeLine {
-  background-color: rgba(0, 0, 0, 0.05);
+.cm-editor:not(.cm-focused) .cm-activeLine {
+  background: none;
 }
 
-.dark .cm-activeLine {
-  background-color: rgba(255, 255, 255, 0.05);
+.cm-focused .cm-activeLine {
+  background-color: hsl(var(--color-neu-100) / 0.575);
+}
+
+.dark .cm-focused .cm-activeLine {
+  background-color: hsl(var(--color-neu-500) / 0.06);
 }
 
 .cm-searchMatch {

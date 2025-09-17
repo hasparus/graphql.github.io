@@ -1,5 +1,5 @@
 import { Component } from "react"
-import { EditorView, keymap } from "@codemirror/view"
+import { EditorView, keymap, highlightActiveLine } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 import { history, historyKeymap, defaultKeymap } from "@codemirror/commands"
 import { bracketMatching } from "@codemirror/language"
@@ -76,6 +76,7 @@ export class QueryEditor extends Component<QueryEditorProps> {
         history(),
         closeBrackets(),
         bracketMatching(),
+        highlightActiveLine(),
         keymap.of([...historyKeymap, ...completionKeymap, ...defaultKeymap]),
         runQueryBinding,
         codeMirrorThemeExtension,

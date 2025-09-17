@@ -1,5 +1,5 @@
 import { Component } from "react"
-import { EditorView } from "@codemirror/view"
+import { EditorView, highlightActiveLine } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 import { json } from "@codemirror/lang-json"
 import { history } from "@codemirror/commands"
@@ -48,6 +48,7 @@ export class VariableEditor extends Component<VariableEditorProps> {
       extensions: [
         history(),
         json(),
+        highlightActiveLine(),
         codeMirrorThemeExtension,
         EditorView.updateListener.of(update => {
           if (update.docChanged && !this.ignoreChangeEvent) {

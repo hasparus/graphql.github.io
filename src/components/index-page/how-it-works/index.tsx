@@ -35,6 +35,7 @@ export function HowItWorks() {
       <SectionLabel className="mb-6">How it works</SectionLabel>
       <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
       <div className="relative">
+        {/* eslint-disable-next-line tailwindcss/no-custom-classname*/}
         <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
           <HowItWorksListItem
             text="Describe your data"
@@ -53,7 +54,7 @@ export function HowItWorks() {
         {inView && (
           <ol
             // this is rendered *on top* of the static version to avoid layout shift
-            className="pointer-events-none absolute inset-0 list-none gap-px *:pointer-events-auto lg:grid lg:grid-cols-3 lg:[&>:first-child]:col-start-2"
+            className="pointer-events-none absolute inset-0 list-none gap-px [counter-set:list-item_1] *:pointer-events-auto lg:grid lg:grid-cols-3 lg:[&>:first-child]:col-start-2"
           >
             <InteractiveEditor />
           </ol>

@@ -1,5 +1,5 @@
 import { Component } from "react"
-import { EditorView } from "@codemirror/view"
+import { EditorView, highlightActiveLine } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 // todo: perhaps custom grammar to match the shiki highlighting?
 import { json } from "@codemirror/lang-json"
@@ -36,6 +36,7 @@ export class ResultViewer extends Component<ResultViewerProps> {
         EditorState.readOnly.of(true),
         json(),
         codeMirrorThemeExtension,
+        highlightActiveLine(),
       ],
     })
 

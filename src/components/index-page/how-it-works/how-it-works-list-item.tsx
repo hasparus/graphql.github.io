@@ -13,7 +13,7 @@ export function HowItWorksListItem({
         {text}
         {icon}
       </div>
-      <div className="mt-px flex-1 bg-neu-0 text-sm/[21px] [--cm-background:transparent] md:pl-2 md:[&_:is(pre,.cm-content)]:!pt-5 max-md:[&_code>span]:!pl-0 [&_pre]:border-none [&_pre]:ring-0">
+      <div className="mt-px flex-1 bg-neu-0 text-sm/[21px] [--cm-background:transparent] md:[&_:is(.cm-line,.nextra-code>span)]:!pl-5 md:[&_:is(pre,.cm-content)]:!pt-5 max-md:[&_code>span]:!pl-0 [&_pre]:border-none [&_pre]:ring-0">
         {code}
       </div>
     </li>
