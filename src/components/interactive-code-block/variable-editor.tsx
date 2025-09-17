@@ -1,7 +1,7 @@
 import { Component } from "react"
 import { EditorView } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
-import { json } from "@codemirror/lang-json"
+import { json } from "./codemirror-json"
 import { history } from "@codemirror/commands"
 import { syntaxHighlighting } from "@codemirror/language"
 import { codeMirrorThemeExtension } from "./codemirror-theme"
