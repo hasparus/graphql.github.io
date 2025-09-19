@@ -40,12 +40,18 @@ const projects: Project[] = [
 
 interface User {
   id: string
-  website?: string
+  website?: string | null
+  contributions: number
 }
 
 interface Project {
   name: string
   tagline: string
+}
+
+interface PaginationArgs {
+  first?: number | null
+  after?: string | null
 }
 
 const UserType = new GraphQLObjectType<User>({
@@ -58,6 +64,10 @@ const UserType = new GraphQLObjectType<User>({
     website: {
       type: GraphQLString,
       description: "Personal website of the contributor",
+    },
+    contributions: {
+      type: new GraphQLNonNull(GraphQLInt),
+      description: "Number of contributions made to the project",
     },
   },
 })
@@ -120,6 +130,40 @@ const QueryType = new GraphQLObjectType({
     },
   },
 })
+
+async function getContributorsForProject(
+  project: Project,
+  args: PaginationArgs,
+): Promise<User[]> {
+  try {
+    const params = new URLSearchParams()
+
+    if (args.first) {
+      params.set("first", args.first.toString())
+    }
+
+    if (args.after) {
+      params.set("after", args.after)
+    }
+
+    params.set("repository", project.name)
+
+    const response = await fetch(`/api/contributors?${params.toString()}`)
+
+    if (!response.ok) {
+      console.error(`Failed to fetch contributors: ${response.status}`)
+      return []
+    }
+
+    const contributors: User[] = await response.json()
+
+    // Map contributors to User format (they have the same structure now)
+    return contributors
+  } catch (error) {
+    console.error("Error fetching contributors:", error)
+    return []
+  }
+}
 
 export const projectsSchema = new GraphQLSchema({
   query: QueryType,
