@@ -23,21 +23,6 @@ export const INITIAL_RESULTS_TEXT = `{
   }
 }`
 
-/**
- * NOTE:
- * Contributors data will be synced from scripts/sync-landing-schema/data.json
- * and should provide GitHub handles and (optionally) websites for each user.
- */
-interface User {
-  id: string
-  website?: string
-}
-
-interface Project {
-  name: string
-  tagline: string
-}
-
 const projects: Project[] = [
   {
     name: PROJECT_NAME,
@@ -53,6 +38,16 @@ const projects: Project[] = [
   },
 ]
 
+interface User {
+  id: string
+  website?: string
+}
+
+interface Project {
+  name: string
+  tagline: string
+}
+
 const UserType = new GraphQLObjectType<User>({
   name: "User",
   fields: {
@@ -66,30 +61,6 @@ const UserType = new GraphQLObjectType<User>({
     },
   },
 })
-
-function getContributorsForProject(
-  project: Project,
-  opts: { first?: number; after?: string | null } = {},
-): User[] {
-  // TODO: Load from scripts/sync-landing-schema/data.json once available
-  const all: User[] = []
-  const { first, after } = opts
-
-  let startIndex = 0
-  if (after) {
-    const idx = all.findIndex(u => u.id === after)
-    if (idx === -1) {
-      return []
-    }
-    startIndex = idx + 1
-  }
-
-  const sliced = all.slice(startIndex)
-  if (typeof first === "number" && first >= 0) {
-    return sliced.slice(0, first)
-  }
-  return sliced
-}
 
 const ProjectType = new GraphQLObjectType<Project>({
   name: "Project",

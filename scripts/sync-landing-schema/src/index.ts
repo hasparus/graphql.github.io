@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { readFile, writeFile } from "node:fs/promises"
 import { fileURLToPath, pathToFileURL } from "node:url"
 import { dirname, resolve } from "node:path"
@@ -17,6 +18,7 @@ type ContributorsForProjects = {
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const outPath = resolve(__dirname, "../data.json")
+const LAST_RUN_PATH = resolve(__dirname, "../.last-sync.isodate")
 
 export const REPO_TO_PROJECT: Record<RepoRef, string> = {
   "graphql/graphql-spec": "GraphQL",
@@ -152,8 +154,40 @@ export async function getContributors(
 
 // CLI entrypoint: when executed directly, write contributors to data.json next to this file
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
+  // Show help
+  if (process.argv.includes("--help") || process.argv.includes("-h")) {
+    console.log(`
+Usage: tsx index.ts [options]
+
+Options:
+  --ignore-timestamp      Skip the 24-hour rate limit check
+  --fetch-full-history    Fetch full history instead of incremental updates
+  --help, -h              Show this help message
+
+Examples:
+  tsx index.ts                           # Normal sync (respects 24h limit)
+  tsx index.ts --ignore-timestamp        # Force sync even if run recently
+  tsx index.ts --fetch-full-history      # Fetch complete history from scratch
+`)
+    process.exit(0)
+  }
+
+  // Only sync once every 24 hours (unless --ignore-timestamp is used)
   const options = {
-    forceRefresh: process.argv.includes("--force"),
+    forceRefresh: process.argv.includes("--fetch-full-history"),
+  }
+
+  if (!process.argv.includes("--ignore-timestamp")) {
+    const ONE_DAY = 24 * 60 * 60 * 1000
+    const lastRun = await readFile(LAST_RUN_PATH, "utf8").catch(() => "")
+    const oneDayAgo = new Date(Date.now() - ONE_DAY)
+
+    if (lastRun && new Date(lastRun).getTime() > oneDayAgo.getTime()) {
+      logger.log(
+        "Skipping sync of contributors, last run was within 24 hours. Use --ignore-timestamp to override.",
+      )
+      process.exit(0)
+    }
   }
 
   const onProgress = (data: { page: number; repoSlug: string }) => {
@@ -173,7 +207,15 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   })
     .then(async data => {
       process.stderr.write("\n")
+
+      if (Object.keys(data).length === 0) {
+        logger.log("No contributors data fetched, keeping existing data.")
+        return
+      }
+
       await writeFile(outPath, JSON.stringify(data, null, 2) + "\n", "utf8")
+      await writeFile(LAST_RUN_PATH, new Date().toISOString())
+
       logger.log(
         `Wrote ${Object.values(data).reduce(
           (n, arr) => n + arr.length,
@@ -186,6 +228,14 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
     .catch(err => {
       process.stderr.write("\n")
       logger.error("Failed to write contributors data.json:", err)
-      process.exitCode = 1
+
+      if (process.env.VERCEL) {
+        logger.error(
+          "We don't want to fail the deployment, so we'll use the existing contributor data.",
+        )
+        return
+      } else {
+        process.exitCode = 1
+      }
     })
 }
