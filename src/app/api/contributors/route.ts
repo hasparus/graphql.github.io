@@ -15,10 +15,14 @@ function getContributorData(): ContributorData {
   return contributorData as ContributorData
 }
 
+const ALLOWED_ORIGIN = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000"
+
 export async function GET(request: NextRequest) {
   const headers = new Headers({
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
     "Access-Control-Allow-Methods": "GET",
     "Access-Control-Allow-Headers": "Content-Type",
     "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=172800",
@@ -33,32 +37,36 @@ export async function GET(request: NextRequest) {
     const after = searchParams.get("after") || ""
     const repository = searchParams.get("repository") || ""
 
-    const data = getContributorData()
-
-    // Flatten all contributors
-    const allContributors: Contributor[] = []
-
-    for (const [repoName, contributors] of Object.entries(data)) {
-      if (
-        !repository ||
-        repoName.toLowerCase().includes(repository.toLowerCase())
-      ) {
-        allContributors.push(...contributors)
-      }
+    if (!repository) {
+      return NextResponse.json(
+        {
+          error: "Bad request",
+          message: "Repository parameter is required",
+        },
+        {
+          status: 400,
+          headers,
+        },
+      )
     }
 
-    // Sort by contributions (descending), then by id for stable sorting
-    allContributors.sort((a, b) => {
+    const data = getContributorData()
+    const repositoryContributors = data[repository]
+
+    if (!repositoryContributors) {
+      return NextResponse.json([], { headers })
+    }
+
+    const sortedContributors = [...repositoryContributors].sort((a, b) => {
       if (b.contributions !== a.contributions) {
         return b.contributions - a.contributions
       }
       return a.id.localeCompare(b.id)
     })
 
-    // Find starting index based on cursor (contributor id)
     let startIndex = 0
     if (after) {
-      const afterIndex = allContributors.findIndex(
+      const afterIndex = sortedContributors.findIndex(
         contributor => contributor.id === after,
       )
       if (afterIndex >= 0) {
@@ -66,9 +74,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Get the requested slice
-    const endIndex = Math.min(startIndex + first, allContributors.length)
-    const paginatedContributors = allContributors.slice(startIndex, endIndex)
+    const endIndex = Math.min(startIndex + first, sortedContributors.length)
+    const paginatedContributors = sortedContributors.slice(startIndex, endIndex)
 
     return NextResponse.json(paginatedContributors, { headers })
   } catch (error) {
