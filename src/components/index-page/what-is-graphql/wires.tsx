@@ -555,6 +555,7 @@ export function Wires({ className }: { className?: string }) {
         <SVGDefinitions />
       </svg>
 
+      {/* TODO: This needs to be turned on in Safari as it doesn't support repeatEvent. */}
       {process.env.NODE_ENV === "development" && (
         <NextStepButton onClick={inc} />
       )}

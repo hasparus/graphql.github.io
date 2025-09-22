@@ -6,6 +6,7 @@ import {
   GraphQLList,
   GraphQLInt,
   GraphQLID,
+  GraphQLError,
 } from "graphql"
 
 const PROJECT_NAME = "GraphQL"
@@ -27,18 +28,21 @@ const projects: Project[] = [
   {
     name: PROJECT_NAME,
     tagline: PROJECT_TAGLINE,
+    contributors: [],
   },
   {
     name: "GraphiQL",
     tagline: "Ecosystem for building browser & IDE tools.",
+    contributors: [],
   },
   {
     name: "graphql-js",
     tagline: "A reference implementation of GraphQL for JavaScript",
+    contributors: [],
   },
 ]
 
-interface User {
+interface Contributor {
   id: string
   website?: string | null
   contributions: number
@@ -47,6 +51,7 @@ interface User {
 interface Project {
   name: string
   tagline: string
+  contributors: Contributor[]
 }
 
 interface PaginationArgs {
@@ -54,7 +59,7 @@ interface PaginationArgs {
   after?: string | null
 }
 
-const UserType = new GraphQLObjectType<User>({
+const UserType = new GraphQLObjectType<Contributor>({
   name: "User",
   fields: {
     id: {
@@ -96,11 +101,26 @@ const ProjectType = new GraphQLObjectType<Project>({
           description: "Cursor (User.id) after which to start",
         },
       },
-      resolve: (project, args) => {
-        return getContributorsForProject(project, {
-          first: args?.first,
-          after: args?.after ?? null,
-        })
+      resolve: async (project, args: PaginationArgs) => {
+        try {
+          const params = new URLSearchParams()
+
+          if (args.first) params.set("first", args.first.toString())
+          if (args.after) params.set("after", args.after)
+          params.set("project", project.name)
+
+          const response = await fetch(`/api/contributors?${params.toString()}`)
+
+          if (!response.ok) {
+            console.error(`Failed to fetch contributors: ${response.status}`)
+            return []
+          }
+
+          return response.json()
+        } catch (error) {
+          console.error("Error fetching contributors:", error)
+          return []
+        }
       },
     },
   },
@@ -118,9 +138,17 @@ const QueryType = new GraphQLObjectType({
         },
       },
       resolve: (_, args) => {
-        return projects.find(
+        const project = projects.find(
           project => project.name.toLowerCase() === args.name.toLowerCase(),
         )
+
+        if (!project) {
+          throw new GraphQLError(
+            "To learn about more GraphQL projects, visit graphql.org/code/ or github.com/topics/graphql. In this playground, try 'GraphiQL', 'graphql-js' or 'graphiql'.",
+          )
+        }
+
+        return project
       },
     },
     projects: {
@@ -130,40 +158,6 @@ const QueryType = new GraphQLObjectType({
     },
   },
 })
-
-async function getContributorsForProject(
-  project: Project,
-  args: PaginationArgs,
-): Promise<User[]> {
-  try {
-    const params = new URLSearchParams()
-
-    if (args.first) {
-      params.set("first", args.first.toString())
-    }
-
-    if (args.after) {
-      params.set("after", args.after)
-    }
-
-    params.set("repository", project.name)
-
-    const response = await fetch(`/api/contributors?${params.toString()}`)
-
-    if (!response.ok) {
-      console.error(`Failed to fetch contributors: ${response.status}`)
-      return []
-    }
-
-    const contributors: User[] = await response.json()
-
-    // Map contributors to User format (they have the same structure now)
-    return contributors
-  } catch (error) {
-    console.error("Error fetching contributors:", error)
-    return []
-  }
-}
 
 export const projectsSchema = new GraphQLSchema({
   query: QueryType,

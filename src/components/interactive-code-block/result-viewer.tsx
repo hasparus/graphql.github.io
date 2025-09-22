@@ -64,7 +64,12 @@ export class ResultViewer extends Component<ResultViewerProps> {
     if (this.props.vainlyExtractData) {
       try {
         const json = JSON.parse(value)
-        if (json && typeof json === "object" && "data" in json) {
+        if (
+          json &&
+          typeof json === "object" &&
+          "data" in json &&
+          !("errors" in json)
+        ) {
           value = JSON.stringify(json.data, null, 2)
         }
       } catch {
@@ -84,6 +89,7 @@ export class ResultViewer extends Component<ResultViewerProps> {
   render() {
     return (
       <div
+        // eslint-disable-next-line tailwindcss/no-custom-classname
         className="result-window h-full"
         ref={e => {
           this.domNode = e

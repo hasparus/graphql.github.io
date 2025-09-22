@@ -32,32 +32,25 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const first = Math.max(
       1,
-      Math.min(100, parseInt(searchParams.get("first") || "20")),
+      Math.min(100, parseInt(searchParams.get("first") || "5")),
     )
     const after = searchParams.get("after") || ""
-    const repository = searchParams.get("repository") || ""
+    const project = searchParams.get("project") || ""
 
-    if (!repository) {
+    if (!project) {
       return NextResponse.json(
         {
           error: "Bad request",
           message: "Repository parameter is required",
         },
-        {
-          status: 400,
-          headers,
-        },
+        { status: 400, headers },
       )
     }
 
     const data = getContributorData()
-    const repositoryContributors = data[repository]
+    const allContributors = data[project] || []
 
-    if (!repositoryContributors) {
-      return NextResponse.json([], { headers })
-    }
-
-    const sortedContributors = [...repositoryContributors].sort((a, b) => {
+    const sortedContributors = allContributors.sort((a, b) => {
       if (b.contributions !== a.contributions) {
         return b.contributions - a.contributions
       }
@@ -85,10 +78,7 @@ export async function GET(request: NextRequest) {
         error: "Internal server error",
         message: "Failed to fetch contributors data",
       },
-      {
-        status: 500,
-        headers,
-      },
+      { status: 500, headers },
     )
   }
 }
