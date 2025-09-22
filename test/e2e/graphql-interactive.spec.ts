@@ -153,11 +153,18 @@ test.describe("interactive examples", () => {
 
       await editor.click()
 
-      await typeInQuery(page, editor, "tagline", "des")
+      await typeInQuery(page, editor, "tagline", "contr")
 
       await page.keyboard.press("Control+Space")
+      let autoCompleteMenu = page.locator(".cm-tooltip-autocomplete")
+      await expect(autoCompleteMenu).toBeVisible({ timeout: 5000 })
+      await page.locator(".cm-completionLabel").click()
 
-      const autoCompleteMenu = page.locator(".cm-tooltip-autocomplete")
+      await page.keyboard.type("(first: 2) {\n")
+      await page.keyboard.type("cont")
+
+      await page.keyboard.press("Control+Space")
+      autoCompleteMenu = page.locator(".cm-tooltip-autocomplete")
       await expect(autoCompleteMenu).toBeVisible({ timeout: 5000 })
       await page.locator(".cm-completionLabel").click()
 
@@ -170,8 +177,14 @@ test.describe("interactive examples", () => {
           const jsonMatch = resultContent?.match(/\{[\s\S]*\}/)
           if (jsonMatch) {
             try {
-              const result = JSON.parse(jsonMatch[0])
-              return result.project && result.project.description ? true : false
+              const data = JSON.parse(jsonMatch[0])
+              if (data?.project?.contributors?.length === 2) {
+                const contributors = data.project.contributors
+                return (
+                  contributors[0].contributions >= contributors[1].contributions
+                )
+              }
+              return false
             } catch {
               return false
             }
