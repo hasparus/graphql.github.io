@@ -1,8 +1,12 @@
 import { writeFile, readFile, rename } from "fs/promises"
+import { dirname, resolve } from "node:path"
+import { fileURLToPath } from "node:url"
+
 import * as logger from "./logger.ts"
 
-const STATE_FILE = ".sync-state.json"
-const TEMP_STATE_FILE = ".sync-state.json.tmp"
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const STATE_FILE = resolve(__dirname, "../.sync-state.json")
+const TEMP_STATE_FILE = resolve(__dirname, "../.sync-state.json.tmp")
 
 export interface RepositoryState {
   lastCursor?: string
