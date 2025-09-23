@@ -129,8 +129,8 @@ export async function getContributors(
           })
         }
       }
-    } catch (err) {
-      logger.warn(`Failed to fetch contributors for ${fullName}:`, err)
+    } catch (err: unknown) {
+      logger.warn(`Failed to fetch contributors for ${fullName}:`, String(err))
       state.repositories[fullName] = {
         ...state.repositories[fullName],
         status: "error",

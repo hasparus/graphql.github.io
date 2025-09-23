@@ -48,7 +48,7 @@ export async function writeState(state: State): Promise<void> {
     const content = JSON.stringify(state, null, 2)
     await writeFile(TEMP_STATE_FILE, content, "utf-8")
     await rename(TEMP_STATE_FILE, STATE_FILE)
-  } catch (error) {
+  } catch (error: unknown) {
     logger.error("Error writing state file:", error)
   }
 }
