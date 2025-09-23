@@ -34,6 +34,7 @@ const ALLOWED_SVG_REGEX = new RegExp(`${sep}icons${sep}.+\\.svg$`)
  * @type {import('next').NextConfig}
  */
 const config = {
+  output: undefined,
   // reactStrictMode: true, provoke duplicated codemirror editors
   webpack(config) {
     // #region MDX
@@ -109,8 +110,6 @@ const config = {
 
     return config
   },
-  // Comment this out if you're working on OG images.
-  output: "export",
   images: {
     loader: "custom",
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],

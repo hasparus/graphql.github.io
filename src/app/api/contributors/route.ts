@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import contributorData from "../../../../scripts/sync-landing-schema/data.json"
 
+export const dynamic = "auto"
+
 interface Contributor {
   id: string
   website?: string | null
