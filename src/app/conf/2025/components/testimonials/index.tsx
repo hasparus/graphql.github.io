@@ -79,7 +79,7 @@ export function TestimonialsList({
         className,
       )}
     >
-      <div className="scroll-start-x-[20%] scroll-start-x [@media(width<=1840px)]:hidden" />
+      <div className="scroll-start-x scroll-start-x-[20%] [@media(width<=1840px)]:hidden" />
       {testimonials.map((testimonial, i) => (
         <div
           key={i}
