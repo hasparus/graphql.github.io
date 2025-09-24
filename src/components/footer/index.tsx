@@ -116,7 +116,7 @@ export function Footer() {
     <footer className="relative !bg-neu-100 text-neu-900 dark:!bg-neu-0 max-md:px-0 max-md:pt-0">
       <Stripes />
 
-      <div className="mx-auto max-w-[120rem] border-neu-400 dark:border-neu-100 3xl:border-x">
+      <div className="mx-auto max-w-[120rem] border-neu-400 dark:border-neu-100 3xl:border-x 3xl:dark:border-t">
         <div className="flex flex-wrap justify-between gap-4 p-4 max-md:w-full md:p-6 2xl:px-10">
           <NextLink href="/" className="nextra-logo flex items-center">
             <GraphQLWordmarkLogo className="h-6" title="GraphQL" />
