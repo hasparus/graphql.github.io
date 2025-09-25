@@ -75,10 +75,11 @@ export function TestimonialsList({
   return (
     <div
       className={clsx(
-        "flex w-full flex-row gap-10 overflow-x-auto px-4 py-6 lg:mt-16 lg:py-16",
+        "nextra-scrollbar relative flex w-full flex-row gap-10 overflow-x-auto px-4 py-6 [scroll-snap-type:x_mandatory] lg:mt-16 lg:py-16",
         className,
       )}
     >
+      <div className="scroll-start-x scroll-start-x-[20%] [@media(width<=1840px)]:hidden" />
       {testimonials.map((testimonial, i) => (
         <div
           key={i}

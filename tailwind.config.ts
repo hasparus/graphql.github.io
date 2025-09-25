@@ -201,6 +201,7 @@ const config: Config = {
       })
     }),
     tailwindMediaHover(),
+    scrollStartPlugin(),
     browserPlugin,
   ],
   darkMode: ["class", 'html[class~="dark"]'],
@@ -212,5 +213,84 @@ function tailwindMediaHover() {
   return plugin(({ addVariant }) => {
     addVariant("hover-hover", "@media (hover: hover)")
     addVariant("hover-none", "@media (hover: none)")
+  })
+}
+
+function scrollStartPlugin() {
+  return plugin(({ addBase, matchUtilities, theme }) => {
+    addBase({
+      "@keyframes --scroll-start-snap-y": {
+        to: { width: "0" },
+      },
+      "@keyframes --scroll-start-snap-x": {
+        to: { height: "0" },
+      },
+    })
+
+    addBase({
+      ".scroll-start-y": {
+        position: "absolute",
+        width: "1px",
+        top: "var(--scroll-start-y)",
+        containerType: "size",
+        visibility: "hidden",
+        animation: "--scroll-start-snap-y 0.01s both",
+      },
+      ".scroll-start-y::before": {
+        content: '""',
+        height: "1px",
+        display: "block",
+      },
+      "@container (width: 1px)": {
+        ".scroll-start-y::before": {
+          scrollSnapAlign: "start",
+        },
+      },
+    })
+
+    addBase({
+      ".scroll-start-x": {
+        position: "absolute",
+        height: "1px",
+        left: "var(--scroll-start-x)",
+        containerType: "size",
+        visibility: "hidden",
+        animation: "--scroll-start-snap-x 0.01s both",
+      },
+      ".scroll-start-x::before": {
+        content: '""',
+        width: "1px",
+        display: "block",
+      },
+      "@container (height: 1px)": {
+        ".scroll-start-x::before": {
+          scrollSnapAlign: "start",
+        },
+      },
+    })
+
+    matchUtilities(
+      {
+        "scroll-start-y": value => ({
+          "--scroll-start-y": value,
+        }),
+      },
+      {
+        values: theme("spacing"),
+        type: ["length", "percentage"],
+      },
+    )
+
+    matchUtilities(
+      {
+        "scroll-start-x": value => ({
+          "--scroll-start-x": value,
+        }),
+      },
+      {
+        values: theme("spacing"),
+        type: ["length", "percentage"],
+      },
+    )
   })
 }
