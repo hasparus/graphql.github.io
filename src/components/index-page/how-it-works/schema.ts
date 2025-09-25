@@ -109,7 +109,9 @@ const ProjectType = new GraphQLObjectType<Project>({
           if (args.after) params.set("after", args.after)
           params.set("project", project.name)
 
-          const response = await fetch(`/api/contributors?${params.toString()}`)
+          const response = await fetch(
+            `/api/contributors/?${params.toString()}`,
+          )
 
           if (!response.ok) {
             console.error(`Failed to fetch contributors: ${response.status}`)
