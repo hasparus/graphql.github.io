@@ -22,6 +22,12 @@ const ALLOWED_ORIGIN = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000"
 
+function isSameOrigin(origin: string, allowedOrigin: string): boolean {
+  return (
+    origin.replace(/\/\/www\./, "") === allowedOrigin.replace(/\/\/www\./, "")
+  )
+}
+
 export async function GET(request: NextRequest) {
   let origin = request.headers.get("origin")
   if (!origin) {
@@ -30,8 +36,9 @@ export async function GET(request: NextRequest) {
 
   const headers = new Headers({
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin":
-      origin === PRODUCTION_ORIGIN ? PRODUCTION_ORIGIN : ALLOWED_ORIGIN,
+    "Access-Control-Allow-Origin": isSameOrigin(origin, PRODUCTION_ORIGIN)
+      ? PRODUCTION_ORIGIN
+      : ALLOWED_ORIGIN,
     "Access-Control-Allow-Methods": "GET",
     "Access-Control-Allow-Headers": "Content-Type",
     "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=172800",
