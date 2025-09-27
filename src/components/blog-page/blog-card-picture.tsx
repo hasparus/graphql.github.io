@@ -237,9 +237,9 @@ function buildGradientStops(random: () => number): GradientStop[] {
   ]
 
   const chromas = [
-    clamp(0.04, 0.14, 0.08 + (random() - 0.5) * 0.04),
-    clamp(0.05, 0.16, 0.1 + (random() - 0.5) * 0.05),
-    clamp(0.04, 0.13, 0.07 + (random() - 0.5) * 0.04),
+    clamp(0.12, 0.26, 0.18 + (random() - 0.5) * 0.08),
+    clamp(0.18, 0.32, 0.24 + (random() - 0.5) * 0.1),
+    clamp(0.12, 0.24, 0.18 + (random() - 0.5) * 0.08),
   ]
 
   return stopOffsets.map((offset, index) => ({
@@ -278,7 +278,7 @@ function sampleGradientColor({
 
 function evaluateGradient(stops: GradientStop[], t: number): OklchColor {
   if (stops.length === 0) {
-    return { l: 0.72, c: 0.08, h: 0 }
+    return { l: 0.72, c: 0.18, h: 0 }
   }
 
   if (t <= stops[0].offset) {
