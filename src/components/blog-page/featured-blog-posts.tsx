@@ -1,12 +1,8 @@
 import { clsx } from "clsx"
 import NextLink from "next/link"
 
-import {
-  BlogCard,
-  BlogCardArrow,
-  BlogCardFooterContent,
-  BlogCardPicture,
-} from "./blog-card"
+import { BlogCard, BlogCardArrow, BlogCardFooterContent } from "./blog-card"
+import { BlogCardPicture } from "./blog-card-picture"
 import { BlogMdxContent } from "./mdx-types"
 import { BlogTags } from "./blog-tags"
 
@@ -29,7 +25,7 @@ export function FeaturedBlogPosts({
     <section
       className={clsx(
         className,
-        "border border-neu-0 bg-neu-0/30 p-4 backdrop-blur-lg lg:p-12",
+        "border border-neu-0 bg-neu-0/30 p-4 backdrop-blur-xl dark:bg-neu-0/20 lg:p-12",
       )}
       {...props}
     >
@@ -37,7 +33,10 @@ export function FeaturedBlogPosts({
         href={firstFeatured.route}
         className="-m-2 flex min-h-[300px] gap-12 p-2 ring-neu-0 hover:bg-neu-0/20 hover:ring-1 dark:ring-neu-100 [&:not(:hover)]:transition"
       >
-        <BlogCardPicture className="w-2/5 shrink-0 max-lg:hidden" />
+        <BlogCardPicture
+          seed={firstFeatured.frontMatter.title}
+          className="aspect-[2.23] w-2/5 shrink-0 max-lg:hidden"
+        />
         <div className="flex flex-col">
           <BlogTags tags={firstFeatured.frontMatter.tags} />
           <div className="typography-h2 mt-6">

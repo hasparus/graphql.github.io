@@ -34,7 +34,11 @@ export function BlogCard({
       )}
       {...rest}
     >
-      <BlogCardPicture className="aspect-[2.23]">
+      <BlogCardPicture
+        seed={frontMatter.title}
+        // this weird selector sets background to tags so they look better on top of the picture
+        className="aspect-[2.23] [&>*>*>*]:bg-neu-0"
+      >
         <BlogTags tags={frontMatter.tags} />
       </BlogCardPicture>
       <div className="flex grow flex-col border border-neu-200 dark:border-neu-50">
@@ -92,3 +96,5 @@ export function BlogCardFooterContent({
     </span>
   )
 }
+
+export { BlogCardPicture } from "./blog-card-picture"

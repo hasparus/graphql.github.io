@@ -8,6 +8,9 @@ import { BlogCard } from "./blog-card"
 import { LookingForMore } from "./looking-for-more"
 import { BlogMdxContent } from "./mdx-types"
 import { FeaturedBlogPosts } from "./featured-blog-posts"
+import { StripesDecoration } from "../../app/conf/_design-system/stripes-decoration"
+
+const mask = `url(${new URL("./blur-bean.webp", import.meta.url).href})`
 
 export interface BlogPageProps {
   tags: Record<string, number>
@@ -19,6 +22,7 @@ export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
   return (
     <main className="gql-all-anchors-focusable bg-neu-0">
       <div className="relative top-[calc(var(--nextra-navbar-height)*-1)] bg-gradient-to-b from-sec-base to-neu-0 pt-[var(--nextra-navbar-height)] dark:from-sec-darker">
+        <Stripes />
         <header className="gql-container gql-section lg:pt-24">
           <h1 className="typography-h1 text-center">The GraphQL Blog</h1>
           <p className="typography-body-sm mt-4 text-center lg:mt-8">
@@ -69,5 +73,27 @@ export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
         <LookingForMore />
       </div>
     </main>
+  )
+}
+
+function Stripes() {
+  return (
+    <div
+      role="presentation"
+      className="pointer-events-none absolute inset-0"
+      style={{
+        maskImage: mask,
+        WebkitMaskImage: mask,
+        maskPosition: "center",
+        WebkitMaskPosition: "center",
+        maskRepeat: "no-repeat",
+        WebkitMaskRepeat: "no-repeat",
+      }}
+    >
+      <StripesDecoration
+        evenClassName="bg-[linear-gradient(0deg,_hsl(var(--color-sec-dark))_0%,_hsl(var(--color-sec-light))_100%)] dark:bg-[linear-gradient(0deg,_hsl(var(--color-sec-dark))_0%,_hsl(var(--color-sec-darker))_100%)]"
+        oddClassName="bg-[linear-gradient(0deg,_hsl(var(--color-sec-lighter))_0%,_hsl(79_81%_40%/0)_100%)] dark:bg-[linear-gradient(0deg,_hsl(var(--color-sec-darker))_0%,_rgba(133,185,19,0.00)_100%)]"
+      />
+    </div>
   )
 }
