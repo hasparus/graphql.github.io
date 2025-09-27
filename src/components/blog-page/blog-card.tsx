@@ -42,11 +42,11 @@ export function BlogCard({
         <div className="typography-body-lg grow text-pretty p-4">
           {frontMatter.title}
         </div>
-        <footer className="mt-auto flex justify-between">
+        <footer className="mt-auto flex items-end justify-between">
           <BlogCardFooterContent
             byline={frontMatter.byline}
             date={frontMatter.date}
-            className="p-4"
+            className="min-h-[73px] p-4"
           />
           <BlogCardArrow className="translate-x-px translate-y-px border-l border-t border-neu-200 p-4 dark:border-neu-50" />
         </footer>
@@ -83,9 +83,17 @@ export function BlogCardFooterContent({
   className?: string
 }) {
   return (
-    <span className={clsx("typography-menu flex flex-col gap-2", className)}>
+    <span
+      className={clsx(
+        "typography-menu flex flex-col justify-center gap-2",
+        className,
+      )}
+    >
       <span>{byline}</span>
-      <time dateTime={date.toISOString()} className="text-neu-700">
+      <time
+        dateTime={date.toISOString()}
+        className="text-neu-700 dark:text-neu-400"
+      >
         {date.toLocaleDateString("en", {
           month: "long",
           day: "numeric",
