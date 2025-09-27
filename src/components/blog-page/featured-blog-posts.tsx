@@ -1,4 +1,6 @@
-import clsx from "clsx"
+import { clsx } from "clsx"
+import NextLink from "next/link"
+
 import {
   BlogCard,
   BlogCardArrow,
@@ -31,7 +33,10 @@ export function FeaturedBlogPosts({
       )}
       {...props}
     >
-      <article className="flex min-h-[300px] gap-12">
+      <NextLink
+        href={firstFeatured.route}
+        className="-m-2 flex min-h-[300px] gap-12 p-2 ring-neu-0 hover:bg-neu-0/20 hover:ring-1 dark:ring-neu-100 [&:not(:hover)]:transition"
+      >
         <BlogCardPicture className="w-2/5 shrink-0 max-lg:hidden" />
         <div className="flex flex-col">
           <BlogTags tags={firstFeatured.frontMatter.tags} />
@@ -46,7 +51,7 @@ export function FeaturedBlogPosts({
             <BlogCardArrow className="border border-neu-300 p-4 dark:border-neu-50" />
           </footer>
         </div>
-      </article>
+      </NextLink>
       <div className="mt-4 grid grid-cols-3 flex-col gap-2 max-md:flex sm:mt-8 sm:gap-4 lg:mt-16 lg:gap-6">
         {nextThree.map(post => (
           <BlogCard key={post.route} {...post} />

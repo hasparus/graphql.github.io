@@ -31,7 +31,7 @@ export function BlogCard({
       data-vertical="3"
       className={clsx(
         className,
-        "relative flex flex-col bg-neu-0 ring-neu-400 hover:ring dark:ring-neu-100",
+        "relative flex flex-col bg-neu-0 ring-neu-300 ring-offset-[3px] ring-offset-neu-0 hover:ring-1 dark:ring-neu-100",
       )}
       {...rest}
     >
