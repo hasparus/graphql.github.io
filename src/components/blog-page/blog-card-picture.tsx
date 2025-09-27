@@ -1,9 +1,7 @@
 import { clsx } from "clsx"
-import { type ReactNode, useEffect, useMemo, useRef } from "react"
-import { blogTagColors } from "./blog-tag-colors"
+import { type ReactNode, useEffect, useRef } from "react"
 
 const PIXEL_SIZE = 18
-const MAX_DPR = 2
 const UINT32_MAX = 0xffffffff
 
 interface BlogCardPictureProps {
@@ -37,8 +35,6 @@ interface PreparedGradient {
 }
 
 // TODO: Animate nicer on load
-// TODO: Update seeding: The closer the post date the more different the gradient should be?
-// TODO: Think: Should the category colors actually be connected to the gradient, so the tag doesn't ever look jarring?
 export function BlogCardPicture({
   frontMatter,
   children,
@@ -56,8 +52,6 @@ export function BlogCardPicture({
       return
     }
 
-    let frame = 0
-
     const draw = () => {
       const rect = container.getBoundingClientRect()
       const width = Math.max(0, Math.round(rect.width))
@@ -69,12 +63,8 @@ export function BlogCardPicture({
 
       const columns = Math.max(1, Math.ceil(width / PIXEL_SIZE))
       const rows = Math.max(1, Math.ceil(height / PIXEL_SIZE))
-      const dpr = Math.min(
-        typeof window === "undefined" ? 1 : (window.devicePixelRatio ?? 1),
-        MAX_DPR,
-      )
-      const canvasWidth = Math.round(width * dpr)
-      const canvasHeight = Math.round(height * dpr)
+      const canvasWidth = Math.round(width)
+      const canvasHeight = Math.round(height)
 
       if (canvas.width !== canvasWidth) {
         canvas.width = canvasWidth
@@ -98,29 +88,17 @@ export function BlogCardPicture({
       }
 
       context.setTransform(1, 0, 0, 1, 0, 0)
-      context.scale(dpr, dpr)
       context.clearRect(0, 0, width, height)
       context.imageSmoothingEnabled = false
 
       const random = createSeededRandom(seed)
       const angle = random() * Math.PI * 2
       const gradientStops = buildGradientStops(random)
-      const gradient = prepareGradient({
-        angle,
-        stops: gradientStops,
-        columns,
-        rows,
-      })
-      const jitterPrefix = `${seed}`
+      const gradient = prepareGradient(angle, gradientStops, columns, rows)
 
       for (let row = 0; row < rows; row += 1) {
         for (let column = 0; column < columns; column += 1) {
-          const color = sampleGradientColor({
-            gradient,
-            column,
-            row,
-            jitterPrefix,
-          })
+          const color = sampleGradientColor(gradient, column, row, seed)
 
           const x = column * PIXEL_SIZE
           const y = row * PIXEL_SIZE
@@ -133,23 +111,7 @@ export function BlogCardPicture({
       }
     }
 
-    const drawWithAnimationFrame = () => {
-      cancelAnimationFrame(frame)
-      frame = window.requestAnimationFrame(draw)
-    }
-
-    drawWithAnimationFrame()
-
-    const handleResize = () => {
-      drawWithAnimationFrame()
-    }
-
-    window.addEventListener("resize", handleResize)
-
-    return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener("resize", handleResize)
-    }
+    draw()
   }, [seed])
 
   return (
@@ -163,7 +125,7 @@ export function BlogCardPicture({
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 size-full"
+        className="pointer-events-none absolute inset-0 !size-full"
       />
       {children ? <div className="relative z-10 p-4">{children}</div> : null}
     </div>
@@ -181,17 +143,12 @@ function createSeededRandom(seed: string) {
   }
 }
 
-function prepareGradient({
-  angle,
-  stops,
-  columns,
-  rows,
-}: {
-  angle: number
-  stops: GradientStop[]
-  columns: number
-  rows: number
-}): PreparedGradient {
+function prepareGradient(
+  angle: number,
+  stops: GradientStop[],
+  columns: number,
+  rows: number,
+): PreparedGradient {
   const cos = Math.cos(angle)
   const sin = Math.sin(angle)
 
@@ -228,6 +185,7 @@ function prepareGradient({
 
 function buildGradientStops(random: () => number): GradientStop[] {
   const baseHue = random() * 360
+
   const midOffset = clamp(0.25, 0.75, 0.44 + (random() - 0.5) * 0.22)
   const secondaryOffset = clamp(
     0.58,
@@ -317,24 +275,19 @@ function buildGradientStops(random: () => number): GradientStop[] {
   return stops
 }
 
-function sampleGradientColor({
-  gradient,
-  column,
-  row,
-  jitterPrefix,
-}: {
-  gradient: PreparedGradient
-  column: number
-  row: number
-  jitterPrefix: string
-}): RgbColor {
+function sampleGradientColor(
+  gradient: PreparedGradient,
+  column: number,
+  row: number,
+  jitterPrefix: string,
+): RgbColor {
   const x = column + 0.5
   const y = row + 0.5
 
   const projection = x * gradient.cos + y * gradient.sin
   const baseT =
     (projection - gradient.minProjection) * gradient.invProjectionRange
-  const noise = hashString(`${jitterPrefix}${column}:${row}`) / UINT32_MAX
+  const noise = hashString(`${jitterPrefix}:${column}:${row}`) / UINT32_MAX
   const t = clamp(0, 1, baseT + (noise - 0.5) * 0.045)
 
   const oklch = evaluateGradient(gradient.stops, t)
@@ -390,18 +343,6 @@ function mixOklch(a: OklchColor, b: OklchColor, amount: number): OklchColor {
     l: a.l + (b.l - a.l) * amount,
     c: a.c + (b.c - a.c) * amount,
     h: normalizeHue(a.h + hueStep * amount),
-  }
-}
-
-function normalizeTagColor(
-  base: OklchColor,
-  lightnessShift: number,
-  chromaScale: number,
-): OklchColor {
-  return {
-    l: clamp(0.58, 0.84, base.l + lightnessShift),
-    c: clamp(0.18, 0.36, base.c * chromaScale),
-    h: base.h,
   }
 }
 

@@ -31,18 +31,18 @@ export function FeaturedBlogPosts({
     >
       <NextLink
         href={firstFeatured.route}
-        className="-m-2 flex min-h-[300px] gap-12 p-2 ring-neu-0 hover:bg-neu-0/20 hover:ring-1 dark:ring-neu-100 [&:not(:hover)]:transition"
+        className="-m-4 flex min-h-[300px] p-4 ring-neu-0 hover:bg-neu-0/20 hover:ring-1 dark:ring-neu-100 lg:gap-12 [&:not(:hover)]:transition"
       >
         <BlogCardPicture
           frontMatter={firstFeatured.frontMatter}
-          className="aspect-[2.23] w-2/5 shrink-0 max-lg:hidden"
+          className="aspect-[2.23] w-2/5 shrink-0 max-lg:invisible max-lg:absolute"
         />
         <div className="flex flex-col">
           <BlogTags tags={firstFeatured.frontMatter.tags} />
           <div className="typography-h2 mt-6">
             {firstFeatured.frontMatter.title}
           </div>
-          <footer className="mt-auto flex items-end justify-between">
+          <footer className="mt-4 flex items-end justify-between lg:mt-auto">
             <BlogCardFooterContent
               byline={firstFeatured.frontMatter.byline}
               date={firstFeatured.frontMatter.date}
@@ -51,7 +51,7 @@ export function FeaturedBlogPosts({
           </footer>
         </div>
       </NextLink>
-      <div className="mt-4 grid grid-cols-3 flex-col gap-2 max-md:flex sm:mt-8 sm:gap-4 lg:mt-16 lg:gap-6">
+      <div className="mt-4 grid grid-cols-3 flex-col gap-2 max-lg:flex sm:mt-8 sm:gap-4 lg:mt-16 lg:gap-6">
         {nextThree.map(post => (
           <BlogCard key={post.route} {...post} />
         ))}
