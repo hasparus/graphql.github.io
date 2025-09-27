@@ -35,7 +35,7 @@ export function BlogCard({
       {...rest}
     >
       <BlogCardPicture
-        seed={frontMatter.title}
+        frontMatter={frontMatter}
         // this weird selector sets background to tags so they look better on top of the picture
         className="aspect-[2.23] [&>*>*>*]:bg-neu-0"
       >

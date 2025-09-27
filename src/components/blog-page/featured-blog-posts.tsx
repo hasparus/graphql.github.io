@@ -34,7 +34,7 @@ export function FeaturedBlogPosts({
         className="-m-2 flex min-h-[300px] gap-12 p-2 ring-neu-0 hover:bg-neu-0/20 hover:ring-1 dark:ring-neu-100 [&:not(:hover)]:transition"
       >
         <BlogCardPicture
-          seed={firstFeatured.frontMatter.title}
+          frontMatter={firstFeatured.frontMatter}
           className="aspect-[2.23] w-2/5 shrink-0 max-lg:hidden"
         />
         <div className="flex flex-col">
