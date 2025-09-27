@@ -51,7 +51,7 @@ export function FeaturedBlogPosts({
           </footer>
         </div>
       </NextLink>
-      <div className="mt-4 grid grid-cols-3 flex-col gap-2 max-lg:flex sm:mt-8 sm:gap-4 lg:mt-16 lg:gap-6">
+      <div className="mt-4 grid grid-cols-3 flex-col gap-2 max-md:flex sm:mt-8 sm:gap-4 lg:mt-16 lg:gap-6">
         {nextThree.map(post => (
           <BlogCard key={post.route} {...post} />
         ))}

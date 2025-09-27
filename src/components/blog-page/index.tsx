@@ -30,18 +30,18 @@ export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
             community. Stay connected with the ideas and innovations shaping the
             GraphQL ecosystem.
           </p>
-          <FeaturedBlogPosts blogs={blogs} className="mt-24 max-md:hidden" />
+          <FeaturedBlogPosts blogs={blogs} className="mt-4 lg:mt-24" />
         </header>
       </div>
       <div className="gql-container">
         <div className="gql-section">
-          <section className="flex items-end justify-between gap-2">
+          <section className="flex justify-between gap-2 max-sm:flex-col sm:items-end">
             <h2 className="typography-h2 capitalize">
               {currentTag || "All Posts"}
             </h2>
             <section>
               <h3 className="typography-menu">Categories</h3>
-              <ul className="mt-4 flex flex-wrap gap-2">
+              <ul className="mt-4 flex gap-2 max-sm:overflow-auto sm:flex-wrap">
                 {Object.entries(tags)
                   .sort((a, b) => b[1] - a[1])
                   .map(([tag, count], i) => (

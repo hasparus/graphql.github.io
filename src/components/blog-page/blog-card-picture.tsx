@@ -34,7 +34,6 @@ interface PreparedGradient {
   stops: GradientStop[]
 }
 
-// TODO: Animate nicer on load
 export function BlogCardPicture({
   frontMatter,
   children,
@@ -125,7 +124,7 @@ export function BlogCardPicture({
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 !size-full"
+        className="animate-fade-in pointer-events-none absolute inset-0 !size-full"
       />
       {children ? <div className="relative z-10 p-4">{children}</div> : null}
     </div>

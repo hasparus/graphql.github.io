@@ -80,6 +80,7 @@ const config: Config = {
           "arrow-left var(--animation-duration, .75s) var(--animation-direction, forwards) ease infinite",
         "show-overflow":
           "show-overflow var(--animation-duration, 12s) var(--animation-delay, 1s) var(--animation-direction, forwards) ease infinite",
+        "fade-in": "fade-in var(--animation-duration, 100ms) ease-out forwards",
       },
       keyframes: {
         scroll: {
@@ -102,6 +103,9 @@ const config: Config = {
           "25%, 75%": {
             transform: "translateX(var(--delta-x))",
           },
+        },
+        "fade-in": {
+          to: { opacity: "1" },
         },
       },
     },
