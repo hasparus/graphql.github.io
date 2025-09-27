@@ -1,6 +1,7 @@
 import NextLink from "next/link"
 
 import { Tag } from "@/app/conf/_design-system/tag"
+import { arrowsMoveSideways } from "@/app/conf/_design-system/utils/arrows-move-sideways"
 
 import { blogTagColors } from "./blog-tag-colors"
 import { BlogCard } from "./blog-card"
@@ -17,7 +18,7 @@ export interface BlogPageProps {
 export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
   return (
     <main className="gql-all-anchors-focusable bg-neu-0">
-      <div className="relative top-[calc(var(--nextra-navbar-height)*-1)] bg-gradient-to-b from-sec-base to-neu-0 pt-[var(--nextra-navbar-height)]">
+      <div className="relative top-[calc(var(--nextra-navbar-height)*-1)] bg-gradient-to-b from-sec-base to-neu-0 pt-[var(--nextra-navbar-height)] dark:from-sec-darker">
         <header className="gql-container gql-section lg:pt-24">
           <h1 className="typography-h1 text-center">The GraphQL Blog</h1>
           <p className="typography-body-sm mt-4 text-center lg:mt-8">
@@ -39,12 +40,14 @@ export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
               <ul className="mt-4 flex flex-wrap gap-2">
                 {Object.entries(tags)
                   .sort((a, b) => b[1] - a[1])
-                  .map(([tag, count]) => (
+                  .map(([tag, count], i) => (
                     <NextLink
                       key={tag}
                       href={currentTag === tag ? "/blog" : `/tags/${tag}`}
                       data-active={currentTag === tag ? "" : undefined}
-                      className="-m-1 flex p-1 ring-inset ring-neu-400 transition-opacity duration-75 hover:ring dark:ring-neu-50 [:has(>:hover)>&:not(:hover)]:opacity-70"
+                      tabIndex={i === 0 ? 0 : -1}
+                      className="-m-1 flex p-1 ring-inset ring-neu-400 transition-opacity duration-75 hover:ring focus:!outline-offset-0 dark:ring-neu-50 [:has(>:hover)>&:not(:hover)]:opacity-70"
+                      onKeyDown={arrowsMoveSideways}
                     >
                       <Tag color={blogTagColors[tag]}>
                         {tag.replaceAll("-", " ")} ({count})

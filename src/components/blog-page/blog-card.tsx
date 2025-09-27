@@ -6,6 +6,7 @@ import ArrowDown from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?sv
 import { Button } from "@/app/conf/_design-system/button"
 
 import { BlogTags } from "./blog-tags"
+import { arrowsMoveSideways } from "@/app/conf/_design-system/utils/arrows-move-sideways"
 
 export interface BlogCardProps extends React.HTMLAttributes<HTMLElement> {
   frontMatter: {
@@ -24,10 +25,13 @@ export function BlogCard({
   ...rest
 }: BlogCardProps) {
   return (
-    <article
+    <NextLink
+      href={route}
+      onKeyDown={arrowsMoveSideways}
+      data-vertical="3"
       className={clsx(
         className,
-        "relative flex flex-col bg-neu-0 ring-inset ring-neu-400 hover:ring-1 dark:ring-neu-100",
+        "relative flex flex-col bg-neu-0 ring-neu-400 hover:ring dark:ring-neu-100",
       )}
       {...rest}
     >
@@ -47,8 +51,7 @@ export function BlogCard({
           <BlogCardArrow className="translate-x-px translate-y-px border-l border-t border-neu-200 p-4 dark:border-neu-50" />
         </footer>
       </div>
-      <NextLink href={route} className="absolute inset-0" />
-    </article>
+    </NextLink>
   )
 }
 
@@ -80,7 +83,7 @@ export function BlogCardFooterContent({
   className?: string
 }) {
   return (
-    <div className={clsx("typography-menu flex flex-col gap-2", className)}>
+    <span className={clsx("typography-menu flex flex-col gap-2", className)}>
       <span>{byline}</span>
       <time dateTime={date.toISOString()} className="text-neu-700">
         {date.toLocaleDateString("en", {
@@ -89,6 +92,6 @@ export function BlogCardFooterContent({
           year: "numeric",
         })}
       </time>
-    </div>
+    </span>
   )
 }
