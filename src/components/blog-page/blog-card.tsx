@@ -1,12 +1,11 @@
 import { clsx } from "clsx"
-import { Tag } from "@/app/conf/_design-system/tag"
 import NextLink from "next/link"
 
 import ArrowDown from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
-import { Button } from "@/app/conf/_design-system/button"
+import { arrowsMoveSideways } from "@/app/conf/_design-system/utils/arrows-move-sideways"
 
 import { BlogTags } from "./blog-tags"
-import { arrowsMoveSideways } from "@/app/conf/_design-system/utils/arrows-move-sideways"
+import { BlogCardPicture } from "./blog-card-picture"
 
 export interface BlogCardProps extends React.HTMLAttributes<HTMLElement> {
   frontMatter: {
@@ -53,16 +52,6 @@ export function BlogCard({
       </div>
     </NextLink>
   )
-}
-
-export function BlogCardPicture({
-  children,
-  className,
-}: {
-  children?: React.ReactNode
-  className?: string
-}) {
-  return <div className={clsx("bg-neu-50 p-4", className)}>{children}</div>
 }
 
 export function BlogCardArrow({ className }: { className?: string }) {
