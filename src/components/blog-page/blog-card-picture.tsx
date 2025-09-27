@@ -111,6 +111,8 @@ export function BlogCardPicture({
     }
 
     draw()
+
+    canvas.dataset.visible = "true"
   }, [seed])
 
   return (
@@ -124,7 +126,7 @@ export function BlogCardPicture({
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="animate-fade-in pointer-events-none absolute inset-0 !size-full"
+        className="data-[visible]:animate-fade-in pointer-events-none absolute inset-0 !size-full"
       />
       {children ? <div className="relative z-10 p-4">{children}</div> : null}
     </div>
