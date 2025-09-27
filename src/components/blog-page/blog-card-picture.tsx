@@ -13,9 +13,15 @@ interface BlogCardPictureProps {
 
 type RgbColor = [number, number, number]
 
+interface OklchColor {
+  l: number
+  c: number
+  h: number
+}
+
 interface GradientStop {
   offset: number
-  color: RgbColor
+  color: OklchColor
 }
 
 interface PreparedGradient {
@@ -219,26 +225,30 @@ function buildGradientStops(random: () => number): GradientStop[] {
   const stopOffsets = [0, clamp(0.25, 0.75, 0.44 + (random() - 0.5) * 0.22), 1]
 
   const hues = [
-    normalizeHue(baseHue - 14 + (random() - 0.5) * 10),
-    normalizeHue(baseHue + 10 + (random() - 0.5) * 14),
-    normalizeHue(baseHue + 28 + (random() - 0.5) * 16),
-  ]
-
-  const saturations = [
-    clamp(0.45, 0.65, 0.54 + (random() - 0.5) * 0.08),
-    clamp(0.48, 0.7, 0.58 + (random() - 0.5) * 0.1),
-    clamp(0.42, 0.62, 0.5 + (random() - 0.5) * 0.08),
+    normalizeHue(baseHue - 18 + (random() - 0.5) * 10),
+    normalizeHue(baseHue + 8 + (random() - 0.5) * 12),
+    normalizeHue(baseHue + 26 + (random() - 0.5) * 14),
   ]
 
   const lightness = [
-    clamp(0.58, 0.75, 0.68 + (random() - 0.5) * 0.07),
-    clamp(0.52, 0.7, 0.6 + (random() - 0.5) * 0.07),
-    clamp(0.6, 0.78, 0.7 + (random() - 0.5) * 0.07),
+    clamp(0.68, 0.8, 0.74 + (random() - 0.5) * 0.06),
+    clamp(0.56, 0.72, 0.64 + (random() - 0.5) * 0.06),
+    clamp(0.7, 0.84, 0.78 + (random() - 0.5) * 0.06),
+  ]
+
+  const chromas = [
+    clamp(0.04, 0.14, 0.08 + (random() - 0.5) * 0.04),
+    clamp(0.05, 0.16, 0.1 + (random() - 0.5) * 0.05),
+    clamp(0.04, 0.13, 0.07 + (random() - 0.5) * 0.04),
   ]
 
   return stopOffsets.map((offset, index) => ({
     offset,
-    color: hslToRgb(hues[index], saturations[index], lightness[index]),
+    color: {
+      l: lightness[index],
+      c: chromas[index],
+      h: hues[index],
+    },
   }))
 }
 
@@ -262,12 +272,13 @@ function sampleGradientColor({
   const noise = hashString(`${jitterPrefix}${column}:${row}`) / UINT32_MAX
   const t = clamp(0, 1, baseT + (noise - 0.5) * 0.06)
 
-  return evaluateGradient(gradient.stops, t)
+  const oklch = evaluateGradient(gradient.stops, t)
+  return oklchToSrgb(oklch)
 }
 
-function evaluateGradient(stops: GradientStop[], t: number): RgbColor {
+function evaluateGradient(stops: GradientStop[], t: number): OklchColor {
   if (stops.length === 0) {
-    return [200, 200, 200]
+    return { l: 0.72, c: 0.08, h: 0 }
   }
 
   if (t <= stops[0].offset) {
@@ -280,61 +291,15 @@ function evaluateGradient(stops: GradientStop[], t: number): RgbColor {
     if (t <= stop.offset) {
       const span = Math.max(stop.offset - previous.offset, 1e-6)
       const amount = (t - previous.offset) / span
-      return mixColors(previous.color, stop.color, amount)
+      return mixOklch(previous.color, stop.color, amount)
     }
   }
 
   return stops[stops.length - 1].color
 }
 
-function mixColors(
-  [r1, g1, b1]: RgbColor,
-  [r2, g2, b2]: RgbColor,
-  amount: number,
-): RgbColor {
-  return [
-    r1 + (r2 - r1) * amount,
-    g1 + (g2 - g1) * amount,
-    b1 + (b2 - b1) * amount,
-  ]
-}
-
 function toCssColor([r, g, b]: RgbColor) {
   return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`
-}
-
-function hslToRgb(h: number, s: number, l: number): RgbColor {
-  const chroma = (1 - Math.abs(2 * l - 1)) * s
-  const huePrime = h / 60
-  const x = chroma * (1 - Math.abs((huePrime % 2) - 1))
-
-  let r = 0
-  let g = 0
-  let b = 0
-
-  if (huePrime >= 0 && huePrime < 1) {
-    r = chroma
-    g = x
-  } else if (huePrime >= 1 && huePrime < 2) {
-    r = x
-    g = chroma
-  } else if (huePrime >= 2 && huePrime < 3) {
-    g = chroma
-    b = x
-  } else if (huePrime >= 3 && huePrime < 4) {
-    g = x
-    b = chroma
-  } else if (huePrime >= 4 && huePrime < 5) {
-    r = x
-    b = chroma
-  } else if (huePrime >= 5 && huePrime < 6) {
-    r = chroma
-    b = x
-  }
-
-  const m = l - chroma / 2
-
-  return [(r + m) * 255, (g + m) * 255, (b + m) * 255]
 }
 
 function normalizeHue(hue: number) {
@@ -352,4 +317,57 @@ function hashString(value: string) {
     hash = Math.imul(hash, 16777619)
   }
   return hash >>> 0
+}
+
+function mixOklch(a: OklchColor, b: OklchColor, amount: number): OklchColor {
+  const hueStep = shortestHueDistance(a.h, b.h)
+  return {
+    l: a.l + (b.l - a.l) * amount,
+    c: a.c + (b.c - a.c) * amount,
+    h: normalizeHue(a.h + hueStep * amount),
+  }
+}
+
+function shortestHueDistance(start: number, end: number) {
+  const startNorm = normalizeHue(start)
+  const endNorm = normalizeHue(end)
+  let diff = endNorm - startNorm
+  if (diff > 180) {
+    diff -= 360
+  } else if (diff < -180) {
+    diff += 360
+  }
+  return diff
+}
+
+function oklchToSrgb({ l, c, h }: OklchColor): RgbColor {
+  const hueRad = (h / 180) * Math.PI
+  const a = Math.cos(hueRad) * c
+  const b = Math.sin(hueRad) * c
+
+  const l_ = l + 0.3963377774 * a + 0.2158037573 * b
+  const m_ = l - 0.1055613458 * a - 0.0638541728 * b
+  const s_ = l - 0.0894841775 * a - 1.291485548 * b
+
+  const l3 = l_ * l_ * l_
+  const m3 = m_ * m_ * m_
+  const s3 = s_ * s_ * s_
+
+  const rLinear = 4.0767416621 * l3 - 3.3077115913 * m3 + 0.2309699292 * s3
+  const gLinear = -1.2684380046 * l3 + 2.6097574011 * m3 - 0.3413193965 * s3
+  const bLinear = -0.0041960863 * l3 - 0.7034186147 * m3 + 1.707614701 * s3
+
+  return [
+    linearToSrgb(rLinear),
+    linearToSrgb(gLinear),
+    linearToSrgb(bLinear),
+  ]
+}
+
+function linearToSrgb(value: number) {
+  const clamped = clamp(0, 1, value)
+  if (clamped <= 0.0031308) {
+    return clamped * 12.92 * 255
+  }
+  return (1.055 * Math.pow(clamped, 1 / 2.4) - 0.055) * 255
 }
