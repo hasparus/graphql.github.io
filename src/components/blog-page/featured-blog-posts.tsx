@@ -31,7 +31,7 @@ export function FeaturedBlogPosts({
     >
       <NextLink
         href={firstFeatured.route}
-        className="-m-4 flex min-h-[300px] p-4 ring-neu-0 hover:bg-neu-0/20 hover:ring-1 dark:ring-neu-100 lg:gap-12 [&:not(:hover)]:transition"
+        className="-m-4 flex p-4 ring-neu-0 hover:bg-neu-0/20 hover:ring-1 dark:ring-neu-100 sm:min-h-[300px] lg:gap-12 [&:not(:hover)]:transition"
       >
         <BlogCardPicture
           frontMatter={firstFeatured.frontMatter}
@@ -42,7 +42,7 @@ export function FeaturedBlogPosts({
           <div className="typography-h2 mt-6">
             {firstFeatured.frontMatter.title}
           </div>
-          <footer className="mt-4 flex items-end justify-between lg:mt-auto">
+          <footer className="mt-2 flex items-end justify-between sm:mt-4 lg:mt-auto">
             <BlogCardFooterContent
               byline={firstFeatured.frontMatter.byline}
               date={firstFeatured.frontMatter.date}
@@ -51,7 +51,7 @@ export function FeaturedBlogPosts({
           </footer>
         </div>
       </NextLink>
-      <div className="mt-4 grid grid-cols-3 flex-col gap-2 max-md:flex sm:mt-8 sm:gap-4 lg:mt-16 lg:gap-6">
+      <div className="mt-4 grid grid-cols-3 flex-col gap-4 max-md:flex sm:mt-8 lg:mt-16 lg:gap-6">
         {nextThree.map(post => (
           <BlogCard key={post.route} {...post} />
         ))}

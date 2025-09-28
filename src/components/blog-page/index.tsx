@@ -23,18 +23,21 @@ export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
     <main className="gql-all-anchors-focusable bg-neu-0">
       <div className="relative top-[calc(var(--nextra-navbar-height)*-1)] bg-gradient-to-b from-sec-base to-neu-0 pt-[var(--nextra-navbar-height)] dark:from-sec-darker">
         <Stripes />
-        <header className="gql-container gql-section lg:pt-24">
+        <header className="gql-container gql-section max-sm:pb-0 lg:pt-24">
           <h1 className="typography-h1 text-center">The GraphQL Blog</h1>
           <p className="typography-body-sm mt-4 text-center lg:mt-8">
             Insights, updates and best practices from across the GraphQL
             community. Stay connected with the ideas and innovations shaping the
             GraphQL ecosystem.
           </p>
-          <FeaturedBlogPosts blogs={blogs} className="mt-4 lg:mt-24" />
+          <FeaturedBlogPosts
+            blogs={blogs}
+            className="mt-4 max-sm:pb-0 lg:mt-24"
+          />
         </header>
       </div>
       <div className="gql-container">
-        <div className="gql-section">
+        <div className="gql-section max-sm:pt-0">
           <section className="flex justify-between gap-2 max-sm:flex-col sm:items-end">
             <h2 className="typography-h2 capitalize">
               {currentTag || "All Posts"}
@@ -80,7 +83,7 @@ function Stripes() {
   return (
     <div
       role="presentation"
-      className="pointer-events-none absolute inset-0"
+      className="pointer-events-none absolute inset-0 max-sm:[mask-position:left_top]"
       style={{
         maskImage: mask,
         WebkitMaskImage: mask,
