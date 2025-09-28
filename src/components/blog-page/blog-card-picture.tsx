@@ -11,6 +11,7 @@ interface BlogCardPictureProps {
   }
   children?: ReactNode
   className?: string
+  style?: React.CSSProperties
 }
 
 type RgbColor = [number, number, number]
@@ -38,6 +39,7 @@ export function BlogCardPicture({
   frontMatter,
   children,
   className,
+  style,
 }: BlogCardPictureProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -113,7 +115,11 @@ export function BlogCardPicture({
     draw()
 
     canvas.dataset.visible = "true"
-  }, [seed])
+  }, [
+    seed,
+    // TEMPORARY
+    style?.aspectRatio,
+  ])
 
   return (
     <div
@@ -122,11 +128,12 @@ export function BlogCardPicture({
         "relative isolate overflow-hidden bg-neu-50 dark:opacity-90",
         className,
       )}
+      style={style}
     >
       <canvas
         ref={canvasRef}
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 !size-full data-[visible]:animate-fade-in"
+        className="data-[visible]:animate-fade-in pointer-events-none absolute inset-0 !size-full"
       />
       {children ? <div className="relative z-10 p-4">{children}</div> : null}
     </div>
