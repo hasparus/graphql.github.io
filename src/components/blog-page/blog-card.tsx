@@ -23,7 +23,6 @@ export function BlogCard({
   className,
   ...rest
 }: BlogCardProps) {
-
   return (
     <NextLink
       href={route}
@@ -35,12 +34,8 @@ export function BlogCard({
       )}
       {...rest}
     >
-      <BlogCardPicture
-        frontMatter={frontMatter}
-        // this weird selector sets background to tags so they look better on top of the picture
-        className="aspect-[2.23] [&>*>*>*]:bg-neu-0"
-      >
-        <BlogTags tags={frontMatter.tags} />
+      <BlogCardPicture frontMatter={frontMatter} className="aspect-[4.75]">
+        <BlogTags tags={frontMatter.tags} opaque />
       </BlogCardPicture>
       <div className="flex grow flex-col border border-neu-200 dark:border-neu-50">
         <div className="typography-body-lg grow text-pretty p-4">
