@@ -1,7 +1,11 @@
 import { useConfig } from "nextra-theme-docs"
 import NextLink from "next/link"
+
 import { Tag } from "../../app/conf/_design-system/tag"
 import { blogTagColors } from "../../components/blog-page/blog-tag-colors"
+import { BlogCardPicture } from "../../components/blog-page/blog-card-picture"
+import { BlogMdxContent } from "../../components/blog-page/mdx-types"
+import { BlogTags } from "../../components/blog-page/blog-tags"
 
 export default {
   // only for blog posts inside folders we need to specify breadcrumb title
@@ -14,24 +18,22 @@ export default {
       timestamp: true,
       layout: "default",
       topContent: function TopContent() {
-        const { frontMatter } = useConfig()
+        const frontMatter = useConfig()
+          .frontMatter as BlogMdxContent["frontMatter"]
         const { title, byline, tags } = frontMatter
         const date = new Date(frontMatter.date)
+
         return (
           <>
             <div className="mt-8 flex gap-4">
-              {tags.map((tag: string) => (
-                <NextLink
-                  key={tag}
-                  href={`/tags/${tag}`}
-                  className="-m-1 flex p-1 ring-inset ring-neu-400 transition-opacity duration-75 hover:ring focus:!outline-offset-0 dark:ring-neu-50 [:has(>:hover)>&:not(:hover)]:opacity-70"
-                >
-                  <Tag color={blogTagColors[tag]}>
-                    {tag.replaceAll("-", " ")}
-                  </Tag>
-                </NextLink>
-              ))}
+              <BlogCardPicture
+                frontMatter={frontMatter}
+                className="aspect-[4.75] w-full"
+              >
+                <BlogTags tags={tags} opaque links />
+              </BlogCardPicture>
             </div>
+
             <h1 className="typography-d1 !mt-3 text-balance !text-left">
               {title}
             </h1>

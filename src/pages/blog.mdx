@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import { clsx } from "clsx"
 import { BlogPage } from "@/components/blog-page"
 
-export default function Blog() {
+export default function Blog({ hideFeaturedPosts = false }) {
   const { asPath } = useRouter()
   const items = getPagesUnderRoute("/blog").flatMap(item => item.children || item)
   const blogs = items.sort(
@@ -28,5 +28,6 @@ export default function Blog() {
     tags={tags}
     currentTag={currentTag}
     blogs={blogs}
+    hideFeaturedPosts={hideFeaturedPosts}
   />
 }

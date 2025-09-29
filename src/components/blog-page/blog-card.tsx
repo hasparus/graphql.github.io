@@ -24,33 +24,39 @@ export function BlogCard({
   ...rest
 }: BlogCardProps) {
   return (
-    <NextLink
-      href={route}
-      onKeyDown={arrowsMoveSideways}
-      data-vertical="3"
-      className={clsx(
-        className,
-        "relative flex flex-col bg-neu-0 ring-neu-300 ring-offset-[3px] ring-offset-neu-0 hover:ring-1 dark:ring-neu-100",
-      )}
-      {...rest}
-    >
-      <BlogCardPicture frontMatter={frontMatter} className="aspect-[4.75]">
-        <BlogTags tags={frontMatter.tags} opaque />
-      </BlogCardPicture>
-      <div className="flex grow flex-col border border-neu-200 dark:border-neu-50">
-        <div className="typography-body-lg grow text-pretty p-4">
-          {frontMatter.title}
+    <div className="relative">
+      <BlogTags
+        tags={frontMatter.tags}
+        opaque
+        className="absolute left-4 top-4 z-[1]"
+        links
+      />
+      <NextLink
+        href={route}
+        onKeyDown={arrowsMoveSideways}
+        data-vertical="3"
+        className={clsx(
+          className,
+          "relative flex h-full flex-col bg-neu-0 ring-neu-300 ring-offset-[3px] ring-offset-neu-0 hover:ring-1 dark:ring-neu-100",
+        )}
+        {...rest}
+      >
+        <BlogCardPicture frontMatter={frontMatter} className="aspect-[4.75]" />
+        <div className="flex grow flex-col border border-neu-200 dark:border-neu-50">
+          <div className="typography-body-lg grow text-pretty p-4">
+            {frontMatter.title}
+          </div>
+          <footer className="mt-auto flex items-end justify-between">
+            <BlogCardFooterContent
+              byline={frontMatter.byline}
+              date={frontMatter.date}
+              className="min-h-[73px] p-4"
+            />
+            <BlogCardArrow className="translate-x-px translate-y-px border-l border-t border-neu-200 p-4 dark:border-neu-50" />
+          </footer>
         </div>
-        <footer className="mt-auto flex items-end justify-between">
-          <BlogCardFooterContent
-            byline={frontMatter.byline}
-            date={frontMatter.date}
-            className="min-h-[73px] p-4"
-          />
-          <BlogCardArrow className="translate-x-px translate-y-px border-l border-t border-neu-200 p-4 dark:border-neu-50" />
-        </footer>
-      </div>
-    </NextLink>
+      </NextLink>
+    </div>
   )
 }
 

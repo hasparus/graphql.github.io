@@ -9,6 +9,7 @@ import { LookingForMore } from "./looking-for-more"
 import { BlogMdxContent } from "./mdx-types"
 import { FeaturedBlogPosts } from "./featured-blog-posts"
 import { StripesDecoration } from "../../app/conf/_design-system/stripes-decoration"
+import clsx from "clsx"
 
 const mask = `url(${new URL("./blur-bean.webp", import.meta.url).href})`
 
@@ -16,13 +17,23 @@ export interface BlogPageProps {
   tags: Record<string, number>
   blogs: BlogMdxContent[]
   currentTag: string
+  hideFeaturedPosts?: boolean
 }
 
-export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
+export function BlogPage({
+  tags,
+  blogs,
+  currentTag,
+  hideFeaturedPosts,
+}: BlogPageProps) {
   return (
     <main className="gql-all-anchors-focusable bg-neu-0">
       <div className="relative top-[calc(var(--nextra-navbar-height)*-1)] bg-gradient-to-b from-sec-base to-neu-0 pt-[var(--nextra-navbar-height)] dark:from-sec-darker">
-        <Stripes />
+        <Stripes
+          className={
+            hideFeaturedPosts ? "opacity-20 ![mask-position:top]" : undefined
+          }
+        />
         <header className="gql-container gql-section max-sm:pb-0 lg:pt-24">
           <h1 className="typography-h1 text-center">The GraphQL Blog</h1>
           <p className="typography-body-sm mt-4 text-center lg:mt-8">
@@ -30,12 +41,15 @@ export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
             community. Stay connected with the ideas and innovations shaping the
             GraphQL ecosystem.
           </p>
-          <FeaturedBlogPosts
-            blogs={blogs}
-            className="mt-4 max-sm:pb-0 lg:mt-24"
-          />
+          {!hideFeaturedPosts && (
+            <FeaturedBlogPosts
+              blogs={blogs}
+              className="mt-4 max-sm:pb-0 lg:mt-24"
+            />
+          )}
         </header>
       </div>
+
       <div className="gql-container">
         <div className="gql-section max-sm:pt-0">
           <section className="flex justify-between gap-2 max-sm:flex-col sm:items-end">
@@ -79,11 +93,14 @@ export function BlogPage({ tags, blogs, currentTag }: BlogPageProps) {
   )
 }
 
-function Stripes() {
+function Stripes({ className }: { className?: string }) {
   return (
     <div
       role="presentation"
-      className="pointer-events-none absolute inset-0 max-sm:[mask-position:left_top]"
+      className={clsx(
+        "pointer-events-none absolute inset-0 max-sm:[mask-position:left_top]",
+        className,
+      )}
       style={{
         maskImage: mask,
         WebkitMaskImage: mask,
