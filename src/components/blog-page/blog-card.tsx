@@ -1,6 +1,5 @@
 import { clsx } from "clsx"
 import NextLink from "next/link"
-import { useControls } from "leva"
 
 import ArrowDown from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
 import { arrowsMoveSideways } from "@/app/conf/_design-system/utils/arrows-move-sideways"
@@ -24,9 +23,6 @@ export function BlogCard({
   className,
   ...rest
 }: BlogCardProps) {
-  const { aspectRatio } = useControls({
-    aspectRatio: { value: 2.23, min: 1, max: 10 },
-  })
 
   return (
     <NextLink
@@ -43,11 +39,6 @@ export function BlogCard({
         frontMatter={frontMatter}
         // this weird selector sets background to tags so they look better on top of the picture
         className="aspect-[2.23] [&>*>*>*]:bg-neu-0"
-        // begin TEMPORARY
-        style={{
-          aspectRatio,
-        }}
-        // end TEMPORARY
       >
         <BlogTags tags={frontMatter.tags} />
       </BlogCardPicture>

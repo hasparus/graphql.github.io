@@ -115,11 +115,7 @@ export function BlogCardPicture({
     draw()
 
     canvas.dataset.visible = "true"
-  }, [
-    seed,
-    // TEMPORARY
-    style?.aspectRatio,
-  ])
+  }, [seed])
 
   return (
     <div
