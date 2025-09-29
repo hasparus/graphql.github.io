@@ -173,6 +173,7 @@ const config = {
       },
     ]
   },
+  typedRoutes: true,
 }
 
 const withBundleAnalyzer = nextBundleAnalyzer({

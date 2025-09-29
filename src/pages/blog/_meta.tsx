@@ -34,7 +34,7 @@ export default {
               </BlogCardPicture>
             </div>
 
-            <h1 className="typography-d1 !mt-3 text-balance !text-left">
+            <h1 className="typography-d1 text-balance !text-left xl:!mb-5">
               {title}
             </h1>
             <div className="typography-menu flex flex-col justify-center gap-2">
