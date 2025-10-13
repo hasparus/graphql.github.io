@@ -35,10 +35,7 @@ export function CheckboxTree({
 }: CheckboxTreeProps) {
   const normalizedSearch = searchQuery?.trim().toLowerCase() ?? ""
 
-  const { preparedItems } = useMemo(() => {
-    const parentIds = new Set<string>()
-    const defaultOpen = new Set<string>()
-
+  const preparedItems = useMemo(() => {
     function enhance(
       itemsToEnhance: CheckboxTreeItem[],
       depth: number,
@@ -54,10 +51,6 @@ export function CheckboxTree({
         }
 
         if (item.children && item.children.length > 0) {
-          parentIds.add(item.id)
-          if (depth === 0) {
-            defaultOpen.add(item.id)
-          }
           prepared.children = enhance(item.children, depth + 1)
         }
 
@@ -65,10 +58,7 @@ export function CheckboxTree({
       })
     }
 
-    return {
-      allParentIds: parentIds,
-      preparedItems: enhance(items, 0),
-    }
+    return enhance(items, 0)
   }, [items, normalizedSearch])
 
   const filteredTree = useMemo(() => {
@@ -114,7 +104,7 @@ export function CheckboxTree({
         <div key={node.id}>
           <div
             className="flex items-start gap-2 py-1"
-            style={{ paddingInlineStart: node.depth * 16 }}
+            style={{ paddingInlineStart: (node.depth - 1) * 16 }}
           >
             {isSelectable ? (
               <label

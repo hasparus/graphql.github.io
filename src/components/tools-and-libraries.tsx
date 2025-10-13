@@ -304,15 +304,13 @@ export function CodePage({ allTags, data }: CodePageProps) {
           <MagnifyingGlassIcon className="shrink-0" />
         </div>
         <div className="mt-8 md:grid md:grid-cols-[minmax(240px,300px)_1fr] md:gap-8 xl:grid-cols-[minmax(260px,320px)_1fr]">
-          <aside className="mb-6 border border-neu-300 p-4 dark:border-neu-200 md:mb-0">
-            <CheckboxTree
-              items={filterTreeItems}
-              selectedValues={selectedTags}
-              onSelectionChange={handleTreeSelection}
-              searchQuery={search}
-              emptyFallback="No categories found"
-            />
-          </aside>
+          <CheckboxTree
+            items={filterTreeItems}
+            selectedValues={selectedTags}
+            onSelectionChange={handleTreeSelection}
+            searchQuery={search}
+            emptyFallback="No categories found"
+          />
           <div>
             <RadioGroup
               value={sort}
