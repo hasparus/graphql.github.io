@@ -11,7 +11,7 @@ import {
 
 import { Tag } from "@/app/conf/_design-system/tag"
 import { Button } from "@/app/conf/_design-system/button"
-import { CheckboxIcon } from "@/app/conf/_design-system/checkbox-icon"
+import { CheckboxIcon } from "@/app/conf/_design-system/pixelarticons/checkbox-icon"
 
 import CloseIcon from "@/app/conf/_design-system/pixelarticons/close.svg?svgr"
 import CaretDownIcon from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"

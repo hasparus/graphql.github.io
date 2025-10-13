@@ -30,6 +30,7 @@ import {
 } from "nextra-theme-docs"
 
 import { Anchor } from "../app/conf/_design-system/anchor"
+import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
 
 const TreeState: Record<string, boolean> = Object.create(null)
 
@@ -507,9 +508,9 @@ export function Sidebar({
                   setToggleAnimation(true)
                 }}
               >
-                <ExpandIcon
-                  height="12"
+                <ArrowBarLeft
                   className={cn(
+                    "size-4",
                     !showSidebar && "first:*:_origin-[35%] first:*:_rotate-180",
                   )}
                 />

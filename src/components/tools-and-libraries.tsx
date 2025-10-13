@@ -279,7 +279,11 @@ export function CodePage({ allTags, data }: CodePageProps) {
         />
       </NextHead>
       <div className="container py-8 md:pt-16">
-        <h1 className="typography-h1">Code Using GraphQL</h1>
+        <h1 className="typography-h1 text-center">Tools and Libraries</h1>
+        <p className="typography-body-sm mt-8 text-center">
+          Explore tools and libraries for working with GraphQL across various
+          languages and platforms.
+        </p>
         <div className="typography-h3 my-10 flex max-w-[700px] items-center border-b border-current pb-2.5">
           <div
             className={clsx(
@@ -303,7 +307,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
           />
           <MagnifyingGlassIcon className="shrink-0" />
         </div>
-        <div className="mt-8 md:grid md:grid-cols-[minmax(240px,300px)_1fr] md:gap-8 xl:grid-cols-[minmax(260px,320px)_1fr]">
+        <div className="mt-8 md:grid md:grid-cols-[minmax(240px,300px)_1fr] md:gap-8">
           <CheckboxTree
             items={filterTreeItems}
             selectedValues={selectedTags}
@@ -315,9 +319,9 @@ export function CodePage({ allTags, data }: CodePageProps) {
             <RadioGroup
               value={sort}
               onValueChange={setSort}
-              className="flex flex-wrap gap-2 md:flex-nowrap"
+              className="typography-menu flex flex-wrap gap-2 text-sm md:flex-nowrap"
             >
-              <div className="mr-4">Sort by:</div>
+              <div>Sort by:</div>
               <div className="flex items-center">
                 <RadioGroupItem value="popularity" id="r1" />
                 <label htmlFor="r1" className="cursor-pointer pl-2">
@@ -333,7 +337,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
             </RadioGroup>
 
             {/* todo: add md:*:h-full when the readme opens in a modal */}
-            <div className="mt-6 grid gap-2 py-8 md:grid-cols-2 md:gap-4">
+            <div className="grid gap-2 py-8 md:grid-cols-2 md:gap-4">
               {(sort === "alphabetical"
                 ? [...newData].sort((a, b) =>
                     a.frontMatter.name.localeCompare(b.frontMatter.name),

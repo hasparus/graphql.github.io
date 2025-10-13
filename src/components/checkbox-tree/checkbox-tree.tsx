@@ -6,7 +6,6 @@ export interface CheckboxTreeItem {
   label: string
   value?: string
   count?: number
-  description?: string
   children?: CheckboxTreeItem[]
 }
 
@@ -118,23 +117,18 @@ export function CheckboxTree({
                   onChange={() => toggleValue(node.value!)}
                   className="size-4 border border-neu-400 bg-transparent [accent-color:hsl(var(--color-pri-base))]"
                 />
-                <span className="min-w-0 grow truncate text-left">
+                <span className="min-w-0 grow truncate text-left text-neu-800">
                   {node.label}
                 </span>
                 {typeof node.count === "number" && (
-                  <span className="ml-auto shrink-0 text-xs text-neu-500">
+                  <span className="ml-auto shrink-0 text-xs text-neu-600">
                     {node.count}
                   </span>
                 )}
               </label>
             ) : (
-              <div className="flex grow flex-col text-sm">
-                <span className="font-medium text-neu-600">{node.label}</span>
-                {node.description ? (
-                  <span className="text-xs text-neu-500">
-                    {node.description}
-                  </span>
-                ) : null}
+              <div className="typography-menu mt-4 text-sm text-neu-900 xl:mt-10">
+                {node.label}
               </div>
             )}
           </div>
