@@ -170,8 +170,20 @@ export function CodePage({ allTags, data }: CodePageProps) {
     const items: CheckboxTreeItem[] = [
       {
         id: "category",
-        label: "Categories",
+        label: "Category",
         children: [
+          {
+            id: "usage-server",
+            label: getName("server"),
+            value: "server",
+            count: getCount("server"),
+          },
+          {
+            id: "usage-client",
+            label: getName("client"),
+            value: "client",
+            count: getCount("client"),
+          },
           {
             id: "category-tools",
             label: getName("tools"),
@@ -197,24 +209,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
             label: getName("services"),
             value: "services",
             count: getCount("services"),
-          },
-        ],
-      },
-      {
-        id: "usage",
-        label: "Usage",
-        children: [
-          {
-            id: "usage-client",
-            label: getName("client"),
-            value: "client",
-            count: getCount("client"),
-          },
-          {
-            id: "usage-server",
-            label: getName("server"),
-            value: "server",
-            count: getCount("server"),
           },
         ],
       },
@@ -284,42 +278,37 @@ export function CodePage({ allTags, data }: CodePageProps) {
           Explore tools and libraries for working with GraphQL across various
           languages and platforms.
         </p>
-        <div className="typography-h3 my-10 flex max-w-[700px] items-center border-b border-current pb-2.5">
-          <div
-            className={clsx(
-              "flex shrink-0",
-              isBackspacePressed && "last:*:opacity-50",
-            )}
-          >
-            {inputTags}
-          </div>
-          <input
-            // TODO: This should also do a fuzzy full text search, not just search on tags.
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Search..."
-            className={clsx(
-              "block grow bg-transparent",
-              "focus-visible:ring-0 focus-visible:ring-offset-0",
-              "focus-visible:border-b-primary",
-            )}
-          />
-          <MagnifyingGlassIcon className="shrink-0" />
-        </div>
         <div className="mt-8 md:grid md:grid-cols-[minmax(240px,300px)_1fr] md:gap-8">
-          <CheckboxTree
-            items={filterTreeItems}
-            selectedValues={selectedTags}
-            onSelectionChange={handleTreeSelection}
-            searchQuery={search}
-            emptyFallback="No categories found"
-          />
+          <aside>
+            <div>
+              <input
+                // TODO: This should also do a fuzzy full text search, not just search on tags.
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Search..."
+                className={clsx(
+                  "block grow bg-transparent",
+                  "focus-visible:ring-0 focus-visible:ring-offset-0",
+                  "focus-visible:border-b-primary",
+                )}
+              />
+              <MagnifyingGlassIcon className="shrink-0" />
+            </div>
+            <CheckboxTree
+              items={filterTreeItems}
+              selectedValues={selectedTags}
+              onSelectionChange={handleTreeSelection}
+              searchQuery={search}
+              emptyFallback="No categories found"
+            />
+          </aside>
+
           <div>
             <RadioGroup
               value={sort}
               onValueChange={value => setSort(value as string)}
-              className="typography-menu flex flex-wrap gap-2 text-sm text-neu-700 md:flex-nowrap"
+              className="typography-menu flex flex-wrap gap-2 text-sm text-neu-800 md:flex-nowrap"
             >
               <div>Sort by:</div>
               <label className="flex items-center gap-1 [&:has([data-checked])]:text-neu-900">

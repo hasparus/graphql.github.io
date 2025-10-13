@@ -120,11 +120,11 @@ export function CheckboxTree({
                 <span className="min-w-0 grow truncate text-left text-neu-800">
                   {node.label}
                 </span>
-                {typeof node.count === "number" && (
+                {node.count ? ( // we intentionally don't display 0
                   <span className="ml-auto shrink-0 text-xs text-neu-700">
                     {node.count}
                   </span>
-                )}
+                ) : null}
               </label>
             ) : (
               <div className="typography-menu mt-4 text-sm text-neu-900 xl:mt-10">
