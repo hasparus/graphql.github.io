@@ -3,7 +3,6 @@ import {
   GlobeIcon,
   NPMIcon,
   StarIcon,
-  MagnifyingGlassIcon,
   RubyGemsIcon,
   ChevronLeftIcon,
 } from "@/icons"
@@ -33,6 +32,7 @@ import { getComponents } from "nextra-theme-docs"
 import { RadioGroup, Radio } from "@/components/radio"
 import { Button } from "@/app/conf/_design-system/button"
 import { Tag } from "@/app/conf/_design-system/tag"
+import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
 
 type PackageInfo = {
   name: string
@@ -280,21 +280,17 @@ export function CodePage({ allTags, data }: CodePageProps) {
         </p>
         <div className="mt-8 md:grid md:grid-cols-[minmax(240px,300px)_1fr] md:gap-8">
           <aside>
-            <div>
+            <label className="focus-within:gql-focus-outline flex items-center gap-1 border border-neu-300 bg-neu-0 p-2">
+              <SearchIcon className="size-5 text-neu-800" />
               <input
                 // TODO: This should also do a fuzzy full text search, not just search on tags.
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Search..."
-                className={clsx(
-                  "block grow bg-transparent",
-                  "focus-visible:ring-0 focus-visible:ring-offset-0",
-                  "focus-visible:border-b-primary",
-                )}
+                placeholder="Filter tags..."
+                className="bg-transparent focus:outline-none"
               />
-              <MagnifyingGlassIcon className="shrink-0" />
-            </div>
+            </label>
             <CheckboxTree
               items={filterTreeItems}
               selectedValues={selectedTags}
@@ -320,7 +316,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
                 <span>Alphabetical</span>
               </label>
             </RadioGroup>
-            {/*  COMENTED OUT TO MAKE DEVELOPMENT FASTER
             <div className="grid gap-2 py-8 md:grid-cols-2 md:gap-4">
               {(sort === "alphabetical"
                 ? [...newData].sort((a, b) =>
@@ -418,7 +413,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                   )
                 },
               )}
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

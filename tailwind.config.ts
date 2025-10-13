@@ -204,6 +204,15 @@ const config: Config = {
           },
         },
       })
+
+      addBase({
+        ".gql-focus-outline": {
+          "outline-style": "solid",
+          "outline-width": "3px",
+          "outline-offset": "5px",
+          "outline-color": "hsl(var(--color-neu-900))",
+        },
+      })
     }),
     tailwindMediaHover(),
     scrollStartPlugin(),

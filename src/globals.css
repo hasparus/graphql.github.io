@@ -347,7 +347,7 @@ div[id^="headlessui-menu-items"] {
 
 .gql-focus-visible,
 .gql-all-anchors-focusable a {
-  @apply focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[5px] focus-visible:outline-neu-900;
+  @apply focus-visible:gql-focus-outline;
 }
 
 .gql-container {
