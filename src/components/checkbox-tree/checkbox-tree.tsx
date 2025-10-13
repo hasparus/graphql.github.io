@@ -1,8 +1,5 @@
 import type { ReactNode } from "react"
-import { useEffect, useMemo, useState } from "react"
-import { clsx } from "clsx"
-
-import { ChevronLeftIcon } from "@/icons"
+import { useMemo } from "react"
 
 export interface CheckboxTreeItem {
   id: string
@@ -38,7 +35,7 @@ export function CheckboxTree({
 }: CheckboxTreeProps) {
   const normalizedSearch = searchQuery?.trim().toLowerCase() ?? ""
 
-  const { allParentIds, defaultExpanded, preparedItems } = useMemo(() => {
+  const { preparedItems } = useMemo(() => {
     const parentIds = new Set<string>()
     const defaultOpen = new Set<string>()
 
@@ -70,22 +67,9 @@ export function CheckboxTree({
 
     return {
       allParentIds: parentIds,
-      defaultExpanded: defaultOpen,
       preparedItems: enhance(items, 0),
     }
   }, [items, normalizedSearch])
-
-  const [expandedItems, setExpandedItems] = useState(
-    () => new Set(defaultExpanded),
-  )
-
-  useEffect(() => {
-    if (!normalizedSearch) {
-      setExpandedItems(new Set(defaultExpanded))
-      return
-    }
-    setExpandedItems(new Set(allParentIds))
-  }, [normalizedSearch, allParentIds, defaultExpanded])
 
   const filteredTree = useMemo(() => {
     function markVisibility(node: PreparedTree): PreparedTree | null {
@@ -121,21 +105,8 @@ export function CheckboxTree({
     }
   }
 
-  const toggleExpand = (id: string) => {
-    setExpandedItems(prev => {
-      const next = new Set(prev)
-      if (next.has(id)) {
-        next.delete(id)
-      } else {
-        next.add(id)
-      }
-      return next
-    })
-  }
-
   const renderTree = (nodes: PreparedTree[]): ReactNode => {
     return nodes.map(node => {
-      const isExpanded = expandedItems.has(node.id)
       const isSelectable = Boolean(node.value)
       const checkboxId = `checkbox-tree-${node.id}`
 
@@ -145,24 +116,6 @@ export function CheckboxTree({
             className="flex items-start gap-2 py-1"
             style={{ paddingInlineStart: node.depth * 16 }}
           >
-            {node.children && node.children.length > 0 ? (
-              <button
-                type="button"
-                aria-expanded={isExpanded}
-                onClick={() => toggleExpand(node.id)}
-                className="mt-0.5 flex size-5 items-center justify-center text-neu-500 transition-colors hover:text-pri-base"
-              >
-                <ChevronLeftIcon
-                  className={clsx(
-                    "size-4 transition-transform",
-                    isExpanded ? "-rotate-90" : "rotate-180",
-                  )}
-                />
-              </button>
-            ) : (
-              <span className="mt-0.5 block size-5" aria-hidden />
-            )}
-
             {isSelectable ? (
               <label
                 htmlFor={checkboxId}
@@ -196,7 +149,7 @@ export function CheckboxTree({
             )}
           </div>
 
-          {node.children && node.children.length > 0 && isExpanded ? (
+          {node.children && node.children.length > 0 ? (
             <div>{renderTree(node.children)}</div>
           ) : null}
         </div>
