@@ -8,6 +8,7 @@ import {
   ChevronLeftIcon,
 } from "@/icons"
 import { Card } from "@/components"
+import { CheckboxTree, type CheckboxTreeItem } from "@/components/checkbox-tree"
 import NextLink from "next/link"
 import NextHead from "next/head"
 import { useMounted } from "nextra/hooks"
@@ -65,11 +66,13 @@ export function CodePage({ allTags, data }: CodePageProps) {
   const allTagsMap = useMemo(
     () =>
       new Map(allTags.map(({ tag, count, name }) => [tag, { count, name }])),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   )
 
   const [search, setSearch] = useState("")
   const [queryParamsTags, setTags] = useQueryParam("tags", TagParam)
+  const selectedTags = queryParamsTags as string[]
 
   const handleQuery = useCallback(
     (e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
@@ -91,8 +94,8 @@ export function CodePage({ allTags, data }: CodePageProps) {
 
   const inputTags =
     mounted &&
-    queryParamsTags
-      .map(tag => [tag, allTagsMap.get(tag as string)?.name])
+    selectedTags
+      .map(tag => [tag, allTagsMap.get(tag)?.name])
       .filter(([, name]) => name)
       .map(([tag, name]) => (
         <button
@@ -117,46 +120,130 @@ export function CodePage({ allTags, data }: CodePageProps) {
         }
       }
     },
-    [isBackspacePressed, search],
+    [isBackspacePressed, search, setTags],
   )
 
-  const { newData, queryTags } = useMemo(() => {
-    const newData = mounted
+  const { newData, tagCounts } = useMemo(() => {
+    const filteredData = mounted
       ? data.filter(({ tags }) => {
-          const matchQueryParamsTags =
-            !queryParamsTags.length ||
-            (queryParamsTags as string[]).every(tag => tags.includes(tag))
-
-          return matchQueryParamsTags
+          const selected = queryParamsTags as string[]
+          return !selected.length || selected.every(tag => tags.includes(tag))
         })
       : data
 
-    const queryTags = newData
-      .flatMap(({ tags }) => tags)
-      .reduce<Record<string, number>>((acc, tag) => {
-        acc[tag] ??= 0
-        acc[tag] += 1
-        return acc
-      }, {})
+    const counts = filteredData.reduce<Map<string, number>>((acc, { tags }) => {
+      tags.forEach(tag => {
+        acc.set(tag, (acc.get(tag) ?? 0) + 1)
+      })
+      return acc
+    }, new Map())
 
     return {
-      newData,
-      queryTags: Object.entries(queryTags)
-        .filter(
-          ([tag]) => !mounted || !(queryParamsTags as string[]).includes(tag),
-        )
-        .map(([tag, count]) => ({
-          tag,
-          count,
-          name: allTagsMap.get(tag)?.name || "",
-        })),
+      newData: filteredData,
+      tagCounts: counts,
     }
   }, [mounted, data, queryParamsTags])
 
+  const filterTreeItems = useMemo<CheckboxTreeItem[]>(() => {
+    const getName = (tag: string) => allTagsMap.get(tag)?.name ?? tag
+    const getCount = (tag: string) => tagCounts.get(tag) ?? 0
+
+    const nonLanguageTags = new Set([
+      "client",
+      "server",
+      "services",
+      "tools",
+      "general",
+      "gateways-supergraphs",
+    ])
+
+    const languages = allTags
+      .filter(({ tag }) => !nonLanguageTags.has(tag))
+      .map<CheckboxTreeItem>(({ tag }) => ({
+        id: `language-${tag}`,
+        label: getName(tag),
+        value: tag,
+        count: getCount(tag),
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label))
+
+    const items: CheckboxTreeItem[] = [
+      {
+        id: "category",
+        label: "Categories",
+        children: [
+          {
+            id: "category-tools",
+            label: getName("tools"),
+            value: "tools",
+            count: getCount("tools"),
+            children: [
+              {
+                id: "category-tools-gateways-supergraphs",
+                label: getName("gateways-supergraphs"),
+                value: "gateways-supergraphs",
+                count: getCount("gateways-supergraphs"),
+              },
+              {
+                id: "category-tools-general",
+                label: getName("general"),
+                value: "general",
+                count: getCount("general"),
+              },
+            ],
+          },
+          {
+            id: "category-services",
+            label: getName("services"),
+            value: "services",
+            count: getCount("services"),
+          },
+        ],
+      },
+      {
+        id: "usage",
+        label: "Usage",
+        children: [
+          {
+            id: "usage-client",
+            label: getName("client"),
+            value: "client",
+            count: getCount("client"),
+          },
+          {
+            id: "usage-server",
+            label: getName("server"),
+            value: "server",
+            count: getCount("server"),
+          },
+        ],
+      },
+    ]
+
+    if (languages.length > 0) {
+      items.push({
+        id: "language-support",
+        label: "Language Support",
+        children: languages,
+      })
+    }
+
+    return items
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allTagsMap, tagCounts])
+
+  const handleTreeSelection = useCallback(
+    (next: string[]) => {
+      setIsBackspacePressed(false)
+      setTags(next)
+    },
+    [setIsBackspacePressed, setTags],
+  )
+
   const selectedTagsAsString = useMemo(() => {
-    const tags = queryParamsTags
+    const tags = selectedTags
       .slice()
-      .map(tag => allTagsMap.get(tag as string)?.name ?? tag)
+      .map(tag => allTagsMap.get(tag)?.name ?? tag)
       .filter((tag): tag is string => typeof tag === "string")
 
     if (tags.length === 0) {
@@ -168,7 +255,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
     }
 
     return `${tags.slice(0, -1).join(", ")} and ${tags.slice(-1)[0]}`
-  }, [queryParamsTags, allTagsMap])
+  }, [selectedTags, allTagsMap])
 
   const [sort, setSort] = useState("popularity")
 
@@ -216,146 +303,138 @@ export function CodePage({ allTags, data }: CodePageProps) {
           />
           <MagnifyingGlassIcon className="shrink-0" />
         </div>
-        <div className="flex flex-wrap gap-2">
-          {queryTags.map(({ tag, count, name }) => {
-            const isTagMatchSearch =
-              !search || name.toLowerCase().includes(search.toLowerCase())
-            if (!isTagMatchSearch) return
+        <div className="mt-8 md:grid md:grid-cols-[minmax(240px,300px)_1fr] md:gap-8 xl:grid-cols-[minmax(260px,320px)_1fr]">
+          <aside className="mb-6 border border-neu-300 p-4 dark:border-neu-200 md:mb-0">
+            <CheckboxTree
+              items={filterTreeItems}
+              selectedValues={selectedTags}
+              onSelectionChange={handleTreeSelection}
+              searchQuery={search}
+              emptyFallback="No categories found"
+            />
+          </aside>
+          <div>
+            <RadioGroup
+              value={sort}
+              onValueChange={setSort}
+              className="flex flex-wrap gap-2 md:flex-nowrap"
+            >
+              <div className="mr-4">Sort by:</div>
+              <div className="flex items-center">
+                <RadioGroupItem value="popularity" id="r1" />
+                <label htmlFor="r1" className="cursor-pointer pl-2">
+                  Popularity
+                </label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem value="alphabetical" id="r2" />
+                <label htmlFor="r2" className="cursor-pointer pl-2">
+                  Alphabetical
+                </label>
+              </div>
+            </RadioGroup>
 
-            return (
-              <NextLink
-                href={`/community/tools-and-libraries/?tags=${tag}`}
-                key={tag}
-                data-tag={tag}
-                onClick={handleQuery}
-                title={`${mounted && (queryParamsTags as string[]).includes(tag) ? "Remove" : "Add"} tag "${name}"`}
-                className="flex"
-              >
-                <Tag
-                  className="!capitalize lg:!text-sm [&:has(:hover)_.Tag--bg]:opacity-50"
-                  color="hsl(var(--color-neu-500)/.8)"
-                >
-                  {name} ({count})
-                </Tag>
-              </NextLink>
-            )
-          })}
-        </div>
-      </div>
-      <RadioGroup
-        value={sort}
-        onValueChange={setSort}
-        className="container flex gap-2"
-      >
-        <div className="mr-4">Sort by:</div>
-        <div className="flex items-center">
-          <RadioGroupItem value="popularity" id="r1" />
-          <label htmlFor="r1" className="cursor-pointer pl-2">
-            Popularity
-          </label>
-        </div>
-        <div className="flex items-center">
-          <RadioGroupItem value="alphabetical" id="r2" />
-          <label htmlFor="r2" className="cursor-pointer pl-2">
-            Alphabetical
-          </label>
-        </div>
-      </RadioGroup>
-
-      {/* todo: add md:*:h-full when the readme opens in a modal */}
-      <div className="container grid gap-2 py-8 md:grid-cols-2 md:gap-4">
-        {(sort === "alphabetical"
-          ? [...newData].sort((a, b) =>
-              a.frontMatter.name.localeCompare(b.frontMatter.name),
-            )
-          : newData
-        ).map(
-          ({
-            frontMatter,
-            tags,
-            formattedStars,
-            lastRelease,
-            license,
-            compiledSource,
-          }) => {
-            const { name, description } = frontMatter
-            const hasMetadata = formattedStars || lastRelease || license
-            return (
-              <Card
-                key={`${name}${tags.toString()}`}
-                className={clsx(
-                  "flex h-max flex-col !p-0",
-                  "min-w-0", // hack to avoid overflow when opening details
-                )}
-              >
-                <article className="flex grow flex-col gap-7 p-4 lg:p-8">
-                  <header className="flex items-center gap-2">
-                    <span className="typography-h3 grow break-all">{name}</span>
-                    <PackageLinks data={frontMatter} />
-                  </header>
-                  <div className="flex gap-2">
-                    {tags.map(tag => (
-                      <NextLink
-                        key={tag}
-                        href={`/community/tools-and-libraries/?tags=${tag}`}
-                        className="flex [&:has(:hover)_.Tag--bg]:opacity-50"
-                      >
-                        <Tag
-                          className="cursor-pointer !capitalize"
-                          color="hsl(var(--color-neu-400))" // todo: tags could be color coded like on the conference page
-                        >
-                          {allTagsMap.get(tag)!.name}
-                        </Tag>
-                      </NextLink>
-                    ))}
-                  </div>
-                  <Markdown className="line-clamp-4 grow lg:text-lg [&_a]:text-primary">
-                    {description}
-                  </Markdown>
-                  <div className="flex-1" />
-                  {hasMetadata && (
-                    <div
+            {/* todo: add md:*:h-full when the readme opens in a modal */}
+            <div className="mt-6 grid gap-2 py-8 md:grid-cols-2 md:gap-4">
+              {(sort === "alphabetical"
+                ? [...newData].sort((a, b) =>
+                    a.frontMatter.name.localeCompare(b.frontMatter.name),
+                  )
+                : newData
+              ).map(
+                ({
+                  frontMatter,
+                  tags,
+                  formattedStars,
+                  lastRelease,
+                  license,
+                  compiledSource,
+                }) => {
+                  const { name, description } = frontMatter
+                  const hasMetadata = formattedStars || lastRelease || license
+                  return (
+                    <Card
+                      key={`${name}${tags.toString()}`}
                       className={clsx(
-                        "flex items-center gap-5 max-md:text-xs",
-                        "[&>:not(:last-child)]:border-r [&>:not(:last-child)]:border-neu-500 [&>:not(:last-child)]:pr-5",
+                        "flex h-max flex-col !p-0",
+                        "min-w-0", // hack to avoid overflow when opening details
                       )}
                     >
-                      {lastRelease && <span>Last release {lastRelease}</span>}
-                      {formattedStars && (
-                        <span className="flex items-center gap-1">
-                          <StarIcon className="text-primary" />
-                          {formattedStars}
-                        </span>
-                      )}
-                      {license && <span>{license}</span>}
-                    </div>
-                  )}
-                </article>
+                      <article className="flex grow flex-col gap-7 p-4 lg:p-8">
+                        <header className="flex items-center gap-2">
+                          <span className="typography-h3 grow break-all">
+                            {name}
+                          </span>
+                          <PackageLinks data={frontMatter} />
+                        </header>
+                        <div className="flex gap-2">
+                          {tags.map(tag => (
+                            <NextLink
+                              key={tag}
+                              href={`/community/tools-and-libraries/?tags=${tag}`}
+                              className="flex [&:has(:hover)_.Tag--bg]:opacity-50"
+                            >
+                              <Tag
+                                className="cursor-pointer !capitalize"
+                                color="hsl(var(--color-neu-400))" // todo: tags could be color coded like on the conference page
+                              >
+                                {allTagsMap.get(tag)!.name}
+                              </Tag>
+                            </NextLink>
+                          ))}
+                        </div>
+                        <Markdown className="line-clamp-4 grow lg:text-lg [&_a]:text-primary">
+                          {description}
+                        </Markdown>
+                        <div className="flex-1" />
+                        {hasMetadata && (
+                          <div
+                            className={clsx(
+                              "flex items-center gap-5 max-md:text-xs",
+                              "[&>:not(:last-child)]:border-r [&>:not(:last-child)]:border-neu-500 [&>:not(:last-child)]:pr-5",
+                            )}
+                          >
+                            {lastRelease && (
+                              <span>Last release {lastRelease}</span>
+                            )}
+                            {formattedStars && (
+                              <span className="flex items-center gap-1">
+                                <StarIcon className="text-primary" />
+                                {formattedStars}
+                              </span>
+                            )}
+                            {license && <span>{license}</span>}
+                          </div>
+                        )}
+                      </article>
 
-                {compiledSource && (
-                  <details className="bg-neu-100">
-                    <summary
-                      className={clsx(
-                        "flex justify-between px-8 py-5 text-primary lg:px-12 dark:[[open]>&]:shadow-[-5px_10px_30px_20px_#1b1b1b4d]",
-                        "[[open]>&]:bg-neu-200",
-                        "cursor-pointer",
+                      {compiledSource && (
+                        <details className="bg-neu-100">
+                          <summary
+                            className={clsx(
+                              "flex justify-between px-8 py-5 text-primary lg:px-12 dark:[[open]>&]:shadow-[-5px_10px_30px_20px_#1b1b1b4d]",
+                              "[[open]>&]:bg-neu-200",
+                              "cursor-pointer",
+                            )}
+                          >
+                            README
+                            <ChevronLeftIcon className="size-5 -rotate-90 transition-transform [[open]>*>&]:rotate-90" />
+                          </summary>
+                          <div
+                            className="px-8 py-5 lg:px-12"
+                            suppressHydrationWarning
+                          >
+                            <RemoteContent compiledSource={compiledSource} />
+                          </div>
+                        </details>
                       )}
-                    >
-                      README
-                      <ChevronLeftIcon className="size-5 -rotate-90 transition-transform [[open]>*>&]:rotate-90" />
-                    </summary>
-                    <div
-                      className="px-8 py-5 lg:px-12"
-                      suppressHydrationWarning
-                    >
-                      <RemoteContent compiledSource={compiledSource} />
-                    </div>
-                  </details>
-                )}
-              </Card>
-            )
-          },
-        )}
+                    </Card>
+                  )
+                },
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
