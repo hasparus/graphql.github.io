@@ -30,7 +30,7 @@ import {
 } from "react"
 import { clsx } from "clsx"
 import { getComponents } from "nextra-theme-docs"
-import { RadioGroup, RadioGroupItem } from "@/components/radio"
+import { RadioGroup, Radio } from "@/components/radio"
 import { Button } from "@/app/conf/_design-system/button"
 import { Tag } from "@/app/conf/_design-system/tag"
 
@@ -318,25 +318,20 @@ export function CodePage({ allTags, data }: CodePageProps) {
           <div>
             <RadioGroup
               value={sort}
-              onValueChange={setSort}
-              className="typography-menu flex flex-wrap gap-2 text-sm md:flex-nowrap"
+              onValueChange={value => setSort(value as string)}
+              className="typography-menu flex flex-wrap gap-2 text-sm text-neu-700 md:flex-nowrap"
             >
               <div>Sort by:</div>
-              <div className="flex items-center">
-                <RadioGroupItem value="popularity" id="r1" />
-                <label htmlFor="r1" className="cursor-pointer pl-2">
-                  Popularity
-                </label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem value="alphabetical" id="r2" />
-                <label htmlFor="r2" className="cursor-pointer pl-2">
-                  Alphabetical
-                </label>
-              </div>
+              <label className="flex items-center gap-1 [&:has([data-checked])]:text-neu-900">
+                <Radio value="popularity" />
+                <span>Popularity</span>
+              </label>
+              <label className="flex items-center gap-1">
+                <Radio value="alphabetical" />
+                <span>Alphabetical</span>
+              </label>
             </RadioGroup>
-
-            {/* todo: add md:*:h-full when the readme opens in a modal */}
+            {/*  COMENTED OUT TO MAKE DEVELOPMENT FASTER
             <div className="grid gap-2 py-8 md:grid-cols-2 md:gap-4">
               {(sort === "alphabetical"
                 ? [...newData].sort((a, b) =>
@@ -434,7 +429,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                   )
                 },
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

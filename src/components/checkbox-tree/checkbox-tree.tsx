@@ -108,7 +108,7 @@ export function CheckboxTree({
             {isSelectable ? (
               <label
                 htmlFor={checkboxId}
-                className="flex grow cursor-pointer items-center gap-2 text-sm"
+                className="flex grow cursor-pointer items-center gap-2"
               >
                 <input
                   id={checkboxId}
@@ -121,7 +121,7 @@ export function CheckboxTree({
                   {node.label}
                 </span>
                 {typeof node.count === "number" && (
-                  <span className="ml-auto shrink-0 text-xs text-neu-600">
+                  <span className="ml-auto shrink-0 text-xs text-neu-700">
                     {node.count}
                   </span>
                 )}
