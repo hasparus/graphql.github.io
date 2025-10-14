@@ -471,51 +471,75 @@ export function Sidebar({
         </FocusedItemContext.Provider>
 
         {hasMenu && (
-          <div
-            className={cn(
-              "nextra-sidebar-footer _sticky _bottom-0",
-              "_flex _items-center _gap-2 _py-4",
-              "_mx-3 _px-1", // to hide focused sidebar links
-              showSidebar
-                ? hasI18n && "_justify-end"
-                : "_py-4 _flex-wrap _justify-center",
-            )}
-            data-toggle-animation={
-              showToggleAnimation ? (showSidebar ? "show" : "hide") : "off"
-            }
-          >
-            <LocaleSwitch
-              lite={!showSidebar}
-              className={showSidebar ? "_grow" : "max-md:_grow"}
-            />
-            {themeConfig.darkMode && (
-              <div
-                className={
-                  showSidebar && !hasI18n ? "_grow _flex _flex-col" : ""
-                }
-              >
-                {renderComponent(themeConfig.themeSwitch.component, {
-                  lite: !showSidebar || hasI18n,
-                })}
-              </div>
-            )}
-            {themeConfig.sidebar.toggleButton && (
-              <Button
-                title={showSidebar ? "Hide sidebar" : "Show sidebar"}
-                className="p-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 dark:hover:bg-neu-500/5 max-md:hidden"
-                onClick={() => {
-                  setSidebar(!showSidebar)
-                  setToggleAnimation(true)
-                }}
-              >
-                <ArrowBarLeft
-                  className={cn("size-5", !showSidebar && "rotate-180")}
-                />
-              </Button>
-            )}
-          </div>
+          <SidebarFooter
+            showSidebar={showSidebar}
+            setSidebar={setSidebar}
+            showToggleAnimation={showToggleAnimation}
+            hasI18n={hasI18n}
+          />
         )}
       </aside>
     </>
+  )
+}
+
+export function SidebarFooter({
+  showSidebar,
+  setSidebar,
+  showToggleAnimation = false,
+  hasI18n = false,
+  setToggleAnimation,
+  className,
+}: {
+  showSidebar: boolean
+  setSidebar: (show: boolean) => void
+  showToggleAnimation?: boolean
+  hasI18n?: boolean
+  setToggleAnimation?: (show: boolean) => void
+  className?: string
+}) {
+  const themeConfig = useThemeConfig()
+
+  return (
+    <div
+      className={cn(
+        "nextra-sidebar-footer _sticky _bottom-0",
+        "_flex _items-center _gap-2 _py-4",
+        "_mx-3 _px-1", // to hide focused sidebar links
+        showSidebar
+          ? hasI18n && "_justify-end"
+          : "_py-4 _flex-wrap _justify-center",
+        className,
+      )}
+      data-toggle-animation={
+        showToggleAnimation ? (showSidebar ? "show" : "hide") : "off"
+      }
+    >
+      <LocaleSwitch
+        lite={!showSidebar}
+        className={showSidebar ? "_grow" : "max-md:_grow"}
+      />
+      {themeConfig.darkMode && (
+        <div className={showSidebar && !hasI18n ? "_grow _flex _flex-col" : ""}>
+          {renderComponent(themeConfig.themeSwitch.component, {
+            lite: !showSidebar || hasI18n,
+          })}
+        </div>
+      )}
+      {themeConfig.sidebar.toggleButton && (
+        <Button
+          title={showSidebar ? "Hide sidebar" : "Show sidebar"}
+          className="p-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 dark:hover:bg-neu-500/5 max-md:hidden"
+          onClick={() => {
+            setSidebar(!showSidebar)
+            setToggleAnimation?.(true)
+          }}
+        >
+          <ArrowBarLeft
+            className={cn("size-5", !showSidebar && "rotate-180")}
+          />
+        </Button>
+      )}
+    </div>
   )
 }

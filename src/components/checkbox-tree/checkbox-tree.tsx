@@ -51,10 +51,10 @@ export function CheckboxTree({
                 <label
                   htmlFor={checkboxId}
                   className={clsx(
-                    "flex grow items-center gap-2",
+                    "flex grow cursor-pointer items-center gap-2 hover:text-neu-900",
                     isDisabled
-                      ? "cursor-not-allowed text-neu-500"
-                      : "cursor-pointer",
+                      ? "text-neu-500 dark:text-neu-500/80 dark:hover:text-neu-900"
+                      : "",
                   )}
                   aria-disabled={isDisabled}
                 >
@@ -64,35 +64,24 @@ export function CheckboxTree({
                       type="checkbox"
                       checked={isChecked}
                       onChange={() => {
-                        if (!isDisabled) toggleValue(item.value!)
+                        // We actually don't want to disable the checkboxes for real here.
+                        toggleValue(item.value!)
                       }}
-                      disabled={isDisabled}
                       className="peer sr-only"
                     />
                     <CheckboxIcon
                       checked={isChecked}
                       className={clsx(
-                        "pointer-events-none size-5 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-1 peer-focus-visible:outline-neu-900",
-                        isDisabled ? "text-neu-300" : undefined,
+                        "pointer-events-none size-5 opacity-90 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-1 peer-focus-visible:outline-neu-900",
                       )}
                       aria-hidden
                     />
                   </span>
-                  <span
-                    className={clsx(
-                      "min-w-0 grow truncate text-left",
-                      isDisabled ? "text-neu-500" : "text-neu-800",
-                    )}
-                  >
+                  <span className="min-w-0 grow truncate text-left">
                     {item.label}
                   </span>
                   {item.count ? ( // we intentionally don't display 0
-                    <span
-                      className={clsx(
-                        "ml-auto shrink-0 text-xs",
-                        isDisabled ? "text-neu-400" : "text-neu-700",
-                      )}
-                    >
+                    <span className="ml-auto shrink-0 text-xs">
                       {item.count}
                     </span>
                   ) : null}

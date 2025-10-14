@@ -14,20 +14,15 @@ import NextHead from "next/head"
 import { useMounted } from "nextra/hooks"
 import Markdown from "markdown-to-jsx"
 import { evaluate } from "nextra/components"
-import {
-  useCallback,
-  useState,
-  MouseEvent,
-  useMemo,
-  KeyboardEventHandler,
-  memo,
-} from "react"
+import { useCallback, useState, MouseEvent, useMemo, memo } from "react"
 import { clsx } from "clsx"
-import { getComponents } from "nextra-theme-docs"
+import { Collapse, getComponents } from "nextra-theme-docs"
 import { RadioGroup, Radio } from "@/components/radio"
 import { Button } from "@/app/conf/_design-system/button"
 import { Tag } from "@/app/conf/_design-system/tag"
 import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
+import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
+import { SidebarFooter } from "./sidebar"
 
 type PackageInfo = {
   name: string
@@ -67,6 +62,12 @@ export function CodePage({ allTags, data }: CodePageProps) {
 
   const [searchParams, setSearchParams] = useSearchParamsState()
   const [search, setSearch] = useState("")
+  const normalizedSearch = useMemo(() => search.trim().toLowerCase(), [search])
+  const searchTokens = useMemo(
+    () =>
+      normalizedSearch ? normalizedSearch.split(/\s+/).filter(Boolean) : [],
+    [normalizedSearch],
+  )
 
   const selectedTags = searchParams.getAll(TAG_PARAM_KEY)
 
@@ -105,12 +106,60 @@ export function CodePage({ allTags, data }: CodePageProps) {
   const mounted = useMounted()
 
   const { newData, tagCounts } = useMemo(() => {
+    const fuzzyMatch = (haystack: string, needle: string) => {
+      if (!needle) return true
+      let matchIndex = 0
+      for (
+        let i = 0;
+        i < haystack.length && matchIndex < needle.length;
+        i += 1
+      ) {
+        if (haystack[i] === needle[matchIndex]) {
+          matchIndex += 1
+        }
+      }
+      return matchIndex === needle.length
+    }
+
     const filteredData = mounted
-      ? data.filter(({ tags }) => {
-          return (
-            !selectedTags.length ||
-            selectedTags.every(tag => tags.includes(tag))
-          )
+      ? data.filter(item => {
+          if (
+            selectedTags.length &&
+            !selectedTags.every(tag => item.tags.includes(tag))
+          ) {
+            return false
+          }
+
+          if (!searchTokens.length) {
+            return true
+          }
+
+          const tagNames = item.tags
+            .map(tag => allTagsMap.get(tag)?.name ?? tag)
+            .join(" ")
+
+          const searchableText = [
+            item.frontMatter.name,
+            item.frontMatter.description,
+            tagNames,
+            item.license,
+            item.lastRelease,
+            item.formattedStars,
+            item.frontMatter.github,
+            item.frontMatter.npm,
+            item.frontMatter.url,
+            item.frontMatter.gem,
+            item.compiledSource,
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase()
+
+          if (!searchableText) {
+            return false
+          }
+
+          return searchTokens.every(token => fuzzyMatch(searchableText, token))
         })
       : data
 
@@ -125,10 +174,9 @@ export function CodePage({ allTags, data }: CodePageProps) {
       newData: filteredData,
       tagCounts: counts,
     }
-  }, [mounted, data, selectedTags])
+  }, [mounted, data, selectedTags, allTagsMap, searchTokens])
 
   const filterTreeItems = useMemo<CheckboxTreeItem[]>(() => {
-    const normalizedSearch = search.trim().toLowerCase()
     const matchesSearch = (label: string) =>
       normalizedSearch ? label.toLowerCase().includes(normalizedSearch) : true
 
@@ -237,7 +285,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
     const disabledRoots = processed.filter(item => item.disabled)
 
     return [...enabledRoots, ...disabledRoots]
-  }, [allTags, allTagsMap, search, tagCounts])
+  }, [allTags, allTagsMap, normalizedSearch, tagCounts])
 
   const handleTreeSelection = useCallback(
     (next: string[]) => {
@@ -264,6 +312,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
   }, [selectedTags, allTagsMap])
 
   const [sort, setSort] = useState("popularity")
+  const [isCollapsing, setIsCollapsing] = useState(false)
 
   let description = `A collection of tools and libraries for GraphQL`
   let title = "Tools and Libraries | GraphQL"
@@ -271,6 +320,8 @@ export function CodePage({ allTags, data }: CodePageProps) {
     description += ` related to ${selectedTagsAsString}`
     title = `${selectedTagsAsString} | ${title}`
   }
+
+  const [showSidebar, setSidebar] = useState(true)
 
   return (
     <>
@@ -285,37 +336,51 @@ export function CodePage({ allTags, data }: CodePageProps) {
         />
       </NextHead>
       <div className="gql-container gql-section pb-8">
-        <div className="mt-8 md:grid md:grid-cols-[minmax(240px,300px)_1fr] md:gap-8">
+        <div className="relative mt-8 flex md:gap-8">
           <aside>
-            <label className="focus-within:gql-focus-outline flex items-center gap-1 border border-neu-300 bg-neu-0 p-2">
-              <SearchIcon className="size-5 text-neu-800" />
-              <input
-                // TODO: This should also do a fuzzy full text search, not just search on tags.
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="Filter tags..."
-                className="bg-transparent focus:outline-none"
+            <Collapse horizontal isOpen={showSidebar}>
+              <label className="flex items-center gap-1 border border-neu-300 bg-neu-0 p-2 focus-within:gql-focus-outline">
+                <SearchIcon className="size-5 text-neu-800" />
+                <input
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  placeholder="Filter tags..."
+                  className="bg-transparent placeholder:text-neu-600 focus:outline-none dark:placeholder:text-neu-400"
+                />
+              </label>
+              <CheckboxTree
+                items={filterTreeItems}
+                selectedValues={selectedTags}
+                onSelectionChange={handleTreeSelection}
               />
-            </label>
-            <CheckboxTree
-              items={filterTreeItems}
-              selectedValues={selectedTags}
-              onSelectionChange={handleTreeSelection}
+            </Collapse>
+
+            <SidebarFooter
+              setSidebar={setSidebar}
+              showSidebar={showSidebar}
+              className="!mx-0 mt-4"
             />
           </aside>
 
-          <div>
+          <div
+            className="min-w-0"
+            onTransitionEnd={e => {
+              if (e.propertyName === "filter") {
+                setIsCollapsing(false)
+              }
+            }}
+          >
             <RadioGroup
               value={sort}
               onValueChange={value => setSort(value as string)}
-              className="typography-menu flex flex-wrap gap-2 text-sm text-neu-800 md:flex-nowrap"
+              className="typography-menu flex flex-wrap gap-2 text-sm text-neu-800 dark:text-neu-600 md:flex-nowrap"
             >
               <div>Sort by:</div>
-              <label className="flex items-center gap-1 [&:has([data-checked])]:text-neu-900">
+              <label className="-m-1 flex cursor-pointer items-center gap-1 p-1 hover:bg-neu-50/50 [&:has([data-checked])]:text-neu-900">
                 <Radio value="popularity" />
                 <span>Popularity</span>
               </label>
-              <label className="flex items-center gap-1">
+              <label className="-m-1 flex cursor-pointer items-center gap-1 p-1 hover:bg-neu-50/50 [&:has([data-checked])]:text-neu-900">
                 <Radio value="alphabetical" />
                 <span>Alphabetical</span>
               </label>
@@ -341,7 +406,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                     <Card
                       key={`${name}${tags.toString()}`}
                       className={clsx(
-                        "flex h-max flex-col !p-0",
+                        "flex h-full flex-col !p-0",
                         "min-w-0", // hack to avoid overflow when opening details
                       )}
                     >
