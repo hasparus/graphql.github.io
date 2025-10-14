@@ -502,17 +502,14 @@ export function Sidebar({
             {themeConfig.sidebar.toggleButton && (
               <Button
                 title={showSidebar ? "Hide sidebar" : "Show sidebar"}
-                className="p-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 dark:bg-pri-lighter/5 max-md:hidden"
+                className="p-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 dark:hover:bg-neu-500/5 max-md:hidden"
                 onClick={() => {
                   setSidebar(!showSidebar)
                   setToggleAnimation(true)
                 }}
               >
                 <ArrowBarLeft
-                  className={cn(
-                    "size-4",
-                    !showSidebar && "first:*:_origin-[35%] first:*:_rotate-180",
-                  )}
+                  className={cn("size-5", !showSidebar && "rotate-180")}
                 />
               </Button>
             )}
