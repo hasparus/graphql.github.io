@@ -67,13 +67,8 @@ export function CodePage({ allTags, data }: CodePageProps) {
 
   const [searchParams, setSearchParams] = useSearchParamsState()
   const [search, setSearch] = useState("")
-  const selectedTags = useMemo(() => {
-    const values = searchParams.getAll(TAG_PARAM_KEY)
-    if (values.length === 0) return []
-    return values.flatMap(value =>
-      value.split("_").map(part => part.trim()).filter(Boolean),
-    )
-  }, [searchParams])
+
+  const selectedTags = searchParams.getAll(TAG_PARAM_KEY)
 
   const updateTags = useCallback(
     (updater: (prev: string[]) => string[]) => {
@@ -108,27 +103,13 @@ export function CodePage({ allTags, data }: CodePageProps) {
   )
 
   const mounted = useMounted()
-  const [isBackspacePressed, setIsBackspacePressed] = useState(false)
-
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
-    e => {
-      if (e.key === "Backspace" && !search) {
-        if (isBackspacePressed) {
-          setIsBackspacePressed(false)
-          updateTags(prevTags => prevTags.slice(0, -1))
-        } else {
-          setIsBackspacePressed(true)
-        }
-      }
-    },
-    [isBackspacePressed, search, updateTags],
-  )
 
   const { newData, tagCounts } = useMemo(() => {
     const filteredData = mounted
       ? data.filter(({ tags }) => {
           return (
-            !selectedTags.length || selectedTags.every(tag => tags.includes(tag))
+            !selectedTags.length ||
+            selectedTags.every(tag => tags.includes(tag))
           )
         })
       : data
@@ -245,7 +226,9 @@ export function CodePage({ allTags, data }: CodePageProps) {
       return {
         ...item,
         disabled: isDisabled,
-        ...(orderedChildren ? { children: orderedChildren } : { children: undefined }),
+        ...(orderedChildren
+          ? { children: orderedChildren }
+          : { children: undefined }),
       }
     }
 
@@ -258,10 +241,9 @@ export function CodePage({ allTags, data }: CodePageProps) {
 
   const handleTreeSelection = useCallback(
     (next: string[]) => {
-      setIsBackspacePressed(false)
       updateTags(() => next)
     },
-    [setIsBackspacePressed, updateTags],
+    [updateTags],
   )
 
   const selectedTagsAsString = useMemo(() => {
@@ -316,7 +298,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
                 // TODO: This should also do a fuzzy full text search, not just search on tags.
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                onKeyDown={handleKeyDown}
                 placeholder="Filter tags..."
                 className="bg-transparent focus:outline-none"
               />
@@ -325,7 +306,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
               items={filterTreeItems}
               selectedValues={selectedTags}
               onSelectionChange={handleTreeSelection}
-              emptyFallback="No categories found"
             />
           </aside>
 
