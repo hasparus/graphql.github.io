@@ -390,11 +390,11 @@ export function CodePage({ allTags, data }: CodePageProps) {
                       </article>
 
                       {compiledSource && (
-                        <details className="bg-neu-100">
+                        <details className="bg-neu-100 dark:bg-neu-50/50 dark:[&:open]:bg-neu-0">
                           <summary
                             className={clsx(
                               "flex justify-between px-8 py-5 text-primary lg:px-12 dark:[[open]>&]:shadow-[-5px_10px_30px_20px_#1b1b1b4d]",
-                              "[[open]>&]:bg-neu-200",
+                              "[[open]>&]:bg-neu-200 dark:[[open]>&]:bg-neu-50/50",
                               "cursor-pointer",
                             )}
                           >

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { useMemo } from "react"
+import { CheckboxIcon } from "@/app/conf/_design-system/pixelarticons/checkbox-icon"
 
 export interface CheckboxTreeItem {
   id: string
@@ -97,6 +98,9 @@ export function CheckboxTree({
   const renderTree = (nodes: PreparedTree[]): ReactNode => {
     return nodes.map(node => {
       const isSelectable = Boolean(node.value)
+      const isChecked = isSelectable
+        ? selectedValues.includes(node.value!)
+        : false
       const checkboxId = `checkbox-tree-${node.id}`
 
       return (
@@ -110,13 +114,20 @@ export function CheckboxTree({
                 htmlFor={checkboxId}
                 className="flex grow cursor-pointer items-center gap-2"
               >
-                <input
-                  id={checkboxId}
-                  type="checkbox"
-                  checked={selectedValues.includes(node.value!)}
-                  onChange={() => toggleValue(node.value!)}
-                  className="size-4 border border-neu-400 bg-transparent [accent-color:hsl(var(--color-pri-base))]"
-                />
+                <span className="flex shrink-0 items-center">
+                  <input
+                    id={checkboxId}
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={() => toggleValue(node.value!)}
+                    className="peer sr-only"
+                  />
+                  <CheckboxIcon
+                    checked={isChecked}
+                    className="pointer-events-none size-5 transition-colors peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-1 peer-focus-visible:outline-neu-900"
+                    aria-hidden
+                  />
+                </span>
                 <span className="min-w-0 grow truncate text-left text-neu-800">
                   {node.label}
                 </span>
