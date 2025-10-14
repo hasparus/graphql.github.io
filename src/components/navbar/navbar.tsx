@@ -122,7 +122,7 @@ export function Navbar({ items }: NavBarProps): ReactElement {
         )}
         <div className="flex-1" />
         <NavigationMenu.Root
-          // onValueChange={handleNavigationMenuChange}
+          onValueChange={handleNavigationMenuChange}
           className="-mx-2 flex overflow-x-auto px-2 py-1.5 xl:absolute xl:left-1/2 xl:-translate-x-1/2"
           render={props => <div {...props} />}
         >
