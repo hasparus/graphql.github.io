@@ -8,17 +8,12 @@ import {
 } from "@/icons"
 import { Card } from "@/components"
 import { CheckboxTree, type CheckboxTreeItem } from "@/components/checkbox-tree"
+import { useSearchParamsState } from "@/components/checkbox-tree/use-search-params-state"
 import NextLink from "next/link"
 import NextHead from "next/head"
 import { useMounted } from "nextra/hooks"
 import Markdown from "markdown-to-jsx"
 import { evaluate } from "nextra/components"
-
-import {
-  DelimitedArrayParam,
-  useQueryParam,
-  withDefault,
-} from "use-query-params"
 import {
   useCallback,
   useState,
@@ -60,7 +55,7 @@ type CodePageProps = {
   }[]
 }
 
-const TagParam = withDefault(DelimitedArrayParam, [])
+const TAG_PARAM_KEY = "tags"
 
 export function CodePage({ allTags, data }: CodePageProps) {
   const allTagsMap = useMemo(
@@ -70,64 +65,71 @@ export function CodePage({ allTags, data }: CodePageProps) {
     [],
   )
 
+  const [searchParams, setSearchParams] = useSearchParamsState()
   const [search, setSearch] = useState("")
-  const [queryParamsTags, setTags] = useQueryParam("tags", TagParam)
-  const selectedTags = queryParamsTags as string[]
+  const selectedTags = useMemo(() => {
+    const values = searchParams.getAll(TAG_PARAM_KEY)
+    if (values.length === 0) return []
+    return values.flatMap(value =>
+      value.split("_").map(part => part.trim()).filter(Boolean),
+    )
+  }, [searchParams])
+
+  const updateTags = useCallback(
+    (updater: (prev: string[]) => string[]) => {
+      setSearchParams(prev => {
+        const currentValues = prev
+          .getAll(TAG_PARAM_KEY)
+          .flatMap(value => value.split("_").filter(Boolean))
+        const next = updater(currentValues)
+
+        prev.delete(TAG_PARAM_KEY)
+        next.forEach(tag => {
+          prev.append(TAG_PARAM_KEY, tag)
+        })
+      })
+    },
+    [setSearchParams],
+  )
 
   const handleQuery = useCallback(
     (e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
       e.preventDefault()
       const tag = e.currentTarget.dataset.tag!
 
-      setTags(prevTags => {
-        if (prevTags!.includes(tag)) {
-          return prevTags!.filter(t => t !== tag)
+      updateTags(prevTags => {
+        if (prevTags.includes(tag)) {
+          return prevTags.filter(t => t !== tag)
         }
-        return [...prevTags!, tag]
+        return [...prevTags, tag]
       })
     },
-    [setTags],
+    [updateTags],
   )
 
   const mounted = useMounted()
   const [isBackspacePressed, setIsBackspacePressed] = useState(false)
-
-  const inputTags =
-    mounted &&
-    selectedTags
-      .map(tag => [tag, allTagsMap.get(tag)?.name])
-      .filter(([, name]) => name)
-      .map(([tag, name]) => (
-        <button
-          key={tag}
-          className="shrink-0 pr-2"
-          data-tag={tag}
-          title={`Remove tag "${name}"`}
-          onClick={handleQuery}
-        >
-          {name} <span className="text-primary">+</span>
-        </button>
-      ))
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
     e => {
       if (e.key === "Backspace" && !search) {
         if (isBackspacePressed) {
           setIsBackspacePressed(false)
-          setTags(prevTags => prevTags!.slice(0, -1))
+          updateTags(prevTags => prevTags.slice(0, -1))
         } else {
           setIsBackspacePressed(true)
         }
       }
     },
-    [isBackspacePressed, search, setTags],
+    [isBackspacePressed, search, updateTags],
   )
 
   const { newData, tagCounts } = useMemo(() => {
     const filteredData = mounted
       ? data.filter(({ tags }) => {
-          const selected = queryParamsTags as string[]
-          return !selected.length || selected.every(tag => tags.includes(tag))
+          return (
+            !selectedTags.length || selectedTags.every(tag => tags.includes(tag))
+          )
         })
       : data
 
@@ -142,9 +144,13 @@ export function CodePage({ allTags, data }: CodePageProps) {
       newData: filteredData,
       tagCounts: counts,
     }
-  }, [mounted, data, queryParamsTags])
+  }, [mounted, data, selectedTags])
 
   const filterTreeItems = useMemo<CheckboxTreeItem[]>(() => {
+    const normalizedSearch = search.trim().toLowerCase()
+    const matchesSearch = (label: string) =>
+      normalizedSearch ? label.toLowerCase().includes(normalizedSearch) : true
+
     const getName = (tag: string) => allTagsMap.get(tag)?.name ?? tag
     const getCount = (tag: string) => tagCounts.get(tag) ?? 0
 
@@ -167,7 +173,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
       }))
       .sort((a, b) => a.label.localeCompare(b.label))
 
-    const items: CheckboxTreeItem[] = [
+    const baseItems: CheckboxTreeItem[] = [
       {
         id: "category",
         label: "Category",
@@ -215,23 +221,47 @@ export function CodePage({ allTags, data }: CodePageProps) {
     ]
 
     if (languages.length > 0) {
-      items.push({
+      baseItems.push({
         id: "language-support",
         label: "Language Support",
         children: languages,
       })
     }
 
-    return items
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allTagsMap, tagCounts])
+    const applySearch = (item: CheckboxTreeItem): CheckboxTreeItem => {
+      const children = item.children?.map(applySearch) ?? []
+      const enabledChildren = children.filter(child => !child.disabled)
+      const disabledChildren = children.filter(child => child.disabled)
+      const hasEnabledChildren = enabledChildren.length > 0
+      const isMatch = matchesSearch(item.label)
+      const isDisabled =
+        normalizedSearch && !isMatch && !hasEnabledChildren ? true : false
+
+      const orderedChildren =
+        children.length > 0
+          ? [...enabledChildren, ...disabledChildren]
+          : undefined
+
+      return {
+        ...item,
+        disabled: isDisabled,
+        ...(orderedChildren ? { children: orderedChildren } : { children: undefined }),
+      }
+    }
+
+    const processed = baseItems.map(applySearch)
+    const enabledRoots = processed.filter(item => !item.disabled)
+    const disabledRoots = processed.filter(item => item.disabled)
+
+    return [...enabledRoots, ...disabledRoots]
+  }, [allTags, allTagsMap, search, tagCounts])
 
   const handleTreeSelection = useCallback(
     (next: string[]) => {
       setIsBackspacePressed(false)
-      setTags(next)
+      updateTags(() => next)
     },
-    [setIsBackspacePressed, setTags],
+    [setIsBackspacePressed, updateTags],
   )
 
   const selectedTagsAsString = useMemo(() => {
@@ -295,7 +325,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
               items={filterTreeItems}
               selectedValues={selectedTags}
               onSelectionChange={handleTreeSelection}
-              searchQuery={search}
               emptyFallback="No categories found"
             />
           </aside>
