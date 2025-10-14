@@ -284,12 +284,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
           key="meta-og-description"
         />
       </NextHead>
-      <div className="container py-8 md:pt-16">
-        <h1 className="typography-h1 text-center">Tools and Libraries</h1>
-        <p className="typography-body-sm mt-8 text-center">
-          Explore tools and libraries for working with GraphQL across various
-          languages and platforms.
-        </p>
+      <div className="gql-container gql-section pb-8">
         <div className="mt-8 md:grid md:grid-cols-[minmax(240px,300px)_1fr] md:gap-8">
           <aside>
             <label className="focus-within:gql-focus-outline flex items-center gap-1 border border-neu-300 bg-neu-0 p-2">
