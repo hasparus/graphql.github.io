@@ -326,7 +326,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
           <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] w-[300px] shrink-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
             <Collapse horizontal isOpen={showSidebar}>
               <section className="nextra-scrollbar overflow-y-auto p-4 pt-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
-                <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] pt-1 shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))]">
+                <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))]">
                   <label className="focus-within:gql-focus-outline flex items-center gap-1 border border-neu-300 bg-neu-0 p-2">
                     <SearchIcon className="size-5 text-neu-800" />
                     <input
