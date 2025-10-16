@@ -42,7 +42,10 @@ export function CheckboxTree({
         }
 
         return (
-          <div key={item.id}>
+          <div
+            className="[*:has(_:focus)>&:not(:focus-within)]:text-neu-700"
+            key={item.id}
+          >
             <div
               className="flex items-start gap-2 py-1"
               style={{ paddingInlineStart: (depth - 1) * 16 }}

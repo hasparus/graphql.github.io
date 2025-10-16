@@ -321,42 +321,38 @@ export function CodePage({ allTags, data }: CodePageProps) {
           key="meta-og-description"
         />
       </NextHead>
-      <div className="gql-container gql-section pb-8">
-        <Breadcrumbs className="" activePath={activePath} />
-        <div className="relative mt-8 flex md:gap-8">
-          <aside>
+      <div className="mx-auto max-w-[90rem] p-4 py-8 pl-0">
+        <div className="relative flex md:gap-6">
+          <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] w-[300px] shrink-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
             <Collapse horizontal isOpen={showSidebar}>
-              <label className="focus-within:gql-focus-outline flex items-center gap-1 border border-neu-300 bg-neu-0 p-2">
-                <SearchIcon className="size-5 text-neu-800" />
-                <input
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  placeholder="Filter tags..."
-                  className="bg-transparent placeholder:text-neu-600 focus:outline-none dark:placeholder:text-neu-400"
+              <section className="nextra-scrollbar overflow-y-auto p-4 pt-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+                <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] pt-1 shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))]">
+                  <label className="focus-within:gql-focus-outline flex items-center gap-1 border border-neu-300 bg-neu-0 p-2">
+                    <SearchIcon className="size-5 text-neu-800" />
+                    <input
+                      value={search}
+                      onChange={e => setSearch(e.target.value)}
+                      placeholder="Filter tags..."
+                      className="bg-transparent placeholder:text-neu-600 focus:outline-none dark:placeholder:text-neu-400"
+                    />
+                  </label>
+                </div>
+                <CheckboxTree
+                  items={filterTreeItems}
+                  selectedValues={selectedTags}
+                  onSelectionChange={handleTreeSelection}
                 />
-              </label>
-              <CheckboxTree
-                items={filterTreeItems}
-                selectedValues={selectedTags}
-                onSelectionChange={handleTreeSelection}
-              />
+              </section>
             </Collapse>
-
             <SidebarFooter
               setSidebar={setSidebar}
               showSidebar={showSidebar}
-              className="!mx-0 mt-4"
+              className="bottom-0 !mx-0 mt-4"
             />
-          </aside>
+          </div>
 
-          <div
-            className="min-w-0"
-            onTransitionEnd={e => {
-              if (e.propertyName === "filter") {
-                setIsCollapsing(false)
-              }
-            }}
-          >
+          <div className="min-w-0">
+            <Breadcrumbs className="mb-6 mt-1" activePath={activePath} />
             <RadioGroup
               value={sort}
               onValueChange={value => setSort(value as string)}
@@ -437,7 +433,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                             )}
                             {license && <span>{license}</span>}
                             {lastRelease && (
-                              <span>Last released {lastRelease}</span>
+                              <span>Last release {lastRelease}</span>
                             )}
                           </div>
                         )}
