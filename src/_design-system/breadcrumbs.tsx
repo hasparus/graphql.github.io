@@ -6,6 +6,7 @@ import type { Item } from "nextra/normalize-pages"
 import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
 
 import { extractStringsFromReactNode } from "../components/utils/extract-strings-from-react-node"
+import { get } from "http"
 
 export const Breadcrumbs = ({
   activePath,
@@ -22,15 +23,7 @@ export const Breadcrumbs = ({
       )}
     >
       {activePath.map((item, index, arr) => {
-        const nextItem = arr[index + 1]
-        const href = nextItem
-          ? "frontMatter" in item
-            ? item.route
-            : (item as { children: { route: string }[] }).children[0]?.route ===
-                nextItem.route
-              ? ""
-              : (item as { children: { route: string }[] }).children[0]?.route
-          : ""
+        const href = getHref(item)
 
         const title = extractStringsFromReactNode(item.title)
         const className = clsx(
@@ -63,4 +56,11 @@ export const Breadcrumbs = ({
       })}
     </div>
   )
+}
+
+function getHref(item: Item): string {
+  if ("frontMatter" in item) return item.route
+
+  const firstChild = item.children[0]
+  return firstChild ? getHref(firstChild) : ""
 }
