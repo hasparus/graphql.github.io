@@ -4,11 +4,24 @@ import NextLink from "next/link"
 import { ArrowRightIcon } from "nextra/icons"
 import type { Item } from "nextra/normalize-pages"
 
-import { extractStringsFromReactNode } from "../../components/utils/extract-strings-from-react-node"
+import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
 
-export const Breadcrumbs = ({ activePath }: { activePath: Item[] }) => {
+import { extractStringsFromReactNode } from "../components/utils/extract-strings-from-react-node"
+
+export const Breadcrumbs = ({
+  activePath,
+  className,
+}: {
+  activePath: Item[]
+  className?: string
+}) => {
   return (
-    <div className="x:mt-1.5 x:flex x:items-center x:gap-1 x:overflow-hidden x:text-sm x:text-gray-600 x:dark:text-gray-400 x:contrast-more:text-current">
+    <div
+      className={clsx(
+        "typography-menu flex items-center gap-1 overflow-hidden text-sm",
+        className,
+      )}
+    >
       {activePath.map((item, index, arr) => {
         const nextItem = arr[index + 1]
         const href = nextItem
@@ -22,21 +35,15 @@ export const Breadcrumbs = ({ activePath }: { activePath: Item[] }) => {
 
         const title = extractStringsFromReactNode(item.title)
         const className = clsx(
-          "x:whitespace-nowrap x:transition-colors",
-          nextItem
-            ? "x:min-w-6 x:overflow-hidden x:text-ellipsis"
-            : "x:font-medium x:text-black x:dark:text-gray-100",
+          "truncate text-neu-700 dark:text-neu-400 min-w-6 last:text-neu-800 dark:last:text-neu-800 leading-none",
           href &&
-            "x:focus-visible:nextra-focus x:ring-inset x:hover:text-gray-900 x:dark:hover:text-gray-100",
+            "focus-visible:gql-focus-visible ring-inset hover:text-neu-900 hover:underline",
         )
 
         return (
           <Fragment key={item.route + item.name}>
             {index > 0 && (
-              <ArrowRightIcon
-                height="14"
-                className="x:shrink-0 x:rtl:rotate-180"
-              />
+              <CaretDown className="size-4 translate-x-[0.5px] -rotate-90" />
             )}
             {href ? (
               <NextLink href={href} title={title} prefetch={false}>

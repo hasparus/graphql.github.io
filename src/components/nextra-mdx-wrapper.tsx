@@ -146,7 +146,7 @@ function Body({ children }: { children: ReactNode }): ReactElement {
     >
       <main className="w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
         {activeType !== "page" && themeContext.breadcrumb && (
-          <Breadcrumbs activePath={activePath} />
+          <Breadcrumbs activePath={activePath} className="mt-1.5" />
         )}
         {body}
       </main>
