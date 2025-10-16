@@ -11,7 +11,7 @@ import {
 import { clsx } from "clsx"
 
 import { Sidebar } from "./sidebar"
-import { renderComponent } from "./utils"
+import { renderComponent } from "./utils/render-component"
 import { TableOfContents } from "./table-of-contents"
 
 const classes = {

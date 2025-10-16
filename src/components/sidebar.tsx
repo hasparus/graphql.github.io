@@ -20,7 +20,7 @@ import {
   useState,
 } from "react"
 import scrollIntoView from "scroll-into-view-if-needed"
-import { renderComponent } from "./utils"
+import { renderComponent } from "./utils/render-component"
 import {
   useActiveAnchor,
   useMenu,
