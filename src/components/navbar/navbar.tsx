@@ -14,7 +14,7 @@ import {
 } from "react"
 import { useMenu, useThemeConfig } from "nextra-theme-docs"
 import { Anchor } from "@/app/conf/_design-system/anchor"
-import { renderComponent } from "@/components/utils"
+import { renderComponent } from "@/components/utils/render-component"
 
 import MenuIcon from "@/app/conf/_design-system/pixelarticons/menu.svg?svgr"
 import CloseIcon from "@/app/conf/_design-system/pixelarticons/close.svg?svgr"
