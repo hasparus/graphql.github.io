@@ -16,13 +16,14 @@ import Markdown from "markdown-to-jsx"
 import { evaluate } from "nextra/components"
 import { useCallback, useState, MouseEvent, useMemo, memo } from "react"
 import { clsx } from "clsx"
-import { Collapse, getComponents } from "nextra-theme-docs"
+import { Collapse, getComponents, useConfig } from "nextra-theme-docs"
 import { RadioGroup, Radio } from "@/components/radio"
 import { Button } from "@/app/conf/_design-system/button"
 import { Tag } from "@/app/conf/_design-system/tag"
 import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
 import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
 import { SidebarFooter } from "./sidebar"
+import { Breadcrumbs } from "../_design-system/breadcrumbs"
 
 type PackageInfo = {
   name: string
@@ -60,6 +61,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
     [],
   )
 
+  const { activePath } = useConfig().normalizePagesResult
   const [searchParams, setSearchParams] = useSearchParamsState()
   const [search, setSearch] = useState("")
   const normalizedSearch = useMemo(() => search.trim().toLowerCase(), [search])
@@ -86,21 +88,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
       })
     },
     [setSearchParams],
-  )
-
-  const handleQuery = useCallback(
-    (e: MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-      e.preventDefault()
-      const tag = e.currentTarget.dataset.tag!
-
-      updateTags(prevTags => {
-        if (prevTags.includes(tag)) {
-          return prevTags.filter(t => t !== tag)
-        }
-        return [...prevTags, tag]
-      })
-    },
-    [updateTags],
   )
 
   const mounted = useMounted()
@@ -312,7 +299,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
   }, [selectedTags, allTagsMap])
 
   const [sort, setSort] = useState("popularity")
-  const [isCollapsing, setIsCollapsing] = useState(false)
 
   let description = `A collection of tools and libraries for GraphQL`
   let title = "Tools and Libraries | GraphQL"
@@ -336,6 +322,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
         />
       </NextHead>
       <div className="gql-container gql-section pb-8">
+        <Breadcrumbs className="" activePath={activePath} />
         <div className="relative mt-8 flex md:gap-8">
           <aside>
             <Collapse horizontal isOpen={showSidebar}>

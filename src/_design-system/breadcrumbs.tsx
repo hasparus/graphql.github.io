@@ -1,7 +1,6 @@
 import { Fragment } from "react"
 import { clsx } from "clsx"
 import NextLink from "next/link"
-import { ArrowRightIcon } from "nextra/icons"
 import type { Item } from "nextra/normalize-pages"
 
 import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
@@ -37,7 +36,7 @@ export const Breadcrumbs = ({
         const className = clsx(
           "truncate text-neu-700 dark:text-neu-400 min-w-6 last:text-neu-800 dark:last:text-neu-800 leading-none",
           href &&
-            "focus-visible:gql-focus-visible ring-inset hover:text-neu-900 hover:underline",
+            "focus-visible:gql-focus-visible ring-inset hover:text-neu-900 hover:underline underline-offset-2",
         )
 
         return (
@@ -46,7 +45,12 @@ export const Breadcrumbs = ({
               <CaretDown className="size-4 translate-x-[0.5px] -rotate-90" />
             )}
             {href ? (
-              <NextLink href={href} title={title} prefetch={false}>
+              <NextLink
+                href={href}
+                title={title}
+                prefetch={false}
+                className={className}
+              >
                 {item.title}
               </NextLink>
             ) : (
