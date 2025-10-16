@@ -21,7 +21,7 @@ import { RadioGroup, Radio } from "@/components/radio"
 import { Button } from "@/app/conf/_design-system/button"
 import { Tag } from "@/app/conf/_design-system/tag"
 import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
-import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
+import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
 import { SidebarFooter } from "./sidebar"
 
 type PackageInfo = {
@@ -339,7 +339,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
         <div className="relative mt-8 flex md:gap-8">
           <aside>
             <Collapse horizontal isOpen={showSidebar}>
-              <label className="flex items-center gap-1 border border-neu-300 bg-neu-0 p-2 focus-within:gql-focus-outline">
+              <label className="focus-within:gql-focus-outline flex items-center gap-1 border border-neu-300 bg-neu-0 p-2">
                 <SearchIcon className="size-5 text-neu-800" />
                 <input
                   value={search}
@@ -440,35 +440,33 @@ export function CodePage({ allTags, data }: CodePageProps) {
                         {hasMetadata && (
                           <div
                             className={clsx(
-                              "flex items-center gap-5 max-md:text-xs",
-                              "[&>:not(:last-child)]:border-r [&>:not(:last-child)]:border-neu-500 [&>:not(:last-child)]:pr-5",
+                              "flex place-items-center gap-2 text-sm [&>*:not(:first-of-type):before]:[content:'/__']",
                             )}
                           >
-                            {lastRelease && (
-                              <span>Last release {lastRelease}</span>
-                            )}
                             {formattedStars && (
                               <span className="flex items-center gap-1">
-                                <StarIcon className="text-primary" />
-                                {formattedStars}
+                                ★{formattedStars}
                               </span>
                             )}
                             {license && <span>{license}</span>}
+                            {lastRelease && (
+                              <span>Last released {lastRelease}</span>
+                            )}
                           </div>
                         )}
                       </article>
 
                       {compiledSource && (
-                        <details className="bg-neu-100 dark:bg-neu-50/50 dark:[&:open]:bg-neu-0">
+                        <details>
                           <summary
                             className={clsx(
-                              "flex justify-between px-8 py-5 text-primary lg:px-12 dark:[[open]>&]:shadow-[-5px_10px_30px_20px_#1b1b1b4d]",
-                              "[[open]>&]:bg-neu-200 dark:[[open]>&]:bg-neu-50/50",
+                              "flex justify-between px-8 py-5 text-pri-base dark:[[open]>&]:shadow-[-5px_10px_30px_20px_#1b1b1b4d]",
+                              "border-t border-neu-100 dark:border-neu-50 [[open]>&]:bg-neu-200 dark:[[open]>&]:bg-neu-50/25",
                               "cursor-pointer",
                             )}
                           >
                             README
-                            <ChevronLeftIcon className="size-5 -rotate-90 transition-transform [[open]>*>&]:rotate-90" />
+                            <CaretDown className="size-5 [[open]>*>&]:rotate-180" />
                           </summary>
                           <div
                             className="px-8 py-5 lg:px-12"
