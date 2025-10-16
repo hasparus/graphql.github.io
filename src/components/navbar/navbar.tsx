@@ -79,21 +79,13 @@ export function Navbar({ items }: NavBarProps): ReactElement {
 
   const activeRoute = useFSRoute()
   const { menu, setMenu } = useMenu()
-  const handleNavigationMenuChange = useCallback((value: unknown) => {
-    if (typeof document === "undefined") {
-      return
-    }
-    document.body.style.overflow = value != null ? "hidden" : "auto"
-  }, [])
 
-  useEffect(() => {
-    if (typeof document === "undefined") {
-      return
-    }
-    return () => {
+  useEffect(
+    () => () => {
       document.body.style.overflow = "auto"
-    }
-  }, [])
+    },
+    [],
+  )
 
   return (
     <div
@@ -122,9 +114,10 @@ export function Navbar({ items }: NavBarProps): ReactElement {
         )}
         <div className="flex-1" />
         <NavigationMenu.Root
-          onValueChange={handleNavigationMenuChange}
+          onValueChange={(value: string | null) => {
+            document.body.style.overflow = value != null ? "hidden" : "auto"
+          }}
           className="-mx-2 flex overflow-x-auto px-2 py-1.5 xl:absolute xl:left-1/2 xl:-translate-x-1/2"
-          render={props => <div {...props} />}
         >
           <NavigationMenu.List className="flex w-full items-center gap-2">
             {items.map(pageOrMenu => {
