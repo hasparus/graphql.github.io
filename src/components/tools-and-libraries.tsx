@@ -1,22 +1,26 @@
-import { GitHubIcon, GlobeIcon, NPMIcon, RubyGemsIcon } from "@/icons"
+import { clsx } from "clsx"
+import NextHead from "next/head"
+import NextLink from "next/link"
+import { Collapse, getComponents, useConfig } from "nextra-theme-docs"
+import { evaluate } from "nextra/components"
+import { useMounted } from "nextra/hooks"
+import { memo, useCallback, useMemo, useState } from "react"
+
 import { Card } from "@/components"
 import { CheckboxTree, type CheckboxTreeItem } from "@/components/checkbox-tree"
 import { useSearchParamsState } from "@/components/checkbox-tree/use-search-params-state"
-import NextLink from "next/link"
-import NextHead from "next/head"
-import { useMounted } from "nextra/hooks"
-import Markdown from "markdown-to-jsx"
-import { evaluate } from "nextra/components"
-import { useCallback, useState, useMemo, memo } from "react"
-import { clsx } from "clsx"
-import { Collapse, getComponents, useConfig } from "nextra-theme-docs"
-import { RadioGroup, Radio } from "@/components/radio"
+import { GitHubIcon, GlobeIcon, NPMIcon, RubyGemsIcon } from "@/icons"
+import { MicroMarkdown } from "@/components/micro-markdown"
+import { Radio, RadioGroup } from "@/components/radio"
+
 import { Button } from "@/app/conf/_design-system/button"
-import { Tag } from "@/app/conf/_design-system/tag"
-import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
 import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
-import { SidebarFooter } from "./sidebar"
+import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
+import { Tag } from "@/app/conf/_design-system/tag"
+
 import { Breadcrumbs } from "../_design-system/breadcrumbs"
+
+import { SidebarFooter } from "./sidebar"
 
 type PackageInfo = {
   name: string
@@ -82,7 +86,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
           key="meta-og-description"
         />
       </NextHead>
-      <div className="mx-auto max-w-[90rem] p-4 py-8 pl-0">
+      <div className="mx-auto max-w-[120rem] p-4 py-8 pl-0">
         <div className="relative flex md:gap-6">
           <ToolsAndLibrariesSidebar
             searchInputValue={sidebarState.searchInputValue}
@@ -100,11 +104,11 @@ export function CodePage({ allTags, data }: CodePageProps) {
               className="typography-menu flex flex-wrap gap-2 text-sm text-neu-800 dark:text-neu-600 md:flex-nowrap"
             >
               <div>Sort by:</div>
-              <label className="-m-1 flex cursor-pointer items-center gap-1 p-1 hover:bg-neu-50/50 [&:has([data-checked])]:text-neu-900">
+              <label className="-m-1 flex items-center gap-1 p-1 [&:has([data-checked])]:text-neu-900 [&:has([data-unchecked])]:cursor-pointer [&:has([data-unchecked])]:hover:bg-neu-50/50">
                 <Radio value="popularity" />
                 <span>Popularity</span>
               </label>
-              <label className="-m-1 flex cursor-pointer items-center gap-1 p-1 hover:bg-neu-50/50 [&:has([data-checked])]:text-neu-900">
+              <label className="-m-1 flex items-center gap-1 p-1 [&:has([data-checked])]:text-neu-900 [&:has([data-unchecked])]:cursor-pointer [&:has([data-unchecked])]:hover:bg-neu-50/50">
                 <Radio value="alphabetical" />
                 <span>Alphabetical</span>
               </label>
@@ -157,9 +161,10 @@ export function CodePage({ allTags, data }: CodePageProps) {
                             </NextLink>
                           ))}
                         </div>
-                        <Markdown className="line-clamp-4 grow lg:text-lg [&_a]:text-primary">
-                          {description}
-                        </Markdown>
+                        <MicroMarkdown
+                          className="typography-body-md grow lg:text-lg"
+                          text={description}
+                        />
                         <div className="flex-1" />
                         {hasMetadata && (
                           <div
@@ -292,7 +297,7 @@ function ToolsAndLibrariesSidebar({
   return (
     <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] w-[300px] shrink-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
       <Collapse horizontal isOpen={sidebarShown}>
-        <section className="nextra-scrollbar overflow-y-auto p-4 pt-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+        <section className="nextra-scrollbar -mt-4 overflow-y-auto p-4 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
           <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))]">
             <label className="flex items-center gap-1 border border-neu-300 bg-neu-0 p-2 focus-within:gql-focus-outline">
               <SearchIcon className="size-5 text-neu-800" />
