@@ -6,7 +6,7 @@ import cn, { clsx } from "clsx"
 import type { Heading } from "nextra"
 import { Button } from "nextra/components"
 import { useFSRoute, useMounted } from "nextra/hooks"
-import { ArrowRightIcon, ExpandIcon } from "nextra/icons"
+import { ArrowRightIcon } from "nextra/icons"
 import type { Item, MenuItem, PageItem } from "nextra/normalize-pages"
 import type { FocusEventHandler, ReactElement } from "react"
 import {
@@ -20,18 +20,19 @@ import {
   useState,
 } from "react"
 import scrollIntoView from "scroll-into-view-if-needed"
-import { renderComponent } from "./utils/render-component"
 import {
   useActiveAnchor,
   useMenu,
   useThemeConfig,
   Collapse,
   LocaleSwitch,
-  ThemeSwitch,
 } from "nextra-theme-docs"
 
-import { Anchor } from "../app/conf/_design-system/anchor"
 import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
+import { Anchor } from "@/app/conf/_design-system/anchor"
+
+import { renderComponent } from "./utils/render-component"
+import { ThemeSwitch } from "./theme-switch"
 
 const TreeState: Record<string, boolean> = Object.create(null)
 
@@ -523,7 +524,7 @@ export function SidebarFooter({
         className={showSidebar ? "_grow" : "max-md:_grow"}
       />
       <div className={showSidebar && !hasI18n ? "_grow _flex _flex-col" : ""}>
-        <ThemeSwitch />
+        <ThemeSwitch lite={!showSidebar} />
       </div>
       {themeConfig.sidebar.toggleButton && (
         <Button
