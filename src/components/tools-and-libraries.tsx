@@ -59,7 +59,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
   const [sort, setSort] = useState("popularity")
 
   const sidebarState = useToolsAndLibrariesSidebarState({
-    allTags,
     allTagsMap,
     data,
   })
@@ -89,8 +88,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
             searchInputValue={sidebarState.searchInputValue}
             selectedTags={sidebarState.selectedTags}
             setSearchInputValue={sidebarState.setSearchInputValue}
-            setSidebarShown={sidebarState.setSidebarShown}
-            sidebarShown={sidebarState.sidebarShown}
             treeItems={sidebarState.treeItems}
             updateTags={sidebarState.updateTags}
           />
@@ -278,8 +275,6 @@ function PackageLinks({ data }: { data: PackageInfo }) {
 }
 
 interface ToolsAndLibrariesSidebarProps {
-  sidebarShown: boolean
-  setSidebarShown: (show: boolean) => void
   treeItems: CheckboxTreeItem[]
   searchInputValue: string
   setSearchInputValue: (value: string) => void
@@ -287,14 +282,13 @@ interface ToolsAndLibrariesSidebarProps {
   updateTags: (tags: string[]) => void
 }
 function ToolsAndLibrariesSidebar({
-  sidebarShown,
-  setSidebarShown,
   treeItems,
   searchInputValue,
   setSearchInputValue,
   selectedTags,
   updateTags,
 }: ToolsAndLibrariesSidebarProps) {
+  const [sidebarShown, setSidebarShown] = useState(true)
   return (
     <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] w-[300px] shrink-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
       <Collapse horizontal isOpen={sidebarShown}>
@@ -327,20 +321,17 @@ function ToolsAndLibrariesSidebar({
 }
 
 function useToolsAndLibrariesSidebarState({
-  allTags,
   allTagsMap,
   data,
 }: {
-  allTags: CodePageProps["allTags"]
   allTagsMap: Map<string, { count: number; name: string }>
   data: CodePageProps["data"]
 }) {
   const mounted = useMounted()
   const [searchParams, setSearchParams] = useSearchParamsState()
-  const [sidebarShown, setSidebarShown] = useState(true)
+  const selectedTags = searchParams.getAll(TAG_PARAM_KEY)
 
   const selectedTagsAsString = useMemo(() => {
-    const selectedTags = searchParams.getAll(TAG_PARAM_KEY)
     const tags = selectedTags
       .slice()
       .map(tag => allTagsMap.get(tag)?.name ?? tag)
@@ -355,7 +346,7 @@ function useToolsAndLibrariesSidebarState({
     }
 
     return `${tags.slice(0, -1).join(", ")} and ${tags.slice(-1)[0]}`
-  }, [allTagsMap, searchParams])
+  }, [allTagsMap, selectedTags])
 
   const [searchInputValue, setSearchInputValue] = useState("")
   const normalizedSearch = useMemo(
@@ -370,13 +361,8 @@ function useToolsAndLibrariesSidebarState({
   )
 
   const updateTags = useCallback(
-    (updater: (prev: string[]) => string[]) => {
+    (next: string[]) => {
       setSearchParams(prev => {
-        const currentValues = prev
-          .getAll(TAG_PARAM_KEY)
-          .flatMap(value => value.split("_").filter(Boolean))
-        const next = updater(currentValues)
-
         prev.delete(TAG_PARAM_KEY)
         next.forEach(tag => {
           prev.append(TAG_PARAM_KEY, tag)
@@ -387,8 +373,6 @@ function useToolsAndLibrariesSidebarState({
   )
 
   const { filteredData, tagCounts } = useMemo(() => {
-    const selectedTags = searchParams.getAll(TAG_PARAM_KEY)
-
     const fuzzyMatch = (haystack: string, needle: string) => {
       if (!needle) return true
       let matchIndex = 0
@@ -460,7 +444,7 @@ function useToolsAndLibrariesSidebarState({
       filteredData,
       tagCounts,
     }
-  }, [mounted, data, allTagsMap, searchTokens, searchParams])
+  }, [mounted, data, allTagsMap, searchTokens, selectedTags])
 
   const treeItems = useMemo<CheckboxTreeItem[]>(() => {
     const matchesSearch = (label: string) =>
@@ -575,11 +559,11 @@ function useToolsAndLibrariesSidebarState({
 
   return {
     filteredData,
+    searchInputValue,
     setSearchInputValue,
-    tagCounts,
+    selectedTags,
     selectedTagsAsString,
     treeItems,
-    setSidebarShown,
-    sidebarShown,
+    updateTags,
   }
 }
