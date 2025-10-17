@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useSyncExternalStore } from "react"
+import { use, useCallback, useMemo, useSyncExternalStore } from "react"
 
 type SetSearchParamsAction =
   | string
@@ -136,4 +136,12 @@ export function useSearchParamsState() {
   )
 
   return [searchParams, setSearchParams] as const
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export declare namespace useSearchParamsState {
+  type SetSearchParams = (
+    action: SetSearchParamsAction,
+    options?: SetSearchParamsOptions,
+  ) => void
 }

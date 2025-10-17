@@ -1,11 +1,4 @@
-import {
-  GitHubIcon,
-  GlobeIcon,
-  NPMIcon,
-  StarIcon,
-  RubyGemsIcon,
-  ChevronLeftIcon,
-} from "@/icons"
+import { GitHubIcon, GlobeIcon, NPMIcon, RubyGemsIcon } from "@/icons"
 import { Card } from "@/components"
 import { CheckboxTree, type CheckboxTreeItem } from "@/components/checkbox-tree"
 import { useSearchParamsState } from "@/components/checkbox-tree/use-search-params-state"
@@ -14,7 +7,7 @@ import NextHead from "next/head"
 import { useMounted } from "nextra/hooks"
 import Markdown from "markdown-to-jsx"
 import { evaluate } from "nextra/components"
-import { useCallback, useState, MouseEvent, useMemo, memo } from "react"
+import { useCallback, useState, useMemo, memo } from "react"
 import { clsx } from "clsx"
 import { Collapse, getComponents, useConfig } from "nextra-theme-docs"
 import { RadioGroup, Radio } from "@/components/radio"
@@ -62,252 +55,21 @@ export function CodePage({ allTags, data }: CodePageProps) {
   )
 
   const { activePath } = useConfig().normalizePagesResult
-  const [searchParams, setSearchParams] = useSearchParamsState()
-  const [search, setSearch] = useState("")
-  const normalizedSearch = useMemo(() => search.trim().toLowerCase(), [search])
-  const searchTokens = useMemo(
-    () =>
-      normalizedSearch ? normalizedSearch.split(/\s+/).filter(Boolean) : [],
-    [normalizedSearch],
-  )
-
-  const selectedTags = searchParams.getAll(TAG_PARAM_KEY)
-
-  const updateTags = useCallback(
-    (updater: (prev: string[]) => string[]) => {
-      setSearchParams(prev => {
-        const currentValues = prev
-          .getAll(TAG_PARAM_KEY)
-          .flatMap(value => value.split("_").filter(Boolean))
-        const next = updater(currentValues)
-
-        prev.delete(TAG_PARAM_KEY)
-        next.forEach(tag => {
-          prev.append(TAG_PARAM_KEY, tag)
-        })
-      })
-    },
-    [setSearchParams],
-  )
-
-  const mounted = useMounted()
-
-  const { newData, tagCounts } = useMemo(() => {
-    const fuzzyMatch = (haystack: string, needle: string) => {
-      if (!needle) return true
-      let matchIndex = 0
-      for (
-        let i = 0;
-        i < haystack.length && matchIndex < needle.length;
-        i += 1
-      ) {
-        if (haystack[i] === needle[matchIndex]) {
-          matchIndex += 1
-        }
-      }
-      return matchIndex === needle.length
-    }
-
-    const filteredData = mounted
-      ? data.filter(item => {
-          if (
-            selectedTags.length &&
-            !selectedTags.every(tag => item.tags.includes(tag))
-          ) {
-            return false
-          }
-
-          if (!searchTokens.length) {
-            return true
-          }
-
-          const tagNames = item.tags
-            .map(tag => allTagsMap.get(tag)?.name ?? tag)
-            .join(" ")
-
-          const searchableText = [
-            item.frontMatter.name,
-            item.frontMatter.description,
-            tagNames,
-            item.license,
-            item.lastRelease,
-            item.formattedStars,
-            item.frontMatter.github,
-            item.frontMatter.npm,
-            item.frontMatter.url,
-            item.frontMatter.gem,
-            item.compiledSource,
-          ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase()
-
-          if (!searchableText) {
-            return false
-          }
-
-          return searchTokens.every(token => fuzzyMatch(searchableText, token))
-        })
-      : data
-
-    const counts = filteredData.reduce<Map<string, number>>((acc, { tags }) => {
-      tags.forEach(tag => {
-        acc.set(tag, (acc.get(tag) ?? 0) + 1)
-      })
-      return acc
-    }, new Map())
-
-    return {
-      newData: filteredData,
-      tagCounts: counts,
-    }
-  }, [mounted, data, selectedTags, allTagsMap, searchTokens])
-
-  const filterTreeItems = useMemo<CheckboxTreeItem[]>(() => {
-    const matchesSearch = (label: string) =>
-      normalizedSearch ? label.toLowerCase().includes(normalizedSearch) : true
-
-    const getName = (tag: string) => allTagsMap.get(tag)?.name ?? tag
-    const getCount = (tag: string) => tagCounts.get(tag) ?? 0
-
-    const nonLanguageTags = new Set([
-      "client",
-      "server",
-      "services",
-      "tools",
-      "general",
-      "gateways-supergraphs",
-    ])
-
-    const languages = allTags
-      .filter(({ tag }) => !nonLanguageTags.has(tag))
-      .map<CheckboxTreeItem>(({ tag }) => ({
-        id: `language-${tag}`,
-        label: getName(tag),
-        value: tag,
-        count: getCount(tag),
-      }))
-      .sort((a, b) => a.label.localeCompare(b.label))
-
-    const baseItems: CheckboxTreeItem[] = [
-      {
-        id: "category",
-        label: "Category",
-        children: [
-          {
-            id: "usage-server",
-            label: getName("server"),
-            value: "server",
-            count: getCount("server"),
-          },
-          {
-            id: "usage-client",
-            label: getName("client"),
-            value: "client",
-            count: getCount("client"),
-          },
-          {
-            id: "category-tools",
-            label: getName("tools"),
-            value: "tools",
-            count: getCount("tools"),
-            children: [
-              {
-                id: "category-tools-gateways-supergraphs",
-                label: getName("gateways-supergraphs"),
-                value: "gateways-supergraphs",
-                count: getCount("gateways-supergraphs"),
-              },
-              {
-                id: "category-tools-general",
-                label: getName("general"),
-                value: "general",
-                count: getCount("general"),
-              },
-            ],
-          },
-          {
-            id: "category-services",
-            label: getName("services"),
-            value: "services",
-            count: getCount("services"),
-          },
-        ],
-      },
-    ]
-
-    if (languages.length > 0) {
-      baseItems.push({
-        id: "language-support",
-        label: "Language Support",
-        children: languages,
-      })
-    }
-
-    const applySearch = (item: CheckboxTreeItem): CheckboxTreeItem => {
-      const children = item.children?.map(applySearch) ?? []
-      const enabledChildren = children.filter(child => !child.disabled)
-      const disabledChildren = children.filter(child => child.disabled)
-      const hasEnabledChildren = enabledChildren.length > 0
-      const isMatch = matchesSearch(item.label)
-      const isDisabled =
-        normalizedSearch && !isMatch && !hasEnabledChildren ? true : false
-
-      const orderedChildren =
-        children.length > 0
-          ? [...enabledChildren, ...disabledChildren]
-          : undefined
-
-      return {
-        ...item,
-        disabled: isDisabled,
-        ...(orderedChildren
-          ? { children: orderedChildren }
-          : { children: undefined }),
-      }
-    }
-
-    const processed = baseItems.map(applySearch)
-    const enabledRoots = processed.filter(item => !item.disabled)
-    const disabledRoots = processed.filter(item => item.disabled)
-
-    return [...enabledRoots, ...disabledRoots]
-  }, [allTags, allTagsMap, normalizedSearch, tagCounts])
-
-  const handleTreeSelection = useCallback(
-    (next: string[]) => {
-      updateTags(() => next)
-    },
-    [updateTags],
-  )
-
-  const selectedTagsAsString = useMemo(() => {
-    const tags = selectedTags
-      .slice()
-      .map(tag => allTagsMap.get(tag)?.name ?? tag)
-      .filter((tag): tag is string => typeof tag === "string")
-
-    if (tags.length === 0) {
-      return ""
-    }
-
-    if (tags.length === 1) {
-      return tags[0]
-    }
-
-    return `${tags.slice(0, -1).join(", ")} and ${tags.slice(-1)[0]}`
-  }, [selectedTags, allTagsMap])
 
   const [sort, setSort] = useState("popularity")
 
+  const sidebarState = useToolsAndLibrariesSidebarState({
+    allTags,
+    allTagsMap,
+    data,
+  })
+
   let description = `A collection of tools and libraries for GraphQL`
   let title = "Tools and Libraries | GraphQL"
-  if (selectedTagsAsString) {
-    description += ` related to ${selectedTagsAsString}`
-    title = `${selectedTagsAsString} | ${title}`
+  if (sidebarState.selectedTagsAsString) {
+    description += ` related to ${sidebarState.selectedTagsAsString}`
+    title = `${sidebarState.selectedTagsAsString} | ${title}`
   }
-
-  const [showSidebar, setSidebar] = useState(true)
 
   return (
     <>
@@ -323,33 +85,15 @@ export function CodePage({ allTags, data }: CodePageProps) {
       </NextHead>
       <div className="mx-auto max-w-[90rem] p-4 py-8 pl-0">
         <div className="relative flex md:gap-6">
-          <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] w-[300px] shrink-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
-            <Collapse horizontal isOpen={showSidebar}>
-              <section className="nextra-scrollbar overflow-y-auto p-4 pt-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
-                <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))]">
-                  <label className="flex items-center gap-1 border border-neu-300 bg-neu-0 p-2 focus-within:gql-focus-outline">
-                    <SearchIcon className="size-5 text-neu-800" />
-                    <input
-                      value={search}
-                      onChange={e => setSearch(e.target.value)}
-                      placeholder="Filter tags..."
-                      className="bg-transparent placeholder:text-neu-600 focus:outline-none dark:placeholder:text-neu-400"
-                    />
-                  </label>
-                </div>
-                <CheckboxTree
-                  items={filterTreeItems}
-                  selectedValues={selectedTags}
-                  onSelectionChange={handleTreeSelection}
-                />
-              </section>
-            </Collapse>
-            <SidebarFooter
-              setSidebar={setSidebar}
-              showSidebar={showSidebar}
-              className="bottom-0 !mx-0 mt-4"
-            />
-          </div>
+          <ToolsAndLibrariesSidebar
+            searchInputValue={sidebarState.searchInputValue}
+            selectedTags={sidebarState.selectedTags}
+            setSearchInputValue={sidebarState.setSearchInputValue}
+            setSidebarShown={sidebarState.setSidebarShown}
+            sidebarShown={sidebarState.sidebarShown}
+            treeItems={sidebarState.treeItems}
+            updateTags={sidebarState.updateTags}
+          />
 
           <div className="min-w-0">
             <Breadcrumbs className="mb-6 mt-1" activePath={activePath} />
@@ -370,10 +114,10 @@ export function CodePage({ allTags, data }: CodePageProps) {
             </RadioGroup>
             <div className="grid gap-2 py-8 md:grid-cols-2 md:gap-4">
               {(sort === "alphabetical"
-                ? [...newData].sort((a, b) =>
+                ? [...sidebarState.filteredData].sort((a, b) =>
                     a.frontMatter.name.localeCompare(b.frontMatter.name),
                   )
-                : newData
+                : sidebarState.filteredData
               ).map(
                 ({
                   frontMatter,
@@ -531,4 +275,311 @@ function PackageLinks({ data }: { data: PackageInfo }) {
       )}
     </>
   )
+}
+
+interface ToolsAndLibrariesSidebarProps {
+  sidebarShown: boolean
+  setSidebarShown: (show: boolean) => void
+  treeItems: CheckboxTreeItem[]
+  searchInputValue: string
+  setSearchInputValue: (value: string) => void
+  selectedTags: string[]
+  updateTags: (tags: string[]) => void
+}
+function ToolsAndLibrariesSidebar({
+  sidebarShown,
+  setSidebarShown,
+  treeItems,
+  searchInputValue,
+  setSearchInputValue,
+  selectedTags,
+  updateTags,
+}: ToolsAndLibrariesSidebarProps) {
+  return (
+    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] w-[300px] shrink-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+      <Collapse horizontal isOpen={sidebarShown}>
+        <section className="nextra-scrollbar overflow-y-auto p-4 pt-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+          <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))]">
+            <label className="flex items-center gap-1 border border-neu-300 bg-neu-0 p-2 focus-within:gql-focus-outline">
+              <SearchIcon className="size-5 text-neu-800" />
+              <input
+                value={searchInputValue}
+                onChange={e => setSearchInputValue(e.target.value)}
+                placeholder="Filter tags..."
+                className="bg-transparent placeholder:text-neu-600 focus:outline-none dark:placeholder:text-neu-400"
+              />
+            </label>
+          </div>
+          <CheckboxTree
+            items={treeItems}
+            selectedValues={selectedTags}
+            onSelectionChange={updateTags}
+          />
+        </section>
+      </Collapse>
+      <SidebarFooter
+        setSidebar={setSidebarShown}
+        showSidebar={sidebarShown}
+        className="bottom-0 !mx-0 mt-4"
+      />
+    </div>
+  )
+}
+
+function useToolsAndLibrariesSidebarState({
+  allTags,
+  allTagsMap,
+  data,
+}: {
+  allTags: CodePageProps["allTags"]
+  allTagsMap: Map<string, { count: number; name: string }>
+  data: CodePageProps["data"]
+}) {
+  const mounted = useMounted()
+  const [searchParams, setSearchParams] = useSearchParamsState()
+  const [sidebarShown, setSidebarShown] = useState(true)
+
+  const selectedTagsAsString = useMemo(() => {
+    const selectedTags = searchParams.getAll(TAG_PARAM_KEY)
+    const tags = selectedTags
+      .slice()
+      .map(tag => allTagsMap.get(tag)?.name ?? tag)
+      .filter((tag): tag is string => typeof tag === "string")
+
+    if (tags.length === 0) {
+      return ""
+    }
+
+    if (tags.length === 1) {
+      return tags[0]
+    }
+
+    return `${tags.slice(0, -1).join(", ")} and ${tags.slice(-1)[0]}`
+  }, [allTagsMap, searchParams])
+
+  const [searchInputValue, setSearchInputValue] = useState("")
+  const normalizedSearch = useMemo(
+    () => searchInputValue.trim().toLowerCase(),
+    [searchInputValue],
+  )
+
+  const searchTokens = useMemo(
+    () =>
+      normalizedSearch ? normalizedSearch.split(/\s+/).filter(Boolean) : [],
+    [normalizedSearch],
+  )
+
+  const updateTags = useCallback(
+    (updater: (prev: string[]) => string[]) => {
+      setSearchParams(prev => {
+        const currentValues = prev
+          .getAll(TAG_PARAM_KEY)
+          .flatMap(value => value.split("_").filter(Boolean))
+        const next = updater(currentValues)
+
+        prev.delete(TAG_PARAM_KEY)
+        next.forEach(tag => {
+          prev.append(TAG_PARAM_KEY, tag)
+        })
+      })
+    },
+    [setSearchParams],
+  )
+
+  const { filteredData, tagCounts } = useMemo(() => {
+    const selectedTags = searchParams.getAll(TAG_PARAM_KEY)
+
+    const fuzzyMatch = (haystack: string, needle: string) => {
+      if (!needle) return true
+      let matchIndex = 0
+      for (
+        let i = 0;
+        i < haystack.length && matchIndex < needle.length;
+        i += 1
+      ) {
+        if (haystack[i] === needle[matchIndex]) {
+          matchIndex += 1
+        }
+      }
+      return matchIndex === needle.length
+    }
+
+    const filteredData = mounted
+      ? data.filter(item => {
+          if (
+            selectedTags.length &&
+            !selectedTags.every(tag => item.tags.includes(tag))
+          ) {
+            return false
+          }
+
+          if (!searchTokens.length) {
+            return true
+          }
+
+          const tagNames = item.tags
+            .map(tag => allTagsMap.get(tag)?.name ?? tag)
+            .join(" ")
+
+          const searchableText = [
+            item.frontMatter.name,
+            item.frontMatter.description,
+            tagNames,
+            item.license,
+            item.lastRelease,
+            item.formattedStars,
+            item.frontMatter.github,
+            item.frontMatter.npm,
+            item.frontMatter.url,
+            item.frontMatter.gem,
+            item.compiledSource,
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase()
+
+          if (!searchableText) {
+            return false
+          }
+
+          return searchTokens.every(token => fuzzyMatch(searchableText, token))
+        })
+      : data
+
+    const tagCounts = filteredData.reduce<Map<string, number>>(
+      (acc, { tags }) => {
+        tags.forEach(tag => {
+          acc.set(tag, (acc.get(tag) ?? 0) + 1)
+        })
+        return acc
+      },
+      new Map(),
+    )
+
+    return {
+      filteredData,
+      tagCounts,
+    }
+  }, [mounted, data, allTagsMap, searchTokens, searchParams])
+
+  const treeItems = useMemo<CheckboxTreeItem[]>(() => {
+    const matchesSearch = (label: string) =>
+      normalizedSearch ? label.toLowerCase().includes(normalizedSearch) : true
+
+    const getName = (tag: string) => allTagsMap.get(tag)?.name ?? tag
+    const getCount = (tag: string) => tagCounts.get(tag) ?? 0
+
+    const nonLanguageTags = new Set([
+      "client",
+      "server",
+      "services",
+      "tools",
+      "general",
+      "gateways-supergraphs",
+    ])
+
+    const languages = Object.keys(allTagsMap)
+      .filter(tag => !nonLanguageTags.has(tag))
+      .map<CheckboxTreeItem>(tag => ({
+        id: `language-${tag}`,
+        label: getName(tag),
+        value: tag,
+        count: getCount(tag),
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label))
+
+    const baseItems: CheckboxTreeItem[] = [
+      {
+        id: "category",
+        label: "Category",
+        children: [
+          {
+            id: "usage-server",
+            label: getName("server"),
+            value: "server",
+            count: getCount("server"),
+          },
+          {
+            id: "usage-client",
+            label: getName("client"),
+            value: "client",
+            count: getCount("client"),
+          },
+          {
+            id: "category-tools",
+            label: getName("tools"),
+            value: "tools",
+            count: getCount("tools"),
+            children: [
+              {
+                id: "category-tools-gateways-supergraphs",
+                label: getName("gateways-supergraphs"),
+                value: "gateways-supergraphs",
+                count: getCount("gateways-supergraphs"),
+              },
+              {
+                id: "category-tools-general",
+                label: getName("general"),
+                value: "general",
+                count: getCount("general"),
+              },
+            ],
+          },
+          {
+            id: "category-services",
+            label: getName("services"),
+            value: "services",
+            count: getCount("services"),
+          },
+        ],
+      },
+    ]
+
+    if (languages.length > 0) {
+      baseItems.push({
+        id: "language-support",
+        label: "Language Support",
+        children: languages,
+      })
+    }
+
+    const applySearch = (item: CheckboxTreeItem): CheckboxTreeItem => {
+      const children = item.children?.map(applySearch) ?? []
+      const enabledChildren = children.filter(child => !child.disabled)
+      const disabledChildren = children.filter(child => child.disabled)
+      const hasEnabledChildren = enabledChildren.length > 0
+      const isMatch = matchesSearch(item.label)
+      const isDisabled =
+        normalizedSearch && !isMatch && !hasEnabledChildren ? true : false
+
+      const orderedChildren =
+        children.length > 0
+          ? [...enabledChildren, ...disabledChildren]
+          : undefined
+
+      return {
+        ...item,
+        disabled: isDisabled,
+        ...(orderedChildren
+          ? { children: orderedChildren }
+          : { children: undefined }),
+      }
+    }
+
+    const processed = baseItems.map(applySearch)
+    const enabledRoots = processed.filter(item => !item.disabled)
+    const disabledRoots = processed.filter(item => item.disabled)
+
+    return [...enabledRoots, ...disabledRoots]
+  }, [allTagsMap, normalizedSearch, tagCounts])
+
+  return {
+    filteredData,
+    setSearchInputValue,
+    tagCounts,
+    selectedTagsAsString,
+    treeItems,
+    setSidebarShown,
+    sidebarShown,
+  }
 }
