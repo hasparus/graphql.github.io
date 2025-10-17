@@ -297,7 +297,7 @@ function ToolsAndLibrariesSidebar({
   return (
     <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
       <Collapse horizontal isOpen={sidebarShown}>
-        <section className="nextra-scrollbar -mt-4 w-[300px] shrink-0 overflow-y-auto p-4 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+        <section className="nextra-scrollbar -mt-4 w-[300px] shrink-0 overflow-y-auto p-4 pb-8 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))] lg:pb-16">
           <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))] before:absolute before:-top-20 before:bottom-0 before:w-full before:bg-[rgb(var(--nextra-bg))]">
             <label className="relative flex items-center gap-1 border border-neu-300 bg-neu-0 p-2 focus-within:gql-focus-outline">
               <SearchIcon className="size-5 text-neu-800" />
