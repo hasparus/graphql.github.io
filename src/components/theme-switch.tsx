@@ -49,7 +49,7 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
         aria-label="Change theme"
         title="Change theme"
         className={clsx(
-          "gql-focus-visible flex items-center gap-2 px-1 text-neu-700 transition-colors hover:text-neu-900 focus-visible:!-outline-offset-2",
+          "gql-focus-visible -m-1 flex cursor-pointer items-center gap-2 p-1 text-neu-800 transition-colors hover:bg-neu-50 hover:text-neu-900 focus-visible:!-outline-offset-2 dark:text-neu-700 dark:hover:bg-neu-50/50",
           className,
         )}
       >
@@ -63,7 +63,7 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
       </Select.Trigger>
       <Select.Portal>
         <Select.Positioner className="z-20 outline-none" sideOffset={4}>
-          <Select.Popup className="min-w-[var(--anchor-width)] border border-neu-300 bg-[rgb(var(--nextra-bg))] text-neu-900 outline-none">
+          <Select.Popup className="min-w-[var(--anchor-width)] border border-neu-200 bg-[rgb(var(--nextra-bg))] p-1 text-neu-900 shadow-md outline-none dark:border-neu-100">
             <Select.List>
               {THEME_OPTIONS.map(option => {
                 const Icon = OPTION_ICONS[option]
@@ -71,10 +71,10 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
                   <Select.Item
                     key={option}
                     value={option}
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm text-neu-700 outline-none data-[highlighted]:bg-neu-100 data-[highlighted]:text-neu-900 data-[selected]:text-neu-900 dark:data-[highlighted]:bg-neu-50"
+                    className="mt-px flex items-center gap-2 px-3 py-1.5 text-sm text-neu-800 first:mt-0 focus-visible:outline-none focus-visible:ring-0 data-[highlighted]:bg-neu-100 data-[highlighted]:text-neu-900 data-[selected]:text-neu-900 dark:text-neu-700 dark:data-[highlighted]:bg-neu-50"
                   >
-                    <Icon className="size-3.5" />
-                    <Select.ItemText className="leading-none">
+                    <Icon height="14" />
+                    <Select.ItemText className="capitalize leading-none">
                       {option}
                     </Select.ItemText>
                   </Select.Item>

@@ -468,7 +468,7 @@ function useToolsAndLibrariesSidebarState({
       "gateways-supergraphs",
     ])
 
-    const languages = Object.keys(allTagsMap)
+    const languages = Array.from(allTagsMap.keys())
       .filter(tag => !nonLanguageTags.has(tag))
       .map<CheckboxTreeItem>(tag => ({
         id: `language-${tag}`,
