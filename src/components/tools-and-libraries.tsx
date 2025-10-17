@@ -96,7 +96,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
             updateTags={sidebarState.updateTags}
           />
 
-          <div className="min-w-0">
+          <div className="flex-1 @container">
             <Breadcrumbs className="mb-6 mt-1" activePath={activePath} />
             <RadioGroup
               value={sort}
@@ -113,7 +113,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                 <span>Alphabetical</span>
               </label>
             </RadioGroup>
-            <div className="grid gap-2 py-8 md:grid-cols-2 md:gap-4">
+            <div className="grid gap-2 py-8 @[760px]:grid-cols-2 md:gap-4 lg:grid-cols-2">
               {(sort === "alphabetical"
                 ? [...sidebarState.filteredData].sort((a, b) =>
                     a.frontMatter.name.localeCompare(b.frontMatter.name),
@@ -295,9 +295,9 @@ function ToolsAndLibrariesSidebar({
 }: ToolsAndLibrariesSidebarProps) {
   const [sidebarShown, setSidebarShown] = useState(true)
   return (
-    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] w-[300px] shrink-0 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
       <Collapse horizontal isOpen={sidebarShown}>
-        <section className="nextra-scrollbar -mt-4 overflow-y-auto p-4 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+        <section className="nextra-scrollbar -mt-4 w-[300px] shrink-0 overflow-y-auto p-4 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
           <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))]">
             <label className="flex items-center gap-1 border border-neu-300 bg-neu-0 p-2 focus-within:gql-focus-outline">
               <SearchIcon className="size-5 text-neu-800" />
@@ -319,7 +319,8 @@ function ToolsAndLibrariesSidebar({
       <SidebarFooter
         setSidebar={setSidebarShown}
         showSidebar={sidebarShown}
-        className="bottom-0 !mx-0 mt-4"
+        className="mt-4"
+        hiddenOnMobile={false}
       />
     </div>
   )

@@ -2,7 +2,7 @@
  * @file sidebar module extracted from Nextra 3.3.1
  */
 
-import cn from "clsx"
+import cn, { clsx } from "clsx"
 import type { Heading } from "nextra"
 import { Button } from "nextra/components"
 import { useFSRoute, useMounted } from "nextra/hooks"
@@ -27,6 +27,7 @@ import {
   useThemeConfig,
   Collapse,
   LocaleSwitch,
+  ThemeSwitch,
 } from "nextra-theme-docs"
 
 import { Anchor } from "../app/conf/_design-system/anchor"
@@ -490,6 +491,7 @@ export function SidebarFooter({
   hasI18n = false,
   setToggleAnimation,
   className,
+  hiddenOnMobile = true,
 }: {
   showSidebar: boolean
   setSidebar: (show: boolean) => void
@@ -497,18 +499,19 @@ export function SidebarFooter({
   hasI18n?: boolean
   setToggleAnimation?: (show: boolean) => void
   className?: string
+  hiddenOnMobile?: boolean
 }) {
   const themeConfig = useThemeConfig()
 
   return (
     <div
       className={cn(
-        "nextra-sidebar-footer _sticky _bottom-0",
-        "_flex _items-center _gap-2 _py-4",
-        "_mx-3 _px-1", // to hide focused sidebar links
+        "nextra-sidebar-footer sticky bottom-0",
+        "flex items-center gap-2 py-4",
+        "mx-3 px-1", // to hide focused sidebar links
         showSidebar
-          ? hasI18n && "_justify-end"
-          : "_py-4 _flex-wrap _justify-center",
+          ? hasI18n && "justify-end"
+          : "flex-col flex-wrap justify-center py-4",
         className,
       )}
       data-toggle-animation={
@@ -519,17 +522,16 @@ export function SidebarFooter({
         lite={!showSidebar}
         className={showSidebar ? "_grow" : "max-md:_grow"}
       />
-      {themeConfig.darkMode && (
-        <div className={showSidebar && !hasI18n ? "_grow _flex _flex-col" : ""}>
-          {renderComponent(themeConfig.themeSwitch.component, {
-            lite: !showSidebar || hasI18n,
-          })}
-        </div>
-      )}
+      <div className={showSidebar && !hasI18n ? "_grow _flex _flex-col" : ""}>
+        <ThemeSwitch />
+      </div>
       {themeConfig.sidebar.toggleButton && (
         <Button
           title={showSidebar ? "Hide sidebar" : "Show sidebar"}
-          className="p-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 dark:hover:bg-neu-500/5 max-md:hidden"
+          className={clsx(
+            "p-2 text-neu-800 hover:bg-neu-100 hover:text-neu-900 dark:hover:bg-neu-500/5",
+            hiddenOnMobile && "max-md:hidden",
+          )}
           onClick={() => {
             setSidebar(!showSidebar)
             setToggleAnimation?.(true)
