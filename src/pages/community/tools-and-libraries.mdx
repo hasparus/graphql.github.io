@@ -13,7 +13,7 @@ import githubInfo from "../../../scripts/get-github-info/github-stats.json"
 
 export const getStaticProps = async () => {
   const filePaths = await fg("./src/code/**/*.md")
-  let results = []
+  const results = []
   const allTags = Object.create(null)
   //
   for (const filePath of filePaths) {
@@ -81,9 +81,6 @@ export const getStaticProps = async () => {
     }))
     .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag))
   //
-
-  results = results.slice(0, 10)
-
   return {
     props: {
       data: results.sort((a, b) => (b.stars ?? 0) - (a.stars ?? 0)),
