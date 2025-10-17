@@ -49,11 +49,11 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
         aria-label="Change theme"
         title="Change theme"
         className={clsx(
-          "gql-focus-visible -m-1 flex cursor-pointer items-center gap-2 p-1 text-neu-800 transition-colors hover:bg-neu-50 hover:text-neu-900 focus-visible:!-outline-offset-2 dark:text-neu-700 dark:hover:bg-neu-50/50",
+          "gql-focus-visible -m-2 flex cursor-pointer items-center gap-2 p-2 text-neu-800 transition-colors hover:bg-neu-50 hover:text-neu-900 focus-visible:!-outline-offset-2 dark:text-neu-700 dark:hover:bg-neu-50/50",
           className,
         )}
       >
-        <ResolvedThemeIcon height="14" />
+        <ResolvedThemeIcon height="16" />
         <Select.Value
           className={clsx(
             "text-sm capitalize leading-none",
@@ -71,9 +71,14 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
                   <Select.Item
                     key={option}
                     value={option}
-                    className="mt-px flex items-center gap-2 px-3 py-1.5 text-sm text-neu-800 first:mt-0 focus-visible:outline-none focus-visible:ring-0 data-[highlighted]:bg-neu-100 data-[highlighted]:text-neu-900 data-[selected]:text-neu-900 dark:text-neu-700 dark:data-[highlighted]:bg-neu-50"
+                    className="mt-px flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm text-neu-800 first:mt-0 focus-visible:outline-none focus-visible:ring-0 data-[highlighted]:bg-neu-100 data-[highlighted]:text-neu-900 data-[selected]:text-neu-900 dark:text-neu-700 dark:data-[highlighted]:bg-neu-50"
                   >
-                    <Icon height="14" />
+                    <Icon
+                      height={
+                        // the icons are not fully proportional
+                        Icon === SystemIcon ? "16" : "14"
+                      }
+                    />
                     <Select.ItemText className="capitalize leading-none">
                       {option}
                     </Select.ItemText>
