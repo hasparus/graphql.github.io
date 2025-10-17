@@ -71,12 +71,12 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
                   <Select.Item
                     key={option}
                     value={option}
-                    className="mt-px flex cursor-pointer items-center gap-2 px-3 py-1.5 text-sm text-neu-800 first:mt-0 focus-visible:outline-none focus-visible:ring-0 data-[highlighted]:bg-neu-100 data-[highlighted]:text-neu-900 data-[selected]:text-neu-900 dark:text-neu-700 dark:data-[highlighted]:bg-neu-50"
+                    className="mt-px flex cursor-pointer items-center gap-2 px-3 py-1.5 text-neu-800 first:mt-0 focus-visible:outline-none focus-visible:ring-0 data-[highlighted]:bg-neu-100 data-[highlighted]:text-neu-900 data-[selected]:text-neu-900 dark:text-neu-700 dark:data-[highlighted]:bg-neu-50"
                   >
                     <Icon
                       height={
                         // the icons are not fully proportional
-                        Icon === SystemIcon ? "16" : "14"
+                        Icon === SystemIcon ? "18" : "16"
                       }
                     />
                     <Select.ItemText className="capitalize leading-none">
