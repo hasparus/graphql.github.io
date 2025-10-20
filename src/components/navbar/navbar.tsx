@@ -6,7 +6,7 @@ import NextLink from "next/link"
 import { Button } from "nextra/components"
 import { useFSRoute } from "nextra/hooks"
 import type * as normalizePages from "nextra/normalize-pages"
-import {
+import React, {
   useCallback,
   useEffect,
   type ReactElement,
@@ -55,8 +55,11 @@ function NavbarMenu({
             target={item.newWindow ? "_blank" : undefined}
             className="block py-3.5 pl-2 pr-9"
             closeOnClick
-            render={(linkProps, state) => (
-              <Anchor {...linkProps}>
+            render={(
+              props: React.ComponentPropsWithoutRef<"a">,
+              state: NavigationMenu.Link.State,
+            ) => (
+              <Anchor {...props} href={props.href!}>
                 <span
                   className={clsx(
                     "typography-menu px-3 py-1 underline-offset-2 hover:underline focus-visible:underline",
