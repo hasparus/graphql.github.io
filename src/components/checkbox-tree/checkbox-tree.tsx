@@ -28,7 +28,7 @@ export function CheckboxTree({
     <div>
       {items.map(item => {
         const isSelectable = Boolean(item.value)
-        const isDisabled = item.disabled
+        const isDisabled = item.disabled || item.count === 0
         const isChecked = isSelectable
           ? selectedValues.includes(item.value!)
           : false
@@ -47,16 +47,21 @@ export function CheckboxTree({
             key={item.id}
           >
             <div
-              className="flex items-start gap-2 py-1"
+              className={clsx(
+                "relative flex items-start gap-2 py-1 before:absolute before:inset-0 before:-inset-x-2",
+                isSelectable &&
+                  !isDisabled &&
+                  "select-none hover:before:bg-neu-100/50 dark:hover:before:bg-neu-400/5",
+              )}
               style={{ paddingInlineStart: (depth - 1) * 16 }}
             >
               {isSelectable ? (
                 <label
                   htmlFor={checkboxId}
                   className={clsx(
-                    "flex grow cursor-pointer items-center gap-2 hover:text-neu-900",
+                    "relative flex grow cursor-pointer items-center gap-2 hover:text-neu-900",
                     isDisabled
-                      ? "text-neu-500 dark:text-neu-500/80 dark:hover:text-neu-900"
+                      ? "pointer-events-none text-neu-500 dark:text-neu-500/80 dark:hover:text-neu-900"
                       : "",
                   )}
                   aria-disabled={isDisabled}
@@ -66,8 +71,8 @@ export function CheckboxTree({
                       id={checkboxId}
                       type="checkbox"
                       checked={isChecked}
+                      disabled={isDisabled}
                       onChange={() => {
-                        // We actually don't want to disable the checkboxes for real here.
                         toggleValue(item.value!)
                       }}
                       className="peer sr-only"
@@ -75,7 +80,7 @@ export function CheckboxTree({
                     <CheckboxIcon
                       checked={isChecked}
                       className={clsx(
-                        "pointer-events-none size-5 opacity-90 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-1 peer-focus-visible:outline-neu-900",
+                        "size-5 translate-y-[-0.25px] opacity-90 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-1 peer-focus-visible:outline-neu-900",
                       )}
                       aria-hidden
                     />
@@ -92,7 +97,7 @@ export function CheckboxTree({
               ) : (
                 <div
                   className={clsx(
-                    "typography-menu mt-4 text-sm xl:mt-10",
+                    "typography-menu mt-4 select-none text-sm xl:mt-10",
                     isDisabled ? "text-neu-500" : "text-neu-900",
                   )}
                   aria-disabled={isDisabled}

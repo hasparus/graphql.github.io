@@ -67,6 +67,7 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
             <Select.List>
               {THEME_OPTIONS.map(option => {
                 const Icon = OPTION_ICONS[option]
+                const isSystem = Icon === SystemIcon
                 return (
                   <Select.Item
                     key={option}
@@ -76,11 +77,9 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
                     <Icon
                       height={
                         // the icons are not fully proportional
-                        Icon === SystemIcon ? "18" : "16"
+                        isSystem ? "18" : "16"
                       }
-                      className={
-                        Icon === SystemIcon ? "-mr-0.5 -translate-x-px" : ""
-                      }
+                      className={isSystem ? "-mr-0.5 -translate-x-px" : ""}
                     />
                     <Select.ItemText className="capitalize leading-none">
                       {option}

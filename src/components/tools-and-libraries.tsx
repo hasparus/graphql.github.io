@@ -16,6 +16,7 @@ import { Radio, RadioGroup } from "@/components/radio"
 import { Button } from "@/app/conf/_design-system/button"
 import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
 import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
+import NotesIcon from "@/app/conf/_design-system/pixelarticons/notes.svg?svgr"
 import { Tag } from "@/app/conf/_design-system/tag"
 
 import { Breadcrumbs } from "../_design-system/breadcrumbs"
@@ -86,7 +87,10 @@ export function CodePage({ allTags, data }: CodePageProps) {
           key="meta-og-description"
         />
       </NextHead>
-      <div className="mx-auto max-w-[120rem] p-4 py-8 pl-0">
+      <div className="mx-auto max-w-[120rem] p-4 pl-0 max-md:pl-4 md:py-8">
+        <style>
+          {`@media (max-width: 767px) { html:has(#sidebar-toggle:checked) { overscroll-behavior: none; } }`}
+        </style>
         <div className="relative flex md:gap-6">
           <ToolsAndLibrariesSidebar
             searchInputValue={sidebarState.searchInputValue}
@@ -97,7 +101,10 @@ export function CodePage({ allTags, data }: CodePageProps) {
           />
 
           <div className="flex-1 @container">
-            <Breadcrumbs className="mb-6 mt-1" activePath={activePath} />
+            <Breadcrumbs
+              className="mb-2 mt-1 md:mb-6"
+              activePath={activePath}
+            />
             <RadioGroup
               value={sort}
               onValueChange={value => setSort(value as string)}
@@ -113,7 +120,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                 <span>Alphabetical</span>
               </label>
             </RadioGroup>
-            <div className="grid gap-2 py-8 @[760px]:grid-cols-2 md:gap-4 lg:grid-cols-2">
+            <div className="grid gap-2 py-4 @[640px]:grid-cols-2 md:gap-4 md:py-8 lg:grid-cols-2">
               {(sort === "alphabetical"
                 ? [...sidebarState.filteredData].sort((a, b) =>
                     a.frontMatter.name.localeCompare(b.frontMatter.name),
@@ -138,7 +145,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                         "min-w-0", // hack to avoid overflow when opening details
                       )}
                     >
-                      <article className="flex grow flex-col gap-7 p-4 lg:p-8">
+                      <article className="flex grow flex-col gap-4 p-4 lg:p-8">
                         <header className="flex items-center gap-2">
                           <span className="typography-h3 grow break-all">
                             {name}
@@ -169,7 +176,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                         {hasMetadata && (
                           <div
                             className={clsx(
-                              "flex place-items-center gap-2 text-sm [&>*:not(:first-of-type):before]:[content:'/__']",
+                              "flex place-items-center gap-2 truncate text-sm [&>*:not(:first-of-type):before]:[content:'/__']",
                             )}
                           >
                             {formattedStars && (
@@ -177,9 +184,34 @@ export function CodePage({ allTags, data }: CodePageProps) {
                                 ★{formattedStars}
                               </span>
                             )}
-                            {license && <span>{license}</span>}
+                            {license && (
+                              <span>
+                                <NotesIcon className="inline size-4 translate-y-[-1.5px] pr-0.5" />
+                                {license.split(" ").map((word, index) => {
+                                  const isLicense =
+                                    word.toLowerCase() === "license"
+                                  return (
+                                    <span key={index}>
+                                      <span
+                                        className={
+                                          isLicense ? "max-md:hidden" : ""
+                                        }
+                                      >
+                                        {word}
+                                      </span>{" "}
+                                    </span>
+                                  )
+                                })}
+                              </span>
+                            )}
                             {lastRelease && (
-                              <span>Last release {lastRelease}</span>
+                              <span>
+                                <span className="max-md:hidden">Last</span>{" "}
+                                <span className="max-md:capitalize">
+                                  release
+                                </span>{" "}
+                                {lastRelease}
+                              </span>
                             )}
                           </div>
                         )}
@@ -295,7 +327,7 @@ function ToolsAndLibrariesSidebar({
 }: ToolsAndLibrariesSidebarProps) {
   const [sidebarShown, setSidebarShown] = useState(true)
   return (
-    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] max-md:fixed max-md:right-0 max-md:top-[--navbar-h] max-md:z-10 max-md:border-l max-md:border-l-white max-md:bg-[rgb(var(--nextra-bg),.8)] max-md:pr-4 max-md:pt-2 max-md:backdrop-blur-[6.4px] dark:max-md:bg-white/10 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
       <Collapse horizontal isOpen={sidebarShown}>
         <section className="nextra-scrollbar -mt-4 w-[300px] shrink-0 overflow-y-auto p-4 pb-8 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))] lg:pb-16">
           <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))] before:absolute before:-top-20 before:bottom-0 before:w-full before:bg-[rgb(var(--nextra-bg))]">
@@ -319,7 +351,7 @@ function ToolsAndLibrariesSidebar({
       <SidebarFooter
         setSidebar={setSidebarShown}
         showSidebar={sidebarShown}
-        className="mt-4"
+        className="mt-4 max-md:hidden"
         hiddenOnMobile={false}
       />
     </div>
