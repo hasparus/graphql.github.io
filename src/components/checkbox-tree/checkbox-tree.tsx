@@ -43,7 +43,7 @@ export function CheckboxTree({
 
         return (
           <div
-            className="[*:has(_:focus)>&:not(:focus-within)]:text-neu-700"
+            className="[*:has(_:focus-visible)>&:not(:focus-within)]:text-neu-700"
             key={item.id}
           >
             <div

@@ -4,7 +4,7 @@ import NextLink from "next/link"
 import { Collapse, getComponents, useConfig } from "nextra-theme-docs"
 import { evaluate } from "nextra/components"
 import { useMounted } from "nextra/hooks"
-import { memo, useCallback, useMemo, useState } from "react"
+import { memo, useCallback, useEffect, useMemo, useState } from "react"
 
 import { Card } from "@/components"
 import { CheckboxTree, type CheckboxTreeItem } from "@/components/checkbox-tree"
@@ -52,6 +52,8 @@ type CodePageProps = {
 
 const TAG_PARAM_KEY = "tags"
 
+type Sort = "popularity" | "alphabetical"
+
 export function CodePage({ allTags, data }: CodePageProps) {
   const allTagsMap = useMemo(
     () =>
@@ -60,9 +62,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
     [],
   )
 
-  const { activePath } = useConfig().normalizePagesResult
-
-  const [sort, setSort] = useState("popularity")
+  const [sort, setSort] = useState<Sort>("popularity")
 
   const sidebarState = useToolsAndLibrariesSidebarState({
     allTagsMap,
@@ -75,6 +75,17 @@ export function CodePage({ allTags, data }: CodePageProps) {
     description += ` related to ${sidebarState.selectedTagsAsString}`
     title = `${sidebarState.selectedTagsAsString} | ${title}`
   }
+
+  useEffect(() => {
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        const toggle = document.getElementById("sidebar-toggle")
+        if (toggle && (toggle as HTMLInputElement).checked) {
+          toggle.click()
+        }
+      }
+    })
+  }, [])
 
   return (
     <>
@@ -92,6 +103,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
         <style>
           {`@media (max-width: 767px) { html:has(#sidebar-toggle:checked) { overscroll-behavior: none; } }`}
         </style>
+        <SidebarOverlay />
         <div className="relative flex md:gap-6">
           <ToolsAndLibrariesSidebar
             searchInputValue={sidebarState.searchInputValue}
@@ -101,25 +113,8 @@ export function CodePage({ allTags, data }: CodePageProps) {
             updateTags={sidebarState.updateTags}
           />
           <div className="flex-1 @container">
-            <Breadcrumbs
-              className="mb-2 mt-1 md:mb-6"
-              activePath={activePath}
-            />
-            <RadioGroup
-              value={sort}
-              onValueChange={value => setSort(value as string)}
-              className="typography-menu flex flex-wrap gap-2 text-sm text-neu-800 dark:text-neu-600 md:flex-nowrap"
-            >
-              <div>Sort by:</div>
-              <label className="-m-1 flex items-center gap-1 p-1 [&:has([data-checked])]:text-neu-900 [&:has([data-unchecked])]:cursor-pointer [&:has([data-unchecked])]:hover:bg-neu-50/50">
-                <Radio value="popularity" />
-                <span>Popularity</span>
-              </label>
-              <label className="-m-1 flex items-center gap-1 p-1 [&:has([data-checked])]:text-neu-900 [&:has([data-unchecked])]:cursor-pointer [&:has([data-unchecked])]:hover:bg-neu-50/50">
-                <Radio value="alphabetical" />
-                <span>Alphabetical</span>
-              </label>
-            </RadioGroup>
+            <ToolsAndLibrariesHeader sort={sort} setSort={setSort} />
+
             <div className="grid gap-2 py-4 @[640px]:grid-cols-2 md:gap-4 md:py-8 lg:grid-cols-2">
               {(sort === "alphabetical"
                 ? [...sidebarState.filteredData].sort((a, b) =>
@@ -327,7 +322,7 @@ function ToolsAndLibrariesSidebar({
 }: ToolsAndLibrariesSidebarProps) {
   const [sidebarShown, setSidebarShown] = useState(true)
   return (
-    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] max-md:fixed max-md:right-0 max-md:top-[--navbar-h] max-md:z-10 max-md:border-l max-md:border-l-white max-md:bg-[rgb(var(--nextra-bg),.8)] max-md:pr-4 max-md:pt-4 max-md:backdrop-blur-[6.4px] dark:max-md:bg-white/10 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] duration-200 ease-out max-md:fixed max-md:right-0 max-md:top-[--navbar-h] max-md:z-10 max-md:transform-gpu max-md:border-l max-md:border-white max-md:bg-[rgb(var(--nextra-bg),.8)] max-md:pr-2 max-md:pt-4 max-md:backdrop-blur-[6.4px] max-md:transition-transform dark:max-md:border-white/10 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))] max-md:hover-hover:[html:has(#sidebar-toggle:checked:hover)_&]:translate-x-[calc(100%-0.5rem)] max-md:[html:has(#sidebar-toggle:not(:checked))_&:not(:hover)]:translate-x-[calc(100%+1px)] max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked))_&]:translate-y-16 max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked))_&]:border-t max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked):hover)_&]:translate-x-2 max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked):hover)_&]:shadow-md">
       <Collapse horizontal isOpen={sidebarShown}>
         <section className="nextra-scrollbar -mt-4 w-[300px] shrink-0 overflow-y-auto p-4 pb-8 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))] lg:pb-16">
           <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))] before:absolute before:-top-20 before:bottom-0 before:w-full before:bg-[rgb(var(--nextra-bg))]">
@@ -604,4 +599,71 @@ function useToolsAndLibrariesSidebarState({
     treeItems,
     updateTags,
   }
+}
+
+function MobileSidebarToggle(props: React.HTMLAttributes<HTMLLabelElement>) {
+  return (
+    <Button
+      as="label"
+      variant="tertiary"
+      isIconButton
+      {...props}
+      className={clsx(
+        props.className,
+        "-m-1 cursor-pointer !p-1 !ring-transparent [&:not(:hover)]:!bg-transparent [&:not(:hover)]:!text-neu-700 dark:[&:not(:hover)]:!text-neu-500",
+      )}
+    >
+      <input type="checkbox" id="sidebar-toggle" className="hidden" />
+      <ArrowBarLeft className="size-6" />
+      <span className="sr-only">Toggle sidebar</span>
+    </Button>
+  )
+}
+
+function ToolsAndLibrariesHeader({
+  sort,
+  setSort,
+}: {
+  sort: Sort
+  setSort: (value: Sort) => void
+}) {
+  const { activePath } = useConfig().normalizePagesResult
+
+  return (
+    <div className="top-[--navbar-h] flex items-center justify-between bg-[rgb(var(--nextra-bg))] max-md:sticky">
+      <div>
+        <Breadcrumbs className="mb-2 mt-1 md:mb-6" activePath={activePath} />
+        <RadioGroup
+          value={sort}
+          onValueChange={value => setSort(value as Sort)}
+          className="typography-menu flex flex-wrap gap-2 text-sm text-neu-800 dark:text-neu-600 md:flex-nowrap"
+        >
+          <div>Sort by:</div>
+          <label className="-m-1 flex items-center gap-1 p-1 [&:has([data-checked])]:text-neu-900 [&:has([data-unchecked])]:cursor-pointer [&:has([data-unchecked])]:hover:bg-neu-50/50">
+            <Radio value="popularity" />
+            <span>Popularity</span>
+          </label>
+          <label className="-m-1 flex items-center gap-1 p-1 [&:has([data-checked])]:text-neu-900 [&:has([data-unchecked])]:cursor-pointer [&:has([data-unchecked])]:hover:bg-neu-50/50">
+            <Radio value="alphabetical" />
+            <span>Alphabetical</span>
+          </label>
+        </RadioGroup>
+      </div>
+      <MobileSidebarToggle className="md:hidden" />
+    </div>
+  )
+}
+
+function SidebarOverlay() {
+  return (
+    <button
+      tabIndex={-1}
+      title="Close sidebar"
+      className="pointer-events-none fixed inset-0 top-[--navbar-h] z-[9] bg-[rgb(var(--nextra-bg),.25)] opacity-0 transition-opacity focus:outline-none max-md:[html:has(#sidebar-toggle:checked)_&]:pointer-events-auto max-md:[html:has(#sidebar-toggle:checked)_&]:opacity-100"
+      // this button can't be a label because of hovers
+      onClick={() => {
+        document.getElementById("sidebar-toggle")?.click()
+      }}
+    />
+  )
 }
