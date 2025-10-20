@@ -99,7 +99,8 @@ export default class MiniGraphiQL extends Component<
         suppressHydrationWarning
       >
         {Object.keys(this.state.variableToType).length > 0 ? (
-          <div className="flex flex-col">
+          // eslint-disable-next-line tailwindcss/no-custom-classname
+          <div className="hasVariables flex flex-col">
             {editor}
             <div className="flex flex-col border-neu-200 dark:border-neu-50">
               <CodeBlockLabel
