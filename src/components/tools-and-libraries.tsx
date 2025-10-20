@@ -18,6 +18,7 @@ import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?sv
 import SearchIcon from "@/app/conf/_design-system/pixelarticons/search.svg?svgr"
 import NotesIcon from "@/app/conf/_design-system/pixelarticons/notes.svg?svgr"
 import { Tag } from "@/app/conf/_design-system/tag"
+import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
 
 import { Breadcrumbs } from "../_design-system/breadcrumbs"
 
@@ -87,7 +88,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
           key="meta-og-description"
         />
       </NextHead>
-      <div className="mx-auto max-w-[120rem] p-4 pl-0 max-md:pl-4 md:py-8">
+      <div className="gql-all-anchors-focusable mx-auto max-w-[120rem] p-4 pl-0 max-md:pl-4 md:py-8">
         <style>
           {`@media (max-width: 767px) { html:has(#sidebar-toggle:checked) { overscroll-behavior: none; } }`}
         </style>
@@ -99,7 +100,6 @@ export function CodePage({ allTags, data }: CodePageProps) {
             treeItems={sidebarState.treeItems}
             updateTags={sidebarState.updateTags}
           />
-
           <div className="flex-1 @container">
             <Breadcrumbs
               className="mb-2 mt-1 md:mb-6"
@@ -223,7 +223,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
                             className={clsx(
                               "flex justify-between px-8 py-5 text-pri-base dark:[[open]>&]:shadow-[-5px_10px_30px_20px_#1b1b1b4d]",
                               "border-t border-neu-100 dark:border-neu-50 [[open]>&]:bg-neu-200 dark:[[open]>&]:bg-neu-50/25",
-                              "cursor-pointer",
+                              "gql-focus-visible cursor-pointer",
                             )}
                           >
                             README
@@ -327,7 +327,7 @@ function ToolsAndLibrariesSidebar({
 }: ToolsAndLibrariesSidebarProps) {
   const [sidebarShown, setSidebarShown] = useState(true)
   return (
-    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] max-md:fixed max-md:right-0 max-md:top-[--navbar-h] max-md:z-10 max-md:border-l max-md:border-l-white max-md:bg-[rgb(var(--nextra-bg),.8)] max-md:pr-4 max-md:pt-2 max-md:backdrop-blur-[6.4px] dark:max-md:bg-white/10 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
+    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] max-md:fixed max-md:right-0 max-md:top-[--navbar-h] max-md:z-10 max-md:border-l max-md:border-l-white max-md:bg-[rgb(var(--nextra-bg),.8)] max-md:pr-4 max-md:pt-4 max-md:backdrop-blur-[6.4px] dark:max-md:bg-white/10 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]">
       <Collapse horizontal isOpen={sidebarShown}>
         <section className="nextra-scrollbar -mt-4 w-[300px] shrink-0 overflow-y-auto p-4 pb-8 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))] lg:pb-16">
           <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))] before:absolute before:-top-20 before:bottom-0 before:w-full before:bg-[rgb(var(--nextra-bg))]">
