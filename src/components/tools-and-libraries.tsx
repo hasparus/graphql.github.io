@@ -115,7 +115,7 @@ export function CodePage({ allTags, data }: CodePageProps) {
           <div className="flex-1 @container">
             <ToolsAndLibrariesHeader sort={sort} setSort={setSort} />
 
-            <div className="grid gap-2 py-4 @[640px]:grid-cols-2 md:gap-4 md:py-8 lg:grid-cols-2">
+            <div className="grid gap-2 py-4 pt-2 @[640px]:grid-cols-2 md:gap-4 md:py-8 md:pt-6 lg:grid-cols-2">
               {(sort === "alphabetical"
                 ? [...sidebarState.filteredData].sort((a, b) =>
                     a.frontMatter.name.localeCompare(b.frontMatter.name),
@@ -322,7 +322,7 @@ function ToolsAndLibrariesSidebar({
 }: ToolsAndLibrariesSidebarProps) {
   const [sidebarShown, setSidebarShown] = useState(true)
   return (
-    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] duration-200 ease-out max-md:fixed max-md:right-0 max-md:top-[--navbar-h] max-md:z-10 max-md:transform-gpu max-md:border-l max-md:border-white max-md:bg-[rgb(var(--nextra-bg),.8)] max-md:pr-2 max-md:pt-4 max-md:backdrop-blur-[6.4px] max-md:transition-transform dark:max-md:border-white/10 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))] max-md:hover-hover:[html:has(#sidebar-toggle:checked:hover)_&]:translate-x-[calc(100%-0.5rem)] max-md:[html:has(#sidebar-toggle:not(:checked))_&:not(:hover)]:translate-x-[calc(100%+1px)] max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked))_&]:translate-y-16 max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked))_&]:border-t max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked):hover)_&]:translate-x-2 max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked):hover)_&]:shadow-md">
+    <div className="sticky top-[calc(var(--navbar-h)+1.5rem)] duration-200 ease-out before:absolute before:-top-4 before:h-4 before:w-full max-md:fixed max-md:right-0 max-md:top-[--navbar-h] max-md:z-10 max-md:transform-gpu max-md:border-l max-md:border-white max-md:bg-[rgb(var(--nextra-bg),.8)] max-md:pr-2 max-md:pt-4 max-md:backdrop-blur-[6.4px] max-md:transition-transform dark:max-md:border-white/10 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))] max-md:hover-hover:[html:has(#sidebar-toggle:checked:hover)_&]:translate-x-[calc(100%-0.5rem)] max-md:[html:has(#sidebar-toggle:not(:checked))_&:not(:hover)]:translate-x-[calc(100%+1px)] max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked))_&]:translate-y-16 max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked))_&]:border-t max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked):hover)_&]:translate-x-2 max-md:hover-hover:[html:has(#sidebar-toggle:not(:checked):hover)_&]:shadow-md">
       <Collapse horizontal isOpen={sidebarShown}>
         <section className="nextra-scrollbar -mt-4 w-[300px] shrink-0 overflow-y-auto p-4 pb-8 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))] lg:pb-16">
           <div className="sticky top-0 z-10 bg-[rgb(var(--nextra-bg))] shadow-[0_8px_16px_8px_rgb(var(--nextra-bg))] before:absolute before:-top-20 before:bottom-0 before:w-full before:bg-[rgb(var(--nextra-bg))]">
@@ -630,8 +630,8 @@ function ToolsAndLibrariesHeader({
   const { activePath } = useConfig().normalizePagesResult
 
   return (
-    <div className="top-[--navbar-h] flex items-center justify-between bg-[rgb(var(--nextra-bg))] max-md:sticky">
-      <div>
+    <div className="top-[--navbar-h] z-[1] mt-2 flex items-center justify-between bg-[rgb(var(--nextra-bg),.8)] py-2 backdrop-blur-[6.4px] before:absolute before:top-0 before:h-[calc(100%+2rem)] before:w-full max-md:sticky">
+      <div className="relative">
         <Breadcrumbs className="mb-2 mt-1 md:mb-6" activePath={activePath} />
         <RadioGroup
           value={sort}
