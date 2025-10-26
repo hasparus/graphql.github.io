@@ -72,7 +72,7 @@ export function EventCard({
     <a
       href={href}
       className={clsx(
-        "gql-focus-visible group flex min-w-[352px] flex-col overflow-hidden border border-neu-200 bg-neu-0 text-left text-current no-underline ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-100 dark:ring-neu-100",
+        "gql-focus-visible group flex min-w-[260px] flex-col overflow-hidden border border-neu-200 bg-neu-0 text-left text-current no-underline ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-100 dark:ring-neu-100 xs:min-w-[352px]",
       )}
       target="_blank"
       rel="noreferrer"
@@ -80,10 +80,10 @@ export function EventCard({
       <div className="flex flex-1 flex-col">
         <div
           className={clsx(
-            "flex items-center justify-between gap-2 px-4 text-neu-700 dark:text-neu-600",
+            "flex items-center justify-between gap-2 px-2 text-neu-700 dark:text-neu-600 xs:px-4",
             meta
               ? "border-b border-neu-200 py-2.5 dark:border-neu-100"
-              : "-mb-4 pt-3",
+              : "-mb-2 pt-2 xs:-mb-4 xs:pt-3",
           )}
         >
           {meta ? (
@@ -91,17 +91,19 @@ export function EventCard({
           ) : (
             <span className="sr-only">Official GraphQL Local</span>
           )}
-          {official && (
+          {official ? (
             <Tag color="hsl(var(--color-pri-base))" className="*:gap-1">
               <span className="font-sans" aria-hidden>
                 ★
               </span>
               Official
             </Tag>
+          ) : meta ? null : (
+            <div className="h-[22px]" />
           )}
         </div>
 
-        <div className="typography-h3 flex min-h-[124px] flex-1 flex-col justify-center px-4 py-6 text-neu-900">
+        <div className="typography-h3 flex min-h-[100px] flex-1 flex-col justify-center px-2 py-3 text-neu-900 xs:min-h-[124px] xs:px-4 xs:py-6">
           {name}
         </div>
 
@@ -114,23 +116,18 @@ export function EventCard({
           )}
         >
           {dateLabel && (
-            <div className="flex items-center gap-1.5 px-4 py-2.5 text-neu-700 dark:text-neu-600">
-              <CalendarIcon className="size-5 shrink-0 translate-y-[-.5px] text-neu-600 dark:text-neu-500" />
+            <div className="typography-body-sm flex items-center gap-1 px-2 py-1.5 text-neu-700 dark:text-neu-600 xs:gap-1.5 xs:px-4 xs:py-2.5">
+              <CalendarIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-600 dark:text-neu-500 xs:size-5" />
               {parsedDate ? (
-                <time
-                  dateTime={parsedDate.toISOString()}
-                  className="typography-body-sm"
-                >
-                  {dateLabel}
-                </time>
+                <time dateTime={parsedDate.toISOString()}>{dateLabel}</time>
               ) : (
-                <span className="typography-body-md">{dateLabel}</span>
+                <span>{dateLabel}</span>
               )}
             </div>
           )}
           {city && (
-            <div className="typography-body-sm flex items-center gap-1.5 whitespace-pre px-4 py-2.5 text-neu-700 dark:text-neu-600">
-              <PinIcon className="size-5 shrink-0 translate-y-[-.5px] text-neu-600 dark:text-neu-500" />
+            <div className="typography-body-sm flex items-center gap-1.5 whitespace-pre px-2 py-1.5 text-neu-700 dark:text-neu-600 xs:px-4 xs:py-2.5">
+              <PinIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-600 dark:text-neu-500 xs:size-5" />
               {city}
             </div>
           )}

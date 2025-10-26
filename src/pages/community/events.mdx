@@ -28,11 +28,11 @@ export const { pastEvents, upcomingEvents } = events.reduce(
     return acc
   },
   { pastEvents: [], upcomingEvents: [] },
-)
+) 
 
 export function EventsScrollview({ children }) {
   return (
-    <div className="scrollview-fade scrollview-fade-x-16 px-1 -mx-1 relative flex gap-2 lg:gap-4 overflow-scroll py-6 nextra-scrollbar">
+    <div className="scrollview-fade scrollview-fade-x-16 px-6 -mx-6 sm:px-1 sm:-mx-1 relative flex gap-2 lg:gap-4 overflow-auto py-6 xs:nextra-scrollbar">
       {children}
     </div>
   )
