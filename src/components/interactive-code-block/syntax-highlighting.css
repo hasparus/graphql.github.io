@@ -70,7 +70,7 @@
   }
 
   & .cm-line {
-    padding: 0 0 0 16px;
+    @apply pl-0 lg:pl-4;
   }
 
   & .cm-scroller {

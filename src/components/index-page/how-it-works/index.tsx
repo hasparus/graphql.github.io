@@ -36,7 +36,7 @@ export function HowItWorks() {
       <h2 className="typography-h2 mb-6 lg:mb-16">A GraphQL Query</h2>
       <div className="relative">
         {/* eslint-disable-next-line tailwindcss/no-custom-classname*/}
-        <ol className="gql-radial-gradient list-none gap-px max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
+        <ol className="gql-radial-gradient list-none gap-px max-lg:before:absolute max-lg:before:inset-x-0 max-lg:before:-top-2 max-lg:before:bottom-[98%] max-lg:before:bg-[rgb(var(--nextra-bg))] max-md:bg-gradient-to-r max-md:from-transparent max-md:via-neu-400 max-md:to-transparent lg:grid lg:grid-cols-3">
           <HowItWorksListItem
             text="Describe your data"
             code={<HowItWorks_Schema />}
