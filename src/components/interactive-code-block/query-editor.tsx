@@ -11,6 +11,7 @@ import {
 import { graphql, updateSchema } from "cm6-graphql"
 import { GraphQLSchema } from "graphql"
 import { codeMirrorThemeExtension } from "./codemirror-theme"
+
 import "./syntax-highlighting.css"
 
 interface QueryEditorProps {
