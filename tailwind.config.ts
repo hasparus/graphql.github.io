@@ -81,6 +81,8 @@ const config: Config = {
         "show-overflow":
           "show-overflow var(--animation-duration, 12s) var(--animation-delay, 1s) var(--animation-direction, forwards) ease infinite",
         "fade-in": "fade-in var(--animation-duration, 200ms) ease-out forwards",
+        "fade-out":
+          "fade-out var(--animation-duration, 200ms) ease-out forwards",
       },
       keyframes: {
         scroll: {
@@ -107,6 +109,9 @@ const config: Config = {
         "fade-in": {
           from: { opacity: "0" },
           to: { opacity: "1" },
+        },
+        "fade-out": {
+          to: { opacity: "0" },
         },
       },
     },
@@ -202,6 +207,15 @@ const config: Config = {
           "&:hover": {
             textDecoration: "none",
           },
+        },
+      })
+
+      addBase({
+        ".gql-focus-outline": {
+          "outline-style": "solid",
+          "outline-width": "3px",
+          "outline-offset": "5px",
+          "outline-color": "hsl(var(--color-neu-900))",
         },
       })
     }),
@@ -302,15 +316,32 @@ function scrollStartPlugin() {
 }
 
 function scrollviewFadePlugin() {
-  return plugin(({ addComponents, addBase }) => {
-    addComponents({
-      ".scrollview-x-fade": {
+  return plugin(({ addUtilities, matchUtilities, theme }) => {
+    matchUtilities(
+      {
+        "scrollview-fade-x": value => ({
+          "--fade-angle": "90deg",
+          "--fade-size": value,
+        }),
+        "scrollview-fade-y": value => ({
+          "--fade-angle": "180deg",
+          "--fade-size": value,
+        }),
+      },
+      {
+        supportsNegativeValues: false,
+        values: theme("spacing"),
+        type: ["length", "percentage"],
+      },
+    )
+    addUtilities({
+      ".scrollview-fade": {
         position: "relative",
         scrollTimeline: "--scroll-timeline-x inline",
         "--fade-start-opacity": "1",
         "--fade-end-opacity": "1",
         maskImage: `
-          linear-gradient(to right, 
+          linear-gradient(var(--fade-angle), 
             hsl(0 0% 0% / var(--fade-start-opacity)), 
             black var(--fade-size), 
             black calc(100% - var(--fade-size)), 
@@ -318,7 +349,7 @@ function scrollviewFadePlugin() {
           )
         `,
         WebkitMaskImage: `
-          linear-gradient(to right, 
+          linear-gradient(var(--fade-angle), 
             hsl(0 0% 0% / var(--fade-start-opacity)), 
             black var(--fade-size), 
             black calc(100% - var(--fade-size)), 
