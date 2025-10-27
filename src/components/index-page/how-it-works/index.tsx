@@ -54,7 +54,7 @@ export function HowItWorks() {
         {inView && (
           <ol
             // this is rendered *on top* of the static version to avoid layout shift
-            className="pointer-events-none absolute inset-0 list-none gap-px [counter-set:list-item_1] *:pointer-events-auto lg:grid lg:grid-cols-3 lg:[&>:first-child]:col-start-2"
+            className="max-lg:before pointer-events-none absolute inset-0 list-none gap-px [counter-set:list-item_1] *:pointer-events-auto max-lg:before:absolute max-lg:before:inset-x-0 max-lg:before:-top-2 max-lg:before:bottom-[98%] max-lg:before:bg-[rgb(var(--nextra-bg))] max-sm:top-[191px] sm:max-lg:top-[214px] lg:grid lg:grid-cols-3 lg:[&>:first-child]:col-start-2"
           >
             <InteractiveEditor />
           </ol>
