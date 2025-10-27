@@ -25,7 +25,7 @@ export interface NavBarProps {
 }
 
 const linkClasses =
-  "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none hover:underline underline-offset-2"
+  "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none hover:underline underline-offset-2 md:py-5"
 
 function NavbarMenu({
   menu,
@@ -171,7 +171,7 @@ export function Navbar({ items }: NavBarProps): ReactElement {
             <NavigationMenu.Positioner
               side="bottom"
               align="start"
-              sideOffset={21}
+              sideOffset={4}
               alignOffset={-8}
             >
               <NavigationMenu.Popup className="data-[closed]:animate-fade-out data-[open]:animate-fade-in">
