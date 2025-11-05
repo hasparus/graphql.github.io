@@ -155,7 +155,7 @@ export function Navbar({ items }: NavbarProps): ReactElement {
 
         <Flexsearch
           className={
-            "block select-none p-8 text-sm max-md:hidden [&>input::placeholder]:text-neu-700 [&>input]:bg-neu-0/[.55] [&>input]:text-neu-900"
+            "block select-none text-sm max-md:hidden [&>input::placeholder]:text-neu-700 [&>input]:bg-neu-0/[.55] [&>input]:text-neu-900"
           }
           setMenu={setMenu}
         />

@@ -85,7 +85,7 @@ export function Search({
   const icon = mounted && !focused && (
     <kbd
       className={clsx(
-        "_absolute _my-1.5 _select-none ltr:_right-1.5 rtl:_left-1.5",
+        "_my-1.5 _select-none rtl:_left-1.5 absolute right-1.5",
         "_h-5 _rounded _bg-white _px-1.5 _font-mono _text-[11px] _font-medium _text-gray-500",
         "_border dark:_border-gray-100/20 dark:_bg-black/50",
         "contrast-more:_border-current contrast-more:_text-current contrast-more:dark:_border-current",

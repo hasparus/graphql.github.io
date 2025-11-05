@@ -434,7 +434,7 @@ export function Sidebar({
       >
         <div className="px-4 pt-4 md:hidden">
           <Flexsearch
-            className="block select-none p-8 text-sm text-neu-500"
+            className="block select-none text-sm text-neu-500"
             setMenu={setMenu}
           />
         </div>
