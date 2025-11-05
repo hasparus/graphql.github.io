@@ -7,7 +7,7 @@ import {
 } from "@headlessui/react"
 import { clsx } from "clsx"
 import NextLink from "next/link"
-import { useRouter } from "next/router"
+import { useRouter } from "next/compat/router"
 import { useMounted } from "nextra/hooks"
 import { InformationCircleIcon, SpinnerIcon } from "nextra/icons"
 import type {
