@@ -224,7 +224,7 @@ export function Search({
                 {searchResult.children}
               </ComboboxOption>
             </Fragment>
-          )))
+          ))
         ) : (
           value && (
             <span className="block select-none p-8 text-center text-sm text-neu-700">
