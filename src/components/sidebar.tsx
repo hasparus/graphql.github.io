@@ -1,3 +1,5 @@
+"use client"
+
 /**
  * @file sidebar module extracted from Nextra 3.3.1
  */
@@ -431,7 +433,10 @@ export function Sidebar({
         ref={containerRef}
       >
         <div className="px-4 pt-4 md:hidden">
-          <Flexsearch className="block select-none p-8 text-sm text-neu-500" />
+          <Flexsearch
+            className="block select-none p-8 text-sm text-neu-500"
+            setMenu={setMenu}
+          />
         </div>
         <FocusedItemContext.Provider value={focused}>
           <OnFocusItemContext.Provider value={setFocused}>

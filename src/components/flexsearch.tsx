@@ -144,8 +144,10 @@ const loadIndexesImpl = async (
 
 export function Flexsearch({
   className,
+  setMenu,
 }: {
   className?: string
+  setMenu: (state: false) => void
 }): ReactElement {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -272,6 +274,7 @@ export function Flexsearch({
       onActive={preload}
       className={className}
       results={results}
+      setMenu={setMenu}
     />
   )
 }

@@ -33,7 +33,7 @@ type SearchProps = {
   loading?: boolean
   error?: boolean
   results: SearchResult[]
-  closeMenu: () => void
+  setMenu: (state: false) => void
 }
 
 const INPUTS = new Set(["input", "select", "button", "textarea"])
@@ -46,7 +46,7 @@ export function Search({
   loading,
   error,
   results,
-  closeMenu,
+  setMenu,
 }: SearchProps): ReactElement {
   const router = useRouter()
   const [focused, setFocused] = useState(false)
@@ -128,10 +128,10 @@ export function Search({
       inputRef.current?.blur()
       await router.push(searchResult.route)
       // Clear input after navigation completes
-      closeMenu()
+      setMenu(false)
       onChange("")
     },
-    [router, closeMenu, onChange],
+    [router, setMenu, onChange],
   )
 
   return (
@@ -195,12 +195,12 @@ export function Search({
         {error ? (
           <span className="_flex _select-none _justify-center _gap-2 _p-8 _text-center _text-sm _text-red-500">
             <InformationCircleIcon className="_size-5" />
-            TODO: ERROR
+            Failed to load search index.
           </span>
         ) : loading ? (
           <span className="_flex _select-none _justify-center _gap-2 _p-8 _text-center _text-sm _text-gray-400">
             <SpinnerIcon className="_size-5 _animate-spin" />
-            TODO: LOADING
+            Loading…
           </span>
         ) : results.length ? (
           results.map(searchResult => (
@@ -224,9 +224,13 @@ export function Search({
                 {searchResult.children}
               </ComboboxOption>
             </Fragment>
-          ))
+          )))
         ) : (
-          value && "TODO: EMPTY RESULT"
+          value && (
+            <span className="block select-none p-8 text-center text-sm text-neu-700">
+              No results found.
+            </span>
+          )
         )}
       </ComboboxOptions>
     </Combobox>

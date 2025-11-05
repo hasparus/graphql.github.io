@@ -2,8 +2,10 @@
 import { ThemeProvider } from "next-themes"
 
 import { Footer } from "../../components/footer"
-import { Navbar } from "../../components/navbar/navbar"
 import { NewFontsStyleTag } from "../fonts"
+import { Navbar } from "../../components/navbar/navbar"
+import { topLevelNavbarItems } from "../../components/navbar/top-level-items"
+import { MenuProvider } from "./menu-provider"
 
 export default function MainLayout({
   children,
@@ -14,9 +16,11 @@ export default function MainLayout({
     <>
       <NewFontsStyleTag />
       <ThemeProvider attribute="class">
-        <Navbar />
-        <div className="bg-neu-0 text-neu-900 antialiased">{children}</div>
-        <Footer />
+        <MenuProvider>
+          <Navbar items={topLevelNavbarItems} />
+          <div className="bg-neu-0 text-neu-900 antialiased">{children}</div>
+          <Footer />
+        </MenuProvider>
       </ThemeProvider>
     </>
   )

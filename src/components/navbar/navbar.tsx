@@ -1,3 +1,5 @@
+"use client"
+
 import { NavigationMenu } from "@base-ui-components/react/navigation-menu"
 
 import clsx from "clsx"
@@ -6,7 +8,7 @@ import NextLink from "next/link"
 import { Button } from "nextra/components"
 import type * as normalizePages from "nextra/normalize-pages"
 import React, { useEffect, type ReactElement, type ReactNode } from "react"
-import { useThemeConfig } from "nextra-theme-docs"
+import { useMenu, useThemeConfig } from "nextra-theme-docs"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 
 import MenuIcon from "@/app/conf/_design-system/pixelarticons/menu.svg?svgr"
@@ -74,20 +76,9 @@ function NavbarMenu({
   )
 }
 
-export interface NavbarProps extends NavBarProps {
-  setMenu: React.Dispatch<React.SetStateAction<boolean>>
-  menu: boolean
-}
-export function Navbar({ items, setMenu, menu }: NavbarProps): ReactElement {
-  const themeConfig = useThemeConfig()
-
-  console.dir(
-    {
-      themeConfig,
-      items,
-    },
-    { depth: 9 },
-  )
+export interface NavbarProps extends NavBarProps {}
+export function Navbar({ items }: NavbarProps): ReactElement {
+  const { menu, setMenu } = useMenu()
 
   useEffect(
     () => () => {
@@ -166,6 +157,7 @@ export function Navbar({ items, setMenu, menu }: NavbarProps): ReactElement {
           className={
             "block select-none p-8 text-sm max-md:hidden [&>input::placeholder]:text-neu-700 [&>input]:bg-neu-0/[.55] [&>input]:text-neu-900"
           }
+          setMenu={setMenu}
         />
 
         <ThemeSwitch lite className="max-lg:hidden [&_span]:hidden" />

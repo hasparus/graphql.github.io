@@ -101,10 +101,7 @@ export default {
     component: () => <Footer />,
   },
   navbar: {
-    component: function NavbarComponent(props) {
-      const activeRoute = useFSRoute()
-      return <Navbar {...props} activeRoute={activeRoute} {...useMenu()} />
-    },
+    component: Navbar,
   },
   toc: {
     backToTop: true,
