@@ -88,9 +88,15 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
+      escape-string-regexp:
+        specifier: ^5.0.0
+        version: 5.0.0
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
+      flexsearch:
+        specifier: 0.7.43
+        version: 0.7.43
       github-slugger:
         specifier: 2.0.0
         version: 2.0.0

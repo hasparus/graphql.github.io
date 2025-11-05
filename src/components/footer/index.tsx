@@ -111,8 +111,6 @@ const CONFERENCE_YEAR = 2025
 const HAS_CONFERENCE_BOX = true
 
 export function Footer() {
-  const themeConfig = useThemeConfig()
-
   return (
     <footer className="relative !bg-neu-100 text-neu-900 dark:!bg-neu-0 max-md:px-0 max-md:pt-0">
       <Stripes />
@@ -175,13 +173,11 @@ export function Footer() {
         </div>
 
         <div className="relative flex items-center justify-between gap-4 p-4 max-md:justify-center md:px-6 2xl:px-10">
-          {themeConfig.darkMode && (
-            <div className="typography-menu flex items-center *:rounded-none dark:*:text-neu-900 max-md:hidden">
-              <ThemeSwitch />
-            </div>
-          )}
+          <div className="typography-menu flex items-center *:rounded-none dark:*:text-neu-900 max-md:hidden">
+            <ThemeSwitch />
+          </div>
           <p className="typography-body-xs flex flex-col text-pretty max-md:gap-5">
-            {renderComponent(themeConfig.footer.content)}
+            Copyright © 2025 The GraphQL Foundation. All rights reserved.
           </p>
         </div>
       </div>

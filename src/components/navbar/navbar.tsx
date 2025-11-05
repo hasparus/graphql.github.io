@@ -4,27 +4,24 @@ import clsx from "clsx"
 // eslint-disable-next-line no-restricted-imports -- since we don't need newWindow prop
 import NextLink from "next/link"
 import { Button } from "nextra/components"
-import { useFSRoute } from "nextra/hooks"
 import type * as normalizePages from "nextra/normalize-pages"
-import React, {
-  useCallback,
-  useEffect,
-  type ReactElement,
-  type ReactNode,
-} from "react"
-import { useMenu, useThemeConfig } from "nextra-theme-docs"
+import React, { useEffect, type ReactElement, type ReactNode } from "react"
+import { useThemeConfig } from "nextra-theme-docs"
 import { Anchor } from "@/app/conf/_design-system/anchor"
-import { renderComponent } from "@/components/utils/render-component"
 
 import MenuIcon from "@/app/conf/_design-system/pixelarticons/menu.svg?svgr"
 import CloseIcon from "@/app/conf/_design-system/pixelarticons/close.svg?svgr"
+import { GraphQLWordmarkLogo } from "../../icons"
+import { ThemeSwitch } from "../theme-switch"
+import { Flexsearch } from "../flexsearch"
+import { NavLink } from "./nav-link"
 
 type Item = normalizePages.PageItem | normalizePages.MenuItem
 export interface NavBarProps {
   items: Item[]
 }
 
-const linkClasses =
+export const linkClasses =
   "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none hover:underline underline-offset-2"
 
 function NavbarMenu({
@@ -77,11 +74,20 @@ function NavbarMenu({
   )
 }
 
-export function Navbar({ items }: NavBarProps): ReactElement {
+export interface NavbarProps extends NavBarProps {
+  setMenu: React.Dispatch<React.SetStateAction<boolean>>
+  menu: boolean
+}
+export function Navbar({ items, setMenu, menu }: NavbarProps): ReactElement {
   const themeConfig = useThemeConfig()
 
-  const activeRoute = useFSRoute()
-  const { menu, setMenu } = useMenu()
+  console.dir(
+    {
+      themeConfig,
+      items,
+    },
+    { depth: 9 },
+  )
 
   useEffect(
     () => () => {
@@ -93,28 +99,18 @@ export function Navbar({ items }: NavBarProps): ReactElement {
   return (
     <div
       className={clsx(
-        "nextra-nav-container top-0 z-20 w-full bg-transparent print:hidden",
-        activeRoute === "/" ? "fixed" : "sticky",
+        "nextra-nav-container sticky top-0 z-20 w-full bg-transparent print:hidden",
+        // TODO: activeRoute === "/" ? "fixed" : "sticky",
       )}
     >
       <BackdropBlur />
       <nav className="mx-auto flex h-[var(--nextra-navbar-height)] max-w-[120rem] items-center justify-end pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)]">
-        {themeConfig.logoLink ? (
-          <NextLink
-            href={
-              typeof themeConfig.logoLink === "string"
-                ? themeConfig.logoLink
-                : "/"
-            }
-            className="nextra-focus flex items-center hover:opacity-75"
-          >
-            {renderComponent(themeConfig.logo)}
-          </NextLink>
-        ) : (
-          <div className="flex items-center">
-            {renderComponent(themeConfig.logo)}
-          </div>
-        )}
+        <NextLink
+          href={"/"}
+          className="nextra-focus flex items-center hover:opacity-75"
+        >
+          <GraphQLWordmarkLogo className="nextra-logo h-6" title="GraphQL" />
+        </NextLink>
         <div className="flex-1" />
         <NavigationMenu.Root
           onValueChange={(value: string | null) => {
@@ -144,24 +140,9 @@ export function Navbar({ items }: NavBarProps): ReactElement {
                   href
               }
 
-              const isActive =
-                page.route === activeRoute ||
-                activeRoute.startsWith(page.route + "/")
-
               return (
                 <NavigationMenu.Item key={href} className="max-md:hidden">
-                  <Anchor
-                    href={href}
-                    className={clsx(
-                      linkClasses,
-                      "whitespace-nowrap max-md:hidden",
-                      isActive && !page.newWindow && "underline",
-                    )}
-                    target={page.newWindow ? "_blank" : undefined}
-                    aria-current={!page.newWindow && isActive}
-                  >
-                    {page.title}
-                  </Anchor>
+                  <NavLink href={href} page={page} />
                 </NavigationMenu.Item>
               )
             })}
@@ -181,25 +162,13 @@ export function Navbar({ items }: NavBarProps): ReactElement {
           </NavigationMenu.Portal>
         </NavigationMenu.Root>
 
-        {process.env.NEXTRA_SEARCH &&
-          renderComponent(themeConfig.search.component, {
-            className:
-              "max-md:_hidden [&>input]:bg-neu-0/[.55] [&>input::placeholder]:text-neu-700 [&>input]:text-neu-900",
-          })}
+        <Flexsearch
+          className={
+            "block select-none p-8 text-sm max-md:hidden [&>input::placeholder]:text-neu-700 [&>input]:bg-neu-0/[.55] [&>input]:text-neu-900"
+          }
+        />
 
-        {themeConfig.project.link ? (
-          <Anchor href={themeConfig.project.link}>
-            {renderComponent(themeConfig.project.icon)}
-          </Anchor>
-        ) : null}
-
-        {themeConfig.chat.link ? (
-          <Anchor href={themeConfig.chat.link}>
-            {renderComponent(themeConfig.chat.icon)}
-          </Anchor>
-        ) : null}
-
-        {renderComponent(themeConfig.navbar.extraContent)}
+        <ThemeSwitch lite className="max-lg:hidden [&_span]:hidden" />
 
         <Button
           aria-label="Menu"

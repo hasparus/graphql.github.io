@@ -33,6 +33,7 @@ import { Anchor } from "@/app/conf/_design-system/anchor"
 
 import { renderComponent } from "./utils/render-component"
 import { ThemeSwitch } from "./theme-switch"
+import { Flexsearch } from "./flexsearch"
 
 const TreeState: Record<string, boolean> = Object.create(null)
 
@@ -429,11 +430,9 @@ export function Sidebar({
         )}
         ref={containerRef}
       >
-        {process.env.NEXTRA_SEARCH && (
-          <div className="_px-4 _pt-4 md:_hidden">
-            {renderComponent(themeConfig.search.component)}
-          </div>
-        )}
+        <div className="px-4 pt-4 md:hidden">
+          <Flexsearch className="block select-none p-8 text-sm text-neu-500" />
+        </div>
         <FocusedItemContext.Provider value={focused}>
           <OnFocusItemContext.Provider value={setFocused}>
             <div

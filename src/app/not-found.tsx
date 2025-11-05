@@ -2,11 +2,9 @@
 
 import { usePathname } from "next/navigation"
 import { useMounted } from "nextra/hooks"
-// @ts-expect-error
-import { ThemeProvider } from "next-themes"
 
-import { NewFontsStyleTag } from "./fonts"
 import { Button } from "./conf/_design-system/button"
+import MainLayout from "./(main)/layout"
 
 import "@/globals.css"
 import "@/app/colors.css"
@@ -30,12 +28,11 @@ export default function Page() {
   }/issues/new?title=${encodeURIComponent(title)}&labels=${labels}`
 
   return (
-    <ThemeProvider attribute="class">
-      <div className="flex h-dvh flex-col items-center justify-center gap-8 bg-neu-0 font-sans lg:gap-10">
-        <NewFontsStyleTag />
+    <MainLayout>
+      <div className="flex h-[500px] flex-col items-center justify-center gap-8 bg-neu-0 font-sans lg:h-[600px] lg:gap-10">
         <FourOhFourIcon className="text-pri-base" />
         <h1 className="text-4xl text-neu-900">Page not found</h1>
-        <div className="flex gap-4">
+        <div className="flex gap-4 max-sm:flex-col">
           <Button variant="primary" href={url}>
             Submit an issue about broken link
           </Button>
@@ -44,7 +41,7 @@ export default function Page() {
           </Button>
         </div>
       </div>
-    </ThemeProvider>
+    </MainLayout>
   )
 }
 
