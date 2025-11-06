@@ -1,5 +1,3 @@
-import theme from "tailwindcss/defaultTheme"
-
 export default {
   resources: "Resources",
   "tools-and-libraries": {
@@ -8,9 +6,8 @@ export default {
     },
   },
   events: {
-    theme: {
-      layout: "raw",
-    },
+    type: "page",
+    href: "/community/events",
   },
   ambassadors: "Ambassador Program",
   contribute: "Contribute to GraphQL",

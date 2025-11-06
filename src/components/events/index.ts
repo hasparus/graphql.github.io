@@ -1,6 +1,6 @@
 export * from "./event-card"
 
-interface Event {
+export interface Event {
   name: string
   slug: string
   location: string
