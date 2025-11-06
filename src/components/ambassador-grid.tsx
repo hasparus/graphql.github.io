@@ -26,7 +26,7 @@ function buildRows(ambassador: Ambassador): InfoCardRow[] {
                 key={tag.url}
                 href={tag.url}
                 aria-label={tag.label}
-                className="inline-flex h-8 w-8 shrink-0 items-center justify-center bg-neu-100 text-current transition hover:bg-sec-base/10 hover:text-sec-base"
+                className="inline-flex size-8 shrink-0 items-center justify-center bg-neu-100 text-current transition hover:bg-sec-base/10 hover:text-sec-base"
                 target="_blank"
                 rel="noopener noreferrer"
               >

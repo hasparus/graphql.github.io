@@ -2,16 +2,17 @@
 
 import { usePathname } from "next/navigation"
 import { useMounted } from "nextra/hooks"
-// @ts-expect-error
-import { ThemeProvider } from "next-themes"
 
-import { NewFontsStyleTag } from "./fonts"
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
+import stripesMask from "@/components/404-page/image.webp"
+
 import { Button } from "./conf/_design-system/button"
+import MainLayout from "./(main)/layout"
 
 import "@/globals.css"
 import "@/app/colors.css"
 
-export default function Page() {
+export default function NotFoundPage() {
   const pathname = usePathname()
   const mounted = useMounted()
 
@@ -30,21 +31,49 @@ export default function Page() {
   }/issues/new?title=${encodeURIComponent(title)}&labels=${labels}`
 
   return (
-    <ThemeProvider attribute="class">
-      <div className="flex h-dvh flex-col items-center justify-center gap-8 bg-neu-0 font-sans lg:gap-10">
-        <NewFontsStyleTag />
-        <FourOhFourIcon className="text-pri-base" />
-        <h1 className="text-4xl text-neu-900">Page not found</h1>
-        <div className="flex gap-4">
-          <Button variant="primary" href={url}>
-            Submit an issue about broken link
-          </Button>
-          <Button variant="secondary" href="/">
-            Go back home
-          </Button>
+    <MainLayout>
+      <style>{".nextra-nav-container.sticky { position: fixed }"}</style>
+      <div className="relative">
+        <Stripes />
+        <div className="relative z-10 flex h-[500px] flex-col items-center justify-center gap-8 pt-[--nextra-navbar-height] font-sans lg:h-[600px] lg:gap-10">
+          <FourOhFourIcon className="text-pri-base" />
+          <h1 className="text-4xl text-neu-900">Page not found</h1>
+          <div className="flex gap-4 max-sm:flex-col">
+            <Button variant="primary" href={url}>
+              Submit an issue about broken link
+            </Button>
+            <Button variant="tertiary" href="/">
+              Go back home
+            </Button>
+          </div>
         </div>
       </div>
-    </ThemeProvider>
+    </MainLayout>
+  )
+}
+
+function Stripes() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0"
+      style={{
+        maskImage: `url(${stripesMask.src})`,
+        WebkitMaskImage: `url(${stripesMask.src})`,
+        maskRepeat: "no-repeat",
+        WebkitMaskRepeat: "no-repeat",
+        maskPosition: "center 100%",
+        WebkitMaskPosition: "center 100%",
+        maskSize: "130%",
+        WebkitMaskSize: "130%",
+      }}
+    >
+      <StripesDecoration
+        stripeWidth="8px"
+        evenClassName="bg-[linear-gradient(180deg,hsl(var(--color-pri-light)/.4)_0%,hsl(var(--color-neu-0)/.2)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-dark)/0.6)_0%,hsl(var(--color-pri-darker)/0.3)_100%)]"
+        oddClassName="bg-[linear-gradient(180deg,hsl(var(--color-neu-0))_0%,hsl(var(--color-neu-0)/0)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-neu-0)/0.2)_0%,transparent_100%)]"
+      />
+    </div>
   )
 }
 

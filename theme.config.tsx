@@ -6,7 +6,6 @@ import { mdxComponents } from "@/_design-system/mdx-components"
 import { GraphQLWordmarkLogo } from "@/icons"
 import { Footer } from "@/components/footer"
 import { NextraMdxWrapper } from "@/components/nextra-mdx-wrapper"
-import { ThemeSwitch } from "@/components/theme-switch"
 
 const graphQLLogo = (
   <GraphQLWordmarkLogo className="nextra-logo h-6" title="GraphQL" />
@@ -98,13 +97,9 @@ export default {
   },
   footer: {
     component: () => <Footer />,
-    content: "Copyright © 2025 The GraphQL Foundation. All rights reserved.",
   },
   navbar: {
     component: Navbar,
-    extraContent: (
-      <ThemeSwitch lite className="max-lg:hidden [&_span]:hidden" />
-    ),
   },
   toc: {
     backToTop: true,

@@ -28,7 +28,7 @@ export function InfoCardRow({ row }: { row: InfoCardRow }) {
   switch (row.type) {
     case "label": {
       return (
-        <div className="flex h-auto items-start justify-between gap-2 border-b border-neu-200 px-4 py-4 text-neu-700 dark:border-neu-100 dark:text-neu-600">
+        <div className="flex h-auto items-start justify-between gap-2 border-b border-neu-200 p-4 text-neu-700 dark:border-neu-100 dark:text-neu-600">
           {row.label}
         </div>
       )
@@ -46,7 +46,7 @@ export function InfoCardRow({ row }: { row: InfoCardRow }) {
           <img
             src={row.imageUrl}
             alt={row.alt}
-            className="h-full w-full object-cover"
+            className="size-full object-cover"
           />
         </div>
       )

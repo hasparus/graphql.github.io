@@ -2958,14 +2958,3 @@ kbd._border._gap-1 {
     color: hsl(var(--color-neu-500));
   }
 }
-
-.nextra-search-results {
-  & .\_text-primary-600 {
-    color: hsl(var(--color-pri-base));
-  }
-}
-.dark .nextra-search-results {
-  & .\_text-primary-600 {
-    color: hsl(var(--color-pri-light));
-  }
-}

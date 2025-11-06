@@ -155,7 +155,7 @@ export function SessionList({
                     <NextLink
                       key={session.id}
                       className={`${clsx(
-                        "white flex flex-col overflow-hidden rounded-md text-current shadow-2xl hover:no-underline focus:no-underline",
+                        "flex flex-col overflow-hidden rounded-md text-current shadow-2xl hover:no-underline focus:no-underline",
                       )} ${minimalVersion ? "bg-[#251f30]" : ""}`}
                       href={
                         minimalVersion

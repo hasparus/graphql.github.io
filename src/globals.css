@@ -7,6 +7,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  --nextra-navbar-height: 64px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -400,4 +402,9 @@ html:has([role="menu"][data-open]) {
   --mermaid-node-fill: hsl(var(--color-neu-50) / 0.5);
   --mermaid-node-stroke: hsl(var(--color-neu-100));
   --mermaid-arrow: hsl(var(--color-neu-300));
+}
+
+.nextra-focus.subheading-anchor:focus-visible {
+  @apply gql-focus-outline after:text-neu-700 focus-visible:outline-offset-1;
+  box-shadow: none;
 }
