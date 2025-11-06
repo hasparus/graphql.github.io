@@ -42,7 +42,7 @@ export default function NotFoundPage() {
             <Button variant="primary" href={url}>
               Submit an issue about broken link
             </Button>
-            <Button variant="secondary" href="/">
+            <Button variant="tertiary" href="/">
               Go back home
             </Button>
           </div>

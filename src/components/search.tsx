@@ -140,8 +140,7 @@ export function Search({
         className={clsx(
           "not-prose", // for blog
           "relative flex items-center",
-          "text-gray-900 dark:text-gray-300",
-          "contrast-more:text-gray-800 contrast-more:dark:text-gray-300",
+          "text-neu-900",
           className,
         )}
       >
@@ -155,8 +154,8 @@ export function Search({
               "text-base leading-tight md:text-sm",
               focus
                 ? "bg-transparent focus-visible:gql-focus-outline focus-visible:outline-offset-1"
-                : "bg-black/[.05] dark:bg-gray-50/10",
-              "placeholder:text-gray-500 dark:placeholder:text-gray-400",
+                : "bg-black/[.05] dark:bg-neu-100/10",
+              "placeholder:text-neu-500",
               "contrast-more:border contrast-more:border-current",
               "[&::-webkit-search-cancel-button]:_appearance-none",
             )
@@ -179,7 +178,7 @@ export function Search({
             "nextra-scrollbar max-md:h-full",
             "border border-neu-300 text-neu-700 dark:border-neu-50",
             "z-20 py-2.5 shadow-xl",
-            "contrast-more:border contrast-more:border-gray-900 contrast-more:dark:border-gray-50",
+            "contrast-more:border contrast-more:border-neu-900 contrast-more:dark:border-neu-100",
             "bg-neu-0/70 backdrop-blur-lg",
             "transition-opacity motion-reduce:transition-none",
             open ? "opacity-100" : "opacity-0",
