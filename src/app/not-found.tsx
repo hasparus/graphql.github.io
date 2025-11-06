@@ -71,7 +71,7 @@ function Stripes() {
       <StripesDecoration
         stripeWidth="8px"
         evenClassName="bg-[linear-gradient(180deg,hsl(var(--color-pri-light)/.4)_0%,hsl(var(--color-neu-0)/.2)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-dark)/0.6)_0%,hsl(var(--color-pri-darker)/0.3)_100%)]"
-        oddClassName="bg-[linear-gradient(180deg,hsl(var(--color-neu-0))_0%,hsl(var(--color-neu-0)/0)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-sec-dark)/0.4)_0%,transparent_100%)]"
+        oddClassName="bg-[linear-gradient(180deg,hsl(var(--color-neu-0))_0%,hsl(var(--color-neu-0)/0)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-neu-0)/0.2)_0%,transparent_100%)]"
       />
     </div>
   )

@@ -32,7 +32,7 @@ export const HighlightMatches = memo<MatchArgs>(function HighlightMatches({
       content.push(
         before,
         // eslint-disable-next-line tailwindcss/no-custom-classname
-        <span key={result.index} className="_text-primary-600">
+        <span key={result.index} className="text-neu-900 underline">
           {after}
         </span>,
       )
