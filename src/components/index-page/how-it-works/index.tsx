@@ -87,7 +87,8 @@ function FigureInfo({ className }: { className?: string }) {
       <InfoIcon className="size-4 shrink-0 translate-y-[2.25px]" />
       <p className="text-neu-800">
         Press <Kbd>Ctrl</Kbd>
-        <Kbd className="ml-0.5">Space</Kbd> to show the completions, <MetaKey />
+        <Kbd className="ml-0.5">Space</Kbd> to open the completions menu,{" "}
+        <MetaKey />
         <Kbd>Enter</Kbd> to run the query.
       </p>
     </div>
