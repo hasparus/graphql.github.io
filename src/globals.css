@@ -403,3 +403,8 @@ html:has([role="menu"][data-open]) {
   --mermaid-node-stroke: hsl(var(--color-neu-100));
   --mermaid-arrow: hsl(var(--color-neu-300));
 }
+
+.nextra-focus.subheading-anchor:focus-visible {
+  @apply gql-focus-outline after:text-neu-700 focus-visible:outline-offset-1;
+  box-shadow: none;
+}

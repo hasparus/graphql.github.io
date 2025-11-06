@@ -85,12 +85,12 @@ export function Search({
   const icon = mounted && !focused && (
     <kbd
       className={clsx(
-        "_my-1.5 _select-none rtl:_left-1.5 absolute right-1.5",
-        "_h-5 _rounded _bg-white _px-1.5 _font-mono _text-[11px] _font-medium _text-gray-500",
-        "_border dark:_border-gray-100/20 dark:_bg-black/50",
-        "contrast-more:_border-current contrast-more:_text-current contrast-more:dark:_border-current",
-        "_items-center _gap-1 _flex",
-        "max-sm:_hidden",
+        "absolute right-1.5 my-1.5 select-none rtl:left-1.5",
+        "h-5 bg-white px-1.5 font-mono text-[11px] font-medium text-neu-600",
+        "border dark:border-neu-100/20 dark:bg-neu-0/50",
+        "contrast-more:border-current contrast-more:text-current contrast-more:dark:border-current",
+        "flex items-center gap-1",
+        "max-sm:hidden",
       )}
     >
       {navigator.userAgent.includes("Mac") ? (
@@ -150,11 +150,11 @@ export function Search({
           spellCheck={false}
           className={({ focus }) =>
             clsx(
-              "rounded-lg px-3 py-2 transition-colors",
+              "px-3 py-2 transition-colors",
               "w-full md:w-64",
               "text-base leading-tight md:text-sm",
               focus
-                ? "nextra-focusable bg-transparent"
+                ? "bg-transparent focus-visible:gql-focus-outline focus-visible:outline-offset-1"
                 : "bg-black/[.05] dark:bg-gray-50/10",
               "placeholder:text-gray-500 dark:placeholder:text-gray-400",
               "contrast-more:border contrast-more:border-current",
@@ -177,10 +177,10 @@ export function Search({
         className={({ open }) =>
           clsx(
             "nextra-scrollbar max-md:h-full",
-            "border border-gray-200 text-gray-100 dark:border-neutral-800",
-            "z-20 rounded-xl py-2.5 shadow-xl",
+            "border border-neu-300 text-neu-700 dark:border-neu-50",
+            "z-20 py-2.5 shadow-xl",
             "contrast-more:border contrast-more:border-gray-900 contrast-more:dark:border-gray-50",
-            "bg-[rgb(var(--nextra-bg),.8)] backdrop-blur-lg",
+            "bg-neu-0/70 backdrop-blur-lg",
             "transition-opacity motion-reduce:transition-none",
             open ? "opacity-100" : "opacity-0",
             error || loading || !results.length
@@ -193,13 +193,13 @@ export function Search({
         }
       >
         {error ? (
-          <span className="_flex _select-none _justify-center _gap-2 _p-8 _text-center _text-sm _text-red-500">
-            <InformationCircleIcon className="_size-5" />
+          <span className="flex select-none justify-center gap-2 p-8 text-center text-sm text-red-500">
+            <InformationCircleIcon className="size-5" />
             Failed to load search index.
           </span>
         ) : loading ? (
-          <span className="_flex _select-none _justify-center _gap-2 _p-8 _text-center _text-sm _text-gray-400">
-            <SpinnerIcon className="_size-5 _animate-spin" />
+          <span className="flex select-none justify-center gap-2 p-8 text-center text-sm text-neu-500">
+            <SpinnerIcon className="size-5 animate-spin" />
             Loading…
           </span>
         ) : results.length ? (
@@ -212,12 +212,12 @@ export function Search({
                 href={searchResult.route}
                 className={({ focus }) =>
                   clsx(
-                    "_mx-2.5 _break-words _rounded-md",
-                    "contrast-more:_border",
+                    "mx-2.5 break-words",
+                    "contrast-more:border",
                     focus
-                      ? "_text-primary-600 contrast-more:_border-current _bg-primary-500/10"
-                      : "_text-gray-800 dark:_text-gray-300 contrast-more:_border-transparent",
-                    "_block _scroll-m-12 _px-2.5 _py-2",
+                      ? "bg-pri-base/10 text-pri-base contrast-more:border-current dark:text-pri-light"
+                      : "text-neu-800",
+                    "block scroll-m-12 px-2.5 py-2",
                   )
                 }
               >
