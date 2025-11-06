@@ -8,7 +8,7 @@ import NextLink from "next/link"
 import { Button } from "nextra/components"
 import type * as normalizePages from "nextra/normalize-pages"
 import React, { useEffect, type ReactElement, type ReactNode } from "react"
-import { useMenu, useThemeConfig } from "nextra-theme-docs"
+import { useMenu } from "nextra-theme-docs"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 
 import MenuIcon from "@/app/conf/_design-system/pixelarticons/menu.svg?svgr"
