@@ -12,7 +12,6 @@ export function arrowsMoveSideways(event: React.KeyboardEvent<HTMLElement>) {
 
   if (event.key === "ArrowDown" || event.key === "ArrowUp") {
     const vertical = event.currentTarget.dataset.vertical
-    console.log({ vertical })
     repeat = vertical ? parseInt(vertical) : 1
   }
 

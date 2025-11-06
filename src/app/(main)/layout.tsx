@@ -18,7 +18,9 @@ export default function MainLayout({
       <ThemeProvider attribute="class">
         <MenuProvider>
           <Navbar items={topLevelNavbarItems} />
-          <div className="bg-neu-0 text-neu-900 antialiased">{children}</div>
+          <div className="isolate bg-neu-0 text-neu-900 antialiased">
+            {children}
+          </div>
           <Footer />
         </MenuProvider>
       </ThemeProvider>

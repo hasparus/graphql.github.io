@@ -39,7 +39,7 @@ export function normalizeMetaToItems(meta: Record<string, any>, route = "/") {
   )
 
   const result = normalizePages({
-    list: pageMapItems,
+    list: [{ data: meta }, ...pageMapItems],
     route,
   })
 

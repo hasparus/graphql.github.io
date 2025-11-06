@@ -126,7 +126,7 @@ export function Search({
       // Calling before navigation so selector `html:not(:has(*:focus))` in styles.css will work,
       // and we'll have padding top since input is not focused
       inputRef.current?.blur()
-      await router.push(searchResult.route)
+      await router?.push(searchResult.route)
       // Clear input after navigation completes
       setMenu(false)
       onChange("")
