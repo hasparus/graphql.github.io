@@ -1,15 +1,15 @@
 import NextLink from "next/link"
+import clsx from "clsx"
 
 import { Tag } from "@/app/conf/_design-system/tag"
 import { arrowsMoveSideways } from "@/app/conf/_design-system/utils/arrows-move-sideways"
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
 import { blogTagColors } from "./blog-tag-colors"
 import { BlogCard } from "./blog-card"
 import { LookingForMore } from "./looking-for-more"
 import { BlogMdxContent } from "./mdx-types"
 import { FeaturedBlogPosts } from "./featured-blog-posts"
-import { StripesDecoration } from "../../app/conf/_design-system/stripes-decoration"
-import clsx from "clsx"
 
 const mask = `url(${new URL("./blur-bean.webp", import.meta.url).href})`
 

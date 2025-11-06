@@ -50,7 +50,7 @@ export function ThemeSwitch({ lite, className }: ThemeSwitchProps) {
         aria-label="Change theme"
         title="Change theme"
         className={clsx(
-          "gql-focus-visible relative cursor-pointer text-neu-800 transition-colors before:absolute before:-inset-2 hover:bg-neu-100 hover:text-neu-900 focus-visible:!-outline-offset-2 dark:text-neu-700 dark:hover:bg-neu-50/50",
+          "gql-focus-visible relative cursor-pointer text-neu-800 transition-colors before:absolute before:-inset-2 hover:bg-neu-100 hover:text-neu-900 focus-visible:outline-offset-4 dark:text-neu-700 dark:hover:bg-neu-50/50",
           className,
         )}
       >

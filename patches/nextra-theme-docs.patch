@@ -1,8 +1,16 @@
 diff --git a/dist/index.d.mts b/dist/index.d.mts
-index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..53dffe4fbe5fb2a92cb55a0466bf95315f904e4e 100644
+index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..a0b8143b6b7ef89513c2199b956f5f87c79c3d45 100644
 --- a/dist/index.d.mts
 +++ b/dist/index.d.mts
-@@ -1421,3 +1421,24 @@ declare function ThemeSwitch({ lite, className }: ThemeSwitchProps): ReactElemen
+@@ -1248,6 +1248,7 @@ interface Menu {
+     setMenu: Dispatch<SetStateAction<boolean>>;
+ }
+ declare const useMenu: () => Menu;
++export declare const MenuProvider: (props: { value: Menu; children: ReactNode; }) => JSX.Element;
+ 
+ declare const useThemeConfig: () => {
+     banner: {
+@@ -1421,3 +1422,24 @@ declare function ThemeSwitch({ lite, className }: ThemeSwitchProps): ReactElemen
  declare function Layout({ children, themeConfig, pageOpts }: NextraThemeLayoutProps): ReactElement;
  
  export { Bleed, Collapse, type PartialDocsThemeConfig as DocsThemeConfig, Link, LocaleSwitch, Navbar, NotFoundPage, SkipNavContent, SkipNavLink, ThemeSwitch, Layout as default, getComponents, useConfig, useMenu, useThemeConfig };
@@ -28,7 +36,7 @@ index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..53dffe4fbe5fb2a92cb55a0466bf9531
 +  flatDocsDirectories: Item[]
 +}
 diff --git a/dist/index.js b/dist/index.js
-index 56201641fd965dcc5ab7c5df53e444c41293c00e..29a446663f5d24acad0389f873c5e31be910717c 100644
+index 56201641fd965dcc5ab7c5df53e444c41293c00e..71f4d353b5bd6c0fcab630330f578b5593f8596e 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -100,10 +100,10 @@ IntersectionObserverContext.displayName = "IntersectionObserver";
@@ -46,6 +54,15 @@ index 56201641fd965dcc5ab7c5df53e444c41293c00e..29a446663f5d24acad0389f873c5e31b
  var ActiveAnchorProvider = ({
    children
  }) => {
+@@ -173,7 +173,7 @@ var MenuContext = createContext2({
+ });
+ MenuContext.displayName = "Menu";
+ var useMenu = () => useContext2(MenuContext);
+-var MenuProvider = MenuContext.Provider;
++export var MenuProvider = MenuContext.Provider;
+ 
+ // src/contexts/config.tsx
+ import { jsx as jsx3 } from "react/jsx-runtime";
 @@ -520,44 +520,6 @@ function Bleed({
    );
  }

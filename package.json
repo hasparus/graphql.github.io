@@ -3,7 +3,7 @@
   "type": "module",
   "repository": "graphql/graphql.github.io website",
   "private": true,
-  "packageManager": "pnpm@10.16.1+sha512.0e155aa2629db8672b49e8475da6226aa4bdea85fdcdfdc15350874946d4f3c91faaf64cbdc4a5d1ab8002f473d5c3fcedcd197989cf0390f9badd3c04678706",
+  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "build": "next build",
@@ -47,7 +47,9 @@
     "clsx": "^2.1.1",
     "cm6-graphql": "^0.2.1",
     "date-fns": "^2.30.0",
+    "escape-string-regexp": "^5.0.0",
     "fast-glob": "^3.3.3",
+    "flexsearch": "0.7.43",
     "github-slugger": "2.0.0",
     "graphql": "16.10.0",
     "gray-matter": "^4.0.3",

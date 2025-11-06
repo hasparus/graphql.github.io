@@ -12,7 +12,7 @@ export const MdxLink = forwardRef<
       {...props}
       ref={ref}
       className={clsx(
-        "typography-link text-neu-900 underline-offset-2",
+        "gql-focus-visible typography-link text-neu-900 underline-offset-2",
         props.className,
       )}
       href={props.href || ""}
