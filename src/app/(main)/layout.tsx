@@ -7,6 +7,9 @@ import { Navbar } from "../../components/navbar/navbar"
 import { topLevelNavbarItems } from "../../components/navbar/top-level-items"
 import { MenuProvider } from "./menu-provider"
 
+import "@/globals.css"
+import "@/app/colors.css"
+
 export default function MainLayout({
   children,
 }: {

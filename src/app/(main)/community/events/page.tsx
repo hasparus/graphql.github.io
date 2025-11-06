@@ -1,0 +1,364 @@
+// ---
+// title: Events & Meetups
+// ---
+
+// # Events & Meetups
+
+import { LocationIcon, ClockIcon } from "../../../../icons"
+import { clsx } from "clsx"
+import { useEffect } from "react"
+import { useData } from "nextra/hooks"
+import "leaflet/dist/leaflet.css"
+
+import { meetups } from "../../../../components/meetups"
+import { events, EventCard } from "../../../../components/events"
+import pinkCircle from "./pink-circle.svg"
+import { Button } from "../../../conf/_design-system/button"
+import { Breadcrumbs } from "../../../../_design-system/breadcrumbs"
+
+const { pastEvents, upcomingEvents } = events.reduce(
+  (acc, event) => {
+    const now = new Date()
+    const date = new Date(event.date)
+    if (date < now) {
+      acc.pastEvents.push(event)
+    } else {
+      acc.upcomingEvents.push(event)
+    }
+    return acc
+  },
+  { pastEvents: [], upcomingEvents: [] },
+)
+
+export function EventsScrollview({ children }) {
+  return (
+    <div className="xs:nextra-scrollbar relative -mx-6 flex gap-2 overflow-auto p-6 scrollview-fade-x-16 scrollview-fade sm:-mx-1 sm:px-1 lg:gap-4">
+      {children}
+    </div>
+  )
+}
+
+export function Events({ events }) {
+  if (events.length === 0) return null
+
+  return (
+    <EventsScrollview>
+      {events.map(event => (
+        <EventCard
+          key={event.slug}
+          href={event.eventLink}
+          date={new Date(event.date)}
+          meta={event.host}
+          name={event.name}
+          city={event.location}
+        />
+      ))}
+    </EventsScrollview>
+  )
+}
+
+// <Events events={upcomingEvents} />
+
+// ## Past Events
+
+// <Events events={pastEvents} />
+
+// ## Meetups
+
+// If you are interested in hosting a GraphQL meetup, The GraphQL Foundation is
+// happy to promote your GraphQL event through the
+// [official communication channels](/community/#official-channels).
+
+// Please contact us in the `#meetups-admin` channel on
+// [the community Discord channel](/community/#official-channels).
+
+// <div className="flex mt-6 items-center justify-center">
+//   <Button href="/community/foundation/local-initiative">
+//     Start a GraphQL Local!
+//   </Button>
+// </div>
+
+// export function Meetups() {
+//   useEffect(() => {
+//     // Load only on client
+//     import("leaflet").then(L => {
+//       // Fixes GET http://localhost:3000/community/upcoming-events/marker-icon-2x.png 404 (Not Found)
+//       // and replace default marker image
+//       L.Icon.Default.mergeOptions({
+//         iconRetinaUrl: pinkCircle.src,
+//         shadowUrl: "",
+//       })
+//       const map = L.map("map").setView([45, -15], 2)
+//       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map)
+//       for (const { node } of meetups) {
+//         L.marker([node.latitude, node.longitude])
+//           .addTo(map)
+//           .bindPopup(
+//             `<a href="${node.link}" target="_blank" rel="noreferrer" class="!text-primary">${node.name}</a>`,
+//           )
+//       }
+//     })
+//   }, [])
+//   return (
+//     <>
+//       <div id="map" className="h-96 my-6 z-0" />
+//       <EventsScrollview>
+//         {meetups.map(({ node }) => (
+//           <EventCard
+//             key={node.id}
+//             href={node.link}
+//             name={node.name}
+//             city={node.city + ", " + node.country}
+//             official={node.official}
+//             date={node.next || node.prev}
+//           />
+//         ))}
+//       </EventsScrollview>
+//     </>
+//   )
+// }
+
+// <Meetups />
+
+// {/*
+// # Join the GraphQL Community
+
+// The GraphQL community is growing fast, with conferences, workshops, and meetups happening around the world.
+
+// Join our community to stay up to date with the latest developments, to learn from your peers, and to share your own experiences.
+
+// Browse the list of community meetups below, or search through the GraphQL events to find an event near you.
+
+// export const CommunityIntro = () => {
+//   const { meetups } = useData()
+//   return (
+//     <p>
+//       Join one of <strong>{meetups.length}</strong> GraphQL Meetups around the
+//       world!
+//     </p>
+//   )
+// }
+
+// export const UrlList = ({ urls }) => {
+//   return (
+//     <div>
+//       <ul className="list-disc ml-3">
+//         {urls.map(link => (
+//           <li key={link.href}>
+//             <a href={link.href} className="block p-1 text-sm">
+//               {link.text}
+//             </a>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   )
+// }
+
+// export const CommunityList = () => {
+//   const data = useData();
+//   const meetups = data.meetups;
+//   const unsetContinents = meetups.map((meetup) => meetup.continent);
+//   const continents = [...new Set(unsetContinents)];
+
+// return (
+// <div>
+// <div>
+// <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full">
+// {continents.map((continent, index) => {
+// const urls = meetups.filter(
+// (meetup) => meetup.continent === continent
+// );
+
+//             return (
+//               <div key={index}>
+//                 <h3>{continent}</h3>
+//                 <UrlList urls={urls} />
+//               </div>
+//             );
+//           })}
+//         </div>
+//       </div>
+//     </div>
+// )
+// }
+
+// export const EventsIntro = () => {
+//   const { events } = useData();
+//   return <p>Join one of <strong>{events.length}</strong> recent or upcoming GraphQL events around the world!</p>
+// }
+
+// export const EventsList = () => {
+// const data = useData();
+// const events = data.events;
+
+//     return (
+//       <div className='mt-5'>
+//         <div>
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 w-full">
+//             {events.map((event) => {
+//               return (
+//                 <div
+//                   key={event.slug}
+//                   className="rounded-lg shadow-md"
+//                 >
+//                   <img
+//                     loading="lazy"
+//                     src={event.coverImage}
+//                     alt={event.name}
+//                     className="w-full h-40 object-contain"
+//                   />
+//                   <div className="p-4 flex flex-col gap-3">
+//                     <a
+//                       href={event.eventLink}
+//                       target="_blank"
+//                       rel="noopener noreferrer"
+//                       className="text-md font-semibold mb-2 underline"
+//                     >
+//                       {event.name}
+//                     </a>
+//                     <p className="text-xs">
+//                       Hosted by:{" "}
+//                       <a
+//                         href={event.hostLink}
+//                         target="_blank"
+//                         rel="noopener noreferrer"
+//                         className="font-bold underline"
+//                       >
+//                         {event.host}
+//                       </a>
+//                     </p>
+//                   </div>
+//                   <div className="p-4">
+//                     <p className="text-xs">
+//                       Location:{" "}
+//                       <span className="font-bold">{event.location}</span>
+//                     </p>
+//                   </div>
+//                 </div>
+//               );
+//             })}
+//           </div>
+//         </div>
+//       </div>
+//     )
+// }
+
+// ## GraphQL Communities
+// <CommunityIntro />
+
+// <CommunityList />
+
+// ## GraphQL Events
+// <EventsIntro />
+
+// <EventsList />
+
+// ## Events
+// */}
+// {/* _None currently scheduled_ */}
+
+// {/* Event template, copy and paste what you need. Please note that the only three required fields are the name of the event, who is organizing and hosting it, and the link to the code of conduct. Events without this information can't be posted.
+
+// ### [Name of the event - REQUIRED]
+
+// * **Date(s):** [date]
+// * **Location:** [city, state, country|Virtual|Hybrid]
+// * **Registration:** [link to reg site, with cost]
+// * **CFP:** [link to CFP site]
+// * **Schedule:** [link to schedule site]
+// * **Host:** [name of organization or company hosting the event - REQUIRED]
+// * **Code of Conduct:** [link to code of conduct - REQUIRED]
+
+// */}
+
+// {/*
+
+// ### GraphQLConf 2023
+
+// - **Date:** September 19-21, 2023
+// - **Location:** San Francisco Bay Area, CA
+// - **Host:** GraphQL Foundation
+// - [**Registration**](https://graphql.org/conf/#attend)
+// - [**Schedule**](https://graphql.org/conf/schedule/)
+// - [**Code of Conduct**](https://graphql.org/conf/faq/#codeofconduct)
+
+// ## Meetups
+
+// ### North America
+
+// - [GraphQL San Francisco](https://www.meetup.com/sf-graphql/)
+// - [GraphQL APIs (San Francisco)](http://www.meetup.com/graphql/)
+// - [GraphQL By the Bay (San Francisco)](https://www.meetup.com/graphql-by-the-bay/)
+// - [GraphQL Seattle](https://www.meetup.com/seattlegraphql/)
+// - [GraphQL Boston](https://www.meetup.com/graphql-boston/)
+// - [GraphQL NYC](https://www.meetup.com/graphql-newyork/)
+// - [GraphQL Austin](https://www.meetup.com/ATX-GraphQL/)
+// - [GraphQL Minneapolis](https://www.meetup.com/GraphQL-MN/)
+// - [GraphQL Denver](https://www.meetup.com/graphql-denver)
+// - [GraphQL Chicago](https://www.meetup.com/graphql-chicago/)
+
+// ### South America
+
+// - [GraphQL São Paulo](https://www.meetup.com/graphql-sp/)
+// - [GraphQL Buenos Aires](https://www.meetup.com/GraphQL-BA/)
+
+// ### Europe
+
+// - [GraphQL Amsterdam](https://www.meetup.com/Amsterdam-GraphQL-Meetup/)
+// - [GraphQL Berlin](https://www.meetup.com/graphql-berlin/)
+// - [GraphQL Barcelona](https://www.meetup.com/GraphQL-Barcelona/)
+// - [GraphQL Budapest](https://www.meetup.com/Budapest-GraphQL/)
+// - [GraphQL Copenhagen](https://www.meetup.com/Copenhagen-GraphQL-Meetup-Group/)
+// - [GraphQL London](https://guild.host/graphql-london/events)
+// - [GraphQL Milano](https://www.meetup.com/GraphQL-Milano/)
+// - [GraphQL Munich](https://www.meetup.com/GraphQL-Munich/)
+// - [GraphQL Paris](https://www.meetup.com/GraphQL-Paris/)
+// - [GraphQL Paris 2](https://www.meetup.com/fr-FR/parisgraphql/)
+// - [GraphQL Sarajevo](https://www.meetup.com/graphql-sarajevo/)
+// - [GraphQL Stockholm](https://www.meetup.com/GraphQL-Stockholm/)
+// - [GraphQL Zurich](https://www.meetup.com/graphql-zurich/)
+// - [GraphQL Wroclaw](https://www.meetup.com/GraphQL-Wroclaw/)
+
+// ### Australia
+
+// - [GraphQL Melbourne](http://graphql.melbourne/)
+// - [GraphQL Sydney](https://graphql.sydney/)
+
+// ### Asia
+
+// - [GraphQL Tel Aviv](https://www.meetup.com/GraphQL-TLV/)
+// - [GraphQL Tokyo](https://www.meetup.com/GraphQL-Tokyo/)
+// - [GraphQL Meetup (Bangalore)](https://www.meetup.com/graphql-bangalore/)
+// - [GraphQL Meetup (Bangkok)](https://www.meetup.com/GraphQL-Bangkok/)
+// - [GraphQL Meetup (Singapore)](https://www.meetup.com/GraphQL-SG/)
+// - [GraphQL Meetup (Hong Kong)](https://www.meetup.com/GraphQLHongKong/)
+// - [GraphQL Shenzhen](https://www.meetup.com/graphqlshenzhen/)
+// - [GraphQL Korea](https://www.facebook.com/groups/graphql.kr)
+// - [GraphQL Seoul](https://www.meetup.com/graphql-seoul/)
+
+// ### Africa
+
+// - [GraphQL Nairobi](https://www.meetup.com/Nairobi-GraphQL-Meetup/)
+
+// */}
+
+export default function EventsPage() {
+  return (
+    <div>
+      <h1 className="hidden">Events and Meetups</h1>
+      <Breadcrumbs
+        activePath={[
+          {
+            title: "Community",
+            route: "/community",
+          },
+          {
+            title: "Events & Meetups",
+            route: "/community/events",
+          },
+        ]}
+      />
+    </div>
+  )
+}
