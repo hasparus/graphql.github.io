@@ -67,7 +67,9 @@ export function HowItWorks() {
           </ol>
         )}
       </div>
-      <FigureInfo className={interacted ? "hidden" : ""} />
+      <FigureInfo
+        className={clsx("transition-opacity", interacted ? "opacity-0" : "")}
+      />
 
       <Button className="mx-auto mt-8 w-fit lg:mt-16" href={TRY_IT_OUT_URL}>
         Try GraphiQL
