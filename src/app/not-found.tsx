@@ -64,8 +64,8 @@ function Stripes() {
         WebkitMaskRepeat: "no-repeat",
         maskPosition: "center 100%",
         WebkitMaskPosition: "center 100%",
-        maskSize: "160%",
-        WebkitMaskSize: "160%",
+        maskSize: "130%",
+        WebkitMaskSize: "130%",
       }}
     >
       <StripesDecoration
