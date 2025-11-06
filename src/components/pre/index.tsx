@@ -49,7 +49,7 @@ export function Pre({
       )}
       <pre
         className={cn(
-          "overflow-x-auto border border-neu-200 py-4 subpixel-antialiased contrast-more:contrast-150 dark:border-neu-50",
+          "overflow-x-auto border border-neu-200 py-4 subpixel-antialiased focus-visible:gql-focus-outline contrast-more:contrast-150 dark:border-neu-50",
           filename ? "rounded-b-md" : "rounded-md",
           className,
         )}

@@ -6,11 +6,15 @@ import { mdxComponents } from "@/_design-system/mdx-components"
 import { GraphQLWordmarkLogo } from "@/icons"
 import { Footer } from "@/components/footer"
 import { NextraMdxWrapper } from "@/components/nextra-mdx-wrapper"
-import { ThemeSwitch } from "@/components/theme-switch"
 
 const graphQLLogo = (
   <GraphQLWordmarkLogo className="nextra-logo h-6" title="GraphQL" />
 )
+
+const absoluteUrl =
+  `https://${process.env.VERCEL_URL}` ||
+  process.env.__NEXT_PRIVATE_ORIGIN ||
+  "http://localhost:3000"
 
 export default {
   backgroundColor: {
@@ -42,9 +46,24 @@ export default {
           </>
         )}
         {canonical && <link rel="canonical" href={canonical} />}
-        {image && <meta name="og:image" content={image} />}
-        <meta property="og:image" content="/img/og-image.png" />
+
         <meta property="twitter:site" content="@graphql" />
+
+        {image ? (
+          <>
+            {/* if there is an OG image, we show a bigger card */}
+            <meta property="og:image" content={image} />
+            <meta name="twitter:card" content="summary_large_image" />
+          </>
+        ) : (
+          <>
+            <meta
+              property="og:image"
+              content={`${absoluteUrl}/img/og-logo.png`}
+            />
+            <meta name="twitter:card" content="summary" />
+          </>
+        )}
       </>
     )
   },
@@ -78,13 +97,9 @@ export default {
   },
   footer: {
     component: () => <Footer />,
-    content: "Copyright © 2025 The GraphQL Foundation. All rights reserved.",
   },
   navbar: {
     component: Navbar,
-    extraContent: (
-      <ThemeSwitch lite className="max-lg:hidden [&_span]:hidden" />
-    ),
   },
   toc: {
     backToTop: true,

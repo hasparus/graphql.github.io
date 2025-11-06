@@ -22,6 +22,7 @@ export function IndexPage() {
           content="GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data."
         />
       </Head>
+
       <Hero />
       <TrustedBy />
       <WhatIsGraphQL />
@@ -34,6 +35,7 @@ export function IndexPage() {
       <UseCases />
       <QuotesFromTheIndustry />
       <JoinTheCommunity />
+      <style>{".nextra-nav-container.sticky { position: fixed }"}</style>
     </div>
   )
 }
