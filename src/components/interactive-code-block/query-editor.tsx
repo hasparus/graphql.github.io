@@ -84,6 +84,7 @@ export class QueryEditor extends Component<QueryEditorProps> {
         graphql(this.props.schema, {}),
         autocompletion({
           icons: false,
+          activateOnTyping: true,
         }),
         EditorView.updateListener.of(update => {
           if (update.docChanged && !this.ignoreChangeEvent) {
