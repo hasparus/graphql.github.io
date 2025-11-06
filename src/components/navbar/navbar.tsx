@@ -16,15 +16,12 @@ import CloseIcon from "@/app/conf/_design-system/pixelarticons/close.svg?svgr"
 import { GraphQLWordmarkLogo } from "../../icons"
 import { ThemeSwitch } from "../theme-switch"
 import { Flexsearch } from "../flexsearch"
-import { NavLink } from "./nav-link"
+import { NavLink, navLinkClasses } from "./nav-link"
 
 type Item = normalizePages.PageItem | normalizePages.MenuItem
 export interface NavBarProps {
   items: Item[]
 }
-
-export const linkClasses =
-  "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none hover:underline underline-offset-2"
 
 function NavbarMenu({
   menu,
@@ -40,7 +37,7 @@ function NavbarMenu({
     <NavigationMenu.Item className="max-md:hidden">
       <NavigationMenu.Trigger
         className={clsx(
-          linkClasses,
+          navLinkClasses,
           "focus-visible:nextra-focusable flex items-center gap-1.5 whitespace-nowrap data-[popup-open]:underline max-md:hidden",
         )}
       >

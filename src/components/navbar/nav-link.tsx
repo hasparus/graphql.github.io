@@ -4,8 +4,10 @@ import clsx from "clsx"
 import type * as normalizePages from "nextra/normalize-pages"
 import React from "react"
 import { Anchor } from "../../app/conf/_design-system/anchor"
-import { linkClasses } from "./navbar"
 import { usePathname } from "next/navigation"
+
+export const navLinkClasses =
+  "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none hover:underline underline-offset-2"
 
 export interface NavLinkProps {
   href: string
@@ -29,7 +31,7 @@ export function NavLink({
     <Anchor
       href={href}
       className={clsx(
-        linkClasses,
+        navLinkClasses,
         "whitespace-nowrap max-md:hidden",
         isActive && !page.newWindow && "underline",
       )}
