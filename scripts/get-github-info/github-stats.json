@@ -199,6 +199,78 @@
     "lastRelease": "",
     "formattedLastRelease": ""
   },
+  "graphql-dotnet/graphql-client": {
+    "hasCommitsInLast3Months": false,
+    "stars": 644,
+    "formattedStars": "1k",
+    "license": "MIT License",
+    "lastRelease": "2024-05-21T07:06:30Z",
+    "formattedLastRelease": "1 year ago"
+  },
+  "bkniffler/graphql-net-client": {
+    "hasCommitsInLast3Months": false,
+    "stars": 94,
+    "formattedStars": "94",
+    "license": "MIT License",
+    "lastRelease": "",
+    "formattedLastRelease": ""
+  },
+  "linq2graphql/linq2graphql.client": {
+    "hasCommitsInLast3Months": false,
+    "stars": 8,
+    "formattedStars": "8",
+    "license": "MIT License",
+    "lastRelease": "2025-10-07T07:20:37Z",
+    "formattedLastRelease": "2 weeks ago"
+  },
+  "sahb1239/SAHB.GraphQLClient": {
+    "hasCommitsInLast3Months": false,
+    "stars": 44,
+    "formattedStars": "44",
+    "license": "MIT License",
+    "lastRelease": "2020-05-17T10:50:58Z",
+    "formattedLastRelease": "5 years ago"
+  },
+  "byme8/ZeroQL": {
+    "hasCommitsInLast3Months": false,
+    "stars": 312,
+    "formattedStars": "312",
+    "license": "MIT License",
+    "lastRelease": "2025-10-14T11:58:44Z",
+    "formattedLastRelease": "1 week ago"
+  },
+  "EntityGraphQL/EntityGraphQL": {
+    "hasCommitsInLast3Months": false,
+    "stars": 446,
+    "formattedStars": "446",
+    "license": "MIT License",
+    "lastRelease": "2025-09-16T00:35:14Z",
+    "formattedLastRelease": "1 month ago"
+  },
+  "graphql-dotnet/graphql-dotnet": {
+    "hasCommitsInLast3Months": false,
+    "stars": 5971,
+    "formattedStars": "6k",
+    "license": "MIT License",
+    "lastRelease": "2025-10-23T21:34:31Z",
+    "formattedLastRelease": "3 days ago"
+  },
+  "chkimes/graphql-net": {
+    "hasCommitsInLast3Months": false,
+    "stars": 888,
+    "formattedStars": "1k",
+    "license": "MIT License",
+    "lastRelease": "",
+    "formattedLastRelease": ""
+  },
+  "rivantsov/ngraphql": {
+    "hasCommitsInLast3Months": false,
+    "stars": 46,
+    "formattedStars": "46",
+    "license": "MIT License",
+    "lastRelease": "",
+    "formattedLastRelease": ""
+  },
   "graphql/libgraphqlparser": {
     "hasCommitsInLast3Months": false,
     "stars": 1100,
@@ -342,6 +414,14 @@
     "license": "Apache License 2.0",
     "lastRelease": "2018-05-31T14:28:32Z",
     "formattedLastRelease": "7 years ago"
+  },
+  "dosco/graphjin": {
+    "hasCommitsInLast3Months": false,
+    "stars": 2997,
+    "formattedStars": "3k",
+    "license": "Apache License 2.0",
+    "lastRelease": "2025-09-18T06:22:50Z",
+    "formattedLastRelease": "1 month ago"
   },
   "99designs/gqlgen": {
     "hasCommitsInLast3Months": false,
@@ -969,7 +1049,7 @@
   },
   "overblog/GraphQLBundle": {
     "hasCommitsInLast3Months": false,
-    "stars": 792,
+    "stars": 791,
     "formattedStars": "1k",
     "license": "MIT License",
     "lastRelease": "2025-10-31T08:00:22Z",
@@ -1233,7 +1313,7 @@
   },
   "maticzav/swift-graphql": {
     "hasCommitsInLast3Months": false,
-    "stars": 620,
+    "stars": 619,
     "formattedStars": "1k",
     "license": "MIT License",
     "lastRelease": "2024-05-06T20:00:06Z",

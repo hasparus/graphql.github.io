@@ -141,7 +141,7 @@ export function UseCases({
                   className={clsx(
                     "relative h-full flex-1 p-8 lg:p-12 xl:p-16",
                     selectedIndex === i
-                      ? "border-sec-dark max-lg:border-b"
+                      ? "max-lg:border-b max-lg:border-sec-dark"
                       : "hidden",
                   )}
                 >

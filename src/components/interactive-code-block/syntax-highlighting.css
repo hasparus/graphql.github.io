@@ -63,18 +63,21 @@
   background: var(--cm-background);
   color: var(--cm-foreground);
   position: relative;
+  max-height: 184px;
 
   & .cm-content {
     padding: 16px 0;
   }
 
   & .cm-line {
-    padding: 0 0 0 16px;
+    @apply pl-0 lg:pl-4;
   }
 
   & .cm-scroller {
     line-height: 1.5;
     font-family: var(--font-mono);
+    overflow: auto;
+    -webkit-font-smoothing: auto;
   }
 }
 
@@ -295,12 +298,16 @@
 }
 
 /* Active line */
-.cm-activeLine {
-  background-color: rgba(0, 0, 0, 0.05);
+.cm-editor:not(.cm-focused) .cm-activeLine {
+  background: none;
 }
 
-.dark .cm-activeLine {
-  background-color: rgba(255, 255, 255, 0.05);
+.cm-focused .cm-activeLine {
+  background-color: hsl(var(--color-neu-100) / 0.575);
+}
+
+.dark .cm-focused .cm-activeLine {
+  background-color: hsl(var(--color-neu-500) / 0.06);
 }
 
 .cm-searchMatch {

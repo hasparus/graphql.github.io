@@ -4,9 +4,9 @@ import { clsx } from "clsx"
 
 import { Pre } from "@/components/pre"
 
-import _CodeA from "./describe-your-data.mdx"
-import _CodeB from "./ask-for-what-you-want.mdx"
-import _CodeC from "./get-predictable-results.mdx"
+import DescribeYourData from "./describe-your-data.mdx"
+import AskForWhatYouWant from "./ask-for-what-you-want.mdx"
+import GetPredictableResults from "./get-predictable-results.mdx"
 
 import _Code1 from "./code1.mdx"
 import _Code2 from "./code2.mdx"
@@ -48,9 +48,15 @@ export const Code2 = () => <_Code2 components={components} />
 export const Code3 = () => <_Code3 components={components} />
 export const Code4 = () => <_Code4 components={components} />
 
-export const CodeA = () => <_CodeA components={components} />
-export const CodeB = () => <_CodeB components={components} />
-export const CodeC = () => <_CodeC components={components} />
+export const HowItWorks_Schema = () => (
+  <DescribeYourData components={components} />
+)
+export const HowItWorks_Query = () => (
+  <AskForWhatYouWant components={components} />
+)
+export const HowItWorks_Result = () => (
+  <GetPredictableResults components={components} />
+)
 
 export const QueryHeroFriends = () => (
   <_QueryHeroFriends components={components} />

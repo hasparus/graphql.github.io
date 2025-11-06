@@ -17,6 +17,7 @@ import type {
   SyntheticEvent,
 } from "react"
 import { Fragment, useCallback, useEffect, useRef, useState } from "react"
+import { Kbd } from "../_design-system/kbd"
 
 export type SearchResult = {
   children: ReactNode
@@ -83,24 +84,15 @@ export function Search({
   }, [])
 
   const icon = mounted && !focused && (
-    <kbd
-      className={clsx(
-        "absolute right-1.5 my-1.5 select-none rtl:left-1.5",
-        "h-5 bg-white px-1.5 font-mono text-[11px] font-medium text-neu-600",
-        "border dark:border-neu-100/20 dark:bg-neu-0/50",
-        "contrast-more:border-current contrast-more:text-current contrast-more:dark:border-current",
-        "flex items-center gap-1",
-        "max-sm:hidden",
-      )}
-    >
+    <Kbd className="absolute right-1.5 my-1.5 select-none max-sm:hidden rtl:left-1.5">
       {navigator.userAgent.includes("Mac") ? (
         <>
-          <span className="_text-xs">⌘</span>K
+          <span className="text-xs">⌘</span>K
         </>
       ) : (
         "CTRL K"
       )}
-    </kbd>
+    </Kbd>
   )
 
   const handleFocus = useCallback<FocusEventHandler>(

@@ -1,9 +1,8 @@
 import { Component } from "react"
-import { EditorView } from "@codemirror/view"
+import { EditorView, highlightActiveLine } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 import { json } from "./codemirror-json"
 import { history } from "@codemirror/commands"
-import { syntaxHighlighting } from "@codemirror/language"
 import { codeMirrorThemeExtension } from "./codemirror-theme"
 
 interface VariableEditorProps {
@@ -44,12 +43,12 @@ export class VariableEditor extends Component<VariableEditorProps> {
   componentDidMount() {
     if (!this.domNode) return
 
-    // Create editor state for JSON (variables are JSON)
     const state = EditorState.create({
       doc: this.props.value || "",
       extensions: [
         history(),
         json(),
+        highlightActiveLine(),
         codeMirrorThemeExtension,
         EditorView.updateListener.of(update => {
           if (update.docChanged && !this.ignoreChangeEvent) {
