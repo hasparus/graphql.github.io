@@ -5,6 +5,8 @@ import { EventsScrollview } from "./events-scrollview"
 import { meetups } from "../../../../components/meetups"
 import { EventCard } from "./event-card"
 
+import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk"
+
 import pinkCircle from "./pink-circle.svg"
 
 export function Meetups() {
@@ -33,9 +35,11 @@ export function Meetups() {
       const map = Leaflet.map(mapContainer.current).setView([45, -15], 2)
       mapRef.current = map
 
-      Leaflet.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(
-        map,
-      )
+      new MaptilerLayer({
+        apiKey: "TXh3zyr74vOlxKSUwkgO",
+        style:
+          "https://api.maptiler.com/maps/019a5ead-6001-7646-ae0f-997316795f2d/style.json?key=TXh3zyr74vOlxKSUwkgO",
+      }).addTo(map)
 
       for (const { node } of meetups) {
         Leaflet.marker([node.latitude, node.longitude])
