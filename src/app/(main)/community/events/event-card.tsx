@@ -94,7 +94,7 @@ export function EventCard({
           {official ? (
             <Tag
               color="hsl(var(--color-pri-base))"
-              className="text-pri-dark *:gap-1"
+              className="text-pri-dark *:gap-1 dark:text-pri-lighter"
             >
               <span className="font-sans" aria-hidden>
                 ★
