@@ -1,9 +1,8 @@
 "use client"
 
-import Link from "next/link"
 import type { Event } from "./events"
 
-import { events, EventCard } from "./events"
+import { events } from "./events"
 import { Breadcrumbs } from "../../../../_design-system/breadcrumbs"
 
 import UsersIcon from "@/app/conf/_design-system/pixelarticons/users.svg?svgr"
@@ -14,7 +13,7 @@ import EyeIcon from "@/app/conf/_design-system/pixelarticons/eye.svg?svgr"
 import Mailbox from "./mailbox.svg?svgr"
 import { Meetups } from "./meetups"
 import { BenefitCard } from "./benefit-card"
-import { EventsScrollview } from "./events-scrollview"
+import { EventsList } from "./events-list"
 import { Button } from "../../../conf/_design-system/button"
 
 const { pastEvents, upcomingEvents } = events.reduce(
@@ -33,26 +32,6 @@ const { pastEvents, upcomingEvents } = events.reduce(
     upcomingEvents: Event[]
   },
 )
-
-export function EventsList({ events }: { events: Event[] }) {
-  if (events.length === 0) return null
-
-  // TODO: Filters over kind
-  return (
-    <EventsScrollview>
-      {events.map(event => (
-        <EventCard
-          key={event.slug}
-          href={event.eventLink}
-          date={new Date(event.date)}
-          meta={event.host}
-          name={event.name}
-          city={event.location}
-        />
-      ))}
-    </EventsScrollview>
-  )
-}
 
 export default function EventsPage() {
   return (
