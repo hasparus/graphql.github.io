@@ -1,4 +1,3 @@
-// src/components/navbar/normalize-meta-to-items.ts
 import { normalizePages } from "nextra/normalize-pages"
 import type { Folder, PageMapItem } from "nextra"
 import meta from "../../pages/_meta"
@@ -6,21 +5,23 @@ import meta from "../../pages/_meta"
 /**
  * Convert _meta.tsx format to PageMapItem[] format that normalizePages expects
  */
-export function normalizeMetaToItems(meta: Record<string, any>, route = "/") {
+export function normalizeMetaToItems(meta: Record<string, any>, parent = "/") {
   const pageMapItems: PageMapItem[] = Object.entries(meta).map(
     ([name, config]) => {
+      const route = parent === "/" ? `/${name}` : `${parent}/${name}`
+
       if (typeof config === "string") {
         return {
           kind: "MdxPage",
           name,
-          route: `/${name}`,
+          route,
           frontMatter: { title: config },
         }
       }
 
       const item: PageMapItem = {
         name,
-        route: config.route || `/${name}`,
+        route: config.route || route,
       }
 
       if (config.title) {
@@ -40,7 +41,7 @@ export function normalizeMetaToItems(meta: Record<string, any>, route = "/") {
 
   const result = normalizePages({
     list: [{ data: meta }, ...pageMapItems],
-    route,
+    route: parent,
   })
 
   return result
