@@ -15,6 +15,7 @@ import Mailbox from "./mailbox.svg?svgr"
 import { Meetups } from "./meetups"
 import { BenefitCard } from "./benefit-card"
 import { EventsScrollview } from "./events-scrollview"
+import { Button } from "../../../conf/_design-system/button"
 
 const { pastEvents, upcomingEvents } = events.reduce(
   (acc, event) => {
@@ -33,9 +34,10 @@ const { pastEvents, upcomingEvents } = events.reduce(
   },
 )
 
-export function Events({ events }: { events: Event[] }) {
+export function EventsList({ events }: { events: Event[] }) {
   if (events.length === 0) return null
 
+  // TODO: Filters over kind
   return (
     <EventsScrollview>
       {events.map(event => (
@@ -80,93 +82,37 @@ export default function EventsPage() {
         />
       </div>
 
-      <section className="gql-section">
-        <div className="flex flex-col gap-10 border border-sec-dark bg-sec-lighter px-6 py-10 sm:px-10 lg:flex-row lg:items-center lg:gap-16 lg:px-16">
-          <div className="flex-1">
-            <p className="typography-h2 text-balance text-neu-900">
-              Submit your meetup
-            </p>
-            <div className="mt-6 space-y-4 text-neu-800">
-              <p className="typography-body-lg text-balance">
-                Planning to host a GraphQL meetup? The GraphQL Foundation can
-                help spread the word through official channels.
-              </p>
-              <p className="typography-body-lg text-balance">
-                To submit your event, join our{" "}
-                <Link
-                  href="https://discord.graphql.org"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline decoration-neu-900/20 underline-offset-2"
-                >
-                  Discord
-                </Link>{" "}
-                and share details in the <code>#meetups-admin</code> channel.
-              </p>
-            </div>
-            <div className="mt-8">
-              <Link
-                href="https://discord.graphql.org"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center bg-neu-900 px-8 py-3 text-white no-underline transition hover:bg-neu-900/90"
-              >
-                Go to Discord
-              </Link>
-            </div>
-          </div>
-          <div className="flex flex-1 justify-center lg:justify-end">
-            <div className="flex aspect-square w-full max-w-[320px] items-center justify-center border border-sec-dark bg-sec-light p-6 text-sec-darker sm:p-8">
-              <Mailbox aria-hidden className="size-full" />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {upcomingEvents.length > 0 && (
         <section className="gql-section">
-          <h2 className="typography-h2">Upcoming Events</h2>
-          <Events events={upcomingEvents} />
+          <h2 className="typography-h2">Upcoming events</h2>
+          <p className="typography-body-md mt-6">
+            See what’s coming up across the GraphQL ecosystem.
+          </p>
+          <EventsList events={upcomingEvents} />
         </section>
       )}
 
       <section className="gql-section">
-        <h2 className="typography-h2">Past Events</h2>
-        <Events events={pastEvents} />
+        <h2 className="typography-h2">Past events</h2>
+        <p className="typography-body-md mt-6">
+          A look back at how the GraphQL community connects and grows together.
+        </p>
+        <EventsList events={pastEvents} />
       </section>
 
       <section className="gql-section">
         <h2 className="typography-h2">Meetups</h2>
-        <p className="typography-body-md">
+        <p className="typography-body-md mt-6">
           If you are interested in hosting a GraphQL meetup, The GraphQL
-          Foundation is happy to promote your GraphQL event through the{" "}
-          <Link href="/community/#official-channels">
-            official communication channels
-          </Link>
-          .
+          Foundation is happy to promote your GraphQL event through the official
+          communication channels. .
         </p>
-
-        <p className="typography-body-md">
-          Please contact us in the <code>#meetups-admin</code> channel on{" "}
-          <Link href="/community/#official-channels">
-            the community Discord channel
-          </Link>
-          .
-        </p>
-
-        <div className="mt-6 flex items-center justify-center">
-          <Link
-            href="/community/foundation/local-initiative"
-            className="inline-flex items-center justify-center bg-primary px-6 py-3 font-semibold text-white no-underline hover:bg-primary/90"
-          >
-            Start a GraphQL Local!
-          </Link>
-        </div>
 
         <Meetups />
       </section>
 
       <BenefitsSection />
+      <GetYourMeetupNoticedSection />
     </div>
   )
 }
@@ -178,7 +124,7 @@ function BenefitsSection() {
         <h2 className="typography-h2 text-balance">
           Benefits of getting involved
         </h2>
-        <p className="typography-body-lg mt-4 text-balance text-neu-700">
+        <p className="typography-body-lg mt-4 text-balance text-neu-800 lg:mt-6">
           Contributing to GraphQL means more than writing code — it’s a chance
           to collaborate, share ideas, and shape the future of the ecosystem.
         </p>
@@ -205,6 +151,59 @@ function BenefitsSection() {
           title="Connect in real life"
           description="Put a face to the handle — meet contributors in person at events and meetups. Build lasting connections beyond the screen."
         />
+      </div>
+    </section>
+  )
+}
+
+function GetYourMeetupNoticedSection() {
+  const serverLink = "https://discord.graphql.org"
+  const channelLink =
+    "https://discord.com/channels/625400653321076807/1020000211927576766/"
+
+  return (
+    <section className="gql-section">
+      <div className="flex flex-col gap-10 border border-sec-dark bg-sec-lighter px-6 py-10 sm:px-10 lg:flex-row lg:items-center lg:gap-16 lg:px-16">
+        <div>
+          <p className="typography-h2 text-balance text-neu-900">
+            Get your meetup noticed
+          </p>
+          <div className="mt-6 space-y-4 text-neu-800">
+            <p className="typography-body-lg text-balance">
+              Planning to host a GraphQL meetup? The GraphQL Foundation can help
+              spread the word through official channels.
+            </p>
+            <p className="typography-body-lg text-balance">
+              To submit your event, join our{" "}
+              <a
+                href={serverLink}
+                target="_blank"
+                rel="noreferrer"
+                className="typography-link"
+              >
+                Discord
+              </a>{" "}
+              and share details in the{" "}
+              <a
+                href={channelLink}
+                target="_blank"
+                rel="noreferrer"
+                className="typography-link"
+              >
+                #locals
+              </a>{" "}
+              channel.
+            </p>
+          </div>
+          <Button href={channelLink} className="mt-8 w-fit">
+            Go to Discord
+          </Button>
+        </div>
+        <div className="flex aspect-square h-full shrink-0 justify-center">
+          <div className="flex aspect-square w-full max-w-[320px] items-center justify-center border border-sec-dark bg-sec-light p-6 text-sec-darker sm:p-8">
+            <Mailbox aria-hidden className="size-full" />
+          </div>
+        </div>
       </div>
     </section>
   )
