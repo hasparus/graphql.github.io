@@ -1,25 +1,20 @@
-// ---
-// title: Events & Meetups
-// ---
-
-// # Events & Meetups
-
 "use client"
 
-import type { ComponentType, ReactNode, SVGProps } from "react"
-import type { Event } from "../../../../components/events"
-
-import { events, EventCard } from "../../../../components/events"
-import { Breadcrumbs } from "../../../../_design-system/breadcrumbs"
-import { meetups } from "../../../../components/meetups"
 import Link from "next/link"
+import type { Event } from "./events"
+
+import { events, EventCard } from "./events"
+import { Breadcrumbs } from "../../../../_design-system/breadcrumbs"
+
 import UsersIcon from "@/app/conf/_design-system/pixelarticons/users.svg?svgr"
 import CommentIcon from "@/app/conf/_design-system/pixelarticons/comment.svg?svgr"
 import SlidersIcon from "@/app/conf/_design-system/pixelarticons/sliders.svg?svgr"
 import EyeIcon from "@/app/conf/_design-system/pixelarticons/eye.svg?svgr"
-import { useEffect, useRef } from "react"
-import "leaflet/dist/leaflet.css"
-import pinkCircle from "../../../../pages/community/pink-circle.svg"
+
+import Mailbox from "./mailbox.svg?svgr"
+import { Meetups } from "./meetups"
+import { BenefitCard } from "./benefit-card"
+import { EventsScrollview } from "./events-scrollview"
 
 const { pastEvents, upcomingEvents } = events.reduce(
   (acc, event) => {
@@ -38,14 +33,6 @@ const { pastEvents, upcomingEvents } = events.reduce(
   },
 )
 
-export function EventsScrollview({ children }: { children: ReactNode }) {
-  return (
-    <div className="xs:nextra-scrollbar relative -mx-6 flex gap-2 overflow-auto p-6 scrollview-fade-x-16 scrollview-fade sm:-mx-1 sm:px-1 lg:gap-4">
-      {children}
-    </div>
-  )
-}
-
 export function Events({ events }: { events: Event[] }) {
   if (events.length === 0) return null
 
@@ -63,67 +50,6 @@ export function Events({ events }: { events: Event[] }) {
       ))}
     </EventsScrollview>
   )
-}
-
-function BenefitCard({
-  title,
-  description,
-  icon: Icon,
-}: {
-  title: string
-  description: string
-  icon: ComponentType<SVGProps<SVGElement>>
-}) {
-  return (
-    <article className="flex h-full flex-col gap-6 border border-neu-200 bg-neu-0 p-6 text-left dark:border-neu-100">
-      <Icon aria-hidden className="size-10 text-sec-darker" />
-      <div className="flex flex-col gap-3 text-neu-900">
-        <h3 className="text-[20px] font-normal leading-tight">{title}</h3>
-        <p className="typography-body-md text-neu-700">{description}</p>
-      </div>
-    </article>
-  )
-}
-
-function MeetupsMap() {
-  const mapRef = useRef<HTMLDivElement>(null)
-  const mapInstanceRef = useRef<any>(null)
-
-  useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return
-
-    // Load only on client
-    import("leaflet").then(L => {
-      // Fixes GET http://localhost:3000/community/upcoming-events/marker-icon-2x.png 404 (Not Found)
-      // and replace default marker image
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: pinkCircle.src,
-        shadowUrl: "",
-      })
-
-      const map = L.map(mapRef.current!).setView([45, -15], 2)
-      mapInstanceRef.current = map
-
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map)
-
-      for (const { node } of meetups) {
-        L.marker([node.latitude, node.longitude])
-          .addTo(map)
-          .bindPopup(
-            `<a href="${node.link}" target="_blank" rel="noreferrer" class="!text-primary">${node.name}</a>`,
-          )
-      }
-    })
-
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove()
-        mapInstanceRef.current = null
-      }
-    }
-  }, [])
-
-  return <div ref={mapRef} className="z-0 my-6 h-96" />
 }
 
 export default function EventsPage() {
@@ -155,37 +81,45 @@ export default function EventsPage() {
       </div>
 
       <section className="gql-section">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="typography-h2 text-balance">
-            Benefits of getting involved
-          </h2>
-          <p className="typography-body-lg mt-4 text-balance text-neu-700">
-            Contributing to GraphQL means more than writing code — it’s a chance
-            to collaborate, share ideas, and shape the future of the ecosystem.
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:mt-16 xl:grid-cols-4">
-          <BenefitCard
-            icon={UsersIcon}
-            title="Valuable networking opportunities"
-            description="Engage in conversations and hands-on projects to deepen your understanding of GraphQL."
-          />
-          <BenefitCard
-            icon={CommentIcon}
-            title="Collaborate with others"
-            description="Connect with contributors and teams building GraphQL tools and platforms."
-          />
-          <BenefitCard
-            icon={SlidersIcon}
-            title="Help guide the spec"
-            description="Share ideas, give feedback, or participate in working groups to influence the future of GraphQL."
-          />
-          <BenefitCard
-            icon={EyeIcon}
-            title="Connect in real life"
-            description="Put a face to the nickname — meet contributors in person at events and meetups. Build lasting connections beyond the screen."
-          />
+        <div className="flex flex-col gap-10 border border-sec-dark bg-sec-lighter px-6 py-10 sm:px-10 lg:flex-row lg:items-center lg:gap-16 lg:px-16">
+          <div className="flex-1">
+            <p className="typography-h2 text-balance text-neu-900">
+              Submit your meetup
+            </p>
+            <div className="mt-6 space-y-4 text-neu-800">
+              <p className="typography-body-lg text-balance">
+                Planning to host a GraphQL meetup? The GraphQL Foundation can
+                help spread the word through official channels.
+              </p>
+              <p className="typography-body-lg text-balance">
+                To submit your event, join our{" "}
+                <Link
+                  href="https://discord.graphql.org"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="underline decoration-neu-900/20 underline-offset-2"
+                >
+                  Discord
+                </Link>{" "}
+                and share details in the <code>#meetups-admin</code> channel.
+              </p>
+            </div>
+            <div className="mt-8">
+              <Link
+                href="https://discord.graphql.org"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center bg-neu-900 px-8 py-3 text-white no-underline transition hover:bg-neu-900/90"
+              >
+                Go to Discord
+              </Link>
+            </div>
+          </div>
+          <div className="flex flex-1 justify-center lg:justify-end">
+            <div className="flex aspect-square w-full max-w-[320px] items-center justify-center border border-sec-dark bg-sec-light p-6 text-sec-darker sm:p-8">
+              <Mailbox aria-hidden className="size-full" />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -229,56 +163,49 @@ export default function EventsPage() {
           </Link>
         </div>
 
-        <MeetupsMap />
-
-        <EventsScrollview>
-          {meetups.map(({ node }) => (
-            <EventCard
-              key={node.id}
-              href={node.link}
-              name={node.name}
-              city={node.city + ", " + node.country}
-              official={node.official}
-              date={node.next || node.prev}
-            />
-          ))}
-        </EventsScrollview>
+        <Meetups />
       </section>
 
-      <section className="gql-section">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="typography-h2 text-balance">
-            Benefits of getting involved
-          </h2>
-          <p className="typography-body-lg mt-4 text-balance text-neu-700">
-            Contributing to GraphQL means more than writing code — it's a chance
-            to collaborate, share ideas, and shape the future of the ecosystem.
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <BenefitCard
-            icon={UsersIcon}
-            title="Valuable networking opportunities"
-            description="Engage in conversations and hands-on projects to deepen your understanding of GraphQL."
-          />
-          <BenefitCard
-            icon={CommentIcon}
-            title="Collaborate with others"
-            description="Connect with contributors and teams building GraphQL tools and platforms."
-          />
-          <BenefitCard
-            icon={SlidersIcon}
-            title="Help guide the spec"
-            description="Share ideas, give feedback, or participate in working groups to influence the future of GraphQL."
-          />
-          <BenefitCard
-            icon={EyeIcon}
-            title="Connect in real life"
-            description="Put a face to the nickname — meet contributors in person at events and meetups. Build lasting connections beyond the screen."
-          />
-        </div>
-      </section>
+      <BenefitsSection />
     </div>
+  )
+}
+
+function BenefitsSection() {
+  return (
+    <section className="gql-section">
+      <div className="mx-auto max-w-3xl text-center">
+        <h2 className="typography-h2 text-balance">
+          Benefits of getting involved
+        </h2>
+        <p className="typography-body-lg mt-4 text-balance text-neu-700">
+          Contributing to GraphQL means more than writing code — it’s a chance
+          to collaborate, share ideas, and shape the future of the ecosystem.
+        </p>
+      </div>
+
+      <div className="mt-10 grid gap-4 md:grid-cols-2 lg:mt-16 xl:grid-cols-4">
+        <BenefitCard
+          icon={<UsersIcon aria-hidden className="size-10 text-sec-darker" />}
+          title="Valuable networking opportunities"
+          description="Engage in conversations and hands-on projects to deepen your understanding of GraphQL."
+        />
+        <BenefitCard
+          icon={<CommentIcon aria-hidden className="size-10 text-sec-darker" />}
+          title="Collaborate with others"
+          description="Connect with contributors and teams building GraphQL tools and platforms."
+        />
+        <BenefitCard
+          icon={<SlidersIcon aria-hidden className="size-10 text-sec-darker" />}
+          title="Help guide the spec"
+          description="Share ideas, give feedback, or participate in working groups to influence the future of GraphQL."
+        />
+        <BenefitCard
+          icon={<EyeIcon aria-hidden className="size-10 text-sec-darker" />}
+          title="Connect in real life"
+          description="Put a face to the handle — meet contributors in person at events and meetups. Build lasting connections beyond the screen."
+        />
+      </div>
+    </section>
   )
 }
