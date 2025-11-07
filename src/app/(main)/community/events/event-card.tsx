@@ -92,7 +92,10 @@ export function EventCard({
             <span className="sr-only">Official GraphQL Local</span>
           )}
           {official ? (
-            <Tag color="hsl(var(--color-pri-base))" className="*:gap-1">
+            <Tag
+              color="hsl(var(--color-pri-base))"
+              className="text-pri-dark *:gap-1"
+            >
               <span className="font-sans" aria-hidden>
                 ★
               </span>
@@ -116,8 +119,8 @@ export function EventCard({
           )}
         >
           {dateLabel && (
-            <div className="typography-body-sm flex items-center gap-1 px-2 py-1.5 text-neu-700 dark:text-neu-600 xs:gap-1.5 xs:px-4 xs:py-2.5">
-              <CalendarIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-600 dark:text-neu-500 xs:size-5" />
+            <div className="typography-body-sm flex items-center gap-1 px-2 py-1.5 text-neu-800 dark:text-neu-600 xs:gap-1.5 xs:px-4 xs:py-2.5">
+              <CalendarIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-700 dark:text-neu-500 xs:size-5" />
               {parsedDate ? (
                 <time dateTime={parsedDate.toISOString()}>{dateLabel}</time>
               ) : (
@@ -126,8 +129,8 @@ export function EventCard({
             </div>
           )}
           {city && (
-            <div className="typography-body-sm flex items-center gap-1.5 whitespace-pre px-2 py-1.5 text-neu-700 dark:text-neu-600 xs:px-4 xs:py-2.5">
-              <PinIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-600 dark:text-neu-500 xs:size-5" />
+            <div className="typography-body-sm flex items-center gap-1.5 whitespace-pre px-2 py-1.5 text-neu-800 dark:text-neu-600 xs:px-4 xs:py-2.5">
+              <PinIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-700 dark:text-neu-500 xs:size-5" />
               {city}
             </div>
           )}

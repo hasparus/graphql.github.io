@@ -14,7 +14,7 @@ export function BenefitCard({
       {icon}
       <div className="flex flex-col gap-3 text-neu-900">
         <h3 className="text-[20px] font-normal leading-tight">{title}</h3>
-        <p className="typography-body-md text-neu-700">{description}</p>
+        <p className="typography-body-md text-neu-800">{description}</p>
       </div>
     </article>
   )
