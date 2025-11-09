@@ -9,7 +9,7 @@ import SlidersIcon from "@/app/conf/_design-system/pixelarticons/sliders.svg?svg
 import EyeIcon from "@/app/conf/_design-system/pixelarticons/eye.svg?svgr"
 
 import Mailbox from "./mailbox.svg?svgr"
-import { Meetups } from "./meetups"
+import { MeetupsMap } from "./meetups-map"
 import { BenefitCard } from "./benefit-card"
 import { EventsList } from "./events-list"
 import { Button } from "../../../conf/_design-system/button"
@@ -34,7 +34,6 @@ const { pastEvents, upcomingEvents } = events.reduce(
     upcomingEvents: Event[]
   },
 )
-
 
 const pastEventsAndMeetups: Array<Meetup | Event> = [...pastEvents, ...meetups]
 
@@ -83,7 +82,7 @@ export default function EventsPage() {
           a city to explore upcoming events.
         </p>
 
-        <Meetups />
+        <MeetupsMap />
       </section>
 
       <section className="gql-section">

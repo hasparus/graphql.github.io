@@ -5,7 +5,7 @@ import { meetups } from "../../../../components/meetups"
 
 import pinkCircle from "./pink-circle.svg"
 
-export function Meetups() {
+export function MeetupsMap() {
   const mapContainer = useRef<HTMLDivElement>(null)
   const mapRef = useRef<import("leaflet").Map>()
   const loadingTokenRef = useRef<symbol>()
