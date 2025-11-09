@@ -15,7 +15,7 @@ export type MapStats = {
   fps: number
   zoom: number
   cellSize: number
-  dotSize: number
+  squareSize: number
   quality: SamplingQuality
 }
 
@@ -23,7 +23,7 @@ export type MapHandle = {
   dispose(): void
   setQuality(value: SamplingQuality): void
   setCellSize(value: number): void
-  setDotSize(value: number): void
+  setSquareSize(value: number): void
   resetView(): void
 }
 
@@ -33,7 +33,7 @@ export type BootOptions = {
   maskUrl: string
   initialQuality: SamplingQuality
   initialCellSize: number
-  initialDotSize: number
+  initialSquareSize: number
   onStatsChange?: (stats: MapStats) => void
   signal?: AbortSignal
 }
@@ -42,8 +42,8 @@ const MIN_ZOOM = 1
 const MAX_ZOOM = 8
 const MIN_CELL = 6
 const MAX_CELL = 24
-const MIN_DOT = 2
-const MAX_DOT = 14
+const MIN_SQUARE = 2
+const MAX_SQUARE = 14
 const MARKER_SIZE = 6
 const HUB_HALO_SIZE = 18
 const HUB_HALO_ALPHA = 0.35
@@ -94,7 +94,7 @@ class MapEngine implements MapHandle {
   private landTexture: WebGLTexture
   private quality: SamplingQuality
   private cellSize: number
-  private dotSize: number
+  private squareSize: number
   private zoom = 1
   private pan = new Float32Array([0, 0])
   private readonly markerInstances: MarkerInstance[]
@@ -133,13 +133,17 @@ class MapEngine implements MapHandle {
     this.landTexture = options.landTexture
     this.quality = options.initialQuality
     this.cellSize = clamp(options.initialCellSize, MIN_CELL, MAX_CELL)
-    this.dotSize = clamp(options.initialDotSize, MIN_DOT, Math.min(MAX_DOT, this.cellSize))
+    this.squareSize = clamp(
+      options.initialSquareSize,
+      MIN_SQUARE,
+      Math.min(MAX_SQUARE, this.cellSize),
+    )
     this.onStatsChange = options.onStatsChange
     this.stats = {
       fps: 0,
       zoom: this.zoom,
       cellSize: this.cellSize,
-      dotSize: this.dotSize,
+      squareSize: this.squareSize,
       quality: this.quality,
     }
 
@@ -213,15 +217,15 @@ class MapEngine implements MapHandle {
     const next = clamp(value, MIN_CELL, MAX_CELL)
     if (next === this.cellSize) return
     this.cellSize = next
-    if (this.dotSize > this.cellSize) {
-      this.dotSize = this.cellSize
+    if (this.squareSize > this.cellSize) {
+      this.squareSize = this.cellSize
     }
   }
 
-  setDotSize(value: number) {
-    const next = clamp(value, MIN_DOT, Math.min(MAX_DOT, this.cellSize))
-    if (next === this.dotSize) return
-    this.dotSize = next
+  setSquareSize(value: number) {
+    const next = clamp(value, MIN_SQUARE, Math.min(MAX_SQUARE, this.cellSize))
+    if (next === this.squareSize) return
+    this.squareSize = next
   }
 
   resetView() {
@@ -361,7 +365,7 @@ class MapEngine implements MapHandle {
         this.stats.fps = this.fps
         this.stats.zoom = this.zoom
         this.stats.cellSize = this.cellSize
-        this.stats.dotSize = this.dotSize
+        this.stats.squareSize = this.squareSize
         this.stats.quality = this.quality
         this.onStatsChange({ ...this.stats })
         this.lastHudTime = time
@@ -387,7 +391,7 @@ class MapEngine implements MapHandle {
     setUniform2f(gl, this.dotsProgram, "uPan", panX, panY)
     setUniform1f(gl, this.dotsProgram, "uZoom", this.zoom)
     setUniform1f(gl, this.dotsProgram, "uCell", this.cellSize)
-    setUniform1f(gl, this.dotsProgram, "uDot", this.dotSize)
+    setUniform1f(gl, this.dotsProgram, "uSquare", this.squareSize)
     setUniform1i(gl, this.dotsProgram, "uQuality", this.quality)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)

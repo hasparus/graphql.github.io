@@ -21,7 +21,7 @@ uniform vec2 uRes;
 uniform vec2 uPan;
 uniform float uZoom;
 uniform float uCell;
-uniform float uDot;
+uniform float uSquare;
 uniform sampler2D uLand;
 uniform int uQuality;
 
@@ -66,7 +66,7 @@ void main() {
     discard;
   }
   vec2 delta = abs(fragPx - center);
-  if (delta.x > 0.5 * uDot || delta.y > 0.5 * uDot) {
+  if (delta.x > 0.5 * uSquare || delta.y > 0.5 * uSquare) {
     discard;
   }
   outColor = vec4(vec3(0.8667, 0.8706, 0.8275), 1.0);

@@ -12,14 +12,15 @@ import {
   type SamplingQuality,
 } from "./map/engine"
 
-const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
-const INITIAL_CELL = 14
-const INITIAL_DOT = 12
+const INITIAL_CELL = 16
+const INITIAL_SQUARE = 12
 const INITIAL_QUALITY: SamplingQuality = 4
 const CELL_RANGE = { min: 6, max: 24 }
-const DOT_RANGE = { min: 2, max: 14 }
+const SQUARE_RANGE = { min: 2, max: 20 }
 const QUALITIES: SamplingQuality[] = [1, 4, 16]
 const HUB_MEETUP_IDS = new Set(["paris"])
+
+const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
 
 const markerPoints: MarkerPoint[] = meetups.map(({ node }) => ({
   id: node.id,
@@ -37,7 +38,7 @@ export function MeetupsMap() {
     fps: 0,
     zoom: 1,
     cellSize: INITIAL_CELL,
-    dotSize: INITIAL_DOT,
+    squareSize: INITIAL_SQUARE,
     quality: INITIAL_QUALITY,
   })
   const [status, setStatus] = useState<MapStatus>("loading")
@@ -58,7 +59,7 @@ export function MeetupsMap() {
           markers: markerPoints,
           maskUrl: LAND_MASK_URL,
           initialCellSize: INITIAL_CELL,
-          initialDotSize: INITIAL_DOT,
+          initialSquareSize: INITIAL_SQUARE,
           initialQuality: INITIAL_QUALITY,
           onStatsChange: next => setStats(next),
           signal: abortController.signal,
@@ -104,9 +105,9 @@ export function MeetupsMap() {
     handleRef.current?.setCellSize(next)
   }
 
-  const updateDot = (next: number) => {
+  const updateSquare = (next: number) => {
     if (disabled) return
-    handleRef.current?.setDotSize(next)
+    handleRef.current?.setSquareSize(next)
   }
 
   const adjust = (value: number, delta: number, min: number, max: number) => {
@@ -197,20 +198,20 @@ export function MeetupsMap() {
           </div>
           <div className="pointer-events-auto flex flex-col gap-1 text-[0.7rem] normal-case">
             <label className="flex items-center justify-between">
-              <span>Dot</span>
-              <span>{stats.dotSize.toFixed(0)} px</span>
+              <span>Square</span>
+              <span>{stats.squareSize.toFixed(0)} px</span>
             </label>
             <div className="flex justify-between gap-2">
               <button
                 type="button"
                 disabled={disabled}
                 onClick={() =>
-                  updateDot(
+                  updateSquare(
                     adjust(
-                      stats.dotSize,
+                      stats.squareSize,
                       -1,
-                      DOT_RANGE.min,
-                      Math.min(DOT_RANGE.max, stats.cellSize),
+                      SQUARE_RANGE.min,
+                      Math.min(SQUARE_RANGE.max, stats.cellSize),
                     ),
                   )
                 }
@@ -222,12 +223,12 @@ export function MeetupsMap() {
                 type="button"
                 disabled={disabled}
                 onClick={() =>
-                  updateDot(
+                  updateSquare(
                     adjust(
-                      stats.dotSize,
+                      stats.squareSize,
                       1,
-                      DOT_RANGE.min,
-                      Math.min(DOT_RANGE.max, stats.cellSize),
+                      SQUARE_RANGE.min,
+                      Math.min(SQUARE_RANGE.max, stats.cellSize),
                     ),
                   )
                 }
