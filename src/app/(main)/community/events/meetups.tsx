@@ -1,9 +1,7 @@
 import { useEffect, useRef } from "react"
 
 import "leaflet/dist/leaflet.css"
-import { EventsScrollview } from "./events-scrollview"
 import { meetups } from "../../../../components/meetups"
-import { EventCard } from "./event-card"
 
 import pinkCircle from "./pink-circle.svg"
 
@@ -51,21 +49,6 @@ export function Meetups() {
       mapRef.current = undefined
     }
   }, [])
-  return (
-    <>
-      <div ref={mapContainer} className="z-0 my-6 h-96" />
-      <EventsScrollview>
-        {meetups.map(({ node }) => (
-          <EventCard
-            key={node.id}
-            href={node.link}
-            name={node.name}
-            city={node.city + ", " + node.country}
-            official={node.official}
-            date={node.next || node.prev}
-          />
-        ))}
-      </EventsScrollview>
-    </>
-  )
+
+  return <div ref={mapContainer} className="z-0 my-6 h-96" />
 }
