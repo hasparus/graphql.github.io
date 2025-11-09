@@ -4,9 +4,9 @@ import clsx from "clsx"
 
 export type EventKind = "meetup" | "conference" | "working-group"
 
-const colors = {
-  meetup: "hsl(var(--color-pri-base))",
-  conference: "hsl(var(--color-sec-dark))",
+export const eventTagColors = {
+  conference: "hsl(var(--color-pri-base))",
+  meetup: "hsl(var(--color-sec-dark))",
   "working-group": "#6883FF",
 }
 
@@ -34,11 +34,14 @@ export function EventFilterTag({
         onChange={onChange}
         checked={checked}
       />
-      <Tag color={colors[kind]} className="flex py-[3px] pl-[3px] *:gap-1">
+      <Tag
+        color={eventTagColors[kind]}
+        className="flex py-[3px] pl-[3px] *:gap-1"
+      >
         <CheckboxIcon
           checked={checked}
           style={{
-            color: colors[kind],
+            color: eventTagColors[kind],
           }}
         />
         {kind.replace("-", " ")}

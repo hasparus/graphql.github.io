@@ -80,7 +80,7 @@ export function EventsList({
       {tags.size > 1 && events.length > 4 ? (
         <fieldset className="mb-8">
           <legend className="typography-menu mt-2">Event type</legend>
-          <div className="mt-4 flex gap-4">
+          <div className="mt-4 flex gap-3">
             {Array.from(tags).map(tag => (
               <EventFilterTag
                 key={tag}
@@ -112,6 +112,7 @@ export function EventsList({
                 city={event.node.city + ", " + event.node.country}
                 official={event.node.official}
                 date={event.node.next || event.node.prev}
+                kind="meetup"
               />
             ) : (
               <EventCard
@@ -121,6 +122,7 @@ export function EventsList({
                 meta={event.host}
                 name={event.name}
                 city={event.location}
+                kind="conference"
               />
             ),
           )}

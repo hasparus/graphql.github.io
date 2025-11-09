@@ -4,6 +4,7 @@ import { clsx } from "clsx"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 import { Tag } from "@/app/conf/_design-system/tag"
+import { eventTagColors } from "./event-filter-tag"
 
 const dateFormatter = new Intl.DateTimeFormat("en", {
   day: "numeric",
@@ -55,7 +56,7 @@ export interface EventCardProps {
   name: ReactNode
   meta?: ReactNode
   official?: boolean
-  kind?: "meetup" | "conference" | "working-group"
+  kind: "meetup" | "conference" | "working-group"
 }
 
 export function EventCard({
@@ -65,17 +66,24 @@ export function EventCard({
   name,
   meta,
   official,
-  kind
+  kind,
 }: EventCardProps) {
   const dateLabel = formatDateLabel(date)
   const parsedDate = normaliseDate(date)
-
   return (
     <a
       href={href}
       className={clsx(
-        "gql-focus-visible group flex min-w-[260px] flex-col overflow-hidden border border-neu-200 bg-neu-0 text-left text-current no-underline ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-100 dark:ring-neu-100 xs:min-w-[352px]",
-        kind === "meetup" && "bg-[#FFF9FD]"
+        "gql-focus-visible group flex min-h-[214px] min-w-[260px] flex-col overflow-hidden border border-neu-200 text-left text-current no-underline ring-neu-400 hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-50 dark:ring-neu-100 xs:min-w-[352px]",
+        "[--bg-opacity:0.05] hover:[--bg-opacity:0.07] dark:[--bg-opacity:0.03] hover:dark:[--bg-opacity:0.06]",
+
+        "z-[4]",
+        kind === "meetup" &&
+          "bg-[hsl(var(--color-sec-base)/var(--bg-opacity))]",
+        kind === "conference" &&
+          "bg-[hsl(var(--color-pri-base)/var(--bg-opacity))] dark:bg-white/5",
+        kind === "working-group" &&
+          "bg-[hsl(229deg_100%_70.4%_/_var(--bg-opacity))]",
       )}
       target="_blank"
       rel="noreferrer"
@@ -83,29 +91,17 @@ export function EventCard({
       <div className="flex flex-1 flex-col">
         <div
           className={clsx(
-            "flex items-center justify-between gap-2 px-2 text-neu-700 dark:text-neu-600 xs:px-4",
+            "flex h-[45px] items-center justify-between gap-2 px-2 text-neu-800 dark:text-neu-600 xs:px-4",
             meta
-              ? "border-b border-neu-200 py-2.5 dark:border-neu-100"
+              ? "border-b border-neu-200 py-2.5 dark:border-neu-50"
               : "-mb-2 pt-2 xs:-mb-4 xs:pt-3",
           )}
         >
+          <Tag color={eventTagColors[kind]}>{kind}</Tag>
           {meta ? (
-            <span className="typography-body-md font-medium">{meta}</span>
+            <span className="typography-body-md">{meta}</span>
           ) : (
             <span className="sr-only">Official GraphQL Local</span>
-          )}
-          {official ? (
-            <Tag
-              color="hsl(var(--color-pri-base))"
-              className="text-pri-dark *:gap-1 dark:text-pri-lighter"
-            >
-              <span className="font-sans" aria-hidden>
-                ★
-              </span>
-              Official
-            </Tag>
-          ) : meta ? null : (
-            <div className="h-[22px]" />
           )}
         </div>
 
@@ -115,15 +111,15 @@ export function EventCard({
 
         <div
           className={clsx(
-            "flex flex-wrap border-t border-neu-200 text-neu-700 dark:border-neu-100",
+            "flex flex-wrap border-t border-neu-200 text-neu-800 dark:border-neu-50",
             dateLabel && city
-              ? "grid grid-cols-2 divide-x divide-neu-200 dark:divide-neu-100"
+              ? "grid grid-cols-2 divide-x divide-neu-200 dark:divide-neu-50"
               : "",
           )}
         >
           {dateLabel && (
             <div className="typography-body-sm flex items-center gap-1 px-2 py-1.5 text-neu-800 dark:text-neu-600 xs:gap-1.5 xs:px-4 xs:py-2.5">
-              <CalendarIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-700 dark:text-neu-500 xs:size-5" />
+              <CalendarIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-800 dark:text-neu-500 xs:size-5" />
               {parsedDate ? (
                 <time dateTime={parsedDate.toISOString()}>{dateLabel}</time>
               ) : (
@@ -133,7 +129,7 @@ export function EventCard({
           )}
           {city && (
             <div className="typography-body-sm flex items-center gap-1.5 whitespace-pre px-2 py-1.5 text-neu-800 dark:text-neu-600 xs:px-4 xs:py-2.5">
-              <PinIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-700 dark:text-neu-500 xs:size-5" />
+              <PinIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-800 dark:text-neu-500 xs:size-5" />
               {city}
             </div>
           )}
