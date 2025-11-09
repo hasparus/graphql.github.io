@@ -39,8 +39,16 @@ export function BringGraphQLToYourCommunity() {
 }
 
 function Stripes() {
+  const mask = "linear-gradient(20deg, transparent 80%, rgb(0 0 0 / 0.6))"
   return (
-    <div className="absolute inset-0" role="presentation" style={{}}>
+    <div
+      className="absolute inset-0"
+      role="presentation"
+      style={{
+        maskImage: mask,
+        WebkitMaskImage: mask,
+      }}
+    >
       <StripesDecoration oddClassName="bg-gradient-to-b from-sec-dark to-sec-base/10" />
     </div>
   )
