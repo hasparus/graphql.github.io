@@ -57,7 +57,13 @@ const ALL_SHOWN = {
   "working-group": true,
 } satisfies Record<EventKind, boolean>
 
-export function EventsList({ events }: { events: Array<Event | Meetup> }) {
+export function EventsList({
+  events,
+  className,
+}: {
+  events: Array<Event | Meetup>
+  className?: string
+}) {
   const [kindFilters, setKindFilters] = useState(ALL_SHOWN)
 
   if (events.length === 0) return null
@@ -70,11 +76,11 @@ export function EventsList({ events }: { events: Array<Event | Meetup> }) {
   })
 
   return (
-    <div>
+    <div className={className}>
       {tags.size > 1 && events.length > 4 ? (
         <fieldset className="mb-8">
-          <legend className="typography-menu">Event type</legend>
-          <div className="mt-8 flex gap-4">
+          <legend className="typography-menu mt-2">Event type</legend>
+          <div className="mt-4 flex gap-4">
             {Array.from(tags).map(tag => (
               <EventFilterTag
                 key={tag}
@@ -92,27 +98,32 @@ export function EventsList({ events }: { events: Array<Event | Meetup> }) {
         </fieldset>
       ) : null}
       <EventsScrollview>
-        {events.map(event =>
-          "node" in event ? (
-            <EventCard
-              key={event.node.id}
-              name={event.node.name}
-              href={event.node.link}
-              city={event.node.city + ", " + event.node.country}
-              official={event.node.official}
-              date={event.node.next || event.node.prev}
-            />
-          ) : (
-            <EventCard
-              key={event.slug}
-              href={event.eventLink}
-              date={new Date(event.date)}
-              meta={event.host}
-              name={event.name}
-              city={event.location}
-            />
-          ),
-        )}
+        {events
+          .filter(event => {
+            if ("node" in event) return kindFilters["meetup"]
+            else return kindFilters["conference"]
+          })
+          .map(event =>
+            "node" in event ? (
+              <EventCard
+                key={event.node.id}
+                name={event.node.name}
+                href={event.node.link}
+                city={event.node.city + ", " + event.node.country}
+                official={event.node.official}
+                date={event.node.next || event.node.prev}
+              />
+            ) : (
+              <EventCard
+                key={event.slug}
+                href={event.eventLink}
+                date={new Date(event.date)}
+                meta={event.host}
+                name={event.name}
+                city={event.location}
+              />
+            ),
+          )}
       </EventsScrollview>
     </div>
   )

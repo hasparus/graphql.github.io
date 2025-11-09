@@ -21,7 +21,7 @@ export function CheckboxIcon({ checked, ...rest }: CheckboxIconProps) {
         </>
       ) : (
         <g className="[&>path]:fill-neu-0">
-          <rect x="2" y="3" width="15" height="15" />
+          <rect x="2.5" y="2.5" width="15" height="15" />
           <path d="M6 10.3333H7.66667V12H6V10.3333Z" />
           <path d="M7.66667 12H9.33333V13.6667H7.66667V12Z" />
           <path d="M9.33333 10.3333H11V12H9.33333V10.3333Z" />

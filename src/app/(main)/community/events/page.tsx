@@ -27,7 +27,16 @@ const { pastEvents, upcomingEvents } = events.reduce(
   },
 )
 
-const pastEventsAndMeetups: Array<Meetup | Event> = [...pastEvents, ...meetups]
+const pastEventsAndMeetups: Array<Meetup | Event> = [
+  ...pastEvents,
+  ...meetups,
+].sort((a, b) => {
+  const dateA =
+    "node" in a ? new Date(a.node.next || a.node.prev) : new Date(a.date)
+  const dateB =
+    "node" in b ? new Date(b.node.next || b.node.prev) : new Date(b.date)
+  return dateB.getTime() - dateA.getTime()
+})
 
 export default function EventsPage() {
   return (
@@ -60,7 +69,7 @@ export default function EventsPage() {
       {upcomingEvents.length > 0 && (
         <section className="gql-section">
           <h2 className="typography-h2">Upcoming events</h2>
-          <p className="typography-body-md mt-6">
+          <p className="typography-body-md my-6 lg:mb-12">
             See what’s coming up across the GraphQL ecosystem.
           </p>
           <EventsList events={upcomingEvents} />
@@ -81,7 +90,7 @@ export default function EventsPage() {
 
       <section className="gql-section">
         <h2 className="typography-h2">Past events & meetups</h2>
-        <p className="typography-body-md mt-6">
+        <p className="typography-body-md my-6 lg:mb-12">
           A look back at how the GraphQL community connects and grows together.
         </p>
         <EventsList events={pastEventsAndMeetups} />
