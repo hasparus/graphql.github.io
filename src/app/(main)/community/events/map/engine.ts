@@ -48,7 +48,12 @@ const MARKER_SIZE = 6
 const HUB_HALO_SIZE = 18
 const HUB_HALO_ALPHA = 0.35
 const MARKER_COLOR: [number, number, number, number] = [1, 0.31, 0.7, 1]
-const HALO_COLOR: [number, number, number, number] = [1, 0.31, 0.7, HUB_HALO_ALPHA]
+const HALO_COLOR: [number, number, number, number] = [
+  1,
+  0.31,
+  0.7,
+  HUB_HALO_ALPHA,
+]
 
 export async function bootMeetupsMap(options: BootOptions): Promise<MapHandle> {
   const gl = initGL(options.canvas)
@@ -57,7 +62,11 @@ export async function bootMeetupsMap(options: BootOptions): Promise<MapHandle> {
   let landTexture: WebGLTexture | null = null
   try {
     landTexture = await loadLandMaskTexture(gl, options.maskUrl, options.signal)
-    console.assert(gl.getError() === gl.NO_ERROR, "WebGL init error", gl.getError())
+    console.assert(
+      gl.getError() === gl.NO_ERROR,
+      "WebGL init error",
+      gl.getError(),
+    )
     return new MapEngine({
       ...options,
       gl,
@@ -97,6 +106,7 @@ class MapEngine implements MapHandle {
   private squareSize: number
   private zoom = 1
   private pan = new Float32Array([0, 0])
+  private target = new Float32Array([0.5, 0.5])
   private readonly markerInstances: MarkerInstance[]
   private readonly centerBuffer: WebGLBuffer
   private readonly sizeBuffer: WebGLBuffer
@@ -121,7 +131,7 @@ class MapEngine implements MapHandle {
     id: 0,
     startX: 0,
     startY: 0,
-    panAtStart: new Float32Array([0, 0]),
+    targetAtStart: new Float32Array([0, 0]),
   }
   private destroyed = false
 
@@ -176,7 +186,11 @@ class MapEngine implements MapHandle {
     gl.vertexAttribDivisor(1, 1)
 
     gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer)
-    gl.bufferData(gl.ARRAY_BUFFER, this.colorScratch.byteLength, gl.DYNAMIC_DRAW)
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      this.colorScratch.byteLength,
+      gl.DYNAMIC_DRAW,
+    )
     gl.enableVertexAttribArray(2)
     gl.vertexAttribPointer(2, 4, gl.FLOAT, false, 0, 0)
     gl.vertexAttribDivisor(2, 1)
@@ -187,6 +201,7 @@ class MapEngine implements MapHandle {
     this.resizeObserver = new ResizeObserver(() => this.resizeCanvas())
     this.resizeObserver.observe(this.canvas)
     this.resizeCanvas()
+    this.updatePanFromTarget()
     this.attachEvents()
     this.loop()
   }
@@ -230,8 +245,9 @@ class MapEngine implements MapHandle {
 
   resetView() {
     this.zoom = 1
-    this.pan[0] = 0
-    this.pan[1] = 0
+    this.target[0] = 0.5
+    this.target[1] = 0.5
+    this.updatePanFromTarget()
   }
 
   private createMarkerInstances(markers: MarkerPoint[]) {
@@ -273,8 +289,8 @@ class MapEngine implements MapHandle {
     this.pointer.id = event.pointerId
     this.pointer.startX = event.clientX
     this.pointer.startY = event.clientY
-    this.pointer.panAtStart[0] = this.pan[0]
-    this.pointer.panAtStart[1] = this.pan[1]
+    this.pointer.targetAtStart[0] = this.target[0]
+    this.pointer.targetAtStart[1] = this.target[1]
     this.canvas.setPointerCapture(event.pointerId)
     this.canvas.style.cursor = "grabbing"
   }
@@ -284,10 +300,15 @@ class MapEngine implements MapHandle {
     const scale = getDevicePixelRatio()
     const dx = (event.clientX - this.pointer.startX) * scale
     const dy = (event.clientY - this.pointer.startY) * scale
-    this.pan[0] = this.pointer.panAtStart[0] + dx
-    this.pan[1] = this.pointer.panAtStart[1] + dy
-    this.wrapPan()
-    this.clampPanY()
+    const width = this.canvas.width || 1
+    const height = this.canvas.height || 1
+    const invWidth = width > 0 ? 1 / (width * this.zoom) : 0
+    const invHeight = height > 0 ? 1 / (height * this.zoom) : 0
+    const nextX = this.pointer.targetAtStart[0] - dx * invWidth
+    const nextY = this.pointer.targetAtStart[1] - dy * invHeight
+    this.target[0] = wrap01(nextX)
+    this.target[1] = clamp01(nextY)
+    this.updatePanFromTarget()
   }
 
   private handlePointerUp = (event: PointerEvent) => {
@@ -312,17 +333,15 @@ class MapEngine implements MapHandle {
 
     const width = this.canvas.width || 1
     const height = this.canvas.height || 1
-    const panX = this.pan[0]
-    const panY = this.pan[1]
-    const uv = [
-      (pointer[0] - panX) / (width * previousZoom),
-      (pointer[1] - panY) / (height * previousZoom),
-    ]
+    const world = this.screenToWorld(pointer[0], pointer[1], previousZoom)
     this.zoom = nextZoom
-    this.pan[0] = pointer[0] - uv[0] * width * nextZoom
-    this.pan[1] = pointer[1] - uv[1] * height * nextZoom
-    this.wrapPan()
-    this.clampPanY()
+    this.target[0] = wrap01(
+      world[0] + (width * 0.5 - pointer[0]) / (width * nextZoom),
+    )
+    this.target[1] = clamp01(
+      world[1] + (height * 0.5 - pointer[1]) / (height * nextZoom),
+    )
+    this.updatePanFromTarget()
   }
 
   private handleKeyDown = (event: KeyboardEvent) => {
@@ -345,16 +364,13 @@ class MapEngine implements MapHandle {
     this.canvas.height = height
     const scaleX = prevWidth ? width / prevWidth : 1
     const scaleY = prevHeight ? height / prevHeight : 1
-    this.pan[0] *= scaleX
-    this.pan[1] *= scaleY
-    this.wrapPan()
-    this.clampPanY()
+    this.updatePanFromTarget()
     this.gl.viewport(0, 0, width, height)
   }
 
   private loop() {
     if (this.destroyed) return
-    this.rafHandle = requestAnimationFrame((time) => {
+    this.rafHandle = requestAnimationFrame(time => {
       const dt = time - this.lastFrameTime
       this.lastFrameTime = time
       const instantaneous = dt > 0 ? 1000 / dt : 0
@@ -418,7 +434,7 @@ class MapEngine implements MapHandle {
     for (let i = 0; i < this.markerInstances.length; i++) {
       const base = this.markerInstances[i]
       const baseX = base.uv[0] * period + panX
-      const baseY = base.uv[1] * height * zoom + panY
+      const baseY = base.uv[1] * height + panY
       const wrapped = wrapPositive(baseX, period)
       cursor = this.writeMarker(cursor, wrapped, baseY, base)
       if (period < width + base.size) {
@@ -467,19 +483,19 @@ class MapEngine implements MapHandle {
     return cursor + 1
   }
 
-  private wrapPan() {
-    const period = this.canvas.width * this.zoom
-    this.pan[0] = wrapCentered(this.pan[0], period)
+  private updatePanFromTarget() {
+    const width = this.canvas.width || 1
+    const height = this.canvas.height || 1
+    this.pan[0] = width * 0.5 - this.target[0] * width * this.zoom
+    this.pan[1] = height * 0.5 - this.target[1] * height * this.zoom
   }
 
-  private clampPanY() {
+  private screenToWorld(px: number, py: number, zoom = this.zoom) {
+    const width = this.canvas.width || 1
     const height = this.canvas.height || 1
-    const extra = Math.max(0, height * (this.zoom - 1))
-    if (extra === 0) {
-      this.pan[1] = 0
-      return
-    }
-    this.pan[1] = clamp(this.pan[1], -extra, extra)
+    const x = width > 0 ? (px - this.pan[0]) / (width * zoom) : 0
+    const y = height > 0 ? (py - this.pan[1]) / (height * zoom) : 0
+    return [x, y] as [number, number]
   }
 }
 
@@ -500,6 +516,16 @@ function wrapPositive(value: number, period: number) {
   let wrapped = value % period
   if (wrapped < 0) wrapped += period
   return wrapped
+}
+
+function wrap01(value: number) {
+  let wrapped = value % 1
+  if (wrapped < 0) wrapped += 1
+  return wrapped
+}
+
+function clamp01(value: number) {
+  return clamp(value, 0, 1)
 }
 
 function getDevicePixelRatio() {

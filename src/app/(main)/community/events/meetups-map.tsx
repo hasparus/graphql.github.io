@@ -12,11 +12,10 @@ import {
   type SamplingQuality,
 } from "./map/engine"
 
-const INITIAL_CELL = 16
-const INITIAL_SQUARE = 12
+const CELL_SIZE = 16
+const SQUARE_SIZE = 12
+
 const INITIAL_QUALITY: SamplingQuality = 4
-const CELL_RANGE = { min: 6, max: 24 }
-const SQUARE_RANGE = { min: 2, max: 20 }
 const QUALITIES: SamplingQuality[] = [1, 4, 16]
 const HUB_MEETUP_IDS = new Set(["paris"])
 
@@ -37,8 +36,8 @@ export function MeetupsMap() {
   const [stats, setStats] = useState<MapStats>({
     fps: 0,
     zoom: 1,
-    cellSize: INITIAL_CELL,
-    squareSize: INITIAL_SQUARE,
+    cellSize: CELL_SIZE,
+    squareSize: SQUARE_SIZE,
     quality: INITIAL_QUALITY,
   })
   const [status, setStatus] = useState<MapStatus>("loading")
@@ -58,8 +57,8 @@ export function MeetupsMap() {
           canvas,
           markers: markerPoints,
           maskUrl: LAND_MASK_URL,
-          initialCellSize: INITIAL_CELL,
-          initialSquareSize: INITIAL_SQUARE,
+          initialCellSize: CELL_SIZE,
+          initialSquareSize: SQUARE_SIZE,
           initialQuality: INITIAL_QUALITY,
           onStatsChange: next => setStats(next),
           signal: abortController.signal,
@@ -98,21 +97,6 @@ export function MeetupsMap() {
   const updateQuality = (quality: SamplingQuality) => {
     if (disabled) return
     handleRef.current?.setQuality(quality)
-  }
-
-  const updateCell = (next: number) => {
-    if (disabled) return
-    handleRef.current?.setCellSize(next)
-  }
-
-  const updateSquare = (next: number) => {
-    if (disabled) return
-    handleRef.current?.setSquareSize(next)
-  }
-
-  const adjust = (value: number, delta: number, min: number, max: number) => {
-    const next = clamp(value + delta, min, max)
-    return next
   }
 
   return (
@@ -162,80 +146,6 @@ export function MeetupsMap() {
                   {quality}x
                 </button>
               ))}
-            </div>
-          </div>
-          <div className="pointer-events-auto flex flex-col gap-1 text-[0.7rem] normal-case">
-            <label className="flex items-center justify-between">
-              <span>Cell</span>
-              <span>{stats.cellSize.toFixed(0)} px</span>
-            </label>
-            <div className="flex justify-between gap-2">
-              <button
-                type="button"
-                disabled={disabled}
-                onClick={() =>
-                  updateCell(
-                    adjust(stats.cellSize, -1, CELL_RANGE.min, CELL_RANGE.max),
-                  )
-                }
-                className="border border-neu-300 px-2 py-1 text-sm"
-              >
-                -
-              </button>
-              <button
-                type="button"
-                disabled={disabled}
-                onClick={() =>
-                  updateCell(
-                    adjust(stats.cellSize, 1, CELL_RANGE.min, CELL_RANGE.max),
-                  )
-                }
-                className="border border-neu-300 px-2 py-1 text-sm"
-              >
-                +
-              </button>
-            </div>
-          </div>
-          <div className="pointer-events-auto flex flex-col gap-1 text-[0.7rem] normal-case">
-            <label className="flex items-center justify-between">
-              <span>Square</span>
-              <span>{stats.squareSize.toFixed(0)} px</span>
-            </label>
-            <div className="flex justify-between gap-2">
-              <button
-                type="button"
-                disabled={disabled}
-                onClick={() =>
-                  updateSquare(
-                    adjust(
-                      stats.squareSize,
-                      -1,
-                      SQUARE_RANGE.min,
-                      Math.min(SQUARE_RANGE.max, stats.cellSize),
-                    ),
-                  )
-                }
-                className="border border-neu-300 px-2 py-1 text-sm"
-              >
-                -
-              </button>
-              <button
-                type="button"
-                disabled={disabled}
-                onClick={() =>
-                  updateSquare(
-                    adjust(
-                      stats.squareSize,
-                      1,
-                      SQUARE_RANGE.min,
-                      Math.min(SQUARE_RANGE.max, stats.cellSize),
-                    ),
-                  )
-                }
-                className="border border-neu-300 px-2 py-1 text-sm"
-              >
-                +
-              </button>
             </div>
           </div>
           <button
