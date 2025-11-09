@@ -305,7 +305,7 @@ class MapEngine implements MapHandle {
     const invWidth = width > 0 ? 1 / (width * this.zoom) : 0
     const invHeight = height > 0 ? 1 / (height * this.zoom) : 0
     const nextX = this.pointer.targetAtStart[0] - dx * invWidth
-    const nextY = this.pointer.targetAtStart[1] - dy * invHeight
+    const nextY = this.pointer.targetAtStart[1] + dy * invHeight
     this.target[0] = wrap01(nextX)
     this.target[1] = clamp01(nextY)
     this.updatePanFromTarget()
