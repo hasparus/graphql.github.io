@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef } from "react"
+import { useEffect, useRef } from "react"
 
 import "leaflet/dist/leaflet.css"
 import { EventsScrollview } from "./events-scrollview"
@@ -6,7 +6,6 @@ import { meetups } from "../../../../components/meetups"
 import { EventCard } from "./event-card"
 
 import pinkCircle from "./pink-circle.svg"
-import { PixelateFilter } from "./pixelate-filter"
 
 export function Meetups() {
   const mapContainer = useRef<HTMLDivElement>(null)

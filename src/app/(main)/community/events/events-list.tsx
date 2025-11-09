@@ -3,7 +3,7 @@ import { clsx } from "clsx"
 
 import { EventCard } from "./event-card"
 import { EventsScrollview } from "./events-scrollview"
-import type { Event } from "./events"
+import type { Event, Meetup } from "./events"
 
 interface FilterChipProps extends ComponentPropsWithoutRef<"button"> {
   active?: boolean
@@ -50,7 +50,7 @@ export function FilterChip({
   )
 }
 
-export function EventsList({ events }: { events: Event[] }) {
+export function EventsList({ events }: { events: Array<Event | Meetup> }) {
   if (events.length === 0) return null
 
   // TODO: Filters over kind (meetup, conference, working-group)
@@ -58,16 +58,27 @@ export function EventsList({ events }: { events: Event[] }) {
   // Show filters only if there are more than 3 events
   return (
     <EventsScrollview>
-      {events.map(event => (
-        <EventCard
-          key={event.slug}
-          href={event.eventLink}
-          date={new Date(event.date)}
-          meta={event.host}
-          name={event.name}
-          city={event.location}
-        />
-      ))}
+      {events.map(event =>
+        "node" in event ? (
+          <EventCard
+            key={event.node.id}
+            name={event.node.name}
+            href={event.node.link}
+            city={event.node.city + ", " + event.node.country}
+            official={event.node.official}
+            date={event.node.next || event.node.prev}
+          />
+        ) : (
+          <EventCard
+            key={event.slug}
+            href={event.eventLink}
+            date={new Date(event.date)}
+            meta={event.host}
+            name={event.name}
+            city={event.location}
+          />
+        ),
+      )}
     </EventsScrollview>
   )
 }

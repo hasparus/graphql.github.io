@@ -1,7 +1,5 @@
 "use client"
 
-import type { Event } from "./events"
-
 import { events } from "./events"
 import { Breadcrumbs } from "../../../../_design-system/breadcrumbs"
 
@@ -15,6 +13,10 @@ import { Meetups } from "./meetups"
 import { BenefitCard } from "./benefit-card"
 import { EventsList } from "./events-list"
 import { Button } from "../../../conf/_design-system/button"
+import { DISCORD_CHANNEL_LINK, DISCORD_SERVER_LINK } from "./links"
+
+import { meetups } from "@/components/meetups"
+import { type Event, type Meetup } from "./events"
 
 const { pastEvents, upcomingEvents } = events.reduce(
   (acc, event) => {
@@ -32,6 +34,9 @@ const { pastEvents, upcomingEvents } = events.reduce(
     upcomingEvents: Event[]
   },
 )
+
+
+const pastEventsAndMeetups: Array<Meetup | Event> = [...pastEvents, ...meetups]
 
 export default function EventsPage() {
   return (
@@ -72,22 +77,21 @@ export default function EventsPage() {
       )}
 
       <section className="gql-section">
-        <h2 className="typography-h2">Past events</h2>
-        <p className="typography-body-md mt-6">
-          A look back at how the GraphQL community connects and grows together.
-        </p>
-        <EventsList events={pastEvents} />
-      </section>
-
-      <section className="gql-section">
         <h2 className="typography-h2">Meetups</h2>
         <p className="typography-body-md mt-6">
-          If you are interested in hosting a GraphQL meetup, The GraphQL
-          Foundation is happy to promote your GraphQL event through the official
-          communication channels. .
+          Find and join local GraphQL meetups happening around the world. Select
+          a city to explore upcoming events.
         </p>
 
         <Meetups />
+      </section>
+
+      <section className="gql-section">
+        <h2 className="typography-h2">Past events & meetups</h2>
+        <p className="typography-body-md mt-6">
+          A look back at how the GraphQL community connects and grows together.
+        </p>
+        <EventsList events={pastEventsAndMeetups} />
       </section>
 
       <BenefitsSection />
@@ -136,10 +140,6 @@ function BenefitsSection() {
 }
 
 function GetYourMeetupNoticedSection() {
-  const serverLink = "https://discord.graphql.org"
-  const channelLink =
-    "https://discord.com/channels/625400653321076807/1020000211927576766/"
-
   return (
     <section className="gql-section">
       <div className="flex flex-col gap-10 border border-sec-dark bg-sec-lighter px-6 py-10 sm:px-10 lg:flex-row lg:items-center lg:gap-16 lg:px-16">
@@ -155,7 +155,7 @@ function GetYourMeetupNoticedSection() {
             <p className="typography-body-lg text-balance">
               To submit your event, join our{" "}
               <a
-                href={serverLink}
+                href={DISCORD_SERVER_LINK}
                 target="_blank"
                 rel="noreferrer"
                 className="typography-link"
@@ -164,7 +164,7 @@ function GetYourMeetupNoticedSection() {
               </a>{" "}
               and share details in the{" "}
               <a
-                href={channelLink}
+                href={DISCORD_CHANNEL_LINK}
                 target="_blank"
                 rel="noreferrer"
                 className="typography-link"
@@ -174,7 +174,7 @@ function GetYourMeetupNoticedSection() {
               channel.
             </p>
           </div>
-          <Button href={channelLink} className="mt-8 w-fit">
+          <Button href={DISCORD_CHANNEL_LINK} className="mt-8 w-fit">
             Go to Discord
           </Button>
         </div>

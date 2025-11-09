@@ -158,3 +158,7 @@ export const events: Event[] = [
     hostLink: "https://www.truedigitalpark.com/",
   },
 ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+import type { meetups } from "@/components/meetups"
+
+export type Meetup = (typeof meetups)[number]
