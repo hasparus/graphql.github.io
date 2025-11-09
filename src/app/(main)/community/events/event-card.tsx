@@ -55,6 +55,7 @@ export interface EventCardProps {
   name: ReactNode
   meta?: ReactNode
   official?: boolean
+  kind?: "meetup" | "conference" | "working-group"
 }
 
 export function EventCard({
@@ -64,6 +65,7 @@ export function EventCard({
   name,
   meta,
   official,
+  kind
 }: EventCardProps) {
   const dateLabel = formatDateLabel(date)
   const parsedDate = normaliseDate(date)
@@ -73,6 +75,7 @@ export function EventCard({
       href={href}
       className={clsx(
         "gql-focus-visible group flex min-w-[260px] flex-col overflow-hidden border border-neu-200 bg-neu-0 text-left text-current no-underline ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-100 dark:ring-neu-100 xs:min-w-[352px]",
+        kind === "meetup" && "bg-[#FFF9FD]"
       )}
       target="_blank"
       rel="noreferrer"

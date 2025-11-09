@@ -41,10 +41,7 @@ export function BringGraphQLToYourCommunity() {
 function Stripes() {
   return (
     <div className="absolute inset-0" role="presentation" style={{}}>
-      <StripesDecoration
-        evenClassName="bg-[linear-gradient(180deg,var(--start-1)_-200%,var(--end-1)_100%)]"
-        oddClassName="bg-[linear-gradient(180deg,var(--start-2)_0%,var(--end-2)_100%)]"
-      />
+      <StripesDecoration oddClassName="bg-gradient-to-b from-sec-dark to-sec-base/10" />
     </div>
   )
 }

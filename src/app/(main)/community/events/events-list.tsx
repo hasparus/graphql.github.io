@@ -1,9 +1,10 @@
-import type { ComponentPropsWithoutRef } from "react"
+import { useState, type ComponentPropsWithoutRef } from "react"
 import { clsx } from "clsx"
 
 import { EventCard } from "./event-card"
 import { EventsScrollview } from "./events-scrollview"
 import type { Event, Meetup } from "./events"
+import { EventFilterTag, EventKind } from "./event-filter-tag"
 
 interface FilterChipProps extends ComponentPropsWithoutRef<"button"> {
   active?: boolean
@@ -50,35 +51,69 @@ export function FilterChip({
   )
 }
 
+const ALL_SHOWN = {
+  meetup: true,
+  conference: true,
+  "working-group": true,
+} satisfies Record<EventKind, boolean>
+
 export function EventsList({ events }: { events: Array<Event | Meetup> }) {
+  const [kindFilters, setKindFilters] = useState(ALL_SHOWN)
+
   if (events.length === 0) return null
 
-  // TODO: Filters over kind (meetup, conference, working-group)
-  // Show filters only for events already in the list
-  // Show filters only if there are more than 3 events
+  const tags: Set<EventKind> = new Set()
+  events.forEach(event => {
+    // todo: add working groups
+    if ("node" in event) tags.add("meetup")
+    else tags.add("conference")
+  })
+
   return (
-    <EventsScrollview>
-      {events.map(event =>
-        "node" in event ? (
-          <EventCard
-            key={event.node.id}
-            name={event.node.name}
-            href={event.node.link}
-            city={event.node.city + ", " + event.node.country}
-            official={event.node.official}
-            date={event.node.next || event.node.prev}
-          />
-        ) : (
-          <EventCard
-            key={event.slug}
-            href={event.eventLink}
-            date={new Date(event.date)}
-            meta={event.host}
-            name={event.name}
-            city={event.location}
-          />
-        ),
-      )}
-    </EventsScrollview>
+    <div>
+      {tags.size > 1 && events.length > 4 ? (
+        <fieldset className="mb-8">
+          <legend className="typography-menu">Event type</legend>
+          <div className="mt-8 flex gap-4">
+            {Array.from(tags).map(tag => (
+              <EventFilterTag
+                key={tag}
+                kind={tag}
+                checked={kindFilters[tag]}
+                onChange={event => {
+                  setKindFilters(prev => ({
+                    ...prev,
+                    [tag]: event.target.checked,
+                  }))
+                }}
+              />
+            ))}
+          </div>
+        </fieldset>
+      ) : null}
+      <EventsScrollview>
+        {events.map(event =>
+          "node" in event ? (
+            <EventCard
+              key={event.node.id}
+              name={event.node.name}
+              href={event.node.link}
+              city={event.node.city + ", " + event.node.country}
+              official={event.node.official}
+              date={event.node.next || event.node.prev}
+            />
+          ) : (
+            <EventCard
+              key={event.slug}
+              href={event.eventLink}
+              date={new Date(event.date)}
+              meta={event.host}
+              name={event.name}
+              city={event.location}
+            />
+          ),
+        )}
+      </EventsScrollview>
+    </div>
   )
 }
