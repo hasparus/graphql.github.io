@@ -20,17 +20,17 @@ export default function MainLayout({
     <>
       <NewFontsStyleTag />
       <ThemeProvider attribute="class">
-          <Navbar items={topLevelNavbarItems} />
-          <Sidebar
-            includePlaceholder={false}
-            toc={[]}
-            docsDirectories={docsDirectories}
-            fullDirectories={directories}
-          />
-          <div className="isolate bg-neu-0 text-neu-900 antialiased">
-            {children}
-          </div>
-          <Footer />
+        <Navbar items={topLevelNavbarItems} />
+        <Sidebar
+          includePlaceholder={false}
+          toc={[]}
+          docsDirectories={docsDirectories}
+          fullDirectories={directories}
+        />
+        <div className="isolate bg-neu-0 text-neu-900 antialiased">
+          {children}
+        </div>
+        <Footer />
       </ThemeProvider>
     </>
   )
