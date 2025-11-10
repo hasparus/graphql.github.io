@@ -54,8 +54,14 @@ const HALO_COLOR: [number, number, number, number] = [
   0.7,
   HUB_HALO_ALPHA,
 ]
-const INERTIA_DAMPING = 0.9
+/**
+ * Per-frame damping factor (scaled by dt / (1/60s)).
+ * Decrease value to increase damping.
+ */
+const INERTIA_DAMPING = 0.87
+/** Reference frame time in milliseconds for the damping exponent. */
 const INERTIA_BASE_DT = 1000 / 60
+/** Velocities below this normalized threshold snap directly to zero. */
 const INERTIA_EPS = 1e-5
 
 export async function bootMeetupsMap(options: BootOptions): Promise<MapHandle> {
