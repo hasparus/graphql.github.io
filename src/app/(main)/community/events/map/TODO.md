@@ -1,0 +1,2 @@
+- [ ] Panning should not recompute squares.
+  - [ ] But zoom works perfectly currently. It's hard to fix panning while making the zoom glitchy & flickery.

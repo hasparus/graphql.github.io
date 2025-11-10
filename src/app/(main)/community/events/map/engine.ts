@@ -54,6 +54,9 @@ const HALO_COLOR: [number, number, number, number] = [
   0.7,
   HUB_HALO_ALPHA,
 ]
+const INERTIA_DAMPING = 0.9
+const INERTIA_BASE_DT = 1000 / 60
+const INERTIA_EPS = 1e-5
 
 export async function bootMeetupsMap(options: BootOptions): Promise<MapHandle> {
   const gl = initGL(options.canvas)
@@ -107,6 +110,7 @@ class MapEngine implements MapHandle {
   private zoom = 1
   private pan = new Float32Array([0, 0])
   private target = new Float32Array([0.5, 0.5])
+  private velocity = new Float32Array([0, 0])
   private readonly markerInstances: MarkerInstance[]
   private readonly centerBuffer: WebGLBuffer
   private readonly sizeBuffer: WebGLBuffer
@@ -132,6 +136,7 @@ class MapEngine implements MapHandle {
     startX: 0,
     startY: 0,
     targetAtStart: new Float32Array([0, 0]),
+    lastMoveTime: 0,
   }
   private destroyed = false
 
@@ -247,6 +252,8 @@ class MapEngine implements MapHandle {
     this.zoom = 1
     this.target[0] = 0.5
     this.target[1] = 0.5
+    this.velocity[0] = 0
+    this.velocity[1] = 0
     this.updatePanFromTarget()
   }
 
@@ -291,6 +298,9 @@ class MapEngine implements MapHandle {
     this.pointer.startY = event.clientY
     this.pointer.targetAtStart[0] = this.target[0]
     this.pointer.targetAtStart[1] = this.target[1]
+    this.pointer.lastMoveTime = performance.now()
+    this.velocity[0] = 0
+    this.velocity[1] = 0
     this.canvas.setPointerCapture(event.pointerId)
     this.canvas.style.cursor = "grabbing"
   }
@@ -304,11 +314,21 @@ class MapEngine implements MapHandle {
     const height = this.canvas.height || 1
     const invWidth = width > 0 ? 1 / (width * this.zoom) : 0
     const invHeight = height > 0 ? 1 / (height * this.zoom) : 0
+    const prevX = this.target[0]
+    const prevY = this.target[1]
     const nextX = this.pointer.targetAtStart[0] - dx * invWidth
     const nextY = this.pointer.targetAtStart[1] + dy * invHeight
     this.target[0] = wrap01(nextX)
     this.target[1] = clamp01(nextY)
     this.updatePanFromTarget()
+
+    const now = performance.now()
+    const last = this.pointer.lastMoveTime || now
+    const dt = Math.max(now - last, 1)
+    this.pointer.lastMoveTime = now
+    const invDt = 1 / dt
+    this.velocity[0] = (this.target[0] - prevX) * invDt
+    this.velocity[1] = (this.target[1] - prevY) * invDt
   }
 
   private handlePointerUp = (event: PointerEvent) => {
@@ -316,6 +336,7 @@ class MapEngine implements MapHandle {
     this.pointer.active = false
     this.canvas.releasePointerCapture(event.pointerId)
     this.canvas.style.cursor = "grab"
+    this.pointer.lastMoveTime = 0
   }
 
   private handleWheel = (event: WheelEvent) => {
@@ -342,6 +363,8 @@ class MapEngine implements MapHandle {
       world[1] + (height * 0.5 - pointer[1]) / (height * nextZoom),
     )
     this.updatePanFromTarget()
+    this.velocity[0] = 0
+    this.velocity[1] = 0
   }
 
   private handleKeyDown = (event: KeyboardEvent) => {
@@ -375,6 +398,7 @@ class MapEngine implements MapHandle {
       this.lastFrameTime = time
       const instantaneous = dt > 0 ? 1000 / dt : 0
       this.fps = this.fps * 0.9 + instantaneous * 0.1
+      this.applyInertia(dt)
       this.render()
       const elapsed = time - this.lastHudTime
       if (this.onStatsChange && elapsed >= this.hudThrottleMs) {
@@ -481,6 +505,32 @@ class MapEngine implements MapHandle {
     this.colorScratch[colorOffset + 2] = instance.color[2]
     this.colorScratch[colorOffset + 3] = instance.color[3]
     return cursor + 1
+  }
+
+  private applyInertia(dtMs: number) {
+    if (this.pointer.active) {
+      return
+    }
+    const velX = this.velocity[0]
+    const velY = this.velocity[1]
+    if (Math.abs(velX) < INERTIA_EPS && Math.abs(velY) < INERTIA_EPS) {
+      this.velocity[0] = 0
+      this.velocity[1] = 0
+      return
+    }
+    const dt = Math.max(dtMs, 0)
+    this.target[0] = wrap01(this.target[0] + velX * dt)
+    const nextY = clamp01(this.target[1] + velY * dt)
+    if (nextY === 0 || nextY === 1) {
+      this.velocity[1] = 0
+    }
+    this.target[1] = nextY
+    this.updatePanFromTarget()
+    const damping = Math.pow(INERTIA_DAMPING, dt / INERTIA_BASE_DT)
+    this.velocity[0] = velX * damping
+    this.velocity[1] = this.velocity[1] * damping
+    if (Math.abs(this.velocity[0]) < INERTIA_EPS) this.velocity[0] = 0
+    if (Math.abs(this.velocity[1]) < INERTIA_EPS) this.velocity[1] = 0
   }
 
   private updatePanFromTarget() {
