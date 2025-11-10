@@ -415,7 +415,7 @@ export function Sidebar({
           "nextra-sidebar-container flex flex-col",
           "motion-reduce:transform-none motion-reduce:transition-none md:top-16 md:shrink-0",
           "[.resizing_&]:transition-none",
-          "transform-gpu transition-all ease-in-out",
+          "transition-gpu ease-in-out",
           "print:hidden",
           showSidebar ? "md:w-64" : "md:w-20",
           asPopover ? "md:hidden" : "md:sticky md:self-start",
