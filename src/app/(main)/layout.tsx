@@ -26,6 +26,7 @@ export default function MainLayout({
           toc={[]}
           docsDirectories={docsDirectories}
           fullDirectories={directories}
+          asPopover
         />
         <div className="isolate bg-neu-0 text-neu-900 antialiased">
           {children}
