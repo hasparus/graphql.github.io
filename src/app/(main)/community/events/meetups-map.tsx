@@ -24,12 +24,12 @@ const ASPECT_RATIO = 1.65
 
 const MAP_THEMES = {
   light: {
-    sea: [0.9804, 0.9882, 0.9569],
-    land: [0.8627, 0.8706, 0.8275],
+    sea: [0.9804, 0.9882, 0.9569], // #FAFCF4
+    land: [0.8627, 0.8706, 0.8275], // #DCDED3
   },
   dark: {
-    sea: [0.0549, 0.0588, 0.0431],
-    land: [0.1647, 0.1804, 0.1373],
+    sea: [0.0549, 0.0588, 0.0431], // neu-900
+    land: [0.1647, 0.1804, 0.1373], // a shade darker than neu-800
   },
 } satisfies Record<string, MapColors>
 
