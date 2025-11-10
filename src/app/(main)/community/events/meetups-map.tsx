@@ -20,6 +20,7 @@ const INITIAL_QUALITY: SamplingQuality = 4
 const QUALITIES: SamplingQuality[] = [1, 4, 16]
 const HUB_MEETUP_IDS = new Set(["paris"])
 const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
+// 1,4992679356
 const ASPECT_RATIO = 1.65
 
 const MAP_THEMES = {
@@ -49,7 +50,7 @@ export function MeetupsMap() {
   const handleRef = useRef<MapHandle>()
   const { resolvedTheme } = useTheme()
   const themeColors = useMemo(
-    () => getMapColors(resolvedTheme),
+    () => MAP_THEMES[resolvedTheme as ThemeVariant] || MAP_THEMES.light,
     [resolvedTheme],
   )
   const initialThemeRef = useRef<MapColors>(themeColors)
@@ -84,6 +85,7 @@ export function MeetupsMap() {
           initialCellSize: CELL_SIZE,
           initialSquareSize: SQUARE_SIZE,
           initialQuality: INITIAL_QUALITY,
+          aspectRatio: ASPECT_RATIO,
           theme: initialThemeRef.current,
           onStatsChange: next => setStats(next),
           signal: abortController.signal,
@@ -135,7 +137,7 @@ export function MeetupsMap() {
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"
-          className="block h-[28rem] w-full"
+          className="block h-80 w-full lg:h-[28rem]"
           style={{ imageRendering: "pixelated", touchAction: "none" }}
         />
 
@@ -194,11 +196,4 @@ export function MeetupsMap() {
       </div>
     </div>
   )
-}
-
-function getMapColors(theme?: string | null): MapColors {
-  if (theme && theme in MAP_THEMES) {
-    return MAP_THEMES[theme as ThemeVariant]
-  }
-  return MAP_THEMES.light
 }

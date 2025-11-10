@@ -18,6 +18,7 @@ precision highp float;
 out vec4 outColor;
 
 uniform vec2 uRes;
+uniform vec2 uWorldSize;
 uniform vec2 uPan;
 uniform float uZoom;
 uniform float uCell;
@@ -55,7 +56,7 @@ void main() {
   vec2 fragPx = gl_FragCoord.xy;
   vec2 cell = floor(fragPx / uCell) * uCell;
   vec2 center = cell + vec2(0.5 * uCell);
-  vec2 uv = (center / uRes) / uZoom - (uPan / (uRes * uZoom));
+  vec2 uv = (center / uWorldSize) / uZoom - (uPan / (uWorldSize * uZoom));
   uv.x = fract(uv.x);
   if (uv.y < 0.0 || uv.y > 1.0) {
     discard;

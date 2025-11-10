@@ -42,6 +42,7 @@ export type BootOptions = {
   initialQuality: SamplingQuality
   initialCellSize: number
   initialSquareSize: number
+  aspectRatio: number
   theme: MapColors
   onStatsChange?: (stats: MapStats) => void
   signal?: AbortSignal
@@ -122,6 +123,7 @@ class MapEngine implements MapHandle {
   private quality: SamplingQuality
   private cellSize: number
   private squareSize: number
+  private aspectRatio: number
   private zoom = 1
   private pan = new Float32Array([0, 0])
   private target = new Float32Array([0.5, 0.5])
@@ -163,6 +165,7 @@ class MapEngine implements MapHandle {
     this.dotsProgram = options.dotsProgram
     this.markersProgram = options.markersProgram
     this.landTexture = options.landTexture
+    this.aspectRatio = options.aspectRatio
     this.quality = options.initialQuality
     this.cellSize = clamp(options.initialCellSize, MIN_CELL, MAX_CELL)
     this.squareSize = clamp(
@@ -273,6 +276,14 @@ class MapEngine implements MapHandle {
     this.landColor.set(colors.land)
   }
 
+  private getWorldDimensions() {
+    const width = this.canvas.width || 1
+    const height = this.canvas.height || 1
+    const worldHeight = Math.min(width / this.aspectRatio, height)
+    const worldWidth = worldHeight * this.aspectRatio
+    return { width, height, worldWidth, worldHeight }
+  }
+
   resetView() {
     this.zoom = 1
     this.target[0] = 0.5
@@ -335,10 +346,9 @@ class MapEngine implements MapHandle {
     const scale = getDevicePixelRatio()
     const dx = (event.clientX - this.pointer.startX) * scale
     const dy = (event.clientY - this.pointer.startY) * scale
-    const width = this.canvas.width || 1
-    const height = this.canvas.height || 1
-    const invWidth = width > 0 ? 1 / (width * this.zoom) : 0
-    const invHeight = height > 0 ? 1 / (height * this.zoom) : 0
+    const { worldWidth, worldHeight } = this.getWorldDimensions()
+    const invWidth = worldWidth > 0 ? 1 / (worldWidth * this.zoom) : 0
+    const invHeight = worldHeight > 0 ? 1 / (worldHeight * this.zoom) : 0
     const prevX = this.target[0]
     const prevY = this.target[1]
     const nextX = this.pointer.targetAtStart[0] - dx * invWidth
@@ -377,15 +387,21 @@ class MapEngine implements MapHandle {
     const nextZoom = clamp(previousZoom * zoomFactor, MIN_ZOOM, MAX_ZOOM)
     if (nextZoom === previousZoom) return
 
-    const width = this.canvas.width || 1
-    const height = this.canvas.height || 1
-    const world = this.screenToWorld(pointer[0], pointer[1], previousZoom)
+    const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
+
+    // Calculate world coordinates at pointer position before zoom
+    const worldX = (pointer[0] - this.pan[0]) / (worldWidth * previousZoom)
+    const worldY = (pointer[1] - this.pan[1]) / (worldHeight * previousZoom)
+
+    // Update zoom
     this.zoom = nextZoom
+
+    // Calculate new target so that worldX, worldY stays under the pointer
     this.target[0] = wrap01(
-      world[0] + (width * 0.5 - pointer[0]) / (width * nextZoom),
+      worldX - (pointer[0] - width * 0.5) / (worldWidth * nextZoom),
     )
     this.target[1] = clamp01(
-      world[1] + (height * 0.5 - pointer[1]) / (height * nextZoom),
+      worldY - (pointer[1] - height * 0.5) / (worldHeight * nextZoom),
     )
     this.updatePanFromTarget()
     this.velocity[0] = 0
@@ -441,18 +457,18 @@ class MapEngine implements MapHandle {
 
   private render() {
     const gl = this.gl
-    const width = this.canvas.width || 1
-    const height = this.canvas.height || 1
+    const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
     gl.viewport(0, 0, width, height)
     gl.clearColor(this.seaColor[0], this.seaColor[1], this.seaColor[2], 1)
     gl.clear(gl.COLOR_BUFFER_BIT)
 
-    const panX = wrapCentered(this.pan[0], width * this.zoom)
+    const panX = wrapCentered(this.pan[0], worldWidth * this.zoom)
     const panY = this.pan[1]
 
     gl.useProgram(this.dotsProgram)
     gl.bindVertexArray(this.fullscreenVAO)
     setUniform2f(gl, this.dotsProgram, "uRes", width, height)
+    setUniform2f(gl, this.dotsProgram, "uWorldSize", worldWidth, worldHeight)
     setUniform2f(gl, this.dotsProgram, "uPan", panX, panY)
     setUniform1f(gl, this.dotsProgram, "uZoom", this.zoom)
     setUniform1f(gl, this.dotsProgram, "uCell", this.cellSize)
@@ -483,15 +499,14 @@ class MapEngine implements MapHandle {
   }
 
   private updateMarkerCenters(panX: number, panY: number) {
-    const width = this.canvas.width || 1
-    const height = this.canvas.height || 1
+    const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
     const zoom = this.zoom
-    const period = width * zoom || width
+    const period = worldWidth * zoom || worldWidth
     let cursor = 0
     for (let i = 0; i < this.markerInstances.length; i++) {
       const base = this.markerInstances[i]
       const baseX = base.uv[0] * period + panX
-      const baseY = base.uv[1] * height + panY
+      const baseY = base.uv[1] * worldHeight * this.zoom + panY
       const wrapped = wrapPositive(baseX, period)
       cursor = this.writeMarker(cursor, wrapped, baseY, base)
       if (period < width + base.size) {
@@ -567,17 +582,15 @@ class MapEngine implements MapHandle {
   }
 
   private updatePanFromTarget() {
-    const width = this.canvas.width || 1
-    const height = this.canvas.height || 1
-    this.pan[0] = width * 0.5 - this.target[0] * width * this.zoom
-    this.pan[1] = height * 0.5 - this.target[1] * height * this.zoom
+    const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
+    this.pan[0] = width * 0.5 - this.target[0] * worldWidth * this.zoom
+    this.pan[1] = height * 0.5 - this.target[1] * worldHeight * this.zoom
   }
 
   private screenToWorld(px: number, py: number, zoom = this.zoom) {
-    const width = this.canvas.width || 1
-    const height = this.canvas.height || 1
-    const x = width > 0 ? (px - this.pan[0]) / (width * zoom) : 0
-    const y = height > 0 ? (py - this.pan[1]) / (height * zoom) : 0
+    const { worldWidth, worldHeight } = this.getWorldDimensions()
+    const x = worldWidth > 0 ? (px - this.pan[0]) / (worldWidth * zoom) : 0
+    const y = worldHeight > 0 ? (py - this.pan[1]) / (worldHeight * zoom) : 0
     return [x, y] as [number, number]
   }
 }
