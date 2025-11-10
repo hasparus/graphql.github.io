@@ -8,7 +8,6 @@ import { meetups } from "@/components/meetups"
 import {
   bootMeetupsMap,
   type MapHandle,
-  type MapStats,
   type MarkerPoint,
   type SamplingQuality,
   type MapColors,
@@ -23,11 +22,11 @@ const ASPECT_RATIO = 1.65
 
 const MAP_THEMES = {
   light: {
-    sea: [0.9804, 0.9882, 0.9569], // #FAFCF4
-    land: [0.8627, 0.8706, 0.8275], // #DCDED3
+    sea: [0.9804, 0.9882, 0.9569], // neu-50
+    land: [0.8627, 0.8706, 0.8275], // neu-300
   },
   dark: {
-    sea: [0.0549, 0.0588, 0.0431], // neu-900
+    sea: [0.0549, 0.0588, 0.0431], // neu-50
     land: [0.1647, 0.1804, 0.1373], // a shade darker than neu-800
   },
 } satisfies Record<string, MapColors>
@@ -115,8 +114,6 @@ export function MeetupsMap() {
     handleRef.current.setThemeColors(themeColors)
   }, [themeColors])
 
-  const disabled = status !== "ready"
-
   return (
     <div
       className="my-6"
@@ -127,7 +124,7 @@ export function MeetupsMap() {
         } as {}
       }
     >
-      <div className="relative border border-neu-200 bg-[--sea-light] dark:bg-[--sea-dark]">
+      <div className="relative border border-neu-200 bg-[--sea-light] dark:border-neu-50 dark:bg-[--sea-dark]">
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"

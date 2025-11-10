@@ -64,6 +64,10 @@ const HALO_COLOR: [number, number, number, number] = [
   0.7,
   HUB_HALO_ALPHA,
 ]
+const GOOGLE_MAPS_IDLE_CURSOR =
+  'url("https://maps.gstatic.com/mapfiles/openhand_8_8.cur"), default'
+const GOOGLE_MAPS_DRAG_CURSOR =
+  'url("https://maps.gstatic.com/mapfiles/closedhand_8_8.cur"), move'
 /**
  * Per-frame damping factor (scaled by dt / (1/60s)).
  * Decrease value to increase damping.
@@ -305,7 +309,7 @@ class MapEngine implements MapHandle {
   }
 
   private attachEvents() {
-    this.canvas.style.cursor = "grab"
+    this.canvas.style.cursor = GOOGLE_MAPS_IDLE_CURSOR
     this.canvas.addEventListener("pointerdown", this.handlePointerDown)
     this.canvas.addEventListener("pointermove", this.handlePointerMove)
     this.canvas.addEventListener("pointerup", this.handlePointerUp)
@@ -337,7 +341,7 @@ class MapEngine implements MapHandle {
     this.velocity[0] = 0
     this.velocity[1] = 0
     this.canvas.setPointerCapture(event.pointerId)
-    this.canvas.style.cursor = "grabbing"
+    this.canvas.style.cursor = GOOGLE_MAPS_DRAG_CURSOR
   }
 
   private handlePointerMove = (event: PointerEvent) => {
@@ -369,7 +373,7 @@ class MapEngine implements MapHandle {
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     this.pointer.active = false
     this.canvas.releasePointerCapture(event.pointerId)
-    this.canvas.style.cursor = "grab"
+    this.canvas.style.cursor = GOOGLE_MAPS_IDLE_CURSOR
     this.pointer.lastMoveTime = 0
   }
 
