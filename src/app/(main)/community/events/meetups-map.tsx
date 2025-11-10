@@ -15,7 +15,7 @@ import {
 
 const CELL_SIZE = 16
 const SQUARE_SIZE = 12
-const INITIAL_QUALITY: SamplingQuality = 16
+const INITIAL_QUALITY: SamplingQuality = 4
 const HUB_MEETUP_IDS = new Set(["paris"])
 const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
 const ASPECT_RATIO = 1.65
@@ -119,12 +119,12 @@ export function MeetupsMap() {
       className="my-6"
       style={
         {
-          "--sea-dark": `rgb(${MAP_THEMES.dark.sea.map(c => c * 255).join(", ")})`,
-          "--sea-light": `rgb(${MAP_THEMES.light.sea.map(c => c * 255).join(", ")})`,
-        } as {}
+          "--sea-dark": `rgb(${MAP_THEMES.dark.sea.map(c => Math.round(c * 255)).join(", ")})`,
+          "--sea-light": `rgb(${MAP_THEMES.light.sea.map(c => Math.round(c * 255)).join(", ")})`,
+        } as React.CSSProperties
       }
     >
-      <div className="relative border border-neu-200 bg-[--sea-light] dark:border-neu-50 dark:bg-[--sea-dark]">
+      <div className="relative border border-neu-200 bg-[--sea-light] dark:border-neu-50 dark:bg-[--sea-dark] max-md:-mx-4 max-md:border-x-0">
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"

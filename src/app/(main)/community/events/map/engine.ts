@@ -49,7 +49,7 @@ export type BootOptions = {
 }
 
 const MIN_ZOOM = 1
-const MAX_ZOOM = 8
+const MAX_ZOOM = 20
 const MIN_CELL = 6
 const MAX_CELL = 24
 const MIN_SQUARE = 2
@@ -64,6 +64,7 @@ const HALO_COLOR: [number, number, number, number] = [
   0.7,
   HUB_HALO_ALPHA,
 ]
+const MAX_VERTICAL_TRAVEL_RATIO = 0.35
 const GOOGLE_MAPS_IDLE_CURSOR =
   'url("https://maps.gstatic.com/mapfiles/openhand_8_8.cur"), default'
 const GOOGLE_MAPS_DRAG_CURSOR =
@@ -287,6 +288,31 @@ class MapEngine implements MapHandle {
     return { width, height, worldWidth, worldHeight }
   }
 
+  private clampLatitude(value: number) {
+    const { min, max } = this.getLatitudeBounds()
+    return clamp(value, min, max)
+  }
+
+  private getLatitudeBounds() {
+    const { height, worldHeight } = this.getWorldDimensions()
+    const zoomedHeight = worldHeight * this.zoom
+    if (!isFinite(zoomedHeight) || zoomedHeight <= 0) {
+      return { min: 0.5, max: 0.5 }
+    }
+    const fraction = height / (2 * zoomedHeight)
+    if (fraction >= 0.5) {
+      return { min: 0.5, max: 0.5 }
+    }
+    const margin = clamp01(fraction)
+    const center = 0.5
+    const fullTravel = center - margin
+    if (fullTravel <= 0) {
+      return { min: center, max: center }
+    }
+    const limitedTravel = fullTravel * MAX_VERTICAL_TRAVEL_RATIO
+    return { min: center - limitedTravel, max: center + limitedTravel }
+  }
+
   resetView() {
     this.zoom = 1
     this.target[0] = 0.5
@@ -357,7 +383,7 @@ class MapEngine implements MapHandle {
     const nextX = this.pointer.targetAtStart[0] - dx * invWidth
     const nextY = this.pointer.targetAtStart[1] + dy * invHeight
     this.target[0] = wrap01(nextX)
-    this.target[1] = clamp01(nextY)
+    this.target[1] = this.clampLatitude(nextY)
     this.updatePanFromTarget()
 
     const now = performance.now()
@@ -403,7 +429,7 @@ class MapEngine implements MapHandle {
     this.target[0] = wrap01(
       worldX - (pointer[0] - width * 0.5) / (worldWidth * nextZoom),
     )
-    this.target[1] = clamp01(
+    this.target[1] = this.clampLatitude(
       worldY - (pointer[1] - height * 0.5) / (worldHeight * nextZoom),
     )
     this.updatePanFromTarget()
@@ -429,8 +455,6 @@ class MapEngine implements MapHandle {
     const prevHeight = this.canvas.height || height
     this.canvas.width = width
     this.canvas.height = height
-    const scaleX = prevWidth ? width / prevWidth : 1
-    const scaleY = prevHeight ? height / prevHeight : 1
     this.updatePanFromTarget()
     this.gl.viewport(0, 0, width, height)
   }
@@ -571,8 +595,9 @@ class MapEngine implements MapHandle {
     }
     const dt = Math.max(dtMs, 0)
     this.target[0] = wrap01(this.target[0] + velX * dt)
-    const nextY = clamp01(this.target[1] + velY * dt)
-    if (nextY === 0 || nextY === 1) {
+    const { min, max } = this.getLatitudeBounds()
+    const nextY = clamp(this.target[1] + velY * dt, min, max)
+    if (nextY === min || nextY === max) {
       this.velocity[1] = 0
     }
     this.target[1] = nextY
