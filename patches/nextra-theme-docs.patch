@@ -36,7 +36,7 @@ index 71f87bcd1dde49d7c19ad49fc098e715a76c5c10..a0b8143b6b7ef89513c2199b956f5f87
 +  flatDocsDirectories: Item[]
 +}
 diff --git a/dist/index.js b/dist/index.js
-index 56201641fd965dcc5ab7c5df53e444c41293c00e..71f4d353b5bd6c0fcab630330f578b5593f8596e 100644
+index 56201641fd965dcc5ab7c5df53e444c41293c00e..cb6682bf947351f5757f51b43ff85237f16f1096 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -100,10 +100,10 @@ IntersectionObserverContext.displayName = "IntersectionObserver";
@@ -125,3 +125,12 @@ index 56201641fd965dcc5ab7c5df53e444c41293c00e..71f4d353b5bd6c0fcab630330f578b55
          body
        ] })
      }
+@@ -2524,7 +2485,7 @@ function getComponents({
+   components
+ }) {
+   if (isRawLayout) {
+-    return { a: A, wrapper: DEFAULT_COMPONENTS.wrapper };
++    return { a: A, wrapper: components.wrapper };
+   }
+   const context = { index: 0 };
+   return __spreadValues(__spreadProps(__spreadValues({}, DEFAULT_COMPONENTS), {

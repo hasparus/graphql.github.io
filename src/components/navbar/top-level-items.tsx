@@ -47,4 +47,4 @@ export function normalizeMetaToItems(meta: Record<string, any>, parent = "/") {
   return result
 }
 
-export const { topLevelNavbarItems } = normalizeMetaToItems(meta)
+export const { topLevelNavbarItems, docsDirectories, directories } = normalizeMetaToItems(meta)

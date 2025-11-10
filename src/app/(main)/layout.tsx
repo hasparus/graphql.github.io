@@ -4,8 +4,12 @@ import { ThemeProvider } from "next-themes"
 import { Footer } from "../../components/footer"
 import { NewFontsStyleTag } from "../fonts"
 import { Navbar } from "../../components/navbar/navbar"
-import { topLevelNavbarItems } from "../../components/navbar/top-level-items"
-import { MenuProvider } from "./menu-provider"
+import {
+  directories,
+  docsDirectories,
+  topLevelNavbarItems,
+} from "../../components/navbar/top-level-items"
+import { Sidebar } from "../../components/sidebar"
 
 export default function MainLayout({
   children,
@@ -16,13 +20,17 @@ export default function MainLayout({
     <>
       <NewFontsStyleTag />
       <ThemeProvider attribute="class">
-        <MenuProvider>
           <Navbar items={topLevelNavbarItems} />
+          <Sidebar
+            includePlaceholder={false}
+            toc={[]}
+            docsDirectories={docsDirectories}
+            fullDirectories={directories}
+          />
           <div className="isolate bg-neu-0 text-neu-900 antialiased">
             {children}
           </div>
           <Footer />
-        </MenuProvider>
       </ThemeProvider>
     </>
   )

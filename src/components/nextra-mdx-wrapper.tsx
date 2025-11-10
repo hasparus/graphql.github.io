@@ -49,6 +49,7 @@ export function NextraMdxWrapper({
         <TableOfContents toc={toc} filePath={config.filePath} />
       </nav>
     )
+
   return (
     <div
       className={clsx(

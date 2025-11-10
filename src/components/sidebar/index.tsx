@@ -22,20 +22,15 @@ import {
   useState,
 } from "react"
 import scrollIntoView from "scroll-into-view-if-needed"
-import {
-  useActiveAnchor,
-  useMenu,
-  useThemeConfig,
-  Collapse,
-  LocaleSwitch,
-} from "nextra-theme-docs"
+import { useActiveAnchor, useThemeConfig, Collapse } from "nextra-theme-docs"
 
 import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 
-import { renderComponent } from "./utils/render-component"
-import { ThemeSwitch } from "./theme-switch"
-import { Flexsearch } from "./flexsearch"
+import { renderComponent } from "../utils/render-component"
+import { ThemeSwitch } from "../theme-switch"
+import { Flexsearch } from "../flexsearch"
+import { useMenu } from "../use-menu"
 
 const TreeState: Record<string, boolean> = Object.create(null)
 
@@ -229,7 +224,7 @@ function Separator({ title }: { title: string }): ReactElement {
       className={cn(
         "[word-break:break-word]",
         title
-          ? "typography-body-sm mb-2 px-2 py-1.5 font-semibold text-neu-800 [&:not(:first-child)]:mt-5"
+          ? "typography-body-sm mb-2 px-2 py-1.5 font-semibold text-neu-800 max-md:first:hidden [&:not(:first-child)]:mt-5"
           : "my-4",
       )}
     >
@@ -370,7 +365,6 @@ export function Sidebar({
   const { menu, setMenu } = useMenu()
   const [focused, setFocused] = useState("")
   const [showSidebar, setSidebar] = useState(true)
-  const [showToggleAnimation, setToggleAnimation] = useState(false)
 
   const anchors = useMemo(() => toc.filter(v => v.depth === 2), [toc])
   const sidebarRef = useRef<HTMLDivElement>(null!)
@@ -480,7 +474,6 @@ export function Sidebar({
           <SidebarFooter
             showSidebar={showSidebar}
             setSidebar={setSidebar}
-            showToggleAnimation={showToggleAnimation}
             hasI18n={hasI18n}
           />
         )}
@@ -492,17 +485,13 @@ export function Sidebar({
 export function SidebarFooter({
   showSidebar,
   setSidebar,
-  showToggleAnimation = false,
   hasI18n = false,
-  setToggleAnimation,
   className,
   hiddenOnMobile = true,
 }: {
   showSidebar: boolean
   setSidebar: (show: boolean) => void
-  showToggleAnimation?: boolean
   hasI18n?: boolean
-  setToggleAnimation?: (show: boolean) => void
   className?: string
   hiddenOnMobile?: boolean
 }) {
@@ -519,14 +508,7 @@ export function SidebarFooter({
           : "flex-col flex-wrap justify-center py-4",
         className,
       )}
-      data-toggle-animation={
-        showToggleAnimation ? (showSidebar ? "show" : "hide") : "off"
-      }
     >
-      <LocaleSwitch
-        lite={!showSidebar}
-        className={showSidebar ? "_grow" : "max-md:_grow"}
-      />
       <div className={showSidebar && !hasI18n ? "_grow _flex _flex-col" : ""}>
         <ThemeSwitch lite={!showSidebar} />
       </div>
@@ -539,7 +521,6 @@ export function SidebarFooter({
           )}
           onClick={() => {
             setSidebar(!showSidebar)
-            setToggleAnimation?.(true)
           }}
         >
           <ArrowBarLeft
