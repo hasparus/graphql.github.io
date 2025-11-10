@@ -12,6 +12,7 @@ import {
   type SamplingQuality,
   type MapColors,
 } from "./map/engine"
+import { MeetupsList } from "./meetups-list"
 
 const CELL_SIZE = 16
 const SQUARE_SIZE = 12
@@ -46,6 +47,7 @@ export function MeetupsMap() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const handleRef = useRef<MapHandle>()
   const { resolvedTheme } = useTheme()
+  const [activeMeetupId, setActiveMeetupId] = useState<string | null>(null)
   const themeColors = useMemo(
     () => MAP_THEMES[resolvedTheme as ThemeVariant] || MAP_THEMES.light,
     [resolvedTheme],
@@ -116,7 +118,7 @@ export function MeetupsMap() {
 
   return (
     <div
-      className="my-6"
+      className="my-6 flex divide-y divide-neu-200 border border-neu-200 bg-[--sea-light] dark:divide-neu-50 dark:border-neu-50 dark:bg-[--sea-dark] max-md:flex-col-reverse md:divide-x md:divide-y-0"
       style={
         {
           "--sea-dark": `rgb(${MAP_THEMES.dark.sea.map(c => Math.round(c * 255)).join(", ")})`,
@@ -124,11 +126,17 @@ export function MeetupsMap() {
         } as React.CSSProperties
       }
     >
-      <div className="relative border border-neu-200 bg-[--sea-light] dark:border-neu-50 dark:bg-[--sea-dark] max-md:-mx-4 max-md:border-x-0">
+      <MeetupsList
+        activeMeetupId={activeMeetupId}
+        onActiveMeetupChange={setActiveMeetupId}
+        className="shrink-0 md:max-h-full"
+      />
+
+      <div className="relative grow bg-[--sea-light] dark:bg-[--sea-dark]">
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"
-          className="block h-80 w-full lg:h-[28rem]"
+          className="block h-80 w-full md:h-full"
           style={{ imageRendering: "pixelated", touchAction: "none" }}
         />
 
