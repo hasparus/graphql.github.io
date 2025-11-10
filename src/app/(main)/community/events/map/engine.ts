@@ -1,12 +1,13 @@
 import { createProgram, initGL, loadLandMaskTexture } from "./gl-utils"
-import { lonLatToUV, type UV } from "./projection"
-import { dotsFrag, fullscreenVert, markersFrag, markersVert } from "./shaders"
+import { lonLatToUV, uvToLonLat } from "./projection"
+import { dotsFrag, fullscreenVert, MARKER_CAPACITY } from "./shaders"
 
 type ColorVec = [r: number, g: number, b: number]
 
 export type MapColors = {
   sea: ColorVec
   land: ColorVec
+  marker: ColorVec
 }
 
 export type SamplingQuality = 1 | 4 | 16
@@ -41,17 +42,8 @@ export type BootOptions = {
 
 const MIN_ZOOM = 1
 const MAX_ZOOM = 20
-const MARKER_SIZE = 6
-const HUB_HALO_SIZE = 18
-const HUB_HALO_ALPHA = 0.35
-const MARKER_COLOR: [number, number, number, number] = [1, 0.31, 0.7, 1]
-const HALO_COLOR: [number, number, number, number] = [
-  1,
-  0.31,
-  0.7,
-  HUB_HALO_ALPHA,
-]
-const MAX_VERTICAL_TRAVEL_RATIO = 0.35
+const MARKER_TYPE_REGULAR = 1
+const MARKER_TYPE_HUB = 2
 /**
  * Per-frame damping factor (scaled by dt / (1/60s)).
  * Decrease value to increase damping.
@@ -61,11 +53,11 @@ const INERTIA_DAMPING = 0.87
 const INERTIA_BASE_DT = 1000 / 60
 /** Velocities below this normalized threshold snap directly to zero. */
 const INERTIA_EPS = 1e-5
+const DEVTOOLS_ENABLED = process.env.NODE_ENV !== "production"
 
 export async function bootMeetupsMap(options: BootOptions): Promise<MapHandle> {
   const gl = initGL(options.canvas)
   const dotsProgram = createProgram(gl, fullscreenVert, dotsFrag)
-  const markersProgram = createProgram(gl, markersVert, markersFrag)
   let landTexture: WebGLTexture | null = null
   try {
     landTexture = await loadLandMaskTexture(gl, options.maskUrl, options.signal)
@@ -78,12 +70,10 @@ export async function bootMeetupsMap(options: BootOptions): Promise<MapHandle> {
       ...options,
       gl,
       dotsProgram,
-      markersProgram,
       landTexture,
     })
   } catch (error) {
     gl.deleteProgram(dotsProgram)
-    gl.deleteProgram(markersProgram)
     if (landTexture) gl.deleteTexture(landTexture)
     throw error
   }
@@ -92,21 +82,13 @@ export async function bootMeetupsMap(options: BootOptions): Promise<MapHandle> {
 type InternalOptions = BootOptions & {
   gl: WebGL2RenderingContext
   dotsProgram: WebGLProgram
-  markersProgram: WebGLProgram
   landTexture: WebGLTexture
-}
-
-type MarkerInstance = {
-  uv: UV
-  size: number
-  color: [number, number, number, number]
 }
 
 class MapEngine implements MapHandle {
   private gl: WebGL2RenderingContext
   private canvas: HTMLCanvasElement
   private dotsProgram: WebGLProgram
-  private markersProgram: WebGLProgram
   private landTexture: WebGLTexture
   private quality: SamplingQuality
   private cellSize: number
@@ -119,17 +101,11 @@ class MapEngine implements MapHandle {
   private pixelRatio = getDevicePixelRatio()
   private seaColor: Float32Array
   private landColor: Float32Array
-  private readonly markerInstances: MarkerInstance[]
-  private readonly centerBuffer: WebGLBuffer
-  private readonly sizeBuffer: WebGLBuffer
-  private readonly colorBuffer: WebGLBuffer
-  private readonly markerVAO: WebGLVertexArrayObject
   private readonly fullscreenVAO: WebGLVertexArrayObject
-  private readonly centerData: Float32Array
-  private readonly sizeScratch: Float32Array
-  private readonly colorScratch: Float32Array
-  private readonly instanceCapacity: number
-  private activeInstances = 0
+  private readonly markerData: Float32Array
+  private markerCount: number
+  private readonly markerColor: Float32Array
+  private readonly hubMarkerColor: Float32Array
   private readonly resizeObserver: ResizeObserver
   private rafHandle = 0
   private fps = 60
@@ -148,7 +124,6 @@ class MapEngine implements MapHandle {
     this.gl = options.gl
     this.canvas = options.canvas
     this.dotsProgram = options.dotsProgram
-    this.markersProgram = options.markersProgram
     this.landTexture = options.landTexture
     this.aspectRatio = options.aspectRatio
     this.quality = options.initialQuality
@@ -157,53 +132,22 @@ class MapEngine implements MapHandle {
 
     this.seaColor = new Float32Array(options.theme.sea)
     this.landColor = new Float32Array(options.theme.land)
-
-    this.markerInstances = this.createMarkerInstances(options.markers)
-
-    this.instanceCapacity = this.markerInstances.length * 3
-    this.centerData = new Float32Array(this.instanceCapacity * 2)
-    this.sizeScratch = new Float32Array(this.instanceCapacity)
-    this.colorScratch = new Float32Array(this.instanceCapacity * 4)
+    const packedMarkers = this.packMarkers(options.markers)
+    this.markerData = packedMarkers.data
+    this.markerCount = packedMarkers.count
+    this.markerColor = new Float32Array(options.theme.marker)
+    this.hubMarkerColor = new Float32Array(options.theme.marker)
 
     const gl = this.gl
     this.fullscreenVAO = gl.createVertexArray() as WebGLVertexArrayObject
-
-    this.markerVAO = gl.createVertexArray() as WebGLVertexArrayObject
-    this.centerBuffer = gl.createBuffer() as WebGLBuffer
-    this.sizeBuffer = gl.createBuffer() as WebGLBuffer
-    this.colorBuffer = gl.createBuffer() as WebGLBuffer
-
-    gl.bindVertexArray(this.markerVAO)
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.centerBuffer)
-    gl.bufferData(gl.ARRAY_BUFFER, this.centerData.byteLength, gl.DYNAMIC_DRAW)
-    gl.enableVertexAttribArray(0)
-    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0)
-    gl.vertexAttribDivisor(0, 1)
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.sizeBuffer)
-    gl.bufferData(gl.ARRAY_BUFFER, this.sizeScratch.byteLength, gl.DYNAMIC_DRAW)
-    gl.enableVertexAttribArray(1)
-    gl.vertexAttribPointer(1, 1, gl.FLOAT, false, 0, 0)
-    gl.vertexAttribDivisor(1, 1)
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer)
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      this.colorScratch.byteLength,
-      gl.DYNAMIC_DRAW,
-    )
-    gl.enableVertexAttribArray(2)
-    gl.vertexAttribPointer(2, 4, gl.FLOAT, false, 0, 0)
-    gl.vertexAttribDivisor(2, 1)
-
-    gl.bindVertexArray(null)
-    gl.bindBuffer(gl.ARRAY_BUFFER, null)
+    this.uploadMarkerUniforms()
 
     this.resizeObserver = new ResizeObserver(() => this.resizeCanvas())
     this.resizeObserver.observe(this.canvas)
     this.resizeCanvas()
     this.updatePanFromTarget()
     this.attachEvents()
+    this.attachDevtools()
     this.loop()
   }
 
@@ -213,14 +157,10 @@ class MapEngine implements MapHandle {
     cancelAnimationFrame(this.rafHandle)
     this.resizeObserver.disconnect()
     this.detachEvents()
+    this.detachDevtools()
     const gl = this.gl
     gl.deleteProgram(this.dotsProgram)
-    gl.deleteProgram(this.markersProgram)
     gl.deleteTexture(this.landTexture)
-    gl.deleteBuffer(this.centerBuffer)
-    gl.deleteBuffer(this.sizeBuffer)
-    gl.deleteBuffer(this.colorBuffer)
-    gl.deleteVertexArray(this.markerVAO)
     gl.deleteVertexArray(this.fullscreenVAO)
   }
 
@@ -247,6 +187,17 @@ class MapEngine implements MapHandle {
   setThemeColors(colors: MapColors) {
     this.seaColor.set(colors.sea)
     this.landColor.set(colors.land)
+    this.markerColor.set(colors.marker)
+    this.hubMarkerColor.set(colors.marker)
+  }
+
+  private uploadMarkerUniforms() {
+    const gl = this.gl
+    gl.useProgram(this.dotsProgram)
+    const location = gl.getUniformLocation(this.dotsProgram, "uMarkers")
+    if (location) {
+      gl.uniform4fv(location, this.markerData)
+    }
   }
 
   private getWorldDimensions() {
@@ -278,7 +229,7 @@ class MapEngine implements MapHandle {
     if (fullTravel <= 0) {
       return { min: center, max: center }
     }
-    const limitedTravel = fullTravel * MAX_VERTICAL_TRAVEL_RATIO
+    const limitedTravel = clamp01(fullTravel)
     return { min: center - limitedTravel, max: center + limitedTravel }
   }
 
@@ -291,16 +242,25 @@ class MapEngine implements MapHandle {
     this.updatePanFromTarget()
   }
 
-  private createMarkerInstances(markers: MarkerPoint[]) {
-    const instances: MarkerInstance[] = []
-    for (const marker of markers) {
+  private packMarkers(markers: MarkerPoint[]) {
+    const capacity = MARKER_CAPACITY
+    const data = new Float32Array(capacity * 4)
+    const count = Math.min(markers.length, capacity)
+    for (let i = 0; i < count; i++) {
+      const marker = markers[i]
       const uv = lonLatToUV(marker.lon, marker.lat)
-      if (marker.isHub) {
-        instances.push({ uv, size: HUB_HALO_SIZE, color: HALO_COLOR })
-      }
-      instances.push({ uv, size: MARKER_SIZE, color: MARKER_COLOR })
+      const offset = i * 4
+      data[offset + 0] = uv[0]
+      data[offset + 1] = 1 - uv[1]
+      data[offset + 2] = marker.isHub ? MARKER_TYPE_HUB : MARKER_TYPE_REGULAR
+      data[offset + 3] = 0
     }
-    return instances
+    if (markers.length > capacity) {
+      console.warn(
+        `Meetups map: capped marker count at ${capacity} (received ${markers.length}).`,
+      )
+    }
+    return { data, count }
   }
 
   private attachEvents() {
@@ -324,6 +284,16 @@ class MapEngine implements MapHandle {
     this.canvas.removeEventListener("wheel", this.handleWheel)
     window.removeEventListener("keydown", this.handleKeyDown)
     window.removeEventListener("resize", this.handleWindowResize)
+  }
+
+  private attachDevtools() {
+    if (!DEVTOOLS_ENABLED) return
+    this.canvas.addEventListener("click", this.handleDebugClick)
+  }
+
+  private detachDevtools() {
+    if (!DEVTOOLS_ENABLED) return
+    this.canvas.removeEventListener("click", this.handleDebugClick)
   }
 
   private handlePointerDown = (event: PointerEvent) => {
@@ -372,6 +342,20 @@ class MapEngine implements MapHandle {
     this.canvas.releasePointerCapture(event.pointerId)
     this.canvas.style.cursor = "default"
     this.pointer.lastMoveTime = 0
+  }
+
+  private handleDebugClick = (event: MouseEvent) => {
+    if (!DEVTOOLS_ENABLED) return
+    const rect = this.canvas.getBoundingClientRect()
+    const scale = this.pixelRatio
+    const px = (event.clientX - rect.left) * scale
+    const py = (event.clientY - rect.top) * scale
+    const [worldX, worldY] = this.screenToWorld(px, py)
+    const uvY = 1 - clamp(worldY, 0, 1)
+    const { lon, lat } = uvToLonLat(wrap01(worldX), uvY)
+    console.debug(
+      `MeetupsMap click → lat ${lat.toFixed(2)}, lon ${lon.toFixed(2)}`,
+    )
   }
 
   private handleWheel = (event: WheelEvent) => {
@@ -477,79 +461,27 @@ class MapEngine implements MapHandle {
       this.landColor[1],
       this.landColor[2],
     )
+    setUniform3f(
+      gl,
+      this.dotsProgram,
+      "uMarkerColor",
+      this.markerColor[0],
+      this.markerColor[1],
+      this.markerColor[2],
+    )
+    setUniform3f(
+      gl,
+      this.dotsProgram,
+      "uHubMarkerColor",
+      this.hubMarkerColor[0],
+      this.hubMarkerColor[1],
+      this.hubMarkerColor[2],
+    )
+    setUniform1i(gl, this.dotsProgram, "uMarkerCount", this.markerCount)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)
     setUniform1i(gl, this.dotsProgram, "uLand", 0)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
-
-    gl.useProgram(this.markersProgram)
-    gl.bindVertexArray(this.markerVAO)
-    setUniform2f(gl, this.markersProgram, "uRes", width, height)
-    this.updateMarkerCenters(panX, panY)
-    gl.enable(gl.BLEND)
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
-    gl.drawArraysInstanced(gl.TRIANGLE_STRIP, 0, 4, this.activeInstances)
-    gl.disable(gl.BLEND)
-    gl.bindVertexArray(null)
-  }
-
-  private updateMarkerCenters(panX: number, panY: number) {
-    const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
-    const zoom = this.zoom
-    const period = worldWidth * zoom || worldWidth
-    let cursor = 0
-    for (let i = 0; i < this.markerInstances.length; i++) {
-      const base = this.markerInstances[i]
-      const sizePx = base.size * this.pixelRatio
-      const baseX = base.uv[0] * period + panX
-      const baseY = base.uv[1] * worldHeight * this.zoom + panY
-      const wrapped = wrapPositive(baseX, period)
-      cursor = this.writeMarker(cursor, wrapped, baseY, base, sizePx)
-      if (period < width + sizePx) {
-        cursor = this.writeMarker(cursor, wrapped + period, baseY, base, sizePx)
-        cursor = this.writeMarker(cursor, wrapped - period, baseY, base, sizePx)
-      }
-    }
-    this.activeInstances = cursor
-    const centersView = this.centerData.subarray(0, cursor * 2)
-    const sizeView = this.sizeScratch.subarray(0, cursor)
-    const colorView = this.colorScratch.subarray(0, cursor * 4)
-
-    const gl = this.gl
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.centerBuffer)
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, centersView)
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.sizeBuffer)
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, sizeView)
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.colorBuffer)
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, colorView)
-    gl.bindBuffer(gl.ARRAY_BUFFER, null)
-  }
-
-  private writeMarker(
-    cursor: number,
-    px: number,
-    py: number,
-    instance: MarkerInstance,
-    sizePx: number,
-  ) {
-    if (cursor >= this.instanceCapacity) {
-      return cursor
-    }
-    const width = this.canvas.width || 1
-    const margin = sizePx * 0.5
-    if (px + margin < 0 || px - margin > width) {
-      return cursor
-    }
-    const centerOffset = cursor * 2
-    this.centerData[centerOffset + 0] = px
-    this.centerData[centerOffset + 1] = py
-    this.sizeScratch[cursor] = sizePx
-    const colorOffset = cursor * 4
-    this.colorScratch[colorOffset + 0] = instance.color[0]
-    this.colorScratch[colorOffset + 1] = instance.color[1]
-    this.colorScratch[colorOffset + 2] = instance.color[2]
-    this.colorScratch[colorOffset + 3] = instance.color[3]
-    return cursor + 1
   }
 
   private syncPixelRatio() {
@@ -609,13 +541,6 @@ function wrapCentered(value: number, period: number) {
   let wrapped = value % period
   if (wrapped > period * 0.5) wrapped -= period
   if (wrapped < -period * 0.5) wrapped += period
-  return wrapped
-}
-
-function wrapPositive(value: number, period: number) {
-  if (!isFinite(period) || period <= 0) return value
-  let wrapped = value % period
-  if (wrapped < 0) wrapped += period
   return wrapped
 }
 

@@ -85,11 +85,7 @@ export function Navbar({ items }: NavbarProps): ReactElement {
   )
 
   return (
-    <div
-      className=
-        "nextra-nav-container sticky top-0 z-20 w-full bg-transparent print:hidden"
-      
-    >
+    <div className="nextra-nav-container sticky top-0 z-20 w-full bg-transparent print:hidden">
       <BackdropBlur />
       <nav className="mx-auto flex h-[var(--nextra-navbar-height)] max-w-[120rem] items-center justify-end pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)]">
         <NextLink

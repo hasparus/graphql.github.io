@@ -12,6 +12,8 @@ void main() {
 }
 `
 
+export const MARKER_CAPACITY = 128
+
 export const dotsFrag = /* GLSL */ `#version 300 es
 precision highp float;
 
@@ -26,6 +28,30 @@ uniform float uSquare;
 uniform sampler2D uLand;
 uniform int uQuality;
 uniform vec3 uLandColor;
+uniform vec4 uMarkers[${MARKER_CAPACITY}];
+uniform int uMarkerCount;
+uniform vec3 uMarkerColor;
+uniform vec3 uHubMarkerColor;
+
+float horizontalDelta(float markerX, float cellX) {
+  float diff = abs(markerX - cellX);
+  return min(diff, 1.0 - diff);
+}
+
+float markerTypeAt(vec2 cellUV, vec2 halfSquareUV) {
+  for (int i = 0; i < ${MARKER_CAPACITY}; i++) {
+    if (i >= uMarkerCount) {
+      break;
+    }
+    vec4 marker = uMarkers[i];
+    float dx = horizontalDelta(marker.x, cellUV.x);
+    float dy = abs(marker.y - cellUV.y);
+    if (dx <= halfSquareUV.x && dy <= halfSquareUV.y) {
+      return marker.z;
+    }
+  }
+  return 0.0;
+}
 
 float sampleCoverage(vec2 uv, int quality) {
   ivec2 texSize = textureSize(uLand, 0);
@@ -71,45 +97,17 @@ void main() {
   if (delta.x > 0.5 * uSquare || delta.y > 0.5 * uSquare) {
     discard;
   }
-  outColor = vec4(uLandColor, 1.0);
-}
-`
-
-export const markersVert = /* GLSL */ `#version 300 es
-precision highp float;
-
-layout(location = 0) in vec2 aCenterPx;
-layout(location = 1) in float aSizePx;
-layout(location = 2) in vec4 aColor;
-
-uniform vec2 uRes;
-
-out vec4 vColor;
-
-vec2 quadCorner(int vertexId) {
-  return vec2(float(vertexId & 1), float((vertexId >> 1) & 1));
-}
-
-void main() {
-  vec2 corner = quadCorner(gl_VertexID);
-  vec2 offset = (corner - 0.5) * aSizePx;
-  vec2 px = aCenterPx + offset;
-  vec2 ndc = vec2(
-    (px.x / uRes.x) * 2.0 - 1.0,
-    1.0 - (px.y / uRes.y) * 2.0
-  );
-  gl_Position = vec4(ndc, 0.0, 1.0);
-  vColor = aColor;
-}
-`
-
-export const markersFrag = `#version 300 es
-precision mediump float;
-
-in vec4 vColor;
-out vec4 outColor;
-
-void main() {
-  outColor = vColor;
+  float safeWorldWidth = max(uWorldSize.x * uZoom, 0.0001);
+  float safeWorldHeight = max(uWorldSize.y * uZoom, 0.0001);
+  vec2 halfSquareUV = vec2(0.5 * uSquare / safeWorldWidth, 0.5 * uSquare / safeWorldHeight);
+  vec2 halfCellUV = vec2(0.5 * uCell / safeWorldWidth, 0.5 * uCell / safeWorldHeight);
+  float markerType = markerTypeAt(uv, halfCellUV);
+  vec3 color = uLandColor;
+  if (markerType > 1.5) {
+    color = uHubMarkerColor;
+  } else if (markerType > 0.5) {
+    color = uMarkerColor;
+  }
+  outColor = vec4(color, 1.0);
 }
 `

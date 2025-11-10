@@ -13,8 +13,8 @@ import {
   type MapColors,
 } from "./map/engine"
 
-const CELL_SIZE = 16
-const SQUARE_SIZE = 12
+const CELL_SIZE = 8
+const SQUARE_SIZE = 6
 const INITIAL_QUALITY: SamplingQuality = 4
 const HUB_MEETUP_IDS = new Set(["paris"])
 const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
@@ -24,10 +24,12 @@ const MAP_THEMES = {
   light: {
     sea: [0.9804, 0.9882, 0.9569], // neu-50
     land: [0.8627, 0.8706, 0.8275], // neu-300
+    marker: [0.8824, 0.0039, 0.5961], // #E10198 = pri-base
   },
   dark: {
     sea: [0.0549, 0.0588, 0.0431], // neu-50
     land: [0.1647, 0.1804, 0.1373], // a shade darker than neu-800
+    marker: [1, 0.6, 0.8745], // #FF99DF = pri-light
   },
 } satisfies Record<string, MapColors>
 
