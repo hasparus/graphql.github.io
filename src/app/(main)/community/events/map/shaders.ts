@@ -24,6 +24,7 @@ uniform float uCell;
 uniform float uSquare;
 uniform sampler2D uLand;
 uniform int uQuality;
+uniform vec3 uLandColor;
 
 float sampleCoverage(vec2 uv, int quality) {
   ivec2 texSize = textureSize(uLand, 0);
@@ -69,7 +70,7 @@ void main() {
   if (delta.x > 0.5 * uSquare || delta.y > 0.5 * uSquare) {
     discard;
   }
-  outColor = vec4(vec3(0.8667, 0.8706, 0.8275), 1.0);
+  outColor = vec4(uLandColor, 1.0);
 }
 `
 

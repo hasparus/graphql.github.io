@@ -2,6 +2,13 @@ import { createProgram, initGL, loadLandMaskTexture } from "./gl-utils"
 import { lonLatToUV, type UV } from "./projection"
 import { dotsFrag, fullscreenVert, markersFrag, markersVert } from "./shaders"
 
+type ColorVec = [r: number, g: number, b: number]
+
+export type MapColors = {
+  sea: ColorVec
+  land: ColorVec
+}
+
 export type SamplingQuality = 1 | 4 | 16
 
 export type MarkerPoint = {
@@ -24,6 +31,7 @@ export type MapHandle = {
   setQuality(value: SamplingQuality): void
   setCellSize(value: number): void
   setSquareSize(value: number): void
+  setThemeColors(colors: MapColors): void
   resetView(): void
 }
 
@@ -34,6 +42,7 @@ export type BootOptions = {
   initialQuality: SamplingQuality
   initialCellSize: number
   initialSquareSize: number
+  theme: MapColors
   onStatsChange?: (stats: MapStats) => void
   signal?: AbortSignal
 }
@@ -117,6 +126,8 @@ class MapEngine implements MapHandle {
   private pan = new Float32Array([0, 0])
   private target = new Float32Array([0.5, 0.5])
   private velocity = new Float32Array([0, 0])
+  private seaColor: Float32Array
+  private landColor: Float32Array
   private readonly markerInstances: MarkerInstance[]
   private readonly centerBuffer: WebGLBuffer
   private readonly sizeBuffer: WebGLBuffer
@@ -167,6 +178,9 @@ class MapEngine implements MapHandle {
       squareSize: this.squareSize,
       quality: this.quality,
     }
+
+    this.seaColor = new Float32Array(options.theme.sea)
+    this.landColor = new Float32Array(options.theme.land)
 
     this.markerInstances = this.createMarkerInstances(options.markers)
 
@@ -252,6 +266,11 @@ class MapEngine implements MapHandle {
     const next = clamp(value, MIN_SQUARE, Math.min(MAX_SQUARE, this.cellSize))
     if (next === this.squareSize) return
     this.squareSize = next
+  }
+
+  setThemeColors(colors: MapColors) {
+    this.seaColor.set(colors.sea)
+    this.landColor.set(colors.land)
   }
 
   resetView() {
@@ -425,7 +444,7 @@ class MapEngine implements MapHandle {
     const width = this.canvas.width || 1
     const height = this.canvas.height || 1
     gl.viewport(0, 0, width, height)
-    gl.clearColor(0.9804, 0.9882, 0.9569, 1)
+    gl.clearColor(this.seaColor[0], this.seaColor[1], this.seaColor[2], 1)
     gl.clear(gl.COLOR_BUFFER_BIT)
 
     const panX = wrapCentered(this.pan[0], width * this.zoom)
@@ -439,6 +458,14 @@ class MapEngine implements MapHandle {
     setUniform1f(gl, this.dotsProgram, "uCell", this.cellSize)
     setUniform1f(gl, this.dotsProgram, "uSquare", this.squareSize)
     setUniform1i(gl, this.dotsProgram, "uQuality", this.quality)
+    setUniform3f(
+      gl,
+      this.dotsProgram,
+      "uLandColor",
+      this.landColor[0],
+      this.landColor[1],
+      this.landColor[2],
+    )
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)
     setUniform1i(gl, this.dotsProgram, "uLand", 0)
@@ -582,6 +609,20 @@ function wrap01(value: number) {
 
 function clamp01(value: number) {
   return clamp(value, 0, 1)
+}
+
+function setUniform3f(
+  gl: WebGL2RenderingContext,
+  program: WebGLProgram,
+  name: string,
+  x: number,
+  y: number,
+  z: number,
+) {
+  const location = gl.getUniformLocation(program, name)
+  if (location) {
+    gl.uniform3f(location, x, y, z)
+  }
 }
 
 function getDevicePixelRatio() {
