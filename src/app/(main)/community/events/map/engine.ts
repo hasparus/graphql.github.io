@@ -411,7 +411,8 @@ class MapEngine implements MapHandle {
       (event.clientX - rect.left) * scale,
       (event.clientY - rect.top) * scale,
     ]
-    const zoomFactor = Math.exp(-event.deltaY * 0.0015)
+    const wheelSensitivity = event.ctrlKey ? 0.005 : 0.0015
+    const zoomFactor = Math.exp(-event.deltaY * wheelSensitivity)
     const previousZoom = this.zoom
     const nextZoom = clamp(previousZoom * zoomFactor, MIN_ZOOM, MAX_ZOOM)
     if (nextZoom === previousZoom) return
