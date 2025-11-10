@@ -18,14 +18,6 @@ export type MarkerPoint = {
   isHub?: boolean
 }
 
-export type MapStats = {
-  fps: number
-  zoom: number
-  cellSize: number
-  squareSize: number
-  quality: SamplingQuality
-}
-
 export type MapHandle = {
   dispose(): void
   setQuality(value: SamplingQuality): void
@@ -44,16 +36,11 @@ export type BootOptions = {
   initialSquareSize: number
   aspectRatio: number
   theme: MapColors
-  onStatsChange?: (stats: MapStats) => void
   signal?: AbortSignal
 }
 
 const MIN_ZOOM = 1
 const MAX_ZOOM = 20
-const MIN_CELL = 6
-const MAX_CELL = 24
-const MIN_SQUARE = 2
-const MAX_SQUARE = 14
 const MARKER_SIZE = 6
 const HUB_HALO_SIZE = 18
 const HUB_HALO_ALPHA = 0.35
@@ -65,10 +52,6 @@ const HALO_COLOR: [number, number, number, number] = [
   HUB_HALO_ALPHA,
 ]
 const MAX_VERTICAL_TRAVEL_RATIO = 0.35
-const GOOGLE_MAPS_IDLE_CURSOR =
-  'url("https://maps.gstatic.com/mapfiles/openhand_8_8.cur"), default'
-const GOOGLE_MAPS_DRAG_CURSOR =
-  'url("https://maps.gstatic.com/mapfiles/closedhand_8_8.cur"), move'
 /**
  * Per-frame damping factor (scaled by dt / (1/60s)).
  * Decrease value to increase damping.
@@ -133,6 +116,7 @@ class MapEngine implements MapHandle {
   private pan = new Float32Array([0, 0])
   private target = new Float32Array([0.5, 0.5])
   private velocity = new Float32Array([0, 0])
+  private pixelRatio = getDevicePixelRatio()
   private seaColor: Float32Array
   private landColor: Float32Array
   private readonly markerInstances: MarkerInstance[]
@@ -147,9 +131,6 @@ class MapEngine implements MapHandle {
   private readonly instanceCapacity: number
   private activeInstances = 0
   private readonly resizeObserver: ResizeObserver
-  private readonly stats: MapStats
-  private readonly hudThrottleMs = 120
-  private lastHudTime = 0
   private rafHandle = 0
   private fps = 60
   private lastFrameTime = performance.now()
@@ -171,20 +152,8 @@ class MapEngine implements MapHandle {
     this.landTexture = options.landTexture
     this.aspectRatio = options.aspectRatio
     this.quality = options.initialQuality
-    this.cellSize = clamp(options.initialCellSize, MIN_CELL, MAX_CELL)
-    this.squareSize = clamp(
-      options.initialSquareSize,
-      MIN_SQUARE,
-      Math.min(MAX_SQUARE, this.cellSize),
-    )
-    this.onStatsChange = options.onStatsChange
-    this.stats = {
-      fps: 0,
-      zoom: this.zoom,
-      cellSize: this.cellSize,
-      squareSize: this.squareSize,
-      quality: this.quality,
-    }
+    this.cellSize = options.initialCellSize
+    this.squareSize = Math.min(options.initialSquareSize, this.cellSize)
 
     this.seaColor = new Float32Array(options.theme.sea)
     this.landColor = new Float32Array(options.theme.land)
@@ -261,7 +230,7 @@ class MapEngine implements MapHandle {
   }
 
   setCellSize(value: number) {
-    const next = clamp(value, MIN_CELL, MAX_CELL)
+    const next = value
     if (next === this.cellSize) return
     this.cellSize = next
     if (this.squareSize > this.cellSize) {
@@ -270,7 +239,7 @@ class MapEngine implements MapHandle {
   }
 
   setSquareSize(value: number) {
-    const next = clamp(value, MIN_SQUARE, Math.min(MAX_SQUARE, this.cellSize))
+    const next = Math.min(value, this.cellSize)
     if (next === this.squareSize) return
     this.squareSize = next
   }
@@ -335,7 +304,7 @@ class MapEngine implements MapHandle {
   }
 
   private attachEvents() {
-    this.canvas.style.cursor = GOOGLE_MAPS_IDLE_CURSOR
+    this.canvas.style.cursor = "default"
     this.canvas.addEventListener("pointerdown", this.handlePointerDown)
     this.canvas.addEventListener("pointermove", this.handlePointerMove)
     this.canvas.addEventListener("pointerup", this.handlePointerUp)
@@ -343,6 +312,7 @@ class MapEngine implements MapHandle {
     this.canvas.addEventListener("pointercancel", this.handlePointerUp)
     this.canvas.addEventListener("wheel", this.handleWheel, { passive: false })
     window.addEventListener("keydown", this.handleKeyDown)
+    window.addEventListener("resize", this.handleWindowResize)
   }
 
   private detachEvents() {
@@ -353,6 +323,7 @@ class MapEngine implements MapHandle {
     this.canvas.removeEventListener("pointercancel", this.handlePointerUp)
     this.canvas.removeEventListener("wheel", this.handleWheel)
     window.removeEventListener("keydown", this.handleKeyDown)
+    window.removeEventListener("resize", this.handleWindowResize)
   }
 
   private handlePointerDown = (event: PointerEvent) => {
@@ -367,12 +338,12 @@ class MapEngine implements MapHandle {
     this.velocity[0] = 0
     this.velocity[1] = 0
     this.canvas.setPointerCapture(event.pointerId)
-    this.canvas.style.cursor = GOOGLE_MAPS_DRAG_CURSOR
+    this.canvas.style.cursor = "move"
   }
 
   private handlePointerMove = (event: PointerEvent) => {
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
-    const scale = getDevicePixelRatio()
+    const scale = this.pixelRatio
     const dx = (event.clientX - this.pointer.startX) * scale
     const dy = (event.clientY - this.pointer.startY) * scale
     const { worldWidth, worldHeight } = this.getWorldDimensions()
@@ -399,14 +370,14 @@ class MapEngine implements MapHandle {
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     this.pointer.active = false
     this.canvas.releasePointerCapture(event.pointerId)
-    this.canvas.style.cursor = GOOGLE_MAPS_IDLE_CURSOR
+    this.canvas.style.cursor = "default"
     this.pointer.lastMoveTime = 0
   }
 
   private handleWheel = (event: WheelEvent) => {
     event.preventDefault()
     const rect = this.canvas.getBoundingClientRect()
-    const scale = getDevicePixelRatio()
+    const scale = this.pixelRatio
     const pointer = [
       (event.clientX - rect.left) * scale,
       (event.clientY - rect.top) * scale,
@@ -444,16 +415,19 @@ class MapEngine implements MapHandle {
     }
   }
 
-  private resizeCanvas() {
-    const dpr = getDevicePixelRatio()
+  private handleWindowResize = () => {
+    this.resizeCanvas()
+  }
+
+  private resizeCanvas(explicitPixelRatio?: number) {
+    const dpr = explicitPixelRatio ?? getDevicePixelRatio()
+    this.pixelRatio = dpr
     const rect = this.canvas.getBoundingClientRect()
     const width = Math.max(1, Math.round(rect.width * dpr))
     const height = Math.max(1, Math.round(rect.height * dpr))
     if (width === this.canvas.width && height === this.canvas.height) {
       return
     }
-    const prevWidth = this.canvas.width || width
-    const prevHeight = this.canvas.height || height
     this.canvas.width = width
     this.canvas.height = height
     this.updatePanFromTarget()
@@ -469,22 +443,13 @@ class MapEngine implements MapHandle {
       this.fps = this.fps * 0.9 + instantaneous * 0.1
       this.applyInertia(dt)
       this.render()
-      const elapsed = time - this.lastHudTime
-      if (this.onStatsChange && elapsed >= this.hudThrottleMs) {
-        this.stats.fps = this.fps
-        this.stats.zoom = this.zoom
-        this.stats.cellSize = this.cellSize
-        this.stats.squareSize = this.squareSize
-        this.stats.quality = this.quality
-        this.onStatsChange({ ...this.stats })
-        this.lastHudTime = time
-      }
       this.loop()
     })
   }
 
   private render() {
     const gl = this.gl
+    this.syncPixelRatio()
     const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
     gl.viewport(0, 0, width, height)
     gl.clearColor(this.seaColor[0], this.seaColor[1], this.seaColor[2], 1)
@@ -492,6 +457,8 @@ class MapEngine implements MapHandle {
 
     const panX = wrapCentered(this.pan[0], worldWidth * this.zoom)
     const panY = this.pan[1]
+    const deviceCell = this.cellSize * this.pixelRatio
+    const deviceSquare = this.squareSize * this.pixelRatio
 
     gl.useProgram(this.dotsProgram)
     gl.bindVertexArray(this.fullscreenVAO)
@@ -499,8 +466,8 @@ class MapEngine implements MapHandle {
     setUniform2f(gl, this.dotsProgram, "uWorldSize", worldWidth, worldHeight)
     setUniform2f(gl, this.dotsProgram, "uPan", panX, panY)
     setUniform1f(gl, this.dotsProgram, "uZoom", this.zoom)
-    setUniform1f(gl, this.dotsProgram, "uCell", this.cellSize)
-    setUniform1f(gl, this.dotsProgram, "uSquare", this.squareSize)
+    setUniform1f(gl, this.dotsProgram, "uCell", deviceCell)
+    setUniform1f(gl, this.dotsProgram, "uSquare", deviceSquare)
     setUniform1i(gl, this.dotsProgram, "uQuality", this.quality)
     setUniform3f(
       gl,
@@ -533,13 +500,14 @@ class MapEngine implements MapHandle {
     let cursor = 0
     for (let i = 0; i < this.markerInstances.length; i++) {
       const base = this.markerInstances[i]
+      const sizePx = base.size * this.pixelRatio
       const baseX = base.uv[0] * period + panX
       const baseY = base.uv[1] * worldHeight * this.zoom + panY
       const wrapped = wrapPositive(baseX, period)
-      cursor = this.writeMarker(cursor, wrapped, baseY, base)
-      if (period < width + base.size) {
-        cursor = this.writeMarker(cursor, wrapped + period, baseY, base)
-        cursor = this.writeMarker(cursor, wrapped - period, baseY, base)
+      cursor = this.writeMarker(cursor, wrapped, baseY, base, sizePx)
+      if (period < width + sizePx) {
+        cursor = this.writeMarker(cursor, wrapped + period, baseY, base, sizePx)
+        cursor = this.writeMarker(cursor, wrapped - period, baseY, base, sizePx)
       }
     }
     this.activeInstances = cursor
@@ -562,25 +530,33 @@ class MapEngine implements MapHandle {
     px: number,
     py: number,
     instance: MarkerInstance,
+    sizePx: number,
   ) {
     if (cursor >= this.instanceCapacity) {
       return cursor
     }
     const width = this.canvas.width || 1
-    const margin = instance.size * 0.5
+    const margin = sizePx * 0.5
     if (px + margin < 0 || px - margin > width) {
       return cursor
     }
     const centerOffset = cursor * 2
     this.centerData[centerOffset + 0] = px
     this.centerData[centerOffset + 1] = py
-    this.sizeScratch[cursor] = instance.size
+    this.sizeScratch[cursor] = sizePx
     const colorOffset = cursor * 4
     this.colorScratch[colorOffset + 0] = instance.color[0]
     this.colorScratch[colorOffset + 1] = instance.color[1]
     this.colorScratch[colorOffset + 2] = instance.color[2]
     this.colorScratch[colorOffset + 3] = instance.color[3]
     return cursor + 1
+  }
+
+  private syncPixelRatio() {
+    const ratio = getDevicePixelRatio()
+    if (ratio !== this.pixelRatio) {
+      this.resizeCanvas(ratio)
+    }
   }
 
   private applyInertia(dtMs: number) {

@@ -1,2 +1,3 @@
 - [ ] Panning should not recompute squares.
   - [ ] But zoom works perfectly currently. It's hard to fix panning while making the zoom glitchy & flickery.
+- [ ] Markers should be rendered by the same shader as the map. This will let us avoid desyncs like what we have now and the shader won't be THAT complex.

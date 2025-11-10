@@ -1,4 +1,4 @@
-export const fullscreenVert = `#version 300 es
+export const fullscreenVert = /* GLSL */ `#version 300 es
 precision highp float;
 
 const vec2 POSITIONS[3] = vec2[3](
@@ -12,7 +12,7 @@ void main() {
 }
 `
 
-export const dotsFrag = `#version 300 es
+export const dotsFrag = /* GLSL */ `#version 300 es
 precision highp float;
 
 out vec4 outColor;
@@ -75,7 +75,7 @@ void main() {
 }
 `
 
-export const markersVert = `#version 300 es
+export const markersVert = /* GLSL */ `#version 300 es
 precision highp float;
 
 layout(location = 0) in vec2 aCenterPx;
