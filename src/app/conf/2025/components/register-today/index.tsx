@@ -38,7 +38,7 @@ export function RegisterToday({ className }: RegisterTodayProps) {
         </div>
         <div className="mt-10 flex gap-x-6 gap-y-4 max-sm:flex-col">
           <Button disabled className="opacity-55" href={GET_TICKETS_LINK}>
-            Registeration closed
+            Registration closed
           </Button>
           <Button
             disabled
