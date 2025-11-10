@@ -16,11 +16,9 @@ import {
 
 const CELL_SIZE = 16
 const SQUARE_SIZE = 12
-const INITIAL_QUALITY: SamplingQuality = 4
-const QUALITIES: SamplingQuality[] = [1, 4, 16]
+const INITIAL_QUALITY: SamplingQuality = 16
 const HUB_MEETUP_IDS = new Set(["paris"])
 const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
-// 1,4992679356
 const ASPECT_RATIO = 1.65
 
 const MAP_THEMES = {
@@ -54,13 +52,7 @@ export function MeetupsMap() {
     [resolvedTheme],
   )
   const initialThemeRef = useRef<MapColors>(themeColors)
-  const [stats, setStats] = useState<MapStats>({
-    fps: 0,
-    zoom: 1,
-    cellSize: CELL_SIZE,
-    squareSize: SQUARE_SIZE,
-    quality: INITIAL_QUALITY,
-  })
+
   const [status, setStatus] = useState<MapStatus>("loading")
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
@@ -87,7 +79,6 @@ export function MeetupsMap() {
           initialQuality: INITIAL_QUALITY,
           aspectRatio: ASPECT_RATIO,
           theme: initialThemeRef.current,
-          onStatsChange: next => setStats(next),
           signal: abortController.signal,
         })
         if (disposed) {
@@ -126,14 +117,17 @@ export function MeetupsMap() {
 
   const disabled = status !== "ready"
 
-  const updateQuality = (quality: SamplingQuality) => {
-    if (disabled) return
-    handleRef.current?.setQuality(quality)
-  }
-
   return (
-    <div className="my-6">
-      <div className="relative border border-neu-200 bg-[#f5f4ed] dark:border-neu-700 dark:bg-[#0b0d10]">
+    <div
+      className="my-6"
+      style={
+        {
+          "--sea-dark": `rgb(${MAP_THEMES.dark.sea.map(c => c * 255).join(", ")})`,
+          "--sea-light": `rgb(${MAP_THEMES.light.sea.map(c => c * 255).join(", ")})`,
+        } as {}
+      }
+    >
+      <div className="relative border border-neu-200 bg-[--sea-light] dark:bg-[--sea-dark]">
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"
@@ -142,57 +136,12 @@ export function MeetupsMap() {
         />
 
         {status !== "ready" && (
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#f5f4ed]/70 text-center text-sm text-neu-600 dark:bg-[#0b0d10]/70 dark:text-neu-50">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-center text-sm text-neu-600">
             {status === "loading"
               ? "Booting WebGL map…"
               : `Unable to load the map${errorMessage ? ` (${errorMessage})` : ""}`}
           </div>
         )}
-
-        <div className="pointer-events-none absolute left-4 top-4 flex max-w-sm flex-col gap-3 border border-neu-300 bg-white/85 p-3 text-[0.65rem] uppercase tracking-wide text-neu-600 dark:border-neu-700 dark:bg-[#14181f]/85 dark:text-neu-100">
-          <div className="flex items-center justify-between gap-6">
-            <span>FPS</span>
-            <span>{stats.fps.toFixed(0)}</span>
-          </div>
-          <div className="flex items-center justify-between gap-6">
-            <span>Zoom</span>
-            <span>{stats.zoom.toFixed(2)}×</span>
-          </div>
-          <div className="flex flex-col gap-2 text-[0.7rem] normal-case">
-            <span className="text-[0.65rem] uppercase tracking-wide">
-              Quality
-            </span>
-            <div className="pointer-events-auto flex gap-1">
-              {QUALITIES.map(quality => (
-                <button
-                  key={quality}
-                  type="button"
-                  disabled={disabled}
-                  onClick={() => updateQuality(quality)}
-                  className={`border border-neu-300 px-2 py-1 text-[0.7rem] dark:border-neu-700 ${
-                    stats.quality === quality
-                      ? "bg-[#ffb5d8] text-[#7b0053]"
-                      : "bg-white text-neu-600 dark:bg-[#1f2430] dark:text-neu-50"
-                  } ${disabled ? "opacity-60" : ""}`}
-                >
-                  {quality}x
-                </button>
-              ))}
-            </div>
-          </div>
-          <button
-            type="button"
-            disabled={disabled}
-            className="pointer-events-auto border border-neu-400 bg-white px-2 py-1 text-[0.7rem] normal-case dark:border-neu-700 dark:bg-[#1f2430] dark:text-neu-50"
-            onClick={() => handleRef.current?.resetView()}
-          >
-            Reset (R)
-          </button>
-        </div>
-
-        <div className="pointer-events-none absolute bottom-4 left-4 text-[0.75rem] text-neu-600 dark:text-neu-100">
-          Scroll to zoom, drag to pan, press R to reset
-        </div>
       </div>
     </div>
   )

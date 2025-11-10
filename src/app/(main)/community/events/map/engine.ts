@@ -142,7 +142,6 @@ class MapEngine implements MapHandle {
   private readonly instanceCapacity: number
   private activeInstances = 0
   private readonly resizeObserver: ResizeObserver
-  private readonly onStatsChange?: (stats: MapStats) => void
   private readonly stats: MapStats
   private readonly hudThrottleMs = 120
   private lastHudTime = 0
