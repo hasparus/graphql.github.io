@@ -49,6 +49,9 @@ jobs:
       - name: Run Playwright tests
         run: ./node_modules/.bin/playwright test
 
+      - name: Run unit tests
+        run: pnpm test:unit
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

@@ -7,7 +7,7 @@ import { Anchor } from "../../app/conf/_design-system/anchor"
 import { usePathname } from "next/navigation"
 
 export const navLinkClasses =
-  "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none hover:underline underline-offset-2"
+  "typography-menu flex items-center text-neu-900 px-3 py-1 nextra-focus [text-box:trim-both_cap_alphabetic] leading-none hover:underline underline-offset-2 md:py-5"
 
 export interface NavLinkProps {
   href: string

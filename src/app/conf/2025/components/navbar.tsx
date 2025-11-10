@@ -21,7 +21,6 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
   const handleDrawerClick = useCallback(() => {
-    // todo: block scrolling on body
     setMobileDrawerOpen(prev => !prev)
   }, [])
 

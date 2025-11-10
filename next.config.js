@@ -35,6 +35,7 @@ const ALLOWED_SVG_REGEX = new RegExp(`${sep}icons${sep}.+\\.svg$`)
  * @type {import('next').NextConfig}
  */
 const config = {
+  output: undefined,
   // reactStrictMode: true, provoke duplicated codemirror editors
   webpack(config) {
     // #region MDX

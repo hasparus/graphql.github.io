@@ -1,5 +1,5 @@
 import { Component } from "react"
-import { EditorView, keymap } from "@codemirror/view"
+import { EditorView, keymap, highlightActiveLine } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 import { history, historyKeymap, defaultKeymap } from "@codemirror/commands"
 import { bracketMatching } from "@codemirror/language"
@@ -11,6 +11,7 @@ import {
 import { graphql, updateSchema } from "cm6-graphql"
 import { GraphQLSchema } from "graphql"
 import { codeMirrorThemeExtension } from "./codemirror-theme"
+
 import "./syntax-highlighting.css"
 
 interface QueryEditorProps {
@@ -76,12 +77,14 @@ export class QueryEditor extends Component<QueryEditorProps> {
         history(),
         closeBrackets(),
         bracketMatching(),
+        highlightActiveLine(),
         keymap.of([...historyKeymap, ...completionKeymap, ...defaultKeymap]),
         runQueryBinding,
         codeMirrorThemeExtension,
         graphql(this.props.schema, {}),
         autocompletion({
           icons: false,
+          activateOnTyping: true,
         }),
         EditorView.updateListener.of(update => {
           if (update.docChanged && !this.ignoreChangeEvent) {

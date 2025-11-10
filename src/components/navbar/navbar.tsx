@@ -139,7 +139,7 @@ export function Navbar({ items }: NavbarProps): ReactElement {
             <NavigationMenu.Positioner
               side="bottom"
               align="start"
-              sideOffset={21}
+              sideOffset={4}
               alignOffset={-8}
             >
               <NavigationMenu.Popup className="data-[closed]:animate-fade-out data-[open]:animate-fade-in">

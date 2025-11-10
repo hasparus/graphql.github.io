@@ -1,5 +1,5 @@
 import { Component } from "react"
-import { EditorView } from "@codemirror/view"
+import { EditorView, highlightActiveLine } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
 import { json } from "./codemirror-json"
 import { codeMirrorThemeExtension } from "./codemirror-theme"
@@ -8,6 +8,7 @@ import "./syntax-highlighting.css"
 
 interface ResultViewerProps {
   value?: string
+  vainlyExtractData?: boolean
 }
 
 /**
@@ -34,6 +35,7 @@ export class ResultViewer extends Component<ResultViewerProps> {
         EditorState.readOnly.of(true),
         json(),
         codeMirrorThemeExtension,
+        highlightActiveLine(),
       ],
     })
 
@@ -58,11 +60,28 @@ export class ResultViewer extends Component<ResultViewerProps> {
   componentDidUpdate() {
     if (!this.view) return
 
+    let value = this.props.value || ""
+    if (this.props.vainlyExtractData) {
+      try {
+        const json = JSON.parse(value)
+        if (
+          json &&
+          typeof json === "object" &&
+          "data" in json &&
+          !("errors" in json)
+        ) {
+          value = JSON.stringify(json.data, null, 2)
+        }
+      } catch {
+        // ignore
+      }
+    }
+
     this.view.dispatch({
       changes: {
         from: 0,
         to: this.view.state.doc.length,
-        insert: this.props.value || "",
+        insert: value,
       },
     })
   }
