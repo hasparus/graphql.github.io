@@ -1,14 +1,23 @@
 import { createProgram, initGL, loadLandMaskTexture } from "./gl-utils"
 import { lonLatToUV, uvToLonLat } from "./projection"
 import { dotsFrag, fullscreenVert, MARKER_CAPACITY } from "./shaders"
-
-type ColorVec = [r: number, g: number, b: number]
-
-export type MapColors = {
-  sea: ColorVec
-  land: ColorVec
-  marker: ColorVec
-}
+import {
+  clamp,
+  clampLatitude,
+  computeLatitudeBounds,
+  computePointerVelocity,
+  computeWorldDimensions,
+  dragTargetByPixels,
+  screenToWorld as projectScreenToWorld,
+  stepInertia,
+  updatePanFromTarget,
+  wrap01,
+  wrapCentered,
+  zoomAroundPointer,
+  type LatitudeBounds,
+  type WorldDimensions,
+} from "./viewport-math"
+import type { MapColors } from "./map-colors"
 
 export type SamplingQuality = 1 | 4 | 16
 
@@ -202,37 +211,21 @@ class MapEngine implements MapHandle {
     }
   }
 
-  private getWorldDimensions() {
-    const width = this.canvas.width || 1
-    const height = this.canvas.height || 1
-    const worldHeight = Math.min(width / this.aspectRatio, height)
-    const worldWidth = worldHeight * this.aspectRatio
-    return { width, height, worldWidth, worldHeight }
+  private getWorldDimensions(): WorldDimensions {
+    return computeWorldDimensions(
+      this.canvas.width,
+      this.canvas.height,
+      this.aspectRatio,
+    )
   }
 
   private clampLatitude(value: number) {
-    const { min, max } = this.getLatitudeBounds()
-    return clamp(value, min, max)
+    return clampLatitude(value, this.getLatitudeBounds())
   }
 
-  private getLatitudeBounds() {
+  private getLatitudeBounds(): LatitudeBounds {
     const { height, worldHeight } = this.getWorldDimensions()
-    const zoomedHeight = worldHeight * this.zoom
-    if (!isFinite(zoomedHeight) || zoomedHeight <= 0) {
-      return { min: 0.5, max: 0.5 }
-    }
-    const fraction = height / (2 * zoomedHeight)
-    if (fraction >= 0.5) {
-      return { min: 0.5, max: 0.5 }
-    }
-    const margin = clamp01(fraction)
-    const center = 0.5
-    const fullTravel = center - margin
-    if (fullTravel <= 0) {
-      return { min: center, max: center }
-    }
-    const limitedTravel = clamp01(fullTravel)
-    return { min: center - limitedTravel, max: center + limitedTravel }
+    return computeLatitudeBounds(height, worldHeight, this.zoom)
   }
 
   resetView() {
@@ -318,24 +311,31 @@ class MapEngine implements MapHandle {
     const scale = this.pixelRatio
     const dx = (event.clientX - this.pointer.startX) * scale
     const dy = (event.clientY - this.pointer.startY) * scale
-    const { worldWidth, worldHeight } = this.getWorldDimensions()
-    const invWidth = worldWidth > 0 ? 1 / (worldWidth * this.zoom) : 0
-    const invHeight = worldHeight > 0 ? 1 / (worldHeight * this.zoom) : 0
+    const dims = this.getWorldDimensions()
     const prevX = this.target[0]
     const prevY = this.target[1]
-    const nextX = this.pointer.targetAtStart[0] - dx * invWidth
-    const nextY = this.pointer.targetAtStart[1] + dy * invHeight
-    this.target[0] = wrap01(nextX)
-    this.target[1] = this.clampLatitude(nextY)
+    const nextTarget = dragTargetByPixels(
+      this.pointer.targetAtStart,
+      dx,
+      dy,
+      this.zoom,
+      dims,
+    )
+    this.target[0] = nextTarget[0]
+    this.target[1] = this.clampLatitude(nextTarget[1])
     this.updatePanFromTarget()
 
     const now = performance.now()
     const last = this.pointer.lastMoveTime || now
     const dt = Math.max(now - last, 1)
     this.pointer.lastMoveTime = now
-    const invDt = 1 / dt
-    this.velocity[0] = (this.target[0] - prevX) * invDt
-    this.velocity[1] = (this.target[1] - prevY) * invDt
+    const velocity = computePointerVelocity(
+      [prevX, prevY],
+      [this.target[0], this.target[1]],
+      dt,
+    )
+    this.velocity[0] = velocity[0]
+    this.velocity[1] = velocity[1]
   }
 
   private handlePointerUp = (event: PointerEvent) => {
@@ -374,22 +374,18 @@ class MapEngine implements MapHandle {
     const nextZoom = clamp(previousZoom * zoomFactor, MIN_ZOOM, MAX_ZOOM)
     if (nextZoom === previousZoom) return
 
-    const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
-
-    // Calculate world coordinates at pointer position before zoom
-    const worldX = (pointer[0] - this.pan[0]) / (worldWidth * previousZoom)
-    const worldY = (pointer[1] - this.pan[1]) / (worldHeight * previousZoom)
-
-    // Update zoom
+    const dims = this.getWorldDimensions()
+    const [nextTargetX, nextTargetY] = zoomAroundPointer({
+      pointerPx: pointer[0],
+      pointerPy: pointer[1],
+      previousZoom,
+      nextZoom,
+      pan: this.pan,
+      dims,
+    })
     this.zoom = nextZoom
-
-    // Calculate new target so that worldX, worldY stays under the pointer
-    this.target[0] = wrap01(
-      worldX - (pointer[0] - width * 0.5) / (worldWidth * nextZoom),
-    )
-    this.target[1] = this.clampLatitude(
-      worldY - (pointer[1] - height * 0.5) / (worldHeight * nextZoom),
-    )
+    this.target[0] = nextTargetX
+    this.target[1] = this.clampLatitude(nextTargetY)
     this.updatePanFromTarget()
     this.velocity[0] = 0
     this.velocity[1] = 0
@@ -497,63 +493,40 @@ class MapEngine implements MapHandle {
     if (this.pointer.active) {
       return
     }
-    const velX = this.velocity[0]
-    const velY = this.velocity[1]
-    if (Math.abs(velX) < INERTIA_EPS && Math.abs(velY) < INERTIA_EPS) {
+    const result = stepInertia({
+      target: [this.target[0], this.target[1]],
+      velocity: [this.velocity[0], this.velocity[1]],
+      dtMs,
+      bounds: this.getLatitudeBounds(),
+      damping: INERTIA_DAMPING,
+      baseDt: INERTIA_BASE_DT,
+      velocityEps: INERTIA_EPS,
+    })
+    if (!result.moved && result.velocity[0] === 0 && result.velocity[1] === 0) {
       this.velocity[0] = 0
       this.velocity[1] = 0
       return
     }
-    const dt = Math.max(dtMs, 0)
-    this.target[0] = wrap01(this.target[0] + velX * dt)
-    const { min, max } = this.getLatitudeBounds()
-    const nextY = clamp(this.target[1] + velY * dt, min, max)
-    if (nextY === min || nextY === max) {
-      this.velocity[1] = 0
+    this.target[0] = result.target[0]
+    this.target[1] = result.target[1]
+    this.velocity[0] = result.velocity[0]
+    this.velocity[1] = result.velocity[1]
+    if (result.moved) {
+      this.updatePanFromTarget()
     }
-    this.target[1] = nextY
-    this.updatePanFromTarget()
-    const damping = Math.pow(INERTIA_DAMPING, dt / INERTIA_BASE_DT)
-    this.velocity[0] = velX * damping
-    this.velocity[1] = this.velocity[1] * damping
-    if (Math.abs(this.velocity[0]) < INERTIA_EPS) this.velocity[0] = 0
-    if (Math.abs(this.velocity[1]) < INERTIA_EPS) this.velocity[1] = 0
   }
 
   private updatePanFromTarget() {
-    const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
-    this.pan[0] = width * 0.5 - this.target[0] * worldWidth * this.zoom
-    this.pan[1] = height * 0.5 - this.target[1] * worldHeight * this.zoom
+    const dims = this.getWorldDimensions()
+    const [panX, panY] = updatePanFromTarget(this.target, this.zoom, dims)
+    this.pan[0] = panX
+    this.pan[1] = panY
   }
 
   private screenToWorld(px: number, py: number, zoom = this.zoom) {
-    const { worldWidth, worldHeight } = this.getWorldDimensions()
-    const x = worldWidth > 0 ? (px - this.pan[0]) / (worldWidth * zoom) : 0
-    const y = worldHeight > 0 ? (py - this.pan[1]) / (worldHeight * zoom) : 0
-    return [x, y] as [number, number]
+    const dims = this.getWorldDimensions()
+    return projectScreenToWorld(px, py, this.pan, zoom, dims)
   }
-}
-
-function clamp(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, value))
-}
-
-function wrapCentered(value: number, period: number) {
-  if (!isFinite(period) || period <= 0) return value
-  let wrapped = value % period
-  if (wrapped > period * 0.5) wrapped -= period
-  if (wrapped < -period * 0.5) wrapped += period
-  return wrapped
-}
-
-function wrap01(value: number) {
-  let wrapped = value % 1
-  if (wrapped < 0) wrapped += 1
-  return wrapped
-}
-
-function clamp01(value: number) {
-  return clamp(value, 0, 1)
 }
 
 function setUniform3f(
