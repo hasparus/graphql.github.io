@@ -99,6 +99,21 @@ export function screenToWorld(
   return [x, y]
 }
 
+export function screenToUV(
+  px: number,
+  py: number,
+  pan: Vec2Like,
+  zoom: number,
+  dims: WorldDimensions,
+) {
+  const zoomedWidth = dims.worldWidth * zoom || dims.worldWidth || 1
+  const zoomedHeight = dims.worldHeight * zoom || dims.worldHeight || 1
+  const u = wrap01((px - pan[0]) / zoomedWidth)
+  const yNormalized = clamp01((py - pan[1]) / zoomedHeight)
+  const v = 1 - yNormalized
+  return [u, v] as const
+}
+
 export function dragTargetByPixels(
   startTarget: Vec2Like,
   dx: number,

@@ -1,5 +1,5 @@
 // This file is auto-generated, please contact local@graphql.org to update
-export const meetups = [
+export let meetups = [
   {
     node: {
       id: "london",
@@ -290,3 +290,9 @@ export const meetups = [
     .replace(/\s*GraphQL\s*/, "")
     .localeCompare(z.node.name.replace(/\s*GraphQL\s*/, "")),
 )
+
+// TEMPORARY
+
+meetups = meetups.filter(m => {
+  return m.node.city === "London" || m.node.city === "Paris"
+})

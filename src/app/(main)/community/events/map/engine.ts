@@ -1,6 +1,7 @@
 import { createProgram, initGL, loadLandMaskTexture } from "./gl-utils"
 import { lonLatToUV, uvToLonLat } from "./projection"
 import { dotsFrag, fullscreenVert, MARKER_CAPACITY } from "./shaders"
+import { createDiagnostics, type Diagnostics } from "./diagnostics"
 import {
   clamp,
   clampLatitude,
@@ -8,10 +9,10 @@ import {
   computePointerVelocity,
   computeWorldDimensions,
   dragTargetByPixels,
+  screenToUV,
   screenToWorld as projectScreenToWorld,
   stepInertia,
   updatePanFromTarget,
-  wrap01,
   wrapCentered,
   zoomAroundPointer,
   type LatitudeBounds,
@@ -62,7 +63,6 @@ const INERTIA_DAMPING = 0.87
 const INERTIA_BASE_DT = 1000 / 60
 /** Velocities below this normalized threshold snap directly to zero. */
 const INERTIA_EPS = 1e-5
-const DEVTOOLS_ENABLED = process.env.NODE_ENV !== "production"
 
 export async function bootMeetupsMap(options: BootOptions): Promise<MapHandle> {
   const gl = initGL(options.canvas)
@@ -118,6 +118,7 @@ class MapEngine implements MapHandle {
   private readonly markerColor: Float32Array
   private readonly hubMarkerColor: Float32Array
   private readonly resizeObserver: ResizeObserver
+  private readonly diagnostics: Diagnostics | null
   private rafHandle = 0
   private fps = 60
   private lastFrameTime = performance.now()
@@ -159,6 +160,10 @@ class MapEngine implements MapHandle {
     this.updatePanFromTarget()
     this.attachEvents()
     this.attachDevtools()
+    this.diagnostics =
+      process.env.NODE_ENV !== "production"
+        ? createDiagnostics({ markers: this.markerPoints })
+        : null
     this.loop()
   }
 
@@ -282,13 +287,13 @@ class MapEngine implements MapHandle {
   }
 
   private attachDevtools() {
-    if (!DEVTOOLS_ENABLED) return
-    this.canvas.addEventListener("click", this.handleDebugClick)
+    if (process.env.NODE_ENV === "production") return
+    this.canvas.addEventListener("click", this.handleDebugClick!)
   }
 
   private detachDevtools() {
-    if (!DEVTOOLS_ENABLED) return
-    this.canvas.removeEventListener("click", this.handleDebugClick)
+    if (process.env.NODE_ENV === "production") return
+    this.canvas.removeEventListener("click", this.handleDebugClick!)
   }
 
   private handlePointerDown = (event: PointerEvent) => {
@@ -346,19 +351,23 @@ class MapEngine implements MapHandle {
     this.pointer.lastMoveTime = 0
   }
 
-  private handleDebugClick = (event: MouseEvent) => {
-    if (!DEVTOOLS_ENABLED) return
-    const rect = this.canvas.getBoundingClientRect()
-    const scale = this.pixelRatio
-    const px = (event.clientX - rect.left) * scale
-    const py = (event.clientY - rect.top) * scale
-    const [worldX, worldY] = this.screenToWorld(px, py)
-    const uvY = 1 - clamp(worldY, 0, 1)
-    const { lon, lat } = uvToLonLat(wrap01(worldX), uvY)
-    console.debug(
-      `MeetupsMap click → lat ${lat.toFixed(2)}, lon ${lon.toFixed(2)}`,
-    )
-  }
+  private handleDebugClick =
+    process.env.NODE_ENV === "production"
+      ? undefined
+      : (event: MouseEvent) => {
+          const rect = this.canvas.getBoundingClientRect()
+          const scale = this.pixelRatio
+          const px = (event.clientX - rect.left) * scale
+          const py = (event.clientY - rect.top) * scale
+          const dims = this.getWorldDimensions()
+          const panX = wrapCentered(this.pan[0], dims.worldWidth * this.zoom)
+          const pan = [panX, this.pan[1]] as const
+          const [u, v] = screenToUV(px, py, pan, this.zoom, dims)
+          const { lon, lat } = uvToLonLat(u, v)
+          console.debug(
+            `MeetupsMap click → lat ${lat.toFixed(2)}, lon ${lon.toFixed(2)}`,
+          )
+        }
 
   private handleWheel = (event: WheelEvent) => {
     event.preventDefault()
@@ -433,7 +442,8 @@ class MapEngine implements MapHandle {
     if (deviceRatio !== this.pixelRatio) {
       this.resizeCanvas(deviceRatio)
     }
-    const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
+    const dims = this.getWorldDimensions()
+    const { width, height, worldWidth, worldHeight } = dims
     gl.viewport(0, 0, width, height)
     gl.clearColor(this.seaColor[0], this.seaColor[1], this.seaColor[2], 1)
     gl.clear(gl.COLOR_BUFFER_BIT)
@@ -481,6 +491,18 @@ class MapEngine implements MapHandle {
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)
     setUniform1i(gl, this.dotsProgram, "uLand", 0)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
+    if (process.env.NODE_ENV !== "production") {
+      this.diagnostics?.afterRender({
+        zoom: this.zoom,
+        pan: this.pan,
+        target: this.target,
+        dims,
+        cellSize: this.cellSize,
+        squareSize: this.squareSize,
+        pixelRatio: this.pixelRatio,
+        fps: this.fps,
+      })
+    }
   }
 
   private applyInertia(dtMs: number) {

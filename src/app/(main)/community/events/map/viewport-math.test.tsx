@@ -8,6 +8,7 @@ import {
   computeWorldDimensions,
   dragTargetByPixels,
   screenToWorld,
+  screenToUV,
   stepInertia,
   updatePanFromTarget,
   wrap01,
@@ -71,6 +72,29 @@ describe("viewport-math", () => {
     const [worldX, worldY] = screenToWorld(400, 300, pan, 1, dims)
     assert.ok(Math.abs(worldX - 0.5) < 1e-6)
     assert.ok(Math.abs(worldY - 0.5) < 1e-6)
+  })
+
+  it("maps screen pixels directly to UV coordinates", () => {
+    const dims = computeWorldDimensions(800, 600, aspectRatio)
+    const pan = updatePanFromTarget([0.5, 0.5], 1, dims)
+    const [u, v] = screenToUV(400, 300, pan, 1, dims)
+    assert.ok(Math.abs(u - 0.5) < 1e-6)
+    assert.ok(Math.abs(v - 0.5) < 1e-6)
+  })
+
+  it("wraps horizontal UVs after long pans", () => {
+    const dims = computeWorldDimensions(800, 600, aspectRatio)
+    const pan = [dims.worldWidth * 0.5, 0] as [number, number]
+    const [u] = screenToUV(0, 0, pan, 1, dims)
+    assert.ok(Math.abs(u - 0.5) < 1e-6)
+  })
+
+  it("clamps and flips V so north stays at the top", () => {
+    const dims = computeWorldDimensions(800, 600, aspectRatio)
+    const top = screenToUV(0, -100, [0, 0], 1, dims)
+    const bottom = screenToUV(0, dims.height + 100, [0, 0], 1, dims)
+    assert.strictEqual(top[1], 1)
+    assert.strictEqual(bottom[1], 0)
   })
 
   it("wraps normalized values into the expected ranges", () => {

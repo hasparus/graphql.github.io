@@ -13,6 +13,11 @@ const config: Config = {
       padding: "1rem",
     },
     extend: {
+      ringColor({ theme }) {
+        return {
+          arguments: theme("colors.primary"),
+        }
+      },
       fontFamily: {
         sans: [
           `var(--font-sans, ${fontFamily.sans.slice(0, 3).join(", ")})`,
