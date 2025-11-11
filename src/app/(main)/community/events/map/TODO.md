@@ -3,3 +3,4 @@
 - [ ] Panning should not recompute squares.
   - [ ] But zoom works perfectly currently. It's hard to fix panning while making the zoom glitchy & flickery.
 - [ ] Markers still sometimes dissapear when zooming. We should ensure we render all of them at all zoom levels.
+- [ ] Zooming no sometimes dissapears the squares and then pops them up again what results in flickering. I'd expect that if we zoom we only gain squares and if we zoom out we only lose squares.
