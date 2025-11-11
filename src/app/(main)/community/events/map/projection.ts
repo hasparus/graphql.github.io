@@ -1,5 +1,10 @@
 const mercatorLimit = 85.05112878
 const minDisplayedLatitude = -60
+/**
+ * We excluded the south pole from the map, so we need to align the map slightly northwards.
+ */
+const baseLatitudeOffset = 4
+const baseLongitudeOffset = 0.1
 
 const maxProjectedV = latToRawV(mercatorLimit)
 const minProjectedV = latToRawV(minDisplayedLatitude)
@@ -7,10 +12,10 @@ const minProjectedV = latToRawV(minDisplayedLatitude)
 export type UV = [number, number]
 
 export function lonLatToUV(lon: number, lat: number): UV {
-  const wrappedLon = ((lon + 180) % 360 + 360) % 360 - 180
-  const u = (wrappedLon + 180) / 360
-  const clampedLat = clampLatitude(lat)
-  const rawV = latToRawV(clampedLat)
+  const adjustedLon = normalizeLongitude(lon + baseLongitudeOffset)
+  const u = (adjustedLon + 180) / 360
+  const adjustedLat = clampProjectedLatitude(lat + baseLatitudeOffset)
+  const rawV = latToRawV(adjustedLat)
   const normalizedV = clamp01(
     (rawV - maxProjectedV) / (minProjectedV - maxProjectedV),
   )
@@ -20,13 +25,26 @@ export function lonLatToUV(lon: number, lat: number): UV {
 export function uvToLonLat(u: number, v: number) {
   const wrappedU = ((u % 1) + 1) % 1
   const rawV = clamp01(v) * (minProjectedV - maxProjectedV) + maxProjectedV
-  const lon = wrappedU * 360 - 180
-  const lat = clampLatitude(rawVToLat(rawV))
+  const mapLon = wrappedU * 360 - 180
+  const mapLat = clampProjectedLatitude(rawVToLat(rawV))
+  const lon = normalizeLongitude(mapLon - baseLongitudeOffset)
+  const lat = clampActualLatitude(mapLat - baseLatitudeOffset)
   return { lon, lat }
 }
 
-function clampLatitude(value: number) {
+function clampProjectedLatitude(value: number) {
   return Math.max(minDisplayedLatitude, Math.min(mercatorLimit, value))
+}
+
+function clampActualLatitude(value: number) {
+  return Math.max(-90, Math.min(90, value))
+}
+
+function normalizeLongitude(value: number) {
+  let lon = value
+  while (lon <= -180) lon += 360
+  while (lon > 180) lon -= 360
+  return lon
 }
 
 function latToRawV(lat: number) {

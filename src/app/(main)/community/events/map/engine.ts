@@ -25,16 +25,8 @@ export type MapHandle = {
   setCellSize(value: number): void
   setSquareSize(value: number): void
   setThemeColors(colors: MapColors): void
-  setMarkerDebugOffset(offset: MarkerOffset): void
   resetView(): void
 }
-
-type MarkerOffset = { lat: number; lon: number }
-
-/**
- * We excluded the south pole from the map, so we need to align the map slightly northwards.
- */
-const MAP_OFFSET: MarkerOffset = { lat: 4, lon: 0.1 }
 
 export type BootOptions = {
   canvas: HTMLCanvasElement
@@ -257,10 +249,7 @@ class MapEngine implements MapHandle {
     const count = Math.min(markers.length, capacity)
     for (let i = 0; i < count; i++) {
       const marker = markers[i]
-      const uv = lonLatToUV(
-        marker.lon + MAP_OFFSET.lon,
-        marker.lat + MAP_OFFSET.lat,
-      )
+      const uv = lonLatToUV(marker.lon, marker.lat)
       const base = i * 4
       target[base + 0] = uv[0]
       target[base + 1] = 1 - uv[1]

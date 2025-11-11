@@ -67,9 +67,10 @@ export function MeetupsList({
               title={`${meetup.city}, ${meetup.country} — ${meetup.name}`}
               className={clsx(
                 "gql-focus-visible gql-focus-visible group flex items-center justify-between gap-3 border-b border-neu-300 px-3 py-2 text-sm text-neu-800 transition-colors last:border-0 hover:bg-neu-200 hover:duration-0 dark:hover:bg-neu-900/5",
-                isActive && "bg-pri-base text-white",
+                isActive &&
+                  "[ul:not(:hover)_&]:bg-neu-200 [ul:not(:hover)_&]:dark:bg-neu-900/5",
               )}
-              onClick={() => onActiveMeetupChange?.(meetup.id)}
+              onMouseOver={() => onActiveMeetupChange?.(meetup.id)}
               onFocus={() => onActiveMeetupChange?.(meetup.id)}
               data-index={index}
             >
