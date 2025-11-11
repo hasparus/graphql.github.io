@@ -107,7 +107,7 @@ export function MeetupsMap() {
 
   return (
     <div
-      className="my-6 flex flex-row-reverse divide-y divide-neu-200 border border-neu-200 bg-[--sea-light] dark:divide-neu-50 dark:border-neu-50 dark:bg-[--sea-dark] max-md:flex-col md:h-[592px] md:divide-x md:divide-y-0"
+      className="my-6 flex flex-row-reverse divide-neu-200 border border-neu-200 bg-[--sea-light] dark:divide-neu-50 dark:border-neu-50 dark:bg-[--sea-dark] max-md:flex-col max-md:divide-y md:h-[592px]"
       style={
         {
           "--sea-dark": `rgb(${MAP_COLORS.dark.sea.map(c => Math.round(c * 255)).join(", ")})`,
@@ -134,7 +134,7 @@ export function MeetupsMap() {
       <MeetupsList
         activeMeetupId={activeMeetupId}
         onActiveMeetupChange={setActiveMeetupId}
-        className="shrink-0 md:max-h-full lg:w-[240px]"
+        className="shrink-0 border-neu-200 dark:border-neu-50 md:max-h-full md:border-r lg:w-[240px]"
       />
     </div>
   )
