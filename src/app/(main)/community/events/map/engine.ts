@@ -25,8 +25,16 @@ export type MapHandle = {
   setCellSize(value: number): void
   setSquareSize(value: number): void
   setThemeColors(colors: MapColors): void
+  setMarkerDebugOffset(offset: MarkerOffset): void
   resetView(): void
 }
+
+type MarkerOffset = { lat: number; lon: number }
+
+/**
+ * We excluded the south pole from the map, so we need to align the map slightly northwards.
+ */
+const MAP_OFFSET: MarkerOffset = { lat: 4, lon: 0.1 }
 
 export type BootOptions = {
   canvas: HTMLCanvasElement
@@ -102,8 +110,10 @@ class MapEngine implements MapHandle {
   private seaColor: Float32Array
   private landColor: Float32Array
   private readonly fullscreenVAO: WebGLVertexArrayObject
+  private readonly markerPoints: MarkerPoint[]
   private readonly markerData: Float32Array
   private markerCount: number
+  private markerCapacityWarned = false
   private readonly markerColor: Float32Array
   private readonly hubMarkerColor: Float32Array
   private readonly resizeObserver: ResizeObserver
@@ -132,9 +142,9 @@ class MapEngine implements MapHandle {
 
     this.seaColor = new Float32Array(options.theme.sea)
     this.landColor = new Float32Array(options.theme.land)
-    const packedMarkers = this.packMarkers(options.markers)
-    this.markerData = packedMarkers.data
-    this.markerCount = packedMarkers.count
+    this.markerPoints = options.markers
+    this.markerData = new Float32Array(MARKER_CAPACITY * 4)
+    this.markerCount = this.packMarkers(this.markerPoints, this.markerData)
     this.markerColor = new Float32Array(options.theme.marker)
     this.hubMarkerColor = new Float32Array(options.theme.marker)
 
@@ -242,25 +252,28 @@ class MapEngine implements MapHandle {
     this.updatePanFromTarget()
   }
 
-  private packMarkers(markers: MarkerPoint[]) {
+  private packMarkers(markers: MarkerPoint[], target: Float32Array) {
     const capacity = MARKER_CAPACITY
-    const data = new Float32Array(capacity * 4)
     const count = Math.min(markers.length, capacity)
     for (let i = 0; i < count; i++) {
       const marker = markers[i]
-      const uv = lonLatToUV(marker.lon, marker.lat)
-      const offset = i * 4
-      data[offset + 0] = uv[0]
-      data[offset + 1] = 1 - uv[1]
-      data[offset + 2] = marker.isHub ? MARKER_TYPE_HUB : MARKER_TYPE_REGULAR
-      data[offset + 3] = 0
+      const uv = lonLatToUV(
+        marker.lon + MAP_OFFSET.lon,
+        marker.lat + MAP_OFFSET.lat,
+      )
+      const base = i * 4
+      target[base + 0] = uv[0]
+      target[base + 1] = 1 - uv[1]
+      target[base + 2] = marker.isHub ? MARKER_TYPE_HUB : MARKER_TYPE_REGULAR
+      target[base + 3] = 0
     }
-    if (markers.length > capacity) {
+    if (markers.length > capacity && !this.markerCapacityWarned) {
       console.warn(
         `Meetups map: capped marker count at ${capacity} (received ${markers.length}).`,
       )
+      this.markerCapacityWarned = true
     }
-    return { data, count }
+    return count
   }
 
   private attachEvents() {
