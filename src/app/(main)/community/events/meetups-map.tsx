@@ -10,9 +10,9 @@ import {
   type MapHandle,
   type MarkerPoint,
   type SamplingQuality,
-  type MapColors,
 } from "./map/engine"
 import { MeetupsList } from "./meetups-list"
+import { MAP_COLORS, MapColors } from "./map/map-colors"
 
 const CELL_SIZE = 8
 const SQUARE_SIZE = 6
@@ -21,20 +21,7 @@ const HUB_MEETUP_IDS = new Set(["paris"])
 const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
 const ASPECT_RATIO = 1.65
 
-const MAP_THEMES = {
-  light: {
-    sea: [0.9804, 0.9882, 0.9569], // neu-50
-    land: [0.8627, 0.8706, 0.8275], // neu-300
-    marker: [0.8824, 0.0039, 0.5961], // #E10198 = pri-base
-  },
-  dark: {
-    sea: [0.0549, 0.0588, 0.0431], // neu-50
-    land: [0.1647, 0.1804, 0.1373], // a shade darker than neu-800
-    marker: [1, 0.6, 0.8745], // #FF99DF = pri-light
-  },
-} satisfies Record<string, MapColors>
-
-type ThemeVariant = keyof typeof MAP_THEMES
+type ThemeVariant = keyof typeof MAP_COLORS
 
 const markerPoints: MarkerPoint[] = meetups.map(({ node }) => ({
   id: node.id,
@@ -51,7 +38,7 @@ export function MeetupsMap() {
   const { resolvedTheme } = useTheme()
   const [activeMeetupId, setActiveMeetupId] = useState<string | null>(null)
   const themeColors = useMemo(
-    () => MAP_THEMES[resolvedTheme as ThemeVariant] || MAP_THEMES.light,
+    () => MAP_COLORS[resolvedTheme as ThemeVariant] || MAP_COLORS.light,
     [resolvedTheme],
   )
   const initialThemeRef = useRef<MapColors>(themeColors)
@@ -123,8 +110,8 @@ export function MeetupsMap() {
       className="my-6 flex flex-row-reverse divide-y divide-neu-200 border border-neu-200 bg-[--sea-light] dark:divide-neu-50 dark:border-neu-50 dark:bg-[--sea-dark] max-md:flex-col md:h-[592px] md:divide-x md:divide-y-0"
       style={
         {
-          "--sea-dark": `rgb(${MAP_THEMES.dark.sea.map(c => Math.round(c * 255)).join(", ")})`,
-          "--sea-light": `rgb(${MAP_THEMES.light.sea.map(c => Math.round(c * 255)).join(", ")})`,
+          "--sea-dark": `rgb(${MAP_COLORS.dark.sea.map(c => Math.round(c * 255)).join(", ")})`,
+          "--sea-light": `rgb(${MAP_COLORS.light.sea.map(c => Math.round(c * 255)).join(", ")})`,
         } as React.CSSProperties
       }
     >
