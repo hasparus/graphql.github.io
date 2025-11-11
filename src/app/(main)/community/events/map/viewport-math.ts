@@ -1,4 +1,5 @@
 export type Vec2 = readonly [number, number]
+export type Vec2Like = Vec2 | Float32Array
 
 export type WorldDimensions = {
   width: number
@@ -17,7 +18,7 @@ export type ZoomAroundPointerInput = {
   pointerPy: number
   previousZoom: number
   nextZoom: number
-  pan: Vec2
+  pan: Vec2Like
   dims: WorldDimensions
 }
 
@@ -77,7 +78,7 @@ export function clampLatitude(value: number, bounds: LatitudeBounds) {
 }
 
 export function updatePanFromTarget(
-  target: Vec2,
+  target: Vec2Like,
   zoom: number,
   dims: WorldDimensions,
 ): Vec2 {
@@ -89,7 +90,7 @@ export function updatePanFromTarget(
 export function screenToWorld(
   px: number,
   py: number,
-  pan: Vec2,
+  pan: Vec2Like,
   zoom: number,
   dims: WorldDimensions,
 ): Vec2 {
@@ -99,7 +100,7 @@ export function screenToWorld(
 }
 
 export function dragTargetByPixels(
-  startTarget: Vec2,
+  startTarget: Vec2Like,
   dx: number,
   dy: number,
   zoom: number,
@@ -113,8 +114,8 @@ export function dragTargetByPixels(
 }
 
 export function computePointerVelocity(
-  prev: Vec2,
-  next: Vec2,
+  prev: Vec2Like,
+  next: Vec2Like,
   dtMs: number,
 ): Vec2 {
   const dt = Math.max(dtMs, 1)
