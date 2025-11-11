@@ -267,7 +267,7 @@ class MapEngine implements MapHandle {
     this.canvas.addEventListener("pointercancel", this.handlePointerUp)
     this.canvas.addEventListener("wheel", this.handleWheel, { passive: false })
     window.addEventListener("keydown", this.handleKeyDown)
-    window.addEventListener("resize", this.handleWindowResize)
+    window.addEventListener("resize", this.resizeCanvas)
   }
 
   private detachEvents() {
@@ -278,7 +278,7 @@ class MapEngine implements MapHandle {
     this.canvas.removeEventListener("pointercancel", this.handlePointerUp)
     this.canvas.removeEventListener("wheel", this.handleWheel)
     window.removeEventListener("keydown", this.handleKeyDown)
-    window.removeEventListener("resize", this.handleWindowResize)
+    window.removeEventListener("resize", this.resizeCanvas)
   }
 
   private attachDevtools() {
@@ -397,12 +397,10 @@ class MapEngine implements MapHandle {
     }
   }
 
-  private handleWindowResize = () => {
-    this.resizeCanvas()
-  }
-
-  private resizeCanvas(explicitPixelRatio?: number) {
-    const dpr = explicitPixelRatio ?? getDevicePixelRatio()
+  private resizeCanvas = (explicitPixelRatio?: number | UIEvent) => {
+    const nextPixelRatio =
+      typeof explicitPixelRatio === "number" ? explicitPixelRatio : undefined
+    const dpr = nextPixelRatio ?? getDevicePixelRatio()
     this.pixelRatio = dpr
     const rect = this.canvas.getBoundingClientRect()
     const width = Math.max(1, Math.round(rect.width * dpr))
@@ -431,7 +429,10 @@ class MapEngine implements MapHandle {
 
   private render() {
     const gl = this.gl
-    this.syncPixelRatio()
+    const deviceRatio = getDevicePixelRatio()
+    if (deviceRatio !== this.pixelRatio) {
+      this.resizeCanvas(deviceRatio)
+    }
     const { width, height, worldWidth, worldHeight } = this.getWorldDimensions()
     gl.viewport(0, 0, width, height)
     gl.clearColor(this.seaColor[0], this.seaColor[1], this.seaColor[2], 1)
@@ -480,13 +481,6 @@ class MapEngine implements MapHandle {
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)
     setUniform1i(gl, this.dotsProgram, "uLand", 0)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
-  }
-
-  private syncPixelRatio() {
-    const ratio = getDevicePixelRatio()
-    if (ratio !== this.pixelRatio) {
-      this.resizeCanvas(ratio)
-    }
   }
 
   private applyInertia(dtMs: number) {
