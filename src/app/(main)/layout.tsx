@@ -1,4 +1,3 @@
-// @ts-expect-error: we want to import the same version as Nextra for the main page
 import { ThemeProvider } from "next-themes"
 
 import { Footer } from "../../components/footer"
