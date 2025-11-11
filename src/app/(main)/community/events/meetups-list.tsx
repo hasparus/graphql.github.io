@@ -50,7 +50,7 @@ export function MeetupsList({
   return (
     <ul
       className={clsx(
-        "nextra-scrollbar overflow-y-auto scrollview-fade-y-8 scrollview-fade md:h-full",
+        "nextra-scrollbar overflow-y-auto scrollview-fade-y-16 scrollview-fade md:h-full",
         className,
       )}
     >
