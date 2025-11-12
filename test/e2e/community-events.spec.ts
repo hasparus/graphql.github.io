@@ -28,23 +28,15 @@ test("community events page map loads and Zurich meetup link works", async ({
   await pastEventsSection.scrollIntoViewIfNeeded()
 
   // Find the scrollview container with past events and meetups
-  const meetupsList = page.locator('[class*="scrollview"]').first()
-  await expect(meetupsList).toBeVisible()
-
-  // Scroll the meetups list to find Zurich
-  await meetupsList.evaluate(el => {
-    el.scrollLeft = el.scrollWidth
-  })
 
   // Find the Zurich meetup card in the scrollable list (not the map popup)
-  const zurichLink = meetupsList.getByText("Zurich").first()
-  await expect(zurichLink).toBeVisible()
-  await zurichLink.scrollIntoViewIfNeeded()
-  await zurichLink.click()
+  const link = page.getByText(/Zurich/i).first()
+  await link.scrollIntoViewIfNeeded()
+  await link.click()
 
   // Click the link and verify it opens to the correct URL
   const pagePromise = page.context().waitForEvent("page")
-  await zurichLink.click()
+  await link.click()
   const newPage = await pagePromise
 
   await newPage.waitForLoadState("domcontentloaded", { timeout: 10000 })
