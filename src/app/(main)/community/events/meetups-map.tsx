@@ -158,7 +158,6 @@ export function MeetupsMap() {
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         onClick={handleMapClick}
-        style={{ cursor: activeMeetup ? "pointer" : "default" }}
       >
         <canvas
           ref={canvasRef}

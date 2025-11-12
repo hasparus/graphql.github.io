@@ -53,7 +53,7 @@ const ACTIVE_TRANSITION_MS = 100
  * Per-frame damping factor (scaled by dt / (1/60s)).
  * Decrease value to increase damping.
  */
-const INERTIA_DAMPING = 0.87
+const INERTIA_DAMPING = 0.92
 /** Reference frame time in milliseconds for the damping exponent. */
 const INERTIA_BASE_DT = 1000 / 60
 /** Velocities below this normalized threshold snap directly to zero. */
@@ -536,9 +536,12 @@ class MapEngine implements MapHandle {
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     this.pointer.active = false
     this.canvas.releasePointerCapture(event.pointerId)
+    this.canvas.style.cursor = "default"
     this.pointer.lastMoveTime = 0
     if (event.type === "pointerup") {
       this.updateHoveredMarkerFromClient(event.clientX, event.clientY)
+    } else {
+      this.updateCursor()
     }
   }
 
