@@ -142,6 +142,8 @@ class MapEngine implements MapHandle {
     y: 0,
     hasValue: false,
   }
+  private readonly pointerTrail = new Float32Array(192)
+  private trailCount = 0
   private readonly onActiveMarkerChange?: (id: string | null) => void
   private destroyed = false
 
@@ -172,6 +174,8 @@ class MapEngine implements MapHandle {
 
     this.fullscreenVAO = this.gl.createVertexArray() as WebGLVertexArrayObject
     this.uploadMarkerUniforms()
+    this.pointerTrail.fill(-1)
+    this.trailCount = 0
 
     this.resizeObserver = new ResizeObserver(() => this.resizeCanvas())
     this.resizeObserver.observe(this.canvas)
@@ -366,6 +370,62 @@ class MapEngine implements MapHandle {
     this.onActiveMarkerChange(id)
   }
 
+  private updatePointerTrail(px: number, py: number) {
+    const now = performance.now() * 0.001
+    const maxGap = this.cellSize * this.pixelRatio * 1.5
+
+    if (this.trailCount === 0) {
+      const idx = 0
+      this.pointerTrail[idx] = px
+      this.pointerTrail[idx + 1] = py
+      this.pointerTrail[idx + 2] = now
+      this.trailCount = 1
+      return
+    }
+
+    const lastIdx = 0
+    const lastX = this.pointerTrail[lastIdx]
+    const lastY = this.pointerTrail[lastIdx + 1]
+    const lastTime = this.pointerTrail[lastIdx + 2]
+    const dx = px - lastX
+    const dy = py - lastY
+    const dist = Math.sqrt(dx * dx + dy * dy)
+
+    if (dist <= maxGap) {
+      this.addTrailPoint(px, py, now)
+    } else {
+      const steps = Math.ceil(dist / maxGap)
+      const stepSize = 1.0 / steps
+      const timeStep = (now - lastTime) / steps
+
+      for (let i = 0; i < steps; i++) {
+        const t = (i + 1) * stepSize
+        const interpX = lastX + dx * t
+        const interpY = lastY + dy * t
+        const interpTime = lastTime + timeStep * (i + 1)
+        this.addTrailPoint(interpX, interpY, interpTime)
+      }
+    }
+  }
+
+  private addTrailPoint(px: number, py: number, time: number) {
+    if (this.trailCount >= 64) {
+      for (let i = 189; i >= 3; i -= 3) {
+        this.pointerTrail[i] = this.pointerTrail[i - 3]
+        this.pointerTrail[i - 1] = this.pointerTrail[i - 4]
+        this.pointerTrail[i - 2] = this.pointerTrail[i - 5]
+      }
+    } else {
+      for (let i = this.trailCount * 3 - 1; i >= 0; i--) {
+        this.pointerTrail[i + 3] = this.pointerTrail[i]
+      }
+      this.trailCount++
+    }
+    this.pointerTrail[0] = px
+    this.pointerTrail[1] = py
+    this.pointerTrail[2] = time
+  }
+
   private attachEvents() {
     this.canvas.style.cursor = "default"
     this.canvas.addEventListener("pointerdown", this.handlePointerDown)
@@ -419,6 +479,10 @@ class MapEngine implements MapHandle {
     this.hoverPointer.x = event.clientX
     this.hoverPointer.y = event.clientY
     this.hoverPointer.hasValue = true
+    const devicePos = this.pointerToDevice(event.clientX, event.clientY)
+    if (devicePos) {
+      this.updatePointerTrail(devicePos[0], devicePos[1])
+    }
     if (!this.pointer.active) {
       this.updateHoveredMarkerFromClient(event.clientX, event.clientY)
     }
@@ -457,6 +521,8 @@ class MapEngine implements MapHandle {
     if (event.type === "pointerleave" || event.type === "pointercancel") {
       this.hoverPointer.hasValue = false
       this.notifyHoverChange(-1)
+      this.pointerTrail.fill(-1)
+      this.trailCount = 0
     }
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     this.pointer.active = false
@@ -596,9 +662,33 @@ class MapEngine implements MapHandle {
       this.fps = this.fps * 0.9 + instantaneous * 0.1
       this.applyInertia(dt)
       this.updateActiveMarkers(dt)
+      this.removeCooledTrailPositions()
       this.render()
       this.loop()
     })
+  }
+
+  private removeCooledTrailPositions() {
+    if (this.trailCount === 0) return
+    const now = performance.now() * 0.001
+    const newestTime = this.pointerTrail[2]
+    const maxAge = 2.0
+    const threshold = newestTime - maxAge
+
+    let writeIdx = 0
+    for (let i = 0; i < this.trailCount; i++) {
+      const idx = i * 3
+      const time = this.pointerTrail[idx + 2]
+      if (time >= threshold) {
+        if (writeIdx !== i) {
+          this.pointerTrail[writeIdx * 3] = this.pointerTrail[idx]
+          this.pointerTrail[writeIdx * 3 + 1] = this.pointerTrail[idx + 1]
+          this.pointerTrail[writeIdx * 3 + 2] = this.pointerTrail[idx + 2]
+        }
+        writeIdx++
+      }
+    }
+    this.trailCount = writeIdx
   }
 
   private render() {
@@ -663,6 +753,15 @@ class MapEngine implements MapHandle {
     )
     setUniform1f(gl, this.dotsProgram, "uHaloMinOpacity", this.haloMinOpacity)
     setUniform1i(gl, this.dotsProgram, "uMarkerCount", this.markerCount)
+    setUniform1f(gl, this.dotsProgram, "uTime", performance.now() * 0.001)
+    const trailLocation = gl.getUniformLocation(
+      this.dotsProgram,
+      "uPointerTrail",
+    )
+    if (trailLocation) {
+      gl.uniform3fv(trailLocation, this.pointerTrail)
+    }
+    setUniform1i(gl, this.dotsProgram, "uTrailCount", this.trailCount)
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)
     setUniform1i(gl, this.dotsProgram, "uLand", 0)

@@ -33,6 +33,9 @@ uniform int uMarkerCount;
 uniform vec3 uMarkerColor;
 uniform vec3 uHaloColor;
 uniform float uHaloMinOpacity;
+uniform vec3 uPointerTrail[64];
+uniform int uTrailCount;
+uniform float uTime;
 
 vec2 markerCellCenter(vec4 marker, vec2 referencePx) {
   float periodX = uWorldSize.x * uZoom;
@@ -121,6 +124,37 @@ void main() {
     color = uMarkerColor;
   }
   float squareHalf = baseHalfSquare;
+  if (markerType <= 0.5) {
+    float maxDecrease = 0.0;
+    float oldestTime = 0.0;
+    float newestTime = uTime;
+    if (uTrailCount > 0) {
+      oldestTime = uPointerTrail[uTrailCount - 1].z;
+      newestTime = uPointerTrail[0].z;
+    }
+    float timeRange = max(newestTime - oldestTime, 0.001);
+    for (int i = 0; i < 64; i++) {
+      if (i >= uTrailCount) {
+        break;
+      }
+      vec3 trailPoint = uPointerTrail[i];
+      if (trailPoint.x <= 0.0 && trailPoint.y <= 0.0) {
+        continue;
+      }
+      vec2 trailPos = trailPoint.xy;
+      float dist = length(center - trailPos);
+      float age = (uTime - trailPoint.z) / timeRange;
+      age = clamp(age, 0.0, 1.0);
+      float positionInTrail = float(i) / max(float(uTrailCount - 1), 1.0);
+      float widthFactor = 1.0 - positionInTrail;
+      float coolingFactor = pow(1.0 - age, 2.5);
+      float combinedFactor = widthFactor * coolingFactor;
+      float cellDist = dist / uCell;
+      float decrease = 3.0 * combinedFactor * exp(-cellDist * 0.8);
+      maxDecrease = max(maxDecrease, decrease);
+    }
+    squareHalf = max(0.0, squareHalf - maxDecrease);
+  }
   vec2 delta = abs(fragPx - center);
   bool insideSquare = delta.x <= squareHalf && delta.y <= squareHalf;
   bool isSeaCell = markerType <= 0.5 && landCoverage < 0.5;
