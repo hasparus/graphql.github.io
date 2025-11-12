@@ -102,7 +102,10 @@ void main() {
       float dist = length(fragPx - markerCenter);
       float innerRadius = baseHalfSquare + 0.4 * uCell;
       float outerRadius = innerRadius + 2.25 * uCell;
-      float halo = (1.0 - smoothstep(innerRadius, outerRadius, dist)) * strength;
+      float radiusDiff = max(outerRadius - innerRadius, 0.0001);
+      float t = clamp((dist - innerRadius) / radiusDiff, 0.0, 1.0);
+      float cubicEaseOut = 1.0 - pow(1.0 - t, 3.0);
+      float halo = (1.0 - cubicEaseOut) * strength;
       haloIntensity = max(haloIntensity, halo);
     }
   }
@@ -118,16 +121,9 @@ void main() {
   float squareHalf = baseHalfSquare;
   vec2 delta = abs(fragPx - center);
   bool insideSquare = delta.x <= squareHalf && delta.y <= squareHalf;
-  if (!insideSquare) {
-    if (haloIntensity <= 0.0) {
-      discard;
-    }
-    float haloAlpha = clamp(haloIntensity, 0.0, 1.0);
-    color = mix(uSeaColor, uMarkerColor, haloAlpha);
-    outColor = vec4(color, 1.0);
-    return;
-  }
-  if (markerType <= 0.5 && landCoverage < 0.5) {
+  bool isSeaCell = markerType <= 0.5 && landCoverage < 0.5;
+  bool shouldRenderHalo = !insideSquare || isSeaCell;
+  if (shouldRenderHalo) {
     if (haloIntensity <= 0.0) {
       discard;
     }
