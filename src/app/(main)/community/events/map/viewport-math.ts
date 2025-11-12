@@ -141,9 +141,7 @@ export function zoomAroundPointer(input: ZoomAroundPointerInput): Vec2 {
   const safePrevWidth = dims.worldWidth * previousZoom || 1
   const safePrevHeight = dims.worldHeight * previousZoom || 1
   const worldX = (pointerPx - pan[0]) / safePrevWidth
-  const worldY =
-    (((-pointerPy + dims.worldHeight) % dims.worldHeight) - pan[1]) /
-    safePrevHeight
+  const worldY = (pointerPy - pan[1]) / safePrevHeight
   const safeNextWidth = dims.worldWidth * nextZoom || 1
   const safeNextHeight = dims.worldHeight * nextZoom || 1
   const nextTargetX = wrap01(

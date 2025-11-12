@@ -414,12 +414,19 @@ class MapEngine implements MapHandle {
     const looksLikeTouch =
       wheel.pointerType === "touch" ||
       wheel.sourceCapabilities?.firesTouchEvents
+    const deviceHeight = this.canvas.height
     const hasOffsets =
       Number.isFinite(event.offsetX) && Number.isFinite(event.offsetY)
 
+    const toDevice = (relativeX: number, relativeY: number) => {
+      const px = relativeX * scale
+      const py = deviceHeight - relativeY * scale
+      return [px, py] as const
+    }
+
     const [pointerPx, pointerPy] = (() => {
       if (hasOffsets) {
-        return [event.offsetX * scale, event.offsetY * scale] as const
+        return toDevice(event.offsetX, event.offsetY)
       }
       const hasEventCoords =
         Number.isFinite(event.clientX) && Number.isFinite(event.clientY)
@@ -440,10 +447,7 @@ class MapEngine implements MapHandle {
         : this.hoverPointer.hasValue
           ? this.hoverPointer.y
           : rect.top + rect.height * 0.5
-      return [
-        (pointerClientX - rect.left) * scale,
-        (pointerClientY - rect.top) * scale,
-      ] as const
+      return toDevice(pointerClientX - rect.left, pointerClientY - rect.top)
     })()
 
     const wheelSensitivity = 0.005
