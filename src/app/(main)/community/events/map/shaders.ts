@@ -38,15 +38,17 @@ float horizontalDelta(float markerX, float cellX) {
   return min(diff, 1.0 - diff);
 }
 
-float markerTypeAt(vec2 cellUV, vec2 halfSquareUV) {
+float markerTypeAtCellCenterPx(vec2 cellCenterPx) {
+  ivec2 cellIndex = ivec2(floor(cellCenterPx / uCell));
   for (int i = 0; i < ${MARKER_CAPACITY}; i++) {
     if (i >= uMarkerCount) {
       break;
     }
     vec4 marker = uMarkers[i];
-    float dx = horizontalDelta(marker.x, cellUV.x);
-    float dy = abs(marker.y - cellUV.y);
-    if (dx <= halfSquareUV.x && dy <= halfSquareUV.y) {
+    float screenX = uPan.x + (marker.x * uWorldSize.x * uZoom);
+    float screenY = uPan.y + (marker.y * uWorldSize.y * uZoom);
+    ivec2 markerIndex = ivec2(floor(vec2(screenX, screenY) / uCell));
+    if (markerIndex.x == cellIndex.x && markerIndex.y == cellIndex.y) {
       return marker.z;
     }
   }
@@ -87,21 +89,17 @@ void main() {
   if (uv.y < 0.0 || uv.y > 1.0) {
     discard;
   }
-  vec2 landUV = vec2(uv.x, 1.0 - uv.y);
-  float seaCoverage = sampleCoverage(landUV, uQuality);
-  float landCoverage = 1.0 - seaCoverage;
-  if (landCoverage < 0.5) {
-    discard;
-  }
   vec2 delta = abs(fragPx - center);
   if (delta.x > 0.5 * uSquare || delta.y > 0.5 * uSquare) {
     discard;
   }
-  float safeWorldWidth = max(uWorldSize.x * uZoom, 0.0001);
-  float safeWorldHeight = max(uWorldSize.y * uZoom, 0.0001);
-  vec2 halfSquareUV = vec2(0.5 * uSquare / safeWorldWidth, 0.5 * uSquare / safeWorldHeight);
-  vec2 halfCellUV = vec2(0.5 * uCell / safeWorldWidth, 0.5 * uCell / safeWorldHeight);
-  float markerType = markerTypeAt(uv, halfCellUV);
+  float markerType = markerTypeAtCellCenterPx(center);
+  vec2 landUV = vec2(uv.x, 1.0 - uv.y);
+  float seaCoverage = sampleCoverage(landUV, uQuality);
+  float landCoverage = 1.0 - seaCoverage;
+  if (markerType <= 0.5 && landCoverage < 0.5) {
+    discard;
+  }
   vec3 color = uLandColor;
   if (markerType > 1.5) {
     color = uHubMarkerColor;
