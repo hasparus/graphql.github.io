@@ -68,7 +68,7 @@ float sampleCoverage(vec2 uv) {
       coverage += texture(uLand, uv + offset).r;
     }
   }
-  
+
   return coverage * 0.25;
 }
 
@@ -87,7 +87,7 @@ void main() {
   }
   float markerType = markerTypeAtCellCenterPx(center);
   vec2 landUV = vec2(uv.x, 1.0 - uv.y);
-  float seaCoverage = sampleCoverage(landUV, uQuality);
+  float seaCoverage = sampleCoverage(landUV);
   float landCoverage = 1.0 - seaCoverage;
   if (markerType <= 0.5 && landCoverage < 0.5) {
     discard;
