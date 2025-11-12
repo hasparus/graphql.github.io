@@ -66,7 +66,7 @@ export function MeetupsList({
               aria-current={isActive ? "true" : undefined}
               title={`${meetup.city}, ${meetup.country} — ${meetup.name}`}
               className={clsx(
-                "gql-focus-visible gql-focus-visible group flex items-center justify-between gap-3 border-b border-neu-300 px-3 py-2 text-sm text-neu-800 transition-colors last:border-0 hover:bg-neu-200 hover:duration-0 dark:hover:bg-neu-900/5",
+                "gql-focus-visible gql-focus-visible group/li flex items-center justify-between gap-3 border-b border-neu-300 px-3 py-2 text-sm text-neu-800 transition-colors last:border-0 hover:bg-neu-200 hover:duration-0 dark:hover:bg-neu-900/5",
                 isActive &&
                   "[ul:not(:hover)_&]:bg-neu-200 [ul:not(:hover)_&]:dark:bg-neu-900/5",
               )}
@@ -78,7 +78,7 @@ export function MeetupsList({
               <ExternalLinkIcon
                 aria-hidden
                 className={clsx(
-                  "size-4 shrink-0 text-neu-600 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100",
+                  "size-4 shrink-0 text-neu-600 opacity-0 transition-opacity duration-150 group-hover/li:opacity-100 group-focus-visible/li:opacity-100",
                 )}
               />
             </a>
