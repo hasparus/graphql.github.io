@@ -110,6 +110,7 @@ class MapEngine implements MapHandle {
   private markerCount: number
   private markerCapacityWarned = false
   private readonly markerColor: Float32Array
+  private haloColor: Float32Array
   private readonly markerIntensity: Float32Array
   private readonly markerIntensityTarget: Float32Array
   private readonly markerIndexById: Map<string, number>
@@ -158,6 +159,7 @@ class MapEngine implements MapHandle {
     this.markerData = new Float32Array(MARKER_CAPACITY * 4)
     this.markerCount = this.packMarkers(this.markerPoints, this.markerData)
     this.markerColor = new Float32Array(options.theme.marker)
+    this.haloColor = new Float32Array(options.theme.halo)
     this.markerIntensity = new Float32Array(MARKER_CAPACITY)
     this.markerIntensityTarget = new Float32Array(MARKER_CAPACITY)
     this.markerIndexById = new Map()
@@ -197,6 +199,7 @@ class MapEngine implements MapHandle {
     this.seaColor.set(colors.sea)
     this.landColor.set(colors.land)
     this.markerColor.set(colors.marker)
+    this.haloColor.set(colors.halo)
   }
 
   setActiveMarker(id: string | null) {
@@ -646,6 +649,14 @@ class MapEngine implements MapHandle {
       this.markerColor[0],
       this.markerColor[1],
       this.markerColor[2],
+    )
+    setUniform3f(
+      gl,
+      this.dotsProgram,
+      "uHaloColor",
+      this.haloColor[0],
+      this.haloColor[1],
+      this.haloColor[2],
     )
     setUniform1i(gl, this.dotsProgram, "uMarkerCount", this.markerCount)
     gl.activeTexture(gl.TEXTURE0)

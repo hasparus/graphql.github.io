@@ -31,6 +31,7 @@ uniform vec3 uSeaColor;
 uniform vec4 uMarkers[${MARKER_CAPACITY}];
 uniform int uMarkerCount;
 uniform vec3 uMarkerColor;
+uniform vec3 uHaloColor;
 
 vec2 markerCellCenter(vec4 marker, vec2 referencePx) {
   float periodX = uWorldSize.x * uZoom;
@@ -128,7 +129,7 @@ void main() {
       discard;
     }
     float haloAlpha = clamp(haloIntensity, 0.0, 1.0);
-    color = mix(uSeaColor, uMarkerColor, haloAlpha);
+    color = mix(uSeaColor, uHaloColor, haloAlpha);
     outColor = vec4(color, 1.0);
     return;
   }
