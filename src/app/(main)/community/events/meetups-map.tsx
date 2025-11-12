@@ -1,11 +1,18 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react"
 import { useTheme } from "next-themes"
 
 import { meetups } from "@/components/meetups"
 
 import { bootMeetupsMap, type MapHandle, type MarkerPoint } from "./map/engine"
+import { MeetupMapPopover, type MeetupMapPointer } from "./map/meetup-map-popover"
 import { MapSkeleton } from "./map-skeleton"
 import { MeetupsList } from "./meetups-list"
 import { asRgbString, MAP_COLORS, MapColors } from "./map/map-colors"
@@ -38,6 +45,33 @@ export function MeetupsMap() {
 
   const [status, setStatus] = useState<MapStatus>("loading")
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [pointer, setPointer] = useState<MeetupMapPointer>({
+    x: 0,
+    y: 0,
+    visible: false,
+  })
+
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    setPointer(previous => {
+      if (
+        previous.visible &&
+        Math.abs(previous.x - x) < 0.5 &&
+        Math.abs(previous.y - y) < 0.5
+      ) {
+        return previous
+      }
+      return { x, y, visible: true }
+    })
+  }
+
+  const handlePointerLeave = () => {
+    setPointer(previous =>
+      previous.visible ? { x: previous.x, y: previous.y, visible: false } : previous,
+    )
+  }
 
   useEffect(() => {
     initialThemeRef.current = themeColors
@@ -115,7 +149,11 @@ export function MeetupsMap() {
         } as React.CSSProperties
       }
     >
-      <div className="group/map relative grow border-neu-200 bg-[--sea] dark:border-neu-50 dark:bg-[--sea] md:border-l">
+      <div
+        className="group/map relative grow border-neu-200 bg-[--sea] dark:border-neu-50 dark:bg-[--sea] md:border-l"
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+      >
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"
@@ -126,6 +164,8 @@ export function MeetupsMap() {
             opacity: status === "ready" ? 1 : 0,
           }}
         />
+
+        <MeetupMapPopover activeMeetupId={activeMeetupId} pointer={pointer} />
 
         <InfoTip />
 
