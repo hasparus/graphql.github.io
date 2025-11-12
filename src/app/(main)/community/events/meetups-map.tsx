@@ -12,7 +12,7 @@ import { useTheme } from "next-themes"
 import { meetups } from "@/components/meetups"
 
 import { bootMeetupsMap, type MapHandle, type MarkerPoint } from "./map/engine"
-import { MapTooltip, type MeetupMapPointer } from "./map/map-tooltip"
+import { MapTooltip } from "./map/map-tooltip"
 import { MapSkeleton } from "./map-skeleton"
 import { MeetupsList } from "./meetups-list"
 import { asRgbString, MAP_COLORS, MapColors } from "./map/map-colors"
@@ -45,34 +45,33 @@ export function MeetupsMap() {
 
   const [status, setStatus] = useState<MapStatus>("loading")
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [pointer, setPointer] = useState<MeetupMapPointer>({
-    x: 0,
-    y: 0,
-    visible: false,
-  })
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const tooltip = document.getElementById("map-tooltip")
+    if (!tooltip) return
     const rect = event.currentTarget.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
-    setPointer(previous => {
-      if (
-        previous.visible &&
-        Math.abs(previous.x - x) < 0.5 &&
-        Math.abs(previous.y - y) < 0.5
-      ) {
-        return previous
-      }
-      return { x, y, visible: true }
-    })
+    tooltip.style.setProperty("--x", `${x}px`)
+    tooltip.style.setProperty("--y", `${y}px`)
   }
 
   const handlePointerLeave = () => {
-    setPointer(previous =>
-      previous.visible
-        ? { x: previous.x, y: previous.y, visible: false }
-        : previous,
-    )
+    const tooltip = document.getElementById("map-tooltip")
+    if (!tooltip) return
+    tooltip.style.removeProperty("--x")
+    tooltip.style.removeProperty("--y")
+  }
+
+  const activeMeetup = useMemo(
+    () => meetups.find(m => m.node.id === activeMeetupId),
+    [activeMeetupId],
+  )
+
+  const handleMapClick = () => {
+    if (activeMeetup?.node.link) {
+      window.open(activeMeetup.node.link, "_blank", "noopener,noreferrer")
+    }
   }
 
   useEffect(() => {
@@ -158,6 +157,8 @@ export function MeetupsMap() {
         className="group/map relative grow border-neu-200 bg-[--sea] dark:border-neu-50 dark:bg-[--sea] md:border-l"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
+        onClick={handleMapClick}
+        style={{ cursor: activeMeetup ? "pointer" : "default" }}
       >
         <canvas
           ref={canvasRef}
@@ -171,11 +172,7 @@ export function MeetupsMap() {
           }}
         />
 
-        <MapTooltip
-          id="map-tooltip"
-          activeMeetupId={activeMeetupId}
-          pointer={pointer}
-        />
+        <MapTooltip id="map-tooltip" activeMeetupId={activeMeetupId} />
 
         <InfoTip />
 

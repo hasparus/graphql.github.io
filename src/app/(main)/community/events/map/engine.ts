@@ -361,6 +361,7 @@ class MapEngine implements MapHandle {
   private notifyHoverChange(index: number) {
     if (index === this.hoveredMarkerIndex) return
     this.hoveredMarkerIndex = index
+    this.updateCursor()
     if (!this.onActiveMarkerChange) return
     if (this.destroyed) return
     const id =
@@ -368,6 +369,12 @@ class MapEngine implements MapHandle {
         ? this.markerPoints[index].id
         : null
     this.onActiveMarkerChange(id)
+  }
+
+  private updateCursor() {
+    if (this.pointer.active) return
+    this.canvas.style.cursor =
+      this.hoveredMarkerIndex >= 0 ? "pointer" : "default"
   }
 
   private updatePointerTrail(px: number, py: number) {
@@ -473,6 +480,8 @@ class MapEngine implements MapHandle {
     this.canvas.setPointerCapture(event.pointerId)
     this.canvas.style.cursor = "move"
     this.notifyHoverChange(-1)
+    this.pointerTrail.fill(-1)
+    this.trailCount = 0
   }
 
   private handlePointerMove = (event: PointerEvent) => {
@@ -480,7 +489,7 @@ class MapEngine implements MapHandle {
     this.hoverPointer.y = event.clientY
     this.hoverPointer.hasValue = true
     const devicePos = this.pointerToDevice(event.clientX, event.clientY)
-    if (devicePos) {
+    if (devicePos && !this.pointer.active) {
       this.updatePointerTrail(devicePos[0], devicePos[1])
     }
     if (!this.pointer.active) {
@@ -527,7 +536,6 @@ class MapEngine implements MapHandle {
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     this.pointer.active = false
     this.canvas.releasePointerCapture(event.pointerId)
-    this.canvas.style.cursor = "default"
     this.pointer.lastMoveTime = 0
     if (event.type === "pointerup") {
       this.updateHoveredMarkerFromClient(event.clientX, event.clientY)
