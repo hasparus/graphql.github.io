@@ -32,6 +32,7 @@ uniform vec4 uMarkers[${MARKER_CAPACITY}];
 uniform int uMarkerCount;
 uniform vec3 uMarkerColor;
 uniform vec3 uHaloColor;
+uniform float uHaloMinOpacity;
 
 vec2 markerCellCenter(vec4 marker, vec2 referencePx) {
   float periodX = uWorldSize.x * uZoom;
@@ -106,8 +107,7 @@ void main() {
       float radiusDiff = max(outerRadius - innerRadius, 0.0001);
       float t = clamp((dist - innerRadius) / radiusDiff, 0.0, 1.0);
       float logFalloff = 1.0 - log(1.0 + t * 9.0) / log(10.0);
-      float minOpacity = 0.5;
-      float halo = minOpacity * logFalloff * strength;
+      float halo = uHaloMinOpacity * logFalloff * strength;
       haloIntensity = max(haloIntensity, halo);
     }
   }

@@ -4,6 +4,7 @@ import { clsx } from "clsx"
 import ExternalLinkIcon from "@/app/conf/_design-system/pixelarticons/external-link.svg?svgr"
 
 import { meetups as meetupNodes } from "@/components/meetups"
+import { useEffect } from "react"
 
 type MeetupListItem = {
   id: string
@@ -45,10 +46,27 @@ export function MeetupsList({
   onActiveMeetupChange,
   meetups = DEFAULT_MEETUPS,
 }: MeetupsListProps) {
+  useEffect(() => {
+    if (activeMeetupId) {
+      const list = document.querySelector("#meetups-list")
+      if (!list) return
+
+      const activeAnchor = list.querySelector<HTMLAnchorElement>(
+        `a[aria-current="true"]`,
+      )
+      if (!activeAnchor) return
+
+      if (list.scrollTop + list.clientHeight < activeAnchor.offsetTop) {
+        list.scrollTo({ top: activeAnchor.offsetTop, behavior: "smooth" })
+      }
+    }
+  }, [activeMeetupId])
+
   if (meetups.length === 0) return null
 
   return (
     <ul
+      id="meetups-list"
       className={clsx(
         "nextra-scrollbar overflow-y-auto scrollview-fade-y-16 scrollview-fade md:h-full",
         className,
