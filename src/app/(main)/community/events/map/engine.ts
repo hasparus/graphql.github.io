@@ -23,12 +23,12 @@ export type MarkerPoint = {
   id: string
   lon: number
   lat: number
-  isHub?: boolean
 }
 
 export type MapHandle = {
   dispose(): void
   setThemeColors(colors: MapColors): void
+  setActiveMarker(id: string | null): void
   resetView(): void
 }
 
@@ -46,7 +46,7 @@ export type BootOptions = {
 const MIN_ZOOM = 1
 const MAX_ZOOM = 20
 const MARKER_TYPE_REGULAR = 1
-const MARKER_TYPE_HUB = 2
+const MARKER_TYPE_ACTIVE = 2
 const POINTER_TRAIL_CAPACITY = 8
 const POINTER_TRAIL_LIFETIME_MS = 480
 const POINTER_TRAIL_MIN_DISTANCE = 6
@@ -117,7 +117,8 @@ class MapEngine implements MapHandle {
   private markerCount: number
   private markerCapacityWarned = false
   private readonly markerColor: Float32Array
-  private readonly hubMarkerColor: Float32Array
+  private readonly markerIndexById: Map<string, number>
+  private activeMarkerIndex = -1
   private readonly resizeObserver: ResizeObserver
   private readonly diagnostics: Diagnostics | null
   private lastRenderState: {
@@ -163,7 +164,10 @@ class MapEngine implements MapHandle {
     this.markerData = new Float32Array(MARKER_CAPACITY * 4)
     this.markerCount = this.packMarkers(this.markerPoints, this.markerData)
     this.markerColor = new Float32Array(options.theme.marker)
-    this.hubMarkerColor = new Float32Array(options.theme.marker)
+    this.markerIndexById = new Map()
+    this.markerPoints.forEach((marker, index) => {
+      this.markerIndexById.set(marker.id, index)
+    })
 
     this.fullscreenVAO = this.gl.createVertexArray() as WebGLVertexArrayObject
     this.uploadMarkerUniforms()
@@ -179,6 +183,9 @@ class MapEngine implements MapHandle {
         ? createDiagnostics({ markers: this.markerPoints })
         : null
     this.loop()
+  }
+  setActiveMarker(id: string | null): void {
+    throw new Error("Method not implemented.")
   }
 
   dispose() {
@@ -197,7 +204,21 @@ class MapEngine implements MapHandle {
     this.seaColor.set(colors.sea)
     this.landColor.set(colors.land)
     this.markerColor.set(colors.marker)
-    this.hubMarkerColor.set(colors.marker)
+  }
+
+  setActiveMarker(id: string | null) {
+    const nextIndex = typeof id === "string" ? this.markerIndexById.get(id) ?? -1 : -1
+    if (nextIndex === this.activeMarkerIndex) return
+    if (this.activeMarkerIndex >= 0) {
+      const prevBase = this.activeMarkerIndex * 4
+      this.markerData[prevBase + 2] = MARKER_TYPE_REGULAR
+    }
+    this.activeMarkerIndex = nextIndex
+    if (nextIndex >= 0) {
+      const base = nextIndex * 4
+      this.markerData[base + 2] = MARKER_TYPE_ACTIVE
+    }
+    this.uploadMarkerUniforms()
   }
 
   private uploadMarkerUniforms() {
@@ -243,7 +264,7 @@ class MapEngine implements MapHandle {
       const base = i * 4
       target[base + 0] = uv[0]
       target[base + 1] = 1 - uv[1]
-      target[base + 2] = marker.isHub ? MARKER_TYPE_HUB : MARKER_TYPE_REGULAR
+      target[base + 2] = MARKER_TYPE_REGULAR
       target[base + 3] = 0
     }
     if (markers.length > capacity && !this.markerCapacityWarned) {
@@ -571,9 +592,6 @@ class MapEngine implements MapHandle {
     const panY = this.pan[1]
     const deviceCell = this.cellSize * this.pixelRatio
     const deviceSquare = this.squareSize * this.pixelRatio
-    let pointerActive = 0
-    let pointerCenterX = 0
-    let pointerCenterY = 0
     const pointerTrailBuffer = this.pointerTrailBuffer
     pointerTrailBuffer.fill(0)
     let pointerTrailCount = 0
@@ -584,13 +602,8 @@ class MapEngine implements MapHandle {
         this.hoverPointer.y,
       )
       if (pointerDevice) {
-        pointerActive = 1
         const pointerPx = pointerDevice[0]
         const pointerPy = pointerDevice[1]
-        const cellX = Math.floor(pointerPx / deviceCell)
-        const cellY = Math.floor(pointerPy / deviceCell)
-        pointerCenterX = (cellX + 0.5) * deviceCell
-        pointerCenterY = (cellY + 0.5) * deviceCell
         this.pushPointerTrail(pointerPx, pointerPy, now)
       }
     }
@@ -639,23 +652,7 @@ class MapEngine implements MapHandle {
       this.markerColor[1],
       this.markerColor[2],
     )
-    setUniform3f(
-      gl,
-      this.dotsProgram,
-      "uHubMarkerColor",
-      this.hubMarkerColor[0],
-      this.hubMarkerColor[1],
-      this.hubMarkerColor[2],
-    )
     setUniform1i(gl, this.dotsProgram, "uMarkerCount", this.markerCount)
-    setUniform1i(gl, this.dotsProgram, "uPointerActive", pointerActive)
-    setUniform2f(
-      gl,
-      this.dotsProgram,
-      "uPointerCenter",
-      pointerCenterX,
-      pointerCenterY,
-    )
     setUniform1i(gl, this.dotsProgram, "uPointerTrailCount", pointerTrailCount)
     const pointerTrailLocation = gl.getUniformLocation(
       this.dotsProgram,

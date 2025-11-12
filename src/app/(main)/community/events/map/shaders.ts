@@ -88,6 +88,7 @@ void main() {
   float markerType = markerTypeAtCellCenterPx(center);
   float pointerHalo = 0.0;
   float pointerTrail = 0.0;
+  const float trailDecay = 1.2;
   for (int i = 0; i < 8; i++) {
     if (i >= uPointerTrailCount) {
       break;
@@ -95,12 +96,12 @@ void main() {
     vec4 entry = uPointerTrail[i];
     vec2 trailPos = entry.xy;
     float age = clamp(entry.z, 0.0, 1.0);
-    float fade = 1.0 - age;
+    float fade = exp(-trailDecay * age);
     float centerDist = length(center - trailPos);
     float centerInfluence = clamp(1.0 - centerDist / (uCell * 8.0), 0.0, 1.0);
-    pointerTrail = max(pointerTrail, fade * centerInfluence);
+    pointerTrail += fade * centerInfluence;
     if (markerType > 0.5) {
-      float haloRadius = 0.5 * uSquare + 3.5 * uCell;
+      float haloRadius = 0.5 * uSquare + 1.5 * uCell;
       float haloDist = length(fragPx - trailPos);
       float haloInfluence = clamp(1.0 - haloDist / haloRadius, 0.0, 1.0);
       pointerHalo = max(pointerHalo, fade * haloInfluence * haloInfluence * 0.35);
@@ -124,6 +125,7 @@ void main() {
   } else if (markerType > 0.5) {
     color = uMarkerColor;
   }
+  pointerTrail = clamp(pointerTrail, 0.0, 1.0);
   float halfSquare = 0.5 * uSquare;
   if (pointerTrail > 0.0 && markerType <= 0.5) {
     float shrink = clamp(1.0 - pointerTrail * 0.12, 0.9, 1.0);

@@ -12,7 +12,6 @@ import { asRgbString, MAP_COLORS, MapColors } from "./map/map-colors"
 
 const CELL_SIZE = 8
 const SQUARE_SIZE = 6
-const HUB_MEETUP_IDS = new Set(["paris"])
 const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
 const ASPECT_RATIO = 1.65
 
@@ -22,7 +21,6 @@ const markerPoints: MarkerPoint[] = meetups.map(({ node }) => ({
   id: node.id,
   lon: node.longitude,
   lat: node.latitude,
-  isHub: HUB_MEETUP_IDS.has(node.id),
 }))
 
 type MapStatus = "loading" | "ready" | "error"
@@ -44,6 +42,11 @@ export function MeetupsMap() {
   useEffect(() => {
     initialThemeRef.current = themeColors
   }, [themeColors])
+
+  useEffect(() => {
+    if (!handleRef.current) return
+    handleRef.current.setActiveMarker(activeMeetupId)
+  }, [activeMeetupId])
 
   useEffect(() => {
     const canvas = canvasRef.current
