@@ -28,8 +28,6 @@ export type MarkerPoint = {
 
 export type MapHandle = {
   dispose(): void
-  setCellSize(value: number): void
-  setSquareSize(value: number): void
   setThemeColors(colors: MapColors): void
   resetView(): void
 }
@@ -154,8 +152,7 @@ class MapEngine implements MapHandle {
     this.markerColor = new Float32Array(options.theme.marker)
     this.hubMarkerColor = new Float32Array(options.theme.marker)
 
-    const gl = this.gl
-    this.fullscreenVAO = gl.createVertexArray() as WebGLVertexArrayObject
+    this.fullscreenVAO = this.gl.createVertexArray() as WebGLVertexArrayObject
     this.uploadMarkerUniforms()
 
     this.resizeObserver = new ResizeObserver(() => this.resizeCanvas())
@@ -178,25 +175,9 @@ class MapEngine implements MapHandle {
     this.resizeObserver.disconnect()
     this.detachEvents()
     this.detachDevtools()
-    const gl = this.gl
-    gl.deleteProgram(this.dotsProgram)
-    gl.deleteTexture(this.landTexture)
-    gl.deleteVertexArray(this.fullscreenVAO)
-  }
-
-  setCellSize(value: number) {
-    const next = value
-    if (next === this.cellSize) return
-    this.cellSize = next
-    if (this.squareSize > this.cellSize) {
-      this.squareSize = this.cellSize
-    }
-  }
-
-  setSquareSize(value: number) {
-    const next = Math.min(value, this.cellSize)
-    if (next === this.squareSize) return
-    this.squareSize = next
+    this.gl.deleteProgram(this.dotsProgram)
+    this.gl.deleteTexture(this.landTexture)
+    this.gl.deleteVertexArray(this.fullscreenVAO)
   }
 
   setThemeColors(colors: MapColors) {
@@ -207,11 +188,10 @@ class MapEngine implements MapHandle {
   }
 
   private uploadMarkerUniforms() {
-    const gl = this.gl
-    gl.useProgram(this.dotsProgram)
-    const location = gl.getUniformLocation(this.dotsProgram, "uMarkers")
+    this.gl.useProgram(this.dotsProgram)
+    const location = this.gl.getUniformLocation(this.dotsProgram, "uMarkers")
     if (location) {
-      gl.uniform4fv(location, this.markerData)
+      this.gl.uniform4fv(location, this.markerData)
     }
   }
 
