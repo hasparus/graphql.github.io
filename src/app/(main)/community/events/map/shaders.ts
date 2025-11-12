@@ -127,6 +127,15 @@ void main() {
     outColor = vec4(color, 1.0);
     return;
   }
+  if (markerType <= 0.5 && landCoverage < 0.5) {
+    if (haloIntensity <= 0.0) {
+      discard;
+    }
+    float haloAlpha = clamp(haloIntensity, 0.0, 1.0);
+    color = mix(uSeaColor, uMarkerColor, haloAlpha);
+    outColor = vec4(color, 1.0);
+    return;
+  }
   outColor = vec4(color, 1.0);
 }
 `

@@ -115,7 +115,7 @@ export function MeetupsMap() {
         } as React.CSSProperties
       }
     >
-      <div className="group/map relative grow bg-[--sea] dark:bg-[--sea]">
+      <div className="group/map relative grow border-neu-200 bg-[--sea] dark:border-neu-50 dark:bg-[--sea] md:border-l">
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"
@@ -140,7 +140,7 @@ export function MeetupsMap() {
       <MeetupsList
         activeMeetupId={activeMeetupId}
         onActiveMeetupChange={setActiveMeetupId}
-        className="shrink-0 border-neu-200 bg-[--sea] dark:border-neu-50 md:max-h-full md:border-r lg:w-[240px]"
+        className="shrink-0 bg-[--sea] md:max-h-full lg:w-[240px]"
       />
     </div>
   )
