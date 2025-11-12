@@ -10,7 +10,6 @@ import {
   computeWorldDimensions,
   dragTargetByPixels,
   screenToUV,
-  screenToWorld,
   stepInertia,
   updatePanFromTarget,
   wrapCentered,
@@ -119,6 +118,12 @@ class MapEngine implements MapHandle {
   private readonly hubMarkerColor: Float32Array
   private readonly resizeObserver: ResizeObserver
   private readonly diagnostics: Diagnostics | null
+  private lastRenderState: {
+    pan: [number, number]
+    zoom: number
+    dims: WorldDimensions
+    deviceCell: number
+  } | null = null
   private rafHandle = 0
   private fps = 60
   private lastFrameTime = performance.now()
@@ -129,6 +134,11 @@ class MapEngine implements MapHandle {
     startY: 0,
     targetAtStart: new Float32Array([0, 0]),
     lastMoveTime: 0,
+  }
+  private hoverPointer: { x: number; y: number; hasValue: boolean } = {
+    x: 0,
+    y: 0,
+    hasValue: false,
   }
   private destroyed = false
 
@@ -312,6 +322,9 @@ class MapEngine implements MapHandle {
   }
 
   private handlePointerMove = (event: PointerEvent) => {
+    this.hoverPointer.x = event.clientX
+    this.hoverPointer.y = event.clientY
+    this.hoverPointer.hasValue = true
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     const scale = this.pixelRatio
     const dx = (event.clientX - this.pointer.startX) * scale
@@ -355,35 +368,85 @@ class MapEngine implements MapHandle {
     process.env.NODE_ENV === "production"
       ? undefined
       : (event: MouseEvent) => {
-          const { clientX, clientY } = event
-          console.log("click", { clientX, clientY })
           const rect = this.canvas.getBoundingClientRect()
-          const px = clientX - rect.left
-          const py = clientY - rect.top
-          console.log("relative", { px, py })
-          const dimensions = this.getWorldDimensions()
-          console.log("dimensions", dimensions)
-          const [u, v] = screenToWorld(
-            px * this.pixelRatio,
-            py * this.pixelRatio,
-            this.pan,
-            this.zoom,
-            dimensions,
+          const scale = this.pixelRatio
+          const px = (event.clientX - rect.left) * scale
+          const py = (event.clientY - rect.top) * scale
+          console.log(
+            `px [${px}] = (clientX [${event.clientX}] - rect.left [${rect.left}]) * scale [${scale}]`,
           )
-          console.log("uv", { u, v })
-          const pos = uvToLonLat(u, v)
-          console.debug("click", pos)
+          console.log(
+            `py [${py}] = (clientY [${event.clientY}] - rect.top [${rect.top}]) * scale [${scale}]`,
+          )
+          const state =
+            this.lastRenderState ?? this.captureRenderStateSnapshot()
+
+          console.log("state", state)
+          const [u, v] = screenToUV(px, py, state.pan, state.zoom, state.dims)
+          console.log({ u, v })
+          const { lon, lat } = uvToLonLat(u, v)
+          console.log({ lat, lon })
+          console.debug(
+            `MeetupsMap click → lat ${lat.toFixed(2)}, lon ${lon.toFixed(2)}`,
+          )
         }
 
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "r" || event.key === "R") {
+      this.resetView()
+    }
+  }
+
   private handleWheel = (event: WheelEvent) => {
+    if (!event.ctrlKey) {
+      // we only handle zooming with control or with pinch gestures (which set ctrlKey)
+      // to avoid interfering with normal scrolling through the page
+      return
+    }
+
     event.preventDefault()
     const rect = this.canvas.getBoundingClientRect()
     const scale = this.pixelRatio
-    const pointer = [
-      (event.clientX - rect.left) * scale,
-      (event.clientY - rect.top) * scale,
-    ]
-    const wheelSensitivity = event.ctrlKey ? 0.005 : 0.0015
+    const wheel = event as WheelEvent & {
+      pointerType?: string
+      sourceCapabilities?: { firesTouchEvents?: boolean }
+    }
+    const looksLikeTouch =
+      wheel.pointerType === "touch" ||
+      wheel.sourceCapabilities?.firesTouchEvents
+    const hasOffsets =
+      Number.isFinite(event.offsetX) && Number.isFinite(event.offsetY)
+
+    const [pointerPx, pointerPy] = (() => {
+      if (hasOffsets) {
+        return [event.offsetX * scale, event.offsetY * scale] as const
+      }
+      const hasEventCoords =
+        Number.isFinite(event.clientX) && Number.isFinite(event.clientY)
+      const withinBounds =
+        hasEventCoords &&
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom
+      const shouldUseEventCoords = withinBounds && !looksLikeTouch
+      const pointerClientX = shouldUseEventCoords
+        ? event.clientX
+        : this.hoverPointer.hasValue
+          ? this.hoverPointer.x
+          : rect.left + rect.width * 0.5
+      const pointerClientY = shouldUseEventCoords
+        ? event.clientY
+        : this.hoverPointer.hasValue
+          ? this.hoverPointer.y
+          : rect.top + rect.height * 0.5
+      return [
+        (pointerClientX - rect.left) * scale,
+        (pointerClientY - rect.top) * scale,
+      ] as const
+    })()
+
+    const wheelSensitivity = 0.005
     const zoomFactor = Math.exp(-event.deltaY * wheelSensitivity)
     const previousZoom = this.zoom
     const nextZoom = clamp(previousZoom * zoomFactor, MIN_ZOOM, MAX_ZOOM)
@@ -391,8 +454,8 @@ class MapEngine implements MapHandle {
 
     const dims = this.getWorldDimensions()
     const [nextTargetX, nextTargetY] = zoomAroundPointer({
-      pointerPx: pointer[0],
-      pointerPy: pointer[1],
+      pointerPx,
+      pointerPy,
       previousZoom,
       nextZoom,
       pan: this.pan,
@@ -406,15 +469,11 @@ class MapEngine implements MapHandle {
     this.velocity[1] = 0
   }
 
-  private handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "r" || event.key === "R") {
-      this.resetView()
-    }
-  }
-
   private resizeCanvas = (explicitPixelRatio?: number | UIEvent) => {
+    // we discard the argument if it's an event
     const nextPixelRatio =
       typeof explicitPixelRatio === "number" ? explicitPixelRatio : undefined
+
     const dpr = nextPixelRatio ?? getDevicePixelRatio()
     this.pixelRatio = dpr
     const rect = this.canvas.getBoundingClientRect()
@@ -497,6 +556,12 @@ class MapEngine implements MapHandle {
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)
     setUniform1i(gl, this.dotsProgram, "uLand", 0)
     gl.drawArrays(gl.TRIANGLES, 0, 3)
+    this.lastRenderState = {
+      pan: [panX, panY],
+      zoom: this.zoom,
+      dims,
+      deviceCell,
+    }
     if (process.env.NODE_ENV !== "production") {
       this.diagnostics?.afterRender({
         zoom: this.zoom,
@@ -543,6 +608,19 @@ class MapEngine implements MapHandle {
     const [panX, panY] = updatePanFromTarget(this.target, this.zoom, dims)
     this.pan[0] = panX
     this.pan[1] = panY
+  }
+
+  private captureRenderStateSnapshot() {
+    const dims = this.getWorldDimensions()
+    const panX = wrapCentered(this.pan[0], dims.worldWidth * this.zoom)
+    const panY = this.pan[1]
+    const deviceCell = this.cellSize * this.pixelRatio
+    return {
+      pan: [panX, panY] as [number, number],
+      zoom: this.zoom,
+      dims,
+      deviceCell,
+    }
   }
 }
 

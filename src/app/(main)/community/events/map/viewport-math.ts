@@ -136,21 +136,20 @@ export function computePointerVelocity(
   return [(next[0] - prev[0]) * invDt, (next[1] - prev[1]) * invDt]
 }
 
-export function zoomAroundPointer(
-  input: ZoomAroundPointerInput,
-): Vec2 {
+export function zoomAroundPointer(input: ZoomAroundPointerInput): Vec2 {
   const { pointerPx, pointerPy, previousZoom, nextZoom, pan, dims } = input
   const safePrevWidth = dims.worldWidth * previousZoom || 1
   const safePrevHeight = dims.worldHeight * previousZoom || 1
   const worldX = (pointerPx - pan[0]) / safePrevWidth
-  const worldY = (pointerPy - pan[1]) / safePrevHeight
+  const worldY =
+    (((-pointerPy + dims.worldHeight) % dims.worldHeight) - pan[1]) /
+    safePrevHeight
   const safeNextWidth = dims.worldWidth * nextZoom || 1
   const safeNextHeight = dims.worldHeight * nextZoom || 1
   const nextTargetX = wrap01(
     worldX - (pointerPx - dims.width * 0.5) / safeNextWidth,
   )
-  const nextTargetY =
-    worldY - (pointerPy - dims.height * 0.5) / safeNextHeight
+  const nextTargetY = worldY - (pointerPy - dims.height * 0.5) / safeNextHeight
   return [nextTargetX, nextTargetY]
 }
 
