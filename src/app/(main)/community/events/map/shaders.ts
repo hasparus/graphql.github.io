@@ -26,7 +26,6 @@ uniform float uZoom;
 uniform float uCell;
 uniform float uSquare;
 uniform sampler2D uLand;
-uniform int uQuality;
 uniform vec3 uLandColor;
 uniform vec4 uMarkers[${MARKER_CAPACITY}];
 uniform int uMarkerCount;
@@ -58,29 +57,19 @@ float markerTypeAtCellCenterPx(vec2 cellCenterPx) {
   return 0.0;
 }
 
-float sampleCoverage(vec2 uv, int quality) {
+float sampleCoverage(vec2 uv) {
   ivec2 texSize = textureSize(uLand, 0);
   vec2 texel = 1.0 / vec2(texSize);
   float coverage = 0.0;
-  if (quality <= 1) {
-    return texture(uLand, uv).r;
-  }
-  if (quality == 4) {
-    for (int y = 0; y < 2; y++) {
-      for (int x = 0; x < 2; x++) {
-        vec2 offset = (vec2(float(x), float(y)) - 0.5) * texel;
-        coverage += texture(uLand, uv + offset).r;
-      }
-    }
-    return coverage * 0.25;
-  }
-  for (int y = 0; y < 4; y++) {
-    for (int x = 0; x < 4; x++) {
-      vec2 offset = (vec2(float(x), float(y)) - 1.5) * texel;
+  
+  for (int y = 0; y < 2; y++) {
+    for (int x = 0; x < 2; x++) {
+      vec2 offset = (vec2(float(x), float(y)) - 0.5) * texel;
       coverage += texture(uLand, uv + offset).r;
     }
   }
-  return coverage * 0.0625;
+  
+  return coverage * 0.25;
 }
 
 void main() {

@@ -5,19 +5,13 @@ import { useTheme } from "next-themes"
 
 import { meetups } from "@/components/meetups"
 
-import {
-  bootMeetupsMap,
-  type MapHandle,
-  type MarkerPoint,
-  type SamplingQuality,
-} from "./map/engine"
+import { bootMeetupsMap, type MapHandle, type MarkerPoint } from "./map/engine"
 import { MapSkeleton } from "./map-skeleton"
 import { MeetupsList } from "./meetups-list"
 import { asRgbString, MAP_COLORS, MapColors } from "./map/map-colors"
 
 const CELL_SIZE = 8
 const SQUARE_SIZE = 6
-const INITIAL_QUALITY: SamplingQuality = 4
 const HUB_MEETUP_IDS = new Set(["paris"])
 const LAND_MASK_URL = new URL("./map/land-mask.png", import.meta.url).toString()
 const ASPECT_RATIO = 1.65
@@ -67,7 +61,6 @@ export function MeetupsMap() {
           maskUrl: LAND_MASK_URL,
           initialCellSize: CELL_SIZE,
           initialSquareSize: SQUARE_SIZE,
-          initialQuality: INITIAL_QUALITY,
           aspectRatio: ASPECT_RATIO,
           theme: initialThemeRef.current,
           signal: abortController.signal,

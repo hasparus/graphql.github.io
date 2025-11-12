@@ -19,8 +19,6 @@ import {
 } from "./viewport-math"
 import type { MapColors } from "./map-colors"
 
-export type SamplingQuality = 1 | 4 | 16
-
 export type MarkerPoint = {
   id: string
   lon: number
@@ -30,7 +28,6 @@ export type MarkerPoint = {
 
 export type MapHandle = {
   dispose(): void
-  setQuality(value: SamplingQuality): void
   setCellSize(value: number): void
   setSquareSize(value: number): void
   setThemeColors(colors: MapColors): void
@@ -41,7 +38,6 @@ export type BootOptions = {
   canvas: HTMLCanvasElement
   markers: MarkerPoint[]
   maskUrl: string
-  initialQuality: SamplingQuality
   initialCellSize: number
   initialSquareSize: number
   aspectRatio: number
@@ -98,7 +94,6 @@ class MapEngine implements MapHandle {
   private canvas: HTMLCanvasElement
   private dotsProgram: WebGLProgram
   private landTexture: WebGLTexture
-  private quality: SamplingQuality
   private cellSize: number
   private squareSize: number
   private aspectRatio: number
@@ -148,7 +143,6 @@ class MapEngine implements MapHandle {
     this.dotsProgram = options.dotsProgram
     this.landTexture = options.landTexture
     this.aspectRatio = options.aspectRatio
-    this.quality = options.initialQuality
     this.cellSize = options.initialCellSize
     this.squareSize = Math.min(options.initialSquareSize, this.cellSize)
 
@@ -188,11 +182,6 @@ class MapEngine implements MapHandle {
     gl.deleteProgram(this.dotsProgram)
     gl.deleteTexture(this.landTexture)
     gl.deleteVertexArray(this.fullscreenVAO)
-  }
-
-  setQuality(value: SamplingQuality) {
-    if (value === this.quality) return
-    this.quality = value
   }
 
   setCellSize(value: number) {
@@ -530,7 +519,6 @@ class MapEngine implements MapHandle {
     setUniform1f(gl, this.dotsProgram, "uZoom", this.zoom)
     setUniform1f(gl, this.dotsProgram, "uCell", deviceCell)
     setUniform1f(gl, this.dotsProgram, "uSquare", deviceSquare)
-    setUniform1i(gl, this.dotsProgram, "uQuality", this.quality)
     setUniform3f(
       gl,
       this.dotsProgram,
