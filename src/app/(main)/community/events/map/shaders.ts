@@ -102,11 +102,12 @@ void main() {
       vec2 markerCenter = markerCellCenter(marker, fragPx);
       float dist = length(fragPx - markerCenter);
       float innerRadius = baseHalfSquare + 0.4 * uCell;
-      float outerRadius = innerRadius + 2.25 * uCell;
+      float outerRadius = innerRadius + 2.0 * uCell;
       float radiusDiff = max(outerRadius - innerRadius, 0.0001);
       float t = clamp((dist - innerRadius) / radiusDiff, 0.0, 1.0);
-      float cubicEaseOut = 1.0 - pow(1.0 - t, 3.0);
-      float halo = (1.0 - cubicEaseOut) * strength;
+      float logFalloff = 1.0 - log(1.0 + t * 9.0) / log(10.0);
+      float minOpacity = 0.5;
+      float halo = minOpacity * logFalloff * strength;
       haloIntensity = max(haloIntensity, halo);
     }
   }
