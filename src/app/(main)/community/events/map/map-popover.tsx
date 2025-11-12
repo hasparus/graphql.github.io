@@ -10,25 +10,23 @@ export type MeetupMapPointer = {
 
 const meetupNameById = new Map(meetups.map(({ node }) => [node.id, node.name]))
 
-type MeetupMapPopoverProps = {
+type MapPopoverProps = {
   activeMeetupId: string | null
   pointer: MeetupMapPointer
 }
 
-export function MeetupMapPopover({ activeMeetupId, pointer }: MeetupMapPopoverProps) {
+export function MapPopover({ activeMeetupId, pointer }: MapPopoverProps) {
   if (!activeMeetupId || !pointer.visible) return null
   const name = meetupNameById.get(activeMeetupId)
   if (!name) return null
   return (
-    <div
-      data-testid="meetup-map-popover"
-      className="pointer-events-none absolute z-10 hidden min-w-0 -translate-x-1/2 -translate-y-3 whitespace-nowrap rounded border border-neu-100 bg-neu-0 px-2 py-1 text-xs font-medium text-neu-900 shadow-sm group-hover/map:flex"
+    <span
+      className="pointer-events-none absolute left-0 top-0 z-10 hidden min-w-0 whitespace-nowrap border border-neu-200/40 bg-neu-0/40 px-2 py-1 text-xs font-medium text-neu-900 shadow-sm backdrop-blur-sm group-hover/map:flex"
       style={{
-        left: pointer.x,
-        top: pointer.y,
+        transform: `translate3d(calc(${pointer.x}px - 50%), calc(${pointer.y}px - 50% - 24px), 0)`,
       }}
     >
       {name}
-    </div>
+    </span>
   )
 }
