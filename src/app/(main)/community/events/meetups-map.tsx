@@ -67,6 +67,7 @@ export function MeetupsMap() {
           aspectRatio: ASPECT_RATIO,
           theme: initialThemeRef.current,
           signal: abortController.signal,
+          onActiveMarkerChange: setActiveMeetupId,
         })
         if (disposed) {
           engine.dispose()

@@ -41,15 +41,14 @@ export type BootOptions = {
   aspectRatio: number
   theme: MapColors
   signal?: AbortSignal
+  onActiveMarkerChange?: (id: string | null) => void
 }
 
 const MIN_ZOOM = 1
 const MAX_ZOOM = 20
 const MARKER_TYPE_REGULAR = 1
 const MARKER_TYPE_ACTIVE = 2
-const POINTER_TRAIL_CAPACITY = 8
-const POINTER_TRAIL_LIFETIME_MS = 480
-const POINTER_TRAIL_MIN_DISTANCE = 6
+const ACTIVE_TRANSITION_MS = 100
 /**
  * Per-frame damping factor (scaled by dt / (1/60s)).
  * Decrease value to increase damping.
@@ -90,12 +89,6 @@ type InternalOptions = BootOptions & {
   landTexture: WebGLTexture
 }
 
-type PointerTrailEntry = {
-  x: number
-  y: number
-  time: number
-}
-
 class MapEngine implements MapHandle {
   private gl: WebGL2RenderingContext
   private canvas: HTMLCanvasElement
@@ -117,8 +110,12 @@ class MapEngine implements MapHandle {
   private markerCount: number
   private markerCapacityWarned = false
   private readonly markerColor: Float32Array
+  private readonly markerIntensity: Float32Array
+  private readonly markerIntensityTarget: Float32Array
   private readonly markerIndexById: Map<string, number>
   private activeMarkerIndex = -1
+  private hoveredMarkerIndex = -1
+  private markerUniformDirty = true
   private readonly resizeObserver: ResizeObserver
   private readonly diagnostics: Diagnostics | null
   private lastRenderState: {
@@ -143,10 +140,7 @@ class MapEngine implements MapHandle {
     y: 0,
     hasValue: false,
   }
-  private pointerTrail: PointerTrailEntry[] = []
-  private pointerTrailBuffer = new Float32Array(POINTER_TRAIL_CAPACITY * 4)
-  private lastPointerSample: { x: number; y: number; time: number } | null =
-    null
+  private readonly onActiveMarkerChange?: (id: string | null) => void
   private destroyed = false
 
   constructor(options: InternalOptions) {
@@ -164,10 +158,13 @@ class MapEngine implements MapHandle {
     this.markerData = new Float32Array(MARKER_CAPACITY * 4)
     this.markerCount = this.packMarkers(this.markerPoints, this.markerData)
     this.markerColor = new Float32Array(options.theme.marker)
+    this.markerIntensity = new Float32Array(MARKER_CAPACITY)
+    this.markerIntensityTarget = new Float32Array(MARKER_CAPACITY)
     this.markerIndexById = new Map()
     this.markerPoints.forEach((marker, index) => {
       this.markerIndexById.set(marker.id, index)
     })
+    this.onActiveMarkerChange = options.onActiveMarkerChange
 
     this.fullscreenVAO = this.gl.createVertexArray() as WebGLVertexArrayObject
     this.uploadMarkerUniforms()
@@ -205,17 +202,22 @@ class MapEngine implements MapHandle {
   setActiveMarker(id: string | null) {
     const nextIndex =
       typeof id === "string" ? (this.markerIndexById.get(id) ?? -1) : -1
-    if (nextIndex === this.activeMarkerIndex) return
+    if (nextIndex === this.activeMarkerIndex) {
+      if (nextIndex >= 0) {
+        this.markerIntensityTarget[nextIndex] = 1
+      }
+      return
+    }
     if (this.activeMarkerIndex >= 0) {
-      const prevBase = this.activeMarkerIndex * 4
-      this.markerData[prevBase + 2] = MARKER_TYPE_REGULAR
+      this.markerIntensityTarget[this.activeMarkerIndex] = 0
     }
     this.activeMarkerIndex = nextIndex
     if (nextIndex >= 0) {
       const base = nextIndex * 4
       this.markerData[base + 2] = MARKER_TYPE_ACTIVE
+      this.markerIntensityTarget[nextIndex] = 1
     }
-    this.uploadMarkerUniforms()
+    this.markerUniformDirty = true
   }
 
   private uploadMarkerUniforms() {
@@ -224,6 +226,7 @@ class MapEngine implements MapHandle {
     if (location) {
       this.gl.uniform4fv(location, this.markerData)
     }
+    this.markerUniformDirty = false
   }
 
   private getWorldDimensions(): WorldDimensions {
@@ -290,40 +293,71 @@ class MapEngine implements MapHandle {
     return [px, py] as const
   }
 
-  private pushPointerTrail(px: number, py: number, time: number) {
-    const lastSample = this.lastPointerSample
-    if (lastSample) {
-      const dx = px - lastSample.x
-      const dy = py - lastSample.y
-      const distanceSq = dx * dx + dy * dy
-      if (distanceSq < 0.25) {
-        this.insertPointerPoint(px, py, time)
-        this.lastPointerSample = { x: px, y: py, time }
-        return
-      }
-      const distance = Math.sqrt(distanceSq)
-      const dt = Math.max(time - lastSample.time, 1)
-      const subdivisions = Math.min(
-        4,
-        Math.max(0, Math.ceil(distance / POINTER_TRAIL_MIN_DISTANCE) - 1),
-      )
-      for (let i = 1; i <= subdivisions; i++) {
-        const t = i / (subdivisions + 1)
-        const interpTime = lastSample.time + dt * t
-        const interpX = lastSample.x + dx * t
-        const interpY = lastSample.y + dy * t
-        this.insertPointerPoint(interpX, interpY, interpTime)
+  private updateHoveredMarkerFromClient(clientX: number, clientY: number) {
+    if (this.pointer.active) return
+    if (!this.onActiveMarkerChange) return
+    const device = this.pointerToDevice(clientX, clientY)
+    if (!device) {
+      this.notifyHoverChange(-1)
+      return
+    }
+    const [px, py] = device
+    const dims = this.getWorldDimensions()
+    const deviceCell = this.cellSize * this.pixelRatio
+    if (!(deviceCell > 0)) {
+      this.notifyHoverChange(-1)
+      return
+    }
+    const cellX = Math.floor(px / deviceCell)
+    const cellY = Math.floor(py / deviceCell)
+    const centerX = (cellX + 0.5) * deviceCell
+    const centerY = (cellY + 0.5) * deviceCell
+    const zoomedHeight = dims.worldHeight * this.zoom
+    if (!(zoomedHeight > 0)) {
+      this.notifyHoverChange(-1)
+      return
+    }
+    const normalizedY = (centerY - this.pan[1]) / zoomedHeight
+    if (normalizedY < 0 || normalizedY > 1) {
+      this.notifyHoverChange(-1)
+      return
+    }
+    const periodX = dims.worldWidth * this.zoom
+    if (!(periodX > 0 && Number.isFinite(periodX))) {
+      this.notifyHoverChange(-1)
+      return
+    }
+    const halfPeriod = 0.5 * periodX
+    let foundIndex = -1
+    for (let i = 0; i < this.markerCount; i++) {
+      const base = i * 4
+      const markerX = this.markerData[base]
+      const markerY = this.markerData[base + 1]
+      const baseX = this.pan[0] + markerX * periodX
+      let offset = baseX - centerX + halfPeriod
+      offset = (((offset % periodX) + periodX) % periodX) - halfPeriod
+      const nearestX = centerX + offset
+      const screenY = this.pan[1] + markerY * zoomedHeight
+      const markerCellX = Math.floor(nearestX / deviceCell)
+      const markerCellY = Math.floor(screenY / deviceCell)
+      if (markerCellX === cellX && markerCellY === cellY) {
+        foundIndex = i
+        break
       }
     }
-    this.insertPointerPoint(px, py, time)
-    this.lastPointerSample = { x: px, y: py, time }
+    this.notifyHoverChange(foundIndex)
   }
 
-  private insertPointerPoint(px: number, py: number, time: number) {
-    if (this.pointerTrail.length >= POINTER_TRAIL_CAPACITY) {
-      this.pointerTrail.shift()
-    }
-    this.pointerTrail.push({ x: px, y: py, time })
+  private notifyHoverChange(index: number) {
+    if (index === this.hoveredMarkerIndex) return
+    this.hoveredMarkerIndex = index
+    if (!this.onActiveMarkerChange) return
+    if (this.destroyed) return
+    const id =
+      index >= 0 && index < this.markerPoints.length
+        ? this.markerPoints[index].id
+        : null
+    this.onActiveMarkerChange(id)
   }
 
   private attachEvents() {
@@ -372,21 +406,15 @@ class MapEngine implements MapHandle {
     this.velocity[1] = 0
     this.canvas.setPointerCapture(event.pointerId)
     this.canvas.style.cursor = "move"
+    this.notifyHoverChange(-1)
   }
 
   private handlePointerMove = (event: PointerEvent) => {
     this.hoverPointer.x = event.clientX
     this.hoverPointer.y = event.clientY
     this.hoverPointer.hasValue = true
-    const pointerPosition = this.pointerToDevice(event.clientX, event.clientY)
-    if (pointerPosition) {
-      this.pushPointerTrail(
-        pointerPosition[0],
-        pointerPosition[1],
-        performance.now(),
-      )
-    } else {
-      this.lastPointerSample = null
+    if (!this.pointer.active) {
+      this.updateHoveredMarkerFromClient(event.clientX, event.clientY)
     }
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     const scale = this.pixelRatio
@@ -422,14 +450,16 @@ class MapEngine implements MapHandle {
   private handlePointerUp = (event: PointerEvent) => {
     if (event.type === "pointerleave" || event.type === "pointercancel") {
       this.hoverPointer.hasValue = false
-      this.lastPointerSample = null
+      this.notifyHoverChange(-1)
     }
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     this.pointer.active = false
     this.canvas.releasePointerCapture(event.pointerId)
     this.canvas.style.cursor = "default"
     this.pointer.lastMoveTime = 0
-    this.lastPointerSample = null
+    if (event.type === "pointerup") {
+      this.updateHoveredMarkerFromClient(event.clientX, event.clientY)
+    }
   }
 
   private handleDebugClick =
@@ -440,20 +470,11 @@ class MapEngine implements MapHandle {
           const scale = this.pixelRatio
           const px = (event.clientX - rect.left) * scale
           const py = (event.clientY - rect.top) * scale
-          console.log(
-            `px [${px}] = (clientX [${event.clientX}] - rect.left [${rect.left}]) * scale [${scale}]`,
-          )
-          console.log(
-            `py [${py}] = (clientY [${event.clientY}] - rect.top [${rect.top}]) * scale [${scale}]`,
-          )
           const state =
             this.lastRenderState ?? this.captureRenderStateSnapshot()
 
-          console.log("state", state)
           const [u, v] = screenToUV(px, py, state.pan, state.zoom, state.dims)
-          console.log({ u, v })
           const { lon, lat } = uvToLonLat(u, v)
-          console.log({ lat, lon })
           console.debug(
             `MeetupsMap click → lat ${lat.toFixed(2)}, lon ${lon.toFixed(2)}`,
           )
@@ -568,6 +589,7 @@ class MapEngine implements MapHandle {
       const instantaneous = dt > 0 ? 1000 / dt : 0
       this.fps = this.fps * 0.9 + instantaneous * 0.1
       this.applyInertia(dt)
+      this.updateActiveMarkers(dt)
       this.render()
       this.loop()
     })
@@ -589,44 +611,12 @@ class MapEngine implements MapHandle {
     const panY = this.pan[1]
     const deviceCell = this.cellSize * this.pixelRatio
     const deviceSquare = this.squareSize * this.pixelRatio
-    const pointerTrailBuffer = this.pointerTrailBuffer
-    pointerTrailBuffer.fill(0)
-    let pointerTrailCount = 0
-    const now = performance.now()
-    if (this.hoverPointer.hasValue && deviceCell > 0) {
-      const pointerDevice = this.pointerToDevice(
-        this.hoverPointer.x,
-        this.hoverPointer.y,
-      )
-      if (pointerDevice) {
-        const pointerPx = pointerDevice[0]
-        const pointerPy = pointerDevice[1]
-        this.pushPointerTrail(pointerPx, pointerPy, now)
-      }
-    }
-    const nextTrail: PointerTrailEntry[] = []
-    for (let i = this.pointerTrail.length - 1; i >= 0; i--) {
-      const entry = this.pointerTrail[i]
-      const ageMs = now - entry.time
-      if (ageMs > POINTER_TRAIL_LIFETIME_MS) {
-        continue
-      }
-      if (pointerTrailCount >= POINTER_TRAIL_CAPACITY) {
-        break
-      }
-      const age = ageMs / POINTER_TRAIL_LIFETIME_MS
-      const base = pointerTrailCount * 4
-      pointerTrailBuffer[base + 0] = entry.x
-      pointerTrailBuffer[base + 1] = entry.y
-      pointerTrailBuffer[base + 2] = age
-      pointerTrailBuffer[base + 3] = 0
-      pointerTrailCount++
-      nextTrail.unshift(entry)
-    }
-    this.pointerTrail = nextTrail
 
     gl.useProgram(this.dotsProgram)
     gl.bindVertexArray(this.fullscreenVAO)
+    if (this.markerUniformDirty) {
+      this.uploadMarkerUniforms()
+    }
     setUniform2f(gl, this.dotsProgram, "uRes", width, height)
     setUniform2f(gl, this.dotsProgram, "uWorldSize", worldWidth, worldHeight)
     setUniform2f(gl, this.dotsProgram, "uPan", panX, panY)
@@ -644,20 +634,20 @@ class MapEngine implements MapHandle {
     setUniform3f(
       gl,
       this.dotsProgram,
+      "uSeaColor",
+      this.seaColor[0],
+      this.seaColor[1],
+      this.seaColor[2],
+    )
+    setUniform3f(
+      gl,
+      this.dotsProgram,
       "uMarkerColor",
       this.markerColor[0],
       this.markerColor[1],
       this.markerColor[2],
     )
     setUniform1i(gl, this.dotsProgram, "uMarkerCount", this.markerCount)
-    setUniform1i(gl, this.dotsProgram, "uPointerTrailCount", pointerTrailCount)
-    const pointerTrailLocation = gl.getUniformLocation(
-      this.dotsProgram,
-      "uPointerTrail",
-    )
-    if (pointerTrailLocation) {
-      gl.uniform4fv(pointerTrailLocation, pointerTrailBuffer)
-    }
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)
     setUniform1i(gl, this.dotsProgram, "uLand", 0)
@@ -706,6 +696,51 @@ class MapEngine implements MapHandle {
     this.velocity[1] = result.velocity[1]
     if (result.moved) {
       this.updatePanFromTarget()
+    }
+  }
+
+  private updateActiveMarkers(dtMs: number) {
+    if (this.markerCount === 0 || dtMs <= 0) return
+    const step = Math.min(1, dtMs / ACTIVE_TRANSITION_MS)
+    if (step <= 0) return
+    let changed = false
+    for (let i = 0; i < this.markerCount; i++) {
+      const target = this.markerIntensityTarget[i]
+      const current = this.markerIntensity[i]
+      const diff = target - current
+      if (Math.abs(diff) <= 1e-4) {
+        if (current !== target) {
+          this.markerIntensity[i] = target
+          this.markerData[i * 4 + 3] = target
+          if (
+            target === 0 &&
+            this.markerData[i * 4 + 2] !== MARKER_TYPE_REGULAR
+          ) {
+            this.markerData[i * 4 + 2] = MARKER_TYPE_REGULAR
+            changed = true
+          }
+          changed = true
+        }
+        continue
+      }
+      const delta = Math.min(Math.abs(diff), step) * Math.sign(diff)
+      const next = current + delta
+      this.markerIntensity[i] = next
+      this.markerData[i * 4 + 3] = next
+      if (next > 0 && this.markerData[i * 4 + 2] !== MARKER_TYPE_ACTIVE) {
+        this.markerData[i * 4 + 2] = MARKER_TYPE_ACTIVE
+        changed = true
+      } else if (
+        next === 0 &&
+        this.markerData[i * 4 + 2] !== MARKER_TYPE_REGULAR
+      ) {
+        this.markerData[i * 4 + 2] = MARKER_TYPE_REGULAR
+        changed = true
+      }
+      changed = true
+    }
+    if (changed) {
+      this.markerUniformDirty = true
     }
   }
 
