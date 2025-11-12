@@ -184,10 +184,6 @@ class MapEngine implements MapHandle {
         : null
     this.loop()
   }
-  setActiveMarker(id: string | null): void {
-    throw new Error("Method not implemented.")
-  }
-
   dispose() {
     if (this.destroyed) return
     this.destroyed = true
@@ -207,7 +203,8 @@ class MapEngine implements MapHandle {
   }
 
   setActiveMarker(id: string | null) {
-    const nextIndex = typeof id === "string" ? this.markerIndexById.get(id) ?? -1 : -1
+    const nextIndex =
+      typeof id === "string" ? (this.markerIndexById.get(id) ?? -1) : -1
     if (nextIndex === this.activeMarkerIndex) return
     if (this.activeMarkerIndex >= 0) {
       const prevBase = this.activeMarkerIndex * 4

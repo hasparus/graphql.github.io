@@ -44,9 +44,9 @@ export function MeetupsMap() {
   }, [themeColors])
 
   useEffect(() => {
-    if (!handleRef.current) return
+    if (status !== "ready" || !handleRef.current) return
     handleRef.current.setActiveMarker(activeMeetupId)
-  }, [activeMeetupId])
+  }, [status, activeMeetupId])
 
   useEffect(() => {
     const canvas = canvasRef.current

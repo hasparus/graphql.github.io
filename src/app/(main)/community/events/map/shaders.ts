@@ -30,9 +30,6 @@ uniform vec3 uLandColor;
 uniform vec4 uMarkers[${MARKER_CAPACITY}];
 uniform int uMarkerCount;
 uniform vec3 uMarkerColor;
-uniform vec3 uHubMarkerColor;
-uniform int uPointerActive;
-uniform vec2 uPointerCenter;
 uniform int uPointerTrailCount;
 uniform vec4 uPointerTrail[8];
 
@@ -86,9 +83,8 @@ void main() {
     discard;
   }
   float markerType = markerTypeAtCellCenterPx(center);
-  float pointerHalo = 0.0;
   float pointerTrail = 0.0;
-  const float trailDecay = 1.2;
+  const float trailDecay = 2.2;
   for (int i = 0; i < 8; i++) {
     if (i >= uPointerTrailCount) {
       break;
@@ -98,21 +94,10 @@ void main() {
     float age = clamp(entry.z, 0.0, 1.0);
     float fade = exp(-trailDecay * age);
     float centerDist = length(center - trailPos);
-    float centerInfluence = clamp(1.0 - centerDist / (uCell * 8.0), 0.0, 1.0);
+    float centerInfluence = exp(-centerDist / (uCell * 3.2));
     pointerTrail += fade * centerInfluence;
-    if (markerType > 0.5) {
-      float haloRadius = 0.5 * uSquare + 1.5 * uCell;
-      float haloDist = length(fragPx - trailPos);
-      float haloInfluence = clamp(1.0 - haloDist / haloRadius, 0.0, 1.0);
-      pointerHalo = max(pointerHalo, fade * haloInfluence * haloInfluence * 0.35);
-    }
   }
-  if (uPointerActive > 0 && markerType > 0.5) {
-    float haloRadius = 0.5 * uSquare + 2.5 * uCell;
-    float haloDist = length(fragPx - uPointerCenter);
-    float haloFactor = clamp(1.0 - haloDist / haloRadius, 0.0, 1.0);
-    pointerHalo = max(pointerHalo, haloFactor * 0.6);
-  }
+  pointerTrail = clamp(pointerTrail, 0.0, 1.0);
   vec2 landUV = vec2(uv.x, 1.0 - uv.y);
   float seaCoverage = sampleCoverage(landUV);
   float landCoverage = 1.0 - seaCoverage;
@@ -120,28 +105,29 @@ void main() {
     discard;
   }
   vec3 color = uLandColor;
-  if (markerType > 1.5) {
-    color = uHubMarkerColor;
-  } else if (markerType > 0.5) {
+  if (markerType > 0.5) {
     color = uMarkerColor;
   }
-  pointerTrail = clamp(pointerTrail, 0.0, 1.0);
   float halfSquare = 0.5 * uSquare;
   if (pointerTrail > 0.0 && markerType <= 0.5) {
-    float shrink = clamp(1.0 - pointerTrail * 0.12, 0.9, 1.0);
+    float shrink = clamp(1.0 - pointerTrail * 0.4, 0.55, 1.0);
     halfSquare *= shrink;
+  }
+  float activeHalo = 0.0;
+  if (markerType > 1.5) {
+    float haloRadius = 0.5 * uSquare + 1.5 * uCell;
+    float haloDist = length(fragPx - center);
+    float haloFactor = clamp(1.0 - haloDist / haloRadius, 0.0, 1.0);
+    activeHalo = haloFactor * haloFactor;
+    halfSquare *= clamp(1.0 - activeHalo * 0.3, 0.7, 1.0);
   }
   vec2 delta = abs(fragPx - center);
   if (delta.x > halfSquare || delta.y > halfSquare) {
     discard;
   }
-  float alpha = 1.0;
-  if (pointerTrail > 0.0 && markerType <= 0.5) {
-    alpha = clamp(1.0 - pointerTrail * 0.08, 0.7, 1.0);
+  if (activeHalo > 0.0) {
+    color = mix(color, vec3(1.0), activeHalo * 0.5);
   }
-  if (pointerHalo > 0.0) {
-    color = mix(color, vec3(1.0), pointerHalo * 0.7);
-  }
-  outColor = vec4(color, alpha);
+  outColor = vec4(color, 1.0);
 }
 `
