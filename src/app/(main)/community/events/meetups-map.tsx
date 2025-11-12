@@ -11,8 +11,9 @@ import {
   type MarkerPoint,
   type SamplingQuality,
 } from "./map/engine"
+import { MapSkeleton } from "./map-skeleton"
 import { MeetupsList } from "./meetups-list"
-import { MAP_COLORS, MapColors } from "./map/map-colors"
+import { asRgbString, MAP_COLORS, MapColors } from "./map/map-colors"
 
 const CELL_SIZE = 8
 const SQUARE_SIZE = 6
@@ -107,27 +108,39 @@ export function MeetupsMap() {
 
   return (
     <div
-      className="my-6 flex flex-row-reverse divide-neu-200 border border-neu-200 bg-[--sea-light] dark:divide-neu-50 dark:border-neu-50 dark:bg-[--sea-dark] max-md:flex-col max-md:divide-y md:h-[592px]"
+      className="my-6 flex flex-row-reverse divide-neu-200 border border-neu-200 bg-[--sea] dark:divide-neu-50 dark:border-neu-50 max-md:flex-col max-md:divide-y md:h-[592px]"
       style={
         {
-          "--sea-dark": `rgb(${MAP_COLORS.dark.sea.map(c => Math.round(c * 255)).join(", ")})`,
-          "--sea-light": `rgb(${MAP_COLORS.light.sea.map(c => Math.round(c * 255)).join(", ")})`,
+          "--sea": asRgbString(
+            resolvedTheme === "dark"
+              ? MAP_COLORS.dark.sea
+              : MAP_COLORS.light.sea,
+          ),
+          "--land": asRgbString(
+            resolvedTheme === "dark"
+              ? MAP_COLORS.dark.land
+              : MAP_COLORS.light.land,
+          ),
         } as React.CSSProperties
       }
     >
-      <div className="relative grow bg-[--sea-light] dark:bg-[--sea-dark]">
+      <div className="relative grow bg-[--sea] dark:bg-[--sea]">
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"
-          className="block h-80 w-full md:h-full"
-          style={{ imageRendering: "pixelated", touchAction: "none" }}
+          className="block h-80 w-full animate-fade-in transition-opacity duration-300 ease-linear md:h-full"
+          style={{
+            imageRendering: "pixelated",
+            touchAction: "none",
+            opacity: status === "ready" ? 1 : 0,
+          }}
         />
 
-        {status !== "ready" && (
+        <MapSkeleton className={status === "loading" ? "" : "!opacity-0"} />
+
+        {status === "error" && (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-center text-sm text-neu-600">
-            {status === "loading"
-              ? "Booting WebGL map…"
-              : `Unable to load the map${errorMessage ? ` (${errorMessage})` : ""}`}
+            Unable to load the map{errorMessage ? ` (${errorMessage})` : ""}
           </div>
         )}
       </div>
