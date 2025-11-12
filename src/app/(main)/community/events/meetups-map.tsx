@@ -12,7 +12,7 @@ import { useTheme } from "next-themes"
 import { meetups } from "@/components/meetups"
 
 import { bootMeetupsMap, type MapHandle, type MarkerPoint } from "./map/engine"
-import { MapPopover, type MeetupMapPointer } from "./map/map-popover"
+import { MapTooltip, type MeetupMapPointer } from "./map/map-tooltip"
 import { MapSkeleton } from "./map-skeleton"
 import { MeetupsList } from "./meetups-list"
 import { asRgbString, MAP_COLORS, MapColors } from "./map/map-colors"
@@ -161,6 +161,7 @@ export function MeetupsMap() {
       >
         <canvas
           ref={canvasRef}
+          aria-describedby="map-tooltip"
           aria-label="Interactive WebGL map of GraphQL meetups"
           className="block h-80 w-full animate-fade-in transition-opacity duration-150 ease-linear md:h-full"
           style={{
@@ -170,7 +171,11 @@ export function MeetupsMap() {
           }}
         />
 
-        <MapPopover activeMeetupId={activeMeetupId} pointer={pointer} />
+        <MapTooltip
+          id="map-tooltip"
+          activeMeetupId={activeMeetupId}
+          pointer={pointer}
+        />
 
         <InfoTip />
 
