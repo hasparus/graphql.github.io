@@ -10,7 +10,7 @@ import {
   computeWorldDimensions,
   dragTargetByPixels,
   screenToUV,
-  screenToWorld as projectScreenToWorld,
+  screenToWorld,
   stepInertia,
   updatePanFromTarget,
   wrapCentered,
@@ -355,18 +355,24 @@ class MapEngine implements MapHandle {
     process.env.NODE_ENV === "production"
       ? undefined
       : (event: MouseEvent) => {
+          const { clientX, clientY } = event
+          console.log("click", { clientX, clientY })
           const rect = this.canvas.getBoundingClientRect()
-          const scale = this.pixelRatio
-          const px = (event.clientX - rect.left) * scale
-          const py = (event.clientY - rect.top) * scale
-          const dims = this.getWorldDimensions()
-          const panX = wrapCentered(this.pan[0], dims.worldWidth * this.zoom)
-          const pan = [panX, this.pan[1]] as const
-          const [u, v] = screenToUV(px, py, pan, this.zoom, dims)
-          const { lon, lat } = uvToLonLat(u, v)
-          console.debug(
-            `MeetupsMap click → lat ${lat.toFixed(2)}, lon ${lon.toFixed(2)}`,
+          const px = clientX - rect.left
+          const py = clientY - rect.top
+          console.log("relative", { px, py })
+          const dimensions = this.getWorldDimensions()
+          console.log("dimensions", dimensions)
+          const [u, v] = screenToWorld(
+            px * this.pixelRatio,
+            py * this.pixelRatio,
+            this.pan,
+            this.zoom,
+            dimensions,
           )
+          console.log("uv", { u, v })
+          const pos = uvToLonLat(u, v)
+          console.debug("click", pos)
         }
 
   private handleWheel = (event: WheelEvent) => {
@@ -537,11 +543,6 @@ class MapEngine implements MapHandle {
     const [panX, panY] = updatePanFromTarget(this.target, this.zoom, dims)
     this.pan[0] = panX
     this.pan[1] = panY
-  }
-
-  private screenToWorld(px: number, py: number, zoom = this.zoom) {
-    const dims = this.getWorldDimensions()
-    return projectScreenToWorld(px, py, this.pan, zoom, dims)
   }
 }
 

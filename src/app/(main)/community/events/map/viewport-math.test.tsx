@@ -15,6 +15,7 @@ import {
   wrapCentered,
   zoomAroundPointer,
 } from "./viewport-math"
+import { lonLatToUV, uvToLonLat } from "./projection"
 
 describe("viewport-math", () => {
   const aspectRatio = 1.65
@@ -89,12 +90,32 @@ describe("viewport-math", () => {
     assert.ok(Math.abs(u - 0.5) < 1e-6)
   })
 
-  it("clamps and flips V so north stays at the top", () => {
+  it("clamps V to the visible range without flipping", () => {
     const dims = computeWorldDimensions(800, 600, aspectRatio)
     const top = screenToUV(0, -100, [0, 0], 1, dims)
     const bottom = screenToUV(0, dims.height + 100, [0, 0], 1, dims)
-    assert.strictEqual(top[1], 1)
-    assert.strictEqual(bottom[1], 0)
+    assert.strictEqual(top[1], 0)
+    assert.strictEqual(bottom[1], 1)
+  })
+
+  it("round-trips lon/lat when using uv helpers", () => {
+    const dims = computeWorldDimensions(900, 600, aspectRatio)
+    const zoom = 1.5
+    const target: [number, number] = [0.42, 0.58]
+    const pan = updatePanFromTarget(target, zoom, dims)
+    const point = { lon: -0.1276, lat: 51.5074 }
+    const uv = lonLatToUV(point.lon, point.lat)
+    const zoomedWidth = dims.worldWidth * zoom
+    const zoomedHeight = dims.worldHeight * zoom
+    const px = pan[0] + uv[0] * zoomedWidth
+    const py = pan[1] + uv[1] * zoomedHeight
+    const [screenU, screenV] = screenToUV(px, py, pan, zoom, dims)
+    const eps = 1e-6
+    assert.ok(Math.abs(screenU - uv[0]) < eps)
+    assert.ok(Math.abs(screenV - uv[1]) < eps)
+    const { lon, lat } = uvToLonLat(screenU, screenV)
+    assert.ok(Math.abs(lon - point.lon) < 1e-3)
+    assert.ok(Math.abs(lat - point.lat) < 1e-3)
   })
 
   it("wraps normalized values into the expected ranges", () => {
