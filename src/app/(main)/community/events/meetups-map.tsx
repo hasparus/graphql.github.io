@@ -108,19 +108,13 @@ export function MeetupsMap() {
 
   return (
     <div
-      className="my-6 flex flex-row-reverse divide-neu-200 border border-neu-200 bg-[--sea] dark:divide-neu-50 dark:border-neu-50 max-md:flex-col max-md:divide-y md:h-[592px]"
+      className="my-6 flex flex-row-reverse divide-neu-200 border border-neu-200 [--sea:--sea-light] dark:divide-neu-50 dark:border-neu-50 dark:[--sea:--sea-dark] max-md:flex-col max-md:divide-y md:h-[592px]"
       style={
         {
-          "--sea": asRgbString(
-            resolvedTheme === "dark"
-              ? MAP_COLORS.dark.sea
-              : MAP_COLORS.light.sea,
-          ),
-          "--land": asRgbString(
-            resolvedTheme === "dark"
-              ? MAP_COLORS.dark.land
-              : MAP_COLORS.light.land,
-          ),
+          "--sea-dark": asRgbString(MAP_COLORS.dark.sea),
+          "--sea-light": asRgbString(MAP_COLORS.light.sea),
+          "--land-dark": asRgbString(MAP_COLORS.dark.land),
+          "--land-light": asRgbString(MAP_COLORS.light.land),
         } as React.CSSProperties
       }
     >
@@ -149,7 +143,7 @@ export function MeetupsMap() {
       <MeetupsList
         activeMeetupId={activeMeetupId}
         onActiveMeetupChange={setActiveMeetupId}
-        className="shrink-0 border-neu-200 dark:border-neu-50 md:max-h-full md:border-r lg:w-[240px]"
+        className="shrink-0 border-neu-200 bg-[--sea] dark:border-neu-50 md:max-h-full md:border-r lg:w-[240px]"
       />
     </div>
   )
