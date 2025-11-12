@@ -12,7 +12,7 @@ import { useTheme } from "next-themes"
 import { meetups } from "@/components/meetups"
 
 import { bootMeetupsMap, type MapHandle, type MarkerPoint } from "./map/engine"
-import { MeetupMapPopover, type MeetupMapPointer } from "./map/meetup-map-popover"
+import { MapPopover, type MeetupMapPointer } from "./map/map-popover"
 import { MapSkeleton } from "./map-skeleton"
 import { MeetupsList } from "./meetups-list"
 import { asRgbString, MAP_COLORS, MapColors } from "./map/map-colors"
@@ -69,7 +69,9 @@ export function MeetupsMap() {
 
   const handlePointerLeave = () => {
     setPointer(previous =>
-      previous.visible ? { x: previous.x, y: previous.y, visible: false } : previous,
+      previous.visible
+        ? { x: previous.x, y: previous.y, visible: false }
+        : previous,
     )
   }
 
@@ -139,6 +141,9 @@ export function MeetupsMap() {
 
   return (
     <div
+      onMouseOut={() => {
+        setActiveMeetupId(null)
+      }}
       className="my-6 flex flex-row-reverse divide-neu-200 border border-neu-200 bg-[--sea] [--sea:--sea-light] dark:divide-neu-50 dark:border-neu-50 dark:[--sea:--sea-dark] max-md:flex-col max-md:divide-y md:h-[592px]"
       style={
         {
@@ -165,7 +170,7 @@ export function MeetupsMap() {
           }}
         />
 
-        <MeetupMapPopover activeMeetupId={activeMeetupId} pointer={pointer} />
+        <MapPopover activeMeetupId={activeMeetupId} pointer={pointer} />
 
         <InfoTip />
 
