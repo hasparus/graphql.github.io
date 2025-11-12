@@ -124,7 +124,7 @@ export function MeetupsMap() {
         } as React.CSSProperties
       }
     >
-      <div className="relative grow bg-[--sea] dark:bg-[--sea]">
+      <div className="group/map relative grow bg-[--sea] dark:bg-[--sea]">
         <canvas
           ref={canvasRef}
           aria-label="Interactive WebGL map of GraphQL meetups"
@@ -136,9 +136,7 @@ export function MeetupsMap() {
           }}
         />
 
-        <div className="pointer-events-none absolute bottom-0 left-0 w-fit translate-y-0.5 px-1 py-0.5 text-[11px] text-neu-700/90 opacity-0 blur-[0.5px] backdrop-blur-sm transition duration-200 before:inset-0 before:bg-[--sea] before:opacity-30 group-hover:translate-y-0 group-hover:opacity-100 group-hover:blur-0 hover-none:hidden">
-          Pinch or ctrl+scroll to zoom
-        </div>
+        <InfoTip />
 
         <MapSkeleton className={status === "loading" ? "" : "!opacity-0"} />
 
@@ -153,6 +151,14 @@ export function MeetupsMap() {
         onActiveMeetupChange={setActiveMeetupId}
         className="shrink-0 border-neu-200 dark:border-neu-50 md:max-h-full md:border-r lg:w-[240px]"
       />
+    </div>
+  )
+}
+
+function InfoTip() {
+  return (
+    <div className="pointer-events-none absolute bottom-0 left-0 w-fit translate-y-0.5 px-1 py-0.5 text-[11px] text-neu-700/90 opacity-0 blur-[0.5px] backdrop-blur-sm transition duration-200 before:inset-0 before:bg-[--sea] before:opacity-30 group-hover/map:translate-y-0 group-hover/map:opacity-100 group-hover/map:blur-0 hover-none:hidden">
+      Pinch or ctrl+scroll to zoom
     </div>
   )
 }
