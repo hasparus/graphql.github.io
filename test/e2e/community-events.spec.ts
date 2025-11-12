@@ -1,8 +1,6 @@
 import { test, expect } from "@playwright/test"
 
-test("community events page map loads and Zurich meetup link works", async ({
-  page,
-}) => {
+test("map loads and Zurich meetup link works", async ({ page }) => {
   await page.goto("/community/events")
 
   // Wait for the map canvas to be visible
@@ -43,7 +41,7 @@ test("community events page map loads and Zurich meetup link works", async ({
   expect(newPage.url()).toContain("meetup.com/graphql-zurich")
 })
 
-test("community events map popover appears on marker hover", async ({ page }) => {
+test("map tooltip appears on marker hover", async ({ page }) => {
   await page.goto("/community/events")
   const mapCanvas = page.locator("canvas").first()
   await expect(mapCanvas).toBeVisible({ timeout: 10000 })
@@ -53,8 +51,8 @@ test("community events map popover appears on marker hover", async ({ page }) =>
       return Boolean(box && box.width > 100 && box.height > 100)
     })
     .toBe(true)
-  const popover = page.locator('[data-testid="meetup-map-popover"]')
-  await expect(popover).toHaveCount(0)
+  const tooltip = page.getByRole("tooltip")
+  await expect(tooltip).toHaveCount(0)
   await mapCanvas.hover()
   const { clientX, clientY } = await page.evaluate(() => {
     const canvas = document.querySelector("canvas") as HTMLCanvasElement | null
@@ -81,7 +79,9 @@ test("community events map popover appears on marker hover", async ({ page }) =>
     const latToRawV = (lat: number) => {
       const clampedLat = Math.max(-mercatorLimit, Math.min(mercatorLimit, lat))
       const rad = (clampedLat * Math.PI) / 180
-      return 0.5 - Math.log(Math.tan(Math.PI * 0.25 + rad * 0.5)) / (2 * Math.PI)
+      return (
+        0.5 - Math.log(Math.tan(Math.PI * 0.25 + rad * 0.5)) / (2 * Math.PI)
+      )
     }
     const maxProjectedV = latToRawV(mercatorLimit)
     const minProjectedV = latToRawV(minDisplayedLatitude)
@@ -93,7 +93,9 @@ test("community events map popover appears on marker hover", async ({ page }) =>
         Math.min(mercatorLimit, lat + baseLatitudeOffset),
       )
       const rawV = latToRawV(adjustedLat)
-      const normalizedV = clamp01((rawV - maxProjectedV) / (minProjectedV - maxProjectedV))
+      const normalizedV = clamp01(
+        (rawV - maxProjectedV) / (minProjectedV - maxProjectedV),
+      )
       return [u, normalizedV] as const
     }
     const { width, height } = canvas
@@ -117,6 +119,6 @@ test("community events map popover appears on marker hover", async ({ page }) =>
     return { clientX, clientY }
   })
   await page.mouse.move(clientX, clientY)
-  await expect(popover).toHaveText("London GraphQL", { timeout: 5000 })
-  await expect(popover).toBeVisible()
+  await expect(tooltip).toHaveText("London GraphQL", { timeout: 5000 })
+  await expect(tooltip).toBeVisible()
 })
