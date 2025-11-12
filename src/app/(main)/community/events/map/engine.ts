@@ -144,6 +144,8 @@ class MapEngine implements MapHandle {
   }
   private pointerTrail: PointerTrailEntry[] = []
   private pointerTrailBuffer = new Float32Array(POINTER_TRAIL_CAPACITY * 4)
+  private lastPointerSample: { x: number; y: number; time: number } | null =
+    null
   private destroyed = false
 
   constructor(options: InternalOptions) {
@@ -271,21 +273,35 @@ class MapEngine implements MapHandle {
   }
 
   private pushPointerTrail(px: number, py: number, time: number) {
-    const last = this.pointerTrail[this.pointerTrail.length - 1]
-    if (last) {
-      const dx = last.x - px
-      const dy = last.y - py
+    const lastSample = this.lastPointerSample
+    if (lastSample) {
+      const dx = px - lastSample.x
+      const dy = py - lastSample.y
       const distanceSq = dx * dx + dy * dy
-      if (
-        distanceSq <
-        POINTER_TRAIL_MIN_DISTANCE * POINTER_TRAIL_MIN_DISTANCE
-      ) {
-        last.x = px
-        last.y = py
-        last.time = time
+      if (distanceSq < 0.25) {
+        this.insertPointerPoint(px, py, time)
+        this.lastPointerSample = { x: px, y: py, time }
         return
       }
+      const distance = Math.sqrt(distanceSq)
+      const dt = Math.max(time - lastSample.time, 1)
+      const subdivisions = Math.min(
+        4,
+        Math.max(0, Math.ceil(distance / POINTER_TRAIL_MIN_DISTANCE) - 1),
+      )
+      for (let i = 1; i <= subdivisions; i++) {
+        const t = i / (subdivisions + 1)
+        const interpTime = lastSample.time + dt * t
+        const interpX = lastSample.x + dx * t
+        const interpY = lastSample.y + dy * t
+        this.insertPointerPoint(interpX, interpY, interpTime)
+      }
     }
+    this.insertPointerPoint(px, py, time)
+    this.lastPointerSample = { x: px, y: py, time }
+  }
+
+  private insertPointerPoint(px: number, py: number, time: number) {
     if (this.pointerTrail.length >= POINTER_TRAIL_CAPACITY) {
       this.pointerTrail.shift()
     }
@@ -351,6 +367,8 @@ class MapEngine implements MapHandle {
         pointerPosition[1],
         performance.now(),
       )
+    } else {
+      this.lastPointerSample = null
     }
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     const scale = this.pixelRatio
@@ -386,12 +404,14 @@ class MapEngine implements MapHandle {
   private handlePointerUp = (event: PointerEvent) => {
     if (event.type === "pointerleave" || event.type === "pointercancel") {
       this.hoverPointer.hasValue = false
+      this.lastPointerSample = null
     }
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     this.pointer.active = false
     this.canvas.releasePointerCapture(event.pointerId)
     this.canvas.style.cursor = "default"
     this.pointer.lastMoveTime = 0
+    this.lastPointerSample = null
   }
 
   private handleDebugClick =
