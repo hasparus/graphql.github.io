@@ -45,9 +45,12 @@ float markerTypeAtCellCenterPx(vec2 cellCenterPx) {
       break;
     }
     vec4 marker = uMarkers[i];
-    float screenX = uPan.x + (marker.x * uWorldSize.x * uZoom);
+    float periodX = uWorldSize.x * uZoom;
+    float baseX = uPan.x + (marker.x * periodX);
+    float nearestX =
+      cellCenterPx.x + (mod(baseX - cellCenterPx.x + 0.5 * periodX, periodX) - 0.5 * periodX);
     float screenY = uPan.y + (marker.y * uWorldSize.y * uZoom);
-    ivec2 markerIndex = ivec2(floor(vec2(screenX, screenY) / uCell));
+    ivec2 markerIndex = ivec2(floor(vec2(nearestX, screenY) / uCell));
     if (markerIndex.x == cellIndex.x && markerIndex.y == cellIndex.y) {
       return marker.z;
     }
