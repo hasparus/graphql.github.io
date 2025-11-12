@@ -123,7 +123,7 @@ void main() {
       discard;
     }
     float haloAlpha = clamp(haloIntensity, 0.0, 1.0);
-    color = mix(terrainColor, uMarkerColor, haloAlpha);
+    color = mix(uSeaColor, uMarkerColor, haloAlpha);
     outColor = vec4(color, 1.0);
     return;
   }
