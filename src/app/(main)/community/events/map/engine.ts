@@ -47,6 +47,9 @@ const MIN_ZOOM = 1
 const MAX_ZOOM = 20
 const MARKER_TYPE_REGULAR = 1
 const MARKER_TYPE_HUB = 2
+const POINTER_TRAIL_CAPACITY = 8
+const POINTER_TRAIL_LIFETIME_MS = 480
+const POINTER_TRAIL_MIN_DISTANCE = 6
 /**
  * Per-frame damping factor (scaled by dt / (1/60s)).
  * Decrease value to increase damping.
@@ -85,6 +88,12 @@ type InternalOptions = BootOptions & {
   gl: WebGL2RenderingContext
   dotsProgram: WebGLProgram
   landTexture: WebGLTexture
+}
+
+type PointerTrailEntry = {
+  x: number
+  y: number
+  time: number
 }
 
 class MapEngine implements MapHandle {
@@ -133,6 +142,8 @@ class MapEngine implements MapHandle {
     y: 0,
     hasValue: false,
   }
+  private pointerTrail: PointerTrailEntry[] = []
+  private pointerTrailBuffer = new Float32Array(POINTER_TRAIL_CAPACITY * 4)
   private destroyed = false
 
   constructor(options: InternalOptions) {
@@ -242,6 +253,45 @@ class MapEngine implements MapHandle {
     return count
   }
 
+  private pointerToDevice(clientX: number, clientY: number) {
+    const rect = this.canvas.getBoundingClientRect()
+    if (
+      clientX < rect.left ||
+      clientX > rect.right ||
+      clientY < rect.top ||
+      clientY > rect.bottom
+    ) {
+      return null
+    }
+    const relativeX = clientX - rect.left
+    const relativeY = clientY - rect.top
+    const px = relativeX * this.pixelRatio
+    const py = this.canvas.height - relativeY * this.pixelRatio
+    return [px, py] as const
+  }
+
+  private pushPointerTrail(px: number, py: number, time: number) {
+    const last = this.pointerTrail[this.pointerTrail.length - 1]
+    if (last) {
+      const dx = last.x - px
+      const dy = last.y - py
+      const distanceSq = dx * dx + dy * dy
+      if (
+        distanceSq <
+        POINTER_TRAIL_MIN_DISTANCE * POINTER_TRAIL_MIN_DISTANCE
+      ) {
+        last.x = px
+        last.y = py
+        last.time = time
+        return
+      }
+    }
+    if (this.pointerTrail.length >= POINTER_TRAIL_CAPACITY) {
+      this.pointerTrail.shift()
+    }
+    this.pointerTrail.push({ x: px, y: py, time })
+  }
+
   private attachEvents() {
     this.canvas.style.cursor = "default"
     this.canvas.addEventListener("pointerdown", this.handlePointerDown)
@@ -294,6 +344,14 @@ class MapEngine implements MapHandle {
     this.hoverPointer.x = event.clientX
     this.hoverPointer.y = event.clientY
     this.hoverPointer.hasValue = true
+    const pointerPosition = this.pointerToDevice(event.clientX, event.clientY)
+    if (pointerPosition) {
+      this.pushPointerTrail(
+        pointerPosition[0],
+        pointerPosition[1],
+        performance.now(),
+      )
+    }
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     const scale = this.pixelRatio
     const dx = (event.clientX - this.pointer.startX) * scale
@@ -326,6 +384,9 @@ class MapEngine implements MapHandle {
   }
 
   private handlePointerUp = (event: PointerEvent) => {
+    if (event.type === "pointerleave" || event.type === "pointercancel") {
+      this.hoverPointer.hasValue = false
+    }
     if (!this.pointer.active || event.pointerId !== this.pointer.id) return
     this.pointer.active = false
     this.canvas.releasePointerCapture(event.pointerId)
@@ -490,6 +551,49 @@ class MapEngine implements MapHandle {
     const panY = this.pan[1]
     const deviceCell = this.cellSize * this.pixelRatio
     const deviceSquare = this.squareSize * this.pixelRatio
+    let pointerActive = 0
+    let pointerCenterX = 0
+    let pointerCenterY = 0
+    const pointerTrailBuffer = this.pointerTrailBuffer
+    pointerTrailBuffer.fill(0)
+    let pointerTrailCount = 0
+    const now = performance.now()
+    if (this.hoverPointer.hasValue && deviceCell > 0) {
+      const pointerDevice = this.pointerToDevice(
+        this.hoverPointer.x,
+        this.hoverPointer.y,
+      )
+      if (pointerDevice) {
+        pointerActive = 1
+        const pointerPx = pointerDevice[0]
+        const pointerPy = pointerDevice[1]
+        const cellX = Math.floor(pointerPx / deviceCell)
+        const cellY = Math.floor(pointerPy / deviceCell)
+        pointerCenterX = (cellX + 0.5) * deviceCell
+        pointerCenterY = (cellY + 0.5) * deviceCell
+        this.pushPointerTrail(pointerPx, pointerPy, now)
+      }
+    }
+    const nextTrail: PointerTrailEntry[] = []
+    for (let i = this.pointerTrail.length - 1; i >= 0; i--) {
+      const entry = this.pointerTrail[i]
+      const ageMs = now - entry.time
+      if (ageMs > POINTER_TRAIL_LIFETIME_MS) {
+        continue
+      }
+      if (pointerTrailCount >= POINTER_TRAIL_CAPACITY) {
+        break
+      }
+      const age = ageMs / POINTER_TRAIL_LIFETIME_MS
+      const base = pointerTrailCount * 4
+      pointerTrailBuffer[base + 0] = entry.x
+      pointerTrailBuffer[base + 1] = entry.y
+      pointerTrailBuffer[base + 2] = age
+      pointerTrailBuffer[base + 3] = 0
+      pointerTrailCount++
+      nextTrail.unshift(entry)
+    }
+    this.pointerTrail = nextTrail
 
     gl.useProgram(this.dotsProgram)
     gl.bindVertexArray(this.fullscreenVAO)
@@ -524,6 +628,22 @@ class MapEngine implements MapHandle {
       this.hubMarkerColor[2],
     )
     setUniform1i(gl, this.dotsProgram, "uMarkerCount", this.markerCount)
+    setUniform1i(gl, this.dotsProgram, "uPointerActive", pointerActive)
+    setUniform2f(
+      gl,
+      this.dotsProgram,
+      "uPointerCenter",
+      pointerCenterX,
+      pointerCenterY,
+    )
+    setUniform1i(gl, this.dotsProgram, "uPointerTrailCount", pointerTrailCount)
+    const pointerTrailLocation = gl.getUniformLocation(
+      this.dotsProgram,
+      "uPointerTrail",
+    )
+    if (pointerTrailLocation) {
+      gl.uniform4fv(pointerTrailLocation, pointerTrailBuffer)
+    }
     gl.activeTexture(gl.TEXTURE0)
     gl.bindTexture(gl.TEXTURE_2D, this.landTexture)
     setUniform1i(gl, this.dotsProgram, "uLand", 0)
