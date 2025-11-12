@@ -412,6 +412,10 @@ function scrollviewFadePlugin() {
         from: { "--fade-end-opacity": "0" },
         to: { "--fade-end-opacity": "1" },
       },
+      "@keyframes sheen": {
+        "0%, 100%": { backgroundPosition: "0%" },
+        "50%": { backgroundPosition: "100%" },
+      },
     })
   })
 }

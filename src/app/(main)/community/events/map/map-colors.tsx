@@ -18,3 +18,7 @@ export const MAP_COLORS = {
     marker: [1, 0.6, 0.8745], // #FF99DF = pri-light
   },
 } satisfies Record<string, MapColors>
+
+export function asRgbString(color: ColorVec3): string {
+  return `rgb(${color.map(c => Math.round(c * 255)).join(", ")})`
+}
