@@ -1,5 +1,3 @@
-"use client"
-
 import { Breadcrumbs } from "@/_design-system/breadcrumbs"
 import { meetups } from "@/components/meetups"
 
@@ -9,6 +7,15 @@ import { events, type Event, type Meetup } from "./events"
 import { BenefitsSection } from "./benefits-section"
 import { GetYourMeetupNoticedSection } from "./get-your-meetup-noticed-section"
 import { BringGraphQLToYourCommunity } from "./bring-graphql-to-your-community"
+import dynamic from "next/dynamic"
+
+const GalleryStrip = dynamic(
+  () =>
+    import("@/app/conf/2025/components/gallery-strip").then(
+      mod => mod.GalleryStrip,
+    ),
+  { ssr: false },
+)
 
 const { pastEvents, upcomingEvents } = events.reduce(
   (acc, event) => {
@@ -95,6 +102,12 @@ export default function EventsPage() {
         </p>
         <EventsList events={pastEventsAndMeetups} />
       </section>
+
+      <h2 className="typography-h2 text-center">Event gallery</h2>
+      <p className="typography-body-md mt-6 text-center">
+        A look back at what’s been happening.
+      </p>
+      <GalleryStrip className="[&>:first-child]:mx-auto" />
 
       <BenefitsSection />
       <GetYourMeetupNoticedSection />

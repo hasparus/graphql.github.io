@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, type ComponentPropsWithoutRef } from "react"
 import { clsx } from "clsx"
 
