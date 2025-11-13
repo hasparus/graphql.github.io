@@ -630,7 +630,7 @@ function ToolsAndLibrariesHeader({
   const { activePath } = useConfig().normalizePagesResult
 
   return (
-    <div className="top-[--navbar-h] z-[1] mt-2 flex items-center justify-between bg-[rgb(var(--nextra-bg),.8)] py-2 backdrop-blur-[6.4px] max-md:sticky">
+    <div className="top-[--navbar-h] z-[1] flex items-center justify-between bg-[rgb(var(--nextra-bg),.65)] py-2 backdrop-blur-[6.4px] [text-box:trim-both_cap_alphabetic] max-md:sticky max-md:mt-2 md:pt-0 md:leading-none">
       <div className="relative">
         <Breadcrumbs className="mb-2 mt-1 md:mb-6" activePath={activePath} />
         <RadioGroup

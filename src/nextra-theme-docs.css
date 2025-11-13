@@ -2958,3 +2958,10 @@ kbd._border._gap-1 {
     color: hsl(var(--color-neu-500));
   }
 }
+
+:root {
+  --nextra-bg: 251, 251, 249;
+}
+.dark {
+  --nextra-bg: 15, 15, 12;
+}
