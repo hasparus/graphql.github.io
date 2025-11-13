@@ -22,20 +22,15 @@ import {
   useState,
 } from "react"
 import scrollIntoView from "scroll-into-view-if-needed"
-import {
-  useActiveAnchor,
-  useMenu,
-  useThemeConfig,
-  Collapse,
-  LocaleSwitch,
-} from "nextra-theme-docs"
+import { useActiveAnchor, useThemeConfig, Collapse } from "nextra-theme-docs"
 
 import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
 import { Anchor } from "@/app/conf/_design-system/anchor"
 
-import { renderComponent } from "./utils/render-component"
-import { ThemeSwitch } from "./theme-switch"
-import { Flexsearch } from "./flexsearch"
+import { renderComponent } from "../utils/render-component"
+import { ThemeSwitch } from "../theme-switch"
+import { Flexsearch } from "../flexsearch"
+import { useMenu } from "../use-menu"
 
 const TreeState: Record<string, boolean> = Object.create(null)
 
@@ -57,8 +52,8 @@ const Folder = memo(function FolderInner(props: FolderProps) {
 
 const classes = {
   link: cn(
-    "_flex _px-2 _py-1.5 _text-sm _transition-colors [word-break:break-word]",
-    "_cursor-pointer contrast-more:border contrast-more:hover:underline gql-focus-visible focus-visible:outline-offset-1",
+    "flex px-2 py-1.5 text-sm transition-colors [word-break:break-word]",
+    "cursor-pointer contrast-more:border contrast-more:hover:underline gql-focus-visible focus-visible:outline-offset-1",
   ),
   inactive: cn(
     "text-neu-800 hover:bg-neu-100 hover:text-neu-900 hover:bg-neu-100 dark:hover:bg-neu-50/50",
@@ -66,13 +61,13 @@ const classes = {
   ),
   active: cn(
     "bg-pri-lighter/25 text-pri-dark dark:bg-pri-light/10 dark:text-pri-light",
-    "contrast-more:_border-primary-500 contrast-more:dark:_border-primary-500",
+    "contrast-more:border-primary-500 contrast-more:dark:border-primary-500",
   ),
-  list: cn("_flex _flex-col _gap-1"),
+  list: cn("flex flex-col gap-1"),
   border: cn(
-    "_relative before:_absolute before:_inset-y-1",
-    'before:_w-px before:bg-neu-100 before:_content-[""] dark:before:bg-neu-50',
-    "ltr:_pl-3 ltr:before:_left-0 rtl:_pr-3 rtl:before:_right-0",
+    "relative before:absolute before:inset-y-1",
+    'before:w-px before:bg-neu-100 before:content-[""] dark:before:bg-neu-50',
+    "pl-3 before:left-0",
   ),
 }
 
@@ -169,8 +164,8 @@ function FolderImpl({ item, anchors, onFocus }: FolderProps): ReactElement {
         }
         data-href={isLink ? undefined : item.route}
         className={cn(
-          "_items-center _justify-between _gap-2",
-          !isLink && "_text-left _w-full",
+          "items-center justify-between gap-2",
+          !isLink && "w-full text-left",
           classes.link,
           active ? classes.active : classes.inactive,
         )}
@@ -202,17 +197,16 @@ function FolderImpl({ item, anchors, onFocus }: FolderProps): ReactElement {
         <ArrowRightIcon
           height="18"
           className={cn(
-            "_shrink-0",
-            "_p-0.5 hover:bg-neu-100/5",
-            "motion-reduce:*:_transition-none *:_origin-center *:_transition-transform *:rtl:_-rotate-180",
-            open && "*:ltr:_rotate-90 *:rtl:_rotate-[-270deg]",
+            "shrink-0 p-0.5 hover:bg-neu-100/5",
+            "origin-center transition-transform motion-reduce:*:transition-none",
+            open && "rotate-90",
           )}
         />
       </ComponentToUse>
       {Array.isArray(item.children) && (
         <Collapse isOpen={open}>
           <Menu
-            className={cn(classes.border, "_pt-1 ltr:_ml-3 rtl:_mr-3")}
+            className={cn(classes.border, "ml-3 pt-1")}
             directories={item.children}
             base={item.route}
             anchors={anchors}
@@ -229,7 +223,7 @@ function Separator({ title }: { title: string }): ReactElement {
       className={cn(
         "[word-break:break-word]",
         title
-          ? "typography-body-sm mb-2 px-2 py-1.5 font-semibold text-neu-800 [&:not(:first-child)]:mt-5"
+          ? "typography-body-sm mb-2 px-2 py-1.5 font-semibold text-neu-800 max-md:first:hidden [&:not(:first-child)]:mt-5"
           : "my-4",
       )}
     >
@@ -275,14 +269,14 @@ function File({
         {item.title}
       </Anchor>
       {active && anchors.length > 0 && (
-        <ul className={cn(classes.list, classes.border, "ltr:_ml-3 rtl:_mr-3")}>
+        <ul className={cn(classes.list, classes.border, "ml-3")}>
           {anchors.map(({ id, value }) => (
             <li key={id}>
               <a
                 href={`#${id}`}
                 className={cn(
                   classes.link,
-                  '_flex _gap-2 before:_opacity-25 before:_content-["#"]',
+                  'flex gap-2 before:opacity-25 before:content-["#"]',
                   activeAnchor[id]?.isActive
                     ? classes.active
                     : classes.inactive,
@@ -370,7 +364,6 @@ export function Sidebar({
   const { menu, setMenu } = useMenu()
   const [focused, setFocused] = useState("")
   const [showSidebar, setSidebar] = useState(true)
-  const [showToggleAnimation, setToggleAnimation] = useState(false)
 
   const anchors = useMemo(() => toc.filter(v => v.depth === 2), [toc])
   const sidebarRef = useRef<HTMLDivElement>(null!)
@@ -406,26 +399,26 @@ export function Sidebar({
   return (
     <>
       {includePlaceholder && asPopover && (
-        <div className="max-xl:_hidden _h-0 _w-64 _shrink-0" />
+        <div className="h-0 w-64 shrink-0 max-xl:hidden" />
       )}
       <div
         className={cn(
           "[transition:background-color_1.5s_ease]",
           menu
-            ? "max-md:_bg-black/80 max-md:dark:_bg-black/60 _fixed _inset-0 _z-10"
-            : "_bg-transparent",
+            ? "fixed inset-0 z-10 max-md:bg-black/80 max-md:dark:bg-black/60"
+            : "bg-transparent",
         )}
         onClick={() => setMenu(false)}
       />
       <aside
         className={cn(
-          "nextra-sidebar-container _flex _flex-col",
-          "md:_top-16 md:_shrink-0 motion-reduce:_transform-none motion-reduce:_transition-none",
-          "[.resizing_&]:_transition-none",
-          "_transform-gpu _transition-all _ease-in-out",
-          "print:_hidden",
-          showSidebar ? "md:_w-64" : "md:_w-20",
-          asPopover ? "md:_hidden" : "md:_sticky md:_self-start",
+          "nextra-sidebar-container flex flex-col",
+          "motion-reduce:transform-none motion-reduce:transition-none md:top-16 md:shrink-0",
+          "[.resizing_&]:transition-none",
+          "transition-gpu ease-in-out",
+          "print:hidden",
+          showSidebar ? "md:w-64" : "md:w-20",
+          asPopover ? "md:hidden" : "md:sticky md:self-start",
           menu
             ? "max-md:[transform:translate3d(0,0,0)]"
             : "max-md:[transform:translate3d(0,-100%,0)]",
@@ -442,8 +435,8 @@ export function Sidebar({
           <OnFocusItemContext.Provider value={setFocused}>
             <div
               className={cn(
-                "_overflow-y-auto",
-                "_p-4 _grow md:_h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]",
+                "overflow-y-auto",
+                "grow p-4 md:h-[calc(100vh-var(--nextra-navbar-height)-var(--nextra-menu-height))]",
                 showSidebar ? "nextra-scrollbar" : "no-scrollbar",
               )}
               ref={sidebarRef}
@@ -453,7 +446,7 @@ export function Sidebar({
                 <Collapse isOpen={showSidebar} horizontal>
                   <Menu
                     // eslint-disable-next-line tailwindcss/no-custom-classname
-                    className="nextra-menu-desktop max-md:_hidden"
+                    className="nextra-menu-desktop max-md:hidden"
                     // The sidebar menu, shows only the docs directories.
                     directories={docsDirectories}
                     // When the viewport size is larger than `md`, hide the anchors in
@@ -465,7 +458,7 @@ export function Sidebar({
               )}
               {mounted && window.innerWidth < 768 && (
                 <Menu
-                  className="nextra-menu-mobile md:_hidden"
+                  className="nextra-menu-mobile md:hidden"
                   // The mobile dropdown menu, shows all the directories.
                   directories={fullDirectories}
                   // Always show the anchor links on mobile (`md`).
@@ -480,7 +473,6 @@ export function Sidebar({
           <SidebarFooter
             showSidebar={showSidebar}
             setSidebar={setSidebar}
-            showToggleAnimation={showToggleAnimation}
             hasI18n={hasI18n}
           />
         )}
@@ -492,17 +484,13 @@ export function Sidebar({
 export function SidebarFooter({
   showSidebar,
   setSidebar,
-  showToggleAnimation = false,
   hasI18n = false,
-  setToggleAnimation,
   className,
   hiddenOnMobile = true,
 }: {
   showSidebar: boolean
   setSidebar: (show: boolean) => void
-  showToggleAnimation?: boolean
   hasI18n?: boolean
-  setToggleAnimation?: (show: boolean) => void
   className?: string
   hiddenOnMobile?: boolean
 }) {
@@ -519,15 +507,8 @@ export function SidebarFooter({
           : "flex-col flex-wrap justify-center py-4",
         className,
       )}
-      data-toggle-animation={
-        showToggleAnimation ? (showSidebar ? "show" : "hide") : "off"
-      }
     >
-      <LocaleSwitch
-        lite={!showSidebar}
-        className={showSidebar ? "_grow" : "max-md:_grow"}
-      />
-      <div className={showSidebar && !hasI18n ? "_grow _flex _flex-col" : ""}>
+      <div className={showSidebar && !hasI18n ? "flex grow flex-col" : ""}>
         <ThemeSwitch lite={!showSidebar} />
       </div>
       {themeConfig.sidebar.toggleButton && (
@@ -539,7 +520,6 @@ export function SidebarFooter({
           )}
           onClick={() => {
             setSidebar(!showSidebar)
-            setToggleAnimation?.(true)
           }}
         >
           <ArrowBarLeft

@@ -220,6 +220,7 @@ const config: Config = {
       })
     }),
     tailwindMediaHover(),
+    prefersContrastPlugin(),
     scrollStartPlugin(),
     scrollviewFadePlugin(),
     browserPlugin,
@@ -233,6 +234,12 @@ function tailwindMediaHover() {
   return plugin(({ addVariant }) => {
     addVariant("hover-hover", "@media (hover: hover)")
     addVariant("hover-none", "@media (hover: none)")
+  })
+}
+
+function prefersContrastPlugin() {
+  return plugin(({ addVariant }) => {
+    addVariant("contrast-more", "@media (prefers-contrast: more)")
   })
 }
 
