@@ -5,7 +5,7 @@ import { DISCORD_CHANNEL_LINK, DISCORD_SERVER_LINK } from "./links"
 export function GetYourMeetupNoticedSection() {
   return (
     <section className="gql-section">
-      <div className="flex flex-col gap-10 border border-sec-dark bg-sec-lighter px-6 py-10 dark:border-sec-base/40 dark:bg-sec-darker/20 sm:px-10 lg:flex-row lg:items-center lg:gap-16 lg:px-16">
+      <div className="flex flex-col-reverse gap-4 border border-sec-dark bg-sec-lighter p-6 dark:border-sec-base/40 dark:bg-sec-darker/20 sm:gap-10 sm:p-10 lg:flex-row lg:items-center lg:gap-16 lg:px-16">
         <div>
           <p className="typography-h2 text-balance text-neu-900">
             Get your meetup noticed
@@ -41,10 +41,8 @@ export function GetYourMeetupNoticedSection() {
             Go to Discord
           </Button>
         </div>
-        <div className="flex aspect-square h-full shrink-0 justify-center">
-          <div className="flex aspect-square w-full max-w-[320px] items-center justify-center border border-sec-dark bg-sec-light p-6 text-sec-darker dark:border-sec-base/40 dark:bg-sec-dark/10 sm:p-8">
-            <Mailbox aria-hidden className="size-full" />
-          </div>
+        <div className="flex aspect-square w-full max-w-[320px] items-center justify-center border border-sec-dark bg-sec-light p-2 text-sec-darker dark:border-sec-base/40 dark:bg-sec-dark/10 max-sm:size-16 sm:p-8">
+          <Mailbox aria-hidden className="size-full" />
         </div>
       </div>
     </section>
