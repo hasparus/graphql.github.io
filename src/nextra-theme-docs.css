@@ -2962,8 +2962,6 @@ kbd._border._gap-1 {
 :root {
   --nextra-bg: 251, 251, 249;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
+.dark {
     --nextra-bg: 15, 15, 12;
-  }
 }
