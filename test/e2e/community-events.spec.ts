@@ -28,7 +28,7 @@ test("map loads and Zurich meetup link works", async ({ page }) => {
   // Find the scrollview container with past events and meetups
 
   // Find the Zurich meetup card in the scrollable list (not the map popup)
-  const link = page.getByText(/Zurich/i).first()
+  const link = page.getByRole("link", { name: /Zurich/i }).first()
   await link.scrollIntoViewIfNeeded()
   await link.click()
 
