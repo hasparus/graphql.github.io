@@ -7,13 +7,13 @@ body:
   - type: markdown
     attributes:
       value: >
-        Tell us about the next moment your corner of the GraphQL ecosystem gathers.
-        These details feed the Events & Meetups page so more folks can find you and show up.
+        Share your upcoming GraphQL gathering.
+        These details will be displayed on the Events & Meetups page so more people can find you.
   - type: dropdown
     id: event_type
     attributes:
       label: What kind of gathering is it?
-      options:desc
+      options:
         - Meetup
         - Conference
     validations:
