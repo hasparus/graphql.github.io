@@ -15,10 +15,7 @@ test("Zurich meetup link works", async ({ page }) => {
     })
     .toBe(true)
 
-  const mapContainer = page.locator("#meetups-map")
-  await mapContainer.focus()
-
-  const pastEventsSection = page.locator("text=Past events & meetups")
+  const pastEventsSection = page.getByText("Past events & meetups")
   await pastEventsSection.scrollIntoViewIfNeeded()
 
   const link = page.getByRole("link", { name: /Zurich/i }).first()
