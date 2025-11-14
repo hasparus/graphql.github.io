@@ -14,7 +14,7 @@ test("map loads and Zurich meetup link works", async ({ page }) => {
     .toBe(true)
 
   const mapContainer = page.locator("#meetups-map")
-  await mapContainer.scrollIntoViewIfNeeded()
+  await mapContainer.focus()
   await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
     "meetups-map.png",
     { timeout: 10_000 },

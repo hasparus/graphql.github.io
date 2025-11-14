@@ -22,12 +22,7 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: {
-        ...devices["Desktop Chrome"],
-        launchOptions: {
-          args: process.env.CI ? ["--enable-gpu", "--use-gl=angle"] : [],
-        },
-      },
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
 
