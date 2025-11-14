@@ -10,7 +10,7 @@ function waitFor(delay: number) {
   return new Promise(resolve => setTimeout(resolve, delay))
 }
 
-test.beforeEach(async (_, testInfo) => {
+test.beforeEach(async ({ browser }, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 160000)
 })
 
