@@ -13,7 +13,8 @@ export default defineConfig({
   reporter: process.env.CI ? "github" : "list",
   use: {
     baseURL: "http://localhost:3000",
-    trace: "on-first-retry",
+    trace: "retain-on-first-failure",
+    screenshot: "only-on-failure",
   },
 
   projects: [
