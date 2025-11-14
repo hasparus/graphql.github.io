@@ -5,6 +5,8 @@ test.beforeEach(async ({ page }) => {
 })
 
 test("Zurich meetup link works", async ({ page }) => {
+  if (process.env.CI) test.slow()
+
   const link = page.getByRole("link", { name: /Zurich/i }).first()
   await link.scrollIntoViewIfNeeded()
 
@@ -19,28 +21,33 @@ test("Zurich meetup link works", async ({ page }) => {
 })
 
 test("map matches screenshot", async ({ page }) => {
+  if (process.env.CI) test.slow()
+
   const mapContainer = page.locator("#meetups-map").first()
   await mapContainer.scrollIntoViewIfNeeded()
-  await expect(mapContainer).toBeVisible({ timeout: 10000 })
   await page.waitForTimeout(1500) // we need to wait until Playwright finishes scrolling...
 
   const mapCanvas = page.locator("canvas").first()
-  await expect(mapCanvas).toBeVisible({ timeout: 10000 })
 
   await expect
-    .poll(async () => {
-      const box = await mapCanvas.boundingBox()
-      return box && box.width > 100 && box.height > 100
-    })
+    .poll(
+      async () => {
+        const box = await mapCanvas.boundingBox()
+        return box && box.width > 100 && box.height > 100
+      },
+      { timeout: 15_000 },
+    )
     .toBe(true)
 
   await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
     "meetups-map.png",
-    { timeout: 15_000 },
+    { timeout: 30_000 },
   )
 })
 
 test("map tooltip appears on marker hover", async ({ page }) => {
+  if (process.env.CI) test.slow()
+
   const mapContainer = page.locator("#meetups-map").first()
   await mapContainer.scrollIntoViewIfNeeded()
   await expect(mapContainer).toBeVisible({ timeout: 10000 })

@@ -1,4 +1,4 @@
-name: Lint and check formatting
+name: lint & test
 
 on: pull_request
 
