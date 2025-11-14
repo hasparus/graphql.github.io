@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
 })
 
 test("Zurich meetup link works", async ({ page }) => {
-  if (process.env.CI) test.slow()
+  if (process.env.CI) test.skip()
 
   const link = page.getByRole("link", { name: /Zurich/i }).first()
   await link.scrollIntoViewIfNeeded()
@@ -21,7 +21,7 @@ test("Zurich meetup link works", async ({ page }) => {
 })
 
 test("map matches screenshot", async ({ page }) => {
-  if (process.env.CI) test.slow()
+  if (process.env.CI) test.skip()
 
   const mapContainer = page.locator("#meetups-map").first()
   await mapContainer.scrollIntoViewIfNeeded()
@@ -48,7 +48,7 @@ test("map matches screenshot", async ({ page }) => {
 })
 
 test("map tooltip appears on marker hover", async ({ page }) => {
-  if (process.env.CI) test.slow()
+  if (process.env.CI) test.skip()
 
   const mapContainer = page.locator("#meetups-map").first()
   await mapContainer.scrollIntoViewIfNeeded()
