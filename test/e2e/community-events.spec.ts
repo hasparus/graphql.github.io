@@ -37,6 +37,8 @@ test("Zurich meetup link works", async ({ page }) => {
 test("map matches screenshot", async ({ page }) => {
   const mapContainer = page.locator("#meetups-map").first()
   await mapContainer.scrollIntoViewIfNeeded()
+  await expect(mapContainer).toBeVisible({ timeout: 10000 })
+  await page.waitForTimeout(1500) // we need to wait until Playwright finishes scrolling...
   await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
     "meetups-map.png",
     { timeout: 15_000 },
@@ -57,6 +59,7 @@ test("map tooltip appears on marker hover", async ({ page }) => {
   await expect(tooltip).toHaveCount(0)
   const mapCanvas = mapContainer.locator("canvas").first()
   await mapCanvas.hover()
+  await page.waitForTimeout(2000) // we need to wait until Playwright finishes scrolling...
   const { clientX, clientY } = await page.evaluate(() => {
     const canvas = document.querySelector(
       "#meetups-map canvas",
