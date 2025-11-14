@@ -28,6 +28,7 @@ export default defineConfig({
         ...(process.env.CI
           ? {
               args: [
+                "--enable-gpu",
                 "--use-gl=angle",
                 "--use-angle=gl-egl",
                 "--ignore-gpu-blocklist",
