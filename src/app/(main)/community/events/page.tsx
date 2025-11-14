@@ -10,9 +10,8 @@ import { GetYourMeetupNoticedSection } from "./get-your-meetup-noticed-section"
 import { BringGraphQLToYourCommunity } from "./bring-graphql-to-your-community"
 import dynamic from "next/dynamic"
 
-// TODO: The issue template should probably live in https://github.com/graphql/community-wg
 const ISSUE_TEMPLATE_LINK =
-  "https://github.com/graphql/graphql.github.io/issues/new?assignees=&labels=event&template=event-submission.yml"
+  "https://github.com/graphql/community-wg/issues/new?assignees=&labels=event&template=event-submission.yml"
 
 const GalleryStrip = dynamic(
   () =>
