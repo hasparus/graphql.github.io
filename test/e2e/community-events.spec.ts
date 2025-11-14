@@ -5,19 +5,6 @@ test.beforeEach(async ({ page }) => {
 })
 
 test("Zurich meetup link works", async ({ page }) => {
-  const mapCanvas = page.locator("canvas").first()
-  await expect(mapCanvas).toBeVisible({ timeout: 10000 })
-
-  await expect
-    .poll(async () => {
-      const box = await mapCanvas.boundingBox()
-      return box && box.width > 100 && box.height > 100
-    })
-    .toBe(true)
-
-  const pastEventsSection = page.getByText("Past events & meetups")
-  await pastEventsSection.scrollIntoViewIfNeeded()
-
   const link = page.getByRole("link", { name: /Zurich/i }).first()
   await link.scrollIntoViewIfNeeded()
 
@@ -36,6 +23,17 @@ test("map matches screenshot", async ({ page }) => {
   await mapContainer.scrollIntoViewIfNeeded()
   await expect(mapContainer).toBeVisible({ timeout: 10000 })
   await page.waitForTimeout(1500) // we need to wait until Playwright finishes scrolling...
+
+  const mapCanvas = page.locator("canvas").first()
+  await expect(mapCanvas).toBeVisible({ timeout: 10000 })
+
+  await expect
+    .poll(async () => {
+      const box = await mapCanvas.boundingBox()
+      return box && box.width > 100 && box.height > 100
+    })
+    .toBe(true)
+
   await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
     "meetups-map.png",
     { timeout: 15_000 },

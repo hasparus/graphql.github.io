@@ -22,7 +22,15 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"], channel: "chromium" },
+      use: {
+        ...devices["Desktop Chrome"],
+        channel: "chromium",
+        ...(process.env.CI
+          ? {
+              args: ["--use-gl=egl", "--ignore-gpu-blocklist"],
+            }
+          : {}),
+      },
     },
   ],
 
