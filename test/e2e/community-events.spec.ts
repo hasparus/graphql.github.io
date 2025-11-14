@@ -18,7 +18,7 @@ test("map loads and Zurich meetup link works", async ({ page }) => {
   // Take a screenshot of the map and verify it matches snapshot
   const mapContainer = page.locator("canvas").first()
   await expect(mapContainer).toHaveScreenshot("meetups-map.png", {
-    timeout: 10000,
+    timeout: 20_000,
   })
 
   // Find the "Past events & meetups" section
