@@ -26,7 +26,7 @@ jobs:
       - name: Validate code snippets
         run: pnpm validate:snippets
 
-  test:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,6 +42,20 @@ jobs:
 
       - name: Run unit tests
         run: pnpm test:unit
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: the-guild-org/shared-config/setup@main
+        name: setup env
+        with:
+          packageManager: pnpm
+          workingDirectory: ./
+
+      - name: Install Dependencies
+        run: pnpm i
 
         # per the docs: "caching browser binaries is not recommended,
         # since the amount of time it takes to restore the cache is
