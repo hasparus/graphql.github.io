@@ -1,5 +1,6 @@
 import { Breadcrumbs } from "@/_design-system/breadcrumbs"
 import { meetups } from "@/components/meetups"
+import { Button } from "@/app/conf/_design-system/button"
 
 import { MeetupsMap } from "./meetups-map"
 import { EventsList } from "./events-list"
@@ -8,6 +9,9 @@ import { BenefitsSection } from "./benefits-section"
 import { GetYourMeetupNoticedSection } from "./get-your-meetup-noticed-section"
 import { BringGraphQLToYourCommunity } from "./bring-graphql-to-your-community"
 import dynamic from "next/dynamic"
+
+const ISSUE_TEMPLATE_LINK =
+  "https://github.com/graphql/community-wg/issues/new?assignees=&labels=event&template=event-submission.yml"
 
 const GalleryStrip = dynamic(
   () =>
@@ -75,10 +79,20 @@ export default function EventsPage() {
 
       {upcomingEvents.length > 0 && (
         <section className="gql-section">
-          <h2 className="typography-h2">Upcoming events</h2>
-          <p className="typography-body-md my-6 lg:mb-12">
-            See what’s coming up across the GraphQL ecosystem.
-          </p>
+          <header className="mb-6 flex w-full gap-4 max-md:flex-col lg:mb-12 lg:gap-6">
+            <div className="flex-1">
+              <h2 className="typography-h2">Upcoming events</h2>
+              <p className="typography-body-md col-start-1 mt-4 lg:mt-6">
+                See what’s coming up across the GraphQL ecosystem.
+              </p>
+            </div>
+            <Button
+              className="w-fit self-end lg:row-span-2"
+              href={ISSUE_TEMPLATE_LINK}
+            >
+              Add a new event
+            </Button>
+          </header>
           <EventsList events={upcomingEvents} />
         </section>
       )}
