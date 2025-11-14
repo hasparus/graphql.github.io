@@ -140,6 +140,7 @@ export function MeetupsMap() {
 
   return (
     <div
+      id="meetups-map"
       onMouseOut={() => {
         setActiveMeetupId(null)
       }}

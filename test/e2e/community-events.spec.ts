@@ -3,11 +3,9 @@ import { test, expect } from "@playwright/test"
 test("map loads and Zurich meetup link works", async ({ page }) => {
   await page.goto("/community/events")
 
-  // Wait for the map canvas to be visible
   const mapCanvas = page.locator("canvas").first()
   await expect(mapCanvas).toBeVisible({ timeout: 10000 })
 
-  // Wait for map to finish loading by checking if it has proper dimensions
   await expect
     .poll(async () => {
       const box = await mapCanvas.boundingBox()
@@ -15,24 +13,20 @@ test("map loads and Zurich meetup link works", async ({ page }) => {
     })
     .toBe(true)
 
-  // Take a screenshot of the map and verify it matches snapshot
-  const mapContainer = page.locator("canvas").first()
-  await expect(mapContainer).toHaveScreenshot("meetups-map.png", {
-    timeout: 20_000,
-  })
+  const mapContainer = page.locator("#meetups-map")
+  await mapContainer.scrollIntoViewIfNeeded()
+  await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
+    "meetups-map.png",
+    { timeout: 10_000 },
+  )
 
-  // Find the "Past events & meetups" section
   const pastEventsSection = page.locator("text=Past events & meetups")
   await pastEventsSection.scrollIntoViewIfNeeded()
 
-  // Find the scrollview container with past events and meetups
-
-  // Find the Zurich meetup card in the scrollable list (not the map popup)
   const link = page.getByRole("link", { name: /Zurich/i }).first()
   await link.scrollIntoViewIfNeeded()
   await link.click()
 
-  // Click the link and verify it opens to the correct URL
   const pagePromise = page.context().waitForEvent("page")
   await link.click()
   const newPage = await pagePromise
@@ -43,19 +37,23 @@ test("map loads and Zurich meetup link works", async ({ page }) => {
 
 test("map tooltip appears on marker hover", async ({ page }) => {
   await page.goto("/community/events")
-  const mapCanvas = page.locator("canvas").first()
-  await expect(mapCanvas).toBeVisible({ timeout: 10000 })
+  const mapContainer = page.locator("#meetups-map").first()
+  await mapContainer.scrollIntoViewIfNeeded()
+  await expect(mapContainer).toBeVisible({ timeout: 10000 })
   await expect
     .poll(async () => {
-      const box = await mapCanvas.boundingBox()
+      const box = await mapContainer.boundingBox()
       return Boolean(box && box.width > 100 && box.height > 100)
     })
     .toBe(true)
   const tooltip = page.getByRole("tooltip")
   await expect(tooltip).toHaveCount(0)
+  const mapCanvas = mapContainer.locator("canvas").first()
   await mapCanvas.hover()
   const { clientX, clientY } = await page.evaluate(() => {
-    const canvas = document.querySelector("canvas") as HTMLCanvasElement | null
+    const canvas = document.querySelector(
+      "#meetups-map canvas",
+    ) as HTMLCanvasElement | null
     if (!canvas) throw new Error("Canvas not found")
     const targetLat = 51.51
     const targetLon = -0.12
