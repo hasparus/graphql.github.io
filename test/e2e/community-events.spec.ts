@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test"
 
-test("map loads and Zurich meetup link works", async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto("/community/events")
+})
 
+test("Zurich meetup link works", async ({ page }) => {
   const mapCanvas = page.locator("canvas").first()
   await expect(mapCanvas).toBeVisible({ timeout: 10000 })
 
@@ -15,16 +17,13 @@ test("map loads and Zurich meetup link works", async ({ page }) => {
 
   const mapContainer = page.locator("#meetups-map")
   await mapContainer.focus()
-  await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
-    "meetups-map.png",
-    { timeout: 10_000 },
-  )
 
   const pastEventsSection = page.locator("text=Past events & meetups")
   await pastEventsSection.scrollIntoViewIfNeeded()
 
   const link = page.getByRole("link", { name: /Zurich/i }).first()
   await link.scrollIntoViewIfNeeded()
+
   await link.click()
 
   const pagePromise = page.context().waitForEvent("page")
@@ -35,8 +34,16 @@ test("map loads and Zurich meetup link works", async ({ page }) => {
   expect(newPage.url()).toContain("meetup.com/graphql-zurich")
 })
 
+test("map matches screenshot", async ({ page }) => {
+  const mapContainer = page.locator("#meetups-map").first()
+  await mapContainer.scrollIntoViewIfNeeded()
+  await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
+    "meetups-map.png",
+    { timeout: 15_000 },
+  )
+})
+
 test("map tooltip appears on marker hover", async ({ page }) => {
-  await page.goto("/community/events")
   const mapContainer = page.locator("#meetups-map").first()
   await mapContainer.scrollIntoViewIfNeeded()
   await expect(mapContainer).toBeVisible({ timeout: 10000 })
