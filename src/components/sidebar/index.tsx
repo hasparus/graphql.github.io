@@ -22,7 +22,12 @@ import {
   useState,
 } from "react"
 import scrollIntoView from "scroll-into-view-if-needed"
-import { useActiveAnchor, useThemeConfig, Collapse } from "nextra-theme-docs"
+import {
+  useActiveAnchor,
+  useThemeConfig,
+  Collapse,
+  ActiveAnchor,
+} from "nextra-theme-docs"
 
 import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
 import { Anchor } from "@/app/conf/_design-system/anchor"
@@ -249,7 +254,11 @@ function File({
 
   // It is possible that the item doesn't have any route - for example an external link.
   const active = item.route && [route, route + "/"].includes(item.route + "/")
-  const activeAnchor = useActiveAnchor()
+  /**
+   * we don't have this bug in staging, but this crashed in prod
+   * todo: clear this up when we investigate why that happened only in prod
+   */
+  const activeAnchor = useActiveAnchor() as ActiveAnchor | null
   const { setMenu } = useMenu()
 
   if (item.type === "separator") {
@@ -277,7 +286,7 @@ function File({
                 className={cn(
                   classes.link,
                   'flex gap-2 before:opacity-25 before:content-["#"]',
-                  activeAnchor[id]?.isActive
+                  activeAnchor?.[id]?.isActive
                     ? classes.active
                     : classes.inactive,
                 )}
