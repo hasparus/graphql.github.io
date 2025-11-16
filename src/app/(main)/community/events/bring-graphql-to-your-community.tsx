@@ -1,6 +1,5 @@
 import { Button } from "../../../conf/_design-system/button"
 import { StripesDecoration } from "../../../conf/_design-system/stripes-decoration"
-import { DISCORD_CHANNEL_LINK } from "./links"
 
 export function BringGraphQLToYourCommunity() {
   return (
@@ -26,7 +25,7 @@ export function BringGraphQLToYourCommunity() {
             Learn more
           </Button>
           <Button
-            href={DISCORD_CHANNEL_LINK}
+            href="/community/foundation/local-initiative/"
             variant="tertiary"
             className="[.light_&]:bg-white"
           >
