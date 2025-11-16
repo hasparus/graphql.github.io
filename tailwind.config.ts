@@ -13,6 +13,11 @@ const config: Config = {
       padding: "1rem",
     },
     extend: {
+      ringColor({ theme }) {
+        return {
+          arguments: theme("colors.primary"),
+        }
+      },
       fontFamily: {
         sans: [
           `var(--font-sans, ${fontFamily.sans.slice(0, 3).join(", ")})`,
@@ -323,16 +328,40 @@ function scrollStartPlugin() {
 }
 
 function scrollviewFadePlugin() {
-  return plugin(({ addUtilities, matchUtilities, theme }) => {
+  return plugin(({ addUtilities, matchUtilities, theme, addBase }) => {
     matchUtilities(
       {
         "scrollview-fade-x": value => ({
           "--fade-angle": "90deg",
-          "--fade-size": value,
+          "--fade-size-start": value,
+          "--fade-size-end": value,
+          "--fade-axis": "x",
         }),
         "scrollview-fade-y": value => ({
           "--fade-angle": "180deg",
-          "--fade-size": value,
+          "--fade-size-start": value,
+          "--fade-size-end": value,
+          "--fade-axis": "y",
+        }),
+        "scrollview-fade-left": value => ({
+          "--fade-angle": "90deg",
+          "--fade-size-start": value,
+          "--fade-axis": "x",
+        }),
+        "scrollview-fade-right": value => ({
+          "--fade-angle": "90deg",
+          "--fade-size-end": value,
+          "--fade-axis": "x",
+        }),
+        "scrollview-fade-top": value => ({
+          "--fade-angle": "180deg",
+          "--fade-size-start": value,
+          "--fade-axis": "y",
+        }),
+        "scrollview-fade-bottom": value => ({
+          "--fade-angle": "180deg",
+          "--fade-size-end": value,
+          "--fade-axis": "y",
         }),
       },
       {
@@ -341,31 +370,45 @@ function scrollviewFadePlugin() {
         type: ["length", "percentage"],
       },
     )
+
+    addBase({
+      "@property --fade-start-opacity": {
+        syntax: '"<number>"',
+        initialValue: "1",
+        inherits: "false",
+      },
+      "@property --fade-end-opacity": {
+        syntax: '"<number>"',
+        initialValue: "1",
+        inherits: "false",
+      },
+    })
+
     addUtilities({
       ".scrollview-fade": {
         position: "relative",
-        scrollTimeline: "--scroll-timeline-x inline",
+        scrollTimeline: "--scroll-timeline var(--fade-axis)",
         "--fade-start-opacity": "1",
         "--fade-end-opacity": "1",
         maskImage: `
           linear-gradient(var(--fade-angle), 
             hsl(0 0% 0% / var(--fade-start-opacity)), 
-            black var(--fade-size), 
-            black calc(100% - var(--fade-size)), 
+            black var(--fade-size-start,0), 
+            black calc(100% - var(--fade-size-end,0)), 
             hsl(0 0% 0% / var(--fade-end-opacity))
           )
         `,
         WebkitMaskImage: `
           linear-gradient(var(--fade-angle), 
             hsl(0 0% 0% / var(--fade-start-opacity)), 
-            black var(--fade-size), 
-            black calc(100% - var(--fade-size)), 
+            black var(--fade-size-start,0), 
+            black calc(100% - var(--fade-size-end,0)), 
             hsl(0 0% 0% / var(--fade-end-opacity))
           )
         `,
         animation:
           "scrollview-fade-start 10s ease-out both, scrollview-fade-end 10s ease-out both",
-        animationTimeline: "--scroll-timeline-x, --scroll-timeline-x",
+        animationTimeline: "--scroll-timeline, --scroll-timeline",
         animationRange: "0 2em, calc(100% - 2em) 100%",
       },
       "@keyframes scrollview-fade-start": {
@@ -376,15 +419,9 @@ function scrollviewFadePlugin() {
         from: { "--fade-end-opacity": "0" },
         to: { "--fade-end-opacity": "1" },
       },
-      "@property --fade-start-opacity": {
-        syntax: '"<number>"',
-        initialValue: "1",
-        inherits: "false",
-      },
-      "@property --fade-end-opacity": {
-        syntax: '"<number>"',
-        initialValue: "1",
-        inherits: "false",
+      "@keyframes sheen": {
+        "0%, 100%": { backgroundPosition: "0%" },
+        "50%": { backgroundPosition: "100%" },
       },
     })
   })

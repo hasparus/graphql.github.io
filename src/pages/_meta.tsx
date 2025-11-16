@@ -21,7 +21,11 @@ export default {
         title: "Resources",
         href: "/community/resources/official-channels",
       },
-      events: { title: "Events & Meetups" },
+      events: {
+        title: "Events & Meetups",
+        type: "page",
+        href: "/community/events",
+      },
       ambassadors: { title: "Ambassador Program" },
       contribute: {
         title: "Contribute to GraphQL",

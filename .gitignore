@@ -65,3 +65,5 @@ out/
 tsconfig.tsbuildinfo
 
 playwright-report/
+
+.pnpm-store/

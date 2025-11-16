@@ -5,7 +5,10 @@ export default {
       layout: "raw",
     },
   },
-  events: "",
+  events: {
+    type: "page",
+    href: "/community/events",
+  },
   ambassadors: "Ambassador Program",
   contribute: "Contribute to GraphQL",
   foundation: "Foundation",

@@ -9,9 +9,6 @@ import stripesMask from "@/components/404-page/image.webp"
 import { Button } from "./conf/_design-system/button"
 import MainLayout from "./(main)/layout"
 
-import "@/globals.css"
-import "@/app/colors.css"
-
 export default function NotFoundPage() {
   const pathname = usePathname()
   const mounted = useMounted()
@@ -35,7 +32,7 @@ export default function NotFoundPage() {
       <style>{".nextra-nav-container.sticky { position: fixed }"}</style>
       <div className="relative">
         <Stripes />
-        <div className="relative z-10 flex h-[500px] flex-col items-center justify-center gap-8 pt-[--nextra-navbar-height] font-sans lg:h-[600px] lg:gap-10">
+        <div className="relative z-10 flex h-[500px] min-h-[calc(100vh_-_531px)] flex-col items-center justify-center gap-8 pt-[--nextra-navbar-height] font-sans lg:h-[600px] lg:gap-10">
           <FourOhFourIcon className="text-pri-base" />
           <h1 className="text-4xl text-neu-900">Page not found</h1>
           <div className="flex gap-4 max-sm:flex-col">

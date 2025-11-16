@@ -1,4 +1,3 @@
-// @ts-expect-error: we want to import the same version as Nextra for the main page
 import { ThemeProvider } from "next-themes"
 
 import { Footer } from "../../components/footer"
@@ -10,6 +9,9 @@ import {
   topLevelNavbarItems,
 } from "../../components/navbar/top-level-items"
 import { Sidebar } from "../../components/sidebar"
+
+import "@/globals.css"
+import "@/app/colors.css"
 
 export default function MainLayout({
   children,

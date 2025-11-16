@@ -7,7 +7,6 @@ import "../../colors.css"
 import { Navbar } from "./components/navbar"
 import { Footer } from "./components/footer"
 
-// @ts-expect-error: we want to import the same version as Nextra for the main page
 import { ThemeProvider } from "next-themes"
 import { GraphQLConfLogoLink } from "./components/graphql-conf-logo-link"
 import { GALLERY_LINK } from "./links"

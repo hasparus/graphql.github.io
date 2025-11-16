@@ -1,7 +1,6 @@
 "use client"
 
 import { clsx } from "clsx"
-// @ts-expect-error we use a transitive-dependency and this one is vulnerable to context clash
 import { useTheme } from "next-themes"
 import { Select } from "@base-ui-components/react/select"
 import { useMounted } from "nextra/hooks"
