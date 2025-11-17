@@ -74,7 +74,7 @@ export function EventCard({
     <a
       href={href}
       className={clsx(
-        "gql-focus-visible group flex min-h-[214px] min-w-[260px] flex-col overflow-hidden border border-neu-200 text-left text-current no-underline ring-neu-400 hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-50 dark:ring-neu-100 xs:min-w-[352px]",
+        "gql-focus-visible group flex min-h-[214px] min-w-[260px] flex-col overflow-hidden border border-neu-200 text-left text-current no-underline ring-neu-400 hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-50 dark:ring-neu-100 xs:min-w-[352px] lg:w-[408px]",
         "[--bg-opacity:0.05] hover:[--bg-opacity:0.07] dark:[--bg-opacity:0.03] hover:dark:[--bg-opacity:0.06]",
 
         "z-[4]",
@@ -99,7 +99,16 @@ export function EventCard({
         >
           <Tag color={eventTagColors[kind]}>{kind}</Tag>
           {meta ? (
-            <span className="typography-body-md">{meta}</span>
+            <span
+              className={clsx(
+                String(meta).length < 22
+                  ? "typography-body-md"
+                  : "typography-body-sm",
+                "overflow-hidden text-ellipsis whitespace-pre",
+              )}
+            >
+              {meta}
+            </span>
           ) : (
             <span className="sr-only">Official GraphQL Local</span>
           )}
@@ -121,7 +130,15 @@ export function EventCard({
             <div className="typography-body-sm flex items-center gap-1 px-2 py-1.5 text-neu-800 dark:text-neu-600 xs:gap-1.5 xs:px-4 xs:py-2.5">
               <CalendarIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-800 dark:text-neu-500 xs:size-5" />
               {parsedDate ? (
-                <time dateTime={parsedDate.toISOString()}>{dateLabel}</time>
+                <time dateTime={parsedDate.toISOString()}>
+                  {kind === "working-group"
+                    ? parsedDate.toLocaleString(undefined, {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                        hour12: false,
+                      })
+                    : dateLabel}
+                </time>
               ) : (
                 <span>{dateLabel}</span>
               )}

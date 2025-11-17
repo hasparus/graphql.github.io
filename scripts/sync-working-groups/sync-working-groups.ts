@@ -24,13 +24,13 @@ const Instant = type({
 
 const calendarEventSchema = type({
   id: "string",
-  "title?": "string",
+  "summary?": "string",
   "status?": "string",
   "description?": "string",
   "location?": "string",
   start: Instant,
   end: Instant,
-  htmlLink: "string",
+  htmlLink: "string.url",
   updated: "string",
 })
 

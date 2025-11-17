@@ -75,7 +75,7 @@ export function EventsList({
 
   const tags: Set<EventKind> = new Set()
   events.forEach(event => {
-    // todo: add working groups
+    if ("start" in event) tags.add("working-group")
     if ("node" in event) tags.add("meetup")
     else tags.add("conference")
   })
@@ -124,8 +124,8 @@ export function EventsList({
                 key={event.id}
                 href={event.htmlLink}
                 date={new Date(event.start)}
-                name={event.title ?? "Working Group"}
-                city={event.location ?? "Online"}
+                name={event.summary ?? "Working Group"}
+                city="Online" // event.location is a zoom link, we could potentially use but we'd have to refactor the event-card to avoid nested anchors
                 kind="working-group"
               />
             ) : (
