@@ -97,7 +97,7 @@ export function EventCard({
               : "-mb-2 pt-2 xs:-mb-4 xs:pt-3",
           )}
         >
-          <Tag color={eventTagColors[kind]}>{kind}</Tag>
+          <Tag color={eventTagColors[kind]}>{kind.replace("-", " ")}</Tag>
           {meta ? (
             <span
               className={clsx(
