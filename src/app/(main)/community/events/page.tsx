@@ -1,3 +1,6 @@
+import { readFile } from "node:fs/promises"
+import path from "node:path"
+
 import { Breadcrumbs } from "@/_design-system/breadcrumbs"
 import { meetups } from "@/components/meetups"
 import { Button } from "@/app/conf/_design-system/button"
@@ -8,7 +11,10 @@ import { events, type Event, type Meetup } from "./events"
 import { BenefitsSection } from "./benefits-section"
 import { GetYourMeetupNoticedSection } from "./get-your-meetup-noticed-section"
 import { BringGraphQLToYourCommunity } from "./bring-graphql-to-your-community"
+import type { WorkingGroupMeeting } from "../../../../../scripts/sync-working-groups/sync-working-groups"
 import dynamic from "next/dynamic"
+
+type AnyEvent = Event | Meetup | WorkingGroupMeeting
 
 const ISSUE_TEMPLATE_LINK =
   "https://github.com/graphql/community-wg/issues/new?assignees=&labels=event&template=event-submission.yml"
@@ -21,35 +27,70 @@ const GalleryStrip = dynamic(
   { ssr: false },
 )
 
-const { pastEvents, upcomingEvents } = events.reduce(
-  (acc, event) => {
-    const now = new Date()
-    const date = new Date(event.date)
-    if (date < now) {
-      acc.pastEvents.push(event)
-    } else {
-      acc.upcomingEvents.push(event)
-    }
-    return acc
-  },
-  { pastEvents: [], upcomingEvents: [] } as {
-    pastEvents: Event[]
-    upcomingEvents: Event[]
-  },
+const WORKING_GROUP_MEETINGS_FILE = path.join(
+  process.cwd(),
+  "scripts/sync-working-groups/working-group-events.ndjson",
 )
 
-const pastEventsAndMeetups: Array<Meetup | Event> = [
-  ...pastEvents,
-  ...meetups,
-].sort((a, b) => {
-  const dateA =
-    "node" in a ? new Date(a.node.next || a.node.prev) : new Date(a.date)
-  const dateB =
-    "node" in b ? new Date(b.node.next || b.node.prev) : new Date(b.date)
-  return dateB.getTime() - dateA.getTime()
-})
+export default async function EventsPage() {
+  const workingGroupMeetings = await loadWorkingGroupMeetings()
 
-export default function EventsPage() {
+  let {
+    pastEvents,
+    upcomingEvents,
+  }: { pastEvents: AnyEvent[]; upcomingEvents: AnyEvent[] } = events.reduce(
+    (acc, event) => {
+      const now = new Date()
+      const date = new Date(event.date)
+      if (date < now) {
+        acc.pastEvents.push(event)
+      } else {
+        acc.upcomingEvents.push(event)
+      }
+      return acc
+    },
+    { pastEvents: [], upcomingEvents: [] } as {
+      pastEvents: Event[]
+      upcomingEvents: Event[]
+    },
+  )
+
+  const now = new Date()
+
+  for (const meeting of workingGroupMeetings) {
+    if (meeting.start && new Date(meeting.start) < now) {
+      pastEvents.push(meeting)
+    } else upcomingEvents.push(meeting)
+  }
+
+  for (const meetup of meetups) {
+    const { next, prev } = meetup.node
+    if (next && new Date(next) < now) {
+      pastEvents.push(meetup)
+    } else {
+      upcomingEvents.push(meetup)
+      pastEvents.push({
+        ...meetup,
+        date: prev,
+      })
+    }
+  }
+
+  const getDate = (event: AnyEvent) => {
+    if ("date" in event) return new Date(event.date)
+    if ("node" in event) return new Date(event.node.next || event.node.prev)
+    return new Date(event.start)
+  }
+
+  function sortByDate(a: AnyEvent, b: AnyEvent) {
+    const aDate = getDate(a)
+    const bDate = getDate(b)
+    return bDate.getTime() - aDate.getTime()
+  }
+
+  pastEvents = pastEvents.sort(sortByDate)
+  upcomingEvents = upcomingEvents.sort(sortByDate)
+
   return (
     <div className="gql-container">
       <h1 className="hidden">Events & Meetups</h1>
@@ -114,7 +155,7 @@ export default function EventsPage() {
         <p className="typography-body-md my-6 lg:mb-12">
           A look back at how the GraphQL community connects and grows together.
         </p>
-        <EventsList events={pastEventsAndMeetups} />
+        <EventsList events={pastEvents} />
       </section>
 
       <h2 className="typography-h2 text-center">Event gallery</h2>
@@ -127,4 +168,18 @@ export default function EventsPage() {
       <GetYourMeetupNoticedSection />
     </div>
   )
+}
+
+async function loadWorkingGroupMeetings(): Promise<WorkingGroupMeeting[]> {
+  try {
+    const raw = (await readFile(WORKING_GROUP_MEETINGS_FILE, "utf8")).trim()
+    if (!raw) return []
+    return raw
+      .split("\n")
+      .filter(Boolean)
+      .map(line => JSON.parse(line) as WorkingGroupMeeting)
+  } catch (error) {
+    console.error("Failed to read working group meetings", error)
+    return []
+  }
 }

@@ -10,21 +10,24 @@ const OUTPUT_FILE = new URL("./working-group-events.ndjson", import.meta.url)
 const DAYS_BACK = 30
 const DAYS_TO_KEEP = 90
 const DAYS_AHEAD = 30
-const DATETIME_REGEX =
-  /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/
 
 const Instant = type({
   "dateTime?": "string",
-  "date?": "string",
-  "timeZone?": "string",
+  "date?": "string", // full day events have just date
 })
+  .pipe((value): string => {
+    if (value.dateTime) return value.dateTime
+    if (value.date) return `${value.date}T00:00:00Z`
+    throw new Error("Instant is missing date/dateTime")
+  })
+  .to("string.date")
 
-const Event = type({
+const calendarEventSchema = type({
   id: "string",
+  "title?": "string",
   "status?": "string",
-  "summary?": "string",
-  "location?": "string",
   "description?": "string",
+  "location?": "string",
   start: Instant,
   end: Instant,
   htmlLink: "string",
@@ -32,25 +35,13 @@ const Event = type({
 })
 
 const responseSchema = type({
-  items: Event.array(),
+  items: calendarEventSchema.array(),
   "nextSyncToken?": "string",
   "nextPageToken?": "string",
 })
 
-const WorkingGroupMeetingSchema = type({
-  id: "string",
-  title: "string",
-  "description?": "string",
-  "location?": "string",
-  start: Instant,
-  end: Instant,
-  htmlLink: "string",
-  updated: "string",
-  calendarId: "string",
-})
-
-type CalendarEvent = typeof Event.infer
-export type WorkingGroupMeeting = typeof WorkingGroupMeetingSchema.infer
+export type WorkingGroupMeeting =
+  typeof calendarEventSchema.inferIntrospectableOut
 
 async function main() {
   if (!API_KEY) {
@@ -62,10 +53,7 @@ async function main() {
   const existingMeetings = await readExistingMeetings()
   console.log(`Found ${existingMeetings.length} existing event(s) in file`)
 
-  const lastMeeting = existingMeetings.at(-1)
-  const lastMeetingStart =
-    lastMeeting?.start.dateTime ??
-    (lastMeeting?.start.date ? `${lastMeeting.start.date}T00:00:00Z` : null)
+  const lastMeetingStart = existingMeetings.at(-1)?.start ?? null
   const cutoffDate = new Date(
     now.getTime() - DAYS_TO_KEEP * 24 * 60 * 60 * 1000,
   )
@@ -77,7 +65,7 @@ async function main() {
 
   const timeMin =
     lastMeetingStart !== null && lastMeetingStart !== undefined
-      ? new Date(Math.min(Date.parse(lastMeetingStart) + 1, now.getTime()))
+      ? new Date(Math.min(Date.parse(lastMeetingStart), now.getTime()))
       : new Date(now.getTime() - DAYS_BACK * 24 * 60 * 60 * 1000)
 
   const timeMax = new Date(now.getTime() + DAYS_AHEAD * 24 * 60 * 60 * 1000)
@@ -110,9 +98,9 @@ async function main() {
 
   const payload = responseSchema.assert(body)
 
-  let allNewMeetings = payload.items
+  let newMeetings = payload.items
     .filter(event => event.status !== "cancelled")
-    .map(toWorkingGroupMeeting)
+    .map(event => calendarEventSchema.out.assert(event))
 
   if (payload.nextPageToken) {
     let pageToken: string | undefined = payload.nextPageToken
@@ -129,17 +117,16 @@ async function main() {
         throw new Error(`Page fetch failed: ${pageResponse.status}`)
       }
       const pagePayload = responseSchema.assert(pageBody)
-      allNewMeetings = [
-        ...allNewMeetings,
+      newMeetings = [
+        ...newMeetings,
         ...pagePayload.items
           .filter(event => event.status !== "cancelled")
-          .map(toWorkingGroupMeeting),
+          .map(event => calendarEventSchema.out.assert(event)),
       ]
       pageToken = pagePayload.nextPageToken
     }
   }
 
-  const newMeetings = allNewMeetings
   const newIds = new Set(newMeetings.map(meeting => meeting.id))
   const existingIds = new Set(existingMeetings.map(meeting => meeting.id))
   const newCount = Array.from(newIds).filter(id => !existingIds.has(id)).length
@@ -159,8 +146,7 @@ async function main() {
   const futureLimit = new Date(now.getTime() + DAYS_AHEAD * 24 * 60 * 60 * 1000)
   const futureLimitStr = futureLimit.toISOString().split("T")[0]
   const filteredMeetings = allMeetings.filter(meeting => {
-    const start = meeting.start.dateTime ?? meeting.start.date ?? ""
-    const startDate = start.split("T")[0]
+    const startDate = meeting.start.split("T")[0]
     return startDate >= cutoffDateStr && startDate <= futureLimitStr
   })
 
@@ -171,18 +157,16 @@ async function main() {
     `Filtered to ${filteredMeetings.length} event(s) after removing old entries`,
   )
 
-  const sortedMeetings = filteredMeetings.sort((a, b) => {
-    const aStart = a.start.dateTime ?? a.start.date ?? ""
-    const bStart = b.start.dateTime ?? b.start.date ?? ""
-    return aStart.localeCompare(bStart)
-  })
+  const sortedMeetings = filteredMeetings.sort((a, b) =>
+    a.start.localeCompare(b.start),
+  )
 
   const ndjson = sortedMeetings.map(event => JSON.stringify(event)).join("\n")
   const content = sortedMeetings.length > 0 ? `${ndjson}\n` : ""
   await writeFile(OUTPUT_FILE, content, "utf8")
 
   console.log(
-    `Saved ${sortedMeetings.length} event(s) to ${OUTPUT_FILE.pathname}`,
+    `Saved ${sortedMeetings.length} event(s) (${newCount} new) to ${OUTPUT_FILE.pathname}`,
   )
 }
 
@@ -193,7 +177,7 @@ async function readExistingMeetings(): Promise<WorkingGroupMeeting[]> {
       .trim()
       .split("\n")
       .filter(line => line.trim())
-      .map(line => WorkingGroupMeetingSchema.assert(JSON.parse(line)))
+      .map(line => calendarEventSchema.out.assert(JSON.parse(line)))
   } catch (error: any) {
     if (error.code === "ENOENT") {
       return []
@@ -220,38 +204,6 @@ function mergeMeetings(
   }
 
   return Array.from(byId.values())
-}
-
-function toWorkingGroupMeeting(event: CalendarEvent): WorkingGroupMeeting {
-  return WorkingGroupMeetingSchema.assert({
-    id: event.id,
-    title: event.summary || "Untitled working group meeting",
-    ...(event.description && { description: event.description }),
-    ...(event.location && { location: event.location }),
-    start: event.start,
-    end: event.end,
-    htmlLink: assertUrl(event.htmlLink, "event.htmlLink"),
-    updated: assertDateTime(event.updated, "event.updated"),
-    calendarId: CALENDAR_ID,
-  })
-}
-
-function assertDateTime(value: string, label: string) {
-  if (!DATETIME_REGEX.test(value)) {
-    throw new Error(
-      `Invalid ${label}: expected YYYY-MM-DDThh:mm:ssZ or offset, received ${value}`,
-    )
-  }
-  return value
-}
-
-function assertUrl(value: string, label: string) {
-  try {
-    new URL(value)
-    return value
-  } catch {
-    throw new Error(`Invalid ${label}: received ${value}`)
-  }
 }
 
 try {

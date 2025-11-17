@@ -7,6 +7,7 @@ import { EventCard } from "./event-card"
 import { EventsScrollview } from "./events-scrollview"
 import type { Event, Meetup } from "./events"
 import { EventFilterTag, EventKind } from "./event-filter-tag"
+import { WorkingGroupMeeting } from "../../../../../scripts/sync-working-groups/sync-working-groups"
 
 interface FilterChipProps extends ComponentPropsWithoutRef<"button"> {
   active?: boolean
@@ -53,6 +54,8 @@ export function FilterChip({
   )
 }
 
+type AnyEvent = Event | Meetup | WorkingGroupMeeting
+
 const ALL_SHOWN = {
   meetup: true,
   conference: true,
@@ -63,7 +66,7 @@ export function EventsList({
   events,
   className,
 }: {
-  events: Array<Event | Meetup>
+  events: AnyEvent[]
   className?: string
 }) {
   const [kindFilters, setKindFilters] = useState(ALL_SHOWN)
@@ -115,6 +118,15 @@ export function EventsList({
                 official={event.node.official}
                 date={event.node.next || event.node.prev}
                 kind="meetup"
+              />
+            ) : "start" in event ? (
+              <EventCard
+                key={event.id}
+                href={event.htmlLink}
+                date={new Date(event.start)}
+                name={event.title ?? "Working Group"}
+                city={event.location ?? "Online"}
+                kind="working-group"
               />
             ) : (
               <EventCard
