@@ -112,6 +112,10 @@ export function EventsList({
               key={tag}
               kind={tag}
               checked={kindFilters[tag]}
+              disabled={
+                Object.values(kindFilters).filter(Boolean).length === 1 &&
+                kindFilters[tag]
+              }
               onChange={event => {
                 setKindFilters(prev => ({
                   ...prev,

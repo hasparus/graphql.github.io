@@ -15,24 +15,27 @@ export interface EventFilterTagProps
   kind: EventKind
   checked: boolean
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  disabled?: boolean
 }
 
 export function EventFilterTag({
   kind,
   checked,
   onChange,
+  disabled,
   ...rest
 }: EventFilterTagProps) {
   return (
     <label
       {...rest}
-      className="cursor-pointer select-none hover:opacity-90 hover:ring hover:ring-neu-100 dark:hover:ring-neu-50"
+      className="cursor-pointer select-none hover:opacity-90 hover:ring hover:ring-neu-100 has-[>:disabled]:pointer-events-none dark:hover:ring-neu-50"
     >
       <input
         type="checkbox"
         className="sr-only"
         onChange={onChange}
         checked={checked}
+        disabled={disabled}
       />
       <Tag
         color={eventTagColors[kind]}
