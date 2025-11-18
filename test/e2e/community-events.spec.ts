@@ -142,10 +142,6 @@ test("map tooltip appears on marker hover", async ({ page }) => {
 test("event type filters hide cards and lock the last active tag", async ({
   page,
 }) => {
-  await page.evaluate(() => {
-    document.documentElement.querySelector("canvas")?.remove()
-  })
-
   const pastEventsSection = page
     .locator("section")
     .filter({
@@ -259,10 +255,6 @@ test("event type filters hide cards and lock the last active tag", async ({
 test("upcoming and past sections only show events on the correct side of now", async ({
   page,
 }) => {
-  await page.evaluate(() => {
-    document.documentElement.querySelector("canvas")?.remove()
-  })
-
   const upcomingSection = page
     .locator("section")
     .filter({
