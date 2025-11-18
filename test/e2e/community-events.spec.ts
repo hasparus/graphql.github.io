@@ -161,7 +161,7 @@ test("event type filters hide cards and lock the last active tag", async ({
   const filterGroup = pastEventsSection.getByRole("group", {
     name: "Event type",
   })
-  
+
   await expect(filterGroup).toBeVisible()
   const conferenceFilter = filterGroup.getByRole("checkbox", {
     name: /conference/i,
