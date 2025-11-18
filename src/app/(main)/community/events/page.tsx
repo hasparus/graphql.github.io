@@ -9,6 +9,7 @@ import { BenefitsSection } from "./benefits-section"
 import { GetYourMeetupNoticedSection } from "./get-your-meetup-noticed-section"
 import { BringGraphQLToYourCommunity } from "./bring-graphql-to-your-community"
 import { getAllEvents } from "./get-all-events"
+import { SubscribeToRssLink } from "./subscribe-to-rss-link"
 
 const ISSUE_TEMPLATE_LINK =
   "https://github.com/graphql/community-wg/issues/new?assignees=&labels=event&template=event-submission.yml"
@@ -67,7 +68,9 @@ export default async function EventsPage() {
               Add a new event
             </Button>
           </header>
-          <EventsList events={upcomingEvents} />
+          <EventsList events={upcomingEvents}>
+            <SubscribeToRssLink />
+          </EventsList>
         </section>
       )}
 

@@ -66,9 +66,11 @@ const ALL_SHOWN = {
 export function EventsList({
   events,
   className,
+  children,
 }: {
   events: AnyEvent[]
   className?: string
+  children?: React.ReactNode
 }) {
   const [kindFilters, setKindFilters] = useState(ALL_SHOWN)
 
@@ -104,28 +106,31 @@ export function EventsList({
 
   return (
     <div className={className}>
-      <fieldset className="mb-8">
-        <legend className="typography-menu mt-2">Event type</legend>
-        <div className="mt-4 flex gap-3">
-          {Array.from(tags).map(tag => (
-            <EventFilterTag
-              key={tag}
-              kind={tag}
-              checked={kindFilters[tag]}
-              disabled={
-                Object.values(kindFilters).filter(Boolean).length === 1 &&
-                kindFilters[tag]
-              }
-              onChange={event => {
-                setKindFilters(prev => ({
-                  ...prev,
-                  [tag]: event.target.checked,
-                }))
-              }}
-            />
-          ))}
-        </div>
-      </fieldset>
+      <div className="mb-8 flex items-end justify-between">
+        <fieldset>
+          <legend className="typography-menu mt-2">Event type</legend>
+          <div className="mt-4 flex gap-3">
+            {Array.from(tags).map(tag => (
+              <EventFilterTag
+                key={tag}
+                kind={tag}
+                checked={kindFilters[tag]}
+                disabled={
+                  Object.values(kindFilters).filter(Boolean).length === 1 &&
+                  kindFilters[tag]
+                }
+                onChange={event => {
+                  setKindFilters(prev => ({
+                    ...prev,
+                    [tag]: event.target.checked,
+                  }))
+                }}
+              />
+            ))}
+          </div>
+        </fieldset>
+        {children}
+      </div>
       <EventsScrollview>
         {events.map(event =>
           "node" in event ? (
