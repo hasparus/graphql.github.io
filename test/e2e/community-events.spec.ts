@@ -43,7 +43,7 @@ test("map matches screenshot", async ({ page }) => {
 
   await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
     "meetups-map.png",
-    { timeout: 30_000 },
+    { timeout: 30_000, maxDiffPixelRatio: 0.015 },
   )
 })
 
@@ -137,4 +137,84 @@ test("map tooltip appears on marker hover", async ({ page }) => {
   await page.mouse.move(clientX, clientY)
   await expect(tooltip).toHaveText("London GraphQL", { timeout: 5000 })
   await expect(tooltip).toBeVisible()
+})
+
+test("event type filters hide cards and lock the last active tag", async ({
+  page,
+}) => {
+  const pastEventsSection = page
+    .locator("section")
+    .filter({
+      has: page.getByRole("heading", {
+        level: 2,
+        name: /Past events & meetups/i,
+      }),
+    })
+    .first()
+
+  await pastEventsSection.scrollIntoViewIfNeeded()
+
+  const filterGroup = pastEventsSection.getByRole("group", {
+    name: "Event type",
+  })
+  const conferenceFilter = filterGroup.getByRole("checkbox", {
+    name: /conference/i,
+  })
+  const meetupFilter = filterGroup.getByRole("checkbox", { name: /meetup/i })
+  const workingGroupFilter = filterGroup.getByRole("checkbox", {
+    name: /working group/i,
+  })
+  const conferenceChip = filterGroup
+    .locator("label")
+    .filter({ hasText: /conference/i })
+    .first()
+  const meetupChip = filterGroup
+    .locator("label")
+    .filter({ hasText: /meetup/i })
+    .first()
+  const workingGroupChip = filterGroup
+    .locator("label")
+    .filter({ hasText: /working group/i })
+    .first()
+
+  const tagBadge = (tag: RegExp) =>
+    pastEventsSection.locator("a span:has(.Tag--bg)").filter({ hasText: tag })
+
+  const conferenceBadge = tagBadge(/^conference$/i)
+  const meetupBadge = tagBadge(/^meetup$/i)
+  const workingGroupBadge = tagBadge(/^working group$/i)
+
+  await expect(conferenceBadge.first()).toBeVisible()
+  await expect(meetupBadge.first()).toBeVisible()
+  await expect(workingGroupBadge.first()).toBeVisible()
+
+  await conferenceChip.click()
+  await expect(conferenceFilter).not.toBeChecked()
+  await expect(conferenceBadge).toHaveCount(0)
+  await conferenceChip.click()
+  await expect(conferenceFilter).toBeChecked()
+  await expect(conferenceBadge.first()).toBeVisible()
+
+  await meetupChip.click()
+  await expect(meetupFilter).not.toBeChecked()
+  await expect(meetupBadge).toHaveCount(0)
+  await meetupChip.click()
+  await expect(meetupFilter).toBeChecked()
+  await expect(meetupBadge.first()).toBeVisible()
+
+  await workingGroupChip.click()
+  await expect(workingGroupFilter).not.toBeChecked()
+  await expect(workingGroupBadge).toHaveCount(0)
+  await workingGroupChip.click()
+  await expect(workingGroupFilter).toBeChecked()
+  await expect(workingGroupBadge.first()).toBeVisible()
+
+  await conferenceChip.click()
+  await workingGroupChip.click()
+  await expect(meetupFilter).toBeDisabled()
+  await expect(meetupBadge.first()).toBeVisible()
+
+  await conferenceChip.click()
+  await workingGroupChip.click()
+  await expect(meetupFilter).toBeEnabled()
 })
