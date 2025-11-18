@@ -55,8 +55,8 @@ export interface EventCardProps {
   city: ReactNode
   name: ReactNode
   meta?: ReactNode
-  official?: boolean
   kind: "meetup" | "conference" | "working-group"
+  className?: string
 }
 
 export function EventCard({
@@ -65,8 +65,8 @@ export function EventCard({
   city,
   name,
   meta,
-  official,
   kind,
+  className,
 }: EventCardProps) {
   const dateLabel = formatDateLabel(date)
   const parsedDate = normaliseDate(date)
@@ -76,7 +76,6 @@ export function EventCard({
       className={clsx(
         "gql-focus-visible group flex min-h-[214px] min-w-[260px] flex-col overflow-hidden border border-neu-200 text-left text-current no-underline ring-neu-400 hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-50 dark:ring-neu-100 xs:min-w-[352px] lg:w-[408px]",
         "[--bg-opacity:0.05] hover:[--bg-opacity:0.07] dark:[--bg-opacity:0.03] hover:dark:[--bg-opacity:0.06]",
-
         "z-[4]",
         kind === "meetup" &&
           "bg-[hsl(var(--color-sec-base)/var(--bg-opacity))]",
@@ -84,6 +83,7 @@ export function EventCard({
           "bg-[hsl(var(--color-pri-base)/var(--bg-opacity))] dark:bg-white/5",
         kind === "working-group" &&
           "bg-[hsl(229deg_100%_70.4%_/_var(--bg-opacity))]",
+        className,
       )}
       target="_blank"
       rel="noreferrer"
@@ -98,7 +98,7 @@ export function EventCard({
           )}
         >
           <Tag color={eventTagColors[kind]}>{kind.replace("-", " ")}</Tag>
-          {meta ? (
+          {!!meta && (
             <span
               className={clsx(
                 String(meta).length < 22
@@ -109,8 +109,6 @@ export function EventCard({
             >
               {meta}
             </span>
-          ) : (
-            <span className="sr-only">Official GraphQL Local</span>
           )}
         </div>
 
