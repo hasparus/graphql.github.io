@@ -158,16 +158,9 @@ void main() {
   vec2 delta = abs(fragPx - center);
   bool insideSquare = delta.x <= squareHalf && delta.y <= squareHalf;
   bool isSeaCell = markerType <= 0.5 && landCoverage < 0.5;
-  bool shouldRenderHalo = !insideSquare || isSeaCell;
-  if (shouldRenderHalo) {
-    if (haloIntensity <= 0.0) {
-      discard;
-    }
-    float haloAlpha = clamp(haloIntensity, 0.0, 1.0);
-    color = mix(uSeaColor, uHaloColor, haloAlpha);
-    outColor = vec4(color, 1.0);
-    return;
-  }
+  float haloAlpha = clamp(haloIntensity, 0.0, 1.0);
+  color = (isSeaCell || !insideSquare) ? uSeaColor : color;
+  color = mix(color, uHaloColor, haloAlpha);
   outColor = vec4(color, 1.0);
 }
 `
