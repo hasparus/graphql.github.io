@@ -45,8 +45,8 @@ export type WorkingGroupMeeting =
 
 async function main() {
   if (!API_KEY) {
-    console.error("GOOGLE_CALENDAR_API_KEY is not set")
-    process.exit(1)
+    console.warn("GOOGLE_CALENDAR_API_KEY is not set, skipping sync (using existing file)")
+    return
   }
 
   const now = new Date()

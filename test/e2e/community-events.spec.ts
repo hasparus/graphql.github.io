@@ -157,6 +157,8 @@ test("event type filters hide cards and lock the last active tag", async ({
   const filterGroup = pastEventsSection.getByRole("group", {
     name: "Event type",
   })
+  
+  await expect(filterGroup).toBeVisible()
   const conferenceFilter = filterGroup.getByRole("checkbox", {
     name: /conference/i,
   })
@@ -273,6 +275,9 @@ test("upcoming and past sections only show events on the correct side of now", a
     upcomingSection.scrollIntoViewIfNeeded(),
     pastEventsSection.scrollIntoViewIfNeeded(),
   ])
+
+  await expect(upcomingSection).toBeVisible()
+  await expect(pastEventsSection).toBeVisible()
 
   const now = Date.now()
 
