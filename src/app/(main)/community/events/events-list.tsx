@@ -106,7 +106,7 @@ export function EventsList({
 
   return (
     <div className={className}>
-      <div className="mb-8 flex items-end justify-between">
+      <div className="flex justify-between gap-2 max-lg:flex-col-reverse lg:mb-8 lg:items-end">
         <fieldset>
           <legend className="typography-menu mt-2">Event type</legend>
           <div className="mt-4 flex gap-3">

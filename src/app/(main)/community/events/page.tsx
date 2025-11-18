@@ -62,7 +62,7 @@ export default async function EventsPage() {
               </p>
             </div>
             <Button
-              className="w-fit self-end lg:row-span-2"
+              className="w-fit self-end max-md:hidden lg:row-span-2"
               href={ISSUE_TEMPLATE_LINK}
             >
               Add a new event
@@ -71,6 +71,9 @@ export default async function EventsPage() {
           <EventsList events={upcomingEvents}>
             <SubscribeToRssLink />
           </EventsList>
+          <Button className="md:hidden" href={ISSUE_TEMPLATE_LINK}>
+            Add a new event
+          </Button>
         </section>
       )}
 
