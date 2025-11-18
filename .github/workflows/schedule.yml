@@ -1,0 +1,34 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0,12 * * *" # on midnight and noon
+
+jobs:
+  check:
+    if: github.ref == 'refs/heads/source'
+    uses: ./.github/workflows/check.yml
+
+  sync:
+    runs-on: ubuntu-latest
+    needs: check
+    if: github.ref == 'refs/heads/source'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: the-guild-org/shared-config/setup@main
+        name: setup env
+        with:
+          packageManager: pnpm
+          workingDirectory: ./
+
+      - name: Prebuild
+        run: pnpm prebuild
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "scripts/**/*"
+          commit_message: "Run sync scripts"
