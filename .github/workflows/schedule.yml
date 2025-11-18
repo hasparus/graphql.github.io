@@ -27,6 +27,13 @@ jobs:
       - name: Prebuild
         run: pnpm prebuild
 
+      - name: Sync conference data
+        if: false # disabled until next conference
+        run: |
+          tsx scripts/sync-sched/sync.ts --year 2025
+        env:
+          SCHED_ACCESS_TOKEN_2025: ${{ secrets.SCHED_ACCESS_TOKEN_2025 }}
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
