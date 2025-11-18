@@ -47,14 +47,25 @@ export async function getAllEvents() {
 
   for (const meetup of meetups) {
     const { next, prev } = meetup.node
+
+    // if next is in the past we treat it as past event
     if (next && new Date(next) < now) {
       pastEvents.push(meetup)
-    } else {
-      upcomingEvents.push(meetup)
+    }
+    // if prev is in the past it is obviously a past event
+    else if (prev && new Date(prev) < now) {
       pastEvents.push({
-        ...meetup,
-        date: prev,
+        node: {
+          ...meetup.node,
+          // we disregard .next, it's checked in nexdt if statement
+          next: "",
+        },
       })
+    }
+
+    // if next is in the future, it is an upcoming event
+    if (next && new Date(next) >= now) {
+      upcomingEvents.push(meetup)
     }
   }
 
