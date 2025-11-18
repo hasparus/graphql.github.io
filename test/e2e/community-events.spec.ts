@@ -253,7 +253,6 @@ test("event type filters hide cards and lock the last active tag", async ({
 test("upcoming and past sections only show events on the correct side of now", async ({
   page,
 }) => {
-  test.slow()
   const upcomingSection = page
     .locator("section")
     .filter({
