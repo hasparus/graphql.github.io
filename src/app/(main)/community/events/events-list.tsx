@@ -75,7 +75,7 @@ export function EventsList({
   const tags: Set<EventKind> = new Set()
   events.forEach(event => {
     if ("start" in event) tags.add("working-group")
-    if ("node" in event) tags.add("meetup")
+    else if ("node" in event) tags.add("meetup")
     else tags.add("conference")
   })
 
