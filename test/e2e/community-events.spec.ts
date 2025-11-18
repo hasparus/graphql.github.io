@@ -258,7 +258,10 @@ test("upcoming and past sections only show events on the correct side of now", a
   const upcomingDates = await readSectionDates(upcomingSection)
   expect(upcomingDates.length).toBeGreaterThan(0)
   upcomingDates.forEach(({ iso, text }) => {
-    expect(iso.length, `${text} is missing a datetime attribute`).toBeGreaterThan(0)
+    expect(
+      iso.length,
+      `${text} is missing a datetime attribute`,
+    ).toBeGreaterThan(0)
     const timestamp = Date.parse(iso)
     expect(
       Number.isNaN(timestamp),
@@ -273,7 +276,10 @@ test("upcoming and past sections only show events on the correct side of now", a
   const pastDates = await readSectionDates(pastEventsSection)
   expect(pastDates.length).toBeGreaterThan(0)
   pastDates.forEach(({ iso, text }) => {
-    expect(iso.length, `${text} is missing a datetime attribute`).toBeGreaterThan(0)
+    expect(
+      iso.length,
+      `${text} is missing a datetime attribute`,
+    ).toBeGreaterThan(0)
     const timestamp = Date.parse(iso)
     expect(
       Number.isNaN(timestamp),
