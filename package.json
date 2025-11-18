@@ -19,6 +19,7 @@
     "start": "next start",
     "test": "playwright test && pnpm test:unit",
     "test:e2e": "playwright test",
+    "test:show-report": "playwright show-report",
     "test:ui": "playwright test --ui",
     "test:unit": "node --import=tsx --test 'src/**/*.test.tsx'",
     "validate:snippets": "node scripts/validate-snippets.js"
