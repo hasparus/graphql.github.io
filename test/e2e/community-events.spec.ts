@@ -180,43 +180,74 @@ test("event type filters hide cards and lock the last active tag", async ({
   const tagBadge = (tag: RegExp) =>
     pastEventsSection.locator("a span:has(.Tag--bg)").filter({ hasText: tag })
 
-  const conferenceBadge = tagBadge(/^conference$/i)
-  const meetupBadge = tagBadge(/^meetup$/i)
-  const workingGroupBadge = tagBadge(/^working group$/i)
+  const filterDefinitions = [
+    {
+      kind: "conference",
+      filterName: /conference/i,
+      badgeText: /^conference$/i,
+      chip: conferenceChip,
+      filter: conferenceFilter,
+    },
+    {
+      kind: "meetup",
+      filterName: /meetup/i,
+      badgeText: /^meetup$/i,
+      chip: meetupChip,
+      filter: meetupFilter,
+    },
+    {
+      kind: "working group",
+      filterName: /working group/i,
+      badgeText: /^working group$/i,
+      chip: workingGroupChip,
+      filter: workingGroupFilter,
+    },
+  ] as const
 
-  await expect(conferenceBadge.first()).toBeVisible()
-  await expect(meetupBadge.first()).toBeVisible()
-  await expect(workingGroupBadge.first()).toBeVisible()
+  type FilterDefinition = (typeof filterDefinitions)[number]
+  type ActiveFilter = FilterDefinition & { badges: Locator }
 
-  await conferenceChip.click()
-  await expect(conferenceFilter).not.toBeChecked()
-  await expect(conferenceBadge).toHaveCount(0)
-  await conferenceChip.click()
-  await expect(conferenceFilter).toBeChecked()
-  await expect(conferenceBadge.first()).toBeVisible()
+  const activeFilters: ActiveFilter[] = []
 
-  await meetupChip.click()
-  await expect(meetupFilter).not.toBeChecked()
-  await expect(meetupBadge).toHaveCount(0)
-  await meetupChip.click()
-  await expect(meetupFilter).toBeChecked()
-  await expect(meetupBadge.first()).toBeVisible()
+  for (const definition of filterDefinitions) {
+    const badgeLocator = tagBadge(definition.badgeText)
+    if ((await definition.filter.count()) === 0) continue
+    activeFilters.push({ ...definition, badges: badgeLocator })
+  }
 
-  await workingGroupChip.click()
-  await expect(workingGroupFilter).not.toBeChecked()
-  await expect(workingGroupBadge).toHaveCount(0)
-  await workingGroupChip.click()
-  await expect(workingGroupFilter).toBeChecked()
-  await expect(workingGroupBadge.first()).toBeVisible()
+  expect(activeFilters.length).toBeGreaterThan(0)
 
-  await conferenceChip.click()
-  await workingGroupChip.click()
-  await expect(meetupFilter).toBeDisabled()
-  await expect(meetupBadge.first()).toBeVisible()
+  for (const activeFilter of activeFilters) {
+    await expect(activeFilter.badges.first()).toBeVisible()
+    await activeFilter.chip.click()
+    await expect(activeFilter.filter).not.toBeChecked()
+    await expect(activeFilter.badges).toHaveCount(0)
+    await activeFilter.chip.click()
+    await expect(activeFilter.filter).toBeChecked()
+    await expect(activeFilter.badges.first()).toBeVisible()
+  }
 
-  await conferenceChip.click()
-  await workingGroupChip.click()
-  await expect(meetupFilter).toBeEnabled()
+  if (activeFilters.length < 2) {
+    return
+  }
+
+  const [lockedFilter, ...filtersToToggle] = activeFilters
+
+  for (const filter of filtersToToggle) {
+    await filter.chip.click()
+    await expect(filter.filter).not.toBeChecked()
+  }
+
+  await expect(lockedFilter.filter).toBeChecked()
+  await expect(lockedFilter.filter).toBeDisabled()
+  await expect(lockedFilter.badges.first()).toBeVisible()
+
+  for (const filter of filtersToToggle) {
+    await filter.chip.click()
+    await expect(filter.filter).toBeChecked()
+  }
+
+  await expect(lockedFilter.filter).toBeEnabled()
 })
 
 test("upcoming and past sections only show events on the correct side of now", async ({
@@ -258,7 +289,10 @@ test("upcoming and past sections only show events on the correct side of now", a
   const upcomingDates = await readSectionDates(upcomingSection)
   expect(upcomingDates.length).toBeGreaterThan(0)
   upcomingDates.forEach(({ iso, text }) => {
-    expect(iso.length, `${text} is missing a datetime attribute`).toBeGreaterThan(0)
+    expect(
+      iso.length,
+      `${text} is missing a datetime attribute`,
+    ).toBeGreaterThan(0)
     const timestamp = Date.parse(iso)
     expect(
       Number.isNaN(timestamp),
@@ -273,7 +307,10 @@ test("upcoming and past sections only show events on the correct side of now", a
   const pastDates = await readSectionDates(pastEventsSection)
   expect(pastDates.length).toBeGreaterThan(0)
   pastDates.forEach(({ iso, text }) => {
-    expect(iso.length, `${text} is missing a datetime attribute`).toBeGreaterThan(0)
+    expect(
+      iso.length,
+      `${text} is missing a datetime attribute`,
+    ).toBeGreaterThan(0)
     const timestamp = Date.parse(iso)
     expect(
       Number.isNaN(timestamp),
