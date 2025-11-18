@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect, type Locator } from "@playwright/test"
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/community/events")
@@ -217,4 +217,71 @@ test("event type filters hide cards and lock the last active tag", async ({
   await conferenceChip.click()
   await workingGroupChip.click()
   await expect(meetupFilter).toBeEnabled()
+})
+
+test("upcoming and past sections only show events on the correct side of now", async ({
+  page,
+}) => {
+  const upcomingSection = page
+    .locator("section")
+    .filter({
+      has: page.getByRole("heading", { level: 2, name: /Upcoming events/i }),
+    })
+    .first()
+  const pastEventsSection = page
+    .locator("section")
+    .filter({
+      has: page.getByRole("heading", {
+        level: 2,
+        name: /Past events & meetups/i,
+      }),
+    })
+    .first()
+
+  await Promise.all([
+    upcomingSection.scrollIntoViewIfNeeded(),
+    pastEventsSection.scrollIntoViewIfNeeded(),
+  ])
+
+  const now = Date.now()
+
+  const readSectionDates = async (section: Locator) => {
+    const entries = await section.locator("a time").evaluateAll(elements =>
+      elements.map(element => ({
+        iso: element.getAttribute("datetime") ?? "",
+        text: element.textContent?.trim() ?? "",
+      })),
+    )
+    return entries
+  }
+
+  const upcomingDates = await readSectionDates(upcomingSection)
+  expect(upcomingDates.length).toBeGreaterThan(0)
+  upcomingDates.forEach(({ iso, text }) => {
+    expect(iso.length, `${text} is missing a datetime attribute`).toBeGreaterThan(0)
+    const timestamp = Date.parse(iso)
+    expect(
+      Number.isNaN(timestamp),
+      `${text} carries an invalid datetime attribute: ${iso}`,
+    ).toBe(false)
+    expect(
+      timestamp,
+      `${text} should be in the future but resolved to ${iso}`,
+    ).toBeGreaterThanOrEqual(now)
+  })
+
+  const pastDates = await readSectionDates(pastEventsSection)
+  expect(pastDates.length).toBeGreaterThan(0)
+  pastDates.forEach(({ iso, text }) => {
+    expect(iso.length, `${text} is missing a datetime attribute`).toBeGreaterThan(0)
+    const timestamp = Date.parse(iso)
+    expect(
+      Number.isNaN(timestamp),
+      `${text} carries an invalid datetime attribute: ${iso}`,
+    ).toBe(false)
+    expect(
+      timestamp,
+      `${text} should be in the past but resolved to ${iso}`,
+    ).toBeLessThan(now)
+  })
 })
