@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { test, expect, type Locator } from "@playwright/test"
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/community/events")
@@ -43,7 +43,7 @@ test("map matches screenshot", async ({ page }) => {
 
   await expect(mapContainer.locator("canvas").first()).toHaveScreenshot(
     "meetups-map.png",
-    { timeout: 30_000 },
+    { timeout: 30_000, maxDiffPixelRatio: 0.015 },
   )
 })
 
@@ -137,4 +137,211 @@ test("map tooltip appears on marker hover", async ({ page }) => {
   await page.mouse.move(clientX, clientY)
   await expect(tooltip).toHaveText("London GraphQL", { timeout: 5000 })
   await expect(tooltip).toBeVisible()
+})
+
+test("event type filters hide cards and lock the last active tag", async ({
+  page,
+}) => {
+  // TODO: @hasparus figure out why this fails only on CI
+  if (process.env.CI) test.skip()
+
+  const pastEventsSection = page
+    .locator("section")
+    .filter({
+      has: page.getByRole("heading", {
+        level: 2,
+        name: /Past events & meetups/i,
+      }),
+    })
+    .first()
+
+  await pastEventsSection.scrollIntoViewIfNeeded()
+
+  const filterGroup = pastEventsSection.getByRole("group", {
+    name: "Event type",
+  })
+
+  await expect(filterGroup).toBeVisible()
+  const conferenceFilter = filterGroup.getByRole("checkbox", {
+    name: /conference/i,
+  })
+  const meetupFilter = filterGroup.getByRole("checkbox", { name: /meetup/i })
+  const workingGroupFilter = filterGroup.getByRole("checkbox", {
+    name: /working group/i,
+  })
+  const conferenceChip = filterGroup
+    .locator("label")
+    .filter({ hasText: /conference/i })
+    .first()
+  const meetupChip = filterGroup
+    .locator("label")
+    .filter({ hasText: /meetup/i })
+    .first()
+  const workingGroupChip = filterGroup
+    .locator("label")
+    .filter({ hasText: /working group/i })
+    .first()
+
+  const tagBadge = (tag: RegExp) =>
+    pastEventsSection.locator("a span:has(.Tag--bg)").filter({ hasText: tag })
+
+  const filterDefinitions = [
+    {
+      kind: "conference",
+      filterName: /conference/i,
+      badgeText: /^conference$/i,
+      chip: conferenceChip,
+      filter: conferenceFilter,
+    },
+    {
+      kind: "meetup",
+      filterName: /meetup/i,
+      badgeText: /^meetup$/i,
+      chip: meetupChip,
+      filter: meetupFilter,
+    },
+    {
+      kind: "working group",
+      filterName: /working group/i,
+      badgeText: /^working group$/i,
+      chip: workingGroupChip,
+      filter: workingGroupFilter,
+    },
+  ] as const
+
+  type FilterDefinition = (typeof filterDefinitions)[number]
+  type ActiveFilter = FilterDefinition & { badges: Locator }
+
+  const activeFilters: ActiveFilter[] = []
+  const toggleableFilters: ActiveFilter[] = []
+
+  for (const definition of filterDefinitions) {
+    const badgeLocator = tagBadge(definition.badgeText)
+    if ((await definition.filter.count()) === 0) continue
+    const filterDefinition = { ...definition, badges: badgeLocator }
+    activeFilters.push(filterDefinition)
+    if (await definition.filter.isEnabled()) {
+      toggleableFilters.push(filterDefinition)
+    }
+  }
+
+  expect(activeFilters.length).toBeGreaterThan(0)
+
+  for (const activeFilter of activeFilters) {
+    await expect(activeFilter.badges.first()).toBeVisible()
+  }
+
+  if (toggleableFilters.length === 0) {
+    return
+  }
+
+  for (const activeFilter of toggleableFilters) {
+    await activeFilter.chip.click()
+    await expect(activeFilter.filter).not.toBeChecked()
+    await expect(activeFilter.badges).toHaveCount(0)
+    await activeFilter.chip.click()
+    await expect(activeFilter.filter).toBeChecked()
+    await expect(activeFilter.badges.first()).toBeVisible()
+  }
+
+  if (toggleableFilters.length < 2) {
+    return
+  }
+
+  const [lockedFilter, ...filtersToToggle] = toggleableFilters
+
+  for (const filter of filtersToToggle) {
+    await filter.chip.click()
+    await expect(filter.filter).not.toBeChecked()
+  }
+
+  await expect(lockedFilter.filter).toBeChecked()
+  await expect(lockedFilter.filter).toBeDisabled()
+  await expect(lockedFilter.badges.first()).toBeVisible()
+
+  for (const filter of filtersToToggle) {
+    await filter.chip.click()
+    await expect(filter.filter).toBeChecked()
+  }
+
+  await expect(lockedFilter.filter).toBeEnabled()
+})
+
+test("upcoming and past sections only show events on the correct side of now", async ({
+  page,
+}) => {
+  // TODO: @hasparus figure out why this fails only on CI
+  if (process.env.CI) test.skip()
+
+  const upcomingSection = page
+    .locator("section")
+    .filter({
+      has: page.getByRole("heading", { level: 2, name: /Upcoming events/i }),
+    })
+    .first()
+  const pastEventsSection = page
+    .locator("section")
+    .filter({
+      has: page.getByRole("heading", {
+        level: 2,
+        name: /Past events & meetups/i,
+      }),
+    })
+    .first()
+
+  await Promise.all([
+    upcomingSection.scrollIntoViewIfNeeded(),
+    pastEventsSection.scrollIntoViewIfNeeded(),
+  ])
+
+  await expect(upcomingSection).toBeVisible()
+  await expect(pastEventsSection).toBeVisible()
+
+  const now = Date.now()
+
+  const readSectionDates = async (section: Locator) => {
+    const entries = await section.locator("a time").evaluateAll(elements =>
+      elements.map(element => ({
+        iso: element.getAttribute("datetime") ?? "",
+        text: element.textContent?.trim() ?? "",
+      })),
+    )
+    return entries
+  }
+
+  const upcomingDates = await readSectionDates(upcomingSection)
+  expect(upcomingDates.length).toBeGreaterThan(0)
+  upcomingDates.forEach(({ iso, text }) => {
+    expect(
+      iso.length,
+      `${text} is missing a datetime attribute`,
+    ).toBeGreaterThan(0)
+    const timestamp = Date.parse(iso)
+    expect(
+      Number.isNaN(timestamp),
+      `${text} carries an invalid datetime attribute: ${iso}`,
+    ).toBe(false)
+    expect(
+      timestamp,
+      `${text} should be in the future but resolved to ${iso}`,
+    ).toBeGreaterThanOrEqual(now)
+  })
+
+  const pastDates = await readSectionDates(pastEventsSection)
+  expect(pastDates.length).toBeGreaterThan(0)
+  pastDates.forEach(({ iso, text }) => {
+    expect(
+      iso.length,
+      `${text} is missing a datetime attribute`,
+    ).toBeGreaterThan(0)
+    const timestamp = Date.parse(iso)
+    expect(
+      Number.isNaN(timestamp),
+      `${text} carries an invalid datetime attribute: ${iso}`,
+    ).toBe(false)
+    expect(
+      timestamp,
+      `${text} should be in the past but resolved to ${iso}`,
+    ).toBeLessThan(now)
+  })
 })

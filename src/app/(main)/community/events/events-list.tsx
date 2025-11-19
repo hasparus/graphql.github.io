@@ -3,6 +3,8 @@
 import { useState, type ComponentPropsWithoutRef } from "react"
 import { clsx } from "clsx"
 
+import type { WorkingGroupMeeting } from "@/../scripts/sync-working-groups/sync-working-groups"
+
 import { EventCard } from "./event-card"
 import { EventsScrollview } from "./events-scrollview"
 import type { Event, Meetup } from "./events"
@@ -53,6 +55,8 @@ export function FilterChip({
   )
 }
 
+type AnyEvent = Event | Meetup | WorkingGroupMeeting
+
 const ALL_SHOWN = {
   meetup: true,
   conference: true,
@@ -62,25 +66,48 @@ const ALL_SHOWN = {
 export function EventsList({
   events,
   className,
+  children,
 }: {
-  events: Array<Event | Meetup>
+  events: AnyEvent[]
   className?: string
+  children?: React.ReactNode
 }) {
   const [kindFilters, setKindFilters] = useState(ALL_SHOWN)
 
-  if (events.length === 0) return null
-
   const tags: Set<EventKind> = new Set()
   events.forEach(event => {
-    // todo: add working groups
-    if ("node" in event) tags.add("meetup")
+    if ("start" in event) tags.add("working-group")
+    else if ("node" in event) tags.add("meetup")
     else tags.add("conference")
+  })
+
+  events = events.filter(event => {
+    if ("node" in event) {
+      return kindFilters.meetup
+    }
+    if ("start" in event) {
+      return kindFilters["working-group"]
+    }
+    if ("slug" in event) {
+      return kindFilters.conference
+    }
+  })
+
+  // we filter out all working groups further in the future than 30 days
+  const FUTURE_DAYS_TO_SHOW = 30
+  const DAY_IN_MS = 24 * 60 * 60 * 1000
+  const thirtyDaysFromNow = Date.now() + FUTURE_DAYS_TO_SHOW * DAY_IN_MS
+  events = events.filter(event => {
+    if ("start" in event) {
+      return new Date(event.start).getTime() <= thirtyDaysFromNow
+    }
+    return true
   })
 
   return (
     <div className={className}>
-      {tags.size > 1 && events.length > 4 ? (
-        <fieldset className="mb-8">
+      <div className="flex justify-between gap-2 max-lg:flex-col-reverse lg:mb-8 lg:items-end">
+        <fieldset>
           <legend className="typography-menu mt-2">Event type</legend>
           <div className="mt-4 flex gap-3">
             {Array.from(tags).map(tag => (
@@ -88,6 +115,10 @@ export function EventsList({
                 key={tag}
                 kind={tag}
                 checked={kindFilters[tag]}
+                disabled={
+                  Object.values(kindFilters).filter(Boolean).length === 1 &&
+                  kindFilters[tag]
+                }
                 onChange={event => {
                   setKindFilters(prev => ({
                     ...prev,
@@ -98,36 +129,40 @@ export function EventsList({
             ))}
           </div>
         </fieldset>
-      ) : null}
+        {children}
+      </div>
       <EventsScrollview>
-        {events
-          .filter(event => {
-            if ("node" in event) return kindFilters["meetup"]
-            else return kindFilters["conference"]
-          })
-          .map(event =>
-            "node" in event ? (
-              <EventCard
-                key={event.node.id}
-                name={event.node.name}
-                href={event.node.link}
-                city={event.node.city + ", " + event.node.country}
-                official={event.node.official}
-                date={event.node.next || event.node.prev}
-                kind="meetup"
-              />
-            ) : (
-              <EventCard
-                key={event.slug}
-                href={event.eventLink}
-                date={new Date(event.date)}
-                meta={event.host}
-                name={event.name}
-                city={event.location}
-                kind="conference"
-              />
-            ),
-          )}
+        {events.map(event =>
+          "node" in event ? (
+            <EventCard
+              key={event.node.id}
+              name={event.node.name}
+              href={event.node.link}
+              city={event.node.city + ", " + event.node.country}
+              date={event.node.next || event.node.prev}
+              kind="meetup"
+            />
+          ) : "start" in event ? (
+            <EventCard
+              key={event.id}
+              href={event.htmlLink}
+              date={new Date(event.start)}
+              name={event.summary ?? "Working Group"}
+              city="Online" // event.location is a zoom link, we could potentially use but we'd have to refactor the event-card to avoid nested anchors
+              kind="working-group"
+            />
+          ) : (
+            <EventCard
+              key={event.slug}
+              href={event.eventLink}
+              date={new Date(event.date)}
+              meta={event.host}
+              name={event.name}
+              city={event.location}
+              kind="conference"
+            />
+          ),
+        )}
       </EventsScrollview>
     </div>
   )

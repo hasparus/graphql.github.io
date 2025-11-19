@@ -55,8 +55,8 @@ export interface EventCardProps {
   city: ReactNode
   name: ReactNode
   meta?: ReactNode
-  official?: boolean
   kind: "meetup" | "conference" | "working-group"
+  className?: string
 }
 
 export function EventCard({
@@ -65,8 +65,8 @@ export function EventCard({
   city,
   name,
   meta,
-  official,
   kind,
+  className,
 }: EventCardProps) {
   const dateLabel = formatDateLabel(date)
   const parsedDate = normaliseDate(date)
@@ -74,9 +74,8 @@ export function EventCard({
     <a
       href={href}
       className={clsx(
-        "gql-focus-visible group flex min-h-[214px] min-w-[260px] flex-col overflow-hidden border border-neu-200 text-left text-current no-underline ring-neu-400 hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-50 dark:ring-neu-100 xs:min-w-[352px]",
+        "gql-focus-visible group flex min-h-[214px] min-w-[260px] flex-col overflow-hidden border border-neu-200 text-left text-current no-underline ring-neu-400 hover:ring-1 hover:ring-offset-1 hover:ring-offset-neu-0 dark:border-neu-50 dark:ring-neu-100 xs:min-w-[352px] lg:w-[408px]",
         "[--bg-opacity:0.05] hover:[--bg-opacity:0.07] dark:[--bg-opacity:0.03] hover:dark:[--bg-opacity:0.06]",
-
         "z-[4]",
         kind === "meetup" &&
           "bg-[hsl(var(--color-sec-base)/var(--bg-opacity))]",
@@ -84,6 +83,7 @@ export function EventCard({
           "bg-[hsl(var(--color-pri-base)/var(--bg-opacity))] dark:bg-white/5",
         kind === "working-group" &&
           "bg-[hsl(229deg_100%_70.4%_/_var(--bg-opacity))]",
+        className,
       )}
       target="_blank"
       rel="noreferrer"
@@ -97,11 +97,18 @@ export function EventCard({
               : "-mb-2 pt-2 xs:-mb-4 xs:pt-3",
           )}
         >
-          <Tag color={eventTagColors[kind]}>{kind}</Tag>
-          {meta ? (
-            <span className="typography-body-md">{meta}</span>
-          ) : (
-            <span className="sr-only">Official GraphQL Local</span>
+          <Tag color={eventTagColors[kind]}>{kind.replace("-", " ")}</Tag>
+          {!!meta && (
+            <span
+              className={clsx(
+                String(meta).length < 22
+                  ? "typography-body-md"
+                  : "typography-body-sm",
+                "overflow-hidden text-ellipsis whitespace-pre",
+              )}
+            >
+              {meta}
+            </span>
           )}
         </div>
 
@@ -121,7 +128,15 @@ export function EventCard({
             <div className="typography-body-sm flex items-center gap-1 px-2 py-1.5 text-neu-800 dark:text-neu-600 xs:gap-1.5 xs:px-4 xs:py-2.5">
               <CalendarIcon className="size-4 shrink-0 translate-y-[-.5px] text-neu-800 dark:text-neu-500 xs:size-5" />
               {parsedDate ? (
-                <time dateTime={parsedDate.toISOString()}>{dateLabel}</time>
+                <time dateTime={parsedDate.toISOString()}>
+                  {kind === "working-group"
+                    ? parsedDate.toLocaleString(undefined, {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                        hour12: false,
+                      })
+                    : dateLabel}
+                </time>
               ) : (
                 <span>{dateLabel}</span>
               )}
