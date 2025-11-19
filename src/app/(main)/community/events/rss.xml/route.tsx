@@ -3,7 +3,6 @@ import RSS from "rss"
 import { getAllEvents } from "../get-all-events"
 
 export const dynamic = "force-static"
-export const config = { runtime: "edge" }
 
 export async function GET() {
   const { upcomingEvents, pastEvents } = await getAllEvents()
