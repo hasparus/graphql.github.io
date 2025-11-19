@@ -20,16 +20,23 @@ export default defineConfig({
   timeout: 60 * 1000,
 
   projects: [
+    // {
+    //   name: "chromium",
+    //   use: {
+    //     ...devices["Desktop Chrome"],
+    //     channel: "chromium",
+    //     ...(process.env.CI
+    //       ? {
+    //           args: ["--enable-gpu"],
+    //         }
+    //       : {}),
+    //   },
+    // },
     {
-      name: "chromium",
+      name: "chrome",
       use: {
         ...devices["Desktop Chrome"],
-        channel: "chromium",
-        ...(process.env.CI
-          ? {
-              args: ["--enable-gpu"],
-            }
-          : {}),
+        channel: "chrome",
       },
     },
   ],
