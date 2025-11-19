@@ -78,5 +78,5 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      - uses: valeriangalliat/action-sshd-cloudflared@v1
-        if: failure()
+      # - uses: valeriangalliat/action-sshd-cloudflared@v1
+      #   if: failure()

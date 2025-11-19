@@ -141,7 +141,8 @@ test("map tooltip appears on marker hover", async ({ page }) => {
 test("event type filters hide cards and lock the last active tag", async ({
   page,
 }) => {
-  await page.goto("/community/events")
+  await page.goto("/community/events", { waitUntil: "load" })
+
   const pastEventsSection = page
     .locator("section")
     .filter({
@@ -152,7 +153,8 @@ test("event type filters hide cards and lock the last active tag", async ({
     })
     .first()
 
-  await pastEventsSection.scrollIntoViewIfNeeded()
+  await pastEventsSection.waitFor({ state: "visible", timeout: 20000 })
+  await page.waitForTimeout(1000)
 
   const filterGroup = pastEventsSection.locator("fieldset")
 
@@ -216,7 +218,8 @@ test("event type filters hide cards and lock the last active tag", async ({
 test("upcoming and past sections only show events on the correct side of now", async ({
   page,
 }) => {
-  await page.goto("/community/events")
+  await page.goto("/community/events", { waitUntil: "load" })
+
   const upcomingSection = page
     .locator("section")
     .filter({
@@ -233,10 +236,10 @@ test("upcoming and past sections only show events on the correct side of now", a
     })
     .first()
 
-  await Promise.all([
-    upcomingSection.scrollIntoViewIfNeeded(),
-    pastEventsSection.scrollIntoViewIfNeeded(),
-  ])
+  // Wait for both sections to be visible  
+  await upcomingSection.waitFor({ state: "visible", timeout: 20000 })
+  await pastEventsSection.waitFor({ state: "visible", timeout: 20000 })
+  await page.waitForTimeout(1000)
 
   const now = Date.now()
 
