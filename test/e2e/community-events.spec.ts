@@ -142,9 +142,6 @@ test("map tooltip appears on marker hover", async ({ page }) => {
 test("event type filters hide cards and lock the last active tag", async ({
   page,
 }) => {
-  // TODO: @hasparus figure out why this fails only on CI
-  if (process.env.CI) test.skip()
-
   const pastEventsSection = page
     .locator("section")
     .filter({
