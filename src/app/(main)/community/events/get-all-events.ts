@@ -17,27 +17,19 @@ const WORKING_GROUP_MEETINGS_FILE = join(
 export async function getAllEvents() {
   const workingGroupMeetings = await loadWorkingGroupMeetings()
 
-  let {
-    pastEvents,
-    upcomingEvents,
-  }: { pastEvents: AnyEvent[]; upcomingEvents: AnyEvent[] } = events.reduce(
-    (acc, event) => {
-      const now = new Date()
-      const date = new Date(event.date)
-      if (date < now) {
-        acc.pastEvents.push(event)
-      } else {
-        acc.upcomingEvents.push(event)
-      }
-      return acc
-    },
-    { pastEvents: [], upcomingEvents: [] } as {
-      pastEvents: Event[]
-      upcomingEvents: Event[]
-    },
-  )
+  let pastEvents: AnyEvent[] = []
+  let upcomingEvents: AnyEvent[] = []
 
   const now = new Date()
+
+  for (const event of events) {
+    const date = new Date(event.date)
+    if (date < now) {
+      pastEvents.push(event)
+    } else {
+      upcomingEvents.push(event)
+    }
+  }
 
   for (const meeting of workingGroupMeetings) {
     if (meeting.start && new Date(meeting.start) < now) {
