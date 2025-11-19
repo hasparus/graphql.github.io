@@ -152,7 +152,9 @@ test("event type filters hide cards and lock the last active tag", async ({
     })
     .first()
 
-  await pastEventsSection.scrollIntoViewIfNeeded()
+  await pastEventsSection.waitFor({ state: "visible" })
+  await pastEventsSection.scrollIntoViewIfNeeded({ timeout: 10000 })
+  await page.waitForTimeout(300) // Brief stabilization to prevent DOM detachment
 
   const filterGroup = pastEventsSection.locator("fieldset")
 
@@ -233,10 +235,10 @@ test("upcoming and past sections only show events on the correct side of now", a
     })
     .first()
 
-  await Promise.all([
-    upcomingSection.scrollIntoViewIfNeeded(),
-    pastEventsSection.scrollIntoViewIfNeeded(),
-  ])
+  // Scroll sections sequentially to avoid DOM detachment issues on CI
+  await upcomingSection.scrollIntoViewIfNeeded({ timeout: 10000 })
+  await page.waitForTimeout(200)
+  await pastEventsSection.scrollIntoViewIfNeeded({ timeout: 10000 })
 
   const now = Date.now()
 
