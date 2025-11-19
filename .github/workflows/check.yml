@@ -1,6 +1,8 @@
 name: lint & test
 
-on: pull_request
+on:
+  - pull_request
+  - workflow_call
 
 jobs:
   check:
@@ -61,7 +63,10 @@ jobs:
         # since the amount of time it takes to restore the cache is
         # comparable to the time it takes to download the binaries"
       - name: Install Playwright Browsers
-        run: ./node_modules/.bin/playwright install --with-deps
+        run: ./node_modules/.bin/playwright install --with-deps --no-shell
+
+      - name: Build the website
+        run: pnpm build
 
       - name: Run end-to-end tests
         run: ./node_modules/.bin/playwright test
@@ -72,3 +77,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      - uses: valeriangalliat/action-sshd-cloudflared@v1
+        if: failure()

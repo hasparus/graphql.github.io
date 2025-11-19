@@ -1,11 +1,8 @@
 import { test, expect, type Locator } from "@playwright/test"
 
-test.beforeEach(async ({ page }) => {
-  await page.goto("/community/events")
-})
-
 test("Zurich meetup link works", async ({ page }) => {
   if (process.env.CI) test.skip()
+  await page.goto("/community/events")
 
   const link = page.getByRole("link", { name: /Zurich/i }).first()
   await link.scrollIntoViewIfNeeded()
@@ -22,6 +19,7 @@ test("Zurich meetup link works", async ({ page }) => {
 
 test("map matches screenshot", async ({ page }) => {
   if (process.env.CI) test.skip()
+  await page.goto("/community/events")
 
   const mapContainer = page.locator("#meetups-map").first()
   await mapContainer.scrollIntoViewIfNeeded()
@@ -49,6 +47,7 @@ test("map matches screenshot", async ({ page }) => {
 
 test("map tooltip appears on marker hover", async ({ page }) => {
   if (process.env.CI) test.skip()
+  await page.goto("/community/events")
 
   const mapContainer = page.locator("#meetups-map").first()
   await mapContainer.scrollIntoViewIfNeeded()
@@ -142,6 +141,7 @@ test("map tooltip appears on marker hover", async ({ page }) => {
 test("event type filters hide cards and lock the last active tag", async ({
   page,
 }) => {
+  await page.goto("/community/events")
   const pastEventsSection = page
     .locator("section")
     .filter({
@@ -154,65 +154,28 @@ test("event type filters hide cards and lock the last active tag", async ({
 
   await pastEventsSection.scrollIntoViewIfNeeded()
 
-  const filterGroup = pastEventsSection.getByRole("group", {
-    name: "Event type",
-  })
-  const conferenceFilter = filterGroup.getByRole("checkbox", {
-    name: /conference/i,
-  })
-  const meetupFilter = filterGroup.getByRole("checkbox", { name: /meetup/i })
-  const workingGroupFilter = filterGroup.getByRole("checkbox", {
-    name: /working group/i,
-  })
-  const conferenceChip = filterGroup
-    .locator("label")
-    .filter({ hasText: /conference/i })
-    .first()
-  const meetupChip = filterGroup
-    .locator("label")
-    .filter({ hasText: /meetup/i })
-    .first()
-  const workingGroupChip = filterGroup
-    .locator("label")
-    .filter({ hasText: /working group/i })
-    .first()
+  const filterGroup = pastEventsSection.locator("fieldset")
 
-  const tagBadge = (tag: RegExp) =>
-    pastEventsSection.locator("a span:has(.Tag--bg)").filter({ hasText: tag })
+  const activeFilters: { filter: Locator; chip: Locator; badges: Locator }[] =
+    []
 
-  const filterDefinitions = [
-    {
-      kind: "conference",
-      filterName: /conference/i,
-      badgeText: /^conference$/i,
-      chip: conferenceChip,
-      filter: conferenceFilter,
-    },
-    {
-      kind: "meetup",
-      filterName: /meetup/i,
-      badgeText: /^meetup$/i,
-      chip: meetupChip,
-      filter: meetupFilter,
-    },
-    {
-      kind: "working group",
-      filterName: /working group/i,
-      badgeText: /^working group$/i,
-      chip: workingGroupChip,
-      filter: workingGroupFilter,
-    },
-  ] as const
+  for (const kind of ["conference", "meetup", "working group"]) {
+    const filter = filterGroup.getByRole("checkbox", {
+      name: new RegExp(kind, "i"),
+    })
 
-  type FilterDefinition = (typeof filterDefinitions)[number]
-  type ActiveFilter = FilterDefinition & { badges: Locator }
+    if ((await filter.count()) === 0) continue
 
-  const activeFilters: ActiveFilter[] = []
-
-  for (const definition of filterDefinitions) {
-    const badgeLocator = tagBadge(definition.badgeText)
-    if ((await definition.filter.count()) === 0) continue
-    activeFilters.push({ ...definition, badges: badgeLocator })
+    activeFilters.push({
+      filter,
+      chip: filterGroup
+        .locator("label")
+        .filter({ hasText: new RegExp(kind, "i") })
+        .first(),
+      badges: pastEventsSection
+        .locator("a span:has(.Tag--bg)")
+        .filter({ hasText: new RegExp(`^${kind}$`, "i") }),
+    })
   }
 
   expect(activeFilters.length).toBeGreaterThan(0)
@@ -253,6 +216,7 @@ test("event type filters hide cards and lock the last active tag", async ({
 test("upcoming and past sections only show events on the correct side of now", async ({
   page,
 }) => {
+  await page.goto("/community/events")
   const upcomingSection = page
     .locator("section")
     .filter({
@@ -276,49 +240,46 @@ test("upcoming and past sections only show events on the correct side of now", a
 
   const now = Date.now()
 
-  const readSectionDates = async (section: Locator) => {
-    const entries = await section.locator("a time").evaluateAll(elements =>
+  const validateSectionDates = async (
+    section: Locator,
+    predicate: (timestamp: number) => boolean,
+    errorMessage: string,
+  ) => {
+    const dates = await section.locator("a time").evaluateAll(elements =>
       elements.map(element => ({
         iso: element.getAttribute("datetime") ?? "",
         text: element.textContent?.trim() ?? "",
       })),
     )
-    return entries
+
+    expect(dates.length).toBeGreaterThan(0)
+
+    for (const { iso, text } of dates) {
+      expect(
+        iso.length,
+        `${text} is missing a datetime attribute`,
+      ).toBeGreaterThan(0)
+      const timestamp = Date.parse(iso)
+      expect(
+        Number.isNaN(timestamp),
+        `${text} carries an invalid datetime attribute: ${iso}`,
+      ).toBe(false)
+      expect(
+        predicate(timestamp),
+        `${text} ${errorMessage} but resolved to ${iso}`,
+      ).toBe(true)
+    }
   }
 
-  const upcomingDates = await readSectionDates(upcomingSection)
-  expect(upcomingDates.length).toBeGreaterThan(0)
-  upcomingDates.forEach(({ iso, text }) => {
-    expect(
-      iso.length,
-      `${text} is missing a datetime attribute`,
-    ).toBeGreaterThan(0)
-    const timestamp = Date.parse(iso)
-    expect(
-      Number.isNaN(timestamp),
-      `${text} carries an invalid datetime attribute: ${iso}`,
-    ).toBe(false)
-    expect(
-      timestamp,
-      `${text} should be in the future but resolved to ${iso}`,
-    ).toBeGreaterThanOrEqual(now)
-  })
+  await validateSectionDates(
+    upcomingSection,
+    ts => ts >= now,
+    "should be in the future",
+  )
 
-  const pastDates = await readSectionDates(pastEventsSection)
-  expect(pastDates.length).toBeGreaterThan(0)
-  pastDates.forEach(({ iso, text }) => {
-    expect(
-      iso.length,
-      `${text} is missing a datetime attribute`,
-    ).toBeGreaterThan(0)
-    const timestamp = Date.parse(iso)
-    expect(
-      Number.isNaN(timestamp),
-      `${text} carries an invalid datetime attribute: ${iso}`,
-    ).toBe(false)
-    expect(
-      timestamp,
-      `${text} should be in the past but resolved to ${iso}`,
-    ).toBeLessThan(now)
-  })
+  await validateSectionDates(
+    pastEventsSection,
+    ts => ts < now,
+    "should be in the past",
+  )
 })

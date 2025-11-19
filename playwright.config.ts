@@ -27,13 +27,7 @@ export default defineConfig({
         channel: "chromium",
         ...(process.env.CI
           ? {
-              args: [
-                "--enable-gpu",
-                "--use-gl=angle",
-                "--use-angle=gl-egl",
-                "--ignore-gpu-blocklist",
-                "--enable-unsafe-swiftshader",
-              ],
+              args: ["--enable-gpu"],
             }
           : {}),
       },
@@ -41,7 +35,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "pnpm dev",
+    command: process.env.CI ? "pnpm start" : "pnpm dev",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
   },

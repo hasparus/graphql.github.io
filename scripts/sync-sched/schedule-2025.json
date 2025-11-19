@@ -8,7 +8,7 @@
     "event_end": "2025-09-07 17:00",
     "event_type": "Breaks / Networking / Special Events",
     "description": "GraphQLConf Canal Cruise - <a href=\"https://www.meetup.com/amsterdam-graphql-meetup/events/310699346/\">Separate Registration Required</a>\n\nJoin us on <strong>Sunday 7 September</strong> for this pre GraphQLConf'25 event, a must-do activity in Amsterdam; a wonderful canal cruise in the historical city centre of Amsterdam.\n\n<em>Initiative by the local Amsterdam GraphQL Meetup group.</em>\n\n<em>A great opportunity to meet your peer-attendees of the <a href=\"https://graphql.org/conf/2025/\" rel=\"nofollow ugc\" target=\"_blank\">GraphQLConf'25</a> during this great sight-seeing activity.\n</em>\n<em><strong>Please </strong></em><a href=\"https://www.meetup.com/amsterdam-graphql-meetup/events/310699346/\"><em><strong>RSVP</strong></em></a><em><strong> by Wednesday September 3rd!</strong>\n</em>\n<em><strong>Location</strong>: in the city centre (tba exact location)\n<strong>Duration of the canal cruise</strong>: 16:00-17:00 on Sunday 7 September\nPlease be 15:45 at the location (to buy the ticket etc).\n</em>\n<em><strong>Cost per person: 10-15 euro*</strong> (depending on the number of attendees)\n</em><em><em>*not included in the conference ticket</em></em>",
-    "goers": "4",
+    "goers": "5",
     "seats": "0",
     "invite_only": "N",
     "id": "04a893e9dfa070fae1dfa767608ad0c0",
@@ -211,6 +211,7 @@
     "invite_only": "N",
     "venue": "Grote Zaal - 2nd Floor",
     "audience": "Any",
+    "geo_area": "Yes",
     "id": "f31a60c9bffdbc04ea8fe446bd8d644b",
     "venue_id": "2152800",
     "speakers": [
@@ -255,6 +256,12 @@
     "start_time_ts": 1757315700,
     "end_date": "2025-09-08",
     "end_time": "09:35:00",
+    "files": [
+      {
+        "path": "https://static.sched.com/hosted_files/graphqlconf2025/60/Community Update GraphQLConf 2025.pdf",
+        "name": "Community Update GraphQLConf 2025.pdf"
+      }
+    ],
     "event_subtype": ""
   },
   {
@@ -377,6 +384,7 @@
     "invite_only": "N",
     "venue": "Grote Zaal - 2nd Floor",
     "audience": "Any",
+    "geo_area": "Yes",
     "id": "3d0c8511f9632541f3f52a9ea020755d",
     "venue_id": "2152800",
     "speakers": [
@@ -407,6 +415,12 @@
     "start_time_ts": 1757318700,
     "end_date": "2025-09-08",
     "end_time": "10:15:00",
+    "files": [
+      {
+        "path": "https://static.sched.com/hosted_files/graphqlconf2025/cf/Apollo GraphQL _ GraphQL Conf 2025 Matt DeBergalis Keynote.pdf",
+        "name": "Apollo GraphQL _ GraphQL Conf 2025 Matt DeBergalis Keynote.pdf"
+      }
+    ],
     "event_subtype": ""
   },
   {
