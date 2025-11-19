@@ -63,6 +63,9 @@ jobs:
       - name: Install Playwright Browsers
         run: ./node_modules/.bin/playwright install --with-deps
 
+      - name: Build the website
+        run: pnpm build
+
       - name: Run end-to-end tests
         run: ./node_modules/.bin/playwright test
 
@@ -72,3 +75,6 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      - uses: valeriangalliat/action-sshd-cloudflared@v1
+        if: failure()

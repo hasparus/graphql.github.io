@@ -157,6 +157,8 @@ test("event type filters hide cards and lock the last active tag", async ({
   const filterGroup = pastEventsSection.getByRole("group", {
     name: "Event type",
   })
+
+  await expect(filterGroup).toBeVisible()
   const conferenceFilter = filterGroup.getByRole("checkbox", {
     name: /conference/i,
   })
@@ -208,17 +210,29 @@ test("event type filters hide cards and lock the last active tag", async ({
   type ActiveFilter = FilterDefinition & { badges: Locator }
 
   const activeFilters: ActiveFilter[] = []
+  const toggleableFilters: ActiveFilter[] = []
 
   for (const definition of filterDefinitions) {
     const badgeLocator = tagBadge(definition.badgeText)
     if ((await definition.filter.count()) === 0) continue
-    activeFilters.push({ ...definition, badges: badgeLocator })
+    const filterDefinition = { ...definition, badges: badgeLocator }
+    activeFilters.push(filterDefinition)
+    if (await definition.filter.isEnabled()) {
+      toggleableFilters.push(filterDefinition)
+    }
   }
 
   expect(activeFilters.length).toBeGreaterThan(0)
 
   for (const activeFilter of activeFilters) {
     await expect(activeFilter.badges.first()).toBeVisible()
+  }
+
+  if (toggleableFilters.length === 0) {
+    return
+  }
+
+  for (const activeFilter of toggleableFilters) {
     await activeFilter.chip.click()
     await expect(activeFilter.filter).not.toBeChecked()
     await expect(activeFilter.badges).toHaveCount(0)
@@ -227,11 +241,11 @@ test("event type filters hide cards and lock the last active tag", async ({
     await expect(activeFilter.badges.first()).toBeVisible()
   }
 
-  if (activeFilters.length < 2) {
+  if (toggleableFilters.length < 2) {
     return
   }
 
-  const [lockedFilter, ...filtersToToggle] = activeFilters
+  const [lockedFilter, ...filtersToToggle] = toggleableFilters
 
   for (const filter of filtersToToggle) {
     await filter.chip.click()
@@ -273,6 +287,9 @@ test("upcoming and past sections only show events on the correct side of now", a
     upcomingSection.scrollIntoViewIfNeeded(),
     pastEventsSection.scrollIntoViewIfNeeded(),
   ])
+
+  await expect(upcomingSection).toBeVisible()
+  await expect(pastEventsSection).toBeVisible()
 
   const now = Date.now()
 
