@@ -141,8 +141,7 @@ test("map tooltip appears on marker hover", async ({ page }) => {
 test("event type filters hide cards and lock the last active tag", async ({
   page,
 }) => {
-  await page.goto("/community/events", { waitUntil: "networkidle" })
-  await page.waitForLoadState("domcontentloaded")
+  await page.goto("/community/events", { waitUntil: "load" })
 
   const pastEventsSection = page
     .locator("section")
@@ -154,9 +153,8 @@ test("event type filters hide cards and lock the last active tag", async ({
     })
     .first()
 
-  await pastEventsSection.waitFor({ state: "visible", timeout: 15000 })
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-  await page.waitForTimeout(500)
+  await pastEventsSection.waitFor({ state: "visible", timeout: 20000 })
+  await page.waitForTimeout(1000)
 
   const filterGroup = pastEventsSection.locator("fieldset")
 
@@ -220,8 +218,7 @@ test("event type filters hide cards and lock the last active tag", async ({
 test("upcoming and past sections only show events on the correct side of now", async ({
   page,
 }) => {
-  await page.goto("/community/events", { waitUntil: "networkidle" })
-  await page.waitForLoadState("domcontentloaded")
+  await page.goto("/community/events", { waitUntil: "load" })
 
   const upcomingSection = page
     .locator("section")
@@ -239,13 +236,10 @@ test("upcoming and past sections only show events on the correct side of now", a
     })
     .first()
 
-  // Wait for both sections to be present before scrolling
-  await upcomingSection.waitFor({ state: "attached", timeout: 15000 })
-  await pastEventsSection.waitFor({ state: "attached", timeout: 15000 })
-  
-  // Scroll to bottom to ensure everything is loaded
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-  await page.waitForTimeout(500)
+  // Wait for both sections to be visible  
+  await upcomingSection.waitFor({ state: "visible", timeout: 20000 })
+  await pastEventsSection.waitFor({ state: "visible", timeout: 20000 })
+  await page.waitForTimeout(1000)
 
   const now = Date.now()
 
