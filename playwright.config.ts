@@ -27,13 +27,7 @@ export default defineConfig({
         channel: "chromium",
         ...(process.env.CI
           ? {
-              args: [
-                "--enable-gpu",
-                "--use-gl=angle",
-                "--use-angle=gl-egl",
-                "--ignore-gpu-blocklist",
-                "--enable-unsafe-swiftshader",
-              ],
+              args: ["--enable-gpu"],
             }
           : {}),
       },
