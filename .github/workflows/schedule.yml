@@ -26,6 +26,8 @@ jobs:
 
       - name: Prebuild
         run: pnpm prebuild
+        env:
+          GOOGLE_CALENDAR_API_KEY: ${{ secrets.GOOGLE_CALENDAR_API_KEY }}
 
       - name: Sync conference data
         if: false # disabled until next conference
