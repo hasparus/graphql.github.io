@@ -141,7 +141,9 @@ test("map tooltip appears on marker hover", async ({ page }) => {
 test("event type filters hide cards and lock the last active tag", async ({
   page,
 }) => {
-  await page.goto("/community/events")
+  await page.goto("/community/events", { waitUntil: "networkidle" })
+  await page.waitForLoadState("domcontentloaded")
+
   const pastEventsSection = page
     .locator("section")
     .filter({
@@ -152,9 +154,9 @@ test("event type filters hide cards and lock the last active tag", async ({
     })
     .first()
 
-  await pastEventsSection.waitFor({ state: "visible" })
-  await pastEventsSection.scrollIntoViewIfNeeded({ timeout: 10000 })
-  await page.waitForTimeout(300) // Brief stabilization to prevent DOM detachment
+  await pastEventsSection.waitFor({ state: "visible", timeout: 15000 })
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  await page.waitForTimeout(500)
 
   const filterGroup = pastEventsSection.locator("fieldset")
 
@@ -218,7 +220,9 @@ test("event type filters hide cards and lock the last active tag", async ({
 test("upcoming and past sections only show events on the correct side of now", async ({
   page,
 }) => {
-  await page.goto("/community/events")
+  await page.goto("/community/events", { waitUntil: "networkidle" })
+  await page.waitForLoadState("domcontentloaded")
+
   const upcomingSection = page
     .locator("section")
     .filter({
@@ -235,10 +239,13 @@ test("upcoming and past sections only show events on the correct side of now", a
     })
     .first()
 
-  // Scroll sections sequentially to avoid DOM detachment issues on CI
-  await upcomingSection.scrollIntoViewIfNeeded({ timeout: 10000 })
-  await page.waitForTimeout(200)
-  await pastEventsSection.scrollIntoViewIfNeeded({ timeout: 10000 })
+  // Wait for both sections to be present before scrolling
+  await upcomingSection.waitFor({ state: "attached", timeout: 15000 })
+  await pastEventsSection.waitFor({ state: "attached", timeout: 15000 })
+  
+  // Scroll to bottom to ensure everything is loaded
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+  await page.waitForTimeout(500)
 
   const now = Date.now()
 
