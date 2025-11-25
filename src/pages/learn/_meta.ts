@@ -3,7 +3,16 @@ export default {
     type: "separator",
     title: "Learn",
   },
-  index: "Introduction",
+  index: {
+    /**
+     * The Learn aggregator is hidden from the Sidebar.
+     */
+    type: "hidden",
+    theme: {
+      layout: "raw",
+    },
+  },
+  introduction: "Introduction",
   schema: "Schemas and Types",
   queries: "",
   mutations: "",
