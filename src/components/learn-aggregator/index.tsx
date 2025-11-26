@@ -15,7 +15,9 @@ export interface TeaserSectionProps {
     title: string
     description: string
     href: string
+    icon: string
   }>
+  firstIconsEager?: boolean
 }
 export function TeaserSection({
   eyebrow,
@@ -23,6 +25,7 @@ export function TeaserSection({
   description,
   cta,
   items,
+  firstIconsEager,
 }: TeaserSectionProps) {
   return (
     <div className="flex items-start gap-8 max-lg:flex-col lg:gap-12 xl:gap-16">
@@ -44,6 +47,16 @@ export function TeaserSection({
               number={index + 1}
               title={item.title}
               description={item.description}
+              icon={
+                <img
+                  src={item.icon}
+                  width={72}
+                  height={72}
+                  className="aspect-square"
+                  loading={index < 2 && firstIconsEager ? "eager" : "lazy"}
+                  alt=""
+                />
+              }
             />
           )
         })}
@@ -58,20 +71,22 @@ interface TeaserSectionListItemProps {
   number: number
   title: string
   description: string
+  icon: ReactNode
 }
 function TeaserSectionListItem({
   number,
   title,
   description,
+  icon,
 }: TeaserSectionListItemProps) {
   return (
     <li className="flex items-end gap-2 text-neu-900">
-      <div>
-        <div></div>
-        <p className="typography-body-md text-pretty p-4 text-neu-900">
-          {description}
-        </p>
-      </div>
+      {icon}
+      <span>Lesson {number}</span>
+      <strong>{title}</strong>
+      <p className="typography-body-md text-pretty p-4 text-neu-900">
+        {description}
+      </p>
       <div className="p-4 max-lg:hidden">
         <ArrowDownIcon className="size-8 shrink-0 -rotate-90" />
       </div>
