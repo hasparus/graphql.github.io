@@ -2,6 +2,7 @@ import { ReactNode } from "react"
 
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 import { Eyebrow } from "@/_design-system/eyebrow"
+import ArrowDownIcon from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
 
 import blurBean from "./learn-blur-bean.webp"
 
@@ -63,7 +64,19 @@ function TeaserSectionListItem({
   title,
   description,
 }: TeaserSectionListItemProps) {
-  return <li></li>
+  return (
+    <li className="flex items-end gap-2 text-neu-900">
+      <div>
+        <div></div>
+        <p className="typography-body-md text-pretty p-4 text-neu-900">
+          {description}
+        </p>
+      </div>
+      <div className="p-4 max-lg:hidden">
+        <ArrowDownIcon className="size-8 shrink-0 -rotate-90" />
+      </div>
+    </li>
+  )
 }
 
 export function LearnHeroStripes() {
