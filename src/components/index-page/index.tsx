@@ -12,6 +12,7 @@ import { JoinTheCommunity } from "./join-the-community"
 import { DataColocation } from "./data-colocation"
 import { WhatIsGraphQL } from "./what-is-graphql"
 import { UseCases } from "./use-cases"
+import { NavbarFixed } from "../navbar/navbar-fixed"
 
 export function IndexPage() {
   return (
@@ -35,7 +36,7 @@ export function IndexPage() {
       <UseCases />
       <QuotesFromTheIndustry />
       <JoinTheCommunity />
-      <style>{".nextra-nav-container.sticky { position: fixed }"}</style>
+      <NavbarFixed />
     </div>
   )
 }
