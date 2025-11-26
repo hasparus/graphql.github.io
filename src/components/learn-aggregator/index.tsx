@@ -1,10 +1,36 @@
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
 import blurBean from "./learn-blur-bean.webp"
+import { Eyebrow } from "@/_design-system/eyebrow"
+import { ReactNode } from "react"
 
-// https://www.figma.com/design/aPUvZDSxJfYDJtPd7GF2sB/GraphQL.org--Working-File?node-id=5768-48498&m=dev
-export function TeaserSection() {
-  return <div className="flex flex-col gap-6 lg:gap-8"></div>
+export interface TeaserSectionProps {
+  eyebrow: string
+  title: string
+  description: string
+  cta: ReactNode
+}
+export function TeaserSection({
+  eyebrow,
+  title,
+  description,
+  cta,
+}: TeaserSectionProps) {
+  return (
+    <div className="flex items-start gap-8 max-lg:flex-col lg:gap-12 xl:gap-16">
+      <header className="flex max-w-[720px] flex-col gap-6 text-left">
+        <div className="flex flex-col gap-6">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="typography-h2 text-pretty text-neu-900">{title}</h2>
+          <p className="typography-body-md text-pretty text-neu-800">
+            {description}
+          </p>
+          {cta}
+        </div>
+      </header>
+      <ul></ul>
+    </div>
+  )
 }
 
 export function LearnHeroStripes() {
@@ -12,7 +38,7 @@ export function LearnHeroStripes() {
     <div
       role="presentation"
       // eslint-disable-next-line tailwindcss/no-contradicting-classname
-      className="pointer-events-none bg-neu-50 absolute inset-0 h-[480px] [--end-1:#FFF] [--end-2:rgb(255_204_239/.2)] [--start-1:#FFEAF8] [--start-2:hsl(var(--color-sec-lighter))] dark:[--end-1:hsl(var(--color-neu-0))] dark:[--start-1:hsl(var(--color-neu-100))]"
+      className="pointer-events-none absolute inset-0 h-[480px] bg-neu-50 [--end-1:#FFF] [--end-2:rgb(255_204_239/.2)] [--start-1:#FFEAF8] [--start-2:hsl(var(--color-sec-lighter))] dark:[--end-1:hsl(var(--color-neu-0))] dark:[--start-1:hsl(var(--color-neu-100))]"
       style={{
         maskImage: `url(${blurBean.src})`,
         WebkitMaskImage: `url(${blurBean.src})`,

@@ -16,7 +16,7 @@ import { NavbarFixed } from '../../components/navbar/navbar-fixed'
   }
   decoration={<LearnHeroStripes />}
 >
-  <Button href="/learn/introduction" className="w-fit">
+  <Button href="/learn/introduction" className="lg:w-fit">
     Start with the basics
   </Button>
   <TocHeroContents
@@ -24,4 +24,16 @@ import { NavbarFixed } from '../../components/navbar/navbar-fixed'
     className='max-w-[528px]'
   />
 </TocHero>
+
+<TeaserSection 
+  eyebrow="Learn GraphQL"
+  title="Getting started with GraphQL"
+  description=
+    "In this tutorial-style introduction to GraphQL, you'll learn the core concepts that power every GraphQL API. Follow a step-by-step path from basic queries to advanced features."
+  cta={
+    <Button href="/learn/introduction" className='lg:w-fit'>
+      Start learning
+    </Button>
+  }
+/>
 
