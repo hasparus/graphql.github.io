@@ -7,9 +7,13 @@ interface LearnPageItem {
   description: string
   icon: string
   section: "getting-started" | "best-practices"
+  href: string
 }
 
-const _items: Record<LearnPagePath, Omit<LearnPageItem, "title"> | null> = {
+const _items: Record<
+  LearnPagePath,
+  Omit<LearnPageItem, "title" | "href"> | null
+> = {
   introduction: {
     description:
       "Get a high-level overview of GraphQL and how it enables flexible, versionless APIs powered by a strong type system.",
@@ -147,6 +151,12 @@ const _items: Record<LearnPagePath, Omit<LearnPageItem, "title"> | null> = {
 
 export const learnPages = _items as Record<LearnPagePath, LearnPageItem | null>
 
+export const pagesBySection: Record<LearnPageItem["section"], LearnPageItem[]> =
+  {
+    "getting-started": [],
+    "best-practices": [],
+  }
+
 for (const path in learnPages) {
   const page = learnPages[path as LearnPagePath]
   if (page === null) continue
@@ -161,4 +171,8 @@ for (const path in learnPages) {
   } else {
     page.title = path.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())
   }
+
+  page.href = `/learn/${path}`
+
+  pagesBySection[page.section].push(page)
 }
