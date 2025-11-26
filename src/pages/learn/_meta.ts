@@ -37,9 +37,5 @@ export default {
   performance: "",
   security: "",
   federation: "",
-  "-- 3": {
-    type: "separator",
-    title: "GraphQL over HTTP",
-  },
   "debug-errors": "Common GraphQL over HTTP Errors",
 }

@@ -116,9 +116,11 @@ const _items: Record<LearnPagePath, Omit<LearnPageItem, "title"> | null> = {
     icon: "",
     section: "best-practices",
   },
-  // ---
-  // omitted on Learn index page
-  "debug-errors": null,
+  "debug-errors": {
+    description: "",
+    icon: "",
+    section: "best-practices",
+  },
 }
 
 export const learnPages = _items as Record<LearnPagePath, LearnPageItem | null>
