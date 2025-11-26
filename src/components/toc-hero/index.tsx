@@ -8,9 +8,9 @@ export interface TocHeroProps {
 }
 export function TocHero({ heading, text, children, decoration }: TocHeroProps) {
   return (
-    <section className="relative bg-neu-0 pt-[calc(var(--nextra-navbar-height)+18px)]">
+    <section className="relative overflow-visible bg-neu-0 pt-[calc(var(--nextra-navbar-height)+24px)]">
       {decoration}
-      <div className="gql-section gql-container relative flex !max-w-screen-lg flex-col items-center gap-6 text-center lg:gap-8">
+      <div className="gql-section gql-container relative flex !max-w-screen-lg flex-col items-center gap-6 text-center lg:gap-8 xl:!max-w-screen-xl">
         <h1 className="typography-h1">{heading}</h1>
         <p className="typography-body-sm max-w-[80vw] text-pretty">{text}</p>
         {children}
