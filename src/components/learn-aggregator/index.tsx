@@ -17,6 +17,7 @@ export interface TeaserSectionProps {
     description: string
     href: string
     icon: string
+    section: "getting-started" | "best-practices"
   }>
   firstIconsEager?: boolean
 }
@@ -48,6 +49,8 @@ export function TeaserSection({
               number={index + 1}
               title={item.title}
               description={item.description}
+              href={item.href}
+              section={item.section}
               icon={
                 <img
                   src={item.icon}
@@ -74,6 +77,7 @@ interface TeaserSectionListItemProps {
   description: string
   icon: ReactNode
   section: "getting-started" | "best-practices"
+  href: string
 }
 function TeaserSectionListItem({
   number,
@@ -81,26 +85,43 @@ function TeaserSectionListItem({
   description,
   icon,
   section,
+  href,
 }: TeaserSectionListItemProps) {
   return (
-    <li className="flex items-end gap-2 text-neu-900">
-      <div
-        className={clsx(
-          section === "getting-started" && "bg-[#FFF5FD] dark:bg-pri-lighter/5",
-          section === "best-practices" &&
-            "bg-sec-lighter dark:bg-sec-lighter/5",
-        )}
+    <li className="text-neu-900">
+      <a
+        href={href}
+        className="gql-focus-visible grid gap-x-3 gap-y-4 border border-neu-200 bg-neu-0 p-4 transition-colors [grid-template-areas:'icon_header''desc_desc'] [grid-template-columns:72px_1fr] [grid-template-rows:auto_auto] hover:border-neu-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 lg:gap-x-6 lg:gap-y-4 lg:p-0 lg:[grid-template-areas:'icon_header_arrow''icon_desc_arrow'] lg:[grid-template-columns:190px_1fr_64px]"
       >
-        {icon}
-      </div>
-      <span>Lesson {number}</span>
-      <strong className="typography-h3 font-normal">{title}</strong>
-      <p className="typography-body-sm text-pretty p-4 text-neu-900">
-        {description}
-      </p>
-      <div className="p-4 max-lg:hidden">
-        <ArrowDownIcon className="size-8 shrink-0 -rotate-90" />
-      </div>
+        <div
+          className={clsx(
+            "flex size-[72px] items-center justify-center border border-neu-200 [grid-area:icon] lg:size-[190px]",
+            section === "getting-started" &&
+              "bg-pri-lighter/10 dark:bg-pri-lighter/5",
+            section === "best-practices" &&
+              "bg-sec-lighter dark:bg-sec-lighter/5",
+          )}
+        >
+          {icon}
+        </div>
+
+        <div className="flex flex-col gap-1 [grid-area:header] lg:gap-2 lg:px-4 lg:pt-4">
+          <span className="typography-body-sm text-neu-700">
+            Lesson {number}
+          </span>
+          <strong className="typography-h3 font-normal text-neu-900">
+            {title}
+          </strong>
+        </div>
+
+        <p className="typography-body-sm text-pretty text-neu-900 [grid-area:desc] lg:px-4 lg:pb-4">
+          {description}
+        </p>
+
+        <div className="hidden items-center justify-center border-l border-t border-neu-200 [grid-area:arrow] lg:flex">
+          <ArrowDownIcon className="size-8 shrink-0 -rotate-90" />
+        </div>
+      </a>
     </li>
   )
 }
