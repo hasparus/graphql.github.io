@@ -1,6 +1,6 @@
 import { clsx } from "clsx"
 
-import CaretDown from "@/app/conf/_design-system/pixelarticons/caret-down.svg?svgr"
+import { ChevronRight } from "@/app/conf/_design-system/pixelarticons/chevron-right"
 
 export interface EyebrowProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode
@@ -23,7 +23,7 @@ export function Eyebrow({
       )}
       {...rest}
     >
-      <CaretDown className="size-4 translate-x-[0.5px] -rotate-90" />
+      <ChevronRight className="size-4 translate-x-[0.5px]" />
       {children}
     </Root>
   )
