@@ -1,20 +1,27 @@
+import { ReactNode } from "react"
+
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
+import { Eyebrow } from "@/_design-system/eyebrow"
 
 import blurBean from "./learn-blur-bean.webp"
-import { Eyebrow } from "@/_design-system/eyebrow"
-import { ReactNode } from "react"
 
 export interface TeaserSectionProps {
   eyebrow: string
   title: string
   description: string
   cta: ReactNode
+  items: Array<{
+    title: string
+    description: string
+    href: string
+  }>
 }
 export function TeaserSection({
   eyebrow,
   title,
   description,
   cta,
+  items,
 }: TeaserSectionProps) {
   return (
     <div className="flex items-start gap-8 max-lg:flex-col lg:gap-12 xl:gap-16">
@@ -28,9 +35,35 @@ export function TeaserSection({
           {cta}
         </div>
       </header>
-      <ul></ul>
+      <ul className="gap-4 lg:gap-8">
+        {items.map((item, index) => {
+          return (
+            <TeaserSectionListItem
+              key={index}
+              number={index + 1}
+              title={item.title}
+              description={item.description}
+            />
+          )
+        })}
+      </ul>
     </div>
   )
+}
+
+// https://www.figma.com/design/aPUvZDSxJfYDJtPd7GF2sB/GraphQL.org--Working-File?node-id=6368-6983&t=JE1eYbp6gpQRUILY-4
+// https://www.figma.com/design/aPUvZDSxJfYDJtPd7GF2sB/GraphQL.org--Working-File?node-id=5830-51637&t=JE1eYbp6gpQRUILY-4
+interface TeaserSectionListItemProps {
+  number: number
+  title: string
+  description: string
+}
+function TeaserSectionListItem({
+  number,
+  title,
+  description,
+}: TeaserSectionListItemProps) {
+  return <li></li>
 }
 
 export function LearnHeroStripes() {
