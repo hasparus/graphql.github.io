@@ -5,6 +5,7 @@ import { Eyebrow } from "@/_design-system/eyebrow"
 import ArrowDownIcon from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
 
 import blurBean from "./learn-blur-bean.webp"
+import clsx from "clsx"
 
 export interface TeaserSectionProps {
   eyebrow: string
@@ -72,19 +73,29 @@ interface TeaserSectionListItemProps {
   title: string
   description: string
   icon: ReactNode
+  section: "getting-started" | "best-practices"
 }
 function TeaserSectionListItem({
   number,
   title,
   description,
   icon,
+  section,
 }: TeaserSectionListItemProps) {
   return (
     <li className="flex items-end gap-2 text-neu-900">
-      {icon}
+      <div
+        className={clsx(
+          section === "getting-started" && "bg-[#FFF5FD] dark:bg-pri-lighter/5",
+          section === "best-practices" &&
+            "bg-sec-lighter dark:bg-sec-lighter/5",
+        )}
+      >
+        {icon}
+      </div>
       <span>Lesson {number}</span>
-      <strong>{title}</strong>
-      <p className="typography-body-md text-pretty p-4 text-neu-900">
+      <strong className="typography-h3 font-normal">{title}</strong>
+      <p className="typography-body-sm text-pretty p-4 text-neu-900">
         {description}
       </p>
       <div className="p-4 max-lg:hidden">
