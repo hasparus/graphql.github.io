@@ -18,128 +18,128 @@ const _items: Record<LearnPagePath, Omit<LearnPageItem, "title"> | null> = {
   },
   schema: {
     description:
-      "Learn the elements of the GraphQL type system and how schemas describe your data and relationships.",
+      "Learn how GraphQL’s schema language defines the shape of your data using types.",
     icon: new URL("./icons/hierarchy.svg", import.meta.url).href,
     section: "getting-started",
   },
   queries: {
     description:
-      "Use query operations to fetch exactly the data you need from a GraphQL server.",
+      "Understand how to structure GraphQL queries to request exactly the data you need — including fields, variables and fragments.",
     icon: new URL("./icons/search.svg", import.meta.url).href,
     section: "getting-started",
   },
   mutations: {
     description:
-      "See how mutation operations write data and when side effects are allowed in GraphQL.",
+      "Explore how to modify data with mutations, including how to update and remove records through your schema.",
     icon: new URL("./icons/construction.svg", import.meta.url).href,
     section: "getting-started",
   },
   subscriptions: {
     description:
-      "Get real-time updates from a GraphQL server with long-lived subscription operations.",
+      "Discover how GraphQL supports real-time data with subscriptions and how to use them effectively at scale.",
     icon: new URL("./icons/sync-square.svg", import.meta.url).href,
     section: "getting-started",
   },
   validation: {
     description:
-      "Validate operations against your schema to catch issues before execution.",
+      "See how GraphQL ensures query correctness through validation rules and how common errors are detected early.",
     icon: new URL("./icons/product-check.svg", import.meta.url).href,
     section: "getting-started",
   },
   execution: {
     description:
-      "Understand how GraphQL resolves fields during execution to fulfill client requests.",
+      "Learn how resolvers power GraphQL execution and how the server processes and returns data for each query.",
     icon: new URL("./icons/board.svg", import.meta.url).href,
     section: "getting-started",
   },
   response: {
     description:
-      "Learn how GraphQL responses mirror queries, include data, and surface errors.",
+      "Explore how GraphQL structures its responses, including data, errors and extensions for custom metadata.",
     icon: new URL("./icons/share.svg", import.meta.url).href,
     section: "getting-started",
   },
   introspection: {
     description:
-      "Ask a schema about its types and fields using GraphQL's introspection system.",
+      "Use introspection to explore the schema itself — a powerful way to inspect types and fields dynamically.",
     icon: new URL("./icons/zoom-page.svg", import.meta.url).href,
     section: "getting-started",
   },
   // ---
   "best-practices": {
     description:
-      "Practical guidance for networking, authorization, pagination, and other everyday GraphQL concerns.",
+      "Practical guidance for common GraphQL concerns like networking, authorization, and pagination.",
     icon: new URL("./icons/books.svg", import.meta.url).href,
     section: "best-practices",
   },
   "thinking-in-graphs": {
     description:
-      "Model your business domain as a graph and use schemas to express connected types.",
+      "Learn how to shift your mindset from RESTful endpoints to graph-based thinking, aligning your schema with business logic and legacy systems.",
     icon: new URL("./icons/layer.svg", import.meta.url).href,
     section: "best-practices",
   },
   "serving-over-http": {
     description:
-      "Follow HTTP guidelines to respond to GraphQL queries and mutations over the web.",
+      "Explore how GraphQL operates over HTTP, including methods, headers, status codes and API endpoint design.",
     icon: new URL("./icons/globe.svg", import.meta.url).href,
     section: "best-practices",
   },
   "file-uploads": {
     description:
-      "Understand why file uploads are tricky in GraphQL and safer patterns to support them.",
+      "Handle file uploads in GraphQL by wrapping them as mutations. Learn the recommended approach for integrating file handling into your API.",
     icon: new URL("./icons/note.svg", import.meta.url).href,
     section: "best-practices",
   },
   authorization: {
     description:
-      "Design authorization in your schema to control which users can access specific data.",
+      "Understand how to secure your GraphQL APIs with type- and field-level authorization patterns.",
     icon: new URL("./icons/key.svg", import.meta.url).href,
     section: "best-practices",
   },
   pagination: {
     description:
-      "Paginate lists and connections so clients can traverse large graphs efficiently.",
+      "Discover different pagination strategies in GraphQL, from simple slicing to fully connected edges and nodes.",
     icon: new URL("./icons/menu.svg", import.meta.url).href,
     section: "best-practices",
   },
   "schema-design": {
     description:
-      "Evolve schemas without versioning while keeping types clear and future-friendly.",
+      "Learn how to design clear, adaptable schemas — including versioning and thoughtful use of nullability.",
     icon: new URL("./icons/cog-double.svg", import.meta.url).href,
     section: "best-practices",
   },
   "global-object-identification": {
     description:
-      "Expose global object IDs so clients can refetch, cache, and reference data reliably.",
+      "Use globally unique IDs and the Node interface to enable caching, refetching, and efficient schema traversal.",
     icon: new URL("./icons/dna.svg", import.meta.url).href,
     section: "best-practices",
   },
   caching: {
     description:
-      "Use identifiers and response patterns that enable effective caching for GraphQL clients and servers.",
+      "Explore caching techniques and ID strategies that make client-side performance and object reuse more effective.",
     icon: new URL("./icons/sync-square.svg", import.meta.url).href,
     section: "best-practices",
   },
   performance: {
     description:
-      "Optimize GraphQL requests and implementations for fast, efficient performance.",
+      "Get practical tips for improving GraphQL performance — from preventing N+1 problems to monitoring and compression.",
     icon: new URL("./icons/startup.svg", import.meta.url).href,
     section: "best-practices",
   },
   security: {
     description:
-      "Protect GraphQL APIs against common attack vectors with layered security practices.",
+      "Protect your GraphQL API with best practices for query limits, input validation, introspection control and more.",
     icon: new URL("./icons/safe.svg", import.meta.url).href,
     section: "best-practices",
   },
   federation: {
     description:
-      "Compose multiple services into a single graph using GraphQL federation.",
+      "Learn how GraphQL federation enables modular, scalable APIs by composing services into a unified schema.",
     icon: new URL("./icons/globe.svg", import.meta.url).href,
     section: "best-practices",
   },
   "debug-errors": {
     description:
-      "Identify common HTTP and GraphQL errors and debug them effectively.",
+      "Learn about common 'graphql-http' errors and how to debug them.",
     icon: new URL("./icons/solve.svg", import.meta.url).href,
     section: "best-practices",
   },
