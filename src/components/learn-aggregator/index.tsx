@@ -1,11 +1,13 @@
-import { ReactNode } from "react"
+import { ReactNode, useState } from "react"
+import { clsx } from "clsx"
 
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
-import { Eyebrow } from "@/_design-system/eyebrow"
 import ArrowDownIcon from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
 
+import { Eyebrow } from "@/_design-system/eyebrow"
+
 import blurBean from "./learn-blur-bean.webp"
-import clsx from "clsx"
+import { Button } from "@/app/conf/_design-system/button"
 
 export interface TeaserSectionProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,6 +34,8 @@ export function TeaserSection({
   className,
   ...rest
 }: TeaserSectionProps) {
+  const [showingMore, showMore] = useState(false)
+
   return (
     <section
       className={clsx(
@@ -50,37 +54,51 @@ export function TeaserSection({
           {cta}
         </div>
       </header>
-      <ul className="grid grid-cols-1 justify-stretch gap-4 sm:max-lg:grid-cols-2 lg:gap-8">
-        {items.map((item, index) => {
-          return (
-            <TeaserSectionListItem
-              key={index}
-              number={index + 1}
-              title={item.title}
-              description={item.description}
-              href={item.href}
-              section={item.section}
-              icon={
-                <img
-                  src={item.icon}
-                  width={72}
-                  height={72}
-                  className="aspect-square lg:size-[138px]"
-                  loading={index < 2 && firstIconsEager ? "eager" : "lazy"}
-                  alt=""
-                />
-              }
-            />
-          )
-        })}
-      </ul>
+      <div>
+        <ul className="grid grid-cols-1 justify-stretch gap-4 sm:max-lg:grid-cols-2 lg:gap-8">
+          {items.map((item, index) => {
+            return (
+              <TeaserSectionListItem
+                key={index}
+                number={index + 1}
+                title={item.title}
+                description={item.description}
+                href={item.href}
+                section={item.section}
+                className={clsx(
+                  !showingMore &&
+                    "lg:[&:nth-child(n+4)]:hidden [&:nth-child(n+5)]:hidden",
+                )}
+                icon={
+                  <img
+                    src={item.icon}
+                    width={72}
+                    height={72}
+                    className="aspect-square lg:size-[138px]"
+                    loading={index < 2 && firstIconsEager ? "eager" : "lazy"}
+                    alt=""
+                  />
+                }
+              />
+            )
+          })}
+        </ul>
+        <Button
+          className="mt-4 w-full lg:mt-8"
+          variant="secondary"
+          onClick={() => showMore(s => !s)}
+        >
+          Show {!showingMore ? "more" : "less"}
+        </Button>
+      </div>
     </section>
   )
 }
 
 // https://www.figma.com/design/aPUvZDSxJfYDJtPd7GF2sB/GraphQL.org--Working-File?node-id=6368-6983&t=JE1eYbp6gpQRUILY-4
 // https://www.figma.com/design/aPUvZDSxJfYDJtPd7GF2sB/GraphQL.org--Working-File?node-id=5830-51637&t=JE1eYbp6gpQRUILY-4
-interface TeaserSectionListItemProps {
+interface TeaserSectionListItemProps
+  extends React.HTMLAttributes<HTMLLIElement> {
   number: number
   title: string
   description: string
@@ -95,16 +113,18 @@ function TeaserSectionListItem({
   icon,
   section,
   href,
+  className,
+  ...rest
 }: TeaserSectionListItemProps) {
   return (
-    <li className="flex text-neu-900">
+    <li className={clsx("flex text-neu-900", className)} {...rest}>
       <a
         href={href}
-        className="gql-focus-visible grid border border-neu-200 bg-neu-0 transition-colors [grid-template-areas:'icon_header''desc_desc'] [grid-template-columns:72px_1fr] [grid-template-rows:auto_1fr] hover:border-neu-300 hover:ring hover:ring-neu-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:ring-neu-50 lg:[grid-template-areas:'icon_header_header''icon_desc_arrow'] lg:[grid-template-columns:190px_1fr_64px]"
+        className="gql-focus-visible grid border border-neu-200 bg-neu-0 transition-colors [grid-template-areas:'icon_header''desc_desc'] [grid-template-columns:72px_1fr] [grid-template-rows:auto_1fr] hover:ring hover:ring-neu-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 dark:border-neu-100 dark:hover:ring-neu-50 lg:[grid-template-areas:'icon_header_header''icon_desc_arrow'] lg:[grid-template-columns:190px_1fr_64px]"
       >
         <span
           className={clsx(
-            "flex size-[72px] items-center justify-center border-neu-200 p-2 [grid-area:icon] lg:size-[190px]",
+            "flex aspect-square h-full w-[72px] items-center justify-center border-neu-200 p-2 [grid-area:icon] dark:border-neu-100 lg:min-w-[190px]",
             section === "getting-started" &&
               "bg-pri-lighter/10 dark:bg-pri-lighter/5",
             section === "best-practices" &&
@@ -124,11 +144,11 @@ function TeaserSectionListItem({
           </span>
         </span>
 
-        <p className="typography-body-sm text-pretty p-4 text-neu-900 [grid-area:desc] max-lg:typography-body-md max-lg:border-t max-lg:border-neu-200">
+        <p className="typography-body-sm text-pretty p-4 text-neu-900 [grid-area:desc] max-lg:typography-body-md max-lg:border-t max-lg:border-neu-200 dark:max-lg:border-neu-100">
           {description}
         </p>
 
-        <span className="hidden items-center justify-center place-self-end border-l border-t border-neu-200 p-4 [grid-area:arrow] lg:flex">
+        <span className="hidden items-center justify-center place-self-end border-l border-t border-neu-200 p-4 [grid-area:arrow] dark:border-neu-100 lg:flex">
           <ArrowDownIcon className="size-8 shrink-0 -rotate-90" />
         </span>
       </a>
@@ -141,7 +161,7 @@ export function LearnHeroStripes() {
     <div
       role="presentation"
       // eslint-disable-next-line tailwindcss/no-contradicting-classname
-      className="pointer-events-none absolute inset-0 h-[300px] bg-neu-50 [--end-1:#FFF] [--end-2:rgb(255_204_239/.2)] [--start-1:#FFEAF8] [--start-2:hsl(var(--color-sec-lighter))] dark:[--end-1:hsl(var(--color-neu-0))] dark:[--start-1:hsl(var(--color-neu-100))] sm:h-[360px] lg:h-[480px]"
+      className="pointer-events-none absolute inset-0 h-[300px] bg-neu-50 [--end-1:#FFF] [--end-2:rgb(255_204_239/.2)] [--start-1:#FFEAF8] [--start-2:hsl(var(--color-sec-lighter))] dark:[--end-1:hsl(var(--color-neu-0))] dark:[--end-2:hsl(var(--color-pri-base)/.1)] dark:[--start-1:hsl(var(--color-neu-100)/.2)] dark:[--start-2:hsl(var(--color-sec-light)/.1)] sm:h-[360px] lg:h-[480px]"
       style={{
         maskImage: `url(${blurBean.src})`,
         WebkitMaskImage: `url(${blurBean.src})`,
