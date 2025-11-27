@@ -116,6 +116,7 @@ function TeaserSectionListItem({
 
         <span className="flex flex-col gap-1 px-2 pt-2 [grid-area:header] lg:px-4 lg:pt-4">
           <span className="typography-body-sm text-neu-700 max-lg:typography-body-md">
+            {/* TODO: Are we really sure these are Lessons? */}
             Lesson {number}
           </span>
           <span className="typography-h3 font-normal text-neu-900">
