@@ -37,9 +37,6 @@ export default async function EventsPage() {
         text="Connect with the GraphQL community through events and meetups around the world."
         decoration={<Stripes />}
       >
-        <Button href="#meetups" className="lg:w-fit">
-          Find a meetup
-        </Button>
         <TocHeroContents
           className="max-w-screen-md"
           sections={[
