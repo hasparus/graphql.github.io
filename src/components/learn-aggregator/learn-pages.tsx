@@ -17,7 +17,7 @@ const _items: Record<
   introduction: {
     description:
       "Get a high-level overview of GraphQL and how it enables flexible, versionless APIs powered by a strong type system.",
-    icon: new URL("./icons/computer.svg", import.meta.url).href,
+    icon: new URL("./icons/computer.svg?raw", import.meta.url).href,
     section: "getting-started",
   },
   schema: {

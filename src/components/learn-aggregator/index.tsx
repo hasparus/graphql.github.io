@@ -7,7 +7,8 @@ import ArrowDownIcon from "@/app/conf/_design-system/pixelarticons/arrow-down.sv
 import blurBean from "./learn-blur-bean.webp"
 import clsx from "clsx"
 
-export interface TeaserSectionProps {
+export interface TeaserSectionProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   eyebrow: string
   title: string
   description: string
@@ -28,10 +29,18 @@ export function TeaserSection({
   cta,
   items,
   firstIconsEager,
+  className,
+  ...rest
 }: TeaserSectionProps) {
   return (
-    <div className="flex items-start gap-8 max-lg:flex-col lg:gap-12 xl:gap-16">
-      <header className="flex max-w-[720px] flex-col gap-6 text-left">
+    <section
+      className={clsx(
+        "gql-container gql-section flex items-start gap-8 max-lg:flex-col lg:gap-12 xl:gap-16",
+        className,
+      )}
+      {...rest}
+    >
+      <header className="flex max-w-[720px] flex-col gap-6 pt-6 text-left">
         <div className="flex flex-col gap-6">
           <Eyebrow>{eyebrow}</Eyebrow>
           <h2 className="typography-h2 text-pretty text-neu-900">{title}</h2>
@@ -41,7 +50,7 @@ export function TeaserSection({
           {cta}
         </div>
       </header>
-      <ul className="gap-4 lg:gap-8">
+      <ul className="flex flex-col gap-4 lg:gap-8">
         {items.map((item, index) => {
           return (
             <TeaserSectionListItem
@@ -65,7 +74,7 @@ export function TeaserSection({
           )
         })}
       </ul>
-    </div>
+    </section>
   )
 }
 
@@ -91,7 +100,7 @@ function TeaserSectionListItem({
     <li className="text-neu-900">
       <a
         href={href}
-        className="gql-focus-visible grid gap-x-3 gap-y-4 border border-neu-200 bg-neu-0 p-4 transition-colors [grid-template-areas:'icon_header''desc_desc'] [grid-template-columns:72px_1fr] [grid-template-rows:auto_auto] hover:border-neu-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 lg:gap-x-6 lg:gap-y-4 lg:p-0 lg:[grid-template-areas:'icon_header_arrow''icon_desc_arrow'] lg:[grid-template-columns:190px_1fr_64px]"
+        className="gql-focus-visible grid border border-neu-200 bg-neu-0 transition-colors [grid-template-areas:'icon_header''desc_desc'] [grid-template-columns:72px_1fr] [grid-template-rows:auto_auto] hover:border-neu-300 hover:ring hover:ring-neu-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:ring-neu-50 lg:[grid-template-areas:'icon_header_arrow''icon_desc_arrow'] lg:[grid-template-columns:190px_1fr_64px]"
       >
         <div
           className={clsx(
@@ -105,7 +114,7 @@ function TeaserSectionListItem({
           {icon}
         </div>
 
-        <div className="flex flex-col gap-1 [grid-area:header] lg:gap-2 lg:px-4 lg:pt-4">
+        <div className="flex flex-col gap-1 [grid-area:header] lg:px-4 lg:pt-4">
           <span className="typography-body-sm text-neu-700">
             Lesson {number}
           </span>
@@ -118,7 +127,7 @@ function TeaserSectionListItem({
           {description}
         </p>
 
-        <div className="hidden items-center justify-center border-l border-t border-neu-200 [grid-area:arrow] lg:flex">
+        <div className="hidden items-center justify-center place-self-end border-l border-t border-neu-200 p-4 [grid-area:arrow] lg:flex">
           <ArrowDownIcon className="size-8 shrink-0 -rotate-90" />
         </div>
       </a>
@@ -131,7 +140,7 @@ export function LearnHeroStripes() {
     <div
       role="presentation"
       // eslint-disable-next-line tailwindcss/no-contradicting-classname
-      className="pointer-events-none absolute inset-0 h-[480px] bg-neu-50 [--end-1:#FFF] [--end-2:rgb(255_204_239/.2)] [--start-1:#FFEAF8] [--start-2:hsl(var(--color-sec-lighter))] dark:[--end-1:hsl(var(--color-neu-0))] dark:[--start-1:hsl(var(--color-neu-100))]"
+      className="pointer-events-none absolute inset-0 h-[300px] bg-neu-50 [--end-1:#FFF] [--end-2:rgb(255_204_239/.2)] [--start-1:#FFEAF8] [--start-2:hsl(var(--color-sec-lighter))] dark:[--end-1:hsl(var(--color-neu-0))] dark:[--start-1:hsl(var(--color-neu-100))] sm:h-[360px] lg:h-[480px]"
       style={{
         maskImage: `url(${blurBean.src})`,
         WebkitMaskImage: `url(${blurBean.src})`,
