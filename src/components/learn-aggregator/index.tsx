@@ -83,13 +83,16 @@ export function TeaserSection({
             )
           })}
         </ul>
-        <Button
-          className="mt-4 w-full lg:mt-8"
-          variant="secondary"
-          onClick={() => showMore(s => !s)}
-        >
-          Show {!showingMore ? "more" : "less"}
-        </Button>
+        {!showingMore && (
+          <Button
+            className="mt-4 w-full lg:mt-8"
+            variant="secondary"
+            onClick={() => showMore(true)}
+          >
+            {/* we don't display "Show less" because scroll restoriation is not worth the effort, and the user already scrolled to the next section */}
+            Show more
+          </Button>
+        )}
       </div>
     </section>
   )
