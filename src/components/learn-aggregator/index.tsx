@@ -104,7 +104,7 @@ function TeaserSectionListItem({
       >
         <div
           className={clsx(
-            "flex size-[72px] items-center justify-center border border-neu-200 [grid-area:icon] lg:size-[190px]",
+            "flex size-[72px] items-center justify-center border-neu-200 [grid-area:icon] max-lg:border lg:size-[190px] lg:border-r",
             section === "getting-started" &&
               "bg-pri-lighter/10 dark:bg-pri-lighter/5",
             section === "best-practices" &&
@@ -123,7 +123,7 @@ function TeaserSectionListItem({
           </strong>
         </div>
 
-        <p className="typography-body-sm text-pretty text-neu-900 [grid-area:desc] lg:px-4 lg:pb-4">
+        <p className="typography-body-sm text-pretty p-4 text-neu-900 [grid-area:desc]">
           {description}
         </p>
 
