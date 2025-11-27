@@ -18,7 +18,7 @@ export function Eyebrow({
   return (
     <Root
       className={clsx(
-        "typography-menu flex items-center gap-1 text-pri-base",
+        "typography-menu flex items-center gap-1 text-pri-base dark:text-pri-light",
         className,
       )}
       {...rest}
