@@ -69,16 +69,11 @@ const _items: Record<
     section: "getting-started",
   },
   // ---
-  "best-practices": {
-    description:
-      "Practical guidance for common GraphQL concerns like networking, authorization, and pagination.",
-    icon: new URL("./assets/books.svg", import.meta.url).href,
-    section: "best-practices",
-  },
+  "best-practices": null,
   "thinking-in-graphs": {
     description:
       "Learn how to shift your mindset from RESTful endpoints to graph-based thinking, aligning your schema with business logic and legacy systems.",
-    icon: new URL("./assets/layer.svg", import.meta.url).href,
+    icon: new URL("./assets/share.svg", import.meta.url).href,
     section: "best-practices",
   },
   "serving-over-http": {
@@ -102,25 +97,25 @@ const _items: Record<
   pagination: {
     description:
       "Discover different pagination strategies in GraphQL, from simple slicing to fully connected edges and nodes.",
-    icon: new URL("./assets/checkbox.svg", import.meta.url).href,
+    icon: new URL("./assets/layer.svg", import.meta.url).href,
     section: "best-practices",
   },
   "schema-design": {
     description:
       "Learn how to design clear, adaptable schemas — including versioning and thoughtful use of nullability.",
-    icon: new URL("./assets/cog-double.svg", import.meta.url).href,
+    icon: new URL("./assets/solve.svg", import.meta.url).href,
     section: "best-practices",
   },
   "global-object-identification": {
     description:
       "Use globally unique IDs and the Node interface to enable caching, refetching, and efficient schema traversal.",
-    icon: new URL("./assets/dna.svg", import.meta.url).href,
+    icon: new URL("./assets/product-check.svg", import.meta.url).href,
     section: "best-practices",
   },
   caching: {
     description:
       "Explore caching techniques and ID strategies that make client-side performance and object reuse more effective.",
-    icon: new URL("./assets/sync-square.svg", import.meta.url).href,
+    icon: new URL("./assets/books.svg", import.meta.url).href,
     section: "best-practices",
   },
   performance: {
@@ -138,13 +133,13 @@ const _items: Record<
   federation: {
     description:
       "Learn how GraphQL federation enables modular, scalable APIs by composing services into a unified schema.",
-    icon: new URL("./assets/globe.svg", import.meta.url).href,
+    icon: new URL("./assets/circuit.svg", import.meta.url).href,
     section: "best-practices",
   },
   "debug-errors": {
     description:
       "Learn about common 'graphql-http' errors and how to debug them.",
-    icon: new URL("./assets/solve.svg", import.meta.url).href,
+    icon: new URL("./assets/construction.svg", import.meta.url).href,
     section: "best-practices",
   },
 }

@@ -12,7 +12,7 @@ export function TocHero({ heading, text, children, decoration }: TocHeroProps) {
       {decoration}
       <div className="gql-section gql-container relative flex !max-w-screen-lg flex-col items-center gap-6 text-center lg:gap-8 xl:!max-w-screen-xl">
         <h1 className="typography-h1">{heading}</h1>
-        <p className="typography-body-sm max-w-[80vw] text-pretty">{text}</p>
+        <p className="typography-body-md max-w-[80vw] text-pretty">{text}</p>
         {children}
       </div>
     </section>

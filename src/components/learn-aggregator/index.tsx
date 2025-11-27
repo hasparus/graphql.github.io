@@ -35,12 +35,12 @@ export function TeaserSection({
   return (
     <section
       className={clsx(
-        "gql-container gql-section flex items-start gap-8 max-lg:flex-col lg:gap-12 xl:gap-16",
+        "gql-container gql-section flex items-start gap-8 max-lg:flex-col max-lg:pt-6 lg:gap-12 xl:gap-16",
         className,
       )}
       {...rest}
     >
-      <header className="flex max-w-[720px] flex-col gap-6 pt-6 text-left">
+      <header className="flex max-w-[720px] flex-col gap-6 text-left lg:max-w-[540px]">
         <div className="flex flex-col gap-6">
           <Eyebrow>{eyebrow}</Eyebrow>
           <h2 className="typography-h2 text-pretty text-neu-900">{title}</h2>
@@ -50,7 +50,7 @@ export function TeaserSection({
           {cta}
         </div>
       </header>
-      <ul className="flex flex-col gap-4 lg:gap-8">
+      <ul className="grid grid-cols-1 justify-stretch gap-4 sm:max-lg:grid-cols-2 lg:gap-8">
         {items.map((item, index) => {
           return (
             <TeaserSectionListItem
@@ -65,7 +65,7 @@ export function TeaserSection({
                   src={item.icon}
                   width={72}
                   height={72}
-                  className="aspect-square"
+                  className="aspect-square lg:size-[138px]"
                   loading={index < 2 && firstIconsEager ? "eager" : "lazy"}
                   alt=""
                 />
@@ -97,12 +97,12 @@ function TeaserSectionListItem({
   href,
 }: TeaserSectionListItemProps) {
   return (
-    <li className="text-neu-900">
+    <li className="flex text-neu-900">
       <a
         href={href}
-        className="gql-focus-visible grid border border-neu-200 bg-neu-0 transition-colors [grid-template-areas:'icon_header''desc_desc'] [grid-template-columns:72px_1fr] [grid-template-rows:auto_auto] hover:border-neu-300 hover:ring hover:ring-neu-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:ring-neu-50 lg:[grid-template-areas:'icon_header_arrow''icon_desc_arrow'] lg:[grid-template-columns:190px_1fr_64px]"
+        className="gql-focus-visible grid border border-neu-200 bg-neu-0 transition-colors [grid-template-areas:'icon_header''desc_desc'] [grid-template-columns:72px_1fr] [grid-template-rows:auto_1fr] hover:border-neu-300 hover:ring hover:ring-neu-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:ring-neu-50 lg:[grid-template-areas:'icon_header_header''icon_desc_arrow'] lg:[grid-template-columns:190px_1fr_64px]"
       >
-        <div
+        <span
           className={clsx(
             "flex size-[72px] items-center justify-center border-neu-200 p-2 [grid-area:icon] lg:size-[190px]",
             section === "getting-started" &&
@@ -112,24 +112,24 @@ function TeaserSectionListItem({
           )}
         >
           {icon}
-        </div>
+        </span>
 
-        <div className="flex flex-col gap-1 px-2 pt-2 [grid-area:header] lg:px-4 lg:pt-4">
-          <span className="typography-body-sm text-neu-700">
+        <span className="flex flex-col gap-1 px-2 pt-2 [grid-area:header] lg:px-4 lg:pt-4">
+          <span className="typography-body-sm text-neu-700 max-lg:typography-body-md">
             Lesson {number}
           </span>
-          <strong className="typography-h3 font-normal text-neu-900">
+          <span className="typography-h3 font-normal text-neu-900">
             {title}
-          </strong>
-        </div>
+          </span>
+        </span>
 
-        <p className="typography-body-sm text-pretty p-4 text-neu-900 [grid-area:desc] max-lg:border-t max-lg:border-neu-200">
+        <p className="typography-body-sm text-pretty p-4 text-neu-900 [grid-area:desc] max-lg:typography-body-md max-lg:border-t max-lg:border-neu-200">
           {description}
         </p>
 
-        <div className="hidden items-center justify-center place-self-end border-l border-t border-neu-200 p-4 [grid-area:arrow] lg:flex">
+        <span className="hidden items-center justify-center place-self-end border-l border-t border-neu-200 p-4 [grid-area:arrow] lg:flex">
           <ArrowDownIcon className="size-8 shrink-0 -rotate-90" />
-        </div>
+        </span>
       </a>
     </li>
   )
