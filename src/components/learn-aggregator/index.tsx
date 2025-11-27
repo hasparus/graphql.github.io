@@ -104,7 +104,7 @@ function TeaserSectionListItem({
       >
         <div
           className={clsx(
-            "flex size-[72px] items-center justify-center border-neu-200 [grid-area:icon] max-lg:border lg:size-[190px] lg:border-r",
+            "flex size-[72px] items-center justify-center border-neu-200 p-2 [grid-area:icon] lg:size-[190px]",
             section === "getting-started" &&
               "bg-pri-lighter/10 dark:bg-pri-lighter/5",
             section === "best-practices" &&
@@ -114,7 +114,7 @@ function TeaserSectionListItem({
           {icon}
         </div>
 
-        <div className="flex flex-col gap-1 [grid-area:header] lg:px-4 lg:pt-4">
+        <div className="flex flex-col gap-1 px-2 pt-2 [grid-area:header] lg:px-4 lg:pt-4">
           <span className="typography-body-sm text-neu-700">
             Lesson {number}
           </span>
@@ -123,7 +123,7 @@ function TeaserSectionListItem({
           </strong>
         </div>
 
-        <p className="typography-body-sm text-pretty p-4 text-neu-900 [grid-area:desc]">
+        <p className="typography-body-sm text-pretty p-4 text-neu-900 [grid-area:desc] max-lg:border-t max-lg:border-neu-200">
           {description}
         </p>
 
