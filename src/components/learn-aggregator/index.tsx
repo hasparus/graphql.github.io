@@ -39,7 +39,7 @@ export function TeaserSection({
   return (
     <section
       className={clsx(
-        "gql-container gql-section flex items-start gap-8 max-lg:flex-col max-lg:pt-6 lg:gap-12 xl:gap-16",
+        "gql-container gql-section flex items-start gap-8 max-lg:flex-col max-lg:pt-6 lg:gap-12 lg:pb-24 xl:gap-16",
         className,
       )}
       {...rest}
@@ -98,8 +98,6 @@ export function TeaserSection({
   )
 }
 
-// https://www.figma.com/design/aPUvZDSxJfYDJtPd7GF2sB/GraphQL.org--Working-File?node-id=6368-6983&t=JE1eYbp6gpQRUILY-4
-// https://www.figma.com/design/aPUvZDSxJfYDJtPd7GF2sB/GraphQL.org--Working-File?node-id=5830-51637&t=JE1eYbp6gpQRUILY-4
 interface TeaserSectionListItemProps
   extends React.HTMLAttributes<HTMLLIElement> {
   number: number
