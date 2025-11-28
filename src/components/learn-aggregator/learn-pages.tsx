@@ -144,13 +144,12 @@ const _items: Record<
   },
 }
 
-export const learnPages = _items as Record<LearnPagePath, LearnPageItem | null>
+const learnPages = _items as Record<LearnPagePath, LearnPageItem | null>
 
-export const pagesBySection: Record<LearnPageItem["section"], LearnPageItem[]> =
-  {
-    "getting-started": [],
-    "best-practices": [],
-  }
+const pagesBySection: Record<LearnPageItem["section"], LearnPageItem[]> = {
+  "getting-started": [],
+  "best-practices": [],
+}
 
 for (const path in learnPages) {
   const page = learnPages[path as LearnPagePath]
@@ -171,3 +170,5 @@ for (const path in learnPages) {
 
   pagesBySection[page.section].push(page)
 }
+
+export { learnPages, pagesBySection }
