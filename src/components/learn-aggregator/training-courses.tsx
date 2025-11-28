@@ -75,7 +75,7 @@ function TrainingCoursesCard({
   return (
     <a
       className={clsx(
-        "grid grid-cols-[1fr_auto] grid-rows-[auto_auto] flex-col gap-2 border border-neu-200 [grid-template-areas:'title_icon''desc_arrow'] dark:border-neu-100 lg:[grid-template-areas:'icon_title_arrow''icon_desc_arrow'] lg:[grid-template-columns:142px_1fr_64px] lg:[grid-template-rows:auto_1fr]",
+        "grid grid-cols-[1fr_auto] grid-rows-[auto_auto] flex-col border border-neu-200 bg-neu-50 [grid-template-areas:'title_icon''desc_arrow'] hover:ring hover:ring-neu-100 dark:border-neu-100 dark:bg-neu-50/50 dark:hover:ring-neu-50 lg:[grid-template-areas:'icon_title_.''icon_desc_arrow'] lg:[grid-template-columns:142px_1fr_64px] lg:[grid-template-rows:1fr_auto]",
         props.className,
       )}
       href={href}
@@ -83,13 +83,13 @@ function TrainingCoursesCard({
       rel="noreferrer"
       {...props}
     >
-      <p className="typography-h3 [grid-area:title] lg:px-4 lg:pb-4 lg:pt-6">
+      <p className="typography-h3 [grid-area:title] lg:px-4 lg:pb-2 lg:pt-6">
         {title}
       </p>
-      <p className="typography-body-md [grid-area:desc] lg:px-4 lg:pb-6">
+      <p className="typography-body-md [grid-area:desc] lg:px-4 lg:pb-6 lg:pt-2">
         {description}
       </p>
-      <span className="border-inherit p-4 text-neu-600 [grid-area:icon] dark:text-neu-600 lg:border-r lg:p-10 [&>svg]:size-8 lg:[&>svg]:size-16">
+      <span className="border-inherit p-4 text-neu-600 [grid-area:icon] dark:text-neu-600 max-lg:border-l lg:border-r lg:p-10 [&>svg]:size-8 lg:[&>svg]:size-16">
         {icon}
       </span>
       <span className="items-center justify-center place-self-end border-l border-t border-neu-200 p-4 [grid-area:arrow] dark:border-neu-100 lg:flex">
