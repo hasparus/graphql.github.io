@@ -1,3 +1,5 @@
+import { clsx } from "clsx"
+
 export { TocHeroContents } from "./toc-hero-contents"
 
 export interface TocHeroProps {
@@ -5,10 +7,22 @@ export interface TocHeroProps {
   text: React.ReactNode
   children: React.ReactNode
   decoration: React.ReactNode
+  className?: string
 }
-export function TocHero({ heading, text, children, decoration }: TocHeroProps) {
+export function TocHero({
+  heading,
+  text,
+  children,
+  decoration,
+  className,
+}: TocHeroProps) {
   return (
-    <section className="relative overflow-visible bg-neu-0 pt-[calc(var(--nextra-navbar-height)+24px)]">
+    <section
+      className={clsx(
+        "relative overflow-visible bg-neu-0 pt-[calc(var(--nextra-navbar-height)+24px)]",
+        className,
+      )}
+    >
       {decoration}
       <div className="gql-section gql-container relative flex !max-w-screen-lg flex-col items-center gap-6 text-center lg:gap-8 xl:!max-w-screen-xl">
         <h1 className="typography-h1">{heading}</h1>

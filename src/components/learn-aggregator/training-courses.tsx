@@ -11,7 +11,7 @@ export function TrainingCoursesSection(
   return (
     <section
       {...props}
-      className={clsx("gql-section gql-container", props.className)}
+      className={clsx("gql-section gql-container lg:pb-24", props.className)}
     >
       <div className="mx-auto flex max-w-[960px] flex-col items-center">
         <Eyebrow>Tutorials</Eyebrow>
