@@ -20,7 +20,7 @@ export function TrainingCoursesSection(
           Get started or level up your GraphQL skills with these trusted
           tutorials.
         </p>
-        <ul className="flex flex-col gap-4 md:gap-8 lg:mt-8 lg:gap-12">
+        <ul className="mt-4 flex flex-col gap-4 md:gap-8 lg:mt-8 lg:gap-12">
           <li>
             <TrainingCoursesCard
               title="GraphQL-JS tutorial"
@@ -83,16 +83,16 @@ function TrainingCoursesCard({
       rel="noreferrer"
       {...props}
     >
-      <p className="typography-h3 [grid-area:title] lg:px-4 lg:pb-2 lg:pt-6">
+      <p className="typography-h3 px-4 py-[18px] [grid-area:title] lg:px-4 lg:pb-2 lg:pt-6">
         {title}
       </p>
-      <p className="typography-body-md [grid-area:desc] lg:px-4 lg:pb-6 lg:pt-2">
+      <p className="typography-body-md px-4 pb-4 [grid-area:desc] lg:pb-6 lg:pt-2">
         {description}
       </p>
-      <span className="border-inherit p-4 text-neu-600 [grid-area:icon] dark:text-neu-600 max-lg:border-l lg:border-r lg:p-10 [&>svg]:size-8 lg:[&>svg]:size-16">
+      <span className="flex items-center justify-center self-stretch border-inherit p-4 text-neu-600 [grid-area:icon] dark:text-neu-600 max-lg:border-l lg:border-r lg:p-10 [&>svg]:size-8 lg:[&>svg]:size-16">
         {icon}
       </span>
-      <span className="items-center justify-center place-self-end border-l border-t border-neu-200 p-4 [grid-area:arrow] dark:border-neu-100 lg:flex">
+      <span className="flex place-content-center place-items-center place-self-stretch border-l border-t border-neu-200 p-4 [grid-area:arrow] dark:border-neu-100 lg:flex lg:place-self-end">
         <ArrowDownIcon className="size-8 shrink-0 -rotate-90" />
       </span>
     </a>
