@@ -1,15 +1,25 @@
 export default {
   index: {
     title: "FAQ",
+    type: "hidden",
     theme: {
-      toc: false,
       sidebar: false,
+      timestamp: false,
+      breadcrumb: false,
+      toc: [
+        { value: "Getting Started", id: "getting-started", depth: 2 },
+        { value: "General", id: "general", depth: 2 },
+        { value: "Best Practices", id: "best-practices", depth: 2 },
+        { value: "Specification", id: "specification", depth: 2 },
+        { value: "Frontend", id: "frontend", depth: 2 },
+        { value: "Foundation", id: "foundation", depth: 2 },
+      ],
     },
   },
-  "getting-started": { display: "hidden" },
-  general: { display: "hidden" },
-  "best-practices": { display: "hidden" },
-  specification: { display: "hidden" },
-  frontend: { display: "hidden" },
-  foundation: { display: "hidden" },
+  "getting-started": "",
+  general: "",
+  "best-practices": "",
+  specification: "",
+  frontend: "",
+  foundation: "",
 }
