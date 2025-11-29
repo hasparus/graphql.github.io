@@ -2,6 +2,7 @@
 
 import { getMdxHeadings } from "@/_design-system/mdx-components/get-mdx-headings"
 import { type ReactNode, useRef, useLayoutEffect, useState } from "react"
+import ArrowDown from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
 
 function slugify(text: string): string {
   return String(text)
@@ -28,31 +29,14 @@ function FaqH1({ id, children }: { id?: string; children?: ReactNode }) {
 function FaqH2({ id, children }: { id?: string; children?: ReactNode }) {
   const slug = id ?? slugify(String(children))
   return (
-    <details className="group border-b border-neu-100 dark:border-neu-200 [&:first-of-type]:border-t [&>p:first-of-type]:!mt-0">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+    <details className="group mt-4 border border-neu-400 bg-neu-0 *:px-3 dark:border-neu-200 lg:mt-6 [&:first-of-type]:border-t [&>:last-child]:mb-3 [&>p:first-of-type]:!mt-3">
+      <summary className="gql-focus-visible flex cursor-pointer list-none items-center justify-between gap-4 p-3 group-open:border-b group-hover:bg-neu-100 [&::-webkit-details-marker]:hidden">
         <h3 id={slug} className="typography-body-lg text-neu-900">
           {children}
         </h3>
-        <ChevronIcon className="size-5 shrink-0 text-neu-600 transition-transform group-open:rotate-180" />
+        <ArrowDown className="size-10 shrink-0 text-neu-800 group-open:rotate-180" />
       </summary>
     </details>
-  )
-}
-
-function ChevronIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
   )
 }
 
