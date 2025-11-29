@@ -1,5 +1,6 @@
 "use client"
 
+import { getMdxHeadings } from "@/_design-system/mdx-components/get-mdx-headings"
 import { type ReactNode, useRef, useLayoutEffect, useState } from "react"
 
 function slugify(text: string): string {
@@ -9,17 +10,18 @@ function slugify(text: string): string {
     .replace(/(^-|-$)/g, "")
 }
 
+const mdxHeadings = getMdxHeadings()
+
 function FaqH1({ id, children }: { id?: string; children?: ReactNode }) {
   const slug = id ?? slugify(String(children))
   return (
-    <h2
+    <mdxHeadings.h2
       id={slug}
-      className="typography-h2 mb-4 mt-8 scroll-mt-24 text-neu-900 first:mt-0"
+      size="h1"
+      className="mb-4 mt-8 scroll-mt-24 text-neu-900 first:mt-0"
     >
-      <a href={`#${slug}`} className="hover:underline">
-        {children}
-      </a>
-    </h2>
+      {children}
+    </mdxHeadings.h2>
   )
 }
 
