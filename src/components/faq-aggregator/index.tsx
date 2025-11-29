@@ -26,7 +26,7 @@ function FaqH1({ id, children }: { id?: string; children?: ReactNode }) {
 function FaqH2({ id, children }: { id?: string; children?: ReactNode }) {
   const slug = id ?? slugify(String(children))
   return (
-    <details className="group border-b border-neu-100 dark:border-neu-200 [&:first-of-type]:border-t">
+    <details className="group border-b border-neu-100 dark:border-neu-200 [&:first-of-type]:border-t [&>p:first-of-type]:!mt-0">
       <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
         <h3 id={slug} className="typography-body-lg text-neu-900">
           {children}
@@ -82,10 +82,7 @@ export function FaqAggregator({ children }: { children: ReactNode }) {
       }
 
       if (answerContent.length > 0) {
-        const wrapper = document.createElement("div")
-        wrapper.className = "pb-4"
-        answerContent.forEach(node => wrapper.appendChild(node))
-        detail.appendChild(wrapper)
+        answerContent.forEach(node => detail.appendChild(node))
       }
     })
 
