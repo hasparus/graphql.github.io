@@ -1,14 +1,11 @@
 export default {
   index: {
-    title: "Overview",
-    theme: {
-      toc: false,
-    },
+    title: "FAQ",
   },
-  "getting-started": "",
-  general: "",
-  "best-practices": "",
-  specification: "",
-  frontend: "",
-  foundation: "",
+  "getting-started": { display: "hidden" },
+  general: { display: "hidden" },
+  "best-practices": { display: "hidden" },
+  specification: { display: "hidden" },
+  frontend: { display: "hidden" },
+  foundation: { display: "hidden" },
 }
