@@ -9,9 +9,11 @@ import Foundation from "./foundation.mdx"
 
 <h1 className="typography-h1">Frequently Asked Questions</h1>
 
-<GettingStarted components={faqMdxComponents} />
-<General components={faqMdxComponents} />
-<BestPractices components={faqMdxComponents} />
-<Specification components={faqMdxComponents} />
-<Frontend components={faqMdxComponents} />
-<Foundation components={faqMdxComponents} />
+<FaqAggregator>
+  <GettingStarted components={faqMdxComponents} />
+  <General components={faqMdxComponents} />
+  <BestPractices components={faqMdxComponents} />
+  <Specification components={faqMdxComponents} />
+  <Frontend components={faqMdxComponents} />
+  <Foundation components={faqMdxComponents} />
+</FaqAggregator>

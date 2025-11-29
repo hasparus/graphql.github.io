@@ -1,6 +1,10 @@
 export default {
   index: {
     title: "FAQ",
+    theme: {
+      toc: false,
+      sidebar: false,
+    },
   },
   "getting-started": { display: "hidden" },
   general: { display: "hidden" },
