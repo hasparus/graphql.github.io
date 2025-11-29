@@ -3,6 +3,11 @@
 import { getMdxHeadings } from "@/_design-system/mdx-components/get-mdx-headings"
 import { type ReactNode, useRef, useLayoutEffect, useState } from "react"
 import ArrowDown from "@/app/conf/_design-system/pixelarticons/arrow-down.svg?svgr"
+import BestPracticesIcon from "./decorations/best-practices.svg?svgr"
+import FrontendIcon from "./decorations/frontend.svg?svgr"
+import GeneralIcon from "./decorations/general.svg?svgr"
+import GettingStartedIcon from "./decorations/getting-started.svg?svgr"
+import SpecificationIcon from "./decorations/specification.svg?svgr"
 
 function slugify(text: string): string {
   return String(text)
@@ -13,24 +18,42 @@ function slugify(text: string): string {
 
 const mdxHeadings = getMdxHeadings()
 
+const iconMap: Record<string, typeof GettingStartedIcon> = {
+  "getting-started": GettingStartedIcon,
+  "best-practices": BestPracticesIcon,
+  frontend: FrontendIcon,
+  general: GeneralIcon,
+  specification: SpecificationIcon,
+}
+
 function FaqH1({ id, children }: { id?: string; children?: ReactNode }) {
   const slug = id ?? slugify(String(children))
+  const Icon = iconMap[slug] ?? GeneralIcon
+
   return (
-    <mdxHeadings.h2
-      id={slug}
-      size="h1"
-      className="mb-4 mt-8 scroll-mt-24 text-neu-900 first:mt-0"
+    <div
+      data-heading
+      className="mb-4 mt-8 flex items-center border border-neu-400 first:mt-0 dark:border-neu-100"
     >
-      {children}
-    </mdxHeadings.h2>
+      <div className="flex size-[90px] shrink-0 items-center justify-center border-r border-inherit bg-neu-100 p-4 dark:bg-neu-50/50">
+        <Icon className="size-full text-neu-800" />
+      </div>
+      <mdxHeadings.h2
+        id={slug}
+        size="h1"
+        className="!mt-0 flex-1 px-4 text-neu-900"
+      >
+        {children}
+      </mdxHeadings.h2>
+    </div>
   )
 }
 
 function FaqH2({ id, children }: { id?: string; children?: ReactNode }) {
   const slug = id ?? slugify(String(children))
   return (
-    <details className="group mt-4 border border-neu-400 bg-neu-0 *:px-3 dark:border-neu-200 lg:mt-6 [&:first-of-type]:border-t [&>:last-child]:mb-3 [&>p:first-of-type]:!mt-3">
-      <summary className="gql-focus-visible flex cursor-pointer list-none items-center justify-between gap-4 p-3 group-open:border-b group-hover:bg-neu-100 [&::-webkit-details-marker]:hidden">
+    <details className="group mt-4 border border-neu-400 bg-neu-0 *:px-3 dark:border-neu-100 lg:mt-6 [&:first-of-type]:border-t [&>:last-child]:mb-3 [&>p:first-of-type]:!mt-3">
+      <summary className="gql-focus-visible flex cursor-pointer list-none items-center justify-between gap-4 p-3 hover:bg-neu-100 group-open:border-b group-open:border-neu-400 dark:hover:bg-neu-50/50 dark:group-open:border-neu-100 [&::-webkit-details-marker]:hidden">
         <h3 id={slug} className="typography-body-lg text-neu-900">
           {children}
         </h3>
@@ -56,7 +79,11 @@ export function FaqAggregator({ children }: { children: ReactNode }) {
       while (sibling) {
         const next = sibling.nextSibling
         if (sibling instanceof Element) {
-          if (sibling.tagName === "DETAILS" || sibling.tagName === "H2") break
+          if (
+            sibling.tagName === "DETAILS" ||
+            (sibling as HTMLElement).dataset?.heading
+          )
+            break
           answerContent.push(sibling)
         } else if (
           sibling.nodeType === Node.TEXT_NODE &&
