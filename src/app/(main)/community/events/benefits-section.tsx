@@ -5,9 +5,9 @@ import EyeIcon from "@/app/conf/_design-system/pixelarticons/eye.svg?svgr"
 
 import { BenefitCard } from "./benefit-card"
 
-export function BenefitsSection() {
+export function BenefitsSection({ id }: { id?: string }) {
   return (
-    <section className="gql-section">
+    <section className="gql-section" id={id}>
       <div className="mx-auto max-w-3xl text-center">
         <h2 className="typography-h2 text-balance">
           Benefits of getting involved

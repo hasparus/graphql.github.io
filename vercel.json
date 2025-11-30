@@ -602,7 +602,7 @@
     },
     {
       "source": "/docs",
-      "destination": "/learn",
+      "destination": "/learn/introduction/",
       "permanent": true
     },
     {

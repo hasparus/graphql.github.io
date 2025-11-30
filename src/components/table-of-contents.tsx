@@ -86,7 +86,7 @@ export function TableOfContents({
                     }[depth],
                     "block",
                     activeAnchor[id]?.isActive
-                      ? "text-pri-base contrast-more:!text-pri-base"
+                      ? "text-pri-base contrast-more:!text-pri-base dark:text-pri-light"
                       : "",
                   )}
                 >
@@ -101,7 +101,8 @@ export function TableOfContents({
       {hasMetaInfo && (
         <div
           className={clsx(
-            hasHeadings && "nextra-toc-footer mt-8 pt-8",
+            hasHeadings &&
+              "nextra-toc-footer mt-8 bg-[rgb(var(--nextra-bg))] pt-8",
             "sticky bottom-0 flex flex-col items-start gap-2 pb-8",
             "-mx-1 px-1", // to hide focused toc links
           )}

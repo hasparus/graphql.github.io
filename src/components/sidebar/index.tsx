@@ -249,7 +249,7 @@ function File({
   item: PageItem | Item
   anchors: Heading[]
   onFocus: FocusEventHandler
-}): ReactElement {
+}) {
   const route = useFSRoute()
 
   // It is possible that the item doesn't have any route - for example an external link.
@@ -260,6 +260,10 @@ function File({
    */
   const activeAnchor = useActiveAnchor() as ActiveAnchor | null
   const { setMenu } = useMenu()
+
+  if (item.type === "hidden") {
+    return null
+  }
 
   if (item.type === "separator") {
     return <Separator title={item.title} />

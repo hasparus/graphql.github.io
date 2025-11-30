@@ -8,6 +8,7 @@ import stripesMask from "@/components/404-page/image.webp"
 
 import { Button } from "./conf/_design-system/button"
 import MainLayout from "./(main)/layout"
+import { NavbarFixed } from "@/components/navbar/navbar-fixed"
 
 export default function NotFoundPage() {
   const pathname = usePathname()
@@ -29,7 +30,7 @@ export default function NotFoundPage() {
 
   return (
     <MainLayout>
-      <style>{".nextra-nav-container.sticky { position: fixed }"}</style>
+      <NavbarFixed />
       <div className="relative">
         <Stripes />
         <div className="relative z-10 flex h-[500px] min-h-[calc(100vh_-_531px)] flex-col items-center justify-center gap-8 pt-[--nextra-navbar-height] font-sans lg:h-[600px] lg:gap-10">

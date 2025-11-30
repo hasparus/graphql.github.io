@@ -3,7 +3,16 @@ export default {
     type: "separator",
     title: "Learn",
   },
-  index: "Introduction",
+  index: {
+    /**
+     * The Learn aggregator is hidden from the Sidebar.
+     */
+    type: "hidden",
+    theme: {
+      layout: "raw",
+    },
+  },
+  introduction: "Introduction",
   schema: "Schemas and Types",
   queries: "",
   mutations: "",
@@ -28,9 +37,5 @@ export default {
   performance: "",
   security: "",
   federation: "",
-  "-- 3": {
-    type: "separator",
-    title: "GraphQL over HTTP",
-  },
   "debug-errors": "Common GraphQL over HTTP Errors",
 }
