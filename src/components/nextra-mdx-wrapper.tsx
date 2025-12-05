@@ -1,14 +1,10 @@
 import type { ReactElement, ReactNode } from "react"
 import { useMounted } from "nextra/hooks"
 import { Heading } from "nextra"
-import {
-  useConfig,
-  useThemeConfig,
-  SkipNavContent,
-  NavLinks,
-} from "nextra-theme-docs"
+import { useConfig, useThemeConfig, SkipNavContent } from "nextra-theme-docs"
 import { clsx } from "clsx"
 
+import { LearnNavLinkCard, ArrowNavLinks } from "./nav-links"
 import { Sidebar } from "./sidebar"
 import { renderComponent } from "./utils/render-component"
 import { TableOfContents } from "./table-of-contents"
@@ -57,7 +53,7 @@ export function NextraMdxWrapper({
   return (
     <div
       className={clsx(
-        "mx-auto flex",
+        "mx-auto flex pb-8 xl:pb-12",
         themeContext.layout !== "raw" && "max-w-[90rem]",
       )}
     >
@@ -106,18 +102,28 @@ function Body({ children }: { children: ReactNode }): ReactElement {
       <div className="mt-16" />
     )
 
+  const isLearnPage = config.filePath.includes("/learn/")
+
   const content = (
     <>
       {renderComponent(themeContext.topContent)}
       {children}
       {gitTimestampEl}
       {renderComponent(themeContext.bottomContent)}
-      {activeType !== "page" && themeContext.pagination && (
-        <NavLinks
-          flatDocsDirectories={flatDocsDirectories}
-          currentIndex={activeIndex}
-        />
-      )}
+      {activeType !== "page" &&
+        themeContext.pagination &&
+        (isLearnPage ? (
+          <LearnNavLinkCard
+            flatDocsDirectories={flatDocsDirectories}
+            currentIndex={activeIndex}
+            articleNoun="lesson"
+          />
+        ) : (
+          <ArrowNavLinks
+            flatDocsDirectories={flatDocsDirectories}
+            currentIndex={activeIndex}
+          />
+        ))}
     </>
   )
 
@@ -144,7 +150,8 @@ function Body({ children }: { children: ReactNode }): ReactElement {
     <article
       className={clsx(
         classes.main,
-        "nextra-content flex min-h-[calc(100vh-var(--nextra-navbar-height))] min-w-0 justify-center pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]",
+        "nextra-content flex min-h-[calc(100vh-var(--nextra-navbar-height))] min-w-0 justify-center pr-[calc(env(safe-area-inset-right)-1.5rem)]",
+        isLearnPage ? "pb-4" : "pb-8",
         themeContext.typesetting === "article" &&
           "nextra-body-typesetting-article",
       )}
