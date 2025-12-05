@@ -5,9 +5,10 @@ import { Tag } from "@/app/conf/_design-system/tag"
 import { arrowsMoveSideways } from "@/app/conf/_design-system/utils/arrows-move-sideways"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
+import { LookingForMore } from "@/components/looking-for-more"
+
 import { blogTagColors } from "./blog-tag-colors"
 import { BlogCard } from "./blog-card"
-import { LookingForMore } from "./looking-for-more"
 import { BlogMdxContent } from "./mdx-types"
 import { FeaturedBlogPosts } from "./featured-blog-posts"
 
@@ -87,7 +88,13 @@ export function BlogPage({
             )}
           </section>
         </div>
-        <LookingForMore />
+        <LookingForMore
+          description="Explore learning guides and best practices — or browse for tools, libraries and other resources."
+          links={[
+            { href: "/learn", label: "Learn" },
+            { href: "/resources", label: "Resources" },
+          ]}
+        />
       </div>
     </main>
   )
