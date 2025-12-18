@@ -26,9 +26,11 @@ export function TocHeroContents({
       <ul
         className={clsx(
           "grid grid-flow-row-dense grid-rows-2 gap-px border-t border-inherit bg-neu-300 dark:bg-neu-100",
-          sections.length > 3
+          sections.length % 3 === 0
             ? "grid-cols-2 lg:grid-cols-[repeat(3,1fr)]"
-            : "grid-cols-1",
+            : sections.length % 2 === 0
+              ? "grid-cols-2"
+              : "grid-cols-1",
         )}
       >
         {sections.map((section, i) => {
