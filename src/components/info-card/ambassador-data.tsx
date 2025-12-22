@@ -394,7 +394,7 @@ export const ambassadors202509: Ambassador[] = [
     label: "Sarah Sanders",
     imageUrl: "/img/ambassadors/sarah-sanders.jpg",
     alt: "Sarah Sanders",
-    organization: "Docker",
+    organization: "PostHog",
     tags: [
       {
         label: "LinkedIn",
@@ -708,7 +708,6 @@ export const ambassadors202512: Ambassador[] = [
   },
 ]
 
-export const ambassadors = [
-  ...ambassadors202509,
-  //...ambassadors202512
-].sort((a, z) => a.label.localeCompare(z.label, "en-US"))
+export const ambassadors = [...ambassadors202509, ...ambassadors202512].sort(
+  (a, z) => a.label.localeCompare(z.label, "en-US"),
+)
