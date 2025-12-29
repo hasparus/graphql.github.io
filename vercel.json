@@ -482,7 +482,12 @@
     },
     {
       "source": "/community",
-      "destination": "/community/resources/official-channels",
+      "destination": "/community/official-channels",
+      "permanent": true
+    },
+    {
+      "source": "/community/",
+      "destination": "/community/official-channels/",
       "permanent": true
     },
     {
@@ -493,6 +498,51 @@
     {
       "source": "/community/contribute",
       "destination": "/community/contribute/essential-links",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources",
+      "destination": "/resources",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/official-channels",
+      "destination": "/community/official-channels",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/training-courses",
+      "destination": "/community/training-courses",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/community-channels",
+      "destination": "/community/community-channels",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/vendor-channels",
+      "destination": "/community/vendor-channels",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/more-resources",
+      "destination": "/community/more-resources",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/blogs-and-newsletters",
+      "destination": "/resources/reading/blogs-and-newsletters",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/video",
+      "destination": "/resources/video",
+      "permanent": true
+    },
+    {
+      "source": "/community/resources/books",
+      "destination": "/resources/reading/books",
       "permanent": true
     },
     {
@@ -557,12 +607,12 @@
     },
     {
       "source": "/community",
-      "destination": "/community/resources/official-channels/",
+      "destination": "/community/official-channels/",
       "permanent": true
     },
     {
       "source": "/community/",
-      "destination": "/community/resources/official-channels/",
+      "destination": "/community/official-channels/",
       "permanent": true
     },
     {
