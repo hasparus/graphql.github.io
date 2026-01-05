@@ -297,7 +297,7 @@ export const meetups = [
       link: "https://luma.com/phillygraphql",
       prev: "",
       next: "2026-01-22",
-      official: false,
+      official: true,
     },
   },
 ].sort((a, z) =>
