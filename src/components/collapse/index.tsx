@@ -47,7 +47,7 @@ export function Collapse({
 
     if (isOpen) {
       if (horizontal) {
-        child.style.removeProperty("width")
+        child.style.removeProperty("minWidth")
         container.style.removeProperty("width")
       } else {
         container.style.height = `${child.clientHeight}px`
@@ -57,8 +57,9 @@ export function Collapse({
       }
     } else {
       if (horizontal) {
-        child.style.width = `${child.clientWidth}px`
-        container.style.width = `${child.clientWidth}px`
+        const width = child.clientWidth
+        child.style.minWidth = `${width}px`
+        container.style.width = `${width}px`
       } else {
         container.style.height = `${child.clientHeight}px`
       }
