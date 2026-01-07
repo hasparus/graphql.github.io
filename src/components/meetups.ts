@@ -285,6 +285,21 @@ export const meetups = [
       official: false,
     },
   },
+  {
+    node: {
+      id: "philly",
+      name: "Philly GraphQL",
+      latitude: 39.9526,
+      longitude: -75.1652,
+      city: "Philadelphia",
+      state: "PA",
+      country: "USA",
+      link: "https://luma.com/phillygraphql",
+      prev: "",
+      next: "2026-01-22",
+      official: true,
+    },
+  },
 ].sort((a, z) =>
   a.node.name
     .replace(/\s*GraphQL\s*/, "")
