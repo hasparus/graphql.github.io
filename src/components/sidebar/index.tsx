@@ -25,9 +25,9 @@ import scrollIntoView from "scroll-into-view-if-needed"
 import {
   useActiveAnchor,
   useThemeConfig,
-  Collapse,
   ActiveAnchor,
 } from "nextra-theme-docs"
+import { Collapse } from "@/components/collapse"
 
 import ArrowBarLeft from "@/app/conf/_design-system/pixelarticons/arrow-bar-left.svg?svgr"
 import { Anchor } from "@/app/conf/_design-system/anchor"
