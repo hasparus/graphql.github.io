@@ -7,9 +7,9 @@ const CALENDAR_ID =
   "linuxfoundation.org_ik79t9uuj2p32i3r203dgv5mo8@group.calendar.google.com"
 const API_KEY = process.env.GOOGLE_CALENDAR_API_KEY
 const OUTPUT_FILE = new URL("./working-group-events.ndjson", import.meta.url)
-const DAYS_BACK = 30
+const DAYS_BACK = 36
 const DAYS_TO_KEEP = 90
-const DAYS_AHEAD = 30
+const DAYS_AHEAD = 500
 
 const Instant = type({
   "dateTime?": "string",
@@ -40,6 +40,7 @@ const responseSchema = type({
   "nextPageToken?": "string",
 })
 
+/** Misnomer, this is just an event from the public calendar, not necessarily a working group */
 export type WorkingGroupMeeting =
   typeof calendarEventSchema.inferIntrospectableOut
 
@@ -63,6 +64,8 @@ async function main() {
   const searchParams = new URLSearchParams({
     key: API_KEY,
     singleEvents: "true",
+    orderBy: "startTime",
+    maxResults: "250",
   })
 
   const timeMin =
@@ -73,7 +76,6 @@ async function main() {
   const timeMax = new Date(now.getTime() + DAYS_AHEAD * 24 * 60 * 60 * 1000)
   searchParams.set("timeMin", timeMin.toISOString())
   searchParams.set("timeMax", timeMax.toISOString())
-  searchParams.set("orderBy", "startTime")
   console.log(
     `\nSyncing from: ${timeMin.toLocaleDateString()} (${timeMin.toISOString()})`,
   )
