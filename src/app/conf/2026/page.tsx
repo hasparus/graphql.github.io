@@ -21,7 +21,7 @@ import { HeroImage } from "./components/hero/hero-image"
 import { HERO_MARQUEE_ITEMS } from "./utils"
 
 export const metadata: Metadata = {
-  title: "GraphQLConf 2026 — May 06-07",
+  title: "GraphQLConf 2026 — May 06-07 + WG Day May 08",
 }
 
 export default function Page() {
@@ -68,11 +68,7 @@ export default function Page() {
             title="Get your ticket"
             description="Join two transformative days of expert insights and innovation to shape the next decade of APIs!"
           >
-            <Button
-              className="opacity-55"
-              variant="primary"
-              href={GET_TICKETS_LINK}
-            >
+            <Button variant="primary" href={GET_TICKETS_LINK}>
               Register now
             </Button>
           </CtaCardSection>
