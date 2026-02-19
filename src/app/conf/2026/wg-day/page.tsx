@@ -5,6 +5,9 @@ import { Button } from "@/app/conf/_design-system/button"
 import { Hero, HeroStripes } from "../components/hero"
 import { NavbarPlaceholder } from "../components/navbar"
 
+import NextImage from "next/image"
+import WGImage from "./attendees.jpg"
+
 export const metadata: Metadata = {
   title: "WG Day | GraphQLConf 2026",
   description:
@@ -48,6 +51,18 @@ export default function WGDayPage() {
 
       <main className="gql-all-anchors-focusable gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <section className="gql-container gql-section space-y-10 xl:mb-16 xl:mt-8">
+          <div className="relative aspect-video max-h-[566px] w-full overflow-hidden rounded-2xl lg:aspect-auto lg:h-[566px]">
+            <NextImage
+              src={WGImage}
+              alt="GraphQL working group attendees"
+              fill
+              className="object-cover object-[52%_30%]"
+              sizes="100vw"
+              placeholder="blur"
+              priority
+            />
+          </div>
+
           <article className="space-y-4">
             <h2 className="typography-h2">What is it?</h2>
             <p className="typography-body-lg max-w-4xl">
@@ -79,13 +94,12 @@ export default function WGDayPage() {
                 Location: Meta MPK 21 (adjacent to the main conference building)
               </li>
               <li>
-                Time: Drop-in between 9:30 AM-4:30 PM PT (last entry 2:00 PM
+                Time: Drop-in between 9:30 AM-4:30 PM PT (last entry 2:00 PM)
               </li>
               <li>
                 Informal format: drop in and out as needed; early departures for
                 travel are absolutely fine
               </li>
-              <li></li>
               <li>
                 Lunch plan: we expect to head to the cafeteria; if you arrive
                 around midday, you may need to meet the group there
@@ -94,16 +108,28 @@ export default function WGDayPage() {
           </article>
 
           <article className="space-y-4">
-            <h2 className="typography-h2">Contact</h2>
+            <h2 className="typography-h2">Join the waitlist</h2>
             <p className="typography-body-lg max-w-4xl">
-              Questions about attendance, waitlist priority, or logistics:
+              Attendance is managed by an invite system and waitlist. You can
+              join the waitlist by filling out the form linked below. Questions
+              about attendance, waitlist priority, or logistics, you can email
+              the event team:
             </p>
-            <Button
-              href="mailto:operations@graphql.org?subject=GraphQLConf%202026%20WG%20Day"
-              className="w-fit"
-            >
-              Email the event team
-            </Button>
+            <div className="mt-4 flex gap-x-6 gap-y-4 max-sm:flex-col">
+              <Button
+                href="https://forms.gle/jV5seEm8VHhsNLUs6"
+                className="w-fit"
+              >
+                Join the waitlist
+              </Button>
+              <Button
+                href="mailto:operations@graphql.org?subject=GraphQLConf%202026%20WG%20Day"
+                className="w-fit"
+                variant="secondary"
+              >
+                Email the event team
+              </Button>
+            </div>
           </article>
         </section>
       </main>
