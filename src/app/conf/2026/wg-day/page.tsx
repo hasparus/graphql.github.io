@@ -108,19 +108,19 @@ export default function WGDayPage() {
           </article>
 
           <article className="space-y-4">
-            <h2 className="typography-h2">Join the waitlist</h2>
+            <h2 className="typography-h2">Join us</h2>
             <p className="typography-body-lg max-w-4xl">
               Attendance is managed by an invite system and waitlist. You can
-              join the waitlist by filling out the form linked below. Questions
-              about attendance, waitlist priority, or logistics, you can email
-              the event team:
+              request to attend by filling out the form linked below. For
+              questions about attendance, waitlist priority, or logistics, you
+              can email the event team:
             </p>
             <div className="mt-4 flex gap-x-6 gap-y-4 max-sm:flex-col">
               <Button
                 href="https://forms.gle/jV5seEm8VHhsNLUs6"
                 className="w-fit"
               >
-                Join the waitlist
+                Attend
               </Button>
               <Button
                 href="mailto:operations@graphql.org?subject=GraphQLConf%202026%20WG%20Day"
