@@ -8,7 +8,7 @@ import {
 } from "@/app/(main)/community/events/map/map-colors"
 
 import { EventsMap } from "./events-map"
-import { EVENTS } from "./events-data"
+import { EVENTS, EventMapItem } from "./events-data"
 import { PastSpeakersSection } from "./2026/components/past-speakers"
 import { NavbarPlaceholder } from "./2026/components/navbar"
 import fostLogo from "./2026/assets/fost-logo.avif"
