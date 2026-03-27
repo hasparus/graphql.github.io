@@ -50,16 +50,16 @@ export default function DayLayout({
             children: "Singapore Tickets",
             href: "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore",
           },
-          [
-            {
-              children: "Code of Conduct",
-              href: "https://www.apidays.global/legal/code-of-conduct#:~:text=Individuals%20who%20participate%20(or%20plan,during%20or%20after%20the%20event.",
-            },
-            {
-              children: "FOST Manifesto",
-              href: "https://www.futureofsoftwaretechnologies.com/manifesto",
-            },
-          ],
+          {
+            children: "Code of Conduct",
+            href: "https://www.apidays.global/legal/code-of-conduct#:~:text=Individuals%20who%20participate%20(or%20plan,during%20or%20after%20the%20event.",
+          },
+          {
+            children: "FOST Manifesto",
+            href: "https://www.futureofsoftwaretechnologies.com/manifesto",
+          },
+          { children: "All GraphQL Events", href: "/community/events/" },
+          { children: "GraphQL Foundation", href: "/foundation" },
         ]}
       />
     </>

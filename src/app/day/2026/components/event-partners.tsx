@@ -9,7 +9,7 @@ export function EventPartnersSection() {
         <div className="flex items-center justify-center">
           <Anchor
             href="https://www.joinfost.io"
-            className="p-8 transition-colors duration-150 ease-out hover:bg-neu-100 hover:duration-0"
+            className="p-8 hover:bg-neu-100"
           >
             <img
               src={fostLogo.src}

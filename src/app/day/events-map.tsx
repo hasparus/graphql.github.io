@@ -153,7 +153,7 @@ export function EventsMap() {
       onMouseOut={() => {
         setActiveEventId(null)
       }}
-      className="h-[420px] bg-[--sea] [--sea:--sea-light] dark:[--sea:--sea-dark] md:h-[520px]"
+      className="h-[320px] bg-[--sea] [--sea:--sea-light] dark:[--sea:--sea-dark] sm:h-[420px] md:h-[520px] lg:h-[560px]"
       style={
         {
           "--sea-dark": asRgbString(MAP_COLORS.dark.sea),

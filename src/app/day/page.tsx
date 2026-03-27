@@ -53,7 +53,7 @@ export default function DayIndexPage() {
             <NextLink
               key={event.href}
               href={event.href}
-              className="group flex items-center justify-between gap-6 border border-neu-200 p-6 transition-[background-color,transform] duration-150 ease-out hover:bg-neu-100 active:scale-[0.995] md:p-8"
+              className="group flex items-center justify-between gap-6 border border-neu-200 p-6 hover:bg-neu-100 md:p-8"
             >
               <div className="flex flex-col gap-2">
                 <h3 className="typography-h2 group-hover:underline">
