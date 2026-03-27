@@ -1,4 +1,5 @@
 import { Anchor } from "@/app/conf/_design-system/anchor"
+import fostLogo from "../assets/fost-logo.png"
 
 export function EventPartnersSection() {
   return (
@@ -10,8 +11,13 @@ export function EventPartnersSection() {
             href="https://www.joinfost.io"
             className="p-8 hover:bg-neu-100"
           >
-            {/* TODO: replace with FOST logo SVG when available */}
-            <span className="text-4xl font-bold tracking-tight">FOST</span>
+            <img
+              src={fostLogo.src}
+              alt="FOST - Future of Software Technologies"
+              width={360}
+              height={120}
+              className="h-16 w-auto"
+            />
           </Anchor>
         </div>
         <p className="typography-body-lg mx-auto max-w-2xl text-pretty text-center">

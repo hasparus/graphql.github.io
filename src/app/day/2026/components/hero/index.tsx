@@ -3,6 +3,8 @@ import clsx from "clsx"
 
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
+
+import fostLogo from "../../assets/fost-logo.png"
 import {
   StripesDecoration,
   StripesDecorationProps,
@@ -60,6 +62,23 @@ export function Hero(props: HeroProps) {
                 </span>
               </h1>
             )}
+            <div className="flex h-min items-center gap-3">
+              <span className="typography-body-sm whitespace-pre">
+                hosted at
+              </span>
+              <img
+                src={fostLogo.src}
+                alt="FOST"
+                width={120}
+                height={40}
+                className={clsx(
+                  "h-8 w-auto",
+                  colorScheme === "primary"
+                    ? "brightness-0 invert dark:brightness-100 dark:invert-0"
+                    : "",
+                )}
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-8">{props.children}</div>

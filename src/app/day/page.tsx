@@ -1,12 +1,14 @@
 import { Metadata } from "next"
 import NextLink from "next/link"
 
-import { NewFontsStyleTag } from "../fonts"
-import "../colors.css"
+import {
+  asRgbString,
+  MAP_COLORS,
+} from "@/app/(main)/community/events/map/map-colors"
 
-import { ThemeProvider } from "next-themes"
 import { EventsMap } from "./events-map"
 import { EVENTS } from "./events-data"
+import { PastSpeakersSection } from "./2026/components/past-speakers"
 
 export const metadata: Metadata = {
   title: "GraphQL Day 2026",
@@ -17,46 +19,59 @@ export const metadata: Metadata = {
 export default function DayIndexPage() {
   return (
     <>
-      <NewFontsStyleTag />
-      <ThemeProvider attribute="class">
-        <div className="bg-neu-0 text-neu-900 antialiased">
-          <header className="relative">
-            <div className="gql-container relative z-10 pb-4 pt-12 md:pt-20">
-              <h1 className="typography-d1 mb-4">GraphQL Day</h1>
-              <p className="typography-body-lg max-w-xl text-neu-700">
-                Community-organized GraphQL events at FOST conferences
-                worldwide.
-              </p>
-            </div>
-            <div className="gql-container">
-              <EventsMap />
-            </div>
-          </header>
-
-          <main className="gql-container pb-12 md:pb-20">
-            <h2 className="typography-h2 mb-8 mt-12">2026 Events</h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {EVENTS.map(event => (
-                <NextLink
-                  key={event.href}
-                  href={event.href}
-                  className="group flex flex-col gap-3 border border-neu-200 p-6 transition-colors hover:bg-neu-100"
-                >
-                  <h3 className="typography-h3 group-hover:underline">
-                    {event.city}
-                  </h3>
-                  <p className="typography-body-md text-neu-700">
-                    {event.date}, 2026
-                  </p>
-                  <p className="typography-body-sm text-pri-base">
-                    GraphQL Day @ FOST {event.city}
-                  </p>
-                </NextLink>
-              ))}
-            </div>
-          </main>
+      <header
+        className="relative bg-[--sea] [--sea:--sea-light] dark:[--sea:--sea-dark]"
+        style={
+          {
+            "--sea-dark": asRgbString(MAP_COLORS.dark.sea),
+            "--sea-light": asRgbString(MAP_COLORS.light.sea),
+          } as React.CSSProperties
+        }
+      >
+        {/* Mobile: map full width, text overlaid */}
+        {/* Desktop: map right-aligned at 75%, text on left */}
+        <div className="relative lg:ml-auto lg:w-3/4">
+          <EventsMap />
+          {/* Gradient fade — bottom-up on mobile, left-to-right on desktop */}
+          {/* eslint-disable-next-line tailwindcss/no-contradicting-classname */}
+          <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[--sea] via-[hsl(var(--sea)/0.6)] via-40% to-transparent lg:bg-gradient-to-r lg:from-[--sea] lg:via-[hsl(var(--sea)/0.4)] lg:via-30% lg:to-transparent" />
         </div>
-      </ThemeProvider>
+        <div className="gql-container pointer-events-none absolute inset-0 z-20 flex flex-col justify-end px-4 lg:justify-center lg:px-12 xl:px-24">
+          <div className="pointer-events-auto pb-8 pt-20 md:pb-12 lg:max-w-md lg:py-0 xl:max-w-2xl">
+            <h1 className="typography-d1 mb-4 text-neu-900">GraphQL Day</h1>
+            <p className="typography-body-lg text-neu-700">
+              Community-organized GraphQL events at FOST conferences worldwide.
+            </p>
+          </div>
+        </div>
+      </header>
+
+      <main className="gql-container px-4 pb-12 md:pb-20 lg:px-12 xl:px-24">
+        <h2 className="typography-h2 mb-8 mt-12">2026 Events</h2>
+        <div className="flex flex-col gap-4">
+          {EVENTS.map(event => (
+            <NextLink
+              key={event.href}
+              href={event.href}
+              className="group flex items-center justify-between gap-6 border border-neu-200 p-6 transition-colors hover:bg-neu-100 md:p-8"
+            >
+              <div className="flex flex-col gap-2">
+                <h3 className="typography-h2 group-hover:underline">
+                  {event.city}
+                </h3>
+                <p className="typography-body-md text-neu-700">
+                  {event.date}, 2026
+                </p>
+              </div>
+              <span className="typography-body-md hidden text-pri-base sm:block">
+                GraphQL Day @ FOST {event.city}
+              </span>
+            </NextLink>
+          ))}
+        </div>
+
+        <PastSpeakersSection />
+      </main>
     </>
   )
 }

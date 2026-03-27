@@ -153,7 +153,7 @@ export function EventsMap() {
       onMouseOut={() => {
         setActiveEventId(null)
       }}
-      className="my-6 flex flex-row-reverse divide-neu-200 border border-neu-200 bg-[--sea] [--sea:--sea-light] dark:divide-neu-50 dark:border-neu-50 dark:[--sea:--sea-dark] max-md:flex-col max-md:divide-y md:h-[592px]"
+      className="h-[420px] bg-[--sea] [--sea:--sea-light] dark:[--sea:--sea-dark] md:h-[520px]"
       style={
         {
           "--sea-dark": asRgbString(MAP_COLORS.dark.sea),
@@ -164,7 +164,7 @@ export function EventsMap() {
       }
     >
       <div
-        className="group/map relative grow border-neu-200 bg-[--sea] dark:border-neu-50 dark:bg-[--sea] md:border-l"
+        className="group/map relative size-full bg-[--sea]"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         onClick={handleMapClick}
@@ -173,7 +173,7 @@ export function EventsMap() {
           ref={canvasRef}
           aria-describedby="events-map-tooltip"
           aria-label="Interactive map of GraphQL Day events"
-          className="block h-80 w-full animate-fade-in transition-opacity duration-150 ease-linear md:h-full"
+          className="block size-full animate-fade-in transition-opacity duration-150 ease-linear"
           style={{
             imageRendering: "pixelated",
             touchAction: "none",
@@ -196,47 +196,7 @@ export function EventsMap() {
           </div>
         )}
       </div>
-      <EventsList
-        activeEventId={activeEventId}
-        onActiveEventChange={setActiveEventId}
-        className="shrink-0 md:max-h-full lg:w-[240px]"
-      />
     </div>
-  )
-}
-
-function EventsList({
-  className,
-  activeEventId,
-  onActiveEventChange,
-}: {
-  className?: string
-  activeEventId?: string | null
-  onActiveEventChange?: (id: string | null) => void
-}) {
-  return (
-    <ul
-      className={`nextra-scrollbar overflow-y-auto scrollview-fade-y-16 scrollview-fade md:h-full ${className || ""}`}
-    >
-      {EVENTS.map(event => {
-        const isActive = event.id === activeEventId
-        return (
-          <li key={event.id}>
-            <a
-              href={event.href}
-              aria-current={isActive ? "true" : undefined}
-              title={`${event.city} — ${event.date}`}
-              className={`gql-focus-visible group/li flex items-center justify-between gap-3 border-b border-neu-300 px-3 py-2 text-sm text-neu-800 transition-colors last:border-0 hover:bg-neu-200 hover:duration-0 dark:hover:bg-neu-900/5 ${isActive ? "[ul:not(:hover)_&]:bg-neu-200 [ul:not(:hover)_&]:dark:bg-neu-900/5" : ""}`}
-              onMouseOver={() => onActiveEventChange?.(event.id)}
-              onFocus={() => onActiveEventChange?.(event.id)}
-            >
-              <span className="typography-body-md truncate">{event.city}</span>
-              <span className="text-xs text-neu-600">{event.date}</span>
-            </a>
-          </li>
-        )
-      })}
-    </ul>
   )
 }
 

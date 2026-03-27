@@ -7,6 +7,8 @@ import { WhyAttendSection } from "../components/why-attend-section"
 import { BecomeASpeakerSection } from "../components/become-a-speaker"
 import { EventPartnersSection } from "../components/event-partners"
 import { CtaCardSection } from "../components/cta-card-section"
+import { MarqueeRows } from "../components/marquee-rows"
+import { PastSpeakersSection } from "../components/past-speakers"
 
 export const metadata: Metadata = {
   title: "GraphQL Day @ FOST Melbourne — Oct 28-29",
@@ -27,11 +29,28 @@ export default function MelbournePage() {
           </Button>
         </div>
       </Hero>
+      <MarqueeRows
+        variant="primary"
+        className="pt-4 max-sm:pb-1 sm:pt-6 md:space-y-2 md:pt-12 xl:pt-16"
+        items={[
+          ["MELBOURNE", "OCTOBER 2026", "GRAPHQL DAY", "FOST"],
+          ["COMMUNITY", "OPEN SOURCE", "APIs", "WORKSHOPS"],
+        ]}
+      />
       <AboutSection />
       <div className="gql-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
         <WhyAttendSection />
         <BecomeASpeakerSection />
+        <PastSpeakersSection />
         <EventPartnersSection />
+        <MarqueeRows
+          variant="secondary"
+          className="my-8 xl:mb-16 xl:mt-10"
+          items={[
+            ["MELBOURNE", "OCTOBER 2026", "GRAPHQL DAY", "FOST"],
+            ["COMMUNITY", "OPEN SOURCE", "APIs", "WORKSHOPS"],
+          ]}
+        />
         <CtaCardSection
           title="Stay tuned"
           description="Join us for a day of GraphQL talks, networking, and hands-on learning at FOST Melbourne."

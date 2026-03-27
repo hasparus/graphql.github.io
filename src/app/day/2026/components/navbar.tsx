@@ -111,6 +111,7 @@ export function Navbar({ links, date, location }: NavbarProps): ReactElement {
           </nav>
 
           <button
+            aria-label={mobileDrawerOpen ? "Close menu" : "Open menu"}
             className="gql-focus-visible z-40 ml-auto size-7 hover:bg-neu-900/10 lg:hidden"
             onClick={handleDrawerClick}
           >
