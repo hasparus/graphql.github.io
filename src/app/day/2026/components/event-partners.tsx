@@ -3,13 +3,13 @@ import fostLogo from "../assets/fost-logo.webp"
 
 export function EventPartnersSection() {
   return (
-    <section className="gql-section">
+    <section className="gql-section xl:py-12">
       <h3 className="typography-h2 mb-12 text-center">Event Partners</h3>
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-center">
           <Anchor
             href="https://www.joinfost.io"
-            className="p-8 hover:bg-neu-100"
+            className="p-8 transition-colors duration-150 ease-out hover:bg-neu-100 hover:duration-0"
           >
             <img
               src={fostLogo.src}

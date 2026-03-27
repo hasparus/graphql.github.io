@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { Metadata } from "next"
 import clsx from "clsx"
 
-import { metadata as layoutMetadata } from "@/app/conf/2023/layout"
+const dayKeywords = ["GraphQL", "GraphQL Day", "FOST", "2026"]
 
 import { speakers, schedule } from "../../_data"
 import { ScheduleSession } from "@/app/conf/_api/sched-types"
@@ -44,7 +44,7 @@ export function generateMetadata({ params }: SessionProps): Metadata {
   return {
     title: event.name,
     description: event.description,
-    keywords: [...layoutMetadata.keywords, ...keywords],
+    keywords: [...dayKeywords, ...keywords],
   }
 }
 
@@ -86,7 +86,7 @@ export default function SessionPage({ params }: SessionProps) {
                 <SessionHeader
                   event={session}
                   eventTitle={eventTitle}
-                  year="2025"
+                  year="2026"
                   className={clsx(
                     "px-2 sm:px-3",
                     video && "mx-auto max-w-[1088px]",
@@ -202,7 +202,7 @@ function SessionHeader({
 
   return (
     <header className={className}>
-      <BackLink year="2025" kind="schedule" />
+      <BackLink year="2026" kind="schedule" />
       <p
         className={clsx(
           "mt-8 text-neu-700",
@@ -264,7 +264,7 @@ function SessionSpeakers({
       )}
     >
       {event.speakers?.map(speaker => (
-        <SpeakerCard key={speaker.username} speaker={speaker} year="2025" />
+        <SpeakerCard key={speaker.username} speaker={speaker} year="2026" />
       ))}
     </div>
   )
@@ -298,8 +298,8 @@ function SessionDescription({ session }: { session: ScheduleSession }) {
   )
 }
 
-const isFirefox = navigator.userAgent.toLowerCase().includes("firefox")
-
 function canRenderPdf() {
+  if (typeof navigator === "undefined") return false
+  const isFirefox = navigator.userAgent.toLowerCase().includes("firefox")
   return !isFirefox && !!navigator?.mimeTypes?.["application/pdf" as any]
 }

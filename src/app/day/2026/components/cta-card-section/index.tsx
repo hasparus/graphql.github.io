@@ -27,7 +27,7 @@ export function CtaCardSection({
             <h2 className="typography-d1 text-neu-0 dark:text-neu-900">
               {heading}
             </h2>
-            <p className="typography-body-lg max-w-[555px] text-pretty text-neu-50 dark:text-neu-800">
+            <p className="typography-body-lg max-w-[555px] text-pretty text-neu-50 dark:text-neu-200">
               {description}
             </p>
           </div>

@@ -1,7 +1,7 @@
 import clsx from "clsx"
 import { findBestMatch } from "string-similarity"
 
-import { ScheduleSession } from "@/app/conf/2023/types"
+import { ScheduleSession } from "@/app/conf/_api/sched-types"
 
 import { videos } from "../../_videos"
 import { speakers, schedule } from "../../_data"

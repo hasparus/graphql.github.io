@@ -39,7 +39,7 @@ export function Hero(props: HeroProps) {
       <article className="relative">
         {props.stripes || <HeroStripes />}
         <div className="gql-container mx-auto flex max-w-full flex-col gap-12 overflow-hidden p-4 pt-6 sm:p-8 sm:pt-12 md:gap-12 md:bg-left md:p-12 lg:px-24 lg:pb-16 lg:pt-24">
-          <div className="flex gap-10 max-md:flex-col md:justify-between">
+          <div className="flex gap-4 max-md:flex-col md:justify-between md:gap-10">
             {props.pageName ? (
               <div>
                 <span
@@ -71,12 +71,7 @@ export function Hero(props: HeroProps) {
                 alt="FOST"
                 width={120}
                 height={40}
-                className={clsx(
-                  "h-8 w-auto",
-                  colorScheme === "primary"
-                    ? "brightness-0 invert dark:brightness-100 dark:invert-0"
-                    : "",
-                )}
+                className="h-8 w-auto"
               />
             </div>
           </div>
@@ -121,7 +116,7 @@ export function HeroStripes({ className, ...rest }: HeroStripesProps) {
       role="presentation"
       image={blurBean}
       className={clsx(
-        "pointer-events-none absolute inset-x-0 bottom-[-385px] top-[-203px] -z-10 translate-y-12 opacity-0 transition duration-[400ms] ease-linear [mask-size:100%_50%] data-[loaded=true]:translate-y-0 data-[loaded=true]:opacity-100 sm:[mask-size:125%] xl:[mask-size:100%]",
+        "pointer-events-none absolute inset-x-0 bottom-[-385px] top-[-203px] -z-10 translate-y-12 opacity-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] [mask-size:100%_50%] data-[loaded=true]:translate-y-0 data-[loaded=true]:opacity-100 sm:[mask-size:125%] xl:[mask-size:100%]",
         className,
       )}
       style={{

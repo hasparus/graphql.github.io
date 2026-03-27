@@ -39,7 +39,7 @@ export default function DayIndexPage() {
         <div className="gql-container pointer-events-none absolute inset-0 z-20 flex flex-col justify-end px-4 lg:justify-center lg:px-12 xl:px-24">
           <div className="pointer-events-auto pb-8 pt-20 md:pb-12 lg:max-w-md lg:py-0 xl:max-w-2xl">
             <h1 className="typography-d1 mb-4 text-neu-900">GraphQL Day</h1>
-            <p className="typography-body-lg text-neu-700">
+            <p className="typography-body-lg text-neu-700 dark:text-neu-200">
               Community-organized GraphQL events at FOST conferences worldwide.
             </p>
           </div>
@@ -47,13 +47,13 @@ export default function DayIndexPage() {
       </header>
 
       <main className="gql-container px-4 pb-12 md:pb-20 lg:px-12 xl:px-24">
-        <h2 className="typography-h2 mb-8 mt-12">2026 Events</h2>
+        <h2 className="typography-h2 mb-8 mt-6 md:mt-12">2026 Events</h2>
         <div className="flex flex-col gap-4">
           {EVENTS.map(event => (
             <NextLink
               key={event.href}
               href={event.href}
-              className="group flex items-center justify-between gap-6 border border-neu-200 p-6 transition-colors hover:bg-neu-100 md:p-8"
+              className="group flex items-center justify-between gap-6 border border-neu-200 p-6 transition-[background-color,transform] duration-150 ease-out hover:bg-neu-100 active:scale-[0.995] md:p-8"
             >
               <div className="flex flex-col gap-2">
                 <h3 className="typography-h2 group-hover:underline">

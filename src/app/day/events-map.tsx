@@ -173,7 +173,7 @@ export function EventsMap() {
           ref={canvasRef}
           aria-describedby="events-map-tooltip"
           aria-label="Interactive map of GraphQL Day events"
-          className="block size-full animate-fade-in transition-opacity duration-150 ease-linear"
+          className="block size-full animate-fade-in transition-opacity duration-300 ease-out"
           style={{
             imageRendering: "pixelated",
             touchAction: "none",
@@ -212,10 +212,10 @@ function EventMapTooltip({
     <span
       id={id}
       role="tooltip"
-      className="pointer-events-none absolute left-0 top-0 z-10 hidden min-w-0 whitespace-nowrap border border-neu-200/40 bg-neu-0/40 px-2 py-[3px] text-xs text-neu-900 shadow-sm backdrop-blur-sm group-hover/map:flex"
+      className="pointer-events-none absolute left-0 top-0 z-10 hidden min-w-0 whitespace-nowrap border border-neu-200/40 bg-neu-0/40 px-2 py-[3px] text-xs text-neu-900 shadow-sm backdrop-blur-sm transition-[transform,opacity] duration-75 ease-out group-hover/map:flex"
       style={{
         transform: `translate3d(calc(var(--x) - 50%), calc(var(--y) - 50% - 22px), 0)`,
-        visibility: activeEventId ? "visible" : "hidden",
+        opacity: activeEventId ? 1 : 0,
       }}
     >
       {name}
@@ -225,7 +225,7 @@ function EventMapTooltip({
 
 function InfoTip() {
   return (
-    <div className="pointer-events-none absolute bottom-0 left-0 w-fit translate-y-0.5 px-1 py-0.5 text-[11px] text-neu-700/90 opacity-0 blur-[0.5px] backdrop-blur-sm transition duration-200 before:inset-0 before:bg-[--sea] before:opacity-30 group-hover/map:translate-y-0 group-hover/map:opacity-100 group-hover/map:blur-0 hover-none:hidden">
+    <div className="pointer-events-none absolute bottom-0 left-0 w-fit translate-y-0.5 px-1 py-0.5 text-[11px] text-neu-700/90 opacity-0 blur-[0.5px] backdrop-blur-sm transition-[transform,opacity,filter] duration-200 ease-out before:inset-0 before:bg-[--sea] before:opacity-30 group-hover/map:translate-y-0 group-hover/map:opacity-100 group-hover/map:blur-0 hover-none:hidden">
       Pinch or ctrl+scroll to zoom
     </div>
   )

@@ -34,7 +34,7 @@ export function WhyAttendSection() {
 
 function Card({ title, description }: { title: string; description: string }) {
   return (
-    <article className="flex flex-col gap-4 border border-neu-200 p-6">
+    <article className="flex flex-col gap-4 border border-neu-200 p-6 transition-colors duration-150 hover:border-neu-300">
       <h4 className="typography-h3">{title}</h4>
       <p className="typography-body-md text-neu-700">{description}</p>
     </article>

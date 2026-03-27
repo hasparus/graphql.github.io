@@ -160,7 +160,7 @@ async function PastSpeakerCard({ name, role, avatar, link }: PastSpeaker) {
       </div>
       <Anchor
         href={link}
-        className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100 dark:hover:bg-sec-base/[.05]"
+        className="absolute inset-0 z-[1] ring-inset ring-neu-400 transition-[background-color,box-shadow] duration-150 ease-out hover:bg-sec-base/[.035] hover:ring-1 dark:ring-neu-100 dark:hover:bg-sec-base/[.05]"
         aria-label={`${name} on LinkedIn`}
       />
     </article>

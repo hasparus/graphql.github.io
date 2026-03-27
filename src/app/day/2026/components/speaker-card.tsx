@@ -1,7 +1,5 @@
 import clsx from "clsx"
 import Image from "next/image"
-import { getPlaiceholder } from "plaiceholder"
-
 import { Anchor } from "@/app/conf/_design-system/anchor"
 import { SchedSpeaker } from "@/app/conf/_api/sched-types"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"

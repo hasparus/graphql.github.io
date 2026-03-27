@@ -12,7 +12,7 @@ import { GraphQLDayLogoLink } from "./2026/components/graphql-day-logo-link"
 
 export const metadata = {
   title: {
-    absolute: "",
+    absolute: "GraphQL Day",
     template: "%s | GraphQL Day",
   },
 } satisfies Metadata
@@ -27,8 +27,14 @@ export default function DayLayout({
       <NewFontsStyleTag />
       <Navbar
         links={[
-          { children: "All Events", href: "/day" },
-          { children: "FAQ", href: "#faq" },
+          { children: "GraphQL Day", href: "/day" },
+          { children: "All GraphQL Events", href: "/community/events/" },
+          { children: "GraphQL.org", href: "/" },
+          { children: "GraphQLConf", href: "/conf/2026" },
+          {
+            children: "GraphQL Day Singapore Tickets",
+            href: "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore",
+          },
         ]}
       />
       <ThemeProvider attribute="class">
@@ -41,13 +47,13 @@ export default function DayLayout({
           { children: "GraphQL", href: "/" },
           { children: "GraphQLConf 2026", href: "/conf/2026" },
           {
-            children: "Get Tickets",
+            children: "Singapore Tickets",
             href: "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore",
           },
           [
             {
               children: "Code of Conduct",
-              href: "/day/2026/code-of-conduct",
+              href: "https://www.apidays.global/legal/code-of-conduct#:~:text=Individuals%20who%20participate%20(or%20plan,during%20or%20after%20the%20event.",
             },
             {
               children: "FOST Manifesto",
