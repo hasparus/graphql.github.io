@@ -4,7 +4,7 @@ import clsx from "clsx"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 
-import fostLogo from "../../assets/fost-logo.png"
+import fostLogo from "../../assets/fost-logo.webp"
 import {
   StripesDecoration,
   StripesDecorationProps,
