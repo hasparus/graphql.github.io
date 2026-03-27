@@ -1,17 +1,25 @@
-import Image from "next/image"
+import Image, { StaticImageData } from "next/image"
 import clsx from "clsx"
 
 import { Marquee } from "@/app/conf/_design-system/marquee"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 import { Anchor } from "@/app/conf/_design-system/anchor"
-import { getBase64Placeholder } from "@/app/conf/_design-system/utils/get-base64-placeholder"
 
 import styles from "./speaker-card.module.css"
+
+import benjieImg from "../assets/speakers/benjie-gillam.webp"
+import michaelImg from "../assets/speakers/michael-staib.webp"
+import ivanImg from "../assets/speakers/ivan-goncharov.webp"
+import martinImg from "../assets/speakers/martin-bonnin.webp"
+import benjaminImg from "../assets/speakers/benjamin-coenen.webp"
+import jensImg from "../assets/speakers/jens-neuse.webp"
+import pascalImg from "../assets/speakers/pascal-senn.webp"
+import matthiasImg from "../assets/speakers/matthias-le-brun.webp"
 
 interface PastSpeaker {
   name: string
   role: string
-  avatar?: string
+  avatar?: StaticImageData
   link: string
 }
 
@@ -19,37 +27,36 @@ const PAST_SPEAKERS: PastSpeaker[] = [
   {
     name: "Benjie Gillam",
     role: "GraphQL TSC, GraphQL Foundation",
-    avatar: "https://avatars.sched.co/b/99/18743846/avatar.jpg.320x320px.jpg",
+    avatar: benjieImg,
     link: "https://www.linkedin.com/in/benjiegillam/",
   },
   {
     name: "Michael Staib",
     role: "Co-Founder, ChilliCream",
-    avatar: "https://avatars.sched.co/9/36/21490456/avatar.jpg.320x320px.jpg",
+    avatar: michaelImg,
     link: "https://www.linkedin.com/in/michael-staib-31519571/",
   },
   {
     name: "Ivan Goncharov",
     role: "Head of R&D, Keenethics",
-    avatar: "https://avatars.sched.co/1/fe/14899949/avatar.jpg.320x320px.jpg",
+    avatar: ivanImg,
     link: "https://www.linkedin.com/in/igoncharov/",
   },
   {
     name: "Martin Bonnin",
     role: "Android Engineer, Apollo GraphQL",
-    avatar: "https://avatars.sched.co/f/e1/14899982/avatar.jpg.320x320px.jpg",
+    avatar: martinImg,
     link: "https://www.linkedin.com/in/martinbonnin/",
   },
   {
     name: "Benjamin Coenen",
     role: "Sr Staff Engineer, Apollo GraphQL",
-    avatar: "https://avatars.sched.co/d/47/21510680/avatar.jpg.320x320px.jpg",
+    avatar: benjaminImg,
     link: "https://www.linkedin.com/in/coenenbenjamin/",
   },
   {
     name: "Aurélien David",
     role: "Co-founder & CTO, Pennylane",
-    avatar: "https://avatars.sched.co/8/59/21490530/avatar.jpg.320x320px.jpg",
     link: "https://www.linkedin.com/in/aurel-spyl/",
   },
   {
@@ -60,18 +67,19 @@ const PAST_SPEAKERS: PastSpeaker[] = [
   {
     name: "Jens Neuse",
     role: "CEO, WunderGraph",
-    avatar: "https://avatars.sched.co/a/e2/18744043/avatar.jpg.320x320px.jpg",
+    avatar: jensImg,
     link: "https://www.linkedin.com/in/jens-neuse-706673195/",
   },
   {
     name: "Pascal Senn",
     role: "COO, ChilliCream",
-    avatar: "https://avatars.sched.co/7/44/21490463/avatar.jpg.320x320px.jpg",
+    avatar: pascalImg,
     link: "https://www.linkedin.com/in/pascal-senn-90899a15a",
   },
   {
     name: "Matthias Le Brun",
     role: "Frontend Developer & Designer",
+    avatar: matthiasImg,
     link: "https://www.linkedin.com/in/bloodyowl/",
   },
   {
@@ -89,7 +97,7 @@ const PAST_SPEAKERS: PastSpeaker[] = [
 const ROW_1 = PAST_SPEAKERS.slice(0, 6)
 const ROW_2 = PAST_SPEAKERS.slice(6)
 
-export async function PastSpeakersSection() {
+export function PastSpeakersSection() {
   return (
     <section className="py-8 xl:py-12">
       <div className="px-4 lg:px-12 xl:px-24">
@@ -100,30 +108,21 @@ export async function PastSpeakersSection() {
       </div>
       <div className="flex flex-col gap-4 overflow-hidden">
         <Marquee speed={30} speedOnHover={15} gap={0}>
-          {await Promise.all(
-            ROW_1.map(s => <PastSpeakerCard key={s.name} {...s} />),
-          )}
+          {ROW_1.map(s => (
+            <PastSpeakerCard key={s.name} {...s} />
+          ))}
         </Marquee>
         <Marquee speed={25} speedOnHover={12} gap={0} reverse>
-          {await Promise.all(
-            ROW_2.map(s => <PastSpeakerCard key={s.name} {...s} />),
-          )}
+          {ROW_2.map(s => (
+            <PastSpeakerCard key={s.name} {...s} />
+          ))}
         </Marquee>
       </div>
     </section>
   )
 }
 
-async function PastSpeakerCard({ name, role, avatar, link }: PastSpeaker) {
-  let placeholder: string | undefined
-  if (avatar) {
-    try {
-      placeholder = await getBase64Placeholder(avatar)
-    } catch {
-      // ok in dev
-    }
-  }
-
+function PastSpeakerCard({ name, role, avatar, link }: PastSpeaker) {
   return (
     <article
       className={clsx(
@@ -138,7 +137,7 @@ async function PastSpeakerCard({ name, role, avatar, link }: PastSpeaker) {
           {avatar ? (
             <Image
               src={avatar}
-              placeholder={placeholder! as `data:image/${string}`}
+              placeholder="blur"
               alt=""
               width={120}
               height={120}

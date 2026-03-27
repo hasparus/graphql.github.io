@@ -44,13 +44,7 @@ export function Navbar({ links, date, location }: NavbarProps): ReactElement {
 
   return (
     <>
-      <div
-        className={clsx(
-          "top-0 w-full scale-y-105 bg-pri-base dark:bg-pri-darker",
-          mobileDrawerOpen ? "static" : "absolute",
-        )}
-      />
-      <NavbarPlaceholder className="bg-pri-base before:bg-white/30 dark:bg-pri-darker dark:before:bg-blk/40" />
+      <NavbarPlaceholder />
       <header
         className={clsx(
           "gql-all-anchors-focusable sticky top-0 z-[100] w-full border-b border-blk/60 font-mono text-neu-900 antialiased dark:border-white/80",

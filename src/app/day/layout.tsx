@@ -27,12 +27,11 @@ export default function DayLayout({
       <NewFontsStyleTag />
       <Navbar
         links={[
-          { children: "GraphQL Day", href: "/day" },
           { children: "All GraphQL Events", href: "/community/events/" },
           { children: "GraphQL.org", href: "/" },
           { children: "GraphQLConf", href: "/conf/2026" },
           {
-            children: "GraphQL Day Singapore Tickets",
+            children: "GraphQL Day Singapore",
             href: "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore",
           },
         ]}
@@ -59,7 +58,7 @@ export default function DayLayout({
             href: "https://www.futureofsoftwaretechnologies.com/manifesto",
           },
           { children: "All GraphQL Events", href: "/community/events/" },
-          { children: "GraphQL Foundation", href: "/foundation" },
+          { children: "GraphQL Day Paris 2025", href: "https://graphql.day" },
         ]}
       />
     </>
