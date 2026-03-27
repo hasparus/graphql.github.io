@@ -153,13 +153,14 @@ export function EventsMap() {
       onMouseOut={() => {
         setActiveEventId(null)
       }}
-      className="h-[320px] bg-[--sea] [--sea:--sea-light] dark:[--sea:--sea-dark] sm:h-[420px] md:h-[520px] lg:h-[560px]"
+      className="ml-auto h-[320px] max-w-full bg-[--sea] [--sea:--sea-light] dark:[--sea:--sea-dark] sm:h-[420px] md:h-[520px] lg:h-[560px]"
       style={
         {
           "--sea-dark": asRgbString(MAP_COLORS.dark.sea),
           "--sea-light": asRgbString(MAP_COLORS.light.sea),
           "--land-dark": asRgbString(MAP_COLORS.dark.land),
           "--land-light": asRgbString(MAP_COLORS.light.land),
+          aspectRatio: ASPECT_RATIO,
         } as React.CSSProperties
       }
     >
