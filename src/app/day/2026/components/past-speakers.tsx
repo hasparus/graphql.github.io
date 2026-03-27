@@ -15,6 +15,10 @@ import benjaminImg from "../assets/speakers/benjamin-coenen.webp"
 import jensImg from "../assets/speakers/jens-neuse.webp"
 import pascalImg from "../assets/speakers/pascal-senn.webp"
 import matthiasImg from "../assets/speakers/matthias-le-brun.webp"
+import aurelienImg from "../assets/speakers/aurelien-david.webp"
+import anImg from "../assets/speakers/an-ngo.webp"
+import jonathanImg from "../assets/speakers/jonathan-rainer.webp"
+import vanessaImg from "../assets/speakers/vanessa-johnson.webp"
 
 interface PastSpeaker {
   name: string
@@ -57,11 +61,13 @@ const PAST_SPEAKERS: PastSpeaker[] = [
   {
     name: "Aurélien David",
     role: "Co-founder & CTO, Pennylane",
+    avatar: aurelienImg,
     link: "https://www.linkedin.com/in/aurel-spyl/",
   },
   {
     name: "An Ngo",
     role: "Lead Engineer, bol",
+    avatar: anImg,
     link: "https://www.linkedin.com/in/vliegveld5/",
   },
   {
@@ -85,36 +91,40 @@ const PAST_SPEAKERS: PastSpeaker[] = [
   {
     name: "Vanessa Johnson",
     role: "Android Engineer, The New York Times",
+    avatar: vanessaImg,
     link: "https://www.linkedin.com/in/vanessa-johnson999/",
   },
   {
     name: "Jonathan Rainer",
     role: "Staff Engineer, Apollo GraphQL",
+    avatar: jonathanImg,
     link: "https://www.linkedin.com/in/jonathan-rainer/",
   },
 ]
 
 const ROW_1 = PAST_SPEAKERS.slice(0, 6)
+ROW_1.push(...ROW_1)
 const ROW_2 = PAST_SPEAKERS.slice(6)
+ROW_2.push(...ROW_2)
 
 export function PastSpeakersSection() {
   return (
-    <section className="py-8 xl:py-12">
+    <section className="gql-container py-8 xl:py-12 3xl:[mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
       <div className="px-4 lg:px-12 xl:px-24">
         <h3 className="typography-h2 mb-2">Past Speakers</h3>
         <p className="typography-body-md mb-8 text-neu-700">
           GraphQL Day Paris 2025
         </p>
       </div>
-      <div className="flex flex-col gap-4 overflow-hidden">
-        <Marquee speed={30} speedOnHover={15} gap={0}>
+      <div className="flex flex-col overflow-hidden">
+        <Marquee speed={25} speedOnHover={12} gap={0}>
           {ROW_1.map(s => (
             <PastSpeakerCard key={s.name} {...s} />
           ))}
         </Marquee>
         <Marquee speed={25} speedOnHover={12} gap={0} reverse>
           {ROW_2.map(s => (
-            <PastSpeakerCard key={s.name} {...s} />
+            <PastSpeakerCard key={s.name} {...s} className="border-t-0" />
           ))}
         </Marquee>
       </div>
@@ -122,11 +132,18 @@ export function PastSpeakersSection() {
   )
 }
 
-function PastSpeakerCard({ name, role, avatar, link }: PastSpeaker) {
+function PastSpeakerCard({
+  name,
+  role,
+  avatar,
+  link,
+  className,
+}: PastSpeaker & { className?: string }) {
   return (
     <article
       className={clsx(
-        "group relative w-[300px] shrink-0 overflow-hidden border border-r-0 border-neu-200 bg-neu-0 @container dark:border-neu-100",
+        "group relative w-[300px] shrink-0 overflow-hidden border border-r-0 border-neu-200 bg-neu-0 @container",
+        className,
         styles.speakerCard,
       )}
     >

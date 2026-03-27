@@ -28,16 +28,17 @@ export default function DayLayout({
       <Navbar
         links={[
           { children: "All GraphQL Events", href: "/community/events/" },
-          { children: "GraphQL.org", href: "/" },
           { children: "GraphQLConf", href: "/conf/2026" },
           {
             children: "GraphQL Day Singapore",
-            href: "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore",
+            href: "/day/2026/singapore",
           },
         ]}
       />
       <ThemeProvider attribute="class">
-        <div className="bg-neu-0 text-neu-900 antialiased">{children}</div>
+        <div className="gql-all-anchors-focusable bg-neu-0 text-neu-900 antialiased">
+          {children}
+        </div>
       </ThemeProvider>
       <Footer
         logo={<GraphQLDayLogoLink />}
@@ -58,6 +59,7 @@ export default function DayLayout({
             href: "https://www.futureofsoftwaretechnologies.com/manifesto",
           },
           { children: "All GraphQL Events", href: "/community/events/" },
+          // todo: we need to find a better link to use here. the .day website will probably be updated to redirect to this or match this.
           { children: "GraphQL Day Paris 2025", href: "https://graphql.day" },
         ]}
       />

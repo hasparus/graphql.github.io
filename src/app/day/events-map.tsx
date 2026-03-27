@@ -41,7 +41,7 @@ const markerPoints: MarkerPoint[] = EVENTS.map(e => ({
 
 type MapStatus = "loading" | "ready" | "error"
 
-export function EventsMap() {
+export function EventsMap({ children }: { children: React.ReactNode }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const handleRef = useRef<MapHandle>()
   const { resolvedTheme } = useTheme()
@@ -187,8 +187,6 @@ export function EventsMap() {
           activeEventId={activeEventId}
         />
 
-        <InfoTip />
-
         <MapSkeleton className={status === "loading" ? "" : "!opacity-0"} />
 
         {status === "error" && (
@@ -196,6 +194,8 @@ export function EventsMap() {
             Unable to load the map{errorMessage ? ` (${errorMessage})` : ""}
           </div>
         )}
+
+        {children}
       </div>
     </div>
   )
@@ -221,13 +221,5 @@ function EventMapTooltip({
     >
       {name}
     </span>
-  )
-}
-
-function InfoTip() {
-  return (
-    <div className="pointer-events-none absolute bottom-0 left-0 w-fit translate-y-0.5 px-1 py-0.5 text-[11px] text-neu-700/90 opacity-0 blur-[0.5px] backdrop-blur-sm transition-[transform,opacity,filter] duration-200 ease-out before:inset-0 before:bg-[--sea] before:opacity-30 group-hover/map:translate-y-0 group-hover/map:opacity-100 group-hover/map:blur-0 hover-none:hidden">
-      Pinch or ctrl+scroll to zoom
-    </div>
   )
 }
