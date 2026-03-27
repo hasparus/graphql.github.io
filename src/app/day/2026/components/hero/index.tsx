@@ -11,7 +11,7 @@ import {
 } from "@/app/conf/_design-system/stripes-decoration"
 
 import { ImageLoaded } from "../image-loaded"
-import blurBean from "./blur-bean-cropped.webp"
+import blurBean from "@/app/conf/2026/components/hero/blur-bean-cropped.webp"
 
 export type HeroProps = {
   pageName?: string

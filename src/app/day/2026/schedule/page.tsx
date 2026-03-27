@@ -6,7 +6,7 @@ import { eventsColors, HERO_MARQUEE_ITEMS } from "../utils"
 import { Button } from "@/app/conf/_design-system/button"
 import { Hero } from "../components/hero"
 import { CtaCardSection } from "../components/cta-card-section"
-import { MarqueeRows } from "../components/marquee-rows"
+import { MarqueeRows } from "@/app/conf/2026/components/marquee-rows"
 
 const year = "2026"
 

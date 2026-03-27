@@ -5,7 +5,7 @@ import { clsx } from "clsx"
 import { SocialIcons } from "@/app/conf/_components/social-icons"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
-import blurBean from "./blur-bean.webp"
+import blurBean from "@/app/conf/2026/components/footer/blur-bean.webp"
 
 interface FooterLink {
   href: string

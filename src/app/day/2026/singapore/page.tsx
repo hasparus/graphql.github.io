@@ -7,7 +7,7 @@ import { WhyAttendSection } from "../components/why-attend-section"
 import { BecomeASpeakerSection } from "../components/become-a-speaker"
 import { EventPartnersSection } from "../components/event-partners"
 import { CtaCardSection } from "../components/cta-card-section"
-import { MarqueeRows } from "../components/marquee-rows"
+import { MarqueeRows } from "@/app/conf/2026/components/marquee-rows"
 import { PastSpeakersSection } from "../components/past-speakers"
 
 const TICKET_LINK =

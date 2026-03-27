@@ -1,6 +1,6 @@
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
-import logoMask from "./logo-mask.webp"
+import logoMask from "@/app/conf/2026/components/cta-card-section/logo-mask.webp"
 
 export interface CtaCardSectionProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "title"> {

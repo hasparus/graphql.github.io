@@ -2,7 +2,7 @@ import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 import { clsx } from "clsx"
 import Image from "next/image"
 
-import maskBlur from "./mask.webp"
+import maskBlur from "@/app/conf/2026/components/testimonials/mask.webp"
 
 export interface TestimonialsProps extends React.HTMLAttributes<HTMLElement> {}
 
