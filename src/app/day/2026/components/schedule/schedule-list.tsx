@@ -107,17 +107,23 @@ function getSessionsByDay(
 export interface ScheduleListProps {
   showFilter?: boolean
   scheduleData: ScheduleSession[]
-  year: `202${number}`
+  basePath: string
   eventsColors: Record<string, string>
   filterFields: FiltersConfig
+  conferenceStart: Date
+  conferenceEnd: Date
+  schedUrl?: string
 }
 
 export function ScheduleList({
   showFilter = true,
   scheduleData,
-  year,
+  basePath,
   eventsColors,
   filterFields,
+  conferenceStart,
+  conferenceEnd,
+  schedUrl,
 }: ScheduleListProps): ReactElement {
   const [filtersState, setFiltersState] = useState<FilterStates>(() =>
     FilterStates.initial(
@@ -140,12 +146,12 @@ export function ScheduleList({
   const firstDayIsDayZero = Object.keys(firstDay).length < 3
   const startIndex = firstDayIsDayZero ? 0 : 1
 
-  const { getTimeMarker } = useCurrentTimeMarker()
+  const { getTimeMarker } = useCurrentTimeMarker(conferenceStart, conferenceEnd)
 
   return (
     <>
       <div className="flex justify-between gap-1 max-lg:flex-col">
-        <BookmarkOnSched year={year} />
+        {schedUrl && <BookmarkOnSched url={schedUrl} />}
         <div className="flex gap-2 max-lg:mb-4">
           <Button
             href="#current-time-marker"
@@ -271,7 +277,7 @@ export function ScheduleList({
                               <ScheduleSessionCard
                                 key={session.id}
                                 session={session}
-                                year={year}
+                                basePath={basePath}
                                 eventsColors={eventsColors}
                                 blockEnd={blockEnd}
                                 durationVisible={endTimesDiffer}
@@ -323,10 +329,10 @@ export function ScheduleList({
   )
 }
 
-function BookmarkOnSched({ year }: { year: `202${number}` }) {
+function BookmarkOnSched({ url }: { url: string }) {
   return (
     <a
-      href={`https://graphqlconf${year}.sched.com`}
+      href={url}
       target="_blank"
       rel="noreferrer"
       className="typography-link mb-8 block w-fit decoration-neu-400 max-lg:hidden"

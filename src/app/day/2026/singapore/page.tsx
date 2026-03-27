@@ -10,7 +10,6 @@ import { CtaCardSection } from "../components/cta-card-section"
 import { MarqueeRows } from "@/app/conf/2026/components/marquee-rows"
 import { PastSpeakersSection } from "../components/past-speakers"
 import { NavbarPlaceholder } from "../components/navbar"
-import { NavbarFixed } from "@/components/navbar/navbar-fixed"
 import { GallerySection } from "../../gallery-section"
 
 const TICKET_LINK =

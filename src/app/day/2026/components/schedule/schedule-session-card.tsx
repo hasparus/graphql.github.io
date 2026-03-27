@@ -27,13 +27,13 @@ function isString(x: unknown): x is string {
 
 export function ScheduleSessionCard({
   session,
-  year,
+  basePath,
   eventsColors,
   blockEnd,
   durationVisible,
 }: {
   session: ScheduleSession
-  year: `202${number}`
+  basePath: string
   eventsColors: Record<string, string>
   blockEnd: Date
   durationVisible: boolean
@@ -98,7 +98,7 @@ export function ScheduleSessionCard({
     >
       <Anchor
         id={`session-${session.id}`}
-        href={`/conf/${year}/schedule/${session.id}?name=${session.name}`}
+        href={`${basePath}/schedule/${session.id}?name=${session.name}`}
         className="absolute inset-0 z-[1] ring-inset ring-neu-400 hover:ring-1 dark:ring-neu-100"
         aria-label={`Read more about "${eventTitle}" by ${speakers
           .map(s => s.name)
@@ -122,7 +122,7 @@ export function ScheduleSessionCard({
                   <React.Fragment key={s.username || s.name}>
                     {s.username ? (
                       <Anchor
-                        href={`/conf/${year}/speakers/${s.username}`}
+                        href={`${basePath}/speakers/${s.username}`}
                         className="relative z-[2] decoration-neu-600 hover:underline dark:decoration-neu-200"
                       >
                         {s.name}
@@ -166,7 +166,7 @@ function SessionDuration({
     new Date(session.event_end).getTime() -
     new Date(session.event_start).getTime()
 
-  // if a session is longer than 3 hourse, we show the time range
+  // if a session is longer than 3 hours, we show the time range
   const formattedTime =
     durationMs > 1000 * 60 * 60 * 3
       ? formatBlockTime(session.event_start, new Date(session.event_end))
@@ -198,7 +198,7 @@ function AddToCalendarLink({
     description: stripHtml(session.description).result,
     location: session.venue,
     organizer: {
-      name: `GraphQLConf ${new Date().getFullYear()}`,
+      name: `GraphQL Day ${new Date().getFullYear()}`,
       email: "graphql_events@linuxfoundation.org",
     },
     guests: speakers.map(s => s.name),

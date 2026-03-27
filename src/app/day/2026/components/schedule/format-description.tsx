@@ -22,7 +22,7 @@ export function formatDescription(text: string): string {
       }
 
       if (!attrs.includes("class=")) {
-        attrs += ' class=" typography-link"'
+        attrs += ' class="typography-link"'
       } else if (!attrs.includes("typography-link")) {
         attrs = attrs.replace(
           /class\s*=\s*["']([^"']*)/gi,

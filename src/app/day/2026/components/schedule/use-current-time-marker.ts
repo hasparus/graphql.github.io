@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { format } from "date-fns"
 
-const CONFERENCE_START = new Date("2025-09-08T00:00:00")
-const CONFERENCE_END = new Date("2025-09-10T23:59:59")
-
-export function useCurrentTimeMarker() {
+export function useCurrentTimeMarker(
+  conferenceStart: Date,
+  conferenceEnd: Date,
+) {
   const [now, setNow] = useState<Date>(new Date())
 
   useEffect(() => {
@@ -13,8 +13,8 @@ export function useCurrentTimeMarker() {
   }, [])
 
   const showNowMarkers =
-    now.getTime() >= CONFERENCE_START.getTime() &&
-    now.getTime() <= CONFERENCE_END.getTime()
+    now.getTime() >= conferenceStart.getTime() &&
+    now.getTime() <= conferenceEnd.getTime()
 
   const getTimeMarker = (sessionDate: string, blockEnd: Date) => {
     const blockStart = new Date(sessionDate)

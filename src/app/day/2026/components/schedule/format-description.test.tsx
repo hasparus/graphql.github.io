@@ -9,7 +9,7 @@ describe(formatDescription.name, () => {
       formatDescription(
         `Check out Y! <a href="https://y.dev">https://y.dev</a>`,
       ),
-      `Check out Y! <a href="https://y.dev" rel="noopener noreferrer" target="_blank" class=" typography-link">y.dev</a>`,
+      `Check out Y! <a href="https://y.dev" rel="noopener noreferrer" target="_blank" class="typography-link">y.dev</a>`,
     )
   })
 
@@ -23,7 +23,7 @@ describe(formatDescription.name, () => {
   it("adds attributes to existing links without URL content", () => {
     assert.equal(
       formatDescription(`<a href="https://example.com">Click here</a>`),
-      `<a href="https://example.com" rel="noopener noreferrer" target="_blank" class=" typography-link">Click here</a>`,
+      `<a href="https://example.com" rel="noopener noreferrer" target="_blank" class="typography-link">Click here</a>`,
     )
   })
 
@@ -32,7 +32,7 @@ describe(formatDescription.name, () => {
       formatDescription(
         `Check <a href="https://y.dev">Y site</a> and https://example.com`,
       ),
-      `Check <a href="https://y.dev" rel="noopener noreferrer" target="_blank" class=" typography-link">Y site</a> and <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="typography-link">example.com</a>`,
+      `Check <a href="https://y.dev" rel="noopener noreferrer" target="_blank" class="typography-link">Y site</a> and <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="typography-link">example.com</a>`,
     )
   })
 
