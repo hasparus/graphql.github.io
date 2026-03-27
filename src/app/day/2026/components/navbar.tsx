@@ -1,28 +1,29 @@
 "use client"
 
-import { ReactElement, useCallback, useEffect, useState } from "react"
+import { ReactElement, useEffect, useState } from "react"
 import { clsx } from "clsx"
 import { usePathname } from "next/navigation"
 
-import { Badge } from "../../_components/badge"
+import { Badge } from "@/app/conf/_components/badge"
 
 import MenuIcon from "@/app/conf/_design-system/pixelarticons/menu.svg?svgr"
 import CloseIcon from "@/app/conf/_design-system/pixelarticons/close.svg?svgr"
-import { GraphQLConfLogoLink } from "./graphql-conf-logo-link"
-import { Anchor } from "../../_design-system/anchor"
+import { GraphQLDayLogoLink } from "./graphql-day-logo-link"
+import { Anchor } from "@/app/conf/_design-system/anchor"
 
 export interface NavbarProps {
   links: { href: string; children: React.ReactNode; "aria-disabled"?: true }[]
-  year: number
+  date?: React.ReactNode
+  location?: React.ReactNode
 }
 
-export function Navbar({ links, year }: NavbarProps): ReactElement {
+export function Navbar({ links, date, location }: NavbarProps): ReactElement {
   const pathname = usePathname()
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
-  const handleDrawerClick = useCallback(() => {
+  const handleDrawerClick = () => {
     setMobileDrawerOpen(prev => !prev)
-  }, [])
+  }
 
   useEffect(() => {
     setMobileDrawerOpen(false)
@@ -58,22 +59,17 @@ export function Navbar({ links, year }: NavbarProps): ReactElement {
       >
         <BackdropBlur />
         <div className="flex h-[var(--navbar-h)] items-center justify-between gap-5 px-4 md:px-6 2xl:px-10">
-          <GraphQLConfLogoLink year={year} />
+          <GraphQLDayLogoLink />
 
-          <div className="typography-menu mr-auto flex h-full flex-col justify-center whitespace-pre border-x border-blk/60 px-4 dark:border-white/80 max-xl:hidden">
-            <p className="flex items-center gap-2 text-sm">
-              <time dateTime="2025-09-08">September 08</time>
-              <span>-</span>
-              <time dateTime="2025-09-10">10, 2025</time>
-            </p>
-            <address className="text-sm not-italic">
-              Amsterdam, Netherlands
-            </address>
-          </div>
+          {date && location && (
+            <div className="typography-menu mr-auto flex h-full flex-col justify-center whitespace-pre border-x border-blk/60 px-4 dark:border-white/80 max-xl:hidden">
+              <p className="flex items-center gap-2 text-sm">{date}</p>
+              <address className="text-sm not-italic">{location}</address>
+            </div>
+          )}
 
           {mobileDrawerOpen && (
             <div
-              // menu overlay
               onClick={handleDrawerClick}
               className="fixed inset-0 top-[calc(var(--navbar-h)+1px)] z-10 bg-white/40 backdrop-blur-[6.4px] dark:bg-blk/30"
             />
@@ -130,8 +126,6 @@ function BackdropBlur() {
   const mask = "linear-gradient(to bottom,#000 0% 50%, transparent 50% 100%)"
   return (
     <div
-      // note: we can't use the background trick to reduce flickering, because we have many section
-      // background colors and big images, so we'd have to change the --bg var with javascript
       className="pointer-events-none absolute inset-0 -z-10 h-[200%] backdrop-blur-[6.4px]"
       style={{
         maskImage: mask,
@@ -147,7 +141,6 @@ export function NavbarPlaceholder({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      // placeholder: the colors here on `before` must match the ones on Hero `before` strip
       className={clsx(
         "absolute h-[calc(var(--navbar-h)+1px)] w-full before:absolute before:top-0 before:h-[calc(var(--navbar-h)+1px)] before:w-full",
         className,

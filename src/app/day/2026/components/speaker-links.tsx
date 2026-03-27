@@ -1,6 +1,6 @@
 import clsx from "clsx"
 
-import { SchedSpeaker } from "@/app/conf/2023/types"
+import { SchedSpeaker } from "@/app/conf/_api/sched-types"
 import {
   SocialIcon,
   SocialIconType,

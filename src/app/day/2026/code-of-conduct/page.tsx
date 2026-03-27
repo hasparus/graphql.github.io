@@ -7,12 +7,12 @@ import { Button } from "@/app/conf/_design-system/button"
 
 import { NavbarPlaceholder } from "../components/navbar"
 import { Hero, HeroStripes } from "../components/hero"
-import "../resources/prose.css"
+import "@/app/conf/2025/resources/prose.css"
 
 import markdown from "./code-of-conduct.mdx?raw"
 
 export const metadata: Metadata = {
-  title: "Code of Conduct | GraphQLConf 2025",
+  title: "Code of Conduct | GraphQL Day 2026",
 }
 
 const components = {

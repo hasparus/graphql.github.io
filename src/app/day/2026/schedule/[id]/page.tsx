@@ -6,7 +6,7 @@ import clsx from "clsx"
 import { metadata as layoutMetadata } from "@/app/conf/2023/layout"
 
 import { speakers, schedule } from "../../_data"
-import { ScheduleSession } from "../../../2023/types"
+import { ScheduleSession } from "@/app/conf/_api/sched-types"
 
 import { findVideo, SessionVideo } from "./session-video"
 import { NavbarPlaceholder } from "../../components/navbar"

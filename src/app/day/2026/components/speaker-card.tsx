@@ -2,17 +2,17 @@ import clsx from "clsx"
 import Image from "next/image"
 import { getPlaiceholder } from "plaiceholder"
 
-import { Anchor } from "../../_design-system/anchor"
-import { SchedSpeaker } from "../../2023/types"
-import { StripesDecoration } from "../../_design-system/stripes-decoration"
+import { Anchor } from "@/app/conf/_design-system/anchor"
+import { SchedSpeaker } from "@/app/conf/_api/sched-types"
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
-import { SpeakerTags } from "./speaker-tags"
+import { SpeakerTags } from "@/app/conf/2025/components/speaker-tags"
 import { SpeakerLinks } from "./speaker-links"
 
 import styles from "./speaker-card.module.css"
-import { formatSpeakerPosition } from "./format-speaker-position"
+import { formatSpeakerPosition } from "@/app/conf/2025/components/format-speaker-position"
 import { formatDescription } from "../schedule/[id]/format-description"
-import { getBase64Placeholder } from "../../_design-system/utils/get-base64-placeholder"
+import { getBase64Placeholder } from "@/app/conf/_design-system/utils/get-base64-placeholder"
 
 export interface SpeakerCardProps extends React.HTMLAttributes<HTMLDivElement> {
   isReturning?: boolean

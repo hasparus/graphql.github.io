@@ -1,46 +1,39 @@
 import { ImageResponse } from "next/og"
 
-import { loadFontsForOG } from "@/app/fonts/og/load-fonts-for-og"
-
 import { schedule } from "../../_data"
-import { SessionOpengraphImage } from "../../components/og-images/session-opengraph-image"
 
 export const contentType = "image/png"
-export const size = {
-  width: 1200,
-  height: 630,
-}
+export const size = { width: 1200, height: 630 }
 
 export function generateStaticParams() {
   return schedule.filter(s => s.id).map(s => ({ id: s.id }))
 }
 
-export default async function SessionOGImage({
-  params,
-}: {
-  params: { id: string }
-}) {
+export default function SessionOGImage({ params }: { params: { id: string } }) {
   const decodedId = decodeURIComponent(params.id)
   const session = schedule.find(s => s.id === decodedId)
 
-  if (!session) {
-    throw new Error(`Speaker not found: ${decodedId}`)
-  }
-
-  const fonts = loadFontsForOG()
-
   return new ImageResponse(
     (
-      <SessionOpengraphImage
-        session={session}
-        date="September 8-10"
-        year="2025"
-        location="Amsterdam, Netherlands"
-      />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#171717",
+          color: "#fafafa",
+          fontFamily: "sans-serif",
+        }}
+      >
+        <div style={{ fontSize: 64, fontWeight: 700 }}>GraphQL Day</div>
+        <div style={{ fontSize: 32, marginTop: 16, opacity: 0.8 }}>
+          {session?.name || "Session"}
+        </div>
+      </div>
     ),
-    {
-      ...size,
-      fonts: await fonts,
-    },
+    size,
   )
 }

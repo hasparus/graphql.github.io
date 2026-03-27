@@ -2,8 +2,8 @@ import NextLink from "next/link"
 import { ReactNode } from "react"
 import { clsx } from "clsx"
 
-import { SocialIcons } from "../../../_components/social-icons"
-import { StripesDecoration } from "../../../_design-system/stripes-decoration"
+import { SocialIcons } from "@/app/conf/_components/social-icons"
+import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
 
 import blurBean from "./blur-bean.webp"
 
@@ -16,25 +16,25 @@ interface FooterLink {
 export function Footer({
   links,
   logo,
+  date,
+  location,
 }: {
   links: (FooterLink | FooterLink[])[]
   logo: ReactNode
+  date?: ReactNode
+  location?: ReactNode
 }) {
   return (
     <footer className="gql-all-anchors-focusable typography-menu relative !bg-neu-100 text-neu-900 dark:!bg-neu-0 max-md:px-0 max-md:pt-0">
       <Stripes />
       <div className="flex flex-wrap justify-between gap-4 p-4 max-md:w-full md:px-6 lg:py-10 2xl:px-10">
         {logo}
-        <div className="typography-body-lg flex gap-x-4 max-sm:grid max-sm:grid-cols-2 max-sm:items-start max-sm:text-lg sm:gap-y-2">
-          <p className="flex items-center whitespace-pre">
-            <time dateTime="2025-09-08">September 08</time>
-            <span>-</span>
-            <time dateTime="2025-09-10">
-              10<span className="max-sm:hidden">, 2025</span>
-            </time>
-          </p>
-          <address className="not-italic">Amsterdam, Netherlands</address>
-        </div>
+        {date && location && (
+          <div className="typography-body-lg flex gap-x-4 max-sm:grid max-sm:grid-cols-2 max-sm:items-start max-sm:text-lg sm:gap-y-2">
+            <p className="flex items-center whitespace-pre">{date}</p>
+            <address className="not-italic">{location}</address>
+          </div>
+        )}
       </div>
       <ul className="grid grid-cols-2 gap-px bg-neu-400 py-px dark:bg-neu-100 lg:grid-cols-4">
         {links.map((box, i) => (

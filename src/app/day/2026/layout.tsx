@@ -8,25 +8,16 @@ import { Navbar } from "./components/navbar"
 import { Footer } from "./components/footer"
 
 import { ThemeProvider } from "next-themes"
-import { GraphQLConfLogoLink } from "./components/graphql-conf-logo-link"
-import { GALLERY_LINK } from "./links"
+import { GraphQLDayLogoLink } from "./components/graphql-day-logo-link"
 
 export const metadata = {
   description:
-    "Join the official GraphQL Conference by the GraphQL Foundation in Amsterdam, Netherlands, from September 8-10, 2025. Discover the future of GraphQL with leading experts, workshops, and networking opportunities.",
-  openGraph: {
-    images: [
-      {
-        url: "/img/og-graphql-conf-2025.jpeg",
-        alt: "GraphQLConf 2025 hosted by the GraphQL Foundation. September 08-10, 2025. Amsterdam, Netherlands",
-      },
-    ],
-  },
+    "GraphQL Day @ FOST — community-organized GraphQL events at Future of Software Technologies conferences worldwide.",
   title: {
     absolute: "",
-    template: "%s | GraphQLConf 2025",
+    template: "%s | GraphQL Day 2026",
   },
-  keywords: ["GraphQL", "GraphQLConf", "GraphQLConf 2025"],
+  keywords: ["GraphQL", "GraphQL Day", "FOST", "Conference", "2026"],
 } satisfies Metadata
 
 export default function Layout({
@@ -38,40 +29,23 @@ export default function Layout({
     <>
       <NewFontsStyleTag />
       <Navbar
-        year={2025}
         links={[
-          { children: "Schedule", href: "/conf/2025/schedule" },
-          { children: "Speakers", href: "/conf/2025/speakers" },
-          { children: "Sponsors", href: "/conf/2025/#sponsors" },
-          { children: "Resources", href: "/conf/2025/resources" },
-          {
-            children: "Event Photos",
-            href: GALLERY_LINK,
-          },
-          { children: "FAQ", href: "/conf/2025/#faq" },
+          { children: "All Events", href: "/day" },
+          { children: "FAQ", href: "#faq" },
         ]}
       />
       <ThemeProvider attribute="class">
         <div className="bg-neu-0 text-neu-900 antialiased">{children}</div>
       </ThemeProvider>
       <Footer
-        logo={<GraphQLConfLogoLink year={2025} />}
+        logo={<GraphQLDayLogoLink />}
         links={[
-          { children: "Sponsor", href: "/conf/2025/#sponsors" },
-          { children: "Speakers", href: "/#speakers" },
-          { children: "GraphQLConf 2024", href: "/conf/2024" },
-          { children: "FAQ", href: "#faq" },
-          { children: "Contact Us", href: "/conf/2025/resources/#contact" },
+          { children: "FOST", href: "https://www.joinfost.io" },
           { children: "GraphQL", href: "/" },
-          { children: "GraphQL Foundation", href: "/foundation" },
           [
             {
               children: "Code of Conduct",
-              href: "/conf/2025/code-of-conduct",
-            },
-            {
-              children: "Inclusion & Accessibility",
-              href: "/conf/2025/resources/#inclusion--accessibility",
+              href: "/day/2026/code-of-conduct",
             },
           ],
         ]}
