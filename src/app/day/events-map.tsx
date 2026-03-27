@@ -153,7 +153,7 @@ export function EventsMap({ children }: { children: React.ReactNode }) {
       onMouseOut={() => {
         setActiveEventId(null)
       }}
-      className="ml-auto h-[320px] max-w-full bg-[--sea] [--sea:--sea-light] dark:[--sea:--sea-dark] sm:h-[420px] md:h-[520px] lg:h-[560px]"
+      className="ml-auto h-[320px] max-w-full animate-fade-in bg-[--sea] [--sea:--sea-light] dark:[--sea:--sea-dark] sm:h-[420px] md:h-[520px] lg:h-[560px]"
       style={
         {
           "--sea-dark": asRgbString(MAP_COLORS.dark.sea),
@@ -165,16 +165,20 @@ export function EventsMap({ children }: { children: React.ReactNode }) {
       }
     >
       <div
-        className="group/map relative size-full bg-[--sea]"
+        className="group/map relative size-full bg-[--sea] transition duration-300 ease-out"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
         onClick={handleMapClick}
+        style={{
+          transform: status === "ready" ? "scale(1)" : "scale(0.99)",
+          filter: status === "ready" ? "blur(0px)" : "blur(1px)",
+        }}
       >
         <canvas
           ref={canvasRef}
           aria-describedby="events-map-tooltip"
           aria-label="Interactive map of GraphQL Day events"
-          className="block size-full animate-fade-in transition-opacity duration-300 ease-out"
+          className="block size-full transition-opacity duration-[600ms] ease-out"
           style={{
             imageRendering: "pixelated",
             touchAction: "none",

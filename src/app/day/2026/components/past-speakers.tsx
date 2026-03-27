@@ -113,7 +113,8 @@ export function PastSpeakersSection() {
       <div className="px-4 lg:px-12 xl:px-24">
         <h3 className="typography-h2 mb-2">Past Speakers</h3>
         <p className="typography-body-md mb-8 text-neu-700">
-          GraphQL Day Paris 2025
+          GraphQL Spec contributors, engineers from Apollo, ChilliCream, The New
+          York Times, and more shared the stage at GraphQL Day Paris 2025.
         </p>
       </div>
       <div className="flex flex-col overflow-hidden">

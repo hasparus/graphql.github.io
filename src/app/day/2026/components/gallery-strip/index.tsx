@@ -9,13 +9,19 @@ import { Marquee } from "@/app/conf/_design-system/marquee"
 
 import { imagesByYear } from "./images"
 
-const YEARS = ["2024", "2023"] as const
+const YEARS = ["2025"] as const
 type Year = (typeof YEARS)[number]
 
-export interface GalleryStripProps extends React.HTMLAttributes<HTMLElement> {}
+export interface GalleryStripProps extends React.HTMLAttributes<HTMLElement> {
+  speed?: number
+}
 
-export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
-  const [selectedYear, setSelectedYear] = useState<Year>("2024")
+export function GalleryStrip({
+  className,
+  speed = 0,
+  ...rest
+}: GalleryStripProps) {
+  const [selectedYear, setSelectedYear] = useState<Year>("2025")
 
   return (
     <section
@@ -43,7 +49,7 @@ export function GalleryStrip({ className, ...rest }: GalleryStripProps) {
       <div className="mt-6 w-full md:mt-10">
         <Marquee
           gap={8}
-          speed={35}
+          speed={speed}
           drag
           reverse
           className="cursor-[var(--cursor-grabbing,grab)] touch-pan-y"

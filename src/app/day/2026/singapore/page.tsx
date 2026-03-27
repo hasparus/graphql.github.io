@@ -11,6 +11,7 @@ import { MarqueeRows } from "@/app/conf/2026/components/marquee-rows"
 import { PastSpeakersSection } from "../components/past-speakers"
 import { NavbarPlaceholder } from "../components/navbar"
 import { NavbarFixed } from "@/components/navbar/navbar-fixed"
+import { GallerySection } from "../../gallery-section"
 
 const TICKET_LINK =
   "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore"
@@ -59,11 +60,7 @@ export default function SingaporePage() {
           <BecomeASpeakerSection />
           <PastSpeakersSection />
           <EventPartnersSection />
-          <MarqueeRows
-            variant="secondary"
-            className="my-8 xl:mb-16 xl:mt-10"
-            items={MARQUEE_ITEMS}
-          />
+          <GallerySection moving />
           <CtaCardSection
             title="Get your ticket"
             description="Join us for a day of GraphQL talks, networking, and hands-on learning at FOST Singapore."
@@ -76,6 +73,11 @@ export default function SingaporePage() {
               Get your ticket
             </Button>
           </CtaCardSection>
+          <MarqueeRows
+            variant="secondary"
+            className="my-8 xl:mb-16 xl:mt-10"
+            items={MARQUEE_ITEMS}
+          />
         </div>
       </main>
     </>
