@@ -91,11 +91,13 @@ const ROW_2 = PAST_SPEAKERS.slice(6)
 
 export async function PastSpeakersSection() {
   return (
-    <section className="gql-section xl:py-12">
-      <h3 className="typography-h2 mb-2">Past Speakers</h3>
-      <p className="typography-body-md mb-8 text-neu-700">
-        GraphQL Day Paris 2025
-      </p>
+    <section className="py-8 xl:py-12">
+      <div className="px-4 lg:px-12 xl:px-24">
+        <h3 className="typography-h2 mb-2">Past Speakers</h3>
+        <p className="typography-body-md mb-8 text-neu-700">
+          GraphQL Day Paris 2025
+        </p>
+      </div>
       <div className="flex flex-col gap-4 overflow-hidden">
         <Marquee speed={30} speedOnHover={15} gap={0}>
           {await Promise.all(
