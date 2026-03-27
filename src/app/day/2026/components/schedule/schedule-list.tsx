@@ -143,7 +143,8 @@ export function ScheduleList({
 
   const firstDay = Object.values(filteredSessions)[0]
   // if the first day has less than 3 sessions, it's probably a "day zero" with extra events or workshops
-  const firstDayIsDayZero = Object.keys(firstDay).length < 3
+  const firstDayIsDayZero =
+    firstDay != null && Object.keys(firstDay).length < 3
   const startIndex = firstDayIsDayZero ? 0 : 1
 
   const { getTimeMarker } = useCurrentTimeMarker(conferenceStart, conferenceEnd)
