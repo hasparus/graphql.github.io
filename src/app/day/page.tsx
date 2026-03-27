@@ -10,8 +10,16 @@ import { EventsMap } from "./events-map"
 import { EVENTS } from "./events-data"
 import { PastSpeakersSection } from "./2026/components/past-speakers"
 import { NavbarPlaceholder } from "./2026/components/navbar"
-import fostLogo from "./2026/assets/fost-logo.svg"
+import fostLogo from "./2026/assets/fost-logo.avif"
 import Image from "next/image"
+
+const NUMBER_OF_CITIES_SPELLED_OUT = "four"
+if (process.env.NODE_ENV === "development") {
+  if (EVENTS.length !== 4)
+    throw new Error(
+      "EVENTS is expected to be 4, please update the NUMBER_OF_CITIES_SPELLED_OUT variable",
+    )
+}
 
 export const metadata: Metadata = {
   title: "GraphQL Day 2026",
@@ -37,20 +45,31 @@ export default function DayIndexPage() {
             <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[--sea] to-transparent lg:bg-gradient-to-r lg:from-[--sea] lg:to-transparent lg:to-40%" />
           </EventsMap>
           <div className="gql-container pointer-events-none absolute inset-0 z-20 flex flex-col justify-end px-4 lg:justify-center lg:px-12 xl:px-24">
-            <div className="pointer-events-auto pb-8 pt-20 md:pb-12 lg:max-w-md lg:py-0 xl:max-w-2xl">
+            <div className="pointer-events-auto flex h-full flex-col py-8 md:pb-12 lg:max-w-md xl:max-w-2xl">
+              <div className="flex-1" />
               <h1 className="typography-d1 mb-4 text-neu-900">GraphQL Day</h1>
-              <p className="typography-body-lg text-neu-700 dark:text-neu-400">
-                Community-organized GraphQL events at FOST conferences
-                worldwide.
+              <p className="typography-body-lg text-balance text-neu-700 dark:text-neu-400">
+                Community-organized GraphQL events at conferences worldwide.
               </p>
-              <a
-                href="https://www.joinfost.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8"
-              >
-                <Image src={fostLogo.src} alt="FOST" width={120} height={40} />
-              </a>
+              <div className="flex-1" />
+              <div className="mt-8 flex h-fit items-center gap-2">
+                <div className="typography-body-sm text-neu-700 dark:text-neu-400">
+                  hosted at
+                </div>
+                <a
+                  href="https://www.joinfost.io"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    src={fostLogo}
+                    alt="FOST"
+                    width={80}
+                    height={24}
+                    placeholder="blur"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -59,10 +78,10 @@ export default function DayIndexPage() {
       <main className="gql-container gql-section">
         <h2 className="typography-h2 my-6 md:mt-12">GraphQL Days in 2026</h2>
         <p className="typography-body-md text-neu-700 dark:text-neu-400">
-          Started in Paris. Now in{" "}
-          {Intl.NumberFormat("en-US").format(EVENTS.length)} cities worldwide.
-          Whether you're deep in production or just getting started, this is
-          your chance to connect, share best practices, and see what's new.
+          Started in Paris. Now in {NUMBER_OF_CITIES_SPELLED_OUT} cities
+          worldwide. Whether you're deep in production or just getting started,
+          this is your chance to connect, share best practices, and see what's
+          new.
         </p>
         <div className="mt-8 flex flex-col gap-4">
           {EVENTS.map(event => (

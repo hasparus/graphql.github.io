@@ -1,5 +1,5 @@
 import { Anchor } from "@/app/conf/_design-system/anchor"
-import fostLogo from "../assets/fost-logo.webp"
+import fostLogo from "../assets/fost-logo.avif"
 
 export function EventPartnersSection() {
   return (
