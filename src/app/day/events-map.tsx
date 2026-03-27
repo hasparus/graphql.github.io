@@ -21,7 +21,7 @@ import {
   MapColors,
 } from "@/app/(main)/community/events/map/map-colors"
 
-import { EVENTS } from "./events-data"
+import { EVENTS, EventMapItem } from "./events-data"
 
 const CELL_SIZE = 8
 const SQUARE_SIZE = 6
