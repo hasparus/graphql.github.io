@@ -119,13 +119,17 @@ export function PastSpeakersSection() {
       </div>
       <div className="flex flex-col overflow-hidden">
         <Marquee speed={25} speedOnHover={12} gap={0}>
-          {ROW_1.map(s => (
-            <PastSpeakerCard key={s.name} {...s} />
+          {ROW_1.map((s, i) => (
+            <PastSpeakerCard key={`${s.name}-${i}`} {...s} />
           ))}
         </Marquee>
         <Marquee speed={25} speedOnHover={12} gap={0} reverse>
-          {ROW_2.map(s => (
-            <PastSpeakerCard key={s.name} {...s} className="border-t-0" />
+          {ROW_2.map((s, i) => (
+            <PastSpeakerCard
+              key={`${s.name}-${i}`}
+              {...s}
+              className="border-t-0"
+            />
           ))}
         </Marquee>
       </div>
