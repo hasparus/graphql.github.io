@@ -30,7 +30,7 @@ export function Hero(props: HeroProps) {
   return (
     <article
       className={clsx(
-        "gql-conf-navbar-strip relative isolate flex flex-col justify-center selection:bg-blk/40 before:bg-white/30 before:dark:bg-blk/40",
+        "gql-conf-navbar-strip relative flex flex-col justify-center selection:bg-blk/40 before:bg-white/30 before:dark:bg-blk/40",
         colorScheme === "primary"
           ? "bg-pri-base text-neu-0 dark:bg-pri-darker dark:text-neu-900 dark:selection:bg-white/40"
           : "bg-neu-100 dark:bg-neu-50/25",
@@ -55,9 +55,16 @@ export function Hero(props: HeroProps) {
                 <h1 className="typography-d1">{props.pageName}</h1>
               </div>
             ) : (
-              <h1 className="typography-d1 flex flex-wrap gap-2">
+              <h1 className="typography-d1 flex flex-wrap gap-2 leading-none">
                 <span>GraphQL Day</span>
-                <span className="text-sec-base">
+                <span
+                  className={clsx(
+                    "typography-h1 w-full",
+                    colorScheme === "primary"
+                      ? "text-sec-base"
+                      : "text-pri-base",
+                  )}
+                >
                   {props.year || props.subtitle}
                 </span>
               </h1>
@@ -129,8 +136,9 @@ export function HeroStripes({ className, ...rest }: HeroStripesProps) {
       }}
     >
       <StripesDecoration
-        evenClassName="bg-[linear-gradient(180deg,hsl(var(--color-pri-light))_0%,hsl(319deg_100%_90%_/_0.2)_100%)] dark:bg-[linear-gradient(180deg,hsl(var(--color-pri-dark))_0%,hsl(319_100%_20%_/_1)_100%)]"
-        oddClassName="bg-[linear-gradient(180deg,hsl(319deg_100%_90%_/_0.2)_0%,hsl(var(--color-pri-base))_100%)] dark:bg-[linear-gradient(180deg,hsl(319_100%_30%_/_1)_0%,hsl(var(--color-pri-dark))_100%)]"
+        evenClassName="bg-[linear-gradient(in_oklch_180deg,hsl(var(--color-pri-light))_0%,hsl(29.7deg_100%_45.1%/_0)_100%)] dark:bg-[linear-gradient(in_oklch_180deg,hsl(var(--color-pri-base)/0.1)_0%,hsl(var(--color-pri-dark)_/.35)_100%)]"
+        // hsl(29.7deg, 86.1%, 45.1%)
+        oddClassName="bg-[linear-gradient(180deg,hsl(319deg_100%_90%_/_0.2)_0%,hsl(var(--color-pri-base))_100%)] dark:bg-[linear-gradient(180deg,hsl(319_100%_30%_/_1)_0%,hsl(29.7deg_100%_45.1%_/_1)_100%)]"
         {...rest}
       />
     </ImageLoaded>

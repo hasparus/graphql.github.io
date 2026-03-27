@@ -85,28 +85,29 @@ export default function DayIndexPage() {
         </p>
         <div className="mt-8 flex flex-col gap-4">
           {EVENTS.map(event => (
-            <NextLink
-              key={event.href}
-              href={event.href}
-              className="group flex items-center justify-between gap-6 border border-neu-200 p-6 hover:bg-neu-100 md:p-8"
-            >
-              <div className="flex flex-col gap-2">
-                <h3 className="typography-h2 group-hover:underline">
-                  {event.city}
-                </h3>
-                <p className="typography-body-md text-neu-700">
-                  {event.date}, 2026
-                </p>
-              </div>
-              <span className="typography-body-md hidden text-pri-base sm:block">
-                GraphQL Day @ FOST {event.city}
-              </span>
-            </NextLink>
+            <GraphQLDayEventCard key={event.id} event={event} />
           ))}
         </div>
       </main>
 
       <PastSpeakersSection />
     </>
+  )
+}
+
+function GraphQLDayEventCard({ event }: { event: EventMapItem }) {
+  return (
+    <NextLink
+      href={event.href}
+      className="group flex items-center justify-between gap-6 border border-neu-200 p-6 hover:bg-neu-100 md:p-8"
+    >
+      <div className="flex flex-col gap-2">
+        <h3 className="typography-h2 group-hover:underline">{event.city}</h3>
+        <p className="typography-body-md text-neu-700">{event.date}, 2026</p>
+      </div>
+      <span className="typography-body-md hidden text-pri-base sm:block">
+        GraphQL Day @ FOST {event.city}
+      </span>
+    </NextLink>
   )
 }
