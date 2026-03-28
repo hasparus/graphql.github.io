@@ -9,9 +9,20 @@ export function AboutSection({ children }: { children?: ReactNode }) {
           {children || (
             <>
               <p className="typography-body-lg">
-                GraphQL Day is a one-day community event hosted at FOST (Future
-                of Software Technologies). Expect real-world talks, workshops,
-                and conversations about building with GraphQL.
+                GraphQL Day is a one-day community event hosted at{" "}
+                <a
+                  href="https://www.joinfost.io"
+                  className="underline hover:text-neu-900"
+                >
+                  FOST
+                </a>{" "}
+                (Future of Software Technologies, think federation of
+                conferences!).
+              </p>
+              <p className="typography-body-lg text-pretty">
+                It is an opportunity to connect with other API ecosystems, meet
+                new and seasoned GraphQL users, educate about GraphQL, share
+                best practices, and have fun!
               </p>
               <p className="typography-body-lg text-pretty">
                 The event is open to everyone — whether you run GraphQL in
