@@ -20,9 +20,9 @@ export function AboutSection({ children }: { children?: ReactNode }) {
                 conferences!).
               </p>
               <p className="typography-body-lg text-pretty">
-                It is an opportunity to connect with other API ecosystems,
-                meet new and seasoned GraphQL users, educate about GraphQL,
-                share best practices, and have fun!
+                It is an opportunity to connect with other API ecosystems, meet
+                new and seasoned GraphQL users, educate about GraphQL, share
+                best practices, and have fun!
               </p>
               <p className="typography-body-lg text-pretty">
                 The event is open to everyone — whether you run GraphQL in
