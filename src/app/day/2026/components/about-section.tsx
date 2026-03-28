@@ -20,7 +20,7 @@ export function AboutSection({ children }: { children?: ReactNode }) {
                 conferences!).
               </p>
               <p className="typography-body-lg text-pretty">
-                They are an opportunity to connect with other API ecosystems,
+                It is an opportunity to connect with other API ecosystems,
                 meet new and seasoned GraphQL users, educate about GraphQL,
                 share best practices, and have fun!
               </p>
