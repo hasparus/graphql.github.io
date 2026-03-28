@@ -1,10 +1,10 @@
 import { Button } from "@/app/conf/_design-system/button"
 
+const CFP_LINK = "https://forms.gle/M1kiuvwK2wLJyNzi9"
+
 export function BecomeASpeakerSection({
-  cfpLink,
   cfpDeadline,
 }: {
-  cfpLink?: string
   cfpDeadline?: string
 }) {
   return (
@@ -28,15 +28,9 @@ export function BecomeASpeakerSection({
         {cfpDeadline && (
           <p className="typography-body-lg">The CFP closes on {cfpDeadline}.</p>
         )}
-        {cfpLink ? (
-          <Button href={cfpLink} className="whitespace-nowrap md:w-fit">
-            Submit a talk
-          </Button>
-        ) : (
-          <Button disabled className="whitespace-nowrap opacity-55 md:w-fit">
-            CFP coming soon
-          </Button>
-        )}
+        <Button href={CFP_LINK} className="whitespace-nowrap md:w-fit">
+          Submit a talk
+        </Button>
       </div>
     </section>
   )
