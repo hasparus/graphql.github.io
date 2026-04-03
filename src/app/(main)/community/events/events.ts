@@ -69,7 +69,7 @@ export const events: Event[] = [
     slug: "graphql-day-at-apidays",
     location: "CNIT La Defense, Paris",
     date: "2025-12-11T08:00:00+00:00",
-    eventLink: "https://graphql.day",
+    eventLink: "https://graphql.day/2025",
     host: "APIDays & GraphQL Community",
     hostLink: "https://apidays.co",
   },
