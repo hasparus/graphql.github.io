@@ -59,8 +59,10 @@ export default function DayLayout({
             href: "https://www.futureofsoftwaretechnologies.com/manifesto",
           },
           { children: "All GraphQL Events", href: "/community/events/" },
-          // todo: we need to find a better link to use here. the .day website will probably be updated to redirect to this or match this.
-          { children: "GraphQL Day Paris 2025", href: "https://graphql.day" },
+          {
+            children: "GraphQL Day Paris 2025",
+            href: "https://graphql.day/2025",
+          },
         ]}
       />
     </>
