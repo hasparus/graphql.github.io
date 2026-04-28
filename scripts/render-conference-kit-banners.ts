@@ -23,7 +23,7 @@ const PAGE = `${URL}/conf/conference-kit/`
 const PUBLIC_DIR = path.resolve(process.cwd(), "public/conference-kit")
 const SCALE = Number(process.env.SCALE ?? 4)
 
-const BANNERS = ["amsterdam", "ai-hero"] as const
+const BANNERS = ["amsterdam", "language", "ai-hero"] as const
 
 async function main() {
   await mkdir(PUBLIC_DIR, { recursive: true })

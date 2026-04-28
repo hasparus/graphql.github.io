@@ -5,6 +5,7 @@ import { Hero, HeroStripes } from "../2026/components/hero"
 import { NavbarPlaceholder } from "../2026/components/navbar"
 
 import { AmsterdamBanner } from "./_components/amsterdam-banner"
+import { LanguageBanner } from "./_components/language-banner"
 import { AiHeroBanner } from "./_components/ai-hero-banner"
 
 export const metadata: Metadata = {
@@ -43,8 +44,9 @@ export default function ConferenceKitPage() {
             </Button>
           </header>
 
-          <div className="flex flex-wrap justify-center gap-12 xl:gap-20">
+          <div className="grid grid-cols-1 gap-8 xl:grid-cols-2">
             <AmsterdamBanner />
+            <LanguageBanner />
             <AiHeroBanner />
           </div>
         </section>
