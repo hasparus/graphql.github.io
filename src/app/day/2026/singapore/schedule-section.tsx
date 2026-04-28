@@ -195,7 +195,7 @@ function SpeakerCard({
     .join(", ")
 
   return (
-    <article className="group relative overflow-hidden border border-t-0 border-neu-200 bg-neu-0 @container dark:border-neu-100">
+    <article className="group relative overflow-hidden border border-t-0 border-neu-200 bg-transparent @container dark:border-neu-100">
       <div className="flex h-full flex-col gap-4 p-4 @[420px]:flex-row md:gap-6 md:p-6">
         <div className="relative aspect-square h-full overflow-hidden @[420px]:w-[176px] @[420px]:shrink-0">
           <div className="absolute inset-0 z-[1] bg-sec-light mix-blend-multiply" />
