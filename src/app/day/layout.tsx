@@ -30,8 +30,8 @@ export default function DayLayout({
           { children: "All GraphQL Events", href: "/community/events/" },
           { children: "GraphQLConf", href: "/conf/2026" },
           {
-            children: "GraphQL Day Singapore",
-            href: "/day/2026/singapore",
+            children: "GraphQL Day NYC",
+            href: "/day/2026/nyc",
           },
         ]}
       />
