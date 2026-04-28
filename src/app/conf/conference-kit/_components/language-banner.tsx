@@ -5,7 +5,7 @@ import wiresStyles from "@/components/index-page/what-is-graphql/wires.module.cs
 import { BannerFrame } from "./banner-frame"
 import { BlobStripes } from "./blob-stripes"
 import { CityQuerySnippet } from "./city-query-snippet"
-import { QRPlaceholder } from "./qr-placeholder"
+import { QRCodeSVG } from "./qr-code"
 import { TRUSTED_LOGOS } from "./trusted-logos"
 
 export function LanguageBanner() {
@@ -17,7 +17,7 @@ export function LanguageBanner() {
     >
       <BlobStripes
         position="70% 30%"
-        size="155%"
+        size="200%"
         stripeWidth="14px"
         evenClassName="bg-[linear-gradient(180deg,rgba(132,205,22,0.18)_0%,rgba(132,205,22,0.03)_100%)]"
         oddClassName="bg-[linear-gradient(180deg,rgba(132,205,22,0.04)_0%,rgba(70,109,11,0.18)_100%)]"
@@ -59,7 +59,7 @@ export function LanguageBanner() {
         <MobileDiagram step={1} className="block overflow-visible" />
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div
-            className={`${wiresStyles.highlightsQuery} border border-sec-base/25 bg-[#0A0B08]/80 py-3 backdrop-blur-sm`}
+            className={`${wiresStyles.highlightsQuery} py-3 backdrop-blur-xl bg-[#0A0B08]/30 border border-sec-base/25`}
             style={{ ["--highlight-opacity" as string]: 1 }}
           >
             <CityQuerySnippet />
@@ -67,47 +67,24 @@ export function LanguageBanner() {
         </div>
       </div>
 
-      <div className="z-10 mt-auto grid grid-cols-2 gap-2.5">
-        <div className="flex h-24 items-center gap-3.5 border border-white/10 bg-white/[0.02] p-3.5">
-          <div className="flex size-16 shrink-0 items-center justify-center border-[1.5px] border-sec-base">
-            <ArrowRightLine className="size-7 text-sec-base" />
+      <div className="z-10 mt-auto flex h-24 items-center gap-5 border border-white/10 bg-white/[0.02] p-3.5">
+        <div className="min-w-0 flex-1">
+          <div className="typography-menu text-xs text-white/60">
+            Learn GraphQL
           </div>
-          <div className="min-w-0">
-            <div
-              className="text-[15px] font-medium"
-              style={{ letterSpacing: "-0.01em" }}
-            >
-              Read the spec
-            </div>
-            <div
-              className="mt-1 text-[12px] text-white/70"
-              style={{ lineHeight: 1.3 }}
-            >
-              Open standard,
-              <br />
-              vendor-neutral.
-            </div>
+          <div
+            className="mt-1 text-[22px] font-medium"
+            style={{ letterSpacing: "-0.01em" }}
+          >
+            graphql.org/learn
           </div>
         </div>
-
-        <div className="flex h-24 items-center gap-3.5 border border-white/10 bg-white/[0.02] p-3.5">
-          <div className="flex size-[68px] shrink-0 items-center justify-center border-[1.5px] border-sec-base p-1">
-            <QRPlaceholder size={56} color="#FAFCF4" />
-          </div>
-          <div className="min-w-0">
-            <div
-              className="font-mono text-[11px] lowercase text-sec-base"
-              style={{ letterSpacing: "0.06em" }}
-            >
-              Learn more
-            </div>
-            <div
-              className="mt-1 text-[18px] font-medium"
-              style={{ letterSpacing: "-0.01em" }}
-            >
-              graphql.org
-            </div>
-          </div>
+        <div className="flex size-[80px] shrink-0 items-center justify-center border-[1.5px] border-sec-base p-1">
+          <QRCodeSVG
+            value="https://graphql.org/learn/introduction/"
+            size={68}
+            color="#FAFCF4"
+          />
         </div>
       </div>
 
@@ -134,23 +111,5 @@ export function LanguageBanner() {
         </div>
       </div>
     </BannerFrame>
-  )
-}
-
-function ArrowRightLine({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <line x1="4" y1="12" x2="19" y2="12" />
-      <polyline points="13,6 19,12 13,18" />
-    </svg>
   )
 }

@@ -1,7 +1,10 @@
 import clsx from "clsx"
 
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
-import blurBlob from "@/app/conf/2025/components/become-a-sponsor/blur-blob.webp"
+// Most other repo blobs are wide-and-flat — the use-cases bean is the only
+// near-square one (1421×1138, ratio 1.25), so it doesn't get stretched into
+// a skinny strip when scaled up on a tall portrait banner.
+import blurBlob from "@/components/index-page/use-cases/blur-bean.webp"
 
 export interface BlobStripesProps {
   className?: string

@@ -26,7 +26,7 @@ export function AiHeroBanner() {
         <GraphQLWordmarkLogo className="h-8 !fill-white" />
       </div>
 
-      <div className="mt-8 flex flex-col gap-9">
+      <div className="mt-16 flex flex-col gap-9">
         <h2
           className="m-0 text-[64px] font-medium text-white"
           style={{
@@ -69,10 +69,10 @@ export function AiHeroBanner() {
             WebkitMaskImage: `url(${logoMask.src})`,
             maskRepeat: "no-repeat",
             WebkitMaskRepeat: "no-repeat",
-            maskSize: "95%",
-            WebkitMaskSize: "95%",
-            maskPosition: "center 55%",
-            WebkitMaskPosition: "center 55%",
+            maskSize: "100%",
+            WebkitMaskSize: "100%",
+            maskPosition: "center 70%",
+            WebkitMaskPosition: "center 70%",
           }}
         />
         <StripesDecoration
