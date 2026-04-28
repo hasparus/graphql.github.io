@@ -1,6 +1,5 @@
 import Image from "next/image"
 import clsx from "clsx"
-import { format, parseISO } from "date-fns"
 
 import { Tag } from "@/app/conf/_design-system/tag"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
@@ -28,14 +27,6 @@ const DATE_FORMAT = new Intl.DateTimeFormat("en-US", {
 })
 
 export function ScheduleSection() {
-  const sessionsByDay = new Map<string, SingaporeSession[]>()
-  for (const session of singaporeSessions) {
-    const day = session.start.slice(0, 10)
-    const list = sessionsByDay.get(day) ?? []
-    list.push(session)
-    sessionsByDay.set(day, list)
-  }
-
   return (
     <section
       id="schedule"
@@ -49,20 +40,8 @@ export function ScheduleSection() {
           </p>
         </div>
 
-        {Array.from(sessionsByDay.entries()).map(([day, sessions], dayIdx) => (
-          <div key={day}>
-            <Hr className="mt-8 lg:mt-12" />
-            <h3 className="typography-h3 px-2 pb-2 pt-8 text-neu-700 sm:px-3 lg:pt-12">
-              {format(parseISO(day), "EEEE, MMMM d, yyyy")}
-            </h3>
-            {sessions.map((session, i) => (
-              <SessionBlock
-                key={session.id}
-                session={session}
-                isFirst={dayIdx === 0 && i === 0}
-              />
-            ))}
-          </div>
+        {singaporeSessions.map((session, i) => (
+          <SessionBlock key={session.id} session={session} isFirst={i === 0} />
         ))}
       </div>
     </section>
@@ -78,25 +57,21 @@ function SessionBlock({
 }) {
   return (
     <article>
-      <Hr className={isFirst ? "mt-4" : "mt-12 lg:mt-16"} />
+      <Hr className={isFirst ? "mt-8 lg:mt-12" : "mt-12 lg:mt-16"} />
       <SessionHeader session={session} className="px-2 pt-8 sm:px-3 lg:pt-12" />
       {session.description && (
-        <>
-          <Hr className="mt-10 2xl:mt-16" />
-          <SessionDescription session={session} />
-        </>
+        <div
+          className="typography-body-lg mt-8 flex flex-col gap-4 px-2 pb-8 sm:px-3 lg:mt-12 xl:pb-12 [&_a]:break-words"
+          dangerouslySetInnerHTML={{
+            __html: formatDescription(session.description),
+          }}
+        />
       )}
       {session.speakers.length > 0 && (
-        <>
-          <Hr />
-          <h4 className="typography-h2 my-8 max-w-[408px] px-2 sm:px-3 lg:my-12">
-            Session {session.speakers.length === 1 ? "speaker" : "speakers"}
-          </h4>
-          <SessionSpeakers
-            speakers={session.speakers}
-            className="-mx-px -mb-px"
-          />
-        </>
+        <SessionSpeakers
+          speakers={session.speakers}
+          className="-mx-px -mb-px border-t border-neu-200 dark:border-neu-100"
+        />
       )}
     </article>
   )
@@ -143,20 +118,6 @@ function SessionHeader({
         <Tag color="hsl(var(--color-pri-base))">{session.type}</Tag>
       </div>
     </header>
-  )
-}
-
-function SessionDescription({ session }: { session: SingaporeSession }) {
-  return (
-    <div className="mt-8 flex gap-4 px-2 pb-8 max-lg:flex-col sm:px-3 lg:mt-16 lg:gap-8 xl:pb-16">
-      <h4 className="typography-h2 min-w-[320px]">Session description</h4>
-      <div
-        className="typography-body-lg flex flex-col gap-4 [&_a]:break-words"
-        dangerouslySetInnerHTML={{
-          __html: formatDescription(session.description),
-        }}
-      />
-    </div>
   )
 }
 

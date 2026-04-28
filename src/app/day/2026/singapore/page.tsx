@@ -5,7 +5,6 @@ import { Hero, HeroDateAndLocation } from "../components/hero"
 import { AboutSection } from "../components/about-section"
 import { WhyAttendSection } from "../components/why-attend-section"
 import { EventPartnersSection } from "../components/event-partners"
-import { CtaCardSection } from "../components/cta-card-section"
 import { MarqueeRows } from "@/app/conf/2026/components/marquee-rows"
 import { PastSpeakersSection } from "../components/past-speakers"
 import { NavbarPlaceholder } from "../components/navbar"
@@ -57,23 +56,11 @@ export default function SingaporePage() {
           items={MARQUEE_ITEMS}
         />
         <div className="gql-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
-          <ScheduleSection />
           <WhyAttendSection />
           <PastSpeakersSection />
           <EventPartnersSection />
           <GallerySection moving />
-          <CtaCardSection
-            title="View the schedule"
-            description="Catch up on the talks, descriptions, and speakers from GraphQL Day @ FOST Singapore."
-          >
-            <Button
-              href={SCHEDULE_ANCHOR}
-              variant="primary"
-              className="whitespace-nowrap"
-            >
-              View the schedule
-            </Button>
-          </CtaCardSection>
+          <ScheduleSection />
           <MarqueeRows
             variant="secondary"
             className="my-8 xl:mb-16 xl:mt-10"
