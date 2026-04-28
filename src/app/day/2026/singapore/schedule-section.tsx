@@ -40,7 +40,7 @@ export function ScheduleSection() {
       <div className="gql-container">
         <div className="gql-section !py-0 max-xs:px-0">
           <div className="border-neu-200 dark:border-neu-100 xs:border-x">
-            <div className="flex flex-wrap items-baseline justify-between gap-4 px-2 pt-8 sm:px-3 lg:pt-12 2xl:pt-16">
+            <div className="flex flex-wrap items-baseline justify-between gap-4 px-2 py-8 sm:px-3 lg:py-12 2xl:py-16">
               <h2 className="typography-h2">Schedule</h2>
               <p className="typography-body-md text-neu-700">
                 All times in Singapore Time (SGT, UTC+8)
