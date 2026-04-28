@@ -68,27 +68,31 @@ function SessionBlock({
   session: SingaporeSession
   isFirst: boolean
 }) {
-  // On xl+ with a single speaker we float the card into the bottom-right of
-  // the description so prose flows around it. Multi-speaker sessions keep
-  // the regular "speakers below" layout at every breakpoint.
-  const floatSpeaker =
+  // On xl+ with a single speaker we slot the card next to the last two
+  // paragraphs of the description so it sits in the bottom-right corner.
+  // Multi-speaker sessions keep the regular "speakers below" layout.
+  const sideSpeaker =
     session.speakers.length === 1 ? session.speakers[0] : null
 
   return (
     <article>
-      <Hr className={isFirst ? "mt-8 lg:mt-12" : "mt-12 lg:mt-16"} />
-      <SessionHeader session={session} className="px-2 pt-8 sm:px-3 lg:pt-12" />
+      <Hr
+        className={
+          isFirst ? "mt-8 lg:mt-12 xl:mt-0" : "mt-12 lg:mt-16 xl:mt-0"
+        }
+      />
+      <SessionHeader session={session} className="px-2 py-8 sm:px-3 lg:py-12" />
       {session.description && (
         <>
-          <Hr className="mt-10 2xl:mt-16" />
+          <Hr className="mt-10 2xl:mt-16 xl:mt-0" />
           <SessionDescription
             description={session.description}
-            floatSpeaker={floatSpeaker}
+            sideSpeaker={sideSpeaker}
           />
         </>
       )}
       {session.speakers.length > 0 && (
-        <div className={floatSpeaker ? "xl:hidden" : undefined}>
+        <div className={sideSpeaker ? "xl:hidden" : undefined}>
           <Hr />
           <SessionSpeakers
             speakers={session.speakers}
@@ -102,29 +106,38 @@ function SessionBlock({
 
 function SessionDescription({
   description,
-  floatSpeaker,
+  sideSpeaker,
 }: {
   description: string
-  floatSpeaker: SingaporeSpeaker | null
+  sideSpeaker: SingaporeSpeaker | null
 }) {
   const paragraphs = parseParagraphs(description)
+  const splitAt =
+    sideSpeaker && paragraphs.length >= 2
+      ? paragraphs.length - 2
+      : paragraphs.length
+  const lead = paragraphs.slice(0, splitAt)
+  const tail = paragraphs.slice(splitAt)
 
   return (
     <div className="typography-body-lg mt-8 px-2 pb-8 sm:px-3 lg:mt-12 xl:pb-12 [&>p+p]:mt-4 [&_a]:break-words">
-      {floatSpeaker && (
-        <div
-          className="hidden xl:float-right xl:ml-6 xl:block xl:w-[340px] xl:pt-[170px]"
-          style={{
-            shapeOutside: "inset(170px 0 0 0)",
-            shapeMargin: "16px",
-          }}
-        >
-          <SpeakerCard speaker={floatSpeaker} index={0} />
+      {lead.map((html, i) => (
+        <p key={`lead-${i}`} dangerouslySetInnerHTML={{ __html: html }} />
+      ))}
+      {tail.length > 0 && (
+        <div className="mt-4 xl:flex xl:items-end xl:gap-6">
+          <div className="[&>p+p]:mt-4 xl:flex-1">
+            {tail.map((html, i) => (
+              <p key={`tail-${i}`} dangerouslySetInnerHTML={{ __html: html }} />
+            ))}
+          </div>
+          {sideSpeaker && (
+            <div className="hidden xl:-mb-12 xl:-mr-3 xl:block xl:w-[580px] xl:shrink-0 xl:[&>article]:border-b-0 xl:[&>article]:border-r-0 xl:[&>article]:border-t">
+              <SpeakerCard speaker={sideSpeaker} index={0} />
+            </div>
+          )}
         </div>
       )}
-      {paragraphs.map((html, i) => (
-        <p key={i} dangerouslySetInnerHTML={{ __html: html }} />
-      ))}
     </div>
   )
 }
@@ -132,8 +145,8 @@ function SessionDescription({
 /**
  * Split FOST description HTML (a sequence of `<p>...</p>` blocks) into the
  * inner HTML of each paragraph so we can render them as real React `<p>`
- * siblings — needed because `shape-outside` only takes effect when the float
- * shares a block formatting context with the surrounding text.
+ * siblings — needed so we can splice the speaker card in alongside the last
+ * couple of paragraphs at xl+.
  */
 function parseParagraphs(html: string): string[] {
   const formatted = formatDescription(html)

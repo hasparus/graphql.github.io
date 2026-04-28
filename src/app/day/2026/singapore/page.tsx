@@ -64,7 +64,7 @@ export default function SingaporePage() {
         <ScheduleSection />
         <MarqueeRows
           variant="secondary"
-          className="my-8 xl:mb-16 xl:mt-10"
+          className="my-8 xl:my-16"
           items={MARQUEE_ITEMS}
         />
       </main>
