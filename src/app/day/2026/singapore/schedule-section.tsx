@@ -71,20 +71,17 @@ function SessionBlock({
   // On xl+ with a single speaker we slot the card next to the last two
   // paragraphs of the description so it sits in the bottom-right corner.
   // Multi-speaker sessions keep the regular "speakers below" layout.
-  const sideSpeaker =
-    session.speakers.length === 1 ? session.speakers[0] : null
+  const sideSpeaker = session.speakers.length === 1 ? session.speakers[0] : null
 
   return (
     <article>
       <Hr
-        className={
-          isFirst ? "mt-8 lg:mt-12 xl:mt-0" : "mt-12 lg:mt-16 xl:mt-0"
-        }
+        className={isFirst ? "mt-8 lg:mt-12 xl:mt-0" : "mt-12 lg:mt-16 xl:mt-0"}
       />
       <SessionHeader session={session} className="px-2 py-8 sm:px-3 lg:py-12" />
       {session.description && (
         <>
-          <Hr className="mt-10 2xl:mt-16 xl:mt-0" />
+          <Hr className="mt-10 xl:mt-0 2xl:mt-16" />
           <SessionDescription
             description={session.description}
             sideSpeaker={sideSpeaker}
@@ -126,7 +123,7 @@ function SessionDescription({
       ))}
       {tail.length > 0 && (
         <div className="mt-4 xl:flex xl:items-end xl:gap-6">
-          <div className="[&>p+p]:mt-4 xl:flex-1">
+          <div className="xl:flex-1 [&>p+p]:mt-4">
             {tail.map((html, i) => (
               <p key={`tail-${i}`} dangerouslySetInnerHTML={{ __html: html }} />
             ))}
