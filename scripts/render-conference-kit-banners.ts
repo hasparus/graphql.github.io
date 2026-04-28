@@ -72,11 +72,14 @@ async function main() {
 
     const zipPath = path.join(PUBLIC_DIR, "banners.zip")
     await rm(zipPath, { force: true })
-    await exec(
-      "zip",
-      ["-j", zipPath, ...BANNERS.map(b => path.join(tmpDir, `${b.slug}.png`))],
+    await exec("zip", [
+      "-j",
+      zipPath,
+      ...BANNERS.map(b => path.join(tmpDir, `${b.slug}.png`)),
+    ])
+    console.log(
+      `[render-banners] wrote ${path.relative(process.cwd(), zipPath)}`,
     )
-    console.log(`[render-banners] wrote ${path.relative(process.cwd(), zipPath)}`)
   } finally {
     await rm(tmpDir, { recursive: true, force: true })
   }

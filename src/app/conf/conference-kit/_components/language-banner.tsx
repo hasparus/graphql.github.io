@@ -59,7 +59,7 @@ export function LanguageBanner() {
         <MobileDiagram step={1} className="block overflow-visible" />
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div
-            className={`${wiresStyles.highlightsQuery} py-3 backdrop-blur-xl bg-[#0A0B08]/30 border border-sec-base/25`}
+            className={`${wiresStyles.highlightsQuery} border border-sec-base/25 bg-[#0A0B08]/30 py-3 backdrop-blur-xl`}
             style={{ ["--highlight-opacity" as string]: 1 }}
           >
             <CityQuerySnippet />

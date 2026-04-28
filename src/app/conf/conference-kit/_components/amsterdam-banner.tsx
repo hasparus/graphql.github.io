@@ -62,7 +62,7 @@ export function AmsterdamBanner() {
             fill
             sizes="250px"
             placeholder="empty"
-            className="hue-rotate-[-5deg] object-cover opacity-80"
+            className="object-cover opacity-80 hue-rotate-[-5deg]"
           />
         </div>
         <div className="flex flex-col gap-2 border-l border-white/10 p-[18px_18px_16px]">
