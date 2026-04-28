@@ -6,11 +6,14 @@ export const BANNER_H = 1412
 export interface BannerFrameProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   caption: string
+  /** Stable id used for the rendered PNG filename and as the print target. */
+  slug: string
 }
 
 export function BannerFrame({
   children,
   caption,
+  slug,
   className,
   style,
   ...rest
@@ -18,6 +21,7 @@ export function BannerFrame({
   return (
     <figure className="flex flex-col gap-3">
       <div
+        data-print-banner={slug}
         className={clsx(
           "relative isolate overflow-hidden border border-neu-200 font-sans dark:border-neu-50",
           className,
@@ -27,9 +31,18 @@ export function BannerFrame({
       >
         {children}
       </div>
-      <figcaption className="font-mono text-xs uppercase tracking-wider text-neu-700">
-        {caption}
-        <span className="text-neu-500"> · 850 × 2000 mm · 1:2.353</span>
+      <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 font-mono text-xs uppercase tracking-wider text-neu-700">
+        <span>
+          {caption}
+          <span className="text-neu-500"> · 850 × 2000 mm · 1:2.353</span>
+        </span>
+        <a
+          href={`/conference-kit/${slug}.png`}
+          download
+          className="underline underline-offset-4 hover:text-pri-base"
+        >
+          Download PNG
+        </a>
       </figcaption>
     </figure>
   )

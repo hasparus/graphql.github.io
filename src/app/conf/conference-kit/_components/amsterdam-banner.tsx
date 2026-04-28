@@ -9,7 +9,7 @@ import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 import { BannerFrame } from "./banner-frame"
 import { AmsterdamSkyline } from "./amsterdam-skyline"
 import { QRPlaceholder } from "./qr-placeholder"
-import { TrustedLogosGrid } from "./trusted-logos"
+import { BannerTrustedFooter } from "./trusted-logos"
 
 const features = [
   {
@@ -39,12 +39,12 @@ const PAD_X = "left-9 right-9"
 export function AmsterdamBanner() {
   return (
     <BannerFrame
+      slug="amsterdam"
       caption="GraphQL Day Amsterdam 2026"
       className="bg-[#0A0B08] text-white"
     >
       <BgGlow />
 
-      {/* Top bar: logo + pill nav */}
       <div
         className={`absolute top-9 z-10 flex items-center justify-between ${PAD_X}`}
       >
@@ -61,7 +61,6 @@ export function AmsterdamBanner() {
         </div>
       </div>
 
-      {/* Headline stack — white / magenta / lime */}
       <div className={`absolute z-10 ${PAD_X}`} style={{ top: 130 }}>
         <h2 className="m-0 text-[60px] font-medium leading-none tracking-tight">
           GraphQL Day
@@ -99,7 +98,6 @@ export function AmsterdamBanner() {
         </div>
       </div>
 
-      {/* 4-feature row */}
       <div
         className={`absolute z-10 grid grid-cols-4 gap-2 ${PAD_X}`}
         style={{ top: 590 }}
@@ -122,7 +120,6 @@ export function AmsterdamBanner() {
         ))}
       </div>
 
-      {/* City illustration + date/location panel */}
       <div
         className={`absolute z-10 grid grid-cols-[44%_1fr] overflow-hidden border border-white/10 bg-white/[0.025] ${PAD_X}`}
         style={{ top: 810, height: 180 }}
@@ -171,7 +168,6 @@ export function AmsterdamBanner() {
         </div>
       </div>
 
-      {/* CTA + QR row */}
       <div
         className={`absolute z-10 grid grid-cols-2 gap-2.5 ${PAD_X}`}
         style={{ top: 1020 }}
@@ -219,16 +215,7 @@ export function AmsterdamBanner() {
         </div>
       </div>
 
-      {/* Trusted-in-production logo wall */}
-      <div className={`absolute bottom-9 z-10 ${PAD_X}`}>
-        <div
-          className="mb-3 font-mono text-[11px] uppercase text-white/55"
-          style={{ letterSpacing: "0.04em" }}
-        >
-          Trusted in production
-        </div>
-        <TrustedLogosGrid cellHeight={38} className="gap-y-3" />
-      </div>
+      <BannerTrustedFooter />
     </BannerFrame>
   )
 }

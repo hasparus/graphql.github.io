@@ -1,5 +1,3 @@
-import clsx from "clsx"
-
 import MetaLockup from "@/components/index-page/trusted-by/logos/Meta.svg?svgr"
 import IBMWordmark from "@/components/index-page/trusted-by/logos/IBM.svg?svgr"
 import AirBnBLockup from "@/components/index-page/trusted-by/logos/AirBnB.svg?svgr"
@@ -32,38 +30,32 @@ export const TRUSTED_LOGOS: TrustedLogo[] = [
   { name: "GitHub", Component: GitHubLockup, height: 26 },
 ]
 
-export interface TrustedLogosGridProps {
-  className?: string
-  cellHeight?: number
-}
-
 // Logos collapsed to a single white silhouette via brightness(0) invert(1).
 // We can't fix every per-element fill on third-party SVGs, so we forfeit
 // brand color in exchange for predictable contrast on dark/gradient banners.
-export function TrustedLogosGrid({
-  className,
-  cellHeight = 56,
-}: TrustedLogosGridProps) {
+export function BannerTrustedFooter() {
   return (
-    <div
-      className={clsx(
-        "grid grid-cols-5 grid-rows-2 items-center gap-2",
-        className,
-      )}
-    >
-      {TRUSTED_LOGOS.map(({ name, Component, height }) => (
-        <div
-          key={name}
-          className="flex min-w-0 items-center justify-center overflow-hidden"
-          style={{ height: cellHeight }}
-          aria-label={name}
-        >
-          <Component
-            className="max-h-full w-auto max-w-full shrink"
-            style={{ height, filter: "brightness(0) invert(1)" }}
-          />
-        </div>
-      ))}
+    <div className="absolute inset-x-9 bottom-9 z-10">
+      <div
+        className="mb-3 font-mono text-[11px] uppercase text-white/55"
+        style={{ letterSpacing: "0.04em" }}
+      >
+        Trusted in production
+      </div>
+      <div className="grid grid-cols-5 grid-rows-2 items-center gap-x-2 gap-y-3">
+        {TRUSTED_LOGOS.map(({ name, Component, height }) => (
+          <div
+            key={name}
+            className="flex h-[38px] min-w-0 items-center justify-center overflow-hidden"
+            aria-label={name}
+          >
+            <Component
+              className="max-h-full w-auto max-w-full shrink"
+              style={{ height, filter: "brightness(0) invert(1)" }}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

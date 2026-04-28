@@ -1,11 +1,10 @@
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
-import GraphQLFoundationWordmark from "@/app/conf/2026/assets/graphql-foundation-wordmark.svg?svgr"
 import CheckIcon from "@/app/conf/_design-system/pixelarticons/check.svg?svgr"
 import logoMask from "@/app/conf/2026/components/cta-card-section/logo-mask.webp"
+import { GraphQLWordmarkLogo } from "@/icons"
 
 import { BannerFrame } from "./banner-frame"
-import { TrustedLogosGrid } from "./trusted-logos"
-import { GraphQLWordmarkLogo } from "@/icons"
+import { BannerTrustedFooter } from "./trusted-logos"
 
 const bullets = [
   "Typed schemas LLMs can reason about",
@@ -16,6 +15,7 @@ const bullets = [
 export function AiHeroBanner() {
   return (
     <BannerFrame
+      slug="ai-hero"
       caption="AI-native hero — generic"
       className="text-white"
       style={{
@@ -59,16 +59,12 @@ export function AiHeroBanner() {
         </ul>
       </div>
 
-      {/* Decoration: blurred-logo mask + vertical stripes behind the logo wall */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden"
-        style={{ height: 640 }}
-      >
+      <div className="pointer-events-none absolute inset-0 bottom-8 top-72 overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(255,255,255,0.22), rgba(255,255,255,0.02))",
+              "linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.22), rgba(255,255,255,0.02))",
             maskImage: `url(${logoMask.src})`,
             WebkitMaskImage: `url(${logoMask.src})`,
             maskRepeat: "no-repeat",
@@ -82,19 +78,11 @@ export function AiHeroBanner() {
         <StripesDecoration
           stripeWidth="5px"
           angle="90deg"
-          oddClassName="bg-[linear-gradient(to_bottom,rgba(255,255,255,0.18),rgba(255,255,255,0))]"
+          oddClassName="bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(255,255,255,0.18),rgba(255,255,255,0))]"
         />
       </div>
 
-      <div className="absolute inset-x-12 bottom-12 flex flex-col gap-4">
-        <span
-          className="font-mono text-xs uppercase text-white/85"
-          style={{ letterSpacing: "0.14em" }}
-        >
-          Trusted by the industry
-        </span>
-        <TrustedLogosGrid cellHeight={56} className="gap-y-5" />
-      </div>
+      <BannerTrustedFooter />
     </BannerFrame>
   )
 }
