@@ -17,16 +17,16 @@ export function AiHeroBanner() {
     <BannerFrame
       slug="ai-hero"
       caption="AI-native hero — generic"
-      className="text-white"
+      className="px-9 text-white"
       style={{
         background: "linear-gradient(180deg, #F2009A 0%, #500437 100%)",
       }}
     >
-      <div className="mx-12 flex h-24 items-center">
+      <div className="flex h-24 items-center">
         <GraphQLWordmarkLogo className="h-10 !fill-white" />
       </div>
 
-      <div className="mx-12 mt-8 flex flex-col gap-9">
+      <div className="mt-8 flex flex-col gap-9">
         <h2
           className="m-0 text-[64px] font-medium text-white"
           style={{
@@ -59,12 +59,12 @@ export function AiHeroBanner() {
         </ul>
       </div>
 
-      <div className="pointer-events-none absolute inset-0 bottom-8 top-72 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bottom-8 top-80 overflow-hidden">
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.22), rgba(255,255,255,0.02))",
+              "linear-gradient(to bottom, rgba(255,255,255,0.33), rgba(255,255,255,0.1))",
             maskImage: `url(${logoMask.src})`,
             WebkitMaskImage: `url(${logoMask.src})`,
             maskRepeat: "no-repeat",

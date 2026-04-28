@@ -1,0 +1,70 @@
+/**
+ * Renders the /conf/conference-kit/ banners as high-res PNGs and packages
+ * them into public/conference-kit/banners.zip. Expects a dev/prod server to
+ * already be running on $URL (default http://localhost:3000) — invoke after
+ * `pnpm dev` is up, or against a `pnpm start` instance. Override SCALE for
+ * print-grade output (e.g. SCALE=6 → 3600×8472 ≈ 100 dpi at 850×2000 mm).
+ *
+ * Only the zip is written to public/. Loose PNGs land in a tmp dir and are
+ * cleaned up so the served directory stays minimal.
+ */
+
+import path from "node:path"
+import os from "node:os"
+import { mkdir, mkdtemp, rm } from "node:fs/promises"
+import { execFile } from "node:child_process"
+import { promisify } from "node:util"
+import { chromium } from "playwright"
+
+const exec = promisify(execFile)
+
+const URL = process.env.URL ?? "http://localhost:3000"
+const PAGE = `${URL}/conf/conference-kit/`
+const PUBLIC_DIR = path.resolve(process.cwd(), "public/conference-kit")
+const SCALE = Number(process.env.SCALE ?? 4)
+
+const BANNERS = ["amsterdam", "ai-hero"] as const
+
+async function main() {
+  await mkdir(PUBLIC_DIR, { recursive: true })
+  const tmpDir = await mkdtemp(path.join(os.tmpdir(), "conference-kit-"))
+
+  try {
+    const browser = await chromium.launch()
+    const context = await browser.newContext({
+      deviceScaleFactor: SCALE,
+      // Wide enough that both banners render side-by-side without wrapping;
+      // the screenshot itself is scoped to a single banner element.
+      viewport: { width: 1600, height: 1600 },
+      colorScheme: "light",
+    })
+    const page = await context.newPage()
+
+    console.log(`[render-banners] loading ${PAGE}`)
+    await page.goto(PAGE, { waitUntil: "networkidle" })
+    await page.evaluate(() => document.fonts.ready)
+
+    for (const slug of BANNERS) {
+      const target = page.locator(`[data-print-banner="${slug}"]`)
+      await target.waitFor({ state: "visible" })
+      await target.screenshot({ path: path.join(tmpDir, `${slug}.png`) })
+    }
+
+    await browser.close()
+
+    const zipPath = path.join(PUBLIC_DIR, "banners.zip")
+    await rm(zipPath, { force: true })
+    await exec(
+      "zip",
+      ["-j", zipPath, ...BANNERS.map(s => path.join(tmpDir, `${s}.png`))],
+    )
+    console.log(`[render-banners] wrote ${path.relative(process.cwd(), zipPath)}`)
+  } finally {
+    await rm(tmpDir, { recursive: true, force: true })
+  }
+}
+
+main().catch(err => {
+  console.error(err)
+  process.exit(1)
+})

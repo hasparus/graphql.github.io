@@ -31,18 +31,9 @@ export function BannerFrame({
       >
         {children}
       </div>
-      <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 font-mono text-xs uppercase tracking-wider text-neu-700">
-        <span>
-          {caption}
-          <span className="text-neu-500"> · 850 × 2000 mm · 1:2.353</span>
-        </span>
-        <a
-          href={`/conference-kit/${slug}.png`}
-          download
-          className="underline underline-offset-4 hover:text-pri-base"
-        >
-          Download PNG
-        </a>
+      <figcaption className="font-mono text-xs uppercase tracking-wider text-neu-700">
+        {caption}
+        <span className="text-neu-500"> · 850 × 2000 mm · 1:2.353</span>
       </figcaption>
     </figure>
   )

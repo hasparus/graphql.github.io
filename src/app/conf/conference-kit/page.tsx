@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 
+import { Button } from "../_design-system/button"
 import { Hero, HeroStripes } from "../2026/components/hero"
 import { NavbarPlaceholder } from "../2026/components/navbar"
 
@@ -37,6 +38,9 @@ export default function ConferenceKitPage() {
         <section className="gql-container gql-section">
           <header className="mb-10 flex flex-wrap items-end justify-between gap-4">
             <h2 className="typography-h2">Roll-up banners</h2>
+            <Button href="/conference-kit/banners.zip" download>
+              Download .zip
+            </Button>
           </header>
 
           <div className="flex flex-wrap justify-center gap-12 xl:gap-20">

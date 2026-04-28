@@ -10,6 +10,7 @@ import { BannerFrame } from "./banner-frame"
 import { AmsterdamSkyline } from "./amsterdam-skyline"
 import { QRPlaceholder } from "./qr-placeholder"
 import { BannerTrustedFooter } from "./trusted-logos"
+import { Tag } from "@/components/tag"
 
 const features = [
   {
@@ -34,34 +35,28 @@ const features = [
   },
 ] as const
 
-const PAD_X = "left-9 right-9"
-
 export function AmsterdamBanner() {
   return (
     <BannerFrame
       slug="amsterdam"
       caption="GraphQL Day Amsterdam 2026"
-      className="bg-[#0A0B08] text-white"
+      className="flex flex-col bg-[#0A0B08] px-9 pt-9 text-white"
     >
       <BgGlow />
 
-      <div
-        className={`absolute top-9 z-10 flex items-center justify-between ${PAD_X}`}
-      >
+      <div className="z-10 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <GraphQLLogo className="size-7" />
           <span className="text-2xl font-medium tracking-tight">GraphQL</span>
         </div>
         <div className="inline-flex items-center gap-2.5 rounded-full border border-white/35 px-4 py-2 font-mono text-xs tracking-wide text-white/85">
-          <span>keynotes</span>
-          <span className="text-pri-base">•</span>
-          <span>workshops</span>
-          <span className="text-pri-base">•</span>
-          <span>community</span>
+          <Tag color={"hsl(var(--color-pri-base))"}>keynotes</Tag>
+          <Tag color={"hsl(var(--color-sec-dark))"}>workshops</Tag>
+          <Tag color={"hsl(var(--color-neu-500))"}>community</Tag>
         </div>
       </div>
 
-      <div className={`absolute z-10 ${PAD_X}`} style={{ top: 130 }}>
+      <div className="absolute z-10" style={{ top: 130 }}>
         <h2 className="m-0 text-[60px] font-medium leading-none tracking-tight">
           GraphQL Day
         </h2>
@@ -77,9 +72,9 @@ export function AmsterdamBanner() {
       </div>
 
       {/* Description + tags */}
-      <div className={`absolute z-10 ${PAD_X}`} style={{ top: 380 }}>
+      <div className="absolute z-10" style={{ top: 380 }}>
         <p
-          className="m-0 text-[17px] text-white/80"
+          className="typography-body-lg m-0 text-white/80"
           style={{ lineHeight: 1.4, textWrap: "pretty" }}
         >
           Community-organized GraphQL events at conferences worldwide.
@@ -99,7 +94,7 @@ export function AmsterdamBanner() {
       </div>
 
       <div
-        className={`absolute z-10 grid grid-cols-4 gap-2 ${PAD_X}`}
+        className="absolute z-10 grid grid-cols-4 gap-2"
         style={{ top: 590 }}
       >
         {features.map(({ Icon, label, iconClassName }) => (
@@ -121,7 +116,7 @@ export function AmsterdamBanner() {
       </div>
 
       <div
-        className={`absolute z-10 grid grid-cols-[44%_1fr] overflow-hidden border border-white/10 bg-white/[0.025] ${PAD_X}`}
+        className="absolute z-10 grid grid-cols-[44%_1fr] overflow-hidden border border-white/10 bg-white/[0.025]"
         style={{ top: 810, height: 180 }}
       >
         <div className="relative bg-sec-darker/15 p-2.5">
@@ -169,7 +164,7 @@ export function AmsterdamBanner() {
       </div>
 
       <div
-        className={`absolute z-10 grid grid-cols-2 gap-2.5 ${PAD_X}`}
+        className="absolute z-10 grid grid-cols-2 gap-2.5"
         style={{ top: 1020 }}
       >
         <div className="flex h-24 items-center gap-3.5 border border-white/10 bg-white/[0.02] p-3.5">
