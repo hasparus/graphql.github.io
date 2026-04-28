@@ -60,13 +60,13 @@ export default function SingaporePage() {
           <PastSpeakersSection />
           <EventPartnersSection />
           <GallerySection moving />
-          <ScheduleSection />
-          <MarqueeRows
-            variant="secondary"
-            className="my-8 xl:mb-16 xl:mt-10"
-            items={MARQUEE_ITEMS}
-          />
         </div>
+        <ScheduleSection />
+        <MarqueeRows
+          variant="secondary"
+          className="my-8 xl:mb-16 xl:mt-10"
+          items={MARQUEE_ITEMS}
+        />
       </main>
     </>
   )
