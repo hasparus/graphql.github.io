@@ -4,10 +4,6 @@ import { Button } from "@/app/conf/_design-system/button"
 import { Hero, HeroDateAndLocation } from "../components/hero"
 import { AboutSection } from "../components/about-section"
 import { WhyAttendSection } from "../components/why-attend-section"
-import {
-  BecomeASpeakerSection,
-  CfpButton,
-} from "../components/become-a-speaker"
 import { EventPartnersSection } from "../components/event-partners"
 import { CtaCardSection } from "../components/cta-card-section"
 import { MarqueeRows } from "@/app/conf/2026/components/marquee-rows"
@@ -15,8 +11,8 @@ import { PastSpeakersSection } from "../components/past-speakers"
 import { NavbarPlaceholder } from "../components/navbar"
 import { GallerySection } from "../../gallery-section"
 
-const TICKET_LINK =
-  "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore"
+const SCHEDULE_LINK =
+  "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore#tab-content-program"
 
 const MARQUEE_ITEMS = [
   ["SINGAPORE", "APRIL 2026", "GRAPHQL DAY", "FOST", "COMMUNITY", "APIs"],
@@ -46,10 +42,9 @@ export default function SingaporePage() {
             location="Singapore"
           />
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 max-sm:*:flex-1">
-            <Button href={TICKET_LINK} className="whitespace-nowrap md:w-fit">
-              Get your ticket
+            <Button href={SCHEDULE_LINK} className="whitespace-nowrap md:w-fit">
+              View the schedule
             </Button>
-            <CfpButton className="whitespace-nowrap md:w-fit" />
           </div>
         </Hero>
         <AboutSection />
@@ -60,20 +55,19 @@ export default function SingaporePage() {
         />
         <div className="gql-container gql-conf-navbar-strip text-neu-900 before:bg-white/40 before:dark:bg-blk/30">
           <WhyAttendSection />
-          <BecomeASpeakerSection />
           <PastSpeakersSection />
           <EventPartnersSection />
           <GallerySection moving />
           <CtaCardSection
-            title="Get your ticket"
-            description="Join us for a day of GraphQL talks, networking, and hands-on learning at FOST Singapore."
+            title="View the schedule"
+            description="Catch up on the talks, descriptions, and speakers from GraphQL Day @ FOST Singapore."
           >
             <Button
-              href={TICKET_LINK}
+              href={SCHEDULE_LINK}
               variant="primary"
               className="whitespace-nowrap"
             >
-              Get your ticket
+              View the schedule
             </Button>
           </CtaCardSection>
           <MarqueeRows
