@@ -35,9 +35,9 @@ export function ScheduleSection() {
   return (
     <section
       id="schedule"
-      className="gql-section scroll-mt-20 bg-neu-50 !py-0 dark:bg-neu-50/50 max-xs:px-0"
+      className="gql-section scroll-mt-20 border-y border-neu-200 bg-neu-50 !py-0 dark:border-neu-100 dark:bg-neu-50/50 max-xs:px-0 xs:border-x"
     >
-      <div className="border-y border-neu-200 dark:border-neu-100 xs:border-x">
+      <div>
         <div className="flex flex-wrap items-baseline justify-between gap-4 px-2 pt-8 sm:px-3 lg:pt-12 2xl:pt-16">
           <h2 className="typography-h2">Schedule</h2>
           <p className="typography-body-md text-neu-700">
