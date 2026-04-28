@@ -23,7 +23,7 @@ export function AiHeroBanner() {
       }}
     >
       <div className="flex h-24 items-center">
-        <GraphQLWordmarkLogo className="h-10 !fill-white" />
+        <GraphQLWordmarkLogo className="h-8 !fill-white" />
       </div>
 
       <div className="mt-8 flex flex-col gap-9">

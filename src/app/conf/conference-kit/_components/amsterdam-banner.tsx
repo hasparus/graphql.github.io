@@ -13,6 +13,7 @@ import { AmsterdamSkyline } from "./amsterdam-skyline"
 import { QRPlaceholder } from "./qr-placeholder"
 import { BannerTrustedFooter } from "./trusted-logos"
 import Image from "next/image"
+import { GraphQLWordmarkLogo } from "@/icons"
 
 const features = [
   {
@@ -47,14 +48,18 @@ export function AmsterdamBanner() {
       <BgGlow />
 
       <div className="z-10 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <GraphQLLogo className="size-7" />
-          <span className="text-2xl font-medium tracking-tight">GraphQL</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <Tag color={"hsl(var(--color-pri-base))"}>keynotes</Tag>
-          <Tag color={"hsl(var(--color-sec-dark))"}>workshops</Tag>
-          <Tag color={"hsl(var(--color-neu-500))"}>community</Tag>
+        <GraphQLWordmarkLogo className="h-8 !fill-white" />
+        <div
+          className="flex flex-wrap items-center gap-2.5 font-mono text-[13px] text-sec-base"
+          style={{ letterSpacing: "0.02em" }}
+        >
+          <span>schema-first</span>
+          <span className="text-pri-base">•</span>
+          <span>typesafe</span>
+          <span className="text-pri-base">•</span>
+          <span>flexible</span>
+          <span className="text-pri-base">•</span>
+          <span>fast</span>
         </div>
       </div>
 
@@ -81,17 +86,10 @@ export function AmsterdamBanner() {
         >
           Community-organized GraphQL events at conferences worldwide.
         </p>
-        <div
-          className="mt-5 flex flex-wrap items-center gap-2.5 font-mono text-[13px] text-sec-base"
-          style={{ letterSpacing: "0.02em" }}
-        >
-          <span>schema-first</span>
-          <span className="text-pri-base">•</span>
-          <span>typesafe</span>
-          <span className="text-pri-base">•</span>
-          <span>flexible</span>
-          <span className="text-pri-base">•</span>
-          <span>fast</span>
+        <div className="mt-4 flex items-center gap-1">
+          <Tag color={"hsl(var(--color-pri-base))"}>keynotes</Tag>
+          <Tag color={"hsl(var(--color-sec-dark))"}>workshops</Tag>
+          <Tag color={"hsl(var(--color-neu-500))"}>community</Tag>
         </div>
       </div>
 
