@@ -39,7 +39,7 @@ export default function ConferenceKitPage() {
         <section className="gql-container">
           <header className="gql-section flex flex-wrap items-end justify-between gap-4">
             <h2 className="typography-h2">Roll-up banners</h2>
-            <Button href="/conference-kit/banners.zip" download>
+            <Button href="/conference-kit/conference-kit.zip" download>
               Download
             </Button>
           </header>

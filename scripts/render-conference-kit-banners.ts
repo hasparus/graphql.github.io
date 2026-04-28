@@ -1,6 +1,6 @@
 /**
  * Renders the /conf/conference-kit/ banners as high-res PNGs and packages
- * them into public/conference-kit/banners.zip. Expects a dev/prod server to
+ * them into public/conference-kit/conference-kit.zip. Expects a dev/prod server to
  * already be running on $URL (default http://localhost:3000) — invoke after
  * `pnpm dev` is up, or against a `pnpm start` instance. Override SCALE for
  * print-grade output (e.g. SCALE=6 → 3600×8472 ≈ 100 dpi at 850×2000 mm).
@@ -48,7 +48,7 @@ async function main() {
     })
     const page = await context.newPage()
 
-    console.log(`[render-banners] loading ${PAGE}`)
+    console.log(`[conference-kit] loading ${PAGE}`)
     await page.goto(PAGE, { waitUntil: "networkidle" })
     await page.evaluate(() => document.fonts.ready)
 
@@ -70,7 +70,7 @@ async function main() {
 
     await browser.close()
 
-    const zipPath = path.join(PUBLIC_DIR, "banners.zip")
+    const zipPath = path.join(PUBLIC_DIR, "conference-kit.zip")
     await rm(zipPath, { force: true })
     await exec("zip", [
       "-j",
@@ -78,7 +78,7 @@ async function main() {
       ...BANNERS.map(b => path.join(tmpDir, `${b.slug}.png`)),
     ])
     console.log(
-      `[render-banners] wrote ${path.relative(process.cwd(), zipPath)}`,
+      `[conference-kit] wrote ${path.relative(process.cwd(), zipPath)}`,
     )
   } finally {
     await rm(tmpDir, { recursive: true, force: true })

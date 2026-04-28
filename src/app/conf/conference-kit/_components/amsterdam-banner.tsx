@@ -2,6 +2,7 @@ import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-i
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 import { Tag } from "@/app/conf/_design-system/tag"
 import fostLogo from "@/app/day/2026/assets/fost-logo.avif"
+import amsterdamImage from "./amsterdam.png"
 
 import { BannerFrame } from "./banner-frame"
 import { QRCodeSVG } from "./qr-code"
@@ -57,7 +58,7 @@ export function AmsterdamBanner() {
       >
         <div className="relative overflow-hidden bg-pri-darker/15">
           <Image
-            src="/conference-kit/amsterdam.png"
+            src={amsterdamImage}
             alt="Amsterdam canal houses"
             fill
             sizes="250px"
