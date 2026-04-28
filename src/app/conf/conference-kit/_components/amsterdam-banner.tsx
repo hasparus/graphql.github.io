@@ -5,12 +5,14 @@ import ModemIcon from "@/app/conf/_design-system/pixelarticons/modem.svg?svgr"
 import ZapIcon from "@/app/conf/_design-system/pixelarticons/zap.svg?svgr"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
+import { Tag } from "@/app/conf/_design-system/tag"
+import fostLogo from "@/app/day/2026/assets/fost-logo.avif"
 
 import { BannerFrame } from "./banner-frame"
 import { AmsterdamSkyline } from "./amsterdam-skyline"
 import { QRPlaceholder } from "./qr-placeholder"
 import { BannerTrustedFooter } from "./trusted-logos"
-import { Tag } from "@/components/tag"
+import Image from "next/image"
 
 const features = [
   {
@@ -49,7 +51,7 @@ export function AmsterdamBanner() {
           <GraphQLLogo className="size-7" />
           <span className="text-2xl font-medium tracking-tight">GraphQL</span>
         </div>
-        <div className="inline-flex items-center gap-2.5 rounded-full border border-white/35 px-4 py-2 font-mono text-xs tracking-wide text-white/85">
+        <div className="flex items-center gap-1">
           <Tag color={"hsl(var(--color-pri-base))"}>keynotes</Tag>
           <Tag color={"hsl(var(--color-sec-dark))"}>workshops</Tag>
           <Tag color={"hsl(var(--color-neu-500))"}>community</Tag>
@@ -127,38 +129,32 @@ export function AmsterdamBanner() {
         </div>
         <div className="flex flex-col gap-2 border-l border-white/10 p-[18px_18px_16px]">
           <div className="flex items-start gap-2.5">
-            <CalendarIcon className="size-[18px] text-sec-base" />
-            <div
-              className="text-[16px] font-medium"
-              style={{ lineHeight: 1.25, letterSpacing: "-0.01em" }}
-            >
-              Jun 9–10, 2026
-            </div>
+            <CalendarIcon className="size-5 translate-y-0.5 text-sec-base" />
+            <div className="typography-body-md">Jun 9–10, 2026</div>
           </div>
           <div className="flex items-start gap-2.5">
-            <PinIcon className="size-[18px] text-sec-base" />
-            <div
-              className="text-[15px] text-white/90"
-              style={{ lineHeight: 1.3 }}
-            >
+            <PinIcon className="size-5 translate-y-0.5 text-sec-base" />
+            <div className="typography-body-md">
               Amsterdam,
               <br />
               The Netherlands
             </div>
           </div>
-          <div className="flex items-baseline gap-2 border-t border-white/10 pt-2">
+          <div className="flex-1" />
+          <div className="flex items-center gap-2 border-t border-white/10 pt-2">
             <span
-              className="font-mono text-[11px] uppercase text-white/60"
+              className="typography-menu translate-y-px text-xs text-white/60"
               style={{ letterSpacing: "0.04em" }}
             >
               hosted at
             </span>
-            <span
-              className="font-mono text-[18px] font-bold text-pri-base"
-              style={{ letterSpacing: "0.02em" }}
-            >
-              FOST
-            </span>
+            <Image
+              src={fostLogo}
+              alt="FOST"
+              width={60}
+              height={20}
+              placeholder="empty"
+            />
           </div>
         </div>
       </div>

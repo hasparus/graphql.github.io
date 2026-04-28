@@ -39,7 +39,7 @@ export default function ConferenceKitPage() {
           <header className="mb-10 flex flex-wrap items-end justify-between gap-4">
             <h2 className="typography-h2">Roll-up banners</h2>
             <Button href="/conference-kit/banners.zip" download>
-              Download .zip
+              Download
             </Button>
           </header>
 
