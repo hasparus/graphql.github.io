@@ -5,12 +5,17 @@ import { Tag } from "@/app/conf/_design-system/tag"
 import { CalendarIcon } from "@/app/conf/_design-system/pixelarticons/calendar-icon"
 import { PinIcon } from "@/app/conf/_design-system/pixelarticons/pin-icon"
 import { StripesDecoration } from "@/app/conf/_design-system/stripes-decoration"
+import {
+  SocialIcon,
+  SocialIconType,
+} from "@/app/conf/_design-system/social-icon"
 import { formatDescription } from "@/app/conf/2026/schedule/[id]/format-description"
 
 import {
   SingaporeSession,
   SingaporeSpeaker,
   singaporeSessions,
+  tagColors,
 } from "./schedule-data"
 
 const TIME_RANGE = new Intl.DateTimeFormat("en-US", {
@@ -89,16 +94,8 @@ function SessionHeader({
 
   return (
     <header className={className}>
-      <p className="typography-h3 text-neu-700">
-        {session.speakers.map((s, i) => (
-          <span key={s.id}>
-            {s.name}
-            {i !== session.speakers.length - 1 && <span>, </span>}
-          </span>
-        ))}
-      </p>
-      <h3 className="typography-h2 mb-6 mt-3">{session.title}</h3>
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <h3 className="typography-h2 mb-6">{session.title}</h3>
+      <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
         <div className="typography-body-md flex flex-col gap-2 md:flex-row md:gap-6">
           <div className="flex items-center gap-2">
             <CalendarIcon className="size-5 text-sec-darker dark:text-sec-light/90 sm:size-6" />
@@ -115,7 +112,18 @@ function SessionHeader({
             </div>
           )}
         </div>
-        <Tag color="hsl(var(--color-pri-base))">{session.type}</Tag>
+        {session.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {session.tags.map(tag => (
+              <Tag
+                key={tag}
+                color={tagColors[tag] ?? "hsl(var(--color-sec-dark))"}
+              >
+                {tag}
+              </Tag>
+            ))}
+          </div>
+        )}
       </div>
     </header>
   )
@@ -200,7 +208,7 @@ function SpeakerCard({
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col gap-2">
+        <div className="flex flex-1 flex-col justify-between gap-3">
           <div className="flex flex-col gap-1">
             <h5 className="typography-body-lg">{speaker.name}</h5>
             {subtitle && (
@@ -209,9 +217,43 @@ function SpeakerCard({
               </p>
             )}
           </div>
+          {speaker.socialurls.length > 0 && (
+            <SpeakerSocialLinks links={speaker.socialurls} />
+          )}
         </div>
       </div>
     </article>
+  )
+}
+
+function SpeakerSocialLinks({
+  links,
+}: {
+  links: SingaporeSpeaker["socialurls"]
+}) {
+  const ordered = SocialIconType.all
+    .map(service =>
+      links.find(l => l.service.toLowerCase() === service.toLowerCase()),
+    )
+    .filter((x): x is { service: string; url: string } => !!x?.url)
+
+  if (ordered.length === 0) return null
+
+  return (
+    <div className="flex w-fit divide-x divide-neu-200 border border-neu-200 dark:divide-neu-100 dark:border-neu-100">
+      {ordered.map(social => (
+        <a
+          key={social.url}
+          href={social.url}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center p-2 text-neu-900 hover:bg-neu-600/10"
+          aria-label={`${social.service} profile`}
+        >
+          <SocialIcon type={social.service.toLowerCase()} className="size-5" />
+        </a>
+      ))}
+    </div>
   )
 }
 
