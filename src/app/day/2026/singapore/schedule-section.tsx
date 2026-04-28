@@ -35,9 +35,9 @@ export function ScheduleSection() {
   return (
     <section
       id="schedule"
-      className="gql-section scroll-mt-20 border-y border-neu-200 bg-neu-50 !py-0 dark:border-neu-100 dark:bg-neu-50/50 max-xs:px-0 xs:border-x"
+      className="gql-section scroll-mt-20 border-y border-neu-200 bg-neu-50 !py-0 dark:border-neu-100 dark:bg-neu-50/50 max-xs:px-0"
     >
-      <div>
+      <div className="border-neu-200 dark:border-neu-100 xs:border-x">
         <div className="flex flex-wrap items-baseline justify-between gap-4 px-2 pt-8 sm:px-3 lg:pt-12 2xl:pt-16">
           <h2 className="typography-h2">Schedule</h2>
           <p className="typography-body-md text-neu-700">
@@ -65,18 +65,24 @@ function SessionBlock({
       <Hr className={isFirst ? "mt-8 lg:mt-12" : "mt-12 lg:mt-16"} />
       <SessionHeader session={session} className="px-2 pt-8 sm:px-3 lg:pt-12" />
       {session.description && (
-        <div
-          className="typography-body-lg mt-8 flex flex-col gap-4 px-2 pb-8 sm:px-3 lg:mt-12 xl:pb-12 [&_a]:break-words"
-          dangerouslySetInnerHTML={{
-            __html: formatDescription(session.description),
-          }}
-        />
+        <>
+          <Hr className="mt-10 2xl:mt-16" />
+          <div
+            className="typography-body-lg mt-8 flex flex-col gap-4 px-2 pb-8 sm:px-3 lg:mt-12 xl:pb-12 [&_a]:break-words"
+            dangerouslySetInnerHTML={{
+              __html: formatDescription(session.description),
+            }}
+          />
+        </>
       )}
       {session.speakers.length > 0 && (
-        <SessionSpeakers
-          speakers={session.speakers}
-          className="-mx-px -mb-px border-t border-neu-200 dark:border-neu-100"
-        />
+        <>
+          <Hr />
+          <SessionSpeakers
+            speakers={session.speakers}
+            className="-mx-px -mb-px"
+          />
+        </>
       )}
     </article>
   )
