@@ -141,7 +141,7 @@ export function AmsterdamBanner() {
             </div>
           </div>
           <div className="flex-1" />
-          <div className="flex items-center gap-2 border-t border-white/10 pt-2">
+          <div className="flex items-center gap-2 border-t border-white/5 pt-3.5">
             <span
               className="typography-menu translate-y-px text-xs text-white/60"
               style={{ letterSpacing: "0.04em" }}
