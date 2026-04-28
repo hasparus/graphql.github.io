@@ -68,6 +68,12 @@ function SessionBlock({
   session: SingaporeSession
   isFirst: boolean
 }) {
+  // On xl+ with a single speaker we float the card into the bottom-right of
+  // the description so prose flows around it. Multi-speaker sessions keep
+  // the regular "speakers below" layout at every breakpoint.
+  const floatSpeaker =
+    session.speakers.length === 1 ? session.speakers[0] : null
+
   return (
     <article>
       <Hr className={isFirst ? "mt-8 lg:mt-12" : "mt-12 lg:mt-16"} />
@@ -75,25 +81,65 @@ function SessionBlock({
       {session.description && (
         <>
           <Hr className="mt-10 2xl:mt-16" />
-          <div
-            className="typography-body-lg mt-8 flex flex-col gap-4 px-2 pb-8 sm:px-3 lg:mt-12 xl:pb-12 [&_a]:break-words"
-            dangerouslySetInnerHTML={{
-              __html: formatDescription(session.description),
-            }}
+          <SessionDescription
+            description={session.description}
+            floatSpeaker={floatSpeaker}
           />
         </>
       )}
       {session.speakers.length > 0 && (
-        <>
+        <div className={floatSpeaker ? "xl:hidden" : undefined}>
           <Hr />
           <SessionSpeakers
             speakers={session.speakers}
             className="-mx-px -mb-px"
           />
-        </>
+        </div>
       )}
     </article>
   )
+}
+
+function SessionDescription({
+  description,
+  floatSpeaker,
+}: {
+  description: string
+  floatSpeaker: SingaporeSpeaker | null
+}) {
+  const paragraphs = parseParagraphs(description)
+
+  return (
+    <div className="typography-body-lg mt-8 px-2 pb-8 sm:px-3 lg:mt-12 xl:pb-12 [&>p+p]:mt-4 [&_a]:break-words">
+      {floatSpeaker && (
+        <div
+          className="hidden xl:float-right xl:ml-6 xl:block xl:w-[340px] xl:pt-[170px]"
+          style={{
+            shapeOutside: "inset(170px 0 0 0)",
+            shapeMargin: "16px",
+          }}
+        >
+          <SpeakerCard speaker={floatSpeaker} index={0} />
+        </div>
+      )}
+      {paragraphs.map((html, i) => (
+        <p key={i} dangerouslySetInnerHTML={{ __html: html }} />
+      ))}
+    </div>
+  )
+}
+
+/**
+ * Split FOST description HTML (a sequence of `<p>...</p>` blocks) into the
+ * inner HTML of each paragraph so we can render them as real React `<p>`
+ * siblings — needed because `shape-outside` only takes effect when the float
+ * shares a block formatting context with the surrounding text.
+ */
+function parseParagraphs(html: string): string[] {
+  const formatted = formatDescription(html)
+  const matches = formatted.match(/<p>[\s\S]*?<\/p>/g)
+  if (!matches) return [formatted]
+  return matches.map(p => p.replace(/^<p>/, "").replace(/<\/p>$/, ""))
 }
 
 function SessionHeader({
