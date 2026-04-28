@@ -78,7 +78,7 @@ export function AiHeroBanner() {
         <StripesDecoration
           stripeWidth="5px"
           angle="90deg"
-          oddClassName="bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(255,255,255,0.18),rgba(255,255,255,0))]"
+          oddClassName="bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(255,255,255,0.18),rgba(255,255,255,0)_88%)]"
         />
       </div>
 

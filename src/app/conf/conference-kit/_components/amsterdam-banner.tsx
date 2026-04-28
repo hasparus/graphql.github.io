@@ -42,7 +42,7 @@ export function AmsterdamBanner() {
     <BannerFrame
       slug="amsterdam"
       caption="GraphQL Day Amsterdam 2026"
-      className="flex flex-col bg-[#0A0B08] px-9 pt-9 text-white"
+      className="flex flex-col gap-[60px] bg-[#0A0B08] p-9 text-white"
     >
       <BlobStripes
         position="65% 35%"
@@ -68,7 +68,7 @@ export function AmsterdamBanner() {
         </div>
       </div>
 
-      <div className="absolute z-10" style={{ top: 130 }}>
+      <div className="z-10">
         <h2 className="m-0 text-[60px] font-medium leading-none tracking-tight">
           GraphQL Day
         </h2>
@@ -83,7 +83,7 @@ export function AmsterdamBanner() {
         </div>
       </div>
 
-      <div className="absolute z-10" style={{ top: 380 }}>
+      <div className="z-10">
         <p
           className="typography-body-lg m-0 text-white/80"
           style={{ lineHeight: 1.4, textWrap: "pretty" }}
@@ -97,10 +97,7 @@ export function AmsterdamBanner() {
         </div>
       </div>
 
-      <div
-        className="absolute z-10 grid grid-cols-4 gap-2"
-        style={{ top: 590 }}
-      >
+      <div className="z-10 grid grid-cols-4 gap-2">
         {features.map(({ Icon, label, iconClassName }) => (
           <div
             key={label}
@@ -120,8 +117,8 @@ export function AmsterdamBanner() {
       </div>
 
       <div
-        className="absolute z-10 grid grid-cols-[44%_1fr] overflow-hidden border border-white/10 bg-white/[0.025]"
-        style={{ top: 810, height: 180 }}
+        className="z-10 grid grid-cols-[44%_1fr] overflow-hidden border border-white/10 bg-white/[0.025]"
+        style={{ height: 180 }}
       >
         <div className="relative bg-sec-darker/15 p-2.5">
           <AmsterdamSkyline
@@ -161,10 +158,7 @@ export function AmsterdamBanner() {
         </div>
       </div>
 
-      <div
-        className="absolute z-10 grid grid-cols-2 gap-2.5"
-        style={{ top: 1020 }}
-      >
+      <div className="z-10 grid grid-cols-2 gap-2.5">
         <div className="flex h-24 items-center gap-3.5 border border-white/10 bg-white/[0.02] p-3.5">
           <div className="flex size-16 shrink-0 items-center justify-center border-[1.5px] border-pri-base">
             <ArrowRightLine className="size-7 text-pri-base" />

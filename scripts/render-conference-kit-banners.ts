@@ -23,7 +23,15 @@ const PAGE = `${URL}/conf/conference-kit/`
 const PUBLIC_DIR = path.resolve(process.cwd(), "public/conference-kit")
 const SCALE = Number(process.env.SCALE ?? 4)
 
-const BANNERS = ["amsterdam", "language", "ai-hero"] as const
+type ColorScheme = "light" | "dark"
+
+const BANNERS: ReadonlyArray<{ slug: string; colorScheme: ColorScheme }> = [
+  { slug: "amsterdam", colorScheme: "light" },
+  // The language banner's inline `getCity` snippet uses shiki's dark token
+  // colors; next-themes flips html.dark when prefers-color-scheme matches.
+  { slug: "language", colorScheme: "dark" },
+  { slug: "ai-hero", colorScheme: "light" },
+]
 
 async function main() {
   await mkdir(PUBLIC_DIR, { recursive: true })
@@ -44,7 +52,17 @@ async function main() {
     await page.goto(PAGE, { waitUntil: "networkidle" })
     await page.evaluate(() => document.fonts.ready)
 
-    for (const slug of BANNERS) {
+    for (const { slug, colorScheme } of BANNERS) {
+      await page.emulateMedia({ colorScheme })
+      // next-themes listens for the prefers-color-scheme change and toggles
+      // html.dark; wait for that to settle before screenshotting.
+      await page.waitForFunction(
+        expected =>
+          document.documentElement.classList.contains("dark") ===
+          (expected === "dark"),
+        colorScheme,
+        { timeout: 2000 },
+      )
       const target = page.locator(`[data-print-banner="${slug}"]`)
       await target.waitFor({ state: "visible" })
       await target.screenshot({ path: path.join(tmpDir, `${slug}.png`) })
@@ -56,7 +74,7 @@ async function main() {
     await rm(zipPath, { force: true })
     await exec(
       "zip",
-      ["-j", zipPath, ...BANNERS.map(s => path.join(tmpDir, `${s}.png`))],
+      ["-j", zipPath, ...BANNERS.map(b => path.join(tmpDir, `${b.slug}.png`))],
     )
     console.log(`[render-banners] wrote ${path.relative(process.cwd(), zipPath)}`)
   } finally {

@@ -1,5 +1,3 @@
-"use client"
-
 import cn from "clsx"
 import type { ComponentPropsWithoutRef, FC, ReactElement } from "react"
 import { useRef } from "react"

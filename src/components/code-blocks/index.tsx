@@ -1,5 +1,3 @@
-"use client"
-
 import { Code } from "nextra/components"
 import { ComponentPropsWithoutRef } from "react"
 import { clsx } from "clsx"
@@ -24,7 +22,6 @@ export { default as Schema } from "./schema.mdx"
 import _QueryHeroFriends from "./query.hero-friends.mdx"
 import _ResponseHeroFriends from "./response.hero-friends.mdx"
 import _PredictableResult from "./predictable-result.mdx"
-import _CityQuery from "./city-query.mdx"
 
 const components = {
   pre: Pre,
@@ -68,4 +65,3 @@ export const ResponseHeroFriends = () => (
   <_ResponseHeroFriends components={components} />
 )
 
-export const CityQuery = () => <_CityQuery components={components} />
