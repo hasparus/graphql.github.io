@@ -30,8 +30,8 @@ export default function DayLayout({
           { children: "All GraphQL Events", href: "/community/events/" },
           { children: "GraphQLConf", href: "/conf/2026" },
           {
-            children: "GraphQL Day Singapore",
-            href: "/day/2026/singapore",
+            children: "GraphQL Day NYC",
+            href: "/day/2026/nyc",
           },
         ]}
       />
@@ -47,8 +47,8 @@ export default function DayLayout({
           { children: "GraphQL", href: "/" },
           { children: "GraphQLConf 2026", href: "/conf/2026" },
           {
-            children: "Singapore Tickets",
-            href: "https://portal.joinfost.io/event/future-of-software-technologies-singapore-2026/9521470b-6661-4c85-8594-b74d9d7cf2e3/graphql-day-at-fost-singapore",
+            children: "Singapore Schedule",
+            href: "/day/2026/singapore#schedule",
           },
           {
             children: "Code of Conduct",
