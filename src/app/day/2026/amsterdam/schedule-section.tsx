@@ -109,10 +109,9 @@ function SessionDescription({
   sideSpeaker: AmsterdamSpeaker | null
 }) {
   const paragraphs = parseParagraphs(description)
-  const splitAt =
-    sideSpeaker && paragraphs.length >= 2
-      ? paragraphs.length - 2
-      : paragraphs.length
+  const splitAt = sideSpeaker
+    ? Math.max(0, paragraphs.length - 2)
+    : paragraphs.length
   const lead = paragraphs.slice(0, splitAt)
   const tail = paragraphs.slice(splitAt)
 
@@ -122,7 +121,7 @@ function SessionDescription({
         <p key={`lead-${i}`} dangerouslySetInnerHTML={{ __html: html }} />
       ))}
       {tail.length > 0 && (
-        <div className="mt-4 xl:flex xl:items-end xl:gap-6">
+        <div className="mt-4 first:mt-0 xl:flex xl:items-end xl:gap-6">
           <div className="xl:flex-1 [&>p+p]:mt-4">
             {tail.map((html, i) => (
               <p key={`tail-${i}`} dangerouslySetInnerHTML={{ __html: html }} />
